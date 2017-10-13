@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+	<title>Au collège | Inscription</title>
+</head>
+<body>
+	<h1>Au collège Jean Lurçat</h1>
+	<h3><em>On fait les choses comme ça !</em></h3>
+	<br>
+	
+	<nav>
+		<ul>
+			<li>1. Affectation</li>
+			<li><strong>2. Inscription</strong></li>
+			<ul>
+				<li><strong>Elève</strong></li>
+				<li>Famille</li>
+				<li>Options et langues</li>
+				<li>Régime</li>
+				<li>Renseignements médicaux</li>
+				<li>Pièces à joindre</li>
+			</ul>
+			<li>3. Validation</li>
+		</ul>
+	</nav>
+
+	<form>
+		<legend>Identité de l'élève</legend>
+
+	    <div class="form-group col-md-4">
+		    <label for="inputPrenom" class="col-form-label">Prénom</label>
+		    <input type="text" class="form-control" id="inputPrenom" value="Etienne" placeholder="Prénom">
+		</div>
+
+		<div class="form-group col-md-4">
+		    <label for="inputNomDeFamille" class="col-form-label">Nom de famille</label>
+		    <input type="text" class="form-control" id="inputNomDeFamille" value="Puydebois" placeholder="Nom de famille">
+		</div>
+
+		<div class="form-group col-md-4">
+		    <label for="inputSexe" class="col-form-label">Sexe</label>
+			<label class="form-check-label">
+		   	<input type="radio" class="form-check-input" name="sexeOptions" id="feminin" value="feminin"> Féminin</label>
+		   	<label class="form-check-label">
+		   	<input type="radio" class="form-check-input" name="sexeOptions" id="masculin" value="masculin" checked> Masculin</label>
+		</div>
+
+		<div class="form-group col-md-4">
+			<label for="inputDateDeNaissance">Né le</label>
+			<input type="date" class="form-control" id="inputDateDeNaissance" value="1995-11-19"  min="2002-01-01" max="2011-12-31">
+		</div>
+
+		<div class="form-group col-md-4">
+		    <label for="inputVilleDeNaissance" class="col-form-label">à</label>
+		    <input type="text" class="form-control" id="inputVilleDeNaissance" value="Béziers" placeholder="Ville de naissance">
+		</div>
+
+		<div class="form-group col-md-4">
+		    <label for="inputPaysDeNaissance" class="col-form-label">Pays</label>
+		    <input type="text" class="form-control" id="inputPaysDeNaissance" value="France" placeholder="Pays de naissance">
+		</div>
+
+		<div class="form-group col-md-4">
+		    <label for="inputNationalite" class="col-form-label">Nationalité</label>
+		    <input type="text" class="form-control" id="inputNationalite" value="Française" placeholder="Nationalité">
+		</div>
+	</form>
+
+	<form>
+		<legend>Scolarité antérieure</legend>
+	    
+ 		<div class="form-row">
+      		<div class="form-group col-md-1">
+    			<label for="inputVille" class="col-form-label">Année</label>
+      			<input type="text" readonly class="form-control" id="inputVille" value="2017/2018" placeholder="Ville">
+    		</div>
+
+    		<div class="form-group col-md-1">
+      			<label for="inputClasse" class="col-form-label">Classe</label>
+      			<select id="inputClasse" class="form-control">CM2
+	  				<option value="CM2">CM2</option>
+	  				<option value="CM1">CM1</option>
+	  				<option value="CE2">CE2</option>
+	  				<option value="CE1">CE1</option>
+      			</select>
+    		</div>
+
+    		<div class="form-group col-md-3">
+      			<label for="inputEtablissement" class="col-form-label">Etablissement</label>
+      			<input type="text" class="form-control" id="inputEtablissement" value="Ecole Jean-Baptsite Laumont" placeholder="Etablissement">
+    		</div>
+
+    		<div class="form-group col-md-3">
+    			<label for="inputVille" class="col-form-label">Ville</label>
+      			<input type="text" class="form-control" id="inputVille" value="Aubazine" placeholder="Ville">
+    		</div>
+  		</div>
+	</form>
+</body>
+</html>

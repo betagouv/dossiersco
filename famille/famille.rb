@@ -12,6 +12,10 @@ post '/refus' do
 	erb :refus
 end
 
+post '/eleve' do
+	erb :eleve
+end
+
 post '/validation' do
 
 end
