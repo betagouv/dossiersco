@@ -13,7 +13,7 @@ post '/refus' do
 end
 
 post '/eleve' do
-	erb :eleve
+	erb :eleve, :locals => {:prenom => "Etienne"}
 end
 
 post '/validation' do
