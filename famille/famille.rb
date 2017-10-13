@@ -13,7 +13,8 @@ post '/refus' do
 end
 
 post '/eleve' do
-	erb :eleve, :locals => {:prenom => "Etienne"}
+	fiche_eleve = {:prenom => "Etienne", :nom => "Puydebois"}
+	erb :eleve, :locals => fiche_eleve
 end
 
 post '/validation' do
