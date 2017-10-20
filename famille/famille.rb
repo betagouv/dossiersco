@@ -1,5 +1,9 @@
 require 'sinatra'
 
+get '/tableau_de_bord' do
+  erb :tableau_de_bord
+end
+
 get '/' do
 	erb :affectation
 end
