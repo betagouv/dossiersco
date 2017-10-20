@@ -19,16 +19,15 @@
 			</tr>
 		</thead>
 		<tbody>
+			<% @liste_eleves.each do |eleve| %>
+				
 			<tr>
-				<td>Pelcat</td>
-				<td>Elodie</td>
-				<td>Acceptée</td>
+				<td><%= eleve["nom"] %></td>
+				<td><%= eleve["prenom"] %></td>
+				<td><%= eleve["statut"] %></td>
 			</tr>
-			<tr>
-				<td>Etienne</td>
-				<td>Puydebois</td>
-				<td>Refusée</td>
-			</tr>
+			
+			<% end %>
 		</tbody>
 	</table>
 </body>
