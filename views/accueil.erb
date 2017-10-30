@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <link href="style_app.css" rel="stylesheet">
+
+  <title>dossiersco web</title>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-dark navbar-expand-md fixed-top" style="background-color: #2d9ee0;">
+    <a class="navbar-brand" href="#"><strong>dossiersco web</strong></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Elève</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Famille</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Choix pédagogiques</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Renseignements administratifs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pièces à joindre</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <main role="main" class="container">
+
+    <div class="row row-offcanvas row-offcanvas-right justify-content-center">
+
+      <div class="col-12 col-md-8">
+
+        <h1>Collège Jean Lurçat</h1>
+
+        <hr>
+
+        <p>Votre enfant Etienne Puydebois a été affecté au <strong>collège Jean Lurçat</strong>.</p>
+
+        <h6>Message de l'établissement</h6>
+
+        <div class="card">
+          <div class="card-body">            
+            <p><em>« Tous les enfants sans aucune distinction sont capables d’apprendre et de progresser, dans une école qui se transforme au service de la qualité et de l’efficacité des apprentissages. »</em><br><br>
+            Madame, Monsieur,<br>
+            Votre enfant va être accueilli en 6<sup>e</sup> au collège Jean Lurçat. Quatre ans au cours desquels l’ensemble des équipes pédagogiques et des personnels feront en sorte de le placer dans de bonnes conditions pour acquérir les compétences demandées en fin de cycles 3 et 4 et pour vivre les valeurs de respect et de citoyenneté liées à notre école laïque républicaine.<br>
+            Bienvenue chez nous,<br>
+            Gérard Ganet, principal</p>
+          </div>
+        </div>
+
+        <form action="/eleve" method="post">
+          <button class="btn btn-primary">Commencer l'inscription</button>
+        </form>
+
+        <footer class="mastfoot">
+          <div class="inner">
+            <p><small>Si vous ne souhaitez pas inscrire votre enfant Etienne Puydebois au collège Jean Lurçat, cliquez <a href="#">ici</a>.</small></p>
+          </div>
+        </footer>
+        
+      </div>
+
+    </div>
+
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+	<link href="style_app.css" rel="stylesheet">
+
+	<title>dossiersco web</title>
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark navbar-expand-md fixed-top" style="background-color: #2d9ee0;">
+  <a class="navbar-brand" href="#"><strong>dossiersco web</strong></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Elève</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Famille</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Choix pédagogiques</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Renseignements administratifs</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Pièces à joindre</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<main role="main" class="container">
+
+  <div class="row row-offcanvas row-offcanvas-right justify-content-center">
+
+    <div class="col-12 col-md-8">
+
+      <h1>Identité de l'élève</h1>
+
+      <hr>
+
+      <form>
+
+        <div class="form-group row">
+          <label for="inputPrenom" class="col-sm-3 col-form-label">Prénom</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="inputPrenom" value="Etienne" placeholder="Prénom">
+          </div>
+        </div>
+
+
+        <div class="form-group row">
+          <label for="inputNomDeFamille" class="col-sm-3 col-form-label">Nom de famille</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="inputNomDeFamille" value="Puydebois" placeholder="Nom de famille">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="inputSexe" class="col-sm-3 col-form-label">Sexe</label>
+          <div class="col-sm-6">
+            <label class="col-sm-4 form-check-label">
+              <input type="radio" class="form-check-input" name="sexeOptions" id="feminin" value="feminin"> Féminin
+            </label>
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="sexeOptions" id="masculin" value="masculin" checked> Masculin
+            </label>  
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="inputDateDeNaissance" class="col-sm-3 col-form-label">Né le</label>
+          <div class="col-sm-4">
+            <input type="date" required class="form-control" id="inputDateDeNaissance" value="1995-11-19">
+          </div>
+          <label for="inputVilleDeNaissance" class="col-xs col-form-label">à</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="inputVilleDeNaissance" value="Béziers" placeholder="Ville de naissance">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="inputPaysDeNaissance" class="col-sm-3 col-form-label">Pays</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="inputPaysDeNaissance" value="France" placeholder="Pays de naissance">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="inputNationalite" class="col-sm-3 col-form-label">Nationalité</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="inputNationalite" value="française" placeholder="Nationalité">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="inputINE" class="col-sm-3 col-form-label">Numéro INE</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="inputINE" value="1234567890A" placeholder="Example : 1234567890A">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="inputTelephone" class="col-sm-3 col-form-label">Téléphone</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="inputTelephone" value="0646348158" placeholder="Numéro de téléphone">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
+          <div class="col-sm-6">
+            <input type="email" class="form-control" id="inputEmail" value="etienne.puydebois@beta.gouv.fr" placeholder="Email">
+          </div>
+        </div>
+
+      </form>
+
+    </div><!--/span-->
+
+  </div><!--/row-->
+
+</main><!--/.container-->
+
+
+	<!-- <form>
+		<legend>Scolarité antérieure</legend>
+	    
+ 		<div class="form-row">
+      		<div class="form-group col-md-1">
+    			<label for="inputVille" class="col-form-label">Année</label>
+      			<input type="text" readonly class="form-control" id="inputVille" value="2017/2018" placeholder="Ville">
+    		</div>
+
+    		<div class="form-group col-md-1">
+      			<label for="inputClasse" class="col-form-label">Classe</label>
+      			<select id="inputClasse" class="form-control">CM2
+	  				<option value="CM2">CM2</option>
+	  				<option value="CM1">CM1</option>
+	  				<option value="CE2">CE2</option>
+	  				<option value="CE1">CE1</option>
+      			</select>
+    		</div>
+
+    		<div class="form-group col-md-3">
+      			<label for="inputEtablissement" class="col-form-label">Etablissement</label>
+      			<input type="text" class="form-control" id="inputEtablissement" value="Ecole Jean-Baptsite Laumont" placeholder="Etablissement">
+    		</div>
+
+    		<div class="form-group col-md-3">
+    			<label for="inputVille" class="col-form-label">Ville</label>
+      			<input type="text" class="form-control" id="inputVille" value="Aubazine" placeholder="Ville">
+    		</div>
+  		</div>
+	</form> -->
+</body>
+</html>
