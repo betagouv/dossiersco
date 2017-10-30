@@ -10,10 +10,31 @@ body {
 }
 body {
   color: #383f45;
-  padding-top: 90px;
+  padding-top: 100px;
 }
 footer {
   padding: 30px 0;
+}
+
+/*
+ * Progress bars
+ */
+.progress {
+  border-radius: .2rem;
+  margin-left: .5rem;
+}
+.progress-bar {
+  background-color: #2d9ee0;
+}
+
+/*
+ * Navbar
+ */
+.navbar-collapse {
+  margin-left: 136px;
+}
+.navbar-light .navbar-nav .active>.nav-link {
+    color: #2d9ee0;
 }
 
 /*
