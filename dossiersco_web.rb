@@ -16,6 +16,10 @@ get '/' do
 	erb :identification
 end
 
+get '/accueil' do
+	erb :accueil
+end
+
 post '/accueil' do
 	erb :accueil
 end
