@@ -27,20 +27,9 @@
 
         <form>
 
-          <div class="form-group row">
-            <label for="inputPrenom" class="col-sm-3 col-form-label">Prénom</label>
-            <div class="col-sm-6">
-              <input type="text" class="form-control" id="inputPrenom" value="Etienne" placeholder="Prénom">
-            </div>
-          </div>
+          <%= erb :'partials/form_brick', :locals => { :name => "Prenom", :desc => "Prénom", :value => "Etienne", :example => "Prénom", :type =>"text" }%>
 
-
-          <div class="form-group row">
-            <label for="inputNomDeFamille" class="col-sm-3 col-form-label">Nom de famille</label>
-            <div class="col-sm-6">
-              <input type="text" class="form-control" id="inputNomDeFamille" value="Puydebois" placeholder="Nom de famille">
-            </div>
-          </div>
+          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Nom de famille", :value => "Puydebois", :example => "Nom de famille", :type =>"text" }%>
 
           <div class="form-group row">
             <label for="inputSexe" class="col-sm-3 col-form-label">Sexe</label>
@@ -54,44 +43,17 @@
             </div>
           </div>
 
-          <div class="form-group row">
-            <label for="inputDateDeNaissance" class="col-sm-3 col-form-label">Né le</label>
-            <div class="col-sm-4">
-              <input type="date" required class="form-control" id="inputDateDeNaissance" value="1995-11-19">
-            </div>
-            <label for="inputVilleDeNaissance" class="col-xs col-form-label">à</label>
-            <div class="col-sm-4">
-              <input type="text" class="form-control" id="inputVilleDeNaissance" value="Béziers" placeholder="Ville de naissance">
-            </div>
-          </div>
+          <%= erb :'partials/form_brick', :locals => { :name => "DateDeNaissance", :desc => "Né le", :value => "1995-11-19", :example => "", :type =>"date" }%>
+          
+          <%= erb :'partials/form_brick', :locals => { :name => "VilleDeNaissance", :desc => "à", :value => "Béziers", :example => "Ville de naissance", :type =>"text" }%>
 
-          <div class="form-group row">
-            <label for="inputPaysDeNaissance" class="col-sm-3 col-form-label">Pays</label>
-            <div class="col-sm-6">
-              <input type="text" class="form-control" id="inputPaysDeNaissance" value="France" placeholder="Pays de naissance">
-            </div>
-          </div>
+          <%= erb :'partials/form_brick', :locals => { :name => "PaysDeNaissance", :desc => "pays", :value => "France", :example => "Pays de naissance", :type =>"text" }%>
 
-          <div class="form-group row">
-            <label for="inputNationalite" class="col-sm-3 col-form-label">Nationalité</label>
-            <div class="col-sm-6">
-              <input type="text" class="form-control" id="inputNationalite" value="française" placeholder="Nationalité">
-            </div>
-          </div>
+          <%= erb :'partials/form_brick', :locals => { :name => "Nationalite", :desc => "Nationalité", :value => "française", :example => "Nationalité", :type =>"text" }%>
 
-          <div class="form-group row">
-            <label for="inputTelephone" class="col-sm-3 col-form-label">Téléphone</label>
-            <div class="col-sm-6">
-              <input type="text" class="form-control" id="inputTelephone" value="0646348158" placeholder="Numéro de téléphone">
-            </div>
-          </div>
+          <%= erb :'partials/form_brick', :locals => { :name => "Telephone", :desc => "Téléphone", :value => "0646348158", :example => "Numéro de téléphone", :type =>"number" }%>
 
-          <div class="form-group row">
-            <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
-            <div class="col-sm-6">
-              <input type="email" class="form-control" id="inputEmail" value="etienne.puydebois@beta.gouv.fr" placeholder="Email">
-            </div>
-          </div>
+          <%= erb :'partials/form_brick', :locals => { :name => "Email", :desc => "Email", :value => "etienne.puydebois@beta.gouv.fr", :example => "Email", :type => "email" }%>
 
         </form>
 
