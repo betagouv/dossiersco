@@ -74,6 +74,11 @@ footer {
   font-size : .9em;
   font-weight: normal;
 }
+
+.badge.badge-secondary {
+  padding-bottom: 6px;
+}
+
 .badge-primary {
   background-color: #2d9ee0;
 }
