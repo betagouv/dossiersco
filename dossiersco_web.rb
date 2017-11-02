@@ -24,11 +24,15 @@ post '/accueil' do
 	erb :accueil
 end
 
-post '/refus' do
-	erb :refus
-end
-
 post '/eleve' do
 	fiche_eleve = {:prenom => "Etienne", :nom => "Puydebois"}
 	erb :eleve, :locals => fiche_eleve
+end
+
+post '/eleve_scolarite_anterieure' do
+	erb :eleve_scolarite_anterieure
+end
+
+get '/eleve_scolarite_anterieure' do
+	erb :eleve_scolarite_anterieure
 end
