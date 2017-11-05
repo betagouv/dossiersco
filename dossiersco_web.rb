@@ -36,3 +36,43 @@ end
 get '/eleve_scolarite_anterieure' do
 	erb :eleve_scolarite_anterieure
 end
+
+post '/famille_resp_legal_1' do
+	erb :famille_resp_legal_1
+end
+
+get '/famille_resp_legal_1' do
+	erb :famille_resp_legal_1
+end
+
+post '/famille_contact_urgence' do
+	erb :famille_contact_urgence
+end
+
+get '/famille_contact_urgence' do
+	erb :famille_contact_urgence
+end
+
+post '/choix_pedagogiques' do
+	erb :choix_pedagogiques
+end
+
+get '/choix_pedagogiques' do
+	erb :choix_pedagogiques
+end
+
+post '/renseignements_administratifs' do
+	erb :renseignements_administratifs
+end
+
+get '/renseignements_administratifs' do
+	erb :renseignements_administratifs
+end
+
+post '/pieces_a_joindre' do
+	erb :pieces_a_joindre
+end
+
+get '/pieces_a_joindre' do
+	erb :pieces_a_joindre
+end
