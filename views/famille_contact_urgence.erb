@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <%= erb :'partials/header', :locals => {:stylesheet => 'style'} %>
+
+</head>
+
+<body>
+
+  <%= erb :'partials/nav_light' %>
+
+  <main role="main" class="container">
+
+    <div class="row row-offcanvas row-offcanvas-right justify-content-center">
+
+      <div class="col-12 col-md-8">
+
+        <%= erb :'partials/nav2' %>
+
+        <h2>Personne à contacter en cas d'urgence</h2>
+
+        <hr>
+
+        <form>
+
+          <%= erb :'partials/form_brick', :locals => { :name => "Prenom", :desc => "Prénom", :value => "", :example => "Prénom", :type =>"text" }%>
+
+          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Nom de famille", :value => "", :example => "Nom de famille", :type =>"text" }%>
+
+          <div class="form-group row">
+            <label for="inputSexe" class="col-sm-4 col-form-label">Lien de parenté avec l'élève</label>
+            <div class="col-sm-5">
+              <select id="inputState" class="form-control">
+                <option selected>Choisissez...</option>
+                <option>...</option>
+              </select>
+            </div>
+          </div>
+
+          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Adresse", :value => "", :example => "", :type =>"text" }%>
+
+          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Code postal", :value => "", :example => "", :type =>"text" }%>
+
+          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Ville", :value => "", :example => "", :type =>"text" }%>
+
+          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Téléphone principal", :value => "", :example => "", :type =>"text" }%>
+
+          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Téléphone secondaire", :value => "", :example => "", :type =>"text" }%>
+
+        </form>
+
+        <div class="row">
+          <div class="col-6">
+          </div>
+          <div class="col-3">
+            <form action="/choix_pedagogiques" method="post">
+              <button class="btn btn-primary btn-continuer-scol">Continuer</button>
+            </form>
+          </div>
+        </div>
+
+      </div><!--/span-->
+
+    </div><!--/row-->
+
+  </main><!--/.container-->
+
+</body>
+</html>
