@@ -11,6 +11,7 @@ body {
 body {
   color: #383f45;
   padding-top: 50px;
+  padding-bottom: 60px;
 }
 
 footer {
@@ -54,6 +55,16 @@ footer {
   border-color: #247FCC;
 }
 
+.btn-continuer {
+  width: -webkit-fill-available;
+  margin-top: 20px;
+}
+
+.btn-continuer-scol {
+  width: -webkit-fill-available;
+  margin-top: 30px;
+}
+
 .card {
   margin-bottom: 20px;
   padding-bottom: 0;
@@ -92,6 +103,14 @@ footer {
 
 .badge-secondary {
   background-color: #979b9f;
+}
+
+.form-control.scol {
+  margin: .4rem 0rem .4rem;
+}
+
+.form-control[readonly] {
+  padding-left: .5rem;
 }
 
 /*

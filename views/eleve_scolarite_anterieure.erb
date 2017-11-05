@@ -22,59 +22,54 @@
 
         <hr>
 
-        <form>
-      
-          <div class="form-row">
-            <div class="form-group col-md-2">
-            <label for="inputVille" class="col-form-label">Année</label>
-              <input type="text" readonly class="form-control" id="inputVille" value="2017/2018" placeholder="Ville">
-            </div>
-
-            <div class="form-group col-md-2">
-                <label for="inputClasse" class="col-form-label">Classe</label>
-                <select id="inputClasse" class="form-control">CM2
-                <option value="CM2">CM2</option>
-                <option value="CM1">CM1</option>
-                <option value="CE2">CE2</option>
-                <option value="CE1">CE1</option>
-                </select>
-            </div>
-
-            <div class="form-group col-md-4">
-                <label for="inputEtablissement" class="col-form-label">Etablissement</label>
-                <input type="text" class="form-control" id="inputEtablissement" value="Ecole Jean-Baptsite Laumont" placeholder="Etablissement">
-            </div>
-
-            <div class="form-group col-md-4">
-              <label for="inputVille" class="col-form-label">Ville</label>
-              <input type="text" class="form-control" id="inputVille" value="Aubazine" placeholder="Ville">
-            </div>
+        <div class="row">
+          <div class="col-2">
+            Année
           </div>
-
-          <div class="form-row">
-            <div class="form-group col-md-2">
-              <input type="text" readonly class="form-control" id="inputVille" value="2017/2018" placeholder="Ville">
-            </div>
-
-            <div class="form-group col-md-2">
-                <select id="inputClasse" class="form-control">CM2
-                <option value="CM2">CM2</option>
-                <option value="CM1">CM1</option>
-                <option value="CE2">CE2</option>
-                <option value="CE1">CE1</option>
-                </select>
-            </div>
-
-            <div class="form-group col-md-4">
-                <input type="text" class="form-control" id="inputEtablissement" value="Ecole Jean-Baptsite Laumont" placeholder="Etablissement">
-            </div>
-
-            <div class="form-group col-md-4">
-              <input type="text" class="form-control" id="inputVille" value="Aubazine" placeholder="Ville">
-            </div>
+          <div class="col-2">
+            Classe
           </div>
+          <div class="col-4">
+            Etablissement
+          </div>
+          <div class="col-4">
+            Ville
+          </div>
+        </div>
 
-        </form>
+        <% for year in [2018, 2017, 2016, 2015] do %>
+
+        <div class="row">
+          <div class="col-2">
+            <input type="text" readonly class="form-control scol" id="inputVille" value="<%= year-1 %>/<%= year %>" placeholder="Ville">
+          </div>
+          <div class="col-2">
+            <select id="inputClasse" class="form-control scol">
+              <option value="CM2">CM2</option>
+              <option value="CM1" <% if year == 2017 %> selected <% end %>>CM1</option>
+              <option value="CE2" <% if year == 2016 %> selected <% end %>>CE2</option>
+              <option value="CE1" <% if year == 2015 %> selected <% end %>>CE1</option>
+            </select>          
+          </div>
+          <div class="col-4">
+            <input type="text" class="form-control scol" id="inputEtablissement" value="Ecole Baptiste Laumont" placeholder="Etablissement">
+          </div>
+          <div class="col-4">
+            <input type="text" class="form-control scol" id="inputVille" value="Aubazine" placeholder="Ville">
+          </div>
+        </div>
+
+        <% end %>
+
+        <div class="row">
+          <div class="col-9">
+          </div>
+          <div class="col-3">
+            <form action="/eleve_scolarite_anterieure" method="post">
+              <button class="btn btn-primary btn-continuer-scol">Continuer</button>
+            </form>
+          </div>
+        </div>
 
       </div><!--/span-->
 
