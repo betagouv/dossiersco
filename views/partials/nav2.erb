@@ -1,19 +1,21 @@
-<div class="container">
-  <div class="row">
+<div class="row">
+    
+  <% menu_items = {1 => "1. Elève", 2 => "2. Famille", 3 => "3. Choix pédagogiques", 4 => "4. Administration", 5 => "5. Pièces à joindre"} %>
+
+  <% for menu_item in (1..@page_id-1) do %>
     <div class="col-auto">
-      <span class="badge badge-success">1. Elève <img src="/tack_small.png" alt="fait" title="fait"></span>
+      <span class="badge badge-success"><%= menu_items[menu_item] %> <img src="/fait.png" alt="fait" title="fait"></span>
     </div>
-    <div class="col-auto">
-      <span class="badge badge-primary">2. Famille <img src="/editing_small.png" alt="en cours" title="en cours"></span>
-    </div>
-    <div class="col-auto">
-      <span class="badge badge-secondary">3. Choix pédagogiques</span>
-    </div>
-    <div class="col-auto">
-      <span class="badge badge-secondary">4. Administration</span>
-    </div>
-    <div class="col-auto">
-      <span class="badge badge-secondary">5. Pièces à joindre</span>
-    </div>
+  <% end %>
+
+  <div class="col-auto">
+    <span class="badge badge-primary"><%= menu_items[@page_id] %> <img src="/en_cours.png" alt="en_cours" title="en_cours"></span>
   </div>
+ 
+  <% for menu_item in (@page_id+1..5) do %>
+    <div class="col-auto">
+      <span class="badge badge-secondary"><%= menu_items[menu_item] %> </span>
+    </div>
+  <% end %>
+
 </div>
