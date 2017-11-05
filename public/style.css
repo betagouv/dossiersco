@@ -113,6 +113,10 @@ footer {
   padding-left: .5rem;
 }
 
+.form-check-label {
+  margin: .5rem 0rem 0rem;
+}
+
 /*
  * Off Canvas
  * --------------------------------------------------
