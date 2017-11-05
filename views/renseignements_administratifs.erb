@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <%= erb :'partials/header', :locals => {:stylesheet => 'style'} %>
+
+</head>
+
+<body>
+
+  <%= erb :'partials/nav_light' %>
+
+  <main role="main" class="container">
+
+    <div class="row row-offcanvas row-offcanvas-right justify-content-center">
+
+      <div class="col-12 col-md-8">
+
+        <%= erb :'partials/nav2' %>
+
+        <div class="card">
+          <h4 class="card-header">Renseignements administratifs</h4>
+          <div class="card-body">
+
+            <h5 class="card-title">Restauration</h5>
+
+            <form>
+
+              <div class="form-group row">
+                <label for="inputSexe" class="col-sm-3 col-form-label">Régime</label>
+                <div class="col">
+                  <label class="col-5 form-check-label">
+                    <input type="radio" class="form-check-input" name="sexeOptions" id="feminin" value="feminin" checked> Demi-pensionnaire
+                  </label>
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="sexeOptions" id="masculin" value="masculin"> Externe
+                  </label>  
+                </div>
+              </div>
+
+            </form>
+
+            <h5 class="card-title">Infirmerie</h5>
+
+            <form>
+
+              <div class="form-group row">
+                <label for="inputSexe" class="col-sm-3 col-form-label"></label>
+                <div class="col">
+                  <label class="col-5 form-check-label">
+                    <input type="radio" class="form-check-input" name="sexeOptions" id="masculin" value="masculin" checked> Je suis en bonne santé
+                  </label>  
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="sexeOptions" id="feminin" value="feminin"> Je suis malade
+                  </label>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-9">
+          </div>
+          <div class="col-3">
+            <form action="/pieces_a_joindre" method="post">
+              <button class="btn btn-primary btn-continuer-scol">Continuer</button>
+            </form>
+          </div>
+        </div>
+
+      </div><!--/span-->
+
+    </div><!--/row-->
+
+  </main><!--/.container-->
+
+</body>
+</html>
