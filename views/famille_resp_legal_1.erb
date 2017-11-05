@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <%= erb :'partials/header', :locals => {:stylesheet => 'style'} %>
+
+</head>
+
+<body>
+
+  <%= erb :'partials/nav_light' %>
+
+  <main role="main" class="container">
+
+    <div class="row row-offcanvas row-offcanvas-right justify-content-center">
+
+      <div class="col-12 col-md-8">
+
+        <%= erb :'partials/nav2' %>
+
+        <h2>Responsable légal 1</h2>
+
+        <hr>
+
+        <form>
+
+          <%= erb :'partials/form_brick', :locals => { :name => "Prenom", :desc => "Prénom", :value => "Louise", :example => "Prénom", :type =>"text" }%>
+
+          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Nom de famille", :value => "Puydebois", :example => "Nom de famille", :type =>"text" }%>
+
+          <div class="form-group row">
+            <label for="inputSexe" class="col-sm-4 col-form-label">Lien de parenté avec l'élève</label>
+            <div class="col-sm-5">
+              <select id="inputState" class="form-control">
+                <option selected>Choisissez...</option>
+                <option>...</option>
+              </select>
+            </div>
+          </div>
+
+          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Adresse", :value => "1 rue de Paris", :example => "Nom de famille", :type =>"text" }%>
+
+          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Code postal", :value => "60300", :example => "Nom de famille", :type =>"text" }%>
+
+          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Ville", :value => "Berlin", :example => "Nom de famille", :type =>"text" }%>
+
+          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Téléphone principal", :value => "0607080910", :example => "Nom de famille", :type =>"text" }%>
+
+          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Téléphone secondaire", :value => "0605040302", :example => "Nom de famille", :type =>"text" }%>
+
+          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Email", :value => "bonjour@france.uk", :example => "Nom de famille", :type =>"text" }%>
+
+          <div class="form-group row">
+            <label for="inputSexe" class="col-sm-4 col-form-label">Situation professionnelle</label>
+            <div class="col-sm-5">
+              <select id="inputState" class="form-control">
+                <option selected>Choisissez...</option>
+                <option>...</option>
+              </select>
+            </div>
+          </div>
+
+          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Code profession", :value => "3", :example => "Nom de famille", :type =>"text" }%>
+
+          <div class="form-check">
+            <label class="form-check-label">
+              <input class="form-check-input" type="checkbox"> J'accepte que mes données soient transmises aux fédérations de parents d'élèves
+            </label>
+          </div>
+
+        </form>
+
+        <div class="row">
+          <div class="col-6">
+          </div>
+          <div class="col-3">
+            <form action="/famille_contact_urgence" method="post">
+              <button class="btn btn-primary btn-continuer-scol">Continuer</button>
+            </form>
+          </div>
+        </div>
+
+      </div><!--/span-->
+
+    </div><!--/row-->
+
+  </main><!--/.container-->
+
+</body>
+</html>
