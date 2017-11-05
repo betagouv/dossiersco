@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <%= erb :'partials/header', :locals => {:stylesheet => 'style'} %>
+
+</head>
+
+<body>
+
+  <%= erb :'partials/nav_light' %>
+
+  <main role="main" class="container">
+
+    <div class="row row-offcanvas row-offcanvas-right justify-content-center">
+
+      <div class="col-12 col-md-8">
+
+        <%= erb :'partials/nav2' %>
+
+        <div class="card">
+          <h4 class="card-header">Choix pédagogiques</h4>
+          <div class="card-body">
+
+            <h5 class="card-title">Langues</h5>
+
+            <form>
+
+              <div class="form-group row">
+                <label for="inputSexe" class="col-sm-3 col-form-label">LV1</label>
+                <div class="col-3">
+                  <select id="inputState" class="form-control">
+                    <option selected>Choisissez...</option>
+                    <option>Anglais</option>
+                    <option>Allemand</option>
+                    <option>Espagnol</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="inputSexe" class="col-sm-3 col-form-label">LV2</label>
+                <div class="col-3">
+                  <select id="inputState" class="form-control">
+                    <option selected>Choisissez...</option>
+                    <option>Anglais</option>
+                    <option>Allemand</option>
+                    <option>Espagnol</option>
+                  </select>
+                </div>
+              </div>
+
+            </form>
+
+            <h5 class="card-title">Options</h5>
+
+            <form>
+
+              <div class="form-group row">
+                <label for="inputSexe" class="col-sm-3 col-form-label">Option 1</label>
+                <div class="col-3">
+                  <select id="inputState" class="form-control">
+                    <option selected>Choisissez...</option>
+                    <option>Choix A</option>
+                    <option>Choix B</option>
+                    <option>Choix C</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="inputSexe" class="col-sm-3 col-form-label">Option 2</label>
+                <div class="col-3">
+                  <select id="inputState" class="form-control">
+                    <option selected>Choisissez...</option>
+                    <option>Choix A</option>
+                    <option>Choix B</option>
+                    <option>Choix C</option>
+                  </select>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-9">
+          </div>
+          <div class="col-3">
+            <form action="/renseignements_administratifs" method="post">
+              <button class="btn btn-primary btn-continuer-scol">Continuer</button>
+            </form>
+          </div>
+        </div>
+
+      </div><!--/span-->
+
+    </div><!--/row-->
+
+  </main><!--/.container-->
+
+</body>
+</html>
