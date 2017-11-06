@@ -34,6 +34,10 @@ body {
   text-align: center;
 }
 
+.col-form-label {
+  float: left;
+}
+
 /* Extra markup and styles for table-esque vertical and horizontal centering */
 .site-wrapper {
   display: table;
