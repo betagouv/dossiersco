@@ -59,6 +59,10 @@ body {
   padding: 2rem;
 }
 
+.form-signin input[type="date"] {
+  margin-bottom: 20px;
+}
+
 /*
  * Buttons
  */
