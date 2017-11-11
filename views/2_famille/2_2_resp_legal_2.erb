@@ -16,18 +16,16 @@
 
       <div class="aligner-progressions">
 
-        <% @page_id = 2 %>
-        <%= erb :'partials/nav2' %>
-
-
-        <% @sous_section_id = 1 %>
-        <%= erb :'partials/progression_secondaire_famille' %>
+        <% @section = 2 %>
+        <%= erb :'partials/progression_primaire' %>
+        <% @sous_section = 2 %>
+        <%= erb :'partials/progression_secondaire' %>
 
       </div>
 
       <div class="col-12 col-md-8">
 
-        <h2>Responsable légal 1</h2>
+        <h2>Responsable légal 2</h2>
 
         <hr>
 
@@ -83,7 +81,7 @@
           <div class="col-6">
           </div>
           <div class="col-3">
-            <form action="/famille_contact_urgence" method="post">
+            <form action="/urgence" method="post">
               <button class="btn btn-primary btn-continuer-scol">Continuer</button>
             </form>
           </div>

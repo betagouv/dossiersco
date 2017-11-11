@@ -14,8 +14,8 @@
 
     <div class="row row-offcanvas row-offcanvas-right justify-content-center">
 
-      <% @page_id = 5 %>
-      <%= erb :'partials/nav2' %>
+      <% @section = 5 %>
+      <%= erb :'partials/progression_primaire' %>
       
       <div class="col-12 col-md-8">
 
@@ -45,7 +45,7 @@
           <div class="col-9">
           </div>
           <div class="col-3">
-            <form action="/pieces_a_joindre" method="post">
+            <form action="/validation" method="post">
               <button class="btn btn-primary btn-continuer-scol">Continuer</button>
             </form>
           </div>

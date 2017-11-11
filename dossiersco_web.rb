@@ -1,6 +1,66 @@
 require 'sinatra'
 require 'redis'
 
+get '/' do
+	erb :identification
+end
+
+# depuis page identification
+post '/accueil' do
+	erb :'0_accueil/accueil'
+end
+
+# depuis logo dossiersco
+get '/accueil' do
+	erb :'0_accueil/accueil'
+end
+
+post '/eleve' do
+	erb :'1_eleve/eleve'
+end
+
+post '/resp_legal_1' do
+	erb :'2_famille/2_1_resp_legal_1'
+end
+
+post '/resp_legal_2' do
+	erb :'2_famille/2_2_resp_legal_2'
+end
+
+post '/urgence' do
+	erb :'2_famille/2_3_urgence'
+end
+
+post '/choix_pedagogiques' do
+	erb :'3_choix_pedagogiques/choix_pedagogiques'
+end
+
+post '/regime' do
+	erb :'4_administration/4_1_regime'
+end
+
+post '/autorisation_sortie' do
+	erb :'4_administration/4_2_autorisation_sortie'
+end
+
+post '/medical' do
+	erb :'4_administration/4_3_medical'
+end
+
+post '/droit_image' do
+	erb :'4_administration/4_4_droit_image'
+end
+
+post '/pieces_a_joindre' do
+	erb :'5_pieces_a_joindre/pieces_a_joindre'
+end
+
+post '/validation' do
+	erb :'6_validation/validation'
+end
+
+##################################################
+
 redis = Redis.new
 
 get '/tableau_de_bord' do
@@ -10,69 +70,4 @@ get '/tableau_de_bord' do
 		@liste_eleves << redis.hgetall(eleve_key)
 	end	
  	erb :tableau_de_bord
-end
-
-get '/' do
-	erb :identification
-end
-
-get '/accueil' do
-	erb :accueil
-end
-
-post '/accueil' do
-	erb :accueil
-end
-
-post '/eleve_identite' do
-	fiche_eleve = {:prenom => "Etienne", :nom => "Puydebois"}
-	erb :eleve_identite, :locals => fiche_eleve
-end
-
-post '/eleve_scolarite_anterieure' do
-	erb :eleve_scolarite_anterieure
-end
-
-get '/eleve_scolarite_anterieure' do
-	erb :eleve_scolarite_anterieure
-end
-
-post '/famille_resp_legal_1' do
-	erb :famille_resp_legal_1
-end
-
-get '/famille_resp_legal_1' do
-	erb :famille_resp_legal_1
-end
-
-post '/famille_contact_urgence' do
-	erb :famille_contact_urgence
-end
-
-get '/famille_contact_urgence' do
-	erb :famille_contact_urgence
-end
-
-post '/choix_pedagogiques' do
-	erb :choix_pedagogiques
-end
-
-get '/choix_pedagogiques' do
-	erb :choix_pedagogiques
-end
-
-post '/renseignements_administratifs' do
-	erb :renseignements_administratifs
-end
-
-get '/renseignements_administratifs' do
-	erb :renseignements_administratifs
-end
-
-post '/pieces_a_joindre' do
-	erb :pieces_a_joindre
-end
-
-get '/pieces_a_joindre' do
-	erb :pieces_a_joindre
 end
