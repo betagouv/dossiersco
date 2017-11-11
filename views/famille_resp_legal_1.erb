@@ -14,8 +14,16 @@
 
     <div class="row row-offcanvas row-offcanvas-right justify-content-center">
 
-      <% @page_id = 2 %>
-      <%= erb :'partials/nav2' %>
+      <div class="aligner-progressions">
+
+        <% @page_id = 2 %>
+        <%= erb :'partials/nav2' %>
+
+
+        <% @sous_section_id = 1 %>
+        <%= erb :'partials/progression_secondaire_famille' %>
+
+      </div>
 
       <div class="col-12 col-md-8">
 

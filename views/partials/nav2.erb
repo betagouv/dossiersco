@@ -1,6 +1,6 @@
 <div class="row">
     
-  <% menu_items = {1 => "1. Elève", 2 => "2. Famille", 3 => "3. Choix pédagogiques", 4 => "4. Administration", 5 => "5. Pièces à joindre"} %>
+  <% menu_items = {1 => "1. Elève", 2 => "2. Famille", 3 => "3. Choix pédagogiques", 4 => "4. Administration", 5 => "5. Pièces à joindre", 6 => "6. Validation"} %>
 
   <% for menu_item in (1..@page_id-1) do %>
     <div class="col-auto">
@@ -9,10 +9,15 @@
   <% end %>
 
   <div class="col-auto">
-    <span class="badge badge-primary"><%= menu_items[@page_id] %> <img src="images/en_cours.png" alt="en_cours" title="en_cours"></span>
+    <span class="badge badge-primary">
+      <%= menu_items[@page_id] %>
+      <% if @page_id != 2 && @page_id != 4 %>
+        <img src="images/en_cours.png" alt="en_cours" title="en_cours">
+      <% end %>
+    </span>
   </div>
  
-  <% for menu_item in (@page_id+1..5) do %>
+  <% for menu_item in (@page_id+1..6) do %>
     <div class="col-auto">
       <span class="badge badge-secondary"><%= menu_items[menu_item] %> </span>
     </div>

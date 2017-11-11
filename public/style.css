@@ -22,6 +22,10 @@ img {
   margin: 0rem .1rem .2rem .2rem;
 }
 
+h2 {
+  margin-top: 20px;
+}
+
 /*
  * Progress bars
  */
@@ -82,10 +86,14 @@ img {
   padding-bottom: 0;
 }
 
+.aligner-progressions {
+  vertical-align: top;
+}
+
 .col-auto {
   padding-left: 0;
   padding-right: 20px;
-  margin-bottom: 30px;
+  padding-bottom: 10px;
 }
 
 .row.my-menu {
@@ -96,6 +104,11 @@ img {
   font-size : 1em;
   font-weight: normal;
   padding: .4rem .5rem .3rem .6rem;
+}
+
+.badge-sous-section {
+  font-size: .8em;
+  padding: .3rem .3rem .15rem .3rem;
 }
 
 .badge.badge-secondary {

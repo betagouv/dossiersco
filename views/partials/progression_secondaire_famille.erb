@@ -1,0 +1,21 @@
+<div class="row">
+    
+  <% sous_sections = {1 => "2.1. Responsable légal 1", 2 => "2.2. Responsable légal 2", 3 => "2.3. En cas d'urgence"} %>
+
+  <% for sous_section in (1..@sous_section_id-1) do %>
+    <div class="col-auto">
+      <span class="badge badge-success badge-sous-section"><%= sous_sections[sous_section] %> <img src="images/fait.png" alt="fait" title="fait"></span>
+    </div>
+  <% end %>
+
+  <div class="col-auto">
+    <span class="badge badge-primary badge-sous-section"><%= sous_sections[@sous_section_id] %> <img src="images/en_cours.png" alt="en_cours" title="en_cours"></span>
+  </div>
+ 
+  <% for sous_section in (@sous_section_id+1..3) do %>
+    <div class="col-auto">
+      <span class="badge-sous-section badge badge-secondary"><%= sous_sections[sous_section] %> </span>
+    </div>
+  <% end %>
+
+</div>
