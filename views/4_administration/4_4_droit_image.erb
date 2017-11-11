@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <%= erb :'partials/header', :locals => {:stylesheet => 'style'} %>
+
+</head>
+
+<body>
+
+  <%= erb :'partials/nav_light' %>
+
+  <main role="main" class="container">
+
+    <div class="row row-offcanvas row-offcanvas-right justify-content-center">
+
+    <div class="aligner-progressions">
+      
+      <% @section = 4 %>
+      <%= erb :'partials/progression_primaire' %>
+      <% @sous_section = 4 %>
+      <%= erb :'partials/progression_secondaire' %>
+      
+    </div>
+
+      <div class="col-12 col-md-8">
+
+        <h2>Droit à l'image</h2>
+
+        <hr>
+
+
+
+        <div class="row">
+          <div class="col-6">
+          </div>
+          <div class="col-3">
+            <form action="/pieces_a_joindre" method="post">
+              <button class="btn btn-primary btn-continuer-scol">Continuer</button>
+            </form>
+          </div>
+        </div>
+
+      </div><!--/span-->
+
+    </div><!--/row-->
+
+  </main><!--/.container-->
+
+</body>
+</html>
