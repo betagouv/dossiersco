@@ -1,0 +1,26 @@
+<div class="row">
+    
+  <% sections = {1 => "1. Elève", 2 => "2. Famille", 3 => "3. Choix pédagogiques", 4 => "4. Administration", 5 => "5. Pièces à joindre", 6 => "6. Validation"} %>
+
+  <% for une_section in (1..@section-1) do %>
+    <div class="col-auto">
+      <span class="badge badge-success"><%= sections[une_section] %> <img src="images/fait.png" alt="fait" title="fait"></span>
+    </div>
+  <% end %>
+
+  <div class="col-auto">
+    <span class="badge badge-primary">
+      <%= sections[@section] %>
+      <% if @section != 2 && @section != 4 %>
+        <img src="images/en_cours.png" alt="en_cours" title="en_cours">
+      <% end %>
+    </span>
+  </div>
+ 
+  <% for une_section in (@section+1..6) do %>
+    <div class="col-auto">
+      <span class="badge badge-secondary"><%= sections[une_section] %> </span>
+    </div>
+  <% end %>
+
+</div>
