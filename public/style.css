@@ -11,7 +11,7 @@ body {
 body {
   color: #383f45;
   padding-top: 50px;
-  padding-bottom: 60px;
+  padding-bottom: 100px;
 }
 
 footer {
@@ -23,7 +23,7 @@ img {
 }
 
 h2 {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 /*
@@ -73,6 +73,10 @@ h2 {
   margin-top: 30px;
 }
 
+.wrapper-continuer {
+  float: right;  
+}
+
 .card {
   margin-bottom: 20px;
   padding-bottom: 0;
@@ -107,8 +111,8 @@ h2 {
 }
 
 .badge-sous-section {
-  font-size: .8em;
-  padding: .3rem .3rem .15rem .3rem;
+  font-size: .9em;
+  padding: .3rem .4rem .15rem .4rem;
 }
 
 .badge.badge-secondary {
