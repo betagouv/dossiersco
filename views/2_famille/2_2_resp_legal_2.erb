@@ -31,61 +31,39 @@
 
         <form>
 
-          <%= erb :'partials/form_brick', :locals => { :name => "Prenom", :desc => "Prénom", :value => "Louise", :example => "Prénom", :type =>"text" }%>
+          <%= erb :'partials/champ_dropdown', :locals => { :desc => "Lien de parenté", :variable => "lien_parente_rl2", :options => ["Choisissez...", "Mère", "Père", "Tutrice", "Tuteur", "Autre"], :selected => "Père" } %>
 
-          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Nom de famille", :value => "Puydebois", :example => "Nom de famille", :type =>"text" }%>
+          <%= erb :'partials/champ_texte', :locals => { :desc => "Prénom", :variable => "prenom_rl2", :valeur => "", :exemple => "Prénom" }%>
 
-          <div class="form-group row">
-            <label for="inputSexe" class="col-sm-4 col-form-label">Lien de parenté avec l'élève</label>
-            <div class="col-sm-5">
-              <select id="inputState" class="form-control">
-                <option selected>Choisissez...</option>
-                <option>...</option>
-              </select>
-            </div>
-          </div>
+          <%= erb :'partials/champ_texte', :locals => { :desc => "Nom", :variable => "nom_rl2", :valeur => "Puydebois", :exemple => "Nom" }%>
 
-          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Adresse", :value => "1 rue de Paris", :example => "Nom de famille", :type =>"text" }%>
+          <%= erb :'partials/champ_texte', :locals => { :desc => "Adresse", :variable => "adr1_rl2", :valeur => "4 Place de la Nation", :exemple => "Numéro et nom de voie" }%>
 
-          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Code postal", :value => "60300", :example => "Nom de famille", :type =>"text" }%>
+          <%= erb :'partials/champ_texte', :locals => { :desc => "Code postal", :variable => "cp_rl2", :valeur => "75012", :exemple => "Code postal" }%>
 
-          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Ville", :value => "Berlin", :example => "Nom de famille", :type =>"text" }%>
+          <%= erb :'partials/champ_texte', :locals => { :desc => "Ville", :variable => "ville_rl2", :valeur => "Paris", :exemple => "Ville" }%>
 
-          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Téléphone principal", :value => "0607080910", :example => "Nom de famille", :type =>"text" }%>
+          <span style="display:block; height: 30px;"></span>
 
-          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Téléphone secondaire", :value => "0605040302", :example => "Nom de famille", :type =>"text" }%>
+          <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone principal", :variable => "tel1_rl2", :valeur => "", :exemple => "Numéro de téléphone" }%>
 
-          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Email", :value => "bonjour@france.uk", :example => "Nom de famille", :type =>"text" }%>
+          <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone secondaire", :variable => "tel2_rl2", :valeur => "", :exemple => "Numéro de téléphone" }%>
 
-          <div class="form-group row">
-            <label for="inputSexe" class="col-sm-4 col-form-label">Situation professionnelle</label>
-            <div class="col-sm-5">
-              <select id="inputState" class="form-control">
-                <option selected>Choisissez...</option>
-                <option>...</option>
-              </select>
-            </div>
-          </div>
+          <%= erb :'partials/champ_email', :locals => { :desc => "Email principal", :variable => "mail_rl2", :valeur => "", :exemple => "Adresse email" }%>
 
-          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Code profession", :value => "3", :example => "Nom de famille", :type =>"text" }%>
+          <span style="display:block; height: 30px;"></span>
 
-          <div class="form-check">
-            <label class="form-check-label">
-              <input class="form-check-input" type="checkbox"> J'accepte que mes données soient transmises aux fédérations de parents d'élèves
-            </label>
-          </div>
+          <%= erb :'partials/champ_dropdown', :locals => { :desc => "Situation emploi", :variable => "sit_emploi_rl2", :options => ["Choisissez...", "Occupe un emploi", "Chômage", "Retraite", "Autre"], :selected => "" } %>
+
+          <%= erb :'partials/champ_dropdown', :locals => { :desc => "Profession", :variable => "emploi_rl2", :options => ["Choisissez...", "Agriculteur·rice", "Artisan·e", "Commerçant·e", "Professeur·e", "Cadre", "Clergé", "Technicien·ne", "Employé·e", "Ouvrier·ère", "Retraité·e"], :selected => "" } %>
+
+          <span style="display:block; height: 30px;"></span>
+
+          <%= erb :'partials/champ_check', :locals => { :desc => "J'accepte que mes coordonnées soient communiquées aux fédérations de parents d'élèves" }%>
 
         </form>
 
-        <div class="row">
-          <div class="col-6">
-          </div>
-          <div class="col-3">
-            <form action="/urgence" method="post">
-              <button class="btn btn-primary btn-continuer-scol">Continuer</button>
-            </form>
-          </div>
-        </div>
+        <%= erb :'partials/precedent_suivant', :locals => { :precedent => "resp_legal_1", :suivant => "urgence" } %>
 
       </div><!--/span-->
 
