@@ -14,58 +14,44 @@
 
     <div class="row row-offcanvas row-offcanvas-right justify-content-center">
 
-    <div class="aligner-progressions">
-      
-      <% @section = 2 %>
-      <%= erb :'partials/progression_primaire' %>
-      <% @sous_section = 3 %>
-      <%= erb :'partials/progression_secondaire' %>
-      
-    </div>
+      <div class="aligner-progressions">
+        
+        <% @section = 2 %>
+        <%= erb :'partials/progression_primaire' %>
+        <% @sous_section = 3 %>
+        <%= erb :'partials/progression_secondaire' %>
+        
+      </div>
 
       <div class="col-12 col-md-8">
 
-        <h2>Personne à contacter en cas d'urgence</h2>
+        <h2>Autre personne à contacter en cas d'urgence</h2>
 
         <hr>
 
         <form>
 
-          <%= erb :'partials/form_brick', :locals => { :name => "Prenom", :desc => "Prénom", :value => "", :example => "Prénom", :type =>"text" }%>
+          <%= erb :'partials/champ_texte', :locals => { :desc => "Lien avec l'élève", :variable => "lien_elv_urg", :valeur => "", :exemple => "Lien avec l'élève" }%>
 
-          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Nom de famille", :value => "", :example => "Nom de famille", :type =>"text" }%>
+          <%= erb :'partials/champ_texte', :locals => { :desc => "Prénom", :variable => "prenom_urg", :valeur => "", :exemple => "Prénom" }%>
 
-          <div class="form-group row">
-            <label for="inputSexe" class="col-sm-4 col-form-label">Lien de parenté avec l'élève</label>
-            <div class="col-sm-5">
-              <select id="inputState" class="form-control">
-                <option selected>Choisissez...</option>
-                <option>...</option>
-              </select>
-            </div>
-          </div>
+          <%= erb :'partials/champ_texte', :locals => { :desc => "Nom", :variable => "nom_urg", :valeur => "", :exemple => "Nom" }%>
 
-          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Adresse", :value => "", :example => "", :type =>"text" }%>
+          <%= erb :'partials/champ_texte', :locals => { :desc => "Adresse", :variable => "adr1_urg", :valeur => "", :exemple => "Numéro et nom de voie" }%>
 
-          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Code postal", :value => "", :example => "", :type =>"text" }%>
+          <%= erb :'partials/champ_texte', :locals => { :desc => "Code postal", :variable => "cp_urg", :valeur => "", :exemple => "Code postal" }%>
 
-          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Ville", :value => "", :example => "", :type =>"text" }%>
+          <%= erb :'partials/champ_texte', :locals => { :desc => "Ville", :variable => "ville_urg", :valeur => "", :exemple => "Ville" }%>
 
-          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Téléphone principal", :value => "", :example => "", :type =>"text" }%>
+          <span style="display:block; height: 30px;"></span>
 
-          <%= erb :'partials/form_brick', :locals => { :name => "NomDeFamille", :desc => "Téléphone secondaire", :value => "", :example => "", :type =>"text" }%>
+          <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone principal", :variable => "tel1_urg", :valeur => "", :exemple => "Numéro de téléphone" }%>
+
+          <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone secondaire", :variable => "tel2_urg", :valeur => "", :exemple => "Numéro de téléphone" }%>
 
         </form>
 
-        <div class="row">
-          <div class="col-6">
-          </div>
-          <div class="col-3">
-            <form action="/choix_pedagogiques" method="post">
-              <button class="btn btn-primary btn-continuer-scol">Continuer</button>
-            </form>
-          </div>
-        </div>
+        <%= erb :'partials/precedent_suivant', :locals => { :precedent => "resp_legal_2", :suivant => "choix_pedagogiques" } %>
 
       </div><!--/span-->
 
