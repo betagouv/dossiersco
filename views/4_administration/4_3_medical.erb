@@ -14,14 +14,14 @@
 
     <div class="row row-offcanvas row-offcanvas-right justify-content-center">
 
-    <div class="aligner-progressions">
-      
-      <% @section = 4 %>
-      <%= erb :'partials/progression_primaire' %>
-      <% @sous_section = 3 %>
-      <%= erb :'partials/progression_secondaire' %>
-      
-    </div>
+      <div class="aligner-progressions">
+        
+        <% @section = 4 %>
+        <%= erb :'partials/progression_primaire' %>
+        <% @sous_section = 3 %>
+        <%= erb :'partials/progression_secondaire' %>
+        
+      </div>
 
       <div class="col-12 col-md-8">
 
@@ -29,17 +29,62 @@
 
         <hr>
 
+        <form>
 
+          <div class="form-group row">
+            <label for="num_secu" class="col-sm-5 col-form-label">Numéro de sécurité sociale de l'élève</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" id="num_secu" value="" placeholder="Numéro de sécurité sociale">
+            </div>
+          </div>
 
-        <div class="row">
-          <div class="col-6">
+          <span style="display:block; height: 30px;"></span>          
+
+          <h4>Médecin traitant</h4>
+
+          <span style="display:block; height: 20px;"></span>
+
+          <%= erb :'partials/champ_texte', :locals => { :desc => "Nom", :variable => "nom_med_traitant", :valeur => "", :exemple => "Nom du médecin traitant" }%>
+
+          <%= erb :'partials/champ_texte', :locals => { :desc => "Adresse", :variable => "adr1_med-traitant", :valeur => "", :exemple => "Adresse" }%>
+
+          <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone", :variable => "tel_med_traitant", :valeur => "", :exemple => "Numéro de téléphone" }%>
+
+          <span style="display:block; height: 30px;"></span>
+
+          <h4>Date des vaccins obligatoires</h4>
+
+          <span style="display:block; height: 20px;"></span>
+
+          <%= erb :'partials/champ_date', :locals => { :desc => "Dernier rappel DTP", :variable => "date_dtp", :valeur => "" }%>          
+
+          <%= erb :'partials/champ_date', :locals => { :desc => "Vaccin BCG", :variable => "date_bcg", :valeur => "" }%>          
+
+          <%= erb :'partials/champ_date', :locals => { :desc => "Vaccin ROR", :variable => "date_ror", :valeur => "" }%>
+
+          <span style="display:block; height: 30px;"></span>
+
+          <h4>Informations complémentaires</h4>
+
+          <span style="display:block; height: 20px;"></span>
+
+          <div class="form-group">
+            <label for="comment">Problèmes de santé que vous souhaitez porter à la connaissance de l'établissement (maladies, allergies, traitements en cours, contre-indications, précautions particulières, etc.)</label>
+            <textarea class="form-control" rows="5" id="comment"></textarea>
           </div>
-          <div class="col-3">
-            <form action="/droit_image" method="post">
-              <button class="btn btn-primary btn-continuer-scol">Continuer</button>
-            </form>
-          </div>
-        </div>
+
+          <span style="display:block; height: 20px;"></span>
+
+          <div class="form-group">
+            <label for="comment_conf">Problèmes de santé confidentiels que vous voulez porter à la connaissance de l'infirmier·ère <em>uniquement</em></label>
+            <textarea class="form-control" rows="5" id="comment_conf"></textarea>
+          </div>     
+
+        </form>
+
+        <span style="display:block; height: 10px;"></span>
+
+        <%= erb :'partials/precedent_suivant', :locals => { :precedent => "autorisation_sortie", :suivant => "droit_image" } %>
 
       </div><!--/span-->
 
