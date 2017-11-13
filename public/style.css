@@ -26,6 +26,10 @@ h2 {
   margin-top: 30px;
 }
 
+.upload {
+  margin-bottom: 0;
+}
+
 /*
  * Progress bars
  */

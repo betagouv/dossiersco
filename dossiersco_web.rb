@@ -59,6 +59,14 @@ post '/validation' do
 	erb :'6_validation/validation'
 end
 
+get '/confirmation' do
+	erb :confirmation
+end
+
+post '/confirmation' do
+	erb :confirmation
+end
+
 ##################################################
 
 redis = Redis.new
