@@ -14,14 +14,14 @@
 
     <div class="row row-offcanvas row-offcanvas-right justify-content-center">
 
-    <div class="aligner-progressions">
-      
-      <% @section = 4 %>
-      <%= erb :'partials/progression_primaire' %>
-      <% @sous_section = 2 %>
-      <%= erb :'partials/progression_secondaire' %>
-      
-    </div>
+      <div class="aligner-progressions">
+        
+        <% @section = 4 %>
+        <%= erb :'partials/progression_primaire' %>
+        <% @sous_section = 2 %>
+        <%= erb :'partials/progression_secondaire' %>
+        
+      </div>
 
       <div class="col-12 col-md-8">
 
@@ -29,17 +29,26 @@
 
         <hr>
 
+        <form>
 
+          <span style="display:block; height: 20px;"></span>
 
-        <div class="row">
-          <div class="col-6">
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="autorisation_sortie" value="oui"> J'autorise
+            </label>
           </div>
-          <div class="col-3">
-            <form action="/medical" method="post">
-              <button class="btn btn-primary btn-continuer-scol">Continuer</button>
-            </form>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="autorisation_sortie" value="non"> Je n'autorise pas
+            </label>
           </div>
-        </div>
+
+          <p>mon enfant à quitter le collège après le dernier cours de l'après-midi (ou après le repas s'il n'a pas cours l'après-midi), en cas d'absence de professeur et sous mon entière responsabilité.</p>
+
+        </form>
+
+        <%= erb :'partials/precedent_suivant', :locals => { :precedent => "regime", :suivant => "medical" } %>
 
       </div><!--/span-->
 
