@@ -105,10 +105,10 @@ end
 
 
 get '/confirmation' do
-	erb :confirmation
+	erb :'7_confirmation/confirmation'
 end
 post '/confirmation' do
-	erb :confirmation
+	erb :'7_confirmation/confirmation'
 end
 
 ##################################################
