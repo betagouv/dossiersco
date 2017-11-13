@@ -3,7 +3,7 @@
 	<div class="col-sm-5">
 	  <select id="<%= variable %>" class="form-control">
 	  	<% options.each do |option| %>
-	    	<option><%= option %></option>
+	    	<option <% if option == selected %> selected <% end %>><%= option %></option>
 	    <% end %>
 	  </select>
 	</div>
