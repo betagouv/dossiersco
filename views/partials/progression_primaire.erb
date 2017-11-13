@@ -2,15 +2,18 @@
     
   <% sections = {1 => "1. Elève", 2 => "2. Famille", 3 => "3. Choix pédagogiques", 4 => "4. Administration", 5 => "5. Pièces à joindre", 6 => "6. Validation"} %>
 
+  <% sections_liens = {1 => "eleve", 2 => "resp_legal_1", 3 => "choix_pedagogiques", 4 => "regime", 5 => "pieces_a_joindre", 6 => "validation"} %>
+
+
   <% for une_section in (1..@section-1) do %>
     <div class="col-auto">
-      <span class="badge badge-success"><%= sections[une_section] %> <img src="images/fait.png" alt="fait" title="fait"></span>
+      <span class="badge badge-section badge-success"><a href="/<%= sections_liens[une_section] %>" class="lien-progression"><%= sections[une_section] %> <img src="images/fait.png" alt="fait" title="fait"></a></span>
     </div>
   <% end %>
 
   <% if @section != 7 %>
     <div class="col-auto">
-      <span class="badge badge-primary">
+      <span class="badge badge-section badge-primary <% if @section % 2 == 0 %> badge-sans-icone <% end %>">
         <%= sections[@section] %>
         <% if @section % 2 == 1 %>
           <img src="images/en_cours.png" alt="en_cours" title="en_cours">
@@ -21,7 +24,7 @@
  
   <% for une_section in (@section+1..6) do %>
     <div class="col-auto">
-      <span class="badge badge-secondary"><%= sections[une_section] %> </span>
+      <span class="badge badge-section badge-secondary"><a href="/<%= sections_liens[une_section] %>" class="lien-progression"><%= sections[une_section] %></a></span>
     </div>
   <% end %>
 

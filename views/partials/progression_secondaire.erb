@@ -2,27 +2,29 @@
   
   <% if @section == 2 %>
 
-    <% sous_sections = {1 => "2.1. Responsable légal 1", 2 => "2.2. Responsable légal 2", 3 => "2.3. En cas d'urgence"} %>
+    <% sous_sections = {1 => "2.1. Responsable légal 1", 2 => "2.2. Responsable légal 2", 3 => "2.3. En cas d'urgence"} %>    
+    <% sous_sections_liens = {1 => "resp_legal_1", 2 => "resp_legal_2", 3 => "urgence"} %>
 
   <% else %>
 
     <% sous_sections = {1 => "4.1. Régime", 2 => "4.2. Autorisation de sortie", 3 => "4.3. Renseignements médicaux", 4 => "4.4. Droit à l'image"} %>
+    <% sous_sections_liens = {1 => "regime", 2 => "autorisation_sortie", 3 => "medical", 4 => "droit_image"} %>
 
   <% end %>
 
   <% for une_sous_section in (1..@sous_section-1) do %>
-    <div class="col-auto">
-      <span class="badge badge-success badge-sous-section"><%= sous_sections[une_sous_section] %> <img src="images/fait.png" alt="fait" title="fait"></span>
+    <div class="col-auto col-auto-progression-secondaire">
+      <span class="badge badge-sous-section badge-success"><a href="/<%= sous_sections_liens[une_sous_section] %>" class="lien-progression"><%= sous_sections[une_sous_section] %> <img src="images/fait.png" alt="fait" title="fait"></a></span>
     </div>
   <% end %>
 
-  <div class="col-auto">
-    <span class="badge badge-primary badge-sous-section"><%= sous_sections[@sous_section] %> <img src="images/en_cours.png" alt="en_cours" title="en_cours"></span>
+  <div class="col-auto col-auto-progression-secondaire">
+    <span class="badge badge-sous-section badge-primary"><%= sous_sections[@sous_section] %> <img src="images/en_cours.png" alt="en_cours" title="en_cours"></span>
   </div>
  
   <% for une_sous_section in (@sous_section+1..sous_sections.length) do %>
-    <div class="col-auto">
-      <span class="badge badge-secondary badge-sous-section"><%= sous_sections[une_sous_section] %> </span>
+    <div class="col-auto col-auto-progression-secondaire">
+      <span class="badge badge-sous-section badge-secondary"><a href="/<%= sous_sections_liens[une_sous_section] %>" class="lien-progression"><%= sous_sections[une_sous_section] %></a></span>
     </div>
   <% end %>
 
