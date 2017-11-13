@@ -19,37 +19,47 @@
       
       <div class="col-12 col-md-8">
 
-        <div class="card">
-          <h4 class="card-header">Pièces à joindre</h4>
-          <div class="card-body">
+        <h2>Pièces à joindre</h2>
 
-            <div class="row">
-              <div class="col">
-                <a href="#" class="btn btn-secondary">Upload PJ1</a>
-              </div>
-              <div class="col">
-                <a href="#" class="btn btn-secondary">Upload PJ2</a>
-              </div>
-              <div class="col">
-                <a href="#" class="btn btn-secondary">Upload PJ3</a>
-              </div>
-              <div class="col">
-                <a href="#" class="btn btn-secondary">Upload PJ4</a>
+        <hr>
+
+        <span style="display:block; height: 20px;"></span>
+
+        <form>
+
+          <% documents_demandes = ["Photo d'identité", "Carte d'identité", "Livret de famille", "Justificatif de domicile", "Dernier avis d'imposition", "Attestation d'assurance", "Notification du tarif de cantine"] %>
+
+          <div class="card-deck">
+            <% for i in 0..2 %>
+              <% @document = documents_demandes[i] %>
+              <%= erb :'partials/carte_upload' %>
+            <% end %>
+          </div>
+
+          <div class="card-deck">
+            <% for i in 3..5 %>
+              <% @document = documents_demandes[i] %>
+              <%= erb :'partials/carte_upload' %>
+            <% end %>
+          </div>
+
+          <div class="row">
+            <div class="col-4">
+              <div class="card">
+                <h5 class="card-header"><%= documents_demandes[6] %></h5>
+                <div class="card-body">
+                  <p class="card-text">Dire pourquoi on demande ce document.<br>
+                    <strong>../tarif_cantine.pdf</strong></p>
+                  <button type="button" class="btn btn-warning btn-sm"><label class="upload">Modifier<input type="file" hidden></label></button>
+                  <button type="button" class="btn btn-primary btn-sm">Envoyer</button>
+                </div>
               </div>
             </div>
+          </div>
 
-          </div>
-        </div>
+        </form>
 
-        <div class="row">
-          <div class="col-9">
-          </div>
-          <div class="col-3">
-            <form action="/validation" method="post">
-              <button class="btn btn-primary btn-continuer-scol">Continuer</button>
-            </form>
-          </div>
-        </div>
+        <%= erb :'partials/precedent_suivant', :locals => { :precedent => "droit_image", :suivant => "validation" } %>
 
       </div><!--/span-->
 
