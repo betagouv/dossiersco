@@ -14,7 +14,7 @@
 
   <% for une_sous_section in (1..@sous_section-1) do %>
     <div class="col-auto col-auto-progression-secondaire">
-      <span class="badge badge-sous-section badge-success"><a href="/<%= sous_sections_liens[une_sous_section] %>" class="lien-progression"><%= sous_sections[une_sous_section] %> <img src="images/fait.png" alt="fait" title="fait"></a></span>
+      <a href="/<%= sous_sections_liens[une_sous_section] %>" class="lien-progression"><span class="badge badge-sous-section badge-success"><%= sous_sections[une_sous_section] %> <img src="images/fait.png" alt="fait" title="fait"></span></a>
     </div>
   <% end %>
 
@@ -24,7 +24,7 @@
  
   <% for une_sous_section in (@sous_section+1..sous_sections.length) do %>
     <div class="col-auto col-auto-progression-secondaire">
-      <span class="badge badge-sous-section badge-secondary"><a href="/<%= sous_sections_liens[une_sous_section] %>" class="lien-progression"><%= sous_sections[une_sous_section] %></a></span>
+      <a href="/<%= sous_sections_liens[une_sous_section] %>" class="lien-progression"><span class="badge badge-sous-section badge-secondary"><%= sous_sections[une_sous_section] %></span></a>
     </div>
   <% end %>
 
