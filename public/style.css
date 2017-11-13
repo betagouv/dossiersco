@@ -26,6 +26,14 @@ h2 {
   margin-top: 30px;
 }
 
+a.lien-progression {
+  color: white;
+}
+
+a.lien-progression:hover {
+  text-decoration: none;
+}
+
 .upload {
   margin-bottom: 0;
 }
@@ -104,36 +112,71 @@ h2 {
   padding-bottom: 10px;
 }
 
+.col-auto.col-auto-progression-secondaire {
+  padding-top: 10px;
+  padding-right: 10px;
+}
+
 .row.my-menu {
   margin-left: 20px;
 }
 
+
+
+
+
+
+/*Badges*/
+
 .badge {
-  font-size : 1em;
   font-weight: normal;
+}
+
+.badge-section {
+  font-size : 1em;
   padding: .4rem .5rem .3rem .6rem;
 }
 
+.badge-section.badge-sans-icone {
+  padding-bottom: .4rem;
+}
+
+.badge-section.badge-secondary {
+  padding-bottom: .4rem;
+}
+
 .badge-sous-section {
-  font-size: .9em;
-  padding: .3rem .4rem .15rem .4rem;
+  font-size: .85em;
+  padding: .25rem .4rem .15rem .4rem;
 }
 
-.badge.badge-secondary {
-  padding-bottom: 7px;
-}
-
-.badge-primary {
-  background-color: #2d9ee0;
+.badge-sous-section.badge-secondary {
+  padding-bottom: .4rem;
 }
 
 .badge-success {
   background-color: #60d156;
 }
 
+.badge-primary {
+  background-color: #2d9ee0;
+}
+
 .badge-secondary {
   background-color: #979b9f;
 }
+
+.badge-success:hover {
+  background-color: #55bf4c;
+}
+
+.badge-secondary:hover {
+  background-color: grey;
+}
+
+
+
+
 
 .form-control.scol {
   margin: .4rem 0rem .4rem;
