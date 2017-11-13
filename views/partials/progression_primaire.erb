@@ -8,14 +8,16 @@
     </div>
   <% end %>
 
-  <div class="col-auto">
-    <span class="badge badge-primary">
-      <%= sections[@section] %>
-      <% if @section != 2 && @section != 4 %>
-        <img src="images/en_cours.png" alt="en_cours" title="en_cours">
-      <% end %>
-    </span>
-  </div>
+  <% if @section != 7 %>
+    <div class="col-auto">
+      <span class="badge badge-primary">
+        <%= sections[@section] %>
+        <% if @section % 2 == 1 %>
+          <img src="images/en_cours.png" alt="en_cours" title="en_cours">
+        <% end %>
+      </span>
+    </div>
+  <% end %>
  
   <% for une_section in (@section+1..6) do %>
     <div class="col-auto">
