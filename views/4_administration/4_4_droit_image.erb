@@ -14,14 +14,14 @@
 
     <div class="row row-offcanvas row-offcanvas-right justify-content-center">
 
-    <div class="aligner-progressions">
-      
-      <% @section = 4 %>
-      <%= erb :'partials/progression_primaire' %>
-      <% @sous_section = 4 %>
-      <%= erb :'partials/progression_secondaire' %>
-      
-    </div>
+      <div class="aligner-progressions">
+        
+        <% @section = 4 %>
+        <%= erb :'partials/progression_primaire' %>
+        <% @sous_section = 4 %>
+        <%= erb :'partials/progression_secondaire' %>
+        
+      </div>
 
       <div class="col-12 col-md-8">
 
@@ -29,17 +29,43 @@
 
         <hr>
 
+        <form>
 
+          <p>En application de l'article 9 du code civil et de l'article 121-1 du code de la propriété intellectuelle :</p>
 
-        <div class="row">
-          <div class="col-6">
+          <span style="display:block; height: 20px;"></span>
+
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="autorisation_sortie" value="oui"> J'autorise
+            </label>
           </div>
-          <div class="col-3">
-            <form action="/pieces_a_joindre" method="post">
-              <button class="btn btn-primary btn-continuer-scol">Continuer</button>
-            </form>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="autorisation_sortie" value="non"> Je n'autorise pas
+            </label>
           </div>
-        </div>
+
+          <p>le collège à diffuser des photographies ou images filmées de mon enfant et/ou ses réalisations scolaires sur le site académique et sur le site du collège, en dehors de toute exploitation commerciale, pour une durée indéterminée.</p>
+
+          <span style="display:block; height: 20px;"></span>
+
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="autorisation_sortie" value="oui"> J'accepte
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="autorisation_sortie" value="non"> Je n'accepte pas
+            </label>
+          </div>
+
+          <p>que mon enfant soit photographié à l'occasion des photos de classe.</p>
+
+        </form>
+
+        <%= erb :'partials/precedent_suivant', :locals => { :precedent => "medical", :suivant => "pieces_a_joindre" } %>
 
       </div><!--/span-->
 
