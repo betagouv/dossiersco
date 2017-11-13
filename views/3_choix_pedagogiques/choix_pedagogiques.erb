@@ -19,79 +19,33 @@
 
       <div class="col-12 col-md-8">
 
-        <div class="card">
-          <h4 class="card-header">Choix pédagogiques</h4>
-          <div class="card-body">
+        <h2>Langues vivantes</h2>
 
-            <h5 class="card-title">Langues</h5>
+        <hr>
 
-            <form>
+        <form>
 
-              <div class="form-group row">
-                <label for="inputSexe" class="col-sm-3 col-form-label">LV1</label>
-                <div class="col-3">
-                  <select id="inputState" class="form-control">
-                    <option selected>Choisissez...</option>
-                    <option>Anglais</option>
-                    <option>Allemand</option>
-                    <option>Espagnol</option>
-                  </select>
-                </div>
-              </div>
+          <%= erb :'partials/champ_radio', :locals => { :desc => "Langue vivante 1", :variable => "lv1", :options => { :anglais => "Anglais" }, :checked => :anglais }%>
 
-              <div class="form-group row">
-                <label for="inputSexe" class="col-sm-3 col-form-label">LV2</label>
-                <div class="col-3">
-                  <select id="inputState" class="form-control">
-                    <option selected>Choisissez...</option>
-                    <option>Anglais</option>
-                    <option>Allemand</option>
-                    <option>Espagnol</option>
-                  </select>
-                </div>
-              </div>
+          <%= erb :'partials/champ_radio', :locals => { :desc => "Langue vivante 2", :variable => "lv2", :options => { :allemand => "Allemand", :espagnol => "Espagnol" }, :checked => "" }%>
 
-            </form>
+        </form>
 
-            <h5 class="card-title">Options</h5>
+        <span style="display:block; height: 10px;"></span>
 
-            <form>
+        <h2>Options facultatives</h2>
 
-              <div class="form-group row">
-                <label for="inputSexe" class="col-sm-3 col-form-label">Option 1</label>
-                <div class="col-3">
-                  <select id="inputState" class="form-control">
-                    <option selected>Choisissez...</option>
-                    <option>Latin</option>
-                    <option>Grec</option>
-                  </select>
-                </div>
-              </div>
+        <hr>
 
-              <div class="form-group row">
-                <label for="inputSexe" class="col-sm-3 col-form-label">Option 2</label>
-                <div class="col-3">
-                  <select id="inputState" class="form-control">
-                    <option selected>Choisissez...</option>
-                    <option>Latin</option>
-                    <option>Grec</option>
-                  </select>
-                </div>
-              </div>
+        <form>
 
-            </form>
-          </div>
-        </div>
+          <%= erb :'partials/champ_check_indente', :locals => { :desc => "Classe musicale" }%>
 
-        <div class="row">
-          <div class="col-9">
-          </div>
-          <div class="col-3">
-            <form action="/regime" method="post">
-              <button class="btn btn-primary btn-continuer-scol">Continuer</button>
-            </form>
-          </div>
-        </div>
+          <%= erb :'partials/champ_check_indente', :locals => { :desc => "Section danse" }%>
+
+        </form>
+
+        <%= erb :'partials/precedent_suivant', :locals => { :precedent => "urgence", :suivant => "regime" } %>
 
       </div><!--/span-->
 
