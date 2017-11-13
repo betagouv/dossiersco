@@ -14,14 +14,14 @@
 
     <div class="row row-offcanvas row-offcanvas-right justify-content-center">
 
-    <div class="aligner-progressions">
-      
-      <% @section = 4 %>
-      <%= erb :'partials/progression_primaire' %>
-      <% @sous_section = 1 %>
-      <%= erb :'partials/progression_secondaire' %>
-      
-    </div>
+      <div class="aligner-progressions">
+        
+        <% @section = 4 %>
+        <%= erb :'partials/progression_primaire' %>
+        <% @sous_section = 1 %>
+        <%= erb :'partials/progression_secondaire' %>
+        
+      </div>
 
       <div class="col-12 col-md-8">
 
@@ -29,17 +29,67 @@
 
         <hr>
 
+        <form>
 
+          <div class="form-group row">
+            <label for="regime" class="col-sm-3 col-form-label">Choix du régime</label>
+            <div class="col-sm-6">
+              <label class="col-sm-6 form-check-label">
+                <input type="radio" name="regime" class="form-check-input trigger" data-rel="dp"> Demi-pensionnaire
+              </label>
+              <label class="col-sm-4 form-check-label">
+                <input type="radio" name="regime" class="form-check-input trigger" data-rel="externe"> Externe
+              </label>
+            </div>
+          </div>
 
-        <div class="row">
-          <div class="col-6">
-          </div>
-          <div class="col-3">
-            <form action="/autorisation_sortie" method="post">
-              <button class="btn btn-primary btn-continuer-scol">Continuer</button>
-            </form>
-          </div>
-        </div>
+          <p>Consulter le règlement du service de demi-pension :
+            <a href="images/reglement_dp.png"><img src="images/reglement_dp_small.png" alt="règlement demi-pension"></a>
+          </p>
+
+          <%= erb :'partials/champ_check', :locals => { :desc => "Je m'engage à fournir la notification de tarif de demi-pension avant le 6 juillet 2018 et à régler les frais de demi-pension en respectant les délais impartis inhérents au bon fonctionnement du service." }%>
+
+          <span style="display:block; height: 20px;"></span>
+
+          <hr width="50%">
+
+          <span style="display:block; height: 20px;"></span>
+
+          <p><em>Si vous avez au moins deux autres enfants demi-pensionnaires ou internes dans un collège ou lycée public, vous pouvez obtenir une réduction du tarif de la demi-pension. Pour cela, veuillez indiquer ci-dessous les frères et sœurs concernées.</em></p>
+
+          <span style="display:block; height: 20px;"></span>
+
+          <% for i in 1..2 %>
+
+            <%= erb :'partials/champ_texte', :locals => { :desc => "Prénom", :variable => "prenom_eft_2", :valeur => "", :exemple => "Prénom" }%>
+
+            <%= erb :'partials/champ_texte', :locals => { :desc => "Nom", :variable => "nom_eft_2", :valeur => "Puydebois", :exemple => "Nom" }%>
+
+            <%= erb :'partials/champ_texte', :locals => { :desc => "Etablissement", :variable => "ets_eft_2", :valeur => "", :exemple => "Etablissement" }%>
+
+            <%= erb :'partials/champ_dropdown', :locals => { :desc => "Classe", :variable => "classe_ant_eft_2", :options => ["Choisissez...", "6ème", "5ème", "4ème", "3ème", "2nde", "1ère", "Tle"], :selected => "" } %>
+
+            <div class="form-group row">
+              <label for="regime" class="col-sm-3 col-form-label">Régime</label>
+              <div class="col-sm-6">
+                <label class="col-sm-6 form-check-label">
+                  <input type="radio" name="regime" class="form-check-input trigger" data-rel="dp"> Demi-pensionnaire
+                </label>
+                <label class="col-sm-4 form-check-label">
+                  <input type="radio" name="regime" class="form-check-input trigger" data-rel="externe"> Interne
+                </label>
+              </div>
+            </div>
+
+            <span style="display:block; height: 30px;"></span>
+
+          <% end %>
+
+          <button type="button" class="btn btn-secondary"><strong>+</strong> Ajouter un enfant</button>
+
+        </form>
+
+        <%= erb :'partials/precedent_suivant', :locals => { :precedent => "choix_pedagogiques", :suivant => "autorisation_sortie" } %>
 
       </div><!--/span-->
 
