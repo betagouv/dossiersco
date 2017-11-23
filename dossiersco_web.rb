@@ -111,7 +111,6 @@ post '/confirmation' do
 	erb :'7_confirmation/confirmation'
 end
 
-##################################################
 
 redis = Redis.new
 
