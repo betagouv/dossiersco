@@ -34,7 +34,7 @@
           <div class="form-group row">
             <label for="regime" class="col-sm-3 col-form-label">Choix du régime</label>
             <div class="col-sm-6">
-              <label class="col-sm-6 form-check-label">
+              <label class="col-sm-7 form-check-label">
                 <input type="radio" name="regime" class="form-check-input trigger" onclick="afficher_dp(event)"> Demi-pensionnaire
               </label>
               <label class="col-sm-4 form-check-label">
@@ -48,62 +48,12 @@
             <span style="display:block; height: 20px;"></span>
 
             <p>Consulter le règlement du service de demi-pension :
-              <a href="images/reglement_dp.png"><img src="images/reglement_dp_small.png" alt="règlement demi-pension"></a>
+              <a href="images/reglement_dp.png" target="_blank"><img src="images/reglement_dp_small.png" alt="règlement demi-pension"></a>
             </p>
 
+            <%= erb :'partials/champ_check', :locals => { :desc => "J'ai lu et j'accepte le règlement du service de demi-pension." }%>
+
             <%= erb :'partials/champ_check', :locals => { :desc => "Je m'engage à régler les frais de demi-pension en respectant les délais impartis inhérents au bon fonctionnement du service." }%>
-
-            <span style="display:block; height: 20px;"></span>
-
-            <hr width="50%">
-
-            <span style="display:block; height: 20px;"></span>
-
-            <p>Si vous avez au moins deux autres enfants demi-pensionnaires ou internes dans un collège ou lycée public, vous pouvez obtenir une réduction du tarif de la demi-pension.</p>
-
-            <div class="form-check">
-              <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" id="chk_reduction_tarif" onclick="afficher_reduction_tarif(event)"> Je suis dans cette situation
-              </label>
-            </div>
-
-            <span style="display:block; height: 12px;"></span>
-
-            <div id="reduction_tarif" style="display: none;">
-                
-              <p>Veuillez indiquer ci-dessous les frères et sœurs concernées.</p>
-
-              <span style="display:block; height: 20px;"></span>
-
-              <% for i in 1..2 %>
-
-                <%= erb :'partials/champ_texte', :locals => { :desc => "Prénom", :variable => "prenom_eft_2", :valeur => "", :exemple => "Prénom" }%>
-
-                <%= erb :'partials/champ_texte', :locals => { :desc => "Nom", :variable => "nom_eft_2", :valeur => "Puydebois", :exemple => "Nom" }%>
-
-                <%= erb :'partials/champ_texte', :locals => { :desc => "Etablissement", :variable => "ets_eft_2", :valeur => "", :exemple => "Etablissement" }%>
-
-                <%= erb :'partials/champ_dropdown', :locals => { :desc => "Classe", :variable => "classe_ant_eft_2", :options => ["Choisissez...", "6ème", "5ème", "4ème", "3ème", "2nde", "1ère", "Tle"], :selected => "" } %>
-
-                <div class="form-group row">
-                  <label for="regime" class="col-sm-3 col-form-label">Régime</label>
-                  <div class="col-sm-6">
-                    <label class="col-sm-6 form-check-label">
-                      <input type="radio" name="regime" class="form-check-input trigger" data-rel="dp"> Demi-pensionnaire
-                    </label>
-                    <label class="col-sm-4 form-check-label">
-                      <input type="radio" name="regime" class="form-check-input trigger" data-rel="externe"> Interne
-                    </label>
-                  </div>
-                </div>
-
-                <span style="display:block; height: 20px;"></span>
-
-              <% end %>
-
-              <button type="button" class="btn btn-secondary"><strong>+</strong> Ajouter un enfant</button>
-              
-            </div>
 
           </div>
 
