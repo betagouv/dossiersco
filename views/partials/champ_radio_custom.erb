@@ -1,0 +1,10 @@
+<div class="form-group row">
+  <label for="<%= variable %>" class="col-sm-7 col-form-label"><%= desc %></label>
+  <div class="col-sm-5">
+    <% options.keys.each do |option| %>
+      <label class="col-sm-3 form-check-label">
+        <input type="radio" class="form-check-input" name="<%= variable %>" <% if option == checked %> checked <% end %>> <%= options[option] %>
+      </label>
+    <% end %> 
+  </div>
+</div>
