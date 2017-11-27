@@ -36,6 +36,19 @@
           <%= erb :'partials/champ_texte', :locals => { :desc => "Prénom", :variable => "prenom_rl2", :valeur => "", :exemple => "Prénom" }%>
 
           <%= erb :'partials/champ_texte', :locals => { :desc => "Nom", :variable => "nom_rl2", :valeur => "Puydebois", :exemple => "Nom" }%>
+          
+          <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-5">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" id="meme_adresse_que_rl1" type="checkbox" checked="" onclick="afficher_adresse_rl1(event)"> <small>Même adresse que Catherine</small>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <span style="display:block; height: 5px;"></span>
 
           <%= erb :'partials/champ_texte', :locals => { :desc => "Adresse", :variable => "adr1_rl2", :valeur => "4 Place de la Nation", :exemple => "Numéro et nom de voie" }%>
 
@@ -59,7 +72,18 @@
 
           <span style="display:block; height: 30px;"></span>
 
-          <%= erb :'partials/champ_check', :locals => { :desc => "J'accepte que mes coordonnées soient communiquées aux fédérations de parents d'élèves" }%>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="autorisation_sortie" value="oui"> J'accepte
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="autorisation_sortie" value="non"> Je n'accepte pas
+            </label>
+          </div>
+
+          <p>que ces coordonnées soient communiquées aux fédérations de parents d'élèves.</p>
 
         </form>
 
@@ -72,4 +96,15 @@
   </main><!--/.container-->
 
 </body>
+
+<script>
+
+  function afficher_adresse_rl1(e){
+    document.getElementById("adr1_rl2").value = meme_adresse_que_rl1.checked ? "4 Place de la Nation" : "";
+    document.getElementById("cp_rl2").value = meme_adresse_que_rl1.checked ? "75012" : "";
+    document.getElementById("ville_rl2").value = meme_adresse_que_rl1.checked ? "Paris" : "";
+  }
+
+</script>
+
 </html>
