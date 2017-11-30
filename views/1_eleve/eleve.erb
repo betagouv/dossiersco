@@ -25,19 +25,19 @@
 
         <form>
 
-          <%= erb :'partials/champ_texte', :locals => { :desc => "Prénom", :variable => "prenom_elv", :valeur => "Etienne", :exemple => "Prénom" }%>
+          <%= erb :'partials/champ_texte_disabled', :locals => { :desc => "Prénom", :variable => "prenom_elv", :valeur => "Etienne", :exemple => "Prénom" }%>
 
-          <%= erb :'partials/champ_texte', :locals => { :desc => "Nom", :variable => "nom_elv", :valeur => "Puydebois", :exemple => "Nom" }%>
+          <%= erb :'partials/champ_texte_disabled', :locals => { :desc => "Nom", :variable => "nom_elv", :valeur => "Puydebois", :exemple => "Nom" }%>
 
           <%= erb :'partials/champ_radio', :locals => { :desc => "Sexe", :variable => "sexe_elv", :options => { :feminin => "Féminin", :masculin => "Masculin" }, :checked => "" }%>
 
           <span style="display:block; height: 20px;"></span>
 
-          <%= erb :'partials/champ_date', :locals => { :desc => "Né le", :variable => "date_naiss_elv", :valeur => "1995-11-19" }%>
+          <%= erb :'partials/champ_date_disabled', :locals => { :desc => "Né le", :variable => "date_naiss_elv", :valeur => "1995-11-19" }%>
 
           <%= erb :'partials/champ_texte', :locals => { :desc => "à", :variable => "ville_naiss_elv", :valeur => "", :exemple => "Ville de naissance" }%>
 
-          <%= erb :'partials/champ_texte', :locals => { :desc => "pays", :variable => "pays_naiss_elv", :valeur => "", :exemple => "Pays de naissance" }%>
+          <%= erb :'partials/champ_texte', :locals => { :desc => "Pays", :variable => "pays_naiss_elv", :valeur => "", :exemple => "Pays de naissance" }%>
           
           <span style="display:block; height: 20px;"></span>
 
@@ -55,7 +55,7 @@
 
           <%= erb :'partials/champ_dropdown', :locals => { :desc => "Classe", :variable => "classe_ant_elv", :options => ["CM2", "CM1 (saut de classe)", "6ème (redoublement)"], :selected => "" } %>
           
-          <%= erb :'partials/champ_texte', :locals => { :desc => "Etablissement", :variable => "ets_elv", :valeur => "Ecole René Cassin (Aubazine)", :exemple => "Etablissement" }%>
+          <%= erb :'partials/champ_texte_disabled', :locals => { :desc => "Etablissement", :variable => "ets_elv", :valeur => "Ecole René Cassin (Aubazine)", :exemple => "Etablissement" }%>
 
         </form>
 
