@@ -1,56 +1,33 @@
-<!doctype html>
-<html lang="en">
-<head>
+<% @section = 7 %>
+<%= erb :'partials/progression_primaire' %>
 
-    <%= erb :'partials/header', :locals => {:stylesheet => 'style'} %>
+<div class="col-12 col-md-8">
 
-</head>
+  <h2>Inscription validée</h2>
 
-<body>
+  <hr>
 
-  <%= erb :'partials/nav_light' %>
+  <p>Nous avons envoyé un mail de confirmation aux adresses suivantes :</p>
 
-  <main role="main" class="container">
+  <ul>
+    <li>catherine.puydebois@example.fr</li>
+    <li>hubert.puydebois@example.fr</li>
+  </ul>
 
-    <div class="row row-offcanvas row-offcanvas-right justify-content-center">
+  <span style="display:block; height: 20px;"></span>
 
-      <% @section = 7 %>
-      <%= erb :'partials/progression_primaire' %>
-      
-      <div class="col-12 col-md-8">
+  <p><strong>Flash info :</strong> nous invitons les parents qui souhaitent visiter le collège et rencontrer nos équipes à une soirée de bienvenue la vendredi 30 juin de 17h à 20h.</p>
 
-        <h2>Inscription validée</h2>
+  <p>A bientôt au collège Jean Lurçat !</p>
 
-        <hr>
+  <span style="display:block; height: 90px;"></span>
 
-        <p>Nous avons envoyé un mail de confirmation aux adresses suivantes :</p>
+  <div class="row justify-content-md-center">
+    <p><small>Qu'avez-vous pensé de cette nouvelle plateforme d'inscription ?</small></p>
+  </div>
 
-        <ul>
-          <li>catherine.puydebois@example.fr</li>
-          <li>hubert.puydebois@example.fr</li>
-        </ul>
+  <div class="row justify-content-md-center">
+    <p><a href="#"><img src="images/satisfaction.png" alt="satisfaction" title="satisfaction"></a></p>
+  </div>
 
-        <span style="display:block; height: 20px;"></span>
-
-        <p><strong>Flash info :</strong> nous invitons les parents qui souhaitent visiter le collège et rencontrer nos équipes à une soirée de bienvenue la vendredi 30 juin de 17h à 20h.</p>
-
-        <p>A bientôt au collège Jean Lurçat !</p>
-
-        <span style="display:block; height: 90px;"></span>
-
-        <div class="row justify-content-md-center">
-          <p><small>Qu'avez-vous pensé de cette nouvelle plateforme d'inscription ?</small></p>
-        </div>
-
-        <div class="row justify-content-md-center">
-          <p><a href="#"><img src="images/satisfaction.png" alt="satisfaction" title="satisfaction"></a></p>
-        </div>
-
-      </div><!--/span-->
-
-    </div><!--/row-->
-
-  </main><!--/.container-->
-
-</body>
-</html>
+</div><!--/span-->
