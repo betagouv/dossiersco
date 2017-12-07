@@ -1,71 +1,131 @@
-<!doctype html>
-<html lang="en">
-<head>
+<% locals_prenom_elv =
+        {
+          name: "prenom_elv",
+          label: "Prénom",
+          type: "text",
+          value: prenom_elv,
+          indication: "Prénom",
+          disabled: true
+        } %>
 
-    <%= erb :'partials/header', :locals => {:stylesheet => 'style'} %>
+<% locals_nom_elv =
+        {
+          name: "nom_elv",
+          label: "Nom",
+          type: "text",
+          value: nom_elv,
+          indication: "Nom",
+          disabled: true
+        } %>
 
-</head>
+<% locals_sexe_elv =
+        {
+          name: "sexe_elv",
+          label: "Sexe",
+          options: ["Féminin", "Masculin"],
+          checked: sexe_elv,
+        } %>
 
-<body>
+<% locals_date_naiss_elv =
+        {
+          name: "date_naiss_elv",
+          label: "Né le",
+          type: "date",
+          value: date_naiss_elv,
+          indication: "",
+          disabled: true
+        } %>
 
-  <%= erb :'partials/nav_light' %>
+<% locals_ville_naiss_elv =
+        {
+          name: "ville_naiss_elv",
+          label: "à",
+          type: "text",
+          value: ville_naiss_elv,
+          indication: "Ville de naissance",
+          disabled: false
+        } %>
 
-  <main role="main" class="container">
+<% locals_pays_naiss_elv =
+        {
+          name: "pays_naiss_elv",
+          label: "Pays",
+          type: "text",
+          value: pays_naiss_elv,
+          indication: "Pays de naissance",
+          disabled: false
+        } %>
 
-    <div class="row row-offcanvas row-offcanvas-right justify-content-center">
+<% locals_nationalite_elv =
+        {
+          name: "nationalite_elv",
+          label: "Nationalité",
+          type: "text",
+          value: nationalite_elv,
+          indication: "Nationalité",
+          disabled: false
+        } %>
 
-      <% @section = 1 %>
-      <%= erb :'partials/progression_primaire' %>
+<% locals_classe_ant_elv =
+        {
+          name: "classe_ant_elv",
+          label: "Classe",
+          options: ["CM2", "CM1 (saut de classe)", "6ème (redoublement)"],
+          selected: classe_ant_elv
+        } %>
 
-      <div class="col-12 col-md-8">
+<% locals_ets_ant_elv =
+        {
+          name: "ets_ant_elv",
+          label: "Etablissement",
+          type: "text",
+          value: ets_ant_elv,
+          indication: "Etablissement",
+          disabled: true
+        } %>
 
-        <h2>Identité de l'élève</h2>
 
-        <hr>
+<% @section = 1 %>
+<%= erb :'partials/progression_primaire' %>
 
-        <form>
+<div class="col-12 col-md-8">
 
-          <%= erb :'partials/champ_texte_disabled', :locals => { :desc => "Prénom", :variable => "prenom_elv", :valeur => "Etienne", :exemple => "Prénom" }%>
+  <form action="/resp_legal_1" method="post">
+  
+    <h2>Identité de l'élève</h2>
 
-          <%= erb :'partials/champ_texte_disabled', :locals => { :desc => "Nom", :variable => "nom_elv", :valeur => "Puydebois", :exemple => "Nom" }%>
+    <hr>
 
-          <%= erb :'partials/champ_radio', :locals => { :desc => "Sexe", :variable => "sexe_elv", :options => { :feminin => "Féminin", :masculin => "Masculin" }, :checked => "" }%>
+    <%= erb :'partials/brique_de_champ', locals: locals_prenom_elv %>
 
-          <span style="display:block; height: 20px;"></span>
+    <%= erb :'partials/brique_de_champ', locals: locals_nom_elv %>
 
-          <%= erb :'partials/champ_date_disabled', :locals => { :desc => "Né le", :variable => "date_naiss_elv", :valeur => "1995-11-19" }%>
+    <%= erb :'partials/brique_de_champ_radio', locals: locals_sexe_elv %>          
 
-          <%= erb :'partials/champ_texte', :locals => { :desc => "à", :variable => "ville_naiss_elv", :valeur => "", :exemple => "Ville de naissance" }%>
+    <span style="display:block; height: 20px;"></span>
 
-          <%= erb :'partials/champ_texte', :locals => { :desc => "Pays", :variable => "pays_naiss_elv", :valeur => "", :exemple => "Pays de naissance" }%>
-          
-          <span style="display:block; height: 20px;"></span>
+    <%= erb :'partials/brique_de_champ', locals: locals_date_naiss_elv %>
 
-          <%= erb :'partials/champ_texte', :locals => { :desc => "Nationalité", :variable => "nationalite_elv", :valeur => "", :exemple => "Nationalité" }%>
+    <%= erb :'partials/brique_de_champ', locals: locals_ville_naiss_elv %>
 
-        </form>
+    <%= erb :'partials/brique_de_champ', locals: locals_pays_naiss_elv %>
+    
+    <span style="display:block; height: 20px;"></span>
 
-        <span style="display:block; height: 10px;"></span>
+    <%= erb :'partials/brique_de_champ', locals: locals_nationalite_elv %>
 
-        <h2>Scolarité de l'année 2017/2018</h2>
+    <span style="display:block; height: 10px;"></span>
 
-        <hr>
+    <h2>Scolarité de l'année 2017/2018</h2>
 
-        <form>
+    <hr>
 
-          <%= erb :'partials/champ_dropdown', :locals => { :desc => "Classe", :variable => "classe_ant_elv", :options => ["CM2", "CM1 (saut de classe)", "6ème (redoublement)"], :selected => "" } %>
-          
-          <%= erb :'partials/champ_texte_disabled', :locals => { :desc => "Etablissement", :variable => "ets_elv", :valeur => "Ecole René Cassin (Aubazine)", :exemple => "Etablissement" }%>
+    <%= erb :'partials/brique_de_champ_dropdown', locals: locals_classe_ant_elv %>
 
-        </form>
+    <%= erb :'partials/brique_de_champ', locals: locals_ets_ant_elv %>
 
-        <%= erb :'partials/precedent_suivant', :locals => { :precedent => "accueil", :suivant => "resp_legal_1" } %>
+    <%= erb :'partials/nouveau_precedent_suivant', :locals => { :precedent => "accueil", :suivant => "resp_legal_1" } %>
+    
+  </form>
 
-      </div><!--/span-->
-
-    </div><!--/row-->
-
-  </main><!--/.container-->
-
-</body>
-</html>
+</div>
