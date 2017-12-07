@@ -1,57 +1,34 @@
-<!doctype html>
-<html lang="en">
-<head>
+<div class="col-12 col-md-8">
 
-  <%= erb :'partials/header', :locals => {:stylesheet => 'style'} %>
+  <h1>Collège Jean Lurçat</h1>
 
-</head>
+  <hr>
 
-<body>
+  <span style="display:block; height: 30px;"></span>
 
-  <%= erb :'partials/nav_light' %>
-  
-  <main role="main" class="container">
+  <p>Votre enfant Etienne Puydebois a été affecté au <strong>collège Jean Lurçat (Brive-la-Gaillarde)</strong> pour son entrée en <strong>6ème</strong>.</p>
 
-    <div class="row row-offcanvas row-offcanvas-right justify-content-center">
+  <span style="display:block; height: 10px;"></span>        
 
-      <div class="col-12 col-md-8">
+  <h5>Message de l'établissement</h5>
 
-        <h1>Collège Jean Lurçat</h1>
+  <div class="card">
+    <div class="card-body">            
+      <p>Madame, Monsieur,</p>
 
-        <hr>
-
-        <span style="display:block; height: 30px;"></span>
-
-        <p>Votre enfant Etienne Puydebois a été affecté au <strong>collège Jean Lurçat (Brive-la-Gaillarde)</strong> pour son entrée en <strong>6ème</strong>.</p>
-
-        <span style="display:block; height: 10px;"></span>        
-
-        <h5>Message de l'établissement</h5>
-
-        <div class="card">
-          <div class="card-body">            
-            <p>Madame, Monsieur,</p>
-
-            <p>Votre enfant va être accueilli en 6ème au collège Jean Lurçat. Quatre ans au cours desquels l’ensemble des équipes pédagogiques et des personnels feront en sorte de le placer dans de bonnes conditions pour acquérir les compétences demandées en fin de cycles 3 et 4, et pour vivre les valeurs de respect et de citoyenneté liées à notre école laïque républicaine.</p>
-            
-            <p>Bienvenue chez nous,<br>
-            Gérard Ganet, principal</p>
-          </div>
-        </div>
-
-        <span style="display:block; height: 20px;"></span>        
-
-        <div class="row justify-content-md-center">
-          <form action="/eleve" method="post">
-            <button class="btn btn-primary">Commencer l'inscription</button>
-          </form>
-        </div>
-        
-      </div>
-
+      <p>Votre enfant va être accueilli en 6ème au collège Jean Lurçat. Quatre ans au cours desquels l’ensemble des équipes pédagogiques et des personnels feront en sorte de le placer dans de bonnes conditions pour acquérir les compétences demandées en fin de cycles 3 et 4, et pour vivre les valeurs de respect et de citoyenneté liées à notre école laïque républicaine.</p>
+      
+      <p>Bienvenue chez nous,<br>
+      Gérard Ganet, principal</p>
     </div>
+  </div>
 
-  </main>
+  <span style="display:block; height: 20px;"></span>        
 
-</body>
-</html>
+  <div class="row justify-content-md-center">
+    <form action="/eleve" method="post">
+      <button class="btn btn-primary">Commencer l'inscription</button>
+    </form>
+  </div>
+  
+</div>

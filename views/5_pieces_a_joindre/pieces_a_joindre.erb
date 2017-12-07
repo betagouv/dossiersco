@@ -1,71 +1,48 @@
-<!doctype html>
-<html lang="en">
-<head>
+<% @section = 5 %>
+<%= erb :'partials/progression_primaire' %>
 
-    <%= erb :'partials/header', :locals => {:stylesheet => 'style'} %>
+<div class="col-12 col-md-8">
 
-</head>
+  <h2>Pièces à joindre</h2>
 
-<body>
+  <hr>
 
-  <%= erb :'partials/nav_light' %>
+  <span style="display:block; height: 20px;"></span>
 
-  <main role="main" class="container">
+  <form>
 
-    <div class="row row-offcanvas row-offcanvas-right justify-content-center">
+    <% documents_demandes = ["Photo d'identité", "Carte d'identité", "Livret de famille", "Justificatif de domicile", "Dernier avis d'imposition", "Attestation d'assurance", "Notification du tarif de cantine"] %>
 
-      <% @section = 5 %>
-      <%= erb :'partials/progression_primaire' %>
-      
-      <div class="col-12 col-md-8">
+    <div class="card-deck">
+      <% for i in 0..2 %>
+        <% @document = documents_demandes[i] %>
+        <%= erb :'partials/carte_upload' %>
+      <% end %>
+    </div>
 
-        <h2>Pièces à joindre</h2>
+    <div class="card-deck">
+      <% for i in 3..5 %>
+        <% @document = documents_demandes[i] %>
+        <%= erb :'partials/carte_upload' %>
+      <% end %>
+    </div>
 
-        <hr>
-
-        <span style="display:block; height: 20px;"></span>
-
-        <form>
-
-          <% documents_demandes = ["Photo d'identité", "Carte d'identité", "Livret de famille", "Justificatif de domicile", "Dernier avis d'imposition", "Attestation d'assurance", "Notification du tarif de cantine"] %>
-
-          <div class="card-deck">
-            <% for i in 0..2 %>
-              <% @document = documents_demandes[i] %>
-              <%= erb :'partials/carte_upload' %>
-            <% end %>
+    <div class="row">
+      <div class="col-4">
+        <div class="card">
+          <h5 class="card-header"><%= documents_demandes[6] %></h5>
+          <div class="card-body">
+            <p class="card-text">Dire pourquoi on demande ce document.<br>
+              <strong>../tarif_cantine.pdf</strong></p>
+            <button type="button" class="btn btn-warning btn-sm"><label class="upload">Modifier<input type="file" hidden></label></button>
+            <button type="button" class="btn btn-primary btn-sm">Envoyer</button>
           </div>
+        </div>
+      </div>
+    </div>
 
-          <div class="card-deck">
-            <% for i in 3..5 %>
-              <% @document = documents_demandes[i] %>
-              <%= erb :'partials/carte_upload' %>
-            <% end %>
-          </div>
+  </form>
 
-          <div class="row">
-            <div class="col-4">
-              <div class="card">
-                <h5 class="card-header"><%= documents_demandes[6] %></h5>
-                <div class="card-body">
-                  <p class="card-text">Dire pourquoi on demande ce document.<br>
-                    <strong>../tarif_cantine.pdf</strong></p>
-                  <button type="button" class="btn btn-warning btn-sm"><label class="upload">Modifier<input type="file" hidden></label></button>
-                  <button type="button" class="btn btn-primary btn-sm">Envoyer</button>
-                </div>
-              </div>
-            </div>
-          </div>
+  <%= erb :'partials/precedent_suivant', :locals => { :precedent => "droit_image", :suivant => "validation" } %>
 
-        </form>
-
-        <%= erb :'partials/precedent_suivant', :locals => { :precedent => "droit_image", :suivant => "validation" } %>
-
-      </div><!--/span-->
-
-    </div><!--/row-->
-
-  </main><!--/.container-->
-
-</body>
-</html>
+</div><!--/span-->

@@ -1,97 +1,74 @@
-<!doctype html>
-<html lang="en">
-<head>
+<div class="aligner-progressions">
+  
+  <% @section = 4 %>
+  <%= erb :'partials/progression_primaire' %>
+  <% @sous_section = 3 %>
+  <%= erb :'partials/progression_secondaire' %>
+  
+</div>
 
-    <%= erb :'partials/header', :locals => {:stylesheet => 'style'} %>
+<div class="col-12 col-md-8">
 
-</head>
+  <h2>Renseignements médicaux</h2>
 
-<body>
+  <hr>
 
-  <%= erb :'partials/nav_light' %>
+  <form>
 
-  <main role="main" class="container">
+    <span style="display:block; height: 20px;"></span>          
 
-    <div class="row row-offcanvas row-offcanvas-right justify-content-center">
+    <h4>Médecin traitant</h4>
 
-      <div class="aligner-progressions">
-        
-        <% @section = 4 %>
-        <%= erb :'partials/progression_primaire' %>
-        <% @sous_section = 3 %>
-        <%= erb :'partials/progression_secondaire' %>
-        
-      </div>
+    <span style="display:block; height: 20px;"></span>
 
-      <div class="col-12 col-md-8">
+    <%= erb :'partials/champ_texte', :locals => { :desc => "Nom", :variable => "nom_med_traitant", :valeur => "", :exemple => "Nom du médecin traitant" }%>
 
-        <h2>Renseignements médicaux</h2>
+    <%= erb :'partials/champ_texte', :locals => { :desc => "Adresse", :variable => "adr1_med-traitant", :valeur => "", :exemple => "Adresse" }%>
 
-        <hr>
+    <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone", :variable => "tel_med_traitant", :valeur => "", :exemple => "Numéro de téléphone" }%>
 
-        <form>
+    <span style="display:block; height: 30px;"></span>
 
-          <span style="display:block; height: 20px;"></span>          
+    <h4>Date des vaccins obligatoires</h4>
 
-          <h4>Médecin traitant</h4>
+    <span style="display:block; height: 20px;"></span>
 
-          <span style="display:block; height: 20px;"></span>
+    <%= erb :'partials/champ_date', :locals => { :desc => "Dernier rappel DTP", :variable => "date_dtp", :valeur => "" }%>          
 
-          <%= erb :'partials/champ_texte', :locals => { :desc => "Nom", :variable => "nom_med_traitant", :valeur => "", :exemple => "Nom du médecin traitant" }%>
+    <%= erb :'partials/champ_date', :locals => { :desc => "Vaccin BCG", :variable => "date_bcg", :valeur => "" }%>          
 
-          <%= erb :'partials/champ_texte', :locals => { :desc => "Adresse", :variable => "adr1_med-traitant", :valeur => "", :exemple => "Adresse" }%>
+    <%= erb :'partials/champ_date', :locals => { :desc => "Vaccin ROR", :variable => "date_ror", :valeur => "" }%>
 
-          <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone", :variable => "tel_med_traitant", :valeur => "", :exemple => "Numéro de téléphone" }%>
+    <span style="display:block; height: 30px;"></span>
 
-          <span style="display:block; height: 30px;"></span>
+    <h4>Informations complémentaires</h4>
 
-          <h4>Date des vaccins obligatoires</h4>
+    <span style="display:block; height: 20px;"></span>
 
-          <span style="display:block; height: 20px;"></span>
+    <p>Votre enfant bénéficie-t-il :</p>
 
-          <%= erb :'partials/champ_date', :locals => { :desc => "Dernier rappel DTP", :variable => "date_dtp", :valeur => "" }%>          
+    <%= erb :'partials/champ_radio_custom', :locals => { :desc => "- d'un Projet d'Accueil Individualisé (PAI) ?", :variable => "PAI", :options => { :oui => "Oui", :non => "Non" }, :checked => "" }%>
 
-          <%= erb :'partials/champ_date', :locals => { :desc => "Vaccin BCG", :variable => "date_bcg", :valeur => "" }%>          
+    <%= erb :'partials/champ_radio_custom', :locals => { :desc => "- d'un Plan d'Accompagnement Personnalisé (PAP) ?", :variable => "PAP", :options => { :oui => "Oui", :non => "Non" }, :checked => "" }%>
 
-          <%= erb :'partials/champ_date', :locals => { :desc => "Vaccin ROR", :variable => "date_ror", :valeur => "" }%>
+    <span style="display:block; height: 20px;"></span>
 
-          <span style="display:block; height: 30px;"></span>
+    <div class="form-group">
+      <label for="comment">Problèmes de santé que vous souhaitez porter à la connaissance de l'établissement (maladies, allergies, traitements en cours, contre-indications, précautions particulières, etc.)</label>
+      <textarea class="form-control" rows="5" id="comment"></textarea>
+    </div>
 
-          <h4>Informations complémentaires</h4>
+    <span style="display:block; height: 20px;"></span>
 
-          <span style="display:block; height: 20px;"></span>
+    <div class="form-group">
+      <label for="comment_conf">Problèmes de santé confidentiels que vous voulez porter à la connaissance de l'infirmier·ère <em>uniquement</em></label>
+      <textarea class="form-control" rows="5" id="comment_conf"></textarea>
+    </div>     
 
-          <p>Votre enfant bénéficie-t-il :</p>
+  </form>
 
-          <%= erb :'partials/champ_radio_custom', :locals => { :desc => "- d'un Projet d'Accueil Individualisé (PAI) ?", :variable => "PAI", :options => { :oui => "Oui", :non => "Non" }, :checked => "" }%>
+  <span style="display:block; height: 10px;"></span>
 
-          <%= erb :'partials/champ_radio_custom', :locals => { :desc => "- d'un Plan d'Accompagnement Personnalisé (PAP) ?", :variable => "PAP", :options => { :oui => "Oui", :non => "Non" }, :checked => "" }%>
+  <%= erb :'partials/precedent_suivant', :locals => { :precedent => "autorisation_sortie", :suivant => "droit_image" } %>
 
-          <span style="display:block; height: 20px;"></span>
-
-          <div class="form-group">
-            <label for="comment">Problèmes de santé que vous souhaitez porter à la connaissance de l'établissement (maladies, allergies, traitements en cours, contre-indications, précautions particulières, etc.)</label>
-            <textarea class="form-control" rows="5" id="comment"></textarea>
-          </div>
-
-          <span style="display:block; height: 20px;"></span>
-
-          <div class="form-group">
-            <label for="comment_conf">Problèmes de santé confidentiels que vous voulez porter à la connaissance de l'infirmier·ère <em>uniquement</em></label>
-            <textarea class="form-control" rows="5" id="comment_conf"></textarea>
-          </div>     
-
-        </form>
-
-        <span style="display:block; height: 10px;"></span>
-
-        <%= erb :'partials/precedent_suivant', :locals => { :precedent => "autorisation_sortie", :suivant => "droit_image" } %>
-
-      </div><!--/span-->
-
-    </div><!--/row-->
-
-  </main><!--/.container-->
-
-</body>
-</html>
+</div><!--/span-->
