@@ -1,30 +1,65 @@
 require 'sinatra'
 require 'redis'
+require 'json'
 
-get '/' do
-	erb :identification
+
+redis = Redis.new
+
+
+get '/init' do
+	eleve =
+		{
+			prenom_elv: "Etienne",
+			nom_elv: "Puydebois",
+			sexe_elv: "",
+			date_naiss_elv: "1995-11-19",
+			ville_naiss_elv: "",
+			pays_naiss_elv: "",
+			nationalite_elv: "",
+			classe_ant_elv: "",
+			ets_ant_elv: "Ecole René Cassin (Aubazine)"
+		}
+	redis.set "eleve", eleve.to_json	
 end
 
-# depuis page identification
+
+get '/' do
+	erb :identification, layout: false
+end
+
+
 post '/accueil' do
 	erb :'0_accueil/accueil'
 end
-
-# depuis logo dossiersco
 get '/accueil' do
 	erb :'0_accueil/accueil'
 end
 
 
 post '/eleve' do
-	erb :'1_eleve/eleve'
+	eleve = JSON.parse(redis.get("eleve"))
+	erb :'1_eleve/eleve', locals: eleve
 end
 get '/eleve' do
-	erb :'1_eleve/eleve'
+	eleve = JSON.parse(redis.get("eleve"))
+	erb :'1_eleve/eleve', locals: eleve
 end
 
 
 post '/resp_legal_1' do
+	eleve_modifie =
+		{	
+			prenom_elv: "Etienne",
+			nom_elv: "Puydebois",
+			sexe_elv: params[:sexe_elv],
+			date_naiss_elv: "1995-11-19",
+			ville_naiss_elv: params[:ville_naiss_elv],
+			pays_naiss_elv: params[:pays_naiss_elv],
+			nationalite_elv: params[:nationalite_elv],
+			classe_ant_elv: params[:classe_ant_elv],
+			ets_ant_elv: "Ecole René Cassin (Aubazine)"
+		}
+	redis.set "eleve", eleve_modifie.to_json
 	erb :'2_famille/2_1_resp_legal_1'
 end
 get '/resp_legal_1' do
@@ -111,8 +146,6 @@ post '/confirmation' do
 	erb :'7_confirmation/confirmation'
 end
 
-
-redis = Redis.new
 
 get '/tableau_de_bord' do
 	eleve_keys = redis.keys("ELEVE:*")
