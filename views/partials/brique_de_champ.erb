@@ -1,0 +1,29 @@
+<!-- 
+
+VARIABLES
+
+name			pour	for, id, name
+label			pour	label
+type			pour	type
+value			pour	value
+indication		pour	placeholder
+disabled		pour	disabled
+
+ -->
+
+<div class="form-group row">
+	<label for="<%= name %>" class="col-sm-4 col-form-label"><%= label %></label>
+	<div class="col-sm-5">
+		<input
+			id="<%= name %>"
+			name="<%= name %>"
+			type="<%= type %>"
+			class="form-control"
+			value="<%= value %>"
+			placeholder="<%= indication %>"
+			<% if disabled %>
+				disabled
+			<% end %>
+		>
+	</div>
+</div>
