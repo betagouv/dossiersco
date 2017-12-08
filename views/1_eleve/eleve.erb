@@ -95,24 +95,20 @@ scolarite_ant = [
 
     <hr>
 
-    <%  rendu = ""
-        identite.each do |champ|
-          rendu += erb :'partials/champ', locals: champ
-        end %>
-
-    <%= rendu %>
+    <%= identite.map do |champ|
+          erb :'partials/champ', locals: champ
+        end
+        .join %>
 
     <h2>Scolarité de l'année 2017/2018</h2>
 
     <hr>
 
-    <%  rendu = ""
-        scolarite_ant.each do |champ|
-          rendu += erb :'partials/champ', locals: champ
-        end %>
+    <%= scolarite_ant.map do |champ|
+          erb :'partials/champ', locals: champ
+        end
+        .join %>
 
-    <%= rendu %>
-    
     <%= erb :'partials/nouveau_precedent_suivant', :locals => { :precedent => "accueil", :suivant => "resp_legal_1" } %>
     
   </form>
