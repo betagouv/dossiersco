@@ -4,33 +4,55 @@ require 'json'
 
 require_relative 'helpers/formulaire'
 
+enable :sessions
+
 redis = Redis.new
 
+# sessions sinatra
 
 get '/init' do
-	eleve =
+	eleve_1 =
 		{
-			prenom: "Etienne",
-			nom: "Puydebois",
-			sexe: "",
-			date_naiss: "1995-11-19",
-			ville_naiss: "",
-			pays_naiss: "",
-			nationalite: "",
-			classe_ant: "",
-			ets_ant: "Ecole René Cassin (Aubazine)"
-		}
-	redis.set "eleve", eleve.to_json	
+            prenom: "Etienne",
+            nom: "Puydebois",
+            sexe: "",
+            date_naiss: "1995-11-19",
+            ville_naiss: "",
+            pays_naiss: "",
+            nationalite: "",
+            classe_ant: "",
+            ets_ant: "Ecole René Cassin (Aubazine)"
+        }
+    eleve_2 =
+        {
+            prenom: "Jeanne",
+            nom: "Dupont",
+            sexe: "",
+            date_naiss: "2005-11-19",
+            ville_naiss: "",
+            pays_naiss: "Tunisie",
+            nationalite: "",
+            classe_ant: "",
+            ets_ant: "Ecole René Cassin (Aubazine)"
+        }
+    redis.set "eleve:1", eleve_1.to_json    
+    redis.set "eleve:2", eleve_2.to_json    
 end
 
 
 get '/' do
-	erb :identification, layout: false
+    locals = {erreur_de_connexion: session[:erreur_de_connexion]}
+	erb :identification, locals: locals, layout: false
 end
 
 
 post '/accueil' do
-	erb :'0_accueil/accueil'
+    if params[:identifiant] == "1" || params[:identifiant] == "2"
+	   erb :'0_accueil/accueil'
+    else
+        session[:erreur_de_connexion] = true
+        redirect '/'
+    end
 end
 get '/accueil' do
 	erb :'0_accueil/accueil'
@@ -38,14 +60,19 @@ end
 
 
 post '/eleve' do
-	eleve = JSON.parse(redis.get("eleve"))
+	eleve = JSON.parse(redis.get("eleve:1"))
 	erb :'1_eleve/eleve', locals: eleve
 end
 get '/eleve' do
-	eleve = JSON.parse(redis.get("eleve"))
+	eleve = JSON.parse(redis.get("eleve:1"))
 	erb :'1_eleve/eleve', locals: eleve
 end
 
+# plus besoin de parse dans le post
+# get va chercher la ressource
+# post modifie la ressource et redirect vers étape suivante
+# dans le controleur bidule il n'y a que bidule
+# redirect utilisé partout
 
 post '/resp_legal_1' do
 	eleve_modifie =
@@ -60,7 +87,7 @@ post '/resp_legal_1' do
 			classe_ant: params[:classe_ant],
 			ets_ant: "Ecole René Cassin (Aubazine)"
 		}
-	redis.set "eleve", eleve_modifie.to_json
+	redis.set "eleve:1", eleve_modifie.to_json
 	erb :'2_famille/2_1_resp_legal_1'
 end
 get '/resp_legal_1' do

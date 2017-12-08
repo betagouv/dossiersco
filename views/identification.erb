@@ -21,12 +21,16 @@
           <p class="lead">Entrée en sixième ou passage dans une classe supérieure, l'inscription de votre enfant se passe ici. Quelques clics pour une rentrée sereine.</p>
         </main>
 
+        <% if erreur_de_connexion %>
+          <p>Nous ne connaissons aucun élève correspondant à ces informations.</p>
+        <% end %>
+
         <div class="container">
 
           <form class="form-signin" action="/accueil" method="post">
 
             <label class="col-form-label" for="formGroupExampleInput">Identifiant</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Exemple : 2206004705B" autofocus>
+            <input name="identifiant" type="text" class="form-control" id="formGroupExampleInput" placeholder="Exemple : 2206004705B" autofocus>
 
             <label class="col-form-label" for="formGroupExampleInput">Date de naissance de l'élève</label>
             <input type="date" class="form-control" id="formGroupExampleInput" placeholder="jj/mm/aaaa">
