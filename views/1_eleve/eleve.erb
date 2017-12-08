@@ -1,4 +1,4 @@
-<% locals_prenom =
+<% identite = [
         {
           name: "prenom",
           label: "Prénom",
@@ -6,9 +6,7 @@
           value: prenom,
           indication: "Prénom",
           disabled: true
-        } %>
-
-<% locals_nom =
+        },
         {
           name: "nom",
           label: "Nom",
@@ -16,24 +14,18 @@
           value: nom,
           indication: "Nom",
           disabled: true
-        } %>
-
-<% locals_sexe =
+        },
         {
           name: "sexe",
           label: "Sexe",
           type: "radio",
           options: ["Féminin", "Masculin"],
           checked: sexe,
-        } %>
-
-<% locals_espace_1 =
+        },
         {
           type: "espace",
           hauteur: 20,
-        } %>
-
-<% locals_date_naiss =
+        },
         {
           name: "date_naiss",
           label: "Né le",
@@ -41,9 +33,7 @@
           value: date_naiss,
           indication: "",
           disabled: true
-        } %>
-
-<% locals_ville_naiss =
+        },
         {
           name: "ville_naiss",
           label: "à",
@@ -51,9 +41,7 @@
           value: ville_naiss,
           indication: "Ville de naissance",
           disabled: false
-        } %>
-
-<% locals_pays_naiss =
+        },
         {
           name: "pays_naiss",
           label: "Pays",
@@ -61,15 +49,11 @@
           value: pays_naiss,
           indication: "Pays de naissance",
           disabled: false
-        } %>
-
-<% locals_espace_2 =
+        },
         {
           type: "espace",
           hauteur: 20,
-        } %>
-
-<% locals_nationalite =
+        },
         {
           name: "nationalite",
           label: "Nationalité",
@@ -77,24 +61,20 @@
           value: nationalite,
           indication: "Nationalité",
           disabled: false
-        } %>
-
-<% locals_espace_3 =
+        },
         {
           type: "espace",
           hauteur: 10,
-        } %>
+        }]
 
-<% locals_classe_ant =
+scolarite_ant = [
         {
           name: "classe_ant",
           label: "Classe",
           type: "dropdown",
           options: ["CM2", "CM1 (saut de classe)", "6ème (redoublement)"],
           selected: classe_ant
-        } %>
-
-<% locals_ets_ant =
+        },
         {
           name: "ets_ant",
           label: "Etablissement",
@@ -102,8 +82,7 @@
           value: ets_ant,
           indication: "Etablissement",
           disabled: true
-        } %>
-
+        }] %>
 
 <% @section = 1 %>
 <%= erb :'partials/progression_primaire' %>
@@ -116,34 +95,24 @@
 
     <hr>
 
-    <%= erb :'partials/champ', locals: locals_prenom %>
+    <%  rendu = ""
+        identite.each do |champ|
+          rendu += erb :'partials/champ', locals: champ
+        end %>
 
-    <%= erb :'partials/champ', locals: locals_nom %>
-
-    <%= erb :'partials/champ', locals: locals_sexe %>          
-
-    <%= erb :'partials/champ', locals: locals_espace_1 %>          
-
-    <%= erb :'partials/champ', locals: locals_date_naiss %>
-
-    <%= erb :'partials/champ', locals: locals_ville_naiss %>
-
-    <%= erb :'partials/champ', locals: locals_pays_naiss %>
-    
-    <%= erb :'partials/champ', locals: locals_espace_2 %>          
-
-    <%= erb :'partials/champ', locals: locals_nationalite %>
-
-    <%= erb :'partials/champ', locals: locals_espace_3 %>          
+    <%= rendu %>
 
     <h2>Scolarité de l'année 2017/2018</h2>
 
     <hr>
 
-    <%= erb :'partials/champ', locals: locals_classe_ant %>
+    <%  rendu = ""
+        scolarite_ant.each do |champ|
+          rendu += erb :'partials/champ', locals: champ
+        end %>
 
-    <%= erb :'partials/champ', locals: locals_ets_ant %>
-
+    <%= rendu %>
+    
     <%= erb :'partials/nouveau_precedent_suivant', :locals => { :precedent => "accueil", :suivant => "resp_legal_1" } %>
     
   </form>
