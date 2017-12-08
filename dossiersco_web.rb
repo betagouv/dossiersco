@@ -9,15 +9,15 @@ redis = Redis.new
 get '/init' do
 	eleve =
 		{
-			prenom_elv: "Etienne",
-			nom_elv: "Puydebois",
-			sexe_elv: "",
-			date_naiss_elv: "1995-11-19",
-			ville_naiss_elv: "",
-			pays_naiss_elv: "",
-			nationalite_elv: "",
-			classe_ant_elv: "",
-			ets_ant_elv: "Ecole René Cassin (Aubazine)"
+			prenom: "Etienne",
+			nom: "Puydebois",
+			sexe: "",
+			date_naiss: "1995-11-19",
+			ville_naiss: "",
+			pays_naiss: "",
+			nationalite: "",
+			classe_ant: "",
+			ets_ant: "Ecole René Cassin (Aubazine)"
 		}
 	redis.set "eleve", eleve.to_json	
 end
@@ -49,15 +49,15 @@ end
 post '/resp_legal_1' do
 	eleve_modifie =
 		{	
-			prenom_elv: "Etienne",
-			nom_elv: "Puydebois",
-			sexe_elv: params[:sexe_elv],
-			date_naiss_elv: "1995-11-19",
-			ville_naiss_elv: params[:ville_naiss_elv],
-			pays_naiss_elv: params[:pays_naiss_elv],
-			nationalite_elv: params[:nationalite_elv],
-			classe_ant_elv: params[:classe_ant_elv],
-			ets_ant_elv: "Ecole René Cassin (Aubazine)"
+			prenom: "Etienne",
+			nom: "Puydebois",
+			sexe: params[:sexe],
+			date_naiss: "1995-11-19",
+			ville_naiss: params[:ville_naiss],
+			pays_naiss: params[:pays_naiss],
+			nationalite: params[:nationalite],
+			classe_ant: params[:classe_ant],
+			ets_ant: "Ecole René Cassin (Aubazine)"
 		}
 	redis.set "eleve", eleve_modifie.to_json
 	erb :'2_famille/2_1_resp_legal_1'
