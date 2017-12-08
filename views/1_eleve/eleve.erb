@@ -22,12 +22,14 @@
         {
           name: "sexe",
           label: "Sexe",
+          type: "radio",
           options: ["Féminin", "Masculin"],
           checked: sexe,
         } %>
 
 <% locals_espace_1 =
         {
+          type: "espace",
           hauteur: 20,
         } %>
 
@@ -63,6 +65,7 @@
 
 <% locals_espace_2 =
         {
+          type: "espace",
           hauteur: 20,
         } %>
 
@@ -78,6 +81,7 @@
 
 <% locals_espace_3 =
         {
+          type: "espace",
           hauteur: 10,
         } %>
 
@@ -85,6 +89,7 @@
         {
           name: "classe_ant",
           label: "Classe",
+          type: "dropdown",
           options: ["CM2", "CM1 (saut de classe)", "6ème (redoublement)"],
           selected: classe_ant
         } %>
@@ -115,9 +120,9 @@
 
     <%= erb :'partials/brique_de_champ', locals: locals_nom %>
 
-    <%= erb :'partials/brique_de_champ_radio', locals: locals_sexe %>          
+    <%= erb :'partials/brique_de_champ', locals: locals_sexe %>          
 
-    <%= erb :'partials/brique_de_champ_espace', locals: locals_espace_1 %>          
+    <%= erb :'partials/brique_de_champ', locals: locals_espace_1 %>          
 
     <%= erb :'partials/brique_de_champ', locals: locals_date_naiss %>
 
@@ -125,17 +130,17 @@
 
     <%= erb :'partials/brique_de_champ', locals: locals_pays_naiss %>
     
-    <%= erb :'partials/brique_de_champ_espace', locals: locals_espace_2 %>          
+    <%= erb :'partials/brique_de_champ', locals: locals_espace_2 %>          
 
     <%= erb :'partials/brique_de_champ', locals: locals_nationalite %>
 
-    <%= erb :'partials/brique_de_champ_espace', locals: locals_espace_3 %>          
+    <%= erb :'partials/brique_de_champ', locals: locals_espace_3 %>          
 
     <h2>Scolarité de l'année 2017/2018</h2>
 
     <hr>
 
-    <%= erb :'partials/brique_de_champ_dropdown', locals: locals_classe_ant %>
+    <%= erb :'partials/brique_de_champ', locals: locals_classe_ant %>
 
     <%= erb :'partials/brique_de_champ', locals: locals_ets_ant %>
 
