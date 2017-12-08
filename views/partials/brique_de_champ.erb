@@ -1,4 +1,5 @@
-<%
+<%	case type
+	when "text", "date"
 =begin 
 
 VARIABLES
@@ -29,3 +30,75 @@ disabled		pour	disabled
 		>
 	</div>
 </div>
+
+<%	when "espace" %>
+
+<span style="display:block; height: <%= hauteur %>px;"></span>
+
+<%	when "dropdown"
+=begin 
+
+VARIABLES
+
+name
+label
+options		["CM1", "CM2", "6ème"]
+selected	"CM2"
+
+=end
+%>
+
+<div class="form-group row">
+	<label for="<%= name %>" class="col-sm-4 col-form-label"><%= label %></label>
+	<div class="col-sm-5">
+		<select
+			id="<%= name %>"
+			name="<%= name %>"
+			class="form-control"
+		>
+			<% options.each do |option| %>
+				<option
+					value="<%= option %>"
+					<% if option == selected %>
+						selected
+					<% end %>
+				> <%= option %>
+				</option>
+			<% end %>
+		</select>
+	</div>
+</div>
+
+<%	when "radio"
+=begin 
+
+VARIABLES
+
+name
+label 			"LV1"
+options			{anglais: "Anglais", allemand: "Allemand"}
+checked			anglais: pour cocher Anglais par défaut
+
+=end
+%>
+
+<div class="form-group row">
+	<label class="col-sm-4 col-form-label"><%= label %></label>
+	<div class="col-sm-6">
+		<% options.each do |option|%>
+      		<label class="col-sm-4 form-check-label">
+				<input
+					name="<%= name %>"
+					value="<%= option %>"
+					type="radio"
+					class="form-check-input"
+					<% if option == checked %>
+						checked
+					<% end %>
+				> <%= option %>
+			</label>
+    	<% end %> 		
+	</div>
+</div>
+
+<% end %>
