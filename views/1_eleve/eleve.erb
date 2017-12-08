@@ -1,85 +1,85 @@
-<% locals_prenom_elv =
+<% locals_prenom =
         {
-          name: "prenom_elv",
+          name: "prenom",
           label: "Prénom",
           type: "text",
-          value: prenom_elv,
+          value: prenom,
           indication: "Prénom",
           disabled: true
         } %>
 
-<% locals_nom_elv =
+<% locals_nom =
         {
-          name: "nom_elv",
+          name: "nom",
           label: "Nom",
           type: "text",
-          value: nom_elv,
+          value: nom,
           indication: "Nom",
           disabled: true
         } %>
 
-<% locals_sexe_elv =
+<% locals_sexe =
         {
-          name: "sexe_elv",
+          name: "sexe",
           label: "Sexe",
           options: ["Féminin", "Masculin"],
-          checked: sexe_elv,
+          checked: sexe,
         } %>
 
-<% locals_date_naiss_elv =
+<% locals_date_naiss =
         {
-          name: "date_naiss_elv",
+          name: "date_naiss",
           label: "Né le",
           type: "date",
-          value: date_naiss_elv,
+          value: date_naiss,
           indication: "",
           disabled: true
         } %>
 
-<% locals_ville_naiss_elv =
+<% locals_ville_naiss =
         {
-          name: "ville_naiss_elv",
+          name: "ville_naiss",
           label: "à",
           type: "text",
-          value: ville_naiss_elv,
+          value: ville_naiss,
           indication: "Ville de naissance",
           disabled: false
         } %>
 
-<% locals_pays_naiss_elv =
+<% locals_pays_naiss =
         {
-          name: "pays_naiss_elv",
+          name: "pays_naiss",
           label: "Pays",
           type: "text",
-          value: pays_naiss_elv,
+          value: pays_naiss,
           indication: "Pays de naissance",
           disabled: false
         } %>
 
-<% locals_nationalite_elv =
+<% locals_nationalite =
         {
-          name: "nationalite_elv",
+          name: "nationalite",
           label: "Nationalité",
           type: "text",
-          value: nationalite_elv,
+          value: nationalite,
           indication: "Nationalité",
           disabled: false
         } %>
 
-<% locals_classe_ant_elv =
+<% locals_classe_ant =
         {
-          name: "classe_ant_elv",
+          name: "classe_ant",
           label: "Classe",
           options: ["CM2", "CM1 (saut de classe)", "6ème (redoublement)"],
-          selected: classe_ant_elv
+          selected: classe_ant
         } %>
 
-<% locals_ets_ant_elv =
+<% locals_ets_ant =
         {
-          name: "ets_ant_elv",
+          name: "ets_ant",
           label: "Etablissement",
           type: "text",
-          value: ets_ant_elv,
+          value: ets_ant,
           indication: "Etablissement",
           disabled: true
         } %>
@@ -96,23 +96,23 @@
 
     <hr>
 
-    <%= erb :'partials/brique_de_champ', locals: locals_prenom_elv %>
+    <%= erb :'partials/brique_de_champ', locals: locals_prenom %>
 
-    <%= erb :'partials/brique_de_champ', locals: locals_nom_elv %>
+    <%= erb :'partials/brique_de_champ', locals: locals_nom %>
 
-    <%= erb :'partials/brique_de_champ_radio', locals: locals_sexe_elv %>          
+    <%= erb :'partials/brique_de_champ_radio', locals: locals_sexe %>          
 
     <span style="display:block; height: 20px;"></span>
 
-    <%= erb :'partials/brique_de_champ', locals: locals_date_naiss_elv %>
+    <%= erb :'partials/brique_de_champ', locals: locals_date_naiss %>
 
-    <%= erb :'partials/brique_de_champ', locals: locals_ville_naiss_elv %>
+    <%= erb :'partials/brique_de_champ', locals: locals_ville_naiss %>
 
-    <%= erb :'partials/brique_de_champ', locals: locals_pays_naiss_elv %>
+    <%= erb :'partials/brique_de_champ', locals: locals_pays_naiss %>
     
     <span style="display:block; height: 20px;"></span>
 
-    <%= erb :'partials/brique_de_champ', locals: locals_nationalite_elv %>
+    <%= erb :'partials/brique_de_champ', locals: locals_nationalite %>
 
     <span style="display:block; height: 10px;"></span>
 
@@ -120,9 +120,9 @@
 
     <hr>
 
-    <%= erb :'partials/brique_de_champ_dropdown', locals: locals_classe_ant_elv %>
+    <%= erb :'partials/brique_de_champ_dropdown', locals: locals_classe_ant %>
 
-    <%= erb :'partials/brique_de_champ', locals: locals_ets_ant_elv %>
+    <%= erb :'partials/brique_de_champ', locals: locals_ets_ant %>
 
     <%= erb :'partials/nouveau_precedent_suivant', :locals => { :precedent => "accueil", :suivant => "resp_legal_1" } %>
     
