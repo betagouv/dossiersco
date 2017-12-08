@@ -2,6 +2,7 @@ require 'sinatra'
 require 'redis'
 require 'json'
 
+require_relative 'helpers/formulaire'
 
 redis = Redis.new
 
