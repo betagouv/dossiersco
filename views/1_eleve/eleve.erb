@@ -26,6 +26,11 @@
           checked: sexe,
         } %>
 
+<% locals_espace_1 =
+        {
+          hauteur: 20,
+        } %>
+
 <% locals_date_naiss =
         {
           name: "date_naiss",
@@ -56,6 +61,11 @@
           disabled: false
         } %>
 
+<% locals_espace_2 =
+        {
+          hauteur: 20,
+        } %>
+
 <% locals_nationalite =
         {
           name: "nationalite",
@@ -64,6 +74,11 @@
           value: nationalite,
           indication: "Nationalité",
           disabled: false
+        } %>
+
+<% locals_espace_3 =
+        {
+          hauteur: 10,
         } %>
 
 <% locals_classe_ant =
@@ -102,7 +117,7 @@
 
     <%= erb :'partials/brique_de_champ_radio', locals: locals_sexe %>          
 
-    <span style="display:block; height: 20px;"></span>
+    <%= erb :'partials/brique_de_champ_espace', locals: locals_espace_1 %>          
 
     <%= erb :'partials/brique_de_champ', locals: locals_date_naiss %>
 
@@ -110,11 +125,11 @@
 
     <%= erb :'partials/brique_de_champ', locals: locals_pays_naiss %>
     
-    <span style="display:block; height: 20px;"></span>
+    <%= erb :'partials/brique_de_champ_espace', locals: locals_espace_2 %>          
 
     <%= erb :'partials/brique_de_champ', locals: locals_nationalite %>
 
-    <span style="display:block; height: 10px;"></span>
+    <%= erb :'partials/brique_de_champ_espace', locals: locals_espace_3 %>          
 
     <h2>Scolarité de l'année 2017/2018</h2>
 
