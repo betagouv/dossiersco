@@ -1,31 +1,45 @@
+<% nav_numbers_light = ["①", "②", "③", "④", "⑤", "⑥"] %>
+
+<% nav_numbers_bold = ["➊", "➋", "➌", "➍", "➎", "➏"] %>
+
+<% sections = ["Elève", "Famille", "Options", "Administration", "Pièces à joindre", "Validation"] %>
+
+<% sections_liens = ["eleve", "resp_legal_1", "choix_pedagogiques", "regime", "pieces_a_joindre", "validation"] %>
+
 <div class="row">
-    
-  <% sections = {1 => "1. Elève", 2 => "2. Famille", 3 => "3. Choix pédagogiques", 4 => "4. Administration", 5 => "5. Pièces à joindre", 6 => "6. Validation"} %>
-
-  <% sections_liens = {1 => "eleve", 2 => "resp_legal_1", 3 => "choix_pedagogiques", 4 => "regime", 5 => "pieces_a_joindre", 6 => "validation"} %>
-
-
+  
   <% for une_section in (1..@section-1) do %>
-    <div class="col-auto">
-      <a href="/<%= sections_liens[une_section] %>" class="lien-progression"><span class="badge badge-section badge-success"><%= sections[une_section] %> <img src="images/fait.png" alt="fait" title="fait"></span></a>
-    </div>
+    <a href="/<%= sections_liens[une_section-1] %>" class="col col-nav nav-number nav-previous">
+      <div><%= nav_numbers_light[une_section-1]%></div>
+    </a>
   <% end %>
 
   <% if @section != 7 %>
-    <div class="col-auto">
-      <span class="badge badge-section badge-primary <% if @section % 2 == 0 %> badge-sans-icone <% end %>">
-        <%= sections[@section] %>
-        <% if @section % 2 == 1 %>
-          <img src="images/en_cours.png" alt="en_cours" title="en_cours">
-        <% end %>
-      </span>
-    </div>
+    <div class="col col-nav nav-number nav-current"><%= nav_numbers_bold[@section-1]%></div>
   <% end %>
- 
+
   <% for une_section in (@section+1..6) do %>
-    <div class="col-auto">
-      <a href="/<%= sections_liens[une_section] %>" class="lien-progression"><span class="badge badge-section badge-secondary"><%= sections[une_section] %></span></a>
-    </div>
+    <a href="/<%= sections_liens[une_section-1] %>" class="col col-nav nav-number nav-next">
+      <div><%= nav_numbers_light[une_section-1]%></div>
+    </a>
+  <% end %>
+
+  <div class="w-100"></div>
+
+  <% for une_section in (1..@section-1) do %>
+    <a href="/<%= sections_liens[une_section-1] %>" class="col col-nav nav-previous">
+      <div><%= sections[une_section-1]%></div>
+    </a>
+  <% end %>
+
+  <% if @section != 7 %>
+    <div class="col col-nav nav-current"><%= sections[@section-1]%></div>
+  <% end %>
+
+  <% for une_section in (@section+1..6) do %>
+    <a href="/<%= sections_liens[une_section-1] %>" class="col col-nav nav-next">
+      <div><%= sections[une_section-1]%></div>
+    </a>
   <% end %>
 
 </div>
