@@ -34,6 +34,11 @@ body {
   text-align: center;
 }
 
+p.erreur {
+  color: #da5a62;
+  margin-left: -13px;
+}
+
 .col-form-label {
   float: left;
 }
