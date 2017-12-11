@@ -23,7 +23,25 @@ img {
 }
 
 h2 {
-  margin-top: 50px;
+  margin-top: 60px;
+  color: #606468;
+}
+
+.chevron-accordeon {
+  padding : .1em .2em .1em .1em;
+}
+
+hr {
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+
+.not-first {
+  margin-top: 8px;
+}
+
+.col-12 a {
+  text-decoration: none;
 }
 
 .upload {
