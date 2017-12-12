@@ -149,7 +149,15 @@ hr {
 }
 
 .card-body {
+  position: relative;
   padding-bottom: 10px;
+  min-height: 8.5em;
+}
+
+.card-relat {
+  position: absolute;
+  top: 5.3em;
+  bottom: 1em;
 }
 
 .mastfoot {
