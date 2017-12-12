@@ -27,6 +27,21 @@ h2 {
   color: #606468;
 }
 
+h4 {
+  color: #606468;
+}
+
+.posit-relat {
+  position: relative;
+}
+
+.posit-absol {
+  position: absolute;
+  bottom: .2em;
+  right: 1em;
+  text-align: right;
+}
+
 .chevron-accordeon {
   padding : .1em .2em .1em .1em;
 }
@@ -34,6 +49,9 @@ h2 {
 hr {
   margin-top: 0px;
   margin-bottom: 20px;
+  border: none;
+  height: 1px;
+  background-color: #b3b5b7;
 }
 
 .not-first {
