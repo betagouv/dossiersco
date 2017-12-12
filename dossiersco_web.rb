@@ -21,7 +21,7 @@ get '/init' do
             pays_naiss: "",
             nationalite: "",
             classe_ant: "",
-            ets_ant: "Ecole René Cassin (Aubazine)"
+            ets_ant: "Ecole Picpus A (Paris 12e)"
         }
     eleve_2 =
         {
@@ -47,7 +47,7 @@ end
 
 
 post '/accueil' do
-    if params[:identifiant] == "1" || params[:identifiant] == "2"
+    if params[:identifiant] == "1" || params[:identifiant] == "1225804331"
 	   erb :'0_accueil/accueil'
     else
         session[:erreur_de_connexion] = true
@@ -77,15 +77,15 @@ end
 post '/resp_legal_1' do
 	eleve_modifie =
 		{	
-			prenom: "Etienne",
-			nom: "Puydebois",
+			prenom: params[:prenom],
+			nom: params[:nom],
 			sexe: params[:sexe],
 			date_naiss: "1995-11-19",
 			ville_naiss: params[:ville_naiss],
 			pays_naiss: params[:pays_naiss],
 			nationalite: params[:nationalite],
 			classe_ant: params[:classe_ant],
-			ets_ant: "Ecole René Cassin (Aubazine)"
+			ets_ant: params[:ets_ant]
 		}
 	redis.set "eleve:1", eleve_modifie.to_json
 	erb :'2_famille/2_1_resp_legal_1'
