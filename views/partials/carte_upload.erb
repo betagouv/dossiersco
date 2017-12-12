@@ -1,8 +1,10 @@
 <div class="card">
   <h5 class="card-header"><%= @document %></h5>
   <div class="card-body">
-    <p class="card-text">Dire pourquoi on demande ce document.</p>
-    <button type="button" class="btn btn-primary btn-sm"><label class="upload">Parcourir<input type="file" hidden></label></button>
-    <button type="button" class="btn btn-secondary btn-sm" disabled>Envoyer</button>
+    <p class="card-text"><%= @explication %></p>
+    <div class="card-relat">
+	    <button type="button" class="btn btn-primary btn-sm"><label class="upload">Parcourir<input type="file" hidden></label></button>
+	    <button type="button" class="btn btn-secondary btn-sm" disabled>Envoyer</button>
+    </div>
   </div>
 </div>

@@ -11,34 +11,24 @@
 
   <form>
 
-    <% documents_demandes = ["Photo d'identité", "Carte d'identité", "Livret de famille", "Justificatif de domicile", "Dernier avis d'imposition", "Attestation d'assurance", "Notification du tarif de cantine"] %>
+    <% documents_demandes = ["Photo d'identité de l'élève", "Pièce d'identité de l'élève", "Attestation d'assurance scolaire", "Notification du tarif de cantine"] %>
+
+    <% pourquoi_on_le_demande = ["Pour faire les trombinoscopes en attendant les photos de classe", "Pour vérifier... l'identité de l'élève !", "Pour participer aux sorties et voyages scolaires", "Pour facturer équitablement la cantine"]%>
 
     <div class="card-deck">
-      <% for i in 0..2 %>
+      <% for i in 0..1 %>
         <% @document = documents_demandes[i] %>
+        <% @explication = pourquoi_on_le_demande[i] %>
         <%= erb :'partials/carte_upload' %>
       <% end %>
     </div>
 
     <div class="card-deck">
-      <% for i in 3..5 %>
+      <% for i in 2..3 %>
         <% @document = documents_demandes[i] %>
+        <% @explication = pourquoi_on_le_demande[i] %>
         <%= erb :'partials/carte_upload' %>
       <% end %>
-    </div>
-
-    <div class="row">
-      <div class="col-4">
-        <div class="card">
-          <h5 class="card-header"><%= documents_demandes[6] %></h5>
-          <div class="card-body">
-            <p class="card-text">Dire pourquoi on demande ce document.<br>
-              <strong>../tarif_cantine.pdf</strong></p>
-            <button type="button" class="btn btn-warning btn-sm"><label class="upload">Modifier<input type="file" hidden></label></button>
-            <button type="button" class="btn btn-primary btn-sm">Envoyer</button>
-          </div>
-        </div>
-      </div>
     </div>
 
   </form>
