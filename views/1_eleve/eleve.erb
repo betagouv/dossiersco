@@ -5,7 +5,7 @@
           type: "text",
           value: prenom,
           indication: "Prénom",
-          disabled: true
+          disabled: false
         },
         {
           name: "nom",
@@ -13,7 +13,7 @@
           type: "text",
           value: nom,
           indication: "Nom",
-          disabled: true
+          disabled: false
         },
         {
           name: "sexe",
@@ -81,13 +81,17 @@ scolarite_ant = [
           type: "text",
           value: ets_ant,
           indication: "Etablissement",
-          disabled: true
+          disabled: false
         }] %>
 
 <% @section = 1 %>
 <%= erb :'partials/progression_primaire' %>
 
 <div class="col-12 col-md-8">
+
+  <span style="display:block; height: 50px;"></span>
+
+  <p><em>Vous noterez que certains champs du formulaire sont déjà remplis. Suite à l'affectation, l'école élémentaire Picpus A nous a transmis certaines informations ; nous avons préféré ne pas vous les redemander. Néanmoins, vous pouvez toujours les corriger.</em></p>
 
   <form action="/resp_legal_1" method="post">
   
