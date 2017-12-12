@@ -73,24 +73,16 @@ hr {
   font-weight: lighter;
 }
 
-.nav-previous {
-  color: #2d9ee0;
-}
-
-.nav-previous:hover {
-  color: #247FCC;
-}
-
-.nav-current {
+.this-nav {
   color: #2d9ee0;
   font-weight: bold;
 }
 
-.nav-next {
+.other-nav {
   color: #979b9f;
 }
 
-.nav-next:hover {
+.other-nav:hover {
   color: grey;
 }
 
