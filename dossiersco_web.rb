@@ -11,10 +11,10 @@ redis = Redis.new
 # sessions sinatra
 
 get '/init' do
-	eleve_1 =
+	eleve =
 		{
             prenom: "Etienne",
-            nom: "Léonard",
+            nom: "Puydebois",
             sexe: "",
             date_naiss: "1995-11-19",
             ville_naiss: "",
@@ -23,7 +23,12 @@ get '/init' do
             classe_ant: "",
             ets_ant: "Ecole Picpus A (Paris 12e)"
         }
-    redis.set "eleve:1", eleve_1.to_json    
+    resp_legal_1 =
+    	{
+    		prenom: "Catherine",
+    		nom: "Puydebois"
+    	}
+    redis.hmset "dossier_eleve:1225804331", :eleve, eleve.to_json, :resp_legal_1, resp_legal_1.to_json
 end
 
 
@@ -45,23 +50,11 @@ get '/accueil' do
 	erb :'0_accueil/accueil'
 end
 
-# je suis sur la page élève
-# je remplis les champs
-# je clique sur enregistrer et continuer
-# il y a un post sur eleve
-# dans lequel je fais redis.set eleve_modifie
-# puis redirect sur get RL1
-# j'arrive dans get RL1
-# je vais chercher les infos qui concernet le RL1
-# json.parse redis RL1
-# j'affiche l'erb RL1
-
 
 get '/eleve' do
-	eleve = JSON.parse(redis.get("eleve:1"))
+	eleve = JSON.parse(redis.hget("dossier_eleve:1225804331",:eleve))
 	erb :'1_eleve/eleve', locals: eleve
 end
-
 post '/eleve' do
 	eleve_modifie =
 		{
@@ -75,22 +68,23 @@ post '/eleve' do
 			classe_ant: params[:classe_ant],
 			ets_ant: params[:ets_ant]
 		}
-	redis.set "eleve:1", eleve_modifie.to_json
-	redirect to('/resp_legal_1') 
+    redis.hmset "dossier_eleve:1225804331", :eleve, eleve_modifie.to_json
+	redirect to('/resp_legal_1')
 end
 
-# plus besoin de parse dans le post
-# get va chercher la ressource
-# post modifie la ressource et redirect vers étape suivante
-# dans le controleur bidule il n'y a que bidule
-# redirect utilisé partout
 
-post '/resp_legal_1' do
-
-	erb :'2_famille/2_1_resp_legal_1'
-end
 get '/resp_legal_1' do
-	erb :'2_famille/2_1_resp_legal_1'
+	resp_legal_1 = JSON.parse(redis.hget("dossier_eleve:1225804331",:resp_legal_1))
+	erb :'2_famille/2_1_resp_legal_1', locals: resp_legal_1
+end
+post '/resp_legal_1' do
+	resp_legal_1_modifie =
+		{
+			prenom: params[:prenom],
+			nom: params[:nom]
+		}
+    redis.hmset "dossier_eleve:1225804331", :resp_legal_1, resp_legal_1_modifie.to_json
+	redirect to('/resp_legal_2')
 end
 
 
