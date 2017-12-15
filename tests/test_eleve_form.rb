@@ -18,7 +18,7 @@ class EleveFormTest < Test::Unit::TestCase
 	end
 
 	def test_entree_succes
-		post '/accueil', identifiant: '1'
+		post '/accueil', identifiant: '1', date_naiss: '1995-11-19'
 		assert last_response.body.include? 'Etienne'
 	end
 	
@@ -29,8 +29,11 @@ class EleveFormTest < Test::Unit::TestCase
 	end
 
 	def test_modification_lieu_naiss_eleve
+		get '/init'
+		post '/accueil', identifiant: '2'
 		post '/eleve', ville_naiss: 'Beziers'
 		get '/eleve'
+		assert last_response.body.include? 'Elodie'
 		assert last_response.body.include? 'Beziers'
 	end
 

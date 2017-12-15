@@ -28,7 +28,26 @@ get '/init' do
     		prenom: "Catherine",
     		nom: "Puydebois"
     	}
-    redis.hmset "dossier_eleve:1225804331", :eleve, eleve.to_json, :resp_legal_1, resp_legal_1.to_json
+    redis.hmset "dossier_eleve:1", :eleve, eleve.to_json, :resp_legal_1, resp_legal_1.to_json
+
+	eleve =
+		{
+            prenom: "Elodie",
+            nom: "Piaf",
+            sexe: "",
+            date_naiss: "1990-03-23",
+            ville_naiss: "",
+            pays_naiss: "",
+            nationalite: "",
+            classe_ant: "",
+            ets_ant: "Ecole Picasso (Nîmes)"
+        }
+    resp_legal_1 =
+    	{
+    		prenom: "Jean",
+    		nom: "Piaf"
+    	}
+    redis.hmset "dossier_eleve:2", :eleve, eleve.to_json, :resp_legal_1, resp_legal_1.to_json
 end
 
 
@@ -39,13 +58,16 @@ end
 
 
 post '/accueil' do
-    if params[:identifiant] == "1" || params[:identifiant] == "1225804331"
-	   erb :'0_accueil/accueil'
+    if params[:identifiant] == "1" && params[:date_naiss] == "1995-11-19"
+		erb :'0_accueil/accueil'
+    elsif params[:identifiant] == "2" && params[:date_naiss] == "1990-03-23"
+	   	erb :'0_accueil/accueil'
     else
         session[:erreur_de_connexion] = true
         redirect '/'
     end
 end
+
 get '/accueil' do
 	erb :'0_accueil/accueil'
 end
@@ -55,6 +77,7 @@ get '/eleve' do
 	eleve = JSON.parse(redis.hget("dossier_eleve:1225804331",:eleve))
 	erb :'1_eleve/eleve', locals: eleve
 end
+
 post '/eleve' do
 	eleve_modifie =
 		{
