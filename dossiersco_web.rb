@@ -58,10 +58,12 @@ end
 
 
 post '/accueil' do
-    if params[:identifiant] == "1" && params[:date_naiss] == "1995-11-19"
-		erb :'0_accueil/accueil'
-    elsif params[:identifiant] == "2" && params[:date_naiss] == "1990-03-23"
-	   	erb :'0_accueil/accueil'
+	identifiant = params[:identifiant]
+    eleve = JSON.parse(redis.hget("dossier_eleve:#{identifiant}",:eleve))
+    if identifiant == "1" && params[:date_naiss] == "1995-11-19"
+		erb :'0_accueil/accueil', locals: eleve
+    elsif identifiant == "2" && params[:date_naiss] == "1990-03-23"
+	   	erb :'0_accueil/accueil', locals: eleve
     else
         session[:erreur_de_connexion] = true
         redirect '/'
@@ -73,15 +75,18 @@ get '/accueil' do
 end
 
 
-get '/eleve' do
-	eleve = JSON.parse(redis.hget("dossier_eleve:1225804331",:eleve))
+get '/eleve/:identifiant' do
+	identifiant = params[:identifiant]
+	eleve = JSON.parse(redis.hget("dossier_eleve:#{identifiant}",:eleve))
 	erb :'1_eleve/eleve', locals: eleve
 end
 
-post '/eleve' do
+post '/eleve/:identifiant' do
+	identifiant = params[:identifiant]
+	eleve = JSON.parse(redis.hget("dossier_eleve:#{identifiant}",:eleve))
 	eleve_modifie =
 		{
-			prenom: params[:prenom],
+			prenom: eleve["prenom"],
 			nom: params[:nom],
 			sexe: params[:sexe],
 			date_naiss: "1995-11-19",
@@ -91,7 +96,7 @@ post '/eleve' do
 			classe_ant: params[:classe_ant],
 			ets_ant: params[:ets_ant]
 		}
-    redis.hmset "dossier_eleve:1225804331", :eleve, eleve_modifie.to_json
+    redis.hmset "dossier_eleve:#{identifiant}", :eleve, eleve_modifie.to_json
 	redirect to('/resp_legal_1')
 end
 
