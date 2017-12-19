@@ -107,7 +107,7 @@ scolarite_ant = [
 
     <%= construire scolarite_ant %>
 
-    <%= erb :'partials/nouveau_precedent_suivant', :locals => { :precedent => "accueil", :suivant => "eleve" } %>
+    <%= erb :'partials/nouveau_precedent_suivant', :locals => { :precedent => "accueil", :suivant => "eleve/" + session[:identifiant] } %>
     
   </form>
 

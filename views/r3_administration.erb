@@ -1,0 +1,237 @@
+<% @section = 3 %>
+<%= erb :'partials/navigation_reinscription' %>
+
+<div class="col-12 col-md-8">
+
+      <span style="display:block; height: 80px;"></span>
+
+      <a data-toggle="collapse" data-parent="#accordeon-admin" href="#accordeon-admin-regime" aria-expanded="false" aria-controls="accordeon-admin-regime">
+
+        <div class="row posit-relat">
+          <div class="col"><h2 class="not-first">Régime</h2></div>
+          <div class="col posit-absol"><img src="images/chevron_bas.png" alt="déplier" title="déplier"></div>
+        </div>
+        <hr>
+      </a>
+      <div id="accordeon-admin-regime" class="collapse" role="tabpanel">
+        <form>
+
+          <div class="form-group row">
+            <label for="regime" class="col-sm-3 col-form-label">Choix du régime</label>
+            <div class="col-sm-6">
+              <label class="col-sm-7 form-check-label">
+                <input type="radio" name="regime" class="form-check-input trigger" onclick="afficher_dp(event)"> Demi-pensionnaire
+              </label>
+              <label class="col-sm-4 form-check-label">
+                <input type="radio" name="regime" class="form-check-input trigger" onclick="masquer_dp(event)"> Externe
+              </label>
+            </div>
+          </div>
+
+          <div id="dp" style="display: none;">
+                        
+            <span style="display:block; height: 20px;"></span>
+
+            <p>Consulter le règlement du service de demi-pension :
+              <a href="images/reglement_dp.png" target="_blank"><img src="images/reglement_dp_small.png" alt="règlement demi-pension"></a>
+            </p>
+
+            <%= erb :'partials/champ_check', :locals => { :desc => "J'ai lu et j'accepte le règlement du service de demi-pension." }%>
+
+            <%= erb :'partials/champ_check', :locals => { :desc => "Je m'engage à régler les frais de demi-pension en respectant les délais impartis inhérents au bon fonctionnement du service." }%>
+
+            <span style="display:block; height: 10px;"></span>
+
+          </div>
+
+        </form>
+      </div>
+
+      <a data-toggle="collapse" data-parent="#accordeon-admin" href="#accordeon-admin-sortie" aria-expanded="false" aria-controls="accordeon-admin-sortie">
+
+        <div class="row posit-relat">
+          <div class="col"><h2 class="not-first">Autorisation de sortie</h2></div>
+          <div class="col posit-absol"><img src="images/chevron_bas.png" alt="déplier" title="déplier"></div>
+        </div>
+        <hr>
+      </a>
+      <div id="accordeon-admin-sortie" class="collapse" role="tabpanel">
+        <p class="mb-3">
+
+          <form>
+
+            <span style="display:block; height: 10px;"></span>
+
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="autorisation_sortie" value="oui"> J'autorise
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="autorisation_sortie" value="non"> Je n'autorise pas
+              </label>
+            </div>
+
+            <p>mon enfant à quitter le collège après le dernier cours de l'après-midi (ou après le repas s'il n'a pas cours l'après-midi), en cas d'absence de professeur et sous mon entière responsabilité.</p>
+
+            <span style="display:block; height: 10px;"></span>
+
+          </form>
+        </p>
+      </div>
+
+      <a data-toggle="collapse" data-parent="#accordeon-admin" href="#accordeon-admin-medical" aria-expanded="false" aria-controls="accordeon-admin-medical">
+
+        <div class="row posit-relat">
+          <div class="col"><h2 class="not-first">Renseignements médicaux</h2></div>
+          <div class="col posit-absol"><img src="images/chevron_bas.png" alt="déplier" title="déplier"></div>
+        </div>
+        <hr>
+      </a>
+      <div id="accordeon-admin-medical" class="collapse" role="tabpanel">
+        <p class="mb-3">
+
+          <form>
+
+            <span style="display:block; height: 20px;"></span>          
+
+            <h4>Médecin traitant</h4>
+
+          	<div class="row">
+          	  <div class="col">
+          	    <div class="form-check">
+          	      <label class="form-check-label">
+          	        <input class="form-check-input" id="meme_adresse_que_med" type="checkbox" checked="" onclick="afficher_infos_med(event)"> Le médecin traitant est le même que l'année dernière
+          	      </label>
+          	    </div>
+          	  </div>
+          	</div>
+
+        	<span style="display:block; height: 20px;"></span>
+
+            <%= erb :'partials/champ_texte', :locals => { :desc => "Nom", :variable => "nom_med_traitant", :valeur => "Dr Blanc", :exemple => "Nom du médecin traitant" }%>
+
+            <%= erb :'partials/champ_texte', :locals => { :desc => "Adresse", :variable => "adr_med_traitant", :valeur => "23 rue du Pont qui chante", :exemple => "Adresse" }%>
+
+    	  	<%= erb :'partials/champ_texte', :locals => { :desc => "Code postal", :variable => "cp_med_traitant", :valeur => "75011", :exemple => "Code postal" }%>
+
+    	  	<%= erb :'partials/champ_texte', :locals => { :desc => "Ville", :variable => "ville_med_traitant", :valeur => "Paris", :exemple => "Ville" }%>
+
+            <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone", :variable => "tel_med_traitant", :valeur => "0156455612", :exemple => "Numéro de téléphone" }%>
+
+            <span style="display:block; height: 30px;"></span>
+
+            <h4>Informations complémentaires</h4>
+
+            <span style="display:block; height: 20px;"></span>
+
+            <p>Votre enfant bénéficie-t-il :</p>
+
+            <%= erb :'partials/champ_radio_custom', :locals => { :desc => "- d'un Projet d'Accueil Individualisé (PAI) ?", :variable => "PAI", :options => { :oui => "Oui", :non => "Non" }, :checked => "" }%>
+
+            <%= erb :'partials/champ_radio_custom', :locals => { :desc => "- d'un Plan d'Accompagnement Personnalisé (PAP) ?", :variable => "PAP", :options => { :oui => "Oui", :non => "Non" }, :checked => "" }%>
+
+            <span style="display:block; height: 20px;"></span>
+
+            <div class="form-group">
+              <label for="comment">Problèmes de santé que vous souhaitez porter à la connaissance de l'établissement (maladies, allergies, traitements en cours, contre-indications, précautions particulières, etc.)</label>
+              <textarea class="form-control" rows="5" id="comment"></textarea>
+            </div>
+
+            <span style="display:block; height: 20px;"></span>
+
+            <div class="form-group">
+              <label for="comment_conf">Problèmes de santé confidentiels que vous voulez porter à la connaissance de l'infirmier·ère <em>uniquement</em></label>
+              <textarea class="form-control" rows="5" id="comment_conf"></textarea>
+            </div>     
+
+          </form>
+
+          <span style="display:block; height: 10px;"></span>
+        </p>
+      </div>
+
+      <a data-toggle="collapse" data-parent="#accordeon-admin" href="#accordeon-admin-image" aria-expanded="false" aria-controls="accordeon-admin-image">
+
+        <div class="row posit-relat">
+          <div class="col"><h2 class="not-first">Droit à l'image</h2></div>
+          <div class="col posit-absol"><img src="images/chevron_bas.png" alt="déplier" title="déplier"></div>
+        </div>
+        <hr>
+      </a>
+      <div id="accordeon-admin-image" class="collapse" role="tabpanel">
+        <p class="mb-3">
+
+            <form>
+
+              <p>En application de l'article 9 du code civil et de l'article 121-1 du code de la propriété intellectuelle :</p>
+
+              <span style="display:block; height: 20px;"></span>
+
+              <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="radio" name="droit_image_diffusion" value="oui"> J'autorise
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="radio" name="droit_image_diffusion" value="non"> Je n'autorise pas
+                </label>
+              </div>
+
+              <p>le collège à diffuser des photographies ou images filmées de mon enfant et/ou ses réalisations scolaires sur le site académique et sur le site du collège, en dehors de toute exploitation commerciale, pour une durée indéterminée.</p>
+
+              <span style="display:block; height: 20px;"></span>
+
+              <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="radio" name="droit_image_photo" value="oui"> J'accepte
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="radio" name="droit_image_photo" value="non"> Je n'accepte pas
+                </label>
+              </div>
+
+              <p>que mon enfant soit photographié à l'occasion des photos de classe.</p>
+
+            </form>
+        </p>
+      </div>
+
+  <span style="display:block; height: 20px;"></span>
+
+  <%= erb :'partials/precedent_suivant', :locals => { :precedent => "r2", :suivant => "r4" } %>
+
+</div><!--/span-->
+
+<script>
+
+  function afficher_dp(e){
+    document.querySelector('#dp').style.display = 'block'
+  }
+
+  function masquer_dp(e){
+    console.log("yu")
+    document.querySelector('#dp').style.display = 'none'
+  }
+
+  function afficher_reduction_tarif(e){
+    document.querySelector('#reduction_tarif').style.display = chk_reduction_tarif.checked ? 'block' : 'none'
+  }
+
+  function afficher_infos_med(e){
+    document.getElementById("nom_med_traitant").value = meme_adresse_que_med.checked ? "Dr Blanc" : "";
+    document.getElementById("adr_med_traitant").value = meme_adresse_que_med.checked ? "23 rue du Pont qui chante" : "";
+    document.getElementById("cp_med_traitant").value = meme_adresse_que_med.checked ? "75011" : "";
+    document.getElementById("ville_med_traitant").value = meme_adresse_que_med.checked ? "Paris" : "";
+    document.getElementById("tel_med_traitant").value = meme_adresse_que_med.checked ? "0156455612" : "";
+  }
+
+</script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>

@@ -1,0 +1,167 @@
+<div class="aligner-progressions">
+
+  <% @section = 2 %>
+  <%= erb :'partials/progression_primaire' %>
+
+</div>
+
+<div class="col-12 col-md-8">
+
+  <h2>Famille (1/3) : Responsable légal 1</h2>
+
+  <hr>
+
+  <form>
+
+    <%= erb :'partials/champ_dropdown', :locals => { :desc => "Lien de parenté", :variable => "lien_parente_rl1", :options => ["Choisissez...", "Mère", "Père", "Tutrice", "Tuteur", "Autre"], :selected => "" } %>
+
+    <%= erb :'partials/champ_texte', :locals => { :desc => "Prénom", :variable => "prenom_rl1", :valeur => "Catherine", :exemple => "Prénom" }%>
+
+    <%= erb :'partials/champ_texte', :locals => { :desc => "Nom", :variable => "nom_rl1", :valeur => "Puydebois", :exemple => "Nom" }%>
+
+    <%= erb :'partials/champ_texte', :locals => { :desc => "Adresse", :variable => "adr1_rl1", :valeur => "4 Place de la Nation", :exemple => "Numéro et nom de voie" }%>
+
+    <%= erb :'partials/champ_texte', :locals => { :desc => "Code postal", :variable => "cp_rl1", :valeur => "75012", :exemple => "Code postal" }%>
+
+    <%= erb :'partials/champ_texte', :locals => { :desc => "Ville", :variable => "ville_rl1", :valeur => "Paris", :exemple => "Ville" }%>
+
+    <span style="display:block; height: 30px;"></span>
+
+    <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone principal", :variable => "tel1_rl1", :valeur => "0645478251", :exemple => "Numéro de téléphone" }%>
+
+    <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone secondaire", :variable => "tel2_rl1", :valeur => "", :exemple => "Numéro de téléphone" }%>
+
+    <%= erb :'partials/champ_email', :locals => { :desc => "Email principal", :variable => "mail_rl1", :valeur => "", :exemple => "Adresse email" }%>
+
+    <span style="display:block; height: 30px;"></span>
+
+    <%= erb :'partials/champ_dropdown', :locals => { :desc => "Situation emploi", :variable => "sit_emploi_rl1", :options => ["Choisissez...", "Occupe un emploi", "Chômage", "Retraite", "Autre"], :selected => "" } %>
+
+    <%= erb :'partials/champ_dropdown', :locals => { :desc => "Profession", :variable => "emploi_rl1", :options => ["Choisissez...", "Agriculteur·rice", "Artisan·e", "Commerçant·e", "Professeur·e", "Cadre", "Clergé", "Technicien·ne", "Employé·e", "Ouvrier·ère", "Retraité·e"], :selected => "" } %>
+
+    <span style="display:block; height: 30px;"></span>
+
+    <%= erb :'partials/champ_texte_custom', :locals => { :desc => "Nombre d'enfants à charge en collège ou lycée", :variable => "charge_sec_rl1", :valeur => "", :exemple => "", longueur_label: 7, longueur_input: 2 }%>
+
+    <%= erb :'partials/champ_texte_custom', :locals => { :desc => "Nombre total d'enfants à charge", :variable => "charge_tot_rl1", :valeur => "", :exemple => "", longueur_label: 7, longueur_input: 2 }%>
+
+    <span style="display:block; height: 30px;"></span>
+
+    <div class="form-check form-check-inline">
+      <label class="form-check-label">
+        <input class="form-check-input" type="radio" name="autorisation_sortie" value="oui"> J'accepte
+      </label>
+    </div>
+    <div class="form-check form-check-inline">
+      <label class="form-check-label">
+        <input class="form-check-input" type="radio" name="autorisation_sortie" value="non"> Je n'accepte pas
+      </label>
+    </div>
+
+    <p>que ces coordonnées soient communiquées aux fédérations de parents d'élèves.</p>
+
+  </form>
+
+  <h2>Famille (2/3) : Responsable légal 2</h2>
+
+  <hr>
+
+  <form>
+
+    <%= erb :'partials/champ_dropdown', :locals => { :desc => "Lien de parenté", :variable => "lien_parente_rl2", :options => ["Choisissez...", "Mère", "Père", "Tutrice", "Tuteur", "Autre"], :selected => "Père" } %>
+
+    <%= erb :'partials/champ_texte', :locals => { :desc => "Prénom", :variable => "prenom_rl2", :valeur => "", :exemple => "Prénom" }%>
+
+    <%= erb :'partials/champ_texte', :locals => { :desc => "Nom", :variable => "nom_rl2", :valeur => "Puydebois", :exemple => "Nom" }%>
+    
+    <div class="row">
+      <div class="col-sm-4"></div>
+      <div class="col-sm-5">
+        <div class="form-check">
+          <label class="form-check-label">
+            <input class="form-check-input" id="meme_adresse_que_rl1" type="checkbox" checked="" onclick="afficher_adresse_rl1(event)"> <small>Même adresse que Catherine Puydebois</small>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <span style="display:block; height: 5px;"></span>
+
+    <%= erb :'partials/champ_texte', :locals => { :desc => "Adresse", :variable => "adr1_rl2", :valeur => "4 Place de la Nation", :exemple => "Numéro et nom de voie" }%>
+
+    <%= erb :'partials/champ_texte', :locals => { :desc => "Code postal", :variable => "cp_rl2", :valeur => "75012", :exemple => "Code postal" }%>
+
+    <%= erb :'partials/champ_texte', :locals => { :desc => "Ville", :variable => "ville_rl2", :valeur => "Paris", :exemple => "Ville" }%>
+
+    <span style="display:block; height: 30px;"></span>
+
+    <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone principal", :variable => "tel1_rl2", :valeur => "", :exemple => "Numéro de téléphone" }%>
+
+    <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone secondaire", :variable => "tel2_rl2", :valeur => "", :exemple => "Numéro de téléphone" }%>
+
+    <%= erb :'partials/champ_email', :locals => { :desc => "Email principal", :variable => "mail_rl2", :valeur => "", :exemple => "Adresse email" }%>
+
+    <span style="display:block; height: 30px;"></span>
+
+    <%= erb :'partials/champ_dropdown', :locals => { :desc => "Situation emploi", :variable => "sit_emploi_rl2", :options => ["Choisissez...", "Occupe un emploi", "Chômage", "Retraite", "Autre"], :selected => "" } %>
+
+    <%= erb :'partials/champ_dropdown', :locals => { :desc => "Profession", :variable => "emploi_rl2", :options => ["Choisissez...", "Agriculteur·rice", "Artisan·e", "Commerçant·e", "Professeur·e", "Cadre", "Clergé", "Technicien·ne", "Employé·e", "Ouvrier·ère", "Retraité·e"], :selected => "" } %>
+
+    <span style="display:block; height: 30px;"></span>
+
+    <div class="form-check form-check-inline">
+      <label class="form-check-label">
+        <input class="form-check-input" type="radio" name="autorisation_sortie" value="oui"> J'accepte
+      </label>
+    </div>
+    <div class="form-check form-check-inline">
+      <label class="form-check-label">
+        <input class="form-check-input" type="radio" name="autorisation_sortie" value="non"> Je n'accepte pas
+      </label>
+    </div>
+
+    <p>que ces coordonnées soient communiquées aux fédérations de parents d'élèves.</p>
+
+  </form>
+
+  <h2>Famille (3/3) : Autre personne à contacter en cas d'urgence</h2>
+
+  <hr>
+
+  <form>
+
+    <%= erb :'partials/champ_texte', :locals => { :desc => "Lien avec l'élève", :variable => "lien_elv_urg", :valeur => "", :exemple => "Lien avec l'élève" }%>
+
+    <%= erb :'partials/champ_texte', :locals => { :desc => "Prénom", :variable => "prenom_urg", :valeur => "", :exemple => "Prénom" }%>
+
+    <%= erb :'partials/champ_texte', :locals => { :desc => "Nom", :variable => "nom_urg", :valeur => "", :exemple => "Nom" }%>
+
+    <span style="display:block; height: 30px;"></span>
+
+    <%= erb :'partials/champ_texte', :locals => { :desc => "Adresse", :variable => "adr1_urg", :valeur => "", :exemple => "Numéro et nom de voie" }%>
+
+    <%= erb :'partials/champ_texte', :locals => { :desc => "Code postal", :variable => "cp_urg", :valeur => "", :exemple => "Code postal" }%>
+
+    <%= erb :'partials/champ_texte', :locals => { :desc => "Ville", :variable => "ville_urg", :valeur => "", :exemple => "Ville" }%>
+
+    <span style="display:block; height: 30px;"></span>
+
+    <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone principal", :variable => "tel1_urg", :valeur => "", :exemple => "Numéro de téléphone" }%>
+
+    <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone secondaire", :variable => "tel2_urg", :valeur => "", :exemple => "Numéro de téléphone" }%>
+
+  </form>
+
+  <%= erb :'partials/precedent_suivant', :locals => { :precedent => "eleve", :suivant => "choix_pedagogiques" } %>
+
+</div><!--/span-->
+
+<script>
+
+  function afficher_adresse_rl1(e){
+    document.getElementById("adr1_rl2").value = meme_adresse_que_rl1.checked ? "4 Place de la Nation" : "";
+    document.getElementById("cp_rl2").value = meme_adresse_que_rl1.checked ? "75012" : "";
+    document.getElementById("ville_rl2").value = meme_adresse_que_rl1.checked ? "Paris" : "";
+  }
+
+</script>

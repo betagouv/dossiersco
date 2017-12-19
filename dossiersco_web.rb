@@ -8,8 +8,6 @@ enable :sessions
 
 redis = Redis.new
 
-# sessions sinatra
-
 get '/init' do
 	eleve =
 		{
@@ -32,10 +30,10 @@ get '/init' do
 
 	eleve =
 		{
-            prenom: "Elodie",
+            prenom: "Louise",
             nom: "Piaf",
             sexe: "",
-            date_naiss: "1990-03-23",
+            date_naiss: "1990-10-10",
             ville_naiss: "",
             pays_naiss: "",
             nationalite: "",
@@ -52,33 +50,49 @@ end
 
 
 get '/' do
-    locals = {erreur_de_connexion: session[:erreur_de_connexion]}
-	erb :identification, locals: locals, layout: false
+	erb :'#_identification', layout: false
 end
 
 
 post '/accueil' do
 	identifiant = params[:identifiant]
-    eleve = JSON.parse(redis.hget("dossier_eleve:#{identifiant}",:eleve))
-    if identifiant == "1" && params[:date_naiss] == "1995-11-19"
-		erb :'0_accueil/accueil', locals: eleve
-    elsif identifiant == "2" && params[:date_naiss] == "1990-03-23"
-	   	erb :'0_accueil/accueil', locals: eleve
+	date_naiss = params[:date_naiss]
+
+    if identifiant == "0"
+		session[:identifiant] = identifiant
+		erb :'r0_accueil'
+
+	elsif identifiant == "1" && date_naiss == "1995-11-19"
+		session[:identifiant] = identifiant
+    	eleve = JSON.parse(redis.hget("dossier_eleve:#{identifiant}",:eleve))
+		erb :'0_accueil', locals: eleve
+
+    elsif identifiant == "2" && date_naiss == "1990-10-10"
+		session[:identifiant] = identifiant
+    	eleve = JSON.parse(redis.hget("dossier_eleve:#{identifiant}",:eleve))
+	   	erb :'0_accueil', locals: eleve
+
+	elsif identifiant == "3"
+		session[:identifiant] = "1"
+    	eleve = JSON.parse(redis.hget("dossier_eleve:1",:eleve))
+		erb :'0_accueil', locals: eleve
+
     else
         session[:erreur_de_connexion] = true
         redirect '/'
     end
+
 end
 
 get '/accueil' do
-	erb :'0_accueil/accueil'
+	erb :'0_accueil'
 end
 
 
 get '/eleve/:identifiant' do
 	identifiant = params[:identifiant]
 	eleve = JSON.parse(redis.hget("dossier_eleve:#{identifiant}",:eleve))
-	erb :'1_eleve/eleve', locals: eleve
+	erb :'1_eleve', locals: eleve
 end
 
 post '/eleve/:identifiant' do
@@ -103,7 +117,7 @@ end
 
 get '/resp_legal_1' do
 	resp_legal_1 = JSON.parse(redis.hget("dossier_eleve:1225804331",:resp_legal_1))
-	erb :'2_famille/2_1_resp_legal_1', locals: resp_legal_1
+	erb :'2_famille', locals: resp_legal_1
 end
 post '/resp_legal_1' do
 	resp_legal_1_modifie =
@@ -117,90 +131,110 @@ end
 
 
 post '/resp_legal_2' do
-	erb :'2_famille/2_2_resp_legal_2'
+	erb :'2_famille'
 end
 get '/resp_legal_2' do
-	erb :'2_famille/2_2_resp_legal_2'
+	erb :'2_famille'
 end
 
 
 post '/urgence' do
-	erb :'2_famille/2_3_urgence'
+	erb :'2_famille'
 end
 get '/urgence' do
-	erb :'2_famille/2_3_urgence'
+	erb :'2_famille'
 end
 
 
 post '/choix_pedagogiques' do
-	erb :'3_choix_pedagogiques/choix_pedagogiques'
+	erb :'3_scolarite'
 end
 get '/choix_pedagogiques' do
-	erb :'3_choix_pedagogiques/choix_pedagogiques'
+	erb :'3_scolarite'
 end
 
 
 post '/regime' do
-	erb :'4_administration/4_1_regime'
+	erb :'4_administration'
 end
 get '/regime' do
-	erb :'4_administration/4_1_regime'
+	erb :'4_administration'
 end
 
 
 post '/autorisation_sortie' do
-	erb :'4_administration/4_2_autorisation_sortie'
+	erb :'4_administration'
 end
 get '/autorisation_sortie' do
-	erb :'4_administration/4_2_autorisation_sortie'
+	erb :'4_administration'
 end
 
 
 post '/medical' do
-	erb :'4_administration/4_3_medical'
+	erb :'4_administration'
 end
 get '/medical' do
-	erb :'4_administration/4_3_medical'
+	erb :'4_administration'
 end
 
 
 post '/droit_image' do
-	erb :'4_administration/4_4_droit_image'
+	erb :'4_administration'
 end
 get '/droit_image' do
-	erb :'4_administration/4_4_droit_image'
+	erb :'4_administration'
 end
 
 
 post '/pieces_a_joindre' do
-	erb :'5_pieces_a_joindre/pieces_a_joindre'
+	erb :'5_pieces_a_joindre'
 end
 get '/pieces_a_joindre' do
-	erb :'5_pieces_a_joindre/pieces_a_joindre'
+	erb :'5_pieces_a_joindre'
 end
 
 
 post '/validation' do
-	erb :'6_validation/validation'
+	erb :'6_validation'
 end
 get '/validation' do
-	erb :'6_validation/validation'
+	erb :'6_validation'
 end
 
 
 get '/confirmation' do
-	erb :'7_confirmation/confirmation'
+	erb :'7_confirmation'
 end
 post '/confirmation' do
-	erb :'7_confirmation/confirmation'
+	erb :'7_confirmation'
 end
 
+# REINSCRIPTIONS
 
-get '/tableau_de_bord' do
-	eleve_keys = redis.keys("ELEVE:*")
-	@liste_eleves = []
-	eleve_keys.each do |eleve_key|
-		@liste_eleves << redis.hgetall(eleve_key)
-	end	
- 	erb :tableau_de_bord
+get '/r0' do
+	erb :'r0_accueil'
+end
+
+get '/r1' do
+	erb :'r1_scolarite'
+end
+
+get '/r2' do
+	erb :'r2_famille'
+end
+
+get '/r3' do
+	erb :'r3_administration'
+end
+
+get '/r4' do
+	erb :'r4_pieces_a_joindre'
+end
+
+get '/r5' do
+	erb :'r5_validation'
+end
+
+get '/r6' do
+	erb :'r6_confirmation'
 end
