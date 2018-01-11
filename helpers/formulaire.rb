@@ -6,5 +6,3 @@ helpers do
         .join
 	end
 end
-
-
