@@ -94,7 +94,7 @@ scolarite_ant = [
   <p><em>Vous noterez que certains champs du formulaire sont déjà remplis. Suite à l'affectation, l'école élémentaire Picpus A nous a transmis certaines informations ; nous avons préféré ne pas vous les redemander. Néanmoins, vous pouvez toujours les corriger.</em></p>
 
   <form action="/eleve" method="post">
-  
+
     <h2>Identité de l'élève</h2>
 
     <hr>
@@ -108,7 +108,7 @@ scolarite_ant = [
     <%= construire scolarite_ant %>
 
     <%= erb :'partials/nouveau_precedent_suivant', :locals => { :precedent => "accueil", :suivant => "eleve/" + session[:identifiant] } %>
-    
+
   </form>
 
 </div>
