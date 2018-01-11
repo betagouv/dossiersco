@@ -2,55 +2,55 @@
 <html lang="en">
 <head>
 
-  <%= erb :'partials/header', :locals => {:stylesheet => 'style_identification'} %>
+	<%= erb :'partials/header', :locals => {:stylesheet => 'style_identification'} %>
 
 </head>
 
 <body>
 
-  <%= erb :'partials/nav_light' %>
+	<%= erb :'partials/nav_light' %>
 
-  <div class="site-wrapper">
+	<div class="site-wrapper">
 
-    <div class="site-wrapper-inner">
+		<div class="site-wrapper-inner">
 
-      <div class="cover-container">
+			<div class="cover-container">
 
-        <main role="main" class="inner cover">
-          <h1 class="cover-heading">Inscription au collège</h1>
-          <p class="lead">Entrée en sixième ou passage dans une classe supérieure, l'inscription de votre enfant se passe ici. Quelques clics pour une rentrée sereine.</p>
-        </main>
+				<main role="main" class="inner cover">
+					<h1 class="cover-heading">Inscription au collège</h1>
+					<p class="lead">Entrée en sixième ou passage dans une classe supérieure, l'inscription de votre enfant se passe ici. Quelques clics pour une rentrée sereine.</p>
+				</main>
 
-        <div class="container">
+				<div class="container">
 
-          <form class="form-signin" action="/accueil" method="post">
+					<form class="form-signin" action="/accueil" method="post">
 
-            <% if session[:erreur_de_connexion] %>
-              <p class="erreur">Nous ne connaissons aucun élève correspondant à ces informations.</p>                
-            <% end %>
+						<% if session[:erreur_de_connexion] %>
+							<p class="erreur">Nous ne connaissons aucun élève correspondant à ces informations.</p>
+						<% end %>
 
-            <label class="col-form-label" for="formGroupExampleInput">Identifiant</label>
-            <input name="identifiant" type="text" class="form-control" id="formGroupExampleInput" placeholder="Exemple : 2206004705B" autofocus>
+						<label class="col-form-label" for="formGroupExampleInput">Identifiant</label>
+						<input name="identifiant" type="text" class="form-control" id="formGroupExampleInput" placeholder="Exemple : 2206004705B" autofocus>
 
-            <label class="col-form-label" for="formGroupExampleInput">Date de naissance de l'élève</label>
-            <input name="date_naiss" type="date" class="form-control" id="formGroupExampleInput" placeholder="jj/mm/aaaa">
-            
-            <button class="btn btn-lg btn-primary btn-block">Connexion</button>
+						<label class="col-form-label" for="formGroupExampleInput">Date de naissance de l'élève</label>
+						<input name="date_naiss" type="date" class="form-control" id="formGroupExampleInput" placeholder="jj/mm/aaaa">
 
-          </form>
+						<button class="btn btn-lg btn-primary btn-block">Connexion</button>
 
-        </div>
+					</form>
 
-  	  <footer class="mastfoot">
-        <div class="inner">
-          <p>Vous êtes agent en EPLE ? L'entrée, c'est par <a href="">ici</a>.</p>
-        </div>
-      </footer>
+				</div>
 
-      </div>
+			<footer class="mastfoot">
+				<div class="inner">
+					<p>Vous êtes agent en EPLE ? L'entrée, c'est par <a href="">ici</a>.</p>
+				</div>
+			</footer>
 
-    </div>
+			</div>
 
-  </div>
+		</div>
+
+	</div>
 </body>
 </html>
