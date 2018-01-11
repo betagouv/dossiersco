@@ -9,43 +9,57 @@ enable :sessions
 redis = Redis.new
 
 get '/init' do
-	eleve =
-		{
-            prenom: "Etienne",
-            nom: "Puydebois",
-            sexe: "",
-            date_naiss: "1995-11-19",
-            ville_naiss: "",
-            pays_naiss: "",
-            nationalite: "",
-            classe_ant: "",
-            ets_ant: "Ecole Picpus A (Paris 12e)"
-        }
-    resp_legal_1 =
-    	{
-    		prenom: "Catherine",
-    		nom: "Puydebois"
-    	}
-    redis.hmset "dossier_eleve:1", :eleve, eleve.to_json, :resp_legal_1, resp_legal_1.to_json
 
 	eleve =
 		{
-            prenom: "Louise",
-            nom: "Piaf",
-            sexe: "",
-            date_naiss: "1990-10-10",
-            ville_naiss: "",
-            pays_naiss: "",
-            nationalite: "",
-            classe_ant: "",
-            ets_ant: "Ecole Picasso (Nîmes)"
-        }
-    resp_legal_1 =
-    	{
-    		prenom: "Jean",
-    		nom: "Piaf"
-    	}
-    redis.hmset "dossier_eleve:2", :eleve, eleve.to_json, :resp_legal_1, resp_legal_1.to_json
+			prenom: "Etienne",
+			nom: "Puydebois",
+			sexe: "",
+			date_naiss: "1995-11-19",
+			ville_naiss: "",
+			pays_naiss: "",
+			nationalite: "",
+			classe_ant: "",
+			ets_ant: "Ecole Picpus A (Paris 12e)"
+		}
+	resp_legal_1 =
+		{
+			prenom: "Catherine",
+			nom: "Puydebois"
+		}
+	redis.hmset "dossier_eleve:1", :eleve, eleve.to_json, :resp_legal_1, resp_legal_1.to_json
+
+	eleve =
+		{
+			prenom: "Edith",
+			nom: "Piaf",
+			sexe: "",
+			date_naiss: "1915-12-19",
+			ville_naiss: "",
+			pays_naiss: "",
+			nationalite: "",
+			classe_ant: "",
+			ets_ant: "Ecole Picasso (Nîmes)"
+		}
+	resp_legal_1 =
+		{
+			prenom: "Jean",
+			nom: "Piaf"
+		}
+	redis.hmset "dossier_eleve:2", :eleve, eleve.to_json, :resp_legal_1, resp_legal_1.to_json
+
+	database_content = ""
+
+	redis.keys.reverse_each do |hash|
+		database_content += hash + "<br>"
+		redis.hgetall(hash).reverse_each do |key, value|
+			database_content += key + " : " + value + "<br>"
+		end
+		database_content += "<br>"
+	end
+
+	database_content
+
 end
 
 
@@ -58,29 +72,29 @@ post '/accueil' do
 	identifiant = params[:identifiant]
 	date_naiss = params[:date_naiss]
 
-    if identifiant == "0"
+	if identifiant == "0"
 		session[:identifiant] = identifiant
 		erb :'r0_accueil'
 
 	elsif identifiant == "1" && date_naiss == "1995-11-19"
 		session[:identifiant] = identifiant
-    	eleve = JSON.parse(redis.hget("dossier_eleve:#{identifiant}",:eleve))
+		eleve = JSON.parse(redis.hget("dossier_eleve:#{identifiant}",:eleve))
 		erb :'0_accueil', locals: eleve
 
-    elsif identifiant == "2" && date_naiss == "1990-10-10"
+	elsif identifiant == "2" && date_naiss == "1990-10-10"
 		session[:identifiant] = identifiant
-    	eleve = JSON.parse(redis.hget("dossier_eleve:#{identifiant}",:eleve))
-	   	erb :'0_accueil', locals: eleve
+		eleve = JSON.parse(redis.hget("dossier_eleve:#{identifiant}",:eleve))
+		erb :'0_accueil', locals: eleve
 
 	elsif identifiant == "3"
 		session[:identifiant] = "1"
-    	eleve = JSON.parse(redis.hget("dossier_eleve:1",:eleve))
+		eleve = JSON.parse(redis.hget("dossier_eleve:1",:eleve))
 		erb :'0_accueil', locals: eleve
 
-    else
-        session[:erreur_de_connexion] = true
-        redirect '/'
-    end
+	else
+		session[:erreur_de_connexion] = true
+		redirect '/'
+	end
 
 end
 
@@ -110,7 +124,7 @@ post '/eleve/:identifiant' do
 			classe_ant: params[:classe_ant],
 			ets_ant: params[:ets_ant]
 		}
-    redis.hmset "dossier_eleve:#{identifiant}", :eleve, eleve_modifie.to_json
+	redis.hmset "dossier_eleve:#{identifiant}", :eleve, eleve_modifie.to_json
 	redirect to('/resp_legal_1')
 end
 
