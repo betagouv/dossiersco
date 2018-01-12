@@ -130,7 +130,7 @@ end
 
 
 get '/resp_legal_1' do
-	resp_legal_1 = JSON.parse(redis.hget("dossier_eleve:1225804331",:resp_legal_1))
+	resp_legal_1 = JSON.parse(redis.hget("dossier_eleve:1",:resp_legal_1))
 	erb :'2_famille', locals: resp_legal_1
 end
 post '/resp_legal_1' do
