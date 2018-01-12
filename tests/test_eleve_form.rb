@@ -26,7 +26,7 @@ class EleveFormTest < Test::Unit::TestCase
 		post '/accueil', identifiant: '2', date_naiss: '1990-03-23'
 		assert last_response.body.include? 'Elodie'
 	end
-	
+
 	# def test_entree_echec
 	# 	post '/accueil', identifiant: '3'
 	# 	follow_redirect!
