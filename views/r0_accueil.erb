@@ -1,25 +1,28 @@
+<% nom_du_college = "Germaine Tillion" %>
+<% demarche = "reinscription" %>
+
 <div class="col-12 col-md-8">
 
-  <span style="display:block; height: 60px;"></span>
+	<span style="display:block; height: 30px;"></span>
 
-  <h1>Collège Germaine Tillion</h1>
+	<h1>Collège <%= nom_du_college %></h1>
 
-  <hr>
+	<hr>
 
-  <span style="display:block; height: 20px;"></span>
+	<span style="display:block; height: 20px;"></span>
 
-  <p>Le conseil de classe du troisième trimestre a validé le passage en cinquième de votre enfant <strong>Etienne Puydebois</strong> au <strong>collège Germaine Tillion (Paris 12e)</strong>.</p>
+	<%= erb :'partials/contexte', :locals => { demarche: demarche } %>
 
-  <p>Vous devez maintenant procéder à sa réinscription sur ce site avant le <strong>samedi 3 juin 2018</strong>.</p>
+	<%= erb :'partials/message_college', :locals => { demarche: demarche } %>
 
-  <p>Cette étape est nécessaire pour choisir les enseignements que votre enfant suivra l'an prochain, remplir une poignée de formalités administratives et mettre à jour vos coordonnées.</p>
+	<span style="display:block; height: 30px;"></span>
 
-  <span style="display:block; height: 50px;"></span>        
+	<div class="row justify-content-md-center">
+		<form action="/r1" method="get">
+			<button class="btn btn-primary">
+				<%= erb :'partials/message_bouton_commencer', :locals => { demarche: demarche } %>
+			</button>
+		</form>
+	</div>
 
-  <div class="row justify-content-md-center">
-    <form action="/r1" method="get">
-      <button class="btn btn-primary">Commencer la réinscription</button>
-    </form>
-  </div>
-  
 </div>
