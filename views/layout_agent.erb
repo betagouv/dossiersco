@@ -1,0 +1,42 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link href="style.css" rel="stylesheet">
+
+    <title>dossiersco web</title>
+
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-light navbar-expand-md fixed-top justify-content-between" style="background-color: transparent;">
+      <a class="navbar-brand" href="/r0"><strong style="color: #2d9ee0;">dossiersco web</strong></a>
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Collège Germaine Tillion</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">S. Lambert</a>
+        </li>
+      </ul>
+    </nav>
+
+    <main role="main" class="container">
+
+      <div class="row row-offcanvas row-offcanvas-right justify-content-center">
+
+      <%= yield %>
+
+      </div><!--/row-->
+
+    </main><!--/.container-->
+
+  </body>
+</html>

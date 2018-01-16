@@ -252,3 +252,9 @@ end
 get '/r6' do
 	erb :'r6_confirmation'
 end
+
+# AGENTS
+
+get '/agent' do
+	erb :'agent', layout: :layout_agent
+end
