@@ -82,6 +82,10 @@ hr {
   background-color: #60d156;
 }
 
+.bg-primary {
+  background-color: #2d9ee0;
+}
+
 .col-nav {
   text-align: center;
 }
