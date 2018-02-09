@@ -1,14 +1,10 @@
-<% nom_du_college = "Georges Courteline" %>
 <% demarche = "inscription" %>
-<% etablissement = {
-	"nom" => "Jean Lurçat",
-	"localite" => "Brive-la-Gaillarde"} %>
 
 <div class="col-12 col-md-8">
 
 	<span style="display:block; height: 30px;"></span>
 
-	<h1>Collège <%= nom_du_college %></h1>
+	<h1>Collège <%= etablissement[:nom] %></h1>
 
 	<hr>
 
@@ -21,7 +17,9 @@
 				etablissement: etablissement } %>
 
 	<%= erb :'partials/message_college',
-			:locals => { demarche: demarche } %>
+			:locals => {
+				demarche: demarche,
+				etablissement: etablissement } %>
 
 	<span style="display:block; height: 30px;"></span>
 

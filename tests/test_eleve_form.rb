@@ -29,6 +29,7 @@ class EleveFormTest < Test::Unit::TestCase
 	def test_entree_succes_eleve_2
 		post '/accueil', identifiant: '2', date_naiss: '1915-12-19'
 		assert last_response.body.include? 'Edith'
+		assert last_response.body.include? 'Jean Lurçat (Brive-la-Gaillarde)'
 	end
 
 	# def test_entree_echec
