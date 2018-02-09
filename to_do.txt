@@ -1,0 +1,2 @@
+[ ] Brancher les conditions de l'accueil réinscription (classe >= 5e)
+[ ] La modification de la ville de naissance ne devrait pas modifier la date de naissance
