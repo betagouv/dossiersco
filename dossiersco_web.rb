@@ -50,9 +50,9 @@ get '/init' do
 
 	database_content = ""
 
-	redis.keys.reverse_each do |hash|
+	redis.keys.each do |hash|
 		database_content += hash + "<br>"
-		redis.hgetall(hash).reverse_each do |key, value|
+		redis.hgetall(hash).each do |key, value|
 			database_content += key + " : " + value + "<br>"
 		end
 		database_content += "<br>"
