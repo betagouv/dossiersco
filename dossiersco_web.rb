@@ -9,6 +9,7 @@ enable :sessions
 redis = Redis.new
 
 get '/init' do
+	redis.flushall
 
 	eleve =
 		{
