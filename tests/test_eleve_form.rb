@@ -24,6 +24,7 @@ class EleveFormTest < Test::Unit::TestCase
 	def test_entree_succes_eleve_1
 		post '/accueil', identifiant: '1', date_naiss: '1995-11-19'
 		assert last_response.body.include? 'Etienne'
+		assert last_response.body.include? 'Georges Courteline (Paris 12è)'
 	end
 
 	def test_entree_succes_eleve_2
