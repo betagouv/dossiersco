@@ -1,6 +1,17 @@
 <% if demarche == "inscription" %>
 
-	<p>Votre enfant <strong><%= eleve[:prenom.to_s] %> <%= eleve[:nom.to_s] %></strong> a été affecté au <strong>collège Jean Lurçat (Brive-la-Gaillarde)</strong> pour son entrée en sixième.</p>
+	<p>
+	Votre enfant
+	<strong>
+		<%= eleve[:prenom.to_s] %> <%= eleve[:nom.to_s] %>
+	</strong>
+	a été affecté au collège
+	<strong>
+		<%= etablissement[:nom.to_s] %> (<%= etablissement[:localite.to_s] %>)
+	</strong>
+	pour son entrée en
+		sixième
+	.</p>
 
 	<p>Vous avez jusqu'au <strong>vendredi 21 juin 2018</strong> pour procéder à son inscription. Le respect de cette date est nécessaire pour maintenir la place de votre enfant dans notre établissement.</p>
 
