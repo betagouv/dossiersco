@@ -70,27 +70,14 @@ end
 
 post '/accueil' do
 	identifiant = params[:identifiant]
-	date_naiss = params[:date_naiss]
+	eleve = JSON.parse(redis.hget("dossier_eleve:#{identifiant}",:eleve))
 
-	if identifiant == "0"
+	date_naiss_fournie = params[:date_naiss]
+	date_naiss_secrete = eleve[:date_naiss.to_s]
+
+	if date_naiss_secrete == date_naiss_fournie
 		session[:identifiant] = identifiant
-		erb :'r0_accueil'
-
-	elsif identifiant == "1" && date_naiss == "1995-11-19"
-		session[:identifiant] = identifiant
-		eleve = JSON.parse(redis.hget("dossier_eleve:#{identifiant}",:eleve))
-		erb :'0_accueil', locals: eleve
-
-	elsif identifiant == "2" && date_naiss == "1990-10-10"
-		session[:identifiant] = identifiant
-		eleve = JSON.parse(redis.hget("dossier_eleve:#{identifiant}",:eleve))
-		erb :'0_accueil', locals: eleve
-
-	elsif identifiant == "3"
-		session[:identifiant] = "1"
-		eleve = JSON.parse(redis.hget("dossier_eleve:1",:eleve))
-		erb :'0_accueil', locals: eleve
-
+		erb :'0_accueil', locals: { eleve: eleve }
 	else
 		session[:erreur_de_connexion] = true
 		redirect '/'
