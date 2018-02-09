@@ -49,12 +49,19 @@ get '/init' do
 		}
 	redis.hmset "dossier_eleve:2", :eleve, eleve.to_json, :resp_legal_1, resp_legal_1.to_json
 
+	etablissement = {
+		nom: "Jean Lurçat",
+		localite: "Brive-la-Gaillarde",
+		message_inscription: "Bonjour, (...)"
+	}
+	redis.hmset "etablissement:1", :etablissement, etablissement.to_json
+
 	database_content = ""
 
-	redis.keys.each do |hash|
-		database_content += hash + "<br>"
-		redis.hgetall(hash).each do |key, value|
-			database_content += key + " : " + value + "<br>"
+	redis.keys.each do |key|
+		database_content += key + "<br>"
+		redis.hgetall(key).each do |field, value|
+			database_content += field + " : " + value + "<br>"
 		end
 		database_content += "<br>"
 	end
@@ -72,13 +79,14 @@ end
 post '/accueil' do
 	identifiant = params[:identifiant]
 	eleve = JSON.parse(redis.hget("dossier_eleve:#{identifiant}",:eleve))
+	etablissement = JSON.parse(redis.hget("etablissement:1",:etablissement))
 
 	date_naiss_fournie = params[:date_naiss]
 	date_naiss_secrete = eleve[:date_naiss.to_s]
 
 	if date_naiss_secrete == date_naiss_fournie
 		session[:identifiant] = identifiant
-		erb :'0_accueil', locals: { eleve: eleve }
+		erb :'0_accueil', locals: { eleve: eleve, etablissement: etablissement }
 	else
 		session[:erreur_de_connexion] = true
 		redirect '/'

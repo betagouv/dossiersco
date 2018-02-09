@@ -17,7 +17,15 @@
 
 <% else %>
 
-	<p>Le conseil de classe du troisième trimestre a validé le passage en cinquième de votre enfant <strong>Etienne Puydebois</strong> au <strong>collège Jean Luçat (Brive-la-Gaillarde)</strong>.</p>
+	<p>Le conseil de classe du troisième trimestre a validé le passage en cinquième de votre enfant
+	<strong>
+		<%= eleve[:prenom.to_s] %> <%= eleve[:nom.to_s] %>
+	</strong>
+	au collège
+	<strong>
+		<%= etablissement[:nom.to_s] %> (<%= etablissement[:localite.to_s] %>)
+	</strong>
+	.</p>
 
 	<p>Vous devez maintenant procéder à sa réinscription sur ce site avant le <strong>samedi 3 juin 2018</strong>.</p>
 
