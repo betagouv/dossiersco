@@ -21,7 +21,8 @@ get '/init' do
 			pays_naiss: "",
 			nationalite: "",
 			classe_ant: "",
-			ets_ant: "Ecole Picpus A (Paris 12e)"
+			ets_ant: "Ecole Picpus A (Paris 12e)",
+			college: "2"
 		}
 	resp_legal_1 =
 		{
@@ -40,7 +41,8 @@ get '/init' do
 			pays_naiss: "",
 			nationalite: "",
 			classe_ant: "",
-			ets_ant: "Ecole Picasso (Nîmes)"
+			ets_ant: "Ecole Picasso (Nîmes)",
+			college: "1"
 		}
 	resp_legal_1 =
 		{
@@ -55,6 +57,13 @@ get '/init' do
 		message_inscription: "Bonjour, (...)"
 	}
 	redis.hmset "etablissement:1", :etablissement, etablissement.to_json
+
+	etablissement = {
+		nom: "Georges Courteline",
+		localite: "Paris 12è",
+		message_inscription: "Bonjour, (...)"
+	}
+	redis.hmset "etablissement:2", :etablissement, etablissement.to_json
 
 	database_content = ""
 
@@ -79,7 +88,8 @@ end
 post '/accueil' do
 	identifiant = params[:identifiant]
 	eleve = JSON.parse(redis.hget("dossier_eleve:#{identifiant}",:eleve))
-	etablissement = JSON.parse(redis.hget("etablissement:1",:etablissement))
+	college = eleve[:college.to_s]
+	etablissement = JSON.parse(redis.hget("etablissement:#{college}",:etablissement))
 
 	date_naiss_fournie = params[:date_naiss]
 	date_naiss_secrete = eleve[:date_naiss.to_s]
