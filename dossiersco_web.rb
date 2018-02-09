@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'redis'
+require 'redis-load'
 require 'json'
 
 require_relative 'helpers/formulaire'
@@ -11,59 +12,8 @@ redis = Redis.new
 get '/init' do
 	redis.flushall
 
-	eleve =
-		{
-			prenom: "Etienne",
-			nom: "Puydebois",
-			sexe: "",
-			date_naiss: "1995-11-19",
-			ville_naiss: "",
-			pays_naiss: "",
-			nationalite: "",
-			classe_ant: "",
-			ets_ant: "Ecole Picpus A (Paris 12e)",
-			college: "2"
-		}
-	resp_legal_1 =
-		{
-			prenom: "Catherine",
-			nom: "Puydebois"
-		}
-	redis.hmset "dossier_eleve:1", :eleve, eleve.to_json, :resp_legal_1, resp_legal_1.to_json
-
-	eleve =
-		{
-			prenom: "Edith",
-			nom: "Piaf",
-			sexe: "",
-			date_naiss: "1915-12-19",
-			ville_naiss: "",
-			pays_naiss: "",
-			nationalite: "",
-			classe_ant: "",
-			ets_ant: "Ecole Picasso (Nîmes)",
-			college: "1"
-		}
-	resp_legal_1 =
-		{
-			prenom: "Jean",
-			nom: "Piaf"
-		}
-	redis.hmset "dossier_eleve:2", :eleve, eleve.to_json, :resp_legal_1, resp_legal_1.to_json
-
-	etablissement = {
-		nom: "Jean Lurçat",
-		localite: "Brive-la-Gaillarde",
-		message_inscription: "Bonjour, (...)"
-	}
-	redis.hmset "etablissement:1", :etablissement, etablissement.to_json
-
-	etablissement = {
-		nom: "Georges Courteline",
-		localite: "Paris 12è",
-		message_inscription: "Bonjour, (...)"
-	}
-	redis.hmset "etablissement:2", :etablissement, etablissement.to_json
+	loader = RedisLoad::Loader.new(redis)
+	loader.load_json("tests/test.json")
 
 	database_content = ""
 
