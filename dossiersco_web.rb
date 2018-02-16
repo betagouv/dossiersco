@@ -37,7 +37,9 @@ end
 
 post '/accueil' do
 	identifiant = params[:identifiant]
-	eleve = JSON.parse(redis.hget("dossier_eleve:#{identifiant}",:eleve))
+
+	eleve = get_eleve(redis, identifiant)
+
 	college = eleve[:college.to_s]
 	etablissement = redis.hgetall("etablissement:#{college}")
 
@@ -51,7 +53,6 @@ post '/accueil' do
 		session[:erreur_de_connexion] = true
 		redirect '/'
 	end
-
 end
 
 get '/accueil' do
@@ -61,13 +62,13 @@ end
 
 get '/eleve/:identifiant' do
 	identifiant = params[:identifiant]
-	eleve = JSON.parse(redis.hget("dossier_eleve:#{identifiant}",:eleve))
+	eleve = get_eleve(redis, identifiant)
 	erb :'1_eleve', locals: eleve
 end
 
 post '/eleve/:identifiant' do
 	identifiant = params[:identifiant]
-	eleve = JSON.parse(redis.hget("dossier_eleve:#{identifiant}",:eleve))
+	eleve = get_eleve(redis, identifiant)
 	eleve_modifie =
 		{
 			prenom: eleve["prenom"],
