@@ -10,11 +10,41 @@
 	"message_inscription" : "Bonjour, (...)"
   },
   "dossier_eleve:2": {
-    "eleve": "{\"prenom\":\"Edith\",\"nom\":\"Piaf\",\"sexe\":\"\",\"date_naiss\":\"1915-12-19\",\"ville_naiss\":\"\",\"pays_naiss\":\"\",\"nationalite\":\"\",\"classe_ant\":\"\",\"ets_ant\":\"Ecole Picasso (Nîmes)\",\"college\":\"1\"}",
-    "resp_legal_1": "{\"prenom\":\"Jean\",\"nom\":\"Piaf\"}"
+  	"procedure" : "inscription",
+    "eleve": {
+    	"prenom" : "Edith",
+    	"nom" : "Piaf",
+    	"sexe" : "",
+    	"date_naiss" : "1915-12-19",
+    	"ville_naiss" : "",
+    	"pays_naiss" : "",
+    	"nationalite" : "",
+    	"classe_ant" : "",
+    	"ets_ant" : "Ecole Picasso (Nîmes)",
+    	"college" : "1"
+    },
+    "resp_legal_1": {
+    	"prenom" : "Jean",
+    	"nom" : "Piaf"
+    }
   },
   "dossier_eleve:1": {
-    "eleve": "{\"prenom\":\"Etienne\",\"nom\":\"Puydebois\",\"sexe\":\"\",\"date_naiss\":\"1995-11-19\",\"ville_naiss\":\"\",\"pays_naiss\":\"\",\"nationalite\":\"\",\"classe_ant\":\"\",\"ets_ant\":\"Ecole Picpus A (Paris 12e)\",\"college\":\"2\"}",
-    "resp_legal_1": "{\"prenom\":\"Catherine\",\"nom\":\"Puydebois\"}"
+    "procedure" : "inscription",
+	"eleve": {
+    	"prenom" : "Etienne",
+    	"nom" : "Puydebois",
+    	"sexe" : "",
+    	"date_naiss" : "1995-11-19",
+    	"ville_naiss" : "",
+    	"pays_naiss" : "",
+    	"nationalite" : "",
+    	"classe_ant" : "",
+    	"ets_ant" : "Ecole Picpus A (Paris 12e)",
+    	"college" : "2"
+    },
+    "resp_legal_1": {
+    	"prenom" : "Catherine",
+    	"nom" : "Puydebois"
+    }
   }
 }
