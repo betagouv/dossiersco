@@ -4,3 +4,4 @@
 [ ] Gérer les modèles eleve et etablissement avec une classe, pour pouvoir faire etablissement.nom, eleve.nom_complet etc.
 [ ] Extraire la base de test dans un fichier à part
 [ ] Installer active_support pour symbolize_keys
+[ ] Ingérer un fichier Affelnet
