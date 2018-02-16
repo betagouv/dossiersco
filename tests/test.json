@@ -1,9 +1,13 @@
 {
   "etablissement:2": {
-    "etablissement": "{\"nom\":\"Georges Courteline\",\"localite\":\"Paris 12è\",\"message_inscription\":\"Bonjour, (...)\"}"
+    "nom" : "Georges Courteline",
+    "localite" : "Paris 12è",
+    "message_inscription" : "Bonjour, (...)"
   },
   "etablissement:1": {
-    "etablissement": "{\"nom\":\"Jean Lurçat\",\"localite\":\"Brive-la-Gaillarde\",\"message_inscription\":\"Bonjour, (...)\"}"
+	"nom" : "Jean Lurçat",
+	"localite" : "Brive-la-Gaillarde",
+	"message_inscription" : "Bonjour, (...)"
   },
   "dossier_eleve:2": {
     "eleve": "{\"prenom\":\"Edith\",\"nom\":\"Piaf\",\"sexe\":\"\",\"date_naiss\":\"1915-12-19\",\"ville_naiss\":\"\",\"pays_naiss\":\"\",\"nationalite\":\"\",\"classe_ant\":\"\",\"ets_ant\":\"Ecole Picasso (Nîmes)\",\"college\":\"1\"}",

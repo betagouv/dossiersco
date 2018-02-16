@@ -39,7 +39,7 @@ post '/accueil' do
 	identifiant = params[:identifiant]
 	eleve = JSON.parse(redis.hget("dossier_eleve:#{identifiant}",:eleve))
 	college = eleve[:college.to_s]
-	etablissement = JSON.parse(redis.hget("etablissement:#{college}",:etablissement))
+	etablissement = redis.hgetall("etablissement:#{college}")
 
 	date_naiss_fournie = params[:date_naiss]
 	date_naiss_secrete = eleve[:date_naiss.to_s]
