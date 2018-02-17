@@ -10,7 +10,7 @@
 	"message_inscription" : "Bonjour, (...)"
   },
   "dossier_eleve:2": {
-  	"procedure" : "inscription",
+  	"demarche" : "inscription",
     "eleve": {
     	"prenom" : "Edith",
     	"nom" : "Piaf",
@@ -29,7 +29,7 @@
     }
   },
   "dossier_eleve:1": {
-    "procedure" : "inscription",
+    "demarche" : "réinscription",
 	"eleve": {
     	"prenom" : "Etienne",
     	"nom" : "Puydebois",

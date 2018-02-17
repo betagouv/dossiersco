@@ -52,4 +52,14 @@ class EleveFormTest < Test::Unit::TestCase
 	# 	follow_redirect!
 	# 	assert last_response.body.include? 'Quelques clics'
 	# end
+
+	def test_accueil_et_inscription
+		post '/accueil', identifiant: '2', date_naiss: '1915-12-19'
+		assert last_response.body.include? 'son inscription'
+	end
+
+	def test_accueil_et_réinscription
+		post '/accueil', identifiant: '1', date_naiss: '1995-11-19'
+		assert last_response.body.include? 'réinscription'
+	end
 end
