@@ -42,13 +42,18 @@ post '/accueil' do
 
 	college = eleve[:college.to_s]
 	etablissement = redis.hgetall("etablissement:#{college}")
+	demarche = redis.hget("dossier_eleve:#{identifiant}", :demarche)
 
 	date_naiss_fournie = params[:date_naiss]
 	date_naiss_secrete = eleve[:date_naiss.to_s]
 
 	if date_naiss_secrete == date_naiss_fournie
 		session[:identifiant] = identifiant
-		erb :'0_accueil', locals: { eleve: eleve, etablissement: etablissement }
+
+		erb :'0_accueil', locals: {
+			eleve: eleve,
+			etablissement: etablissement,
+			demarche: demarche}
 	else
 		session[:erreur_de_connexion] = true
 		redirect '/'
