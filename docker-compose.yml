@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+  app:
+    image: ruby
+    ports:
+      - 9292:9292
+      - 9393:9393
+    volumes:
+      - ./:/app
+    command: /bin/bash -lc "bundle install && bundle exec shotgun -o 0.0.0.0"
+    working_dir: /app
+    environment:
+      REDIS_URL: redis://redis
+      RUBYOPT: -KU
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+  test:
+    image: ruby
+    command: /bin/bash -lc "bundle install && while true; do ruby tests/test_eleve_form.rb; sleep 1; done"
+    volumes:
+      - ./:/app
+    working_dir: /app
+    environment:
+      REDIS_URL: redis://redis
+      RUBYOPT: -KU
