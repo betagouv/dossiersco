@@ -62,4 +62,8 @@ class EleveFormTest < Test::Unit::TestCase
 		post '/accueil', identifiant: '1', date_naiss: '1995-11-19'
 		assert last_response.body.include? 'réinscription'
 	end
+
+	def teardown
+		get '/init'
+	end
 end
