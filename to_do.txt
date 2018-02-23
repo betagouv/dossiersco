@@ -1,6 +1,6 @@
-[ ] Brancher les conditions de l'accueil réinscription (classe >= 5e)
+[X] Brancher les conditions de l'accueil réinscription (classe >= 5e)
 [ ] La modification de la ville de naissance ne devrait pas modifier la date de naissance
-[ ] Créer un docker-compose pour documenter la dépendance redis
+[X] Créer un docker-compose pour documenter la dépendance redis
 [ ] Gérer les modèles eleve et etablissement avec une classe, pour pouvoir faire etablissement.nom, eleve.nom_complet etc.
 [X] Extraire la base de test dans un fichier à part
 [ ] Installer active_support pour symbolize_keys
