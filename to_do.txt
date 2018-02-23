@@ -5,5 +5,7 @@
 [X] Extraire la base de test dans un fichier à part
 [ ] Installer active_support pour symbolize_keys
 [ ] Ingérer un fichier Affelnet
-[ ] Tester l'accès à resp_legal_1
+[X] Tester l'accès à resp_legal_1
 [ ] Harmoniser l'accès aux entités
+[ ] Restreindre l'accès aux données d'un élève aux utilisateurs identifés
+[ ] Corriger le post vers resp_legal_1

@@ -6,6 +6,7 @@ require 'json'
 require_relative 'helpers/formulaire'
 
 enable :sessions
+set :session_secret, "secret"
 
 redis = Redis.new
 
