@@ -146,5 +146,5 @@ get '/r5' do
 end
 
 get '/r6' do
-	erb :'r6_confirmation'
+	erb :'7_confirmation'
 end
