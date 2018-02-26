@@ -32,6 +32,7 @@ end
 
 
 get '/' do
+	session.clear
 	erb :'#_identification', layout: false
 end
 
