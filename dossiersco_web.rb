@@ -134,11 +134,11 @@ get '/r2' do
 end
 
 get '/r3' do
-	erb :'r3_administration'
+	erb :'4_administration'
 end
 
 get '/r4' do
-	erb :'r4_pieces_a_joindre'
+	erb :'5_pieces_a_joindre'
 end
 
 get '/r5' do
