@@ -29,6 +29,12 @@
 							<p class="erreur">Nous ne connaissons aucun élève correspondant à ces informations.</p>
 						<% end %>
 
+						<% if session[:erreur_id_ou_date_naiss_absente] %>
+							<p class="erreur">Veuillez indiquer votre identifiant et la date de naissance de l'élève.</p>
+						<% end %>
+
+						<% session.clear %>
+
 						<label class="col-form-label" for="formGroupExampleInput">Identifiant</label>
 						<input name="identifiant" type="text" class="form-control" id="formGroupExampleInput" placeholder="Exemple : 2206004705B" autofocus>
 
