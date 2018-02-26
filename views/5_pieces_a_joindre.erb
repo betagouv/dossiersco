@@ -1,4 +1,17 @@
-<% @section = 5 %>
+<% demarche = "réinscription" %>
+
+<% if demarche == "inscription" %>
+  <% @section = 5 %>
+  <% nb_documents_demandes = 4 %>
+  <% documents_demandes = ["Photo d'identité de l'élève", "Pièce d'identité de l'élève", "Attestation d'assurance scolaire", "Notification du tarif de cantine"] %>
+  <% pourquoi_on_le_demande = ["Pour faire les trombinoscopes en attendant les photos de classe", "Pour vérifier l'orthographe du nom et du prénom de l'élève", "Pour participer aux sorties et voyages scolaires", "Pour facturer équitablement la cantine"]%>
+<% else %>
+  <% @section = 4 %>
+  <% nb_documents_demandes = 3 %>
+  <% documents_demandes = ["Photo d'identité de l'élève", "Attestation d'assurance scolaire", "Extrait du jugement relatif à la garde de l'enfant"] %>
+  <% pourquoi_on_le_demande = ["Pour coller une photo récente sur les carnets de correspondance", "Pour participer aux sorties et voyages scolaires, notamment", "En cas de séparation, de divorce ou de tutelle datant de moins d'un an"]%>
+<% end %>
+
 <%= erb :'partials/navigation' %>
 
 <div class="col-12 col-md-8">
@@ -11,10 +24,6 @@
 
   <form>
 
-    <% documents_demandes = ["Photo d'identité de l'élève", "Pièce d'identité de l'élève", "Attestation d'assurance scolaire", "Notification du tarif de cantine"] %>
-
-    <% pourquoi_on_le_demande = ["Pour faire les trombinoscopes en attendant les photos de classe", "Pour vérifier l'orthographe du nom et du prénom de l'élève", "Pour participer aux sorties et voyages scolaires", "Pour facturer équitablement la cantine"]%>
-
     <div class="card-deck">
       <% for i in 0..1 %>
         <% @document = documents_demandes[i] %>
@@ -24,7 +33,7 @@
     </div>
 
     <div class="card-deck">
-      <% for i in 2..3 %>
+      <% for i in 2..nb_documents_demandes-1 %>
         <% @document = documents_demandes[i] %>
         <% @explication = pourquoi_on_le_demande[i] %>
         <%= erb :'partials/carte_upload' %>
@@ -35,4 +44,4 @@
 
   <%= erb :'partials/precedent_suivant', :locals => { :precedent => "droit_image", :suivant => "validation" } %>
 
-</div><!--/span-->
+</div>
