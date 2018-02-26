@@ -47,14 +47,17 @@ post '/identification' do
 	if date_naiss_secrete == date_naiss_fournie
 		session[:identifiant] = identifiant
 		session[:demarche] = get_demarche(redis, session[:identifiant])
-		redirect '/accueil'
+		redirect "/#{session[:identifiant]}/accueil"
 	else
 		session[:erreur_id_ou_date_naiss_incorrecte] = true
 		redirect '/'
 	end
 end
 
-get '/accueil' do
+get '/:identifiant/accueil' do
+	if params[:identifiant] != session[:identifiant]
+		redirect "/"
+	end
 	erb :'0_accueil', locals: { redis: redis }
 end
 
