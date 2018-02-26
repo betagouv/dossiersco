@@ -1,7 +1,7 @@
 {
   "etablissement:2": {
     "nom" : "Georges Courteline",
-    "localite" : "Paris 12è",
+    "localite" : "Paris 12ème",
     "message_inscription" : "Bonjour, (...)"
   },
   "etablissement:1": {
@@ -11,6 +11,7 @@
   },
   "dossier_eleve:2": {
   	"demarche" : "inscription",
+    "etablissement" : "1",
     "eleve": {
     	"prenom" : "Edith",
     	"nom" : "Piaf",
@@ -20,8 +21,7 @@
     	"pays_naiss" : "",
     	"nationalite" : "",
     	"classe_ant" : "",
-    	"ets_ant" : "Ecole Picasso (Nîmes)",
-    	"college" : "1"
+    	"ets_ant" : "Ecole Picasso (Nîmes)"
     },
     "resp_legal_1": {
     	"prenom" : "Jean",
@@ -30,6 +30,7 @@
   },
   "dossier_eleve:1": {
     "demarche" : "réinscription",
+    "etablissement" : "2",
 	"eleve": {
     	"prenom" : "Etienne",
     	"nom" : "Puydebois",
@@ -39,8 +40,7 @@
     	"pays_naiss" : "",
     	"nationalite" : "",
     	"classe_ant" : "",
-    	"ets_ant" : "Ecole Picpus A (Paris 12e)",
-    	"college" : "2"
+    	"ets_ant" : "Ecole Picpus A (Paris 12e)"
     },
     "resp_legal_1": {
     	"prenom" : "Catherine",

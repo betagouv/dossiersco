@@ -23,21 +23,17 @@ class EleveFormTest < Test::Unit::TestCase
 
 	def test_entree_succes_eleve_1
 		post '/identification', identifiant: '1', date_naiss: '1995-11-19'
+		follow_redirect!
 		assert last_response.body.include? 'Etienne'
-		assert last_response.body.include? 'Georges Courteline (Paris 12è)'
+		assert last_response.body.include? 'Georges Courteline (Paris 12ème)'
 	end
 
 	def test_entree_succes_eleve_2
 		post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+		follow_redirect!
 		assert last_response.body.include? 'Edith'
 		assert last_response.body.include? 'Jean Lurçat (Brive-la-Gaillarde)'
 	end
-
-	# def test_entree_echec
-	# 	post '/accueil', identifiant: '3'
-	# 	follow_redirect!
-	# 	assert last_response.body.include? 'aucun élève'
-	# end
 
 	def test_modification_lieu_naiss_eleve
 		post '/identification', identifiant: '2', date_naiss: '1915-12-19'
@@ -47,19 +43,15 @@ class EleveFormTest < Test::Unit::TestCase
 		assert last_response.body.include? 'Beziers'
 	end
 
-	# def test_mauvaise_connexion
-	# 	get '/eleve?'
-	# 	follow_redirect!
-	# 	assert last_response.body.include? 'Quelques clics'
-	# end
-
 	def test_accueil_et_inscription
 		post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+		follow_redirect!
 		assert last_response.body.include? 'son inscription'
 	end
 
 	def test_accueil_et_réinscription
 		post '/identification', identifiant: '1', date_naiss: '1995-11-19'
+		follow_redirect!
 		assert last_response.body.include? 'réinscription'
 	end
 

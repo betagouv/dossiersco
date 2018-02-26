@@ -1,13 +1,13 @@
-<% if demarche == "inscription" %>
+<% if session[:demarche] == "inscription" %>
 
 	<p>
 	Votre enfant
 	<strong>
-		<%= eleve[:prenom.to_s] %> <%= eleve[:nom.to_s] %>
+		<%= get_prenom_eleve(redis, session[:identifiant]) %> <%= get_nom_eleve(redis, session[:identifiant]) %>
 	</strong>
 	a été affecté au collège
 	<strong>
-		<%= etablissement[:nom.to_s] %> (<%= etablissement[:localite.to_s] %>)
+		<%= get_nom_etablissement(redis, session[:identifiant]) %> (<%= get_localite_etablissement(redis, session[:identifiant]) %>)
 	</strong>
 	pour son entrée en
 		sixième
@@ -19,11 +19,11 @@
 
 	<p>Le conseil de classe du troisième trimestre a validé le passage en cinquième de votre enfant
 	<strong>
-		<%= eleve[:prenom.to_s] %> <%= eleve[:nom.to_s] %>
+		<%= get_prenom_eleve(redis, session[:identifiant]) %> <%= get_nom_eleve(redis, session[:identifiant]) %>
 	</strong>
 	au collège
 	<strong>
-		<%= etablissement[:nom.to_s] %> (<%= etablissement[:localite.to_s] %>)
+		<%= get_nom_etablissement(redis, session[:identifiant]) %> (<%= get_localite_etablissement(redis, session[:identifiant]) %>)
 	</strong>
 	.</p>
 
