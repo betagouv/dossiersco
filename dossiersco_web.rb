@@ -91,97 +91,27 @@ post '/eleve/:identifiant' do
 end
 
 
-get '/resp_legal_1' do
-	resp_legal_1 = JSON.parse(redis.hget("dossier_eleve:1",:resp_legal_1))
-	erb :'2_famille', locals: resp_legal_1
-end
-post '/resp_legal_1' do
-	resp_legal_1_modifie =
-		{
-			prenom: params[:prenom],
-			nom: params[:nom]
-		}
-    redis.hmset "dossier_eleve:1225804331", :resp_legal_1, resp_legal_1_modifie.to_json
-	redirect to('/resp_legal_2')
+get '/scolarite' do
+	erb :'2_scolarite'
 end
 
-
-post '/resp_legal_2' do
-	erb :'2_famille'
-end
-get '/resp_legal_2' do
-	erb :'2_famille'
+get '/famille' do
+	erb :'3_famille'
 end
 
-
-post '/urgence' do
-	erb :'2_famille'
-end
-get '/urgence' do
-	erb :'2_famille'
-end
-
-
-post '/choix_pedagogiques' do
-	erb :'3_scolarite'
-end
-get '/choix_pedagogiques' do
-	erb :'3_scolarite'
-end
-
-
-post '/regime' do
-	erb :'4_administration'
-end
-get '/regime' do
+get '/administration' do
 	erb :'4_administration'
 end
 
-
-post '/autorisation_sortie' do
-	erb :'4_administration'
-end
-get '/autorisation_sortie' do
-	erb :'4_administration'
-end
-
-
-post '/medical' do
-	erb :'4_administration'
-end
-get '/medical' do
-	erb :'4_administration'
-end
-
-
-post '/droit_image' do
-	erb :'4_administration'
-end
-get '/droit_image' do
-	erb :'4_administration'
-end
-
-
-post '/pieces_a_joindre' do
-	erb :'5_pieces_a_joindre'
-end
 get '/pieces_a_joindre' do
 	erb :'5_pieces_a_joindre'
 end
 
-
-post '/validation' do
-	erb :'6_validation'
-end
 get '/validation' do
 	erb :'6_validation'
 end
 
-
 get '/confirmation' do
-	erb :'7_confirmation'
-end
-post '/confirmation' do
 	erb :'7_confirmation'
 end
 
