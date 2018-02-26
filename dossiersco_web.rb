@@ -49,6 +49,7 @@ post '/identification' do
 
 	if date_naiss_secrete == date_naiss_fournie
 		session[:identifiant] = identifiant
+		session[:demarche] = demarche
 
 		erb :'0_accueil', locals: {
 			eleve: eleve,
