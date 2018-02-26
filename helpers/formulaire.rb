@@ -8,6 +8,12 @@ helpers do
 
 	def get_eleve redis, identifiant
 		ruby_format = redis.hget("dossier_eleve:#{identifiant}",:eleve)
+
+		if ruby_format.nil?
+			session[:erreur_id_ou_date_naiss_incorrecte] = true
+			redirect '/'
+		end
+
 		json_format = ruby_format.gsub(/=>/,':')
 		JSON.parse(json_format)
 	end

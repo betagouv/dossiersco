@@ -25,7 +25,7 @@
 
 					<form class="form-signin" action="/identification" method="post">
 
-						<% if session[:erreur_de_connexion] %>
+						<% if session[:erreur_id_ou_date_naiss_incorrecte] %>
 							<p class="erreur">Nous ne connaissons aucun élève correspondant à ces informations.</p>
 						<% end %>
 

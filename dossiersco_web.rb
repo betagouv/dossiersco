@@ -30,11 +30,9 @@ get '/init' do
 
 end
 
-
 get '/' do
 	erb :'#_identification', layout: false
 end
-
 
 post '/identification' do
 	if params[:identifiant].empty? || params[:date_naiss].empty?
@@ -43,14 +41,14 @@ post '/identification' do
 	end
 
 	identifiant = params[:identifiant]
+	date_naiss_fournie = params[:date_naiss]
 
 	eleve = get_eleve(redis, identifiant)
+	date_naiss_secrete = eleve[:date_naiss.to_s]
+
 	college = eleve[:college.to_s]
 	etablissement = redis.hgetall("etablissement:#{college}")
 	demarche = redis.hget("dossier_eleve:#{identifiant}", :demarche)
-
-	date_naiss_fournie = params[:date_naiss]
-	date_naiss_secrete = eleve[:date_naiss.to_s]
 
 	if date_naiss_secrete == date_naiss_fournie
 		session[:identifiant] = identifiant
@@ -61,7 +59,7 @@ post '/identification' do
 			etablissement: etablissement,
 			demarche: demarche}
 	else
-		session[:erreur_de_connexion] = true
+		session[:erreur_id_ou_date_naiss_incorrecte] = true
 		redirect '/'
 	end
 end
