@@ -142,7 +142,7 @@ get '/r4' do
 end
 
 get '/r5' do
-	erb :'r5_validation'
+	erb :'6_validation'
 end
 
 get '/r6' do
