@@ -1,34 +1,46 @@
-<% @section = 3 %>
+<% demarche = "inscription" %>
+
+<% if demarche == "inscription" %>
+	<% @section = 2 %>
+<% else %>
+	<% @section = 1 %>
+<% end %>
+
 <%= erb :'partials/navigation' %>
 
 <div class="col-12 col-md-8">
 
-  <h2>Langues vivantes</h2>
+	<h2>Scolarité</h2>
 
-  <hr>
+	<hr>
 
-  <form>
+	<form>
 
-    <%= erb :'partials/champ_radio', :locals => { :desc => "Langue vivante 1", :variable => "lv1", :options => { :anglais => "Anglais" }, :checked => :anglais }%>
+		<span style="display:block; height: 20px;"></span>
 
-    <%= erb :'partials/champ_radio', :locals => { :desc => "Langue vivante 2", :variable => "lv2", :options => { :allemand => "Allemand", :espagnol => "Espagnol" }, :checked => "" }%>
+		<h4>Enseignement obligatoire</h4>
 
-  </form>
+		<%= erb :'partials/champ_radio', :locals => { :desc => "Langue Vivante 2", :variable => "lv2", :options => { :allemand => "Allemand", :espagnol => "Espagnol" }, :checked => "" }%>
 
-  <span style="display:block; height: 10px;"></span>
+		<span style="display:block; height: 20px;"></span>
 
-  <h2>Options facultatives</h2>
+		<h4>Enseignement facultatif</h4>
 
-  <hr>
+		<p><em>Le choix d'un enseignement facultatif engage votre enfant à le suivre jusqu'à la fin de sa scolarité au collège.</em></p>
 
-  <form>
+		<div class="form-group row">
+				<div class="col-5 padding-top-8">Langues et Cultures de l'Antiquité</div>
+				<div class="col">
+					<div class="form-check">
+						<label class="form-check-label">
+							<input class="form-check-input" type="checkbox"> Latin
+						</label>
+					</div>
+				</div>
+			</div>
 
-    <%= erb :'partials/champ_check_indente', :locals => { :desc => "Classe musicale" }%>
+	</form>
 
-    <%= erb :'partials/champ_check_indente', :locals => { :desc => "Section danse" }%>
+	<%= erb :'partials/precedent_suivant', :locals => { :precedent => "r0", :suivant => "r2" } %>
 
-  </form>
-
-  <%= erb :'partials/precedent_suivant', :locals => { :precedent => "urgence", :suivant => "regime" } %>
-
-</div><!--/span-->
+</div>
