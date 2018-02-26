@@ -32,12 +32,16 @@ end
 
 
 get '/' do
-	session.clear
 	erb :'#_identification', layout: false
 end
 
 
 post '/identification' do
+	if params[:identifiant].empty? || params[:date_naiss].empty?
+		session[:erreur_id_ou_date_naiss_absente] = true
+		redirect '/'
+	end
+
 	identifiant = params[:identifiant]
 
 	eleve = get_eleve(redis, identifiant)
