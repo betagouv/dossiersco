@@ -36,11 +36,10 @@ get '/' do
 end
 
 
-post '/accueil' do
+post '/identification' do
 	identifiant = params[:identifiant]
 
 	eleve = get_eleve(redis, identifiant)
-
 	college = eleve[:college.to_s]
 	etablissement = redis.hgetall("etablissement:#{college}")
 	demarche = redis.hget("dossier_eleve:#{identifiant}", :demarche)
