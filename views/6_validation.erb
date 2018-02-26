@@ -1,112 +1,107 @@
-      <div class="aligner-progressions">
-        
-        <% @section = 6 %>
-        <%= erb :'partials/navigation' %>
-        
-      </div>
+<% demarche = "inscription" %>
 
-      <div class="col-12 col-md-8">
+<% if demarche == "inscription" %>
+	<% @section = 6 %>
+<% else %>
+	<% @section = 5 %>
+<% end %>
 
-        <h2>Validation</h2>
+<%= erb :'partials/navigation' %>
 
-        <hr>
+<div class="col-12 col-md-8">
 
-        <p>Le dossier d'inscription de votre enfant <strong>Etienne Puydebois</strong> au <strong>collège Georges Courteline (Paris 12e)</strong> pour son entrée en sixième est complet.</p>
+	<h2>Validation</h2>
 
-        <p>Veuillez vérifier les informations ci-dessous, puis validez l'inscription.</p>
+	<hr>
 
-        <div class="card">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-3">
-                <strong>Langue vivante 1</strong>
-              </div>
-              <div class="col-4">
-                Anglais
-              </div>
-              <div class="col-3">
-                <form action="/choix_pedagogiques" method="post">
-                  <button class="btn btn-outline-secondary btn-sm">Modifier</button>                  
-                </form>
-              </div>
-            </div>
+	<% if demarche == "inscription" %>
+		<p>Le dossier d'inscription de votre enfant <strong>Etienne Puydebois</strong> pour son entrée en sixième au <strong>collège Georges Courteline (Paris 12e)</strong>  est complet.</p>
+		<p>Veuillez vérifier les informations ci-dessous, puis validez l'inscription.</p>
+	<% else %>
+		<p>Le dossier de réinscription de votre enfant <strong>Etienne Puydebois</strong> pour son passage en cinquième au <strong>collège Jean Luçat (Brive-la-Gaillarde)</strong> est complet.</p>
+		<p>Veuillez vérifier les informations ci-dessous, puis validez la réinscription.</p>
+	<% end %>
 
-            <span style="display:block; height: 5px;"></span>
+	<div class="card">
+		<div class="card-body">
+			<div class="row">
+				<div class="col-3">
+					<strong>Langue vivante 2</strong>
+				</div>
+				<div class="col-4">
+					Espagnol
+				</div>
+				<div class="col-3">
+					<form action="/r1" method="get">
+						<button class="btn btn-outline-secondary btn-sm">Modifier</button>
+					</form>
+				</div>
+			</div>
 
-            <div class="row">
-              <div class="col-3">
-                <strong>Langue vivante 2</strong>
-              </div>
-              <div class="col-4">
-                Espagnol
-              </div>
-              <div class="col-3">
-                <form action="/choix_pedagogiques" method="post">
-                  <button class="btn btn-outline-secondary btn-sm">Modifier</button>                  
-                </form>
-              </div>
-            </div>
+			<span style="display:block; height: 5px;"></span>
 
-            <span style="display:block; height: 5px;"></span>
+			<div class="row">
+				<div class="col-3">
+					<strong>Option facultative</strong>
+				</div>
+				<div class="col-4">
+					Latin
+				</div>
+				<div class="col-3">
+					<form action="/r1" method="get">
+						<button class="btn btn-outline-secondary btn-sm">Modifier</button>
+					</form>
+				</div>
+			</div>
 
-            <div class="row">
-              <div class="col-3">
-                <strong>Option</strong>
-              </div>
-              <div class="col-4">
-                Classe musicale
-              </div>
-              <div class="col-3">
-                <form action="/choix_pedagogiques" method="post">
-                  <button class="btn btn-outline-secondary btn-sm">Modifier</button>                  
-                </form>
-              </div>
-            </div>
+			<span style="display:block; height: 5px;"></span>
 
-            <span style="display:block; height: 5px;"></span>
+			<div class="row">
+				<div class="col-3">
+					<strong>Régime</strong>
+				</div>
+				<div class="col-4">
+					Demi-pensionnaire
+				</div>
+				<div class="col-3">
+					<form action="/r3" method="get">
+						<button class="btn btn-outline-secondary btn-sm">Modifier</button>
+					</form>
+				</div>
+			</div>
 
-            <div class="row">
-              <div class="col-3">
-                <strong>Régime</strong>
-              </div>
-              <div class="col-4">
-                Demi-pensionnaire
-              </div>
-              <div class="col-3">
-                <form action="/regime" method="post">
-                  <button class="btn btn-outline-secondary btn-sm">Modifier</button>                  
-                </form>
-              </div>
-            </div>
+			<span style="display:block; height: 5px;"></span>
 
-            <span style="display:block; height: 5px;"></span>
+			<div class="row">
+				<div class="col-3">
+					<strong>Sortie</strong>
+				</div>
+				<div class="col-4">
+					Autorisé
+				</div>
+				<div class="col-3">
+					<form action="/r3" method="get">
+						<button class="btn btn-outline-secondary btn-sm">Modifier</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
-            <div class="row">
-              <div class="col-3">
-                <strong>Sortie</strong>
-              </div>
-              <div class="col-4">
-                Autorisé
-              </div>
-              <div class="col-3">
-                <form action="/autorisation_sortie" method="post">
-                  <button class="btn btn-outline-secondary btn-sm">Modifier</button>                  
-                </form>
-              </div>
-            </div>
-          </div>          
-        </div>
+	<span style="display:block; height: 20px;"></span>
 
-        <span style="display:block; height: 20px;"></span>
+	<%= erb :'partials/champ_check', :locals => { :desc => "Je certifie sur l'honneur l'exactitude des informations communiquées et m'engage à tenir le collège informé de tout changement de situation ou de coordonnées." }%>
 
-        <%= erb :'partials/champ_check', :locals => { :desc => "Je certifie sur l'honneur l'exactitude des informations communiquées et m'engage à tenir le collège informé de tout changement de situation ou de coordonnées." }%>          
+	<span style="display:block; height: 30px;"></span>
 
-        <span style="display:block; height: 20px;"></span>
+	<div class="row justify-content-md-center">
+		<form action="/r6" method="get">
+			<% if demarche == "inscription" %>
+				<button class="btn btn-primary">Valider l'inscription</button>
+			<% else %>
+				<button class="btn btn-primary">Valider la réinscription</button>
+			<% end %>
+		</form>
+	</div>
 
-        <div class="row justify-content-md-center">
-          <form action="/confirmation" method="post">
-            <button class="btn btn-primary">Valider l'inscription</button>
-          </form>
-        </div>
-
-      </div><!--/span-->
+</div>
