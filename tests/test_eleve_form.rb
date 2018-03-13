@@ -43,6 +43,12 @@ class EleveFormTest < Test::Unit::TestCase
 		assert last_response.body.include? 'Beziers'
 	end
 
+	def test_passage_de_eleve_vers_scolarite
+		post '/eleve/2', prenom: 'Edith', nom: 'Piaf'
+		follow_redirect!
+		assert last_response.body.include? 'Enseignement obligatoire'
+	end
+
 	def test_accueil_et_inscription
 		post '/identification', identifiant: '2', date_naiss: '1915-12-19'
 		follow_redirect!
