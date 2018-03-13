@@ -44,7 +44,7 @@ class EleveFormTest < Test::Unit::TestCase
 	end
 
 	def test_passage_de_eleve_vers_scolarite
-		post '/eleve/2', prenom: 'Edith', nom: 'Piaf'
+		post '/eleve/2'
 		follow_redirect!
 		assert last_response.body.include? 'Enseignement obligatoire'
 	end
