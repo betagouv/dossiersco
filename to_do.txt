@@ -8,4 +8,6 @@
 [X] Tester l'accès à resp_legal_1
 [ ] Harmoniser l'accès aux entités
 [ ] Restreindre l'accès aux données d'un élève aux utilisateurs identifés
-[ ] Corriger le post vers resp_legal_1
+[X] Corriger le post vers resp_legal_1
+[ ] Faire fonctionner l'encodage des tests (# encoding: utf-8)
+[ ] Choisir une évolution du système de base de données (SQL ?)
