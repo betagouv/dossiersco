@@ -1,7 +1,7 @@
 Pour se connecter à Redis :
 1/ obtenir l'identifiant du container :
 docker container ls
-2/ se connecter via l'identifiant
+2/ se connecter via l'identifiant de redis
 docker exec -it <identifiant> bash
 
 Dans l'instance docker, se connecter à redis :
@@ -9,3 +9,20 @@ Dans l'instance docker, se connecter à redis :
 
 Puis exécuter des commandes comme
 localhost:6379> KEYS *
+
+Se connecter dans l'app
+docker exec -it <id_container_de_app> bash
+irb
+
+irb(main):001:0> require 'rubygems'
+=> false
+irb(main):002:0> require 'redis'
+=> true
+irb(main):003:0> r = Redis.new
+=> #<Redis client v4.0.1 for redis://redis:6379/0>
+irb(main):004:0> 
+irb(main):005:0> r.ping
+=> "PONG"
+irb(main):006:0> r.hgetall("dossier_eleve:1")
+=> {"resp_legal_1"=>"{\"prenom\"=>\"Catherine\", \"nom\"=>\"Puydebois\"}", "etablissement"=>"2", "eleve"=>"{\"prenom\"=>\"Etienne\", \"nom\"=>\"Puydebois\", \"sexe\"=>\"\", \"date_naiss\"=>\"1995-11-19\", \"ville_naiss\"=>\"\", \"pays_naiss\"=>\"\", \"nationalite\"=>\"\", \"classe_ant\"=>\"\", \"ets_ant\"=>\"Ecole Picpus A (Paris 12e)\"}", "demarche"=>"réinscription"}
+
