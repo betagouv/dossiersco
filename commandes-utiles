@@ -1,0 +1,11 @@
+Pour se connecter à Redis :
+1/ obtenir l'identifiant du container :
+docker container ls
+2/ se connecter via l'identifiant
+docker exec -it <identifiant> bash
+
+Dans l'instance docker, se connecter à redis :
+/data# redis-cli -h localhost -p 6379
+
+Puis exécuter des commandes comme
+localhost:6379> KEYS *
