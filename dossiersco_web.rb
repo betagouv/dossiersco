@@ -83,9 +83,8 @@ post '/eleve/:identifiant' do
 			ets_ant: params[:ets_ant]
 		}
 	redis.hmset "dossier_eleve:#{identifiant}", :eleve, eleve_modifie.to_json
-	redirect to('/resp_legal_1')
+	redirect to('/scolarite')
 end
-
 
 get '/scolarite' do
 	erb :'2_scolarite'
