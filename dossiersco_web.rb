@@ -72,7 +72,7 @@ post '/eleve/:identifiant' do
 	eleve = get_eleve(redis, identifiant)
 	eleve_modifie =
 		{
-			prenom: eleve["prenom"],
+			prenom: params[:prenom],
 			nom: params[:nom],
 			sexe: params[:sexe],
 			date_naiss: "1995-11-19",
