@@ -70,19 +70,12 @@ end
 post '/eleve/:identifiant' do
 	identifiant = params[:identifiant]
 	eleve = get_eleve(redis, identifiant)
-	eleve_modifie =
-		{
-			prenom: params[:prenom],
-			nom: params[:nom],
-			sexe: params[:sexe],
-			date_naiss: eleve['date_naiss'],
-			ville_naiss: params[:ville_naiss],
-			pays_naiss: params[:pays_naiss],
-			nationalite: params[:nationalite],
-			classe_ant: params[:classe_ant],
-			ets_ant: params[:ets_ant]
-		}
-	redis.hmset "dossier_eleve:#{identifiant}", :eleve, eleve_modifie.to_json
+	identite_eleve = [:prenom, :nom, :sexe, :ville_naiss, :pays_naiss, :nationalite, :classe_ant, :ets_ant]
+  identite_eleve.each do |info|
+		eleve[info] = params[info] if params.has_key?(info)
+  end
+
+	redis.hmset "dossier_eleve:#{identifiant}", :eleve, eleve.to_json
 	redirect to('/scolarite')
 end
 
