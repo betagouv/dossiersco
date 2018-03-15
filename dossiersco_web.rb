@@ -75,7 +75,7 @@ post '/eleve/:identifiant' do
 			prenom: params[:prenom],
 			nom: params[:nom],
 			sexe: params[:sexe],
-			date_naiss: "1995-11-19",
+			date_naiss: eleve['date_naiss'],
 			ville_naiss: params[:ville_naiss],
 			pays_naiss: params[:pays_naiss],
 			nationalite: params[:nationalite],
