@@ -43,6 +43,13 @@ class EleveFormTest < Test::Unit::TestCase
 		assert last_response.body.include? 'Beziers'
 	end
 
+	def test_modifie_une_information_de_eleve_preserve_les_autres_informations
+		post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+		post '/eleve/2', prenom: 'Edith'
+		get '/eleve/2'
+		assert last_response.body.include? 'Piaf'
+	end
+
 	def test_passage_de_eleve_vers_scolarite
 		post '/eleve/2'
 		follow_redirect!
