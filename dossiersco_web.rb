@@ -80,7 +80,20 @@ post '/eleve/:identifiant' do
 end
 
 get '/scolarite' do
-	erb :'2_scolarite'
+	identifiant = session[:identifiant]
+	eleve = get_eleve(redis, identifiant)
+	erb :'2_scolarite', locals: {eleve: eleve}
+end
+
+post '/scolarite' do
+	identifiant = session[:identifiant]
+	eleve = get_eleve(redis, identifiant)
+	enseignements_eleve = [:lv2]
+	enseignements_eleve.each do |enseignement|
+		eleve[enseignement] = params[enseignement] if params.has_key?(enseignement)
+  end
+	redis.hmset "dossier_eleve:#{identifiant}", :eleve, eleve.to_json
+  redirect to('/famille')
 end
 
 get '/famille' do
