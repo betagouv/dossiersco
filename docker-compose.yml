@@ -15,8 +15,8 @@ services:
       RUBYOPT: -KU
   redis:
     image: redis
-    ports:
-      - 6379:6379
+  redis_test:
+    image: redis
   test:
     image: ruby
     command: /bin/bash -lc "bundle install && while true; do ruby tests/test_eleve_form.rb; sleep 30; done"
@@ -24,5 +24,5 @@ services:
       - ./:/app
     working_dir: /app
     environment:
-      REDIS_URL: redis://redis
+      REDIS_URL: redis://redis_test
       RUBYOPT: -KU

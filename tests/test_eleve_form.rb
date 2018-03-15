@@ -37,7 +37,7 @@ class EleveFormTest < Test::Unit::TestCase
 
 	def test_modification_lieu_naiss_eleve
 		post '/identification', identifiant: '2', date_naiss: '1915-12-19'
-		post '/eleve/2', ville_naiss: 'Beziers'
+		post '/eleve/2', ville_naiss: 'Beziers', prenom: 'Edith'
 		get '/eleve/2'
 		assert last_response.body.include? 'Edith'
 		assert last_response.body.include? 'Beziers'
