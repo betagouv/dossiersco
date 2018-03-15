@@ -1,3 +1,5 @@
+# Accès à Rédis par redis
+
 Pour se connecter à Redis :
 1/ obtenir l'identifiant du container :
 docker container ls
@@ -9,6 +11,11 @@ Dans l'instance docker, se connecter à redis :
 
 Puis exécuter des commandes comme
 localhost:6379> KEYS *
+
+localhost:6379> HGETALL dossier_eleve:2
+
+
+# Accès à Rédis par irb
 
 Se connecter dans l'app
 docker exec -it <id_container_de_app> bash
