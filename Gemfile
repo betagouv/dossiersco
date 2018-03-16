@@ -10,6 +10,9 @@ gem 'fog-aws'
 gem 'bcrypt', '~> 3.1'
 
 group :test do
-	gem 'nokogiri'
-	gem 'rack-test'
+  gem 'nokogiri'
+  gem 'shotgun'
+  gem 'roo'
+  gem 'roo-xls'
+  gem 'rack-test'
 end
