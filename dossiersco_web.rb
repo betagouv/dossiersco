@@ -82,7 +82,8 @@ end
 get '/scolarite' do
 	identifiant = session[:identifiant]
 	eleve = get_eleve(redis, identifiant)
-	erb :'2_scolarite', locals: {eleve: eleve}
+	eleve['lv2'] = eleve['lv2'] or ''
+	erb :'2_scolarite', locals: eleve
 end
 
 post '/scolarite' do

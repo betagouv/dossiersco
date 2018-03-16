@@ -69,11 +69,11 @@ class EleveFormTest < Test::Unit::TestCase
 		assert last_response.body.include? 'réinscription'
 	end
 
-
 	def test_persistence_des_choix_enseignements
 		post '/identification', identifiant: '2', date_naiss: '1915-12-19'
 		post '/scolarite', lv2: 'Espagnol'
 		get '/scolarite'
+		assert last_response.body.gsub(/\s/,'').include? '<input name="lv2" value="Espagnol" type="radio" class="form-check-input" checked>'.gsub(/\s/,'')
 	end
 
 	def teardown
