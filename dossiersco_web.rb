@@ -2,6 +2,10 @@ require 'sinatra'
 require 'redis'
 require 'redis-load'
 require 'json'
+require 'sinatra/activerecord'
+require './models/eleve.rb'
+
+set :database, "sqlite3:dossiersco.sqlite3"
 
 require_relative 'helpers/formulaire'
 
@@ -42,11 +46,11 @@ post '/identification' do
 
 	identifiant = params[:identifiant]
 	date_naiss_fournie = params[:date_naiss]
-	date_naiss_secrete = get_date_naiss_eleve(redis, identifiant)
+	date_naiss_secrete = Eleve.where(identifiant: identifiant).first.date_naiss
 
 	if date_naiss_secrete == date_naiss_fournie
 		session[:identifiant] = identifiant
-		session[:demarche] = get_demarche(redis, session[:identifiant])
+		session[:demarche] = 'inscription'
 		redirect "/#{session[:identifiant]}/accueil"
 	else
 		session[:erreur_id_ou_date_naiss_incorrecte] = true
@@ -56,6 +60,7 @@ end
 
 get '/:identifiant/accueil' do
 	if params[:identifiant] != session[:identifiant]
+		raise
 		redirect "/"
 	end
 	erb :'0_accueil', locals: { redis: redis }
@@ -150,3 +155,4 @@ end
 get '/r6' do
 	erb :'7_confirmation'
 end
+
