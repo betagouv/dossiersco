@@ -1,3 +1,4 @@
+[ ] Corriger les boutons Précédent et Suivants cassés
 [X] Brancher les conditions de l'accueil réinscription (classe >= 5e)
 [ ] La modification de la ville de naissance ne devrait pas modifier la date de naissance
 [X] Créer un docker-compose pour documenter la dépendance redis
@@ -11,3 +12,5 @@
 [X] Corriger le post vers resp_legal_1
 [ ] Faire fonctionner l'encodage des tests (# encoding: utf-8)
 [ ] Choisir une évolution du système de base de données (SQL ?)
+[ ] S'équiper de primitives de test du DOM
+[ ] Ajouter une config Circle CI sur Github

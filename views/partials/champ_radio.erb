@@ -3,7 +3,8 @@
   <div class="col-sm-6">
     <% options.keys.each do |option| %>
       <label class="col-sm-4 form-check-label">
-        <input type="radio" class="form-check-input" name="<%= variable %>" <% if option == checked %> checked <% end %>> <%= options[option] %>
+        <input type="radio" class="form-check-input" value="<%= options[option] %>" name="<%= variable %>">
+        <%= options[option] %>
       </label>
     <% end %> 
   </div>
