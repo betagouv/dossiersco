@@ -12,3 +12,4 @@
 [X] Corriger le post vers resp_legal_1
 [ ] Faire fonctionner l'encodage des tests (# encoding: utf-8)
 [ ] Choisir une évolution du système de base de données (SQL ?)
+[ ] S'équiper de primitives de test du DOM
