@@ -70,7 +70,7 @@ end
 post '/eleve/:identifiant' do
 	identifiant = params[:identifiant]
 	eleve = get_eleve(redis, identifiant)
-	identite_eleve = [:prenom, :nom, :sexe, :ville_naiss, :pays_naiss, :nationalite, :classe_ant, :ets_ant]
+	identite_eleve = ['prenom', 'nom', 'sexe', 'ville_naiss', 'pays_naiss', 'nationalite', 'classe_ant', 'ets_ant']
   identite_eleve.each do |info|
 		eleve[info] = params[info] if params.has_key?(info)
   end
@@ -88,7 +88,7 @@ end
 post '/scolarite' do
 	identifiant = session[:identifiant]
 	eleve = get_eleve(redis, identifiant)
-	enseignements_eleve = [:lv2]
+	enseignements_eleve = ['lv2']
 	enseignements_eleve.each do |enseignement|
 		eleve[enseignement] = params[enseignement] if params.has_key?(enseignement)
   end
