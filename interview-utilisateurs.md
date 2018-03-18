@@ -20,3 +20,22 @@ Lieu : déjeuner à la cantine
 - Il y a des agents qui sont très attachés au papier.
 Idée : proposer d'imprimer en un click les dossiers de tous les élèves.
 Pourquoi ? pour prévenir la peur de ne pas pouvoir revenir à l'ancienne méthode en cas de problème
+
+# Un parent d'élève du collège Édouard Pailleron (19ème)
+
+Lieu : au téléphone.
+
+Le collège (33 Rue Edouard Pailleron, 75019) a une mauvaise réputation,
+injustifiée de l'avis du parent intérrogé, et subit des phénomènes d'évitement.
+La directrice de l'établissement se bat pour améliorer l'image du collège et a
+obtenu le soutien d'un fond européen de développement des espaces urbains périphériques.
+
+C'est mon épouse qui fait l'inscription. Elle est membre de l'association
+des parents d'élèves et pourra transmettre un message pour qu'on trouve
+d'autres familles pilotes.
+
+OK pour filmer son interview utilisateur.
+Le dernier bulletin de notes est remis lors d'un entretien facultatif avec le
+professeur principal. C'est une extraction de l'ENT (Espace Numérique de Travail)
+ou les notes sont accessibles en continue tout au long de l'année.
+Cet outil est spécifique à l'académie de Paris.
