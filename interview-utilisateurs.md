@@ -1,6 +1,6 @@
 # Une parent d'élève
 
-Lieu : son bureau
+Cadre : son bureau
 
 Lister les documents à fournir pour que les parents puissent les préparer avant de se lancer dans l'inscription.
 Pouvoir s'arrêter et reprendre
@@ -13,7 +13,7 @@ Un membre de dossierSco pourrait-il assister à l'inscription ?
 
 # La secrétaire d'une directrice
 
-Lieu : déjeuner à la cantine
+Cadre : un déjeuner à la cantine
 
 - Il y a tous les ans environs deux matinées ou une application n'est pas accessible. Passer au numérique ça veut donc dire ne pas pouvoir travailler deux demi-journées chaque années ?
 
@@ -23,7 +23,7 @@ Pourquoi ? pour prévenir la peur de ne pas pouvoir revenir à l'ancienne métho
 
 # Un parent d'élève du collège Édouard Pailleron (19ème)
 
-Lieu : au téléphone.
+Cadre : au téléphone.
 
 Le collège (33 Rue Edouard Pailleron, 75019) a une mauvaise réputation,
 injustifiée de l'avis du parent intérrogé, et subit des phénomènes d'évitement.
