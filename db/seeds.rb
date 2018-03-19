@@ -1,5 +1,5 @@
-Eleve.destroy_all
 DossierEleve.destroy_all
+Eleve.destroy_all
 
 eleves = [
     {prenom: 'Edith',
