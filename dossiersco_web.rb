@@ -12,6 +12,7 @@ require_relative 'helpers/formulaire'
 
 enable :sessions
 set :session_secret, "secret"
+use Rack::Session::Pool
 
 redis = Redis.new
 
@@ -44,18 +45,12 @@ post '/identification' do
 		session[:erreur_id_ou_date_naiss_absente] = true
 		redirect '/'
 	end
+	dossier_eleve = DossierEleve.joins(:eleve).where(eleves: {identifiant: params[:identifiant]}).first
+	eleve = dossier_eleve.eleve
 
-	identifiant = params[:identifiant]
-	date_naiss_fournie = params[:date_naiss]
-	eleve = Eleve.where(identifiant: identifiant).first
-	date_naiss_secrete = eleve.date_naiss
-  p "eleve: #{DossierEleve.where(eleve: eleve.id).count}"
-  dossier_eleve = DossierEleve.where(eleve: eleve.id).first
-
-	if date_naiss_secrete == date_naiss_fournie
+	if eleve.date_naiss == params[:date_naiss]
 		session[:identifiant] = identifiant
 		session[:demarche] = dossier_eleve.demarche
-    #raise session[:demarche]
 		redirect "/#{session[:identifiant]}/accueil"
 	else
 		session[:erreur_id_ou_date_naiss_incorrecte] = true
@@ -65,10 +60,10 @@ end
 
 get '/:identifiant/accueil' do
 	if params[:identifiant] != session[:identifiant]
-		raise
 		redirect "/"
-	end
-	erb :'0_accueil', locals: { redis: redis }
+  end
+	dossier_eleve = DossierEleve.joins(:eleve).where(eleves: {identifiant: session[:identifiant]}).first
+	erb :'0_accueil', locals: { dossier_eleve: dossier_eleve }
 end
 
 get '/eleve/:identifiant' do
@@ -81,9 +76,9 @@ post '/eleve/:identifiant' do
 	identifiant = params[:identifiant]
 	eleve = get_eleve(redis, identifiant)
 	identite_eleve = ['prenom', 'nom', 'sexe', 'ville_naiss', 'pays_naiss', 'nationalite', 'classe_ant', 'ets_ant']
-  identite_eleve.each do |info|
+	identite_eleve.each do |info|
 		eleve[info] = params[info] if params.has_key?(info)
-  end
+	end
 
 	redis.hmset "dossier_eleve:#{identifiant}", :eleve, eleve.to_json
 	redirect to('/scolarite')
@@ -102,9 +97,9 @@ post '/scolarite' do
 	enseignements_eleve = ['lv2']
 	enseignements_eleve.each do |enseignement|
 		eleve[enseignement] = params[enseignement] if params.has_key?(enseignement)
-  end
+	end
 	redis.hmset "dossier_eleve:#{identifiant}", :eleve, eleve.to_json
-  redirect to('/famille')
+	redirect to('/famille')
 end
 
 get '/famille' do
