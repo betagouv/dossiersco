@@ -45,11 +45,10 @@ post '/identification' do
 		session[:erreur_id_ou_date_naiss_absente] = true
 		redirect '/'
 	end
-	dossier_eleve = DossierEleve.joins(:eleve).where(eleves: {identifiant: params[:identifiant]}).first
+	dossier_eleve = get_dossier_eleve params[:identifiant]
 	eleve = dossier_eleve.eleve
-
 	if eleve.date_naiss == params[:date_naiss]
-		session[:identifiant] = identifiant
+		session[:identifiant] = params[:identifiant]
 		session[:demarche] = dossier_eleve.demarche
 		redirect "/#{session[:identifiant]}/accueil"
 	else
@@ -62,26 +61,30 @@ get '/:identifiant/accueil' do
 	if params[:identifiant] != session[:identifiant]
 		redirect "/"
   end
-	dossier_eleve = DossierEleve.joins(:eleve).where(eleves: {identifiant: session[:identifiant]}).first
+  dossier_eleve = get_dossier_eleve session[:identifiant]
 	erb :'0_accueil', locals: { dossier_eleve: dossier_eleve }
 end
 
 get '/eleve/:identifiant' do
 	identifiant = params[:identifiant]
-	eleve = get_eleve(redis, identifiant)
-	erb :'1_eleve', locals: eleve
+  dossier_eleve = get_dossier_eleve identifiant
+	erb :'1_eleve', locals: { eleve: dossier_eleve.eleve }
 end
 
+# pertinant de garder l'identifiant dans l'url ?
 post '/eleve/:identifiant' do
-	identifiant = params[:identifiant]
-	eleve = get_eleve(redis, identifiant)
+  dossier_eleve = get_dossier_eleve session[:identifiant]
+  eleve = dossier_eleve.eleve
 	identite_eleve = ['prenom', 'nom', 'sexe', 'ville_naiss', 'pays_naiss', 'nationalite', 'classe_ant', 'ets_ant']
 	identite_eleve.each do |info|
 		eleve[info] = params[info] if params.has_key?(info)
 	end
 
-	redis.hmset "dossier_eleve:#{identifiant}", :eleve, eleve.to_json
-	redirect to('/scolarite')
+  if eleve.save!
+	  redirect to('/scolarite')
+  else
+    redirect "/eleve/#{session[:identifiant]}"
+  end
 end
 
 get '/scolarite' do

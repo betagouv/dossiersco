@@ -4,7 +4,11 @@ helpers do
           erb :'partials/champ', locals: champ
         end
         .join
-	end
+  end
+
+  def get_dossier_eleve identifiant
+    DossierEleve.joins(:eleve).find_by(eleves: {identifiant: identifiant})
+  end
 
 	def get_eleve redis, identifiant
 		ruby_format = redis.hget("dossier_eleve:#{identifiant}",:eleve)

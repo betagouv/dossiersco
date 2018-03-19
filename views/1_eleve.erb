@@ -3,7 +3,7 @@
           name: "prenom",
           label: "Prénom",
           type: "text",
-          value: prenom,
+          value: eleve.prenom,
           indication: "Prénom",
           disabled: false
         },
@@ -11,7 +11,7 @@
           name: "nom",
           label: "Nom",
           type: "text",
-          value: nom,
+          value: eleve.nom,
           indication: "Nom",
           disabled: false
         },
@@ -20,7 +20,7 @@
           label: "Sexe",
           type: "radio",
           options: ["Féminin", "Masculin"],
-          checked: sexe,
+          checked: eleve.sexe,
         },
         {
           type: "espace",
@@ -30,7 +30,7 @@
           name: "date_naiss",
           label: "Né le",
           type: "date",
-          value: date_naiss,
+          value: eleve.date_naiss,
           indication: "",
           disabled: true
         },
@@ -38,7 +38,7 @@
           name: "ville_naiss",
           label: "à",
           type: "text",
-          value: ville_naiss,
+          value: eleve.ville_naiss,
           indication: "Ville de naissance",
           disabled: false
         },
@@ -46,7 +46,7 @@
           name: "pays_naiss",
           label: "Pays",
           type: "text",
-          value: pays_naiss,
+          value: eleve.pays_naiss,
           indication: "Pays de naissance",
           disabled: false
         },
@@ -58,7 +58,7 @@
           name: "nationalite",
           label: "Nationalité",
           type: "text",
-          value: nationalite,
+          value: eleve.nationalite,
           indication: "Nationalité",
           disabled: false
         },
@@ -73,13 +73,13 @@ scolarite_ant = [
           label: "Classe",
           type: "dropdown",
           options: ["CM2", "CM1 (saut de classe)", "6ème (redoublement)"],
-          selected: classe_ant
+          selected: eleve.classe_ant
         },
         {
           name: "ets_ant",
           label: "Etablissement",
           type: "text",
-          value: ets_ant,
+          value: eleve.ets_ant,
           indication: "Etablissement",
           disabled: false
         }] %>
@@ -91,7 +91,9 @@ scolarite_ant = [
 
   <span style="display:block; height: 50px;"></span>
 
-  <p><em>Vous noterez que certains champs du formulaire sont déjà remplis. Suite à l'affectation, l'école élémentaire Picpus A nous a transmis certaines informations ; nous avons préféré ne pas vous les redemander. Néanmoins, vous pouvez toujours les corriger.</em></p>
+  <p><em>Vous noterez que certains champs du formulaire sont déjà remplis. Suite à l'affectation,
+    l'école élémentaire Picpus A nous a transmis certaines informations ; nous avons préféré ne pas vous les redemander.
+    Néanmoins, vous pouvez toujours les corriger.</em></p>
 
   <form action="/eleve/<%= session[:identifiant] %>"  method="post">
 
