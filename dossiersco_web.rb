@@ -1,6 +1,6 @@
 require 'sinatra'
-require 'redis'
-require 'redis-load'
+# require 'redis'
+# require 'redis-load'
 require 'json'
 require 'sinatra/activerecord'
 require './models/eleve.rb'
@@ -14,26 +14,23 @@ enable :sessions
 set :session_secret, "secret"
 use Rack::Session::Pool
 
-redis = Redis.new
-
 get '/init' do
-	redis.flushall
-
-	loader = RedisLoad::Loader.new(redis)
-	loader.load_json("tests/test.json")
-
-	database_content = ""
-
-	redis.keys.each do |key|
-		database_content += key + "<br>"
-		redis.hgetall(key).each do |field, value|
-			database_content += field + " : " + value + "<br>"
-		end
-		database_content += "<br>"
-	end
-
-	database_content
-
+	# redis.flushall
+  #
+	# loader = RedisLoad::Loader.new(redis)
+	# loader.load_json("tests/test.json")
+  #
+	# database_content = ""
+  #
+	# redis.keys.each do |key|
+	# 	database_content += key + "<br>"
+	# 	redis.hgetall(key).each do |field, value|
+	# 		database_content += field + " : " + value + "<br>"
+	# 	end
+	# 	database_content += "<br>"
+	# end
+  #
+	# database_content
 end
 
 get '/' do
@@ -88,21 +85,22 @@ post '/eleve/:identifiant' do
 end
 
 get '/scolarite' do
-	identifiant = session[:identifiant]
-	eleve = get_eleve(redis, identifiant)
-	eleve['lv2'] = eleve['lv2'] or ''
-	erb :'2_scolarite', locals: eleve
+  dossier_eleve = get_dossier_eleve session[:identifiant]
+	erb :'2_scolarite', locals: {eleve: dossier_eleve.eleve}
 end
 
 post '/scolarite' do
-	identifiant = session[:identifiant]
-	eleve = get_eleve(redis, identifiant)
+  dossier_eleve = get_dossier_eleve session[:identifiant]
+	eleve = dossier_eleve.eleve
 	enseignements_eleve = ['lv2']
 	enseignements_eleve.each do |enseignement|
 		eleve[enseignement] = params[enseignement] if params.has_key?(enseignement)
-	end
-	redis.hmset "dossier_eleve:#{identifiant}", :eleve, eleve.to_json
-	redirect to('/famille')
+  end
+  if eleve.save!
+    redirect to('/famille')
+  else
+    redirect '/scolarite'
+  end
 end
 
 get '/famille' do
