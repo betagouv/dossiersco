@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180319093137) do
+ActiveRecord::Schema.define(version: 20180319135356) do
 
   create_table "dossier_eleves", force: :cascade do |t|
     t.integer "eleve_id"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20180319093137) do
     t.string "date_naiss"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string "pays_naiss"
   end
 
 end
