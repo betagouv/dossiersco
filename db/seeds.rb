@@ -1,4 +1,5 @@
 Eleve.destroy_all
+DossierEleve.destroy_all
 
 eleves = [
     {prenom: 'Edith',
@@ -14,5 +15,10 @@ eleves = [
 ]
 
 eleves.each do |u|
-  Eleve.create!(u)
+  eleve = Eleve.create!(u)
+  DossierEleve.create!(
+      eleve_id: eleve.id,
+      demarche: "reinscription"
+  )
+  p "eleve #{eleve.id}"
 end

@@ -1,35 +1,24 @@
-# Accès à Rédis par redis
+# Active record
 
-Pour se connecter à Redis :
-1/ obtenir l'identifiant du container :
-docker container ls
-2/ se connecter via l'identifiant de redis
-docker exec -it <identifiant> bash
+## Créer une migration
 
-Dans l'instance docker, se connecter à redis :
-/data# redis-cli -h localhost -p 6379
+rake db:create_migration NAME=create_dossier_eleves_table
 
-Puis exécuter des commandes comme
-localhost:6379> KEYS *
+## Appliquer une migration
 
-localhost:6379> HGETALL dossier_eleve:2
+rake db:migrate
 
 
-# Accès à Rédis par irb
+## Applique le fichier seeds
 
-Se connecter dans l'app
-docker exec -it <id_container_de_app> bash
-irb
+rake db:seed
 
-irb(main):001:0> require 'rubygems'
-=> false
-irb(main):002:0> require 'redis'
-=> true
-irb(main):003:0> r = Redis.new
-=> #<Redis client v4.0.1 for redis://redis:6379/0>
-irb(main):004:0> 
-irb(main):005:0> r.ping
-=> "PONG"
-irb(main):006:0> r.hgetall("dossier_eleve:1")
-=> {"resp_legal_1"=>"{\"prenom\"=>\"Catherine\", \"nom\"=>\"Puydebois\"}", "etablissement"=>"2", "eleve"=>"{\"prenom\"=>\"Etienne\", \"nom\"=>\"Puydebois\", \"sexe\"=>\"\", \"date_naiss\"=>\"1995-11-19\", \"ville_naiss\"=>\"\", \"pays_naiss\"=>\"\", \"nationalite\"=>\"\", \"classe_ant\"=>\"\", \"ets_ant\"=>\"Ecole Picpus A (Paris 12e)\"}", "demarche"=>"réinscription"}
+## Annule la dernière migration
 
+rake db:rollback
+
+## Pour tester une migration
+
+irb(main):001:0> require_relative 'dossiersco_web'
+
+Sortir d'irb pour refaire un require_relative
