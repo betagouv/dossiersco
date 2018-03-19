@@ -13,10 +13,6 @@ services:
     environment:
       REDIS_URL: redis://redis
       RUBYOPT: -KU
-  redis:
-    image: redis
-  redis_test:
-    image: redis
   test:
     image: ruby
     command: /bin/bash -lc "bundle install && while true; do ruby tests/test_eleve_form.rb; sleep 30; done"

@@ -1,6 +1,4 @@
 require 'sinatra'
-# require 'redis'
-# require 'redis-load'
 require 'json'
 require 'sinatra/activerecord'
 require './models/eleve.rb'
@@ -15,22 +13,7 @@ set :session_secret, "secret"
 use Rack::Session::Pool
 
 get '/init' do
-	# redis.flushall
-  #
-	# loader = RedisLoad::Loader.new(redis)
-	# loader.load_json("tests/test.json")
-  #
-	# database_content = ""
-  #
-	# redis.keys.each do |key|
-	# 	database_content += key + "<br>"
-	# 	redis.hgetall(key).each do |field, value|
-	# 		database_content += field + " : " + value + "<br>"
-	# 	end
-	# 	database_content += "<br>"
-	# end
-  #
-	# database_content
+
 end
 
 get '/' do
@@ -63,15 +46,13 @@ get '/:identifiant/accueil' do
 end
 
 get '/eleve/:identifiant' do
-	identifiant = params[:identifiant]
-  dossier_eleve = get_dossier_eleve identifiant
-	erb :'1_eleve', locals: { eleve: dossier_eleve.eleve }
+  eleve = get_eleve session[:identifiant]
+  erb :'1_eleve', locals: { eleve: eleve }
 end
 
 # pertinant de garder l'identifiant dans l'url ?
 post '/eleve/:identifiant' do
-  dossier_eleve = get_dossier_eleve session[:identifiant]
-  eleve = dossier_eleve.eleve
+  eleve = get_eleve session[:identifiant]
 	identite_eleve = ['prenom', 'nom', 'sexe', 'ville_naiss', 'pays_naiss', 'nationalite', 'classe_ant', 'ets_ant']
 	identite_eleve.each do |info|
 		eleve[info] = params[info] if params.has_key?(info)
@@ -90,8 +71,7 @@ get '/scolarite' do
 end
 
 post '/scolarite' do
-  dossier_eleve = get_dossier_eleve session[:identifiant]
-	eleve = dossier_eleve.eleve
+	eleve = get_eleve session[:identifiant]
 	enseignements_eleve = ['lv2']
 	enseignements_eleve.each do |enseignement|
 		eleve[enseignement] = params[enseignement] if params.has_key?(enseignement)
