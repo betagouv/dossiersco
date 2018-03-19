@@ -4,6 +4,7 @@ require 'redis-load'
 require 'json'
 require 'sinatra/activerecord'
 require './models/eleve.rb'
+require './models/dossier_eleve.rb'
 
 set :database, "sqlite3:dossiersco.sqlite3"
 
@@ -46,11 +47,15 @@ post '/identification' do
 
 	identifiant = params[:identifiant]
 	date_naiss_fournie = params[:date_naiss]
-	date_naiss_secrete = Eleve.where(identifiant: identifiant).first.date_naiss
+	eleve = Eleve.where(identifiant: identifiant).first
+	date_naiss_secrete = eleve.date_naiss
+  p "eleve: #{DossierEleve.where(eleve: eleve.id).count}"
+  dossier_eleve = DossierEleve.where(eleve: eleve.id).first
 
 	if date_naiss_secrete == date_naiss_fournie
 		session[:identifiant] = identifiant
-		session[:demarche] = 'inscription'
+		session[:demarche] = dossier_eleve.demarche
+    #raise session[:demarche]
 		redirect "/#{session[:identifiant]}/accueil"
 	else
 		session[:erreur_id_ou_date_naiss_incorrecte] = true

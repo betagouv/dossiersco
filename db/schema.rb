@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180316135539) do
+ActiveRecord::Schema.define(version: 20180319093137) do
+
+  create_table "dossier_eleves", force: :cascade do |t|
+    t.integer "eleve_id"
+    t.string "demarche"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["eleve_id"], name: "index_dossier_eleves_on_eleve_id"
+  end
 
   create_table "eleves", force: :cascade do |t|
     t.string "identifiant"
