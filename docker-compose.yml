@@ -11,7 +11,6 @@ services:
     command: /bin/bash -lc "bundle install && bundle exec shotgun -o 0.0.0.0"
     working_dir: /app
     environment:
-      REDIS_URL: redis://redis
       RUBYOPT: -KU
   test:
     image: ruby
@@ -20,5 +19,4 @@ services:
       - ./:/app
     working_dir: /app
     environment:
-      REDIS_URL: redis://redis_test
       RUBYOPT: -KU
