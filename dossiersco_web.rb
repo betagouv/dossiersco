@@ -3,6 +3,7 @@ require 'json'
 require 'sinatra/activerecord'
 require './models/eleve.rb'
 require './models/dossier_eleve.rb'
+require 'rake'
 
 set :database, "sqlite3:dossiersco.sqlite3"
 
@@ -13,7 +14,9 @@ set :session_secret, "secret"
 use Rack::Session::Pool
 
 get '/init' do
-
+  raise Rake.application.inspect
+  Rake.application.load_rakefile
+  Rake.application.load_seed
 end
 
 get '/' do
