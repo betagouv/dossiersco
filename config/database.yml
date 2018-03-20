@@ -1,0 +1,17 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: developpement
+  pool: 2
+  host: <%= ENV['DATABASE_URL'] %>
+  database: <%= ENV['DATABASE_NAME'] %>
+  username: <%= ENV['DATABASE_USER'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: test
+  pool: 2
+  username: dossiersco
+  password: dossiersco

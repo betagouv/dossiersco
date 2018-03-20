@@ -4,7 +4,7 @@ require 'sinatra/activerecord'
 require './models/eleve.rb'
 require './models/dossier_eleve.rb'
 
-set :database, "sqlite3:dossiersco.sqlite3"
+set :database_file, "config/database.yml"
 
 require_relative 'helpers/formulaire'
 
