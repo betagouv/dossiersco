@@ -3,10 +3,10 @@ development:
   encoding: unicode
   database: developpement
   pool: 2
-  host: <%= ENV['DATABASE_URL'] %>
-  database: <%= ENV['DATABASE_NAME'] %>
-  username: <%= ENV['DATABASE_USER'] %>
-  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: <%= ENV['POSTGRES_URL'] %>
+  database: <%= ENV['POSTGRES_DB'] %>
+  username: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
 
 test:
   adapter: postgresql
