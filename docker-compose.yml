@@ -11,12 +11,12 @@ services:
     command: /bin/bash -lc "bundle install && bundle exec shotgun -o 0.0.0.0"
     working_dir: /app
     environment:
-      DATABASE_URL: postgres://postgres
+      POSTGRES_URL: postgres://postgres
       RUBYOPT: -KU
   postgres:
     image: postgres
     restart: always
     environment:
-      DATABASE_NAME: dossiersco
-      DATABASE_USER: dossiersco
-      DATABASE_PASSWORD: dossiersco
+      POSTGRES_DB: dossiersco
+      POSTGRES_USER: dossiersco
+      POSTGRES_PASSWORD: dossiersco
