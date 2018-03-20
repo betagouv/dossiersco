@@ -21,3 +21,11 @@ services:
       POSTGRES_DB: dossiersco
       POSTGRES_USER: dossiersco
       POSTGRES_PASSWORD: dossiersco
+  postgres_test:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_URL: postgres://postgres
+      POSTGRES_DB: dossiersco
+      POSTGRES_USER: dossiersco
+      POSTGRES_PASSWORD: dossiersco
