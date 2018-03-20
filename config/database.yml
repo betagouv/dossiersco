@@ -13,5 +13,7 @@ test:
   encoding: unicode
   database: test
   pool: 2
-  username: dossiersco
-  password: dossiersco
+  host: <%= ENV['POSTGRES_URL'] %>
+  database: <%= ENV['POSTGRES_DB'] %>
+  username: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
