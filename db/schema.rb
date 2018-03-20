@@ -12,8 +12,11 @@
 
 ActiveRecord::Schema.define(version: 20180319135356) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "dossier_eleves", force: :cascade do |t|
-    t.integer "eleve_id"
+    t.bigint "eleve_id"
     t.string "demarche"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -36,4 +39,5 @@ ActiveRecord::Schema.define(version: 20180319135356) do
     t.string "pays_naiss"
   end
 
+  add_foreign_key "dossier_eleves", "eleves", column: "eleve_id"
 end
