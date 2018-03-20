@@ -8,22 +8,30 @@ services:
       - 9393:9393
     volumes:
       - ./:/app
-    command: /bin/bash -lc "bundle install && bundle exec shotgun -o 0.0.0.0"
+    command: /bin/bash -lc "bundle install && rake db:migrate && bundle exec shotgun -o 0.0.0.0"
     working_dir: /app
     environment:
       POSTGRES_HOST: postgres
+      POSTGRES_DB: dossiersco
+      POSTGRES_USER: dossiersco
+      POSTGRES_PASSWORD: dossiersco
       RUBYOPT: -KU
   postgres:
     image: postgres
     restart: always
-    environment:
-      POSTGRES_DB: dossiersco
-      POSTGRES_USER: dossiersco
-      POSTGRES_PASSWORD: dossiersco
   postgres_test:
     image: postgres
     restart: always
+
+  test:
+    image: ruby
+    command: /bin/bash -lc "bundle install && rake db:migrate db:seed && while true; do ruby tests/test_eleve_form.rb; sleep 30; done"
+    volumes:
+      - ./:/app
+    working_dir: /app
     environment:
+      POSTGRES_HOST: postgres_test
       POSTGRES_DB: dossiersco
       POSTGRES_USER: dossiersco
       POSTGRES_PASSWORD: dossiersco
+      RUBYOPT: -KU
