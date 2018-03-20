@@ -58,7 +58,7 @@ post '/eleve/:identifiant' do
 	end
 
   if eleve.save!
-	  redirect to('/scolarite')
+	  redirect '/scolarite'
   else
     redirect "/eleve/#{session[:identifiant]}"
   end
@@ -76,7 +76,7 @@ post '/scolarite' do
 		eleve[enseignement] = params[enseignement] if params.has_key?(enseignement)
   end
   if eleve.save!
-    redirect to('/famille')
+    redirect '/famille'
   else
     redirect '/scolarite'
   end
