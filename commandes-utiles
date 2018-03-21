@@ -22,3 +22,12 @@ rake db:rollback
 irb(main):001:0> require_relative 'dossiersco_web'
 
 Sortir d'irb pour refaire un require_relative
+
+
+## Entre dans docker pour lancer rake
+
+$docker ps
+CONTAINER ID IMAGE COMMAND                   NAMES
+1caf94c1e9f8 ruby "/bin/bash -lc 'bu..." ... dossiersco_app_1
+
+$docker exec -it dossiersco_app_1 bash
