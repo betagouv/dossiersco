@@ -4,6 +4,7 @@ require 'test/unit'
 require 'rack/test'
 
 require_relative '../dossiersco_web'
+require_relative '../db/seeds'
 
 class EleveFormTest < Test::Unit::TestCase
 	include Rack::Test::Methods
@@ -13,7 +14,7 @@ class EleveFormTest < Test::Unit::TestCase
 	end
 
 	def setup
-		get '/init'
+		init
 	end
 
 	def test_accueil
@@ -69,6 +70,6 @@ class EleveFormTest < Test::Unit::TestCase
 	end
 
 	def teardown
-		get '/init'
+		init
 	end
 end
