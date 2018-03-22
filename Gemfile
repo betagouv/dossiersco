@@ -1,8 +1,10 @@
 source 'https://rubygems.org'
 gem 'sinatra'
-gem 'redis'
-gem 'redis-load'
 gem 'shotgun'
+gem 'activerecord'
+gem 'sinatra-activerecord'
+gem 'pg'
+gem 'rake'
 
 group :test do
 	gem 'rack-test'

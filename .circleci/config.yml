@@ -1,0 +1,17 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby
+      - image: circleci/postgres
+    working_directory: ~/dossiersco
+    steps:
+      - checkout
+
+      - run:
+          name: Install Dependencies
+          command: bundle
+
+      - run:
+          name: Run unit tests
+          command: rake db:migrate db:seed && ruby tests/test_eleve_form.rb
