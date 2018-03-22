@@ -69,7 +69,4 @@ class EleveFormTest < Test::Unit::TestCase
 		assert last_response.body.gsub(/\s/,'').include? '<input name="lv2" value="Espagnol" type="radio" class="form-check-input" checked>'.gsub(/\s/,'')
 	end
 
-	def teardown
-		init
-	end
 end
