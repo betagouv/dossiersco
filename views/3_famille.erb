@@ -1,3 +1,43 @@
+<% resp_legal_1 = [
+    {
+        name: "prenom",
+        label: "Prénom",
+        type: "text",
+        value: 'prenom',
+        indication: "Prénom",
+        disabled: false
+    },
+    {
+        name: "nom",
+        label: "Nom",
+        type: "text",
+        value: 'nom',
+        indication: "Nom",
+        disabled: false
+    },
+    {   name: "adresse",
+        label: "Adresse",
+        type: "text",
+        value: 'Adresse',
+        indication: "Numéro et nom de voie",
+        disabled: false
+    },
+    {   name: "code_postal",
+        label: "Code postal",
+        type: "text",
+        value: 'Code postal',
+        indication: "Code postal",
+        disabled: false
+    },
+    {   name: "ville",
+        label: "Ville",
+        type: "text",
+        value: 'Ville',
+        indication: "Ville",
+        disabled: false
+    }]
+%>
+
 <div class="aligner-progressions">
 
   <% @section = 2 %>
@@ -15,15 +55,7 @@
 
     <%= erb :'partials/champ_dropdown', :locals => { :desc => "Lien de parenté", :variable => "lien_parente_rl1", :options => ["Choisissez...", "Mère", "Père", "Tutrice", "Tuteur", "Autre"], :selected => "" } %>
 
-    <%= erb :'partials/champ_texte', :locals => { :desc => "Prénom", :variable => "prenom_rl1", :valeur => "Catherine", :exemple => "Prénom" }%>
-
-    <%= erb :'partials/champ_texte', :locals => { :desc => "Nom", :variable => "nom_rl1", :valeur => "Puydebois", :exemple => "Nom" }%>
-
-    <%= erb :'partials/champ_texte', :locals => { :desc => "Adresse", :variable => "adr1_rl1", :valeur => "4 Place de la Nation", :exemple => "Numéro et nom de voie" }%>
-
-    <%= erb :'partials/champ_texte', :locals => { :desc => "Code postal", :variable => "cp_rl1", :valeur => "75012", :exemple => "Code postal" }%>
-
-    <%= erb :'partials/champ_texte', :locals => { :desc => "Ville", :variable => "ville_rl1", :valeur => "Paris", :exemple => "Ville" }%>
+    <%= construire resp_legal_1 %>
 
     <span style="display:block; height: 30px;"></span>
 

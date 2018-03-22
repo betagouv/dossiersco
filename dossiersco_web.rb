@@ -1,33 +1,18 @@
 require 'sinatra'
-require 'redis'
-require 'redis-load'
 require 'json'
+require 'sinatra/activerecord'
+require './models/eleve.rb'
+require './models/dossier_eleve.rb'
+
+set :database_file, "config/database.yml"
 
 require_relative 'helpers/formulaire'
 
 enable :sessions
 set :session_secret, "secret"
-
-redis = Redis.new
+use Rack::Session::Pool
 
 get '/init' do
-	redis.flushall
-
-	loader = RedisLoad::Loader.new(redis)
-	loader.load_json("tests/test.json")
-
-	database_content = ""
-
-	redis.keys.each do |key|
-		database_content += key + "<br>"
-		redis.hgetall(key).each do |field, value|
-			database_content += field + " : " + value + "<br>"
-		end
-		database_content += "<br>"
-	end
-
-	database_content
-
 end
 
 get '/' do
@@ -39,14 +24,11 @@ post '/identification' do
 		session[:erreur_id_ou_date_naiss_absente] = true
 		redirect '/'
 	end
-
-	identifiant = params[:identifiant]
-	date_naiss_fournie = params[:date_naiss]
-	date_naiss_secrete = get_date_naiss_eleve(redis, identifiant)
-
-	if date_naiss_secrete == date_naiss_fournie
-		session[:identifiant] = identifiant
-		session[:demarche] = get_demarche(redis, session[:identifiant])
+	dossier_eleve = get_dossier_eleve params[:identifiant]
+	eleve = dossier_eleve.eleve
+	if eleve.date_naiss == params[:date_naiss]
+		session[:identifiant] = params[:identifiant]
+		session[:demarche] = dossier_eleve.demarche
 		redirect "/#{session[:identifiant]}/accueil"
 	else
 		session[:erreur_id_ou_date_naiss_incorrecte] = true
@@ -57,44 +39,47 @@ end
 get '/:identifiant/accueil' do
 	if params[:identifiant] != session[:identifiant]
 		redirect "/"
-	end
-	erb :'0_accueil', locals: { redis: redis }
+  end
+  dossier_eleve = get_dossier_eleve session[:identifiant]
+	erb :'0_accueil', locals: { dossier_eleve: dossier_eleve }
 end
 
 get '/eleve/:identifiant' do
-	identifiant = params[:identifiant]
-	eleve = get_eleve(redis, identifiant)
-	erb :'1_eleve', locals: eleve
+  eleve = get_eleve session[:identifiant]
+  erb :'1_eleve', locals: { eleve: eleve }
 end
 
+# pertinant de garder l'identifiant dans l'url ?
 post '/eleve/:identifiant' do
-	identifiant = params[:identifiant]
-	eleve = get_eleve(redis, identifiant)
+  eleve = get_eleve session[:identifiant]
 	identite_eleve = ['prenom', 'nom', 'sexe', 'ville_naiss', 'pays_naiss', 'nationalite', 'classe_ant', 'ets_ant']
-  identite_eleve.each do |info|
+	identite_eleve.each do |info|
 		eleve[info] = params[info] if params.has_key?(info)
-  end
+	end
 
-	redis.hmset "dossier_eleve:#{identifiant}", :eleve, eleve.to_json
-	redirect to('/scolarite')
+  if eleve.save!
+	  redirect '/scolarite'
+  else
+    redirect "/eleve/#{session[:identifiant]}"
+  end
 end
 
 get '/scolarite' do
-	identifiant = session[:identifiant]
-	eleve = get_eleve(redis, identifiant)
-	eleve['lv2'] = eleve['lv2'] or ''
-	erb :'2_scolarite', locals: eleve
+  dossier_eleve = get_dossier_eleve session[:identifiant]
+	erb :'2_scolarite', locals: {eleve: dossier_eleve.eleve}
 end
 
 post '/scolarite' do
-	identifiant = session[:identifiant]
-	eleve = get_eleve(redis, identifiant)
+	eleve = get_eleve session[:identifiant]
 	enseignements_eleve = ['lv2']
 	enseignements_eleve.each do |enseignement|
 		eleve[enseignement] = params[enseignement] if params.has_key?(enseignement)
   end
-	redis.hmset "dossier_eleve:#{identifiant}", :eleve, eleve.to_json
-  redirect to('/famille')
+  if eleve.save!
+    redirect '/famille'
+  else
+    redirect '/scolarite'
+  end
 end
 
 get '/famille' do
@@ -150,3 +135,4 @@ end
 get '/r6' do
 	erb :'7_confirmation'
 end
+
