@@ -17,6 +17,7 @@
 [ ] Ajouter une config Circle CI sur Github
 
 Remarques pendant la démo du 23/3
+[ ] Exception lors de la connexion avec élève inconnu
 [ ] Clarifier "Vous êtes agent en EPLE"
 [ ] Décider de la destination du lien pour les agents
 [ ] S'assurer du fonctionnement sur mobile
