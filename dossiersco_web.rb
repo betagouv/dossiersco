@@ -9,7 +9,7 @@ require './models/contact_urgence.rb'
 set :database_file, "config/database.yml"
 
 require_relative 'helpers/formulaire'
-require_relative 'db/seeds'
+require_relative 'helpers/init'
 
 enable :sessions
 set :session_secret, "secret"
