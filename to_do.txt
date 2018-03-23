@@ -1,7 +1,7 @@
 [ ] Ingérer un fichier Affelnet
 [ ] Restreindre l'accès aux données d'un élève aux utilisateurs identifés
 [ ] Faire fonctionner l'encodage des tests (# encoding: utf-8)
-[ ] S'équiper de primitives de test du DOM
+[X] S'équiper de primitives de test du DOM
 [ ] Warning seeds
 
 [X] Brancher les conditions de l'accueil réinscription (classe >= 5e)

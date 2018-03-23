@@ -1,5 +1,6 @@
 ENV['RACK_ENV'] = 'test'
 
+require 'nokogiri'
 require 'test/unit'
 require 'rack/test'
 
@@ -26,6 +27,13 @@ class EleveFormTest < Test::Unit::TestCase
 		post '/identification', identifiant: '1', date_naiss: '1995-11-19'
 		follow_redirect!
 		assert last_response.body.include? 'Le conseil de classe'
+	end
+
+	def test_nom_college_accueil
+		post '/identification', identifiant: '1', date_naiss: '1995-11-19'
+		follow_redirect!
+		doc = Nokogiri::HTML(last_response.body)
+		assert_equal 'Collège Arago', doc.xpath("//div//h1/text()").to_s
 	end
 
 	def test_modification_lieu_naiss_eleve
