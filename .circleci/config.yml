@@ -3,7 +3,16 @@ jobs:
   build:
     docker:
       - image: circleci/ruby
+        environment:
+          POSTGRES_HOST: localhost
+          POSTGRES_DB: dossiersco
+          POSTGRES_USER: dossiersco
+          POSTGRES_PASSWORD: dossiersco
       - image: circleci/postgres
+        environment:
+          POSTGRES_DB: dossiersco
+          POSTGRES_USER: dossiersco
+          POSTGRES_PASSWORD: dossiersco
     working_directory: ~/dossiersco
     steps:
       - checkout
