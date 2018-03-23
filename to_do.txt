@@ -24,7 +24,7 @@ Remarques pendant la démo du 23/3
 [ ] Aiguiller pour "identifiant"
 [X] Créer la table Etablissement
 [X] Nom du collège
-[ ] Date limite démarche
+[X] Date limite démarche
 [ ] Valider le wording du message d'invitation
 [ ] Images cassées sur les boutons /eleve/:n
 [ ] Logo flottant
