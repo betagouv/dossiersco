@@ -31,7 +31,11 @@ post '/identification' do
 		redirect '/'
 	end
 	dossier_eleve = get_dossier_eleve params[:identifiant]
-	eleve = dossier_eleve.eleve
+  if dossier_eleve.nil?
+    session[:erreur_id_ou_date_naiss_incorrecte] = true
+    redirect '/'
+  end
+  eleve = dossier_eleve.eleve
 	if eleve.date_naiss == params[:date_naiss]
 		session[:identifiant] = params[:identifiant]
 		session[:demarche] = dossier_eleve.demarche
