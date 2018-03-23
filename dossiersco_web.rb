@@ -9,12 +9,14 @@ require './models/contact_urgence.rb'
 set :database_file, "config/database.yml"
 
 require_relative 'helpers/formulaire'
+require_relative 'db/seeds'
 
 enable :sessions
 set :session_secret, "secret"
 use Rack::Session::Pool
 
 get '/init' do
+  init
 end
 
 get '/' do
@@ -57,7 +59,7 @@ post '/eleve/:identifiant' do
 	identite_eleve = ['prenom', 'nom', 'sexe', 'ville_naiss', 'pays_naiss', 'nationalite', 'classe_ant', 'ets_ant']
 	identite_eleve.each do |info|
 		eleve[info] = params[info] if params.has_key?(info)
-	end
+  end
 
   if eleve.save!
 	  redirect '/scolarite'
@@ -144,4 +146,3 @@ end
 get '/r6' do
 	erb :'7_confirmation'
 end
-

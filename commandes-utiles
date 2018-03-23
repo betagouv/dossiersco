@@ -31,3 +31,11 @@ CONTAINER ID IMAGE COMMAND                   NAMES
 1caf94c1e9f8 ruby "/bin/bash -lc 'bu..." ... dossiersco_app_1
 
 $docker exec -it dossiersco_app_1 bash
+
+## Consulter les logs par service (désentrelacer les logs)
+
+docker-compose logs -f app
+
+# Posgres
+
+psql

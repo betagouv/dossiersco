@@ -19,9 +19,17 @@ services:
   postgres:
     image: postgres
     restart: always
+    environment:
+      POSTGRES_DB: dossiersco
+      POSTGRES_USER: dossiersco
+      POSTGRES_PASSWORD: dossiersco
   postgres_test:
     image: postgres
     restart: always
+    environment:
+      POSTGRES_DB: dossiersco
+      POSTGRES_USER: dossiersco
+      POSTGRES_PASSWORD: dossiersco
 
   test:
     image: ruby
@@ -35,3 +43,4 @@ services:
       POSTGRES_USER: dossiersco
       POSTGRES_PASSWORD: dossiersco
       RUBYOPT: -KU
+
