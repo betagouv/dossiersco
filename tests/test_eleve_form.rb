@@ -69,4 +69,22 @@ class EleveFormTest < Test::Unit::TestCase
 		assert last_response.body.gsub(/\s/,'').include? '<input name="lv2" value="Espagnol" type="radio" class="form-check-input" checked>'.gsub(/\s/,'')
 	end
 
+	def test_dossier_eleve_possede_deux_resp_legaux
+		dossier_eleve = DossierEleve.first
+
+		RespLegal.create(dossier_eleve_id: dossier_eleve.id)
+		RespLegal.create(dossier_eleve_id: dossier_eleve.id)
+
+		assert dossier_eleve.resp_legals.size == 2
+	end
+
+	def test_dossier_eleve_possede_un_contact_urgence
+		dossier_eleve = DossierEleve.first
+
+		ContactUrgence.create(dossier_eleve_id: dossier_eleve.id, tel_principal: "0123456789")
+
+		assert dossier_eleve.contact_urgence.tel_principal == "0123456789"
+	end
+
+
 end

@@ -182,9 +182,9 @@
 
     <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone secondaire", :variable => "tel2_urg", :valeur => "", :exemple => "Numéro de téléphone" }%>
 
-  </form>
+    <%= erb :'partials/precedent_suivant', :locals => { :precedent => "scolarite", :suivant => "administration" } %>
 
-  <%= erb :'partials/precedent_suivant', :locals => { :precedent => "scolarite", :suivant => "choix_pedagogiques" } %>
+  </form>
 
 </div><!--/span-->
 

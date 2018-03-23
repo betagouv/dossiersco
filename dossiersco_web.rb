@@ -3,6 +3,8 @@ require 'json'
 require 'sinatra/activerecord'
 require './models/eleve.rb'
 require './models/dossier_eleve.rb'
+require './models/resp_legal.rb'
+require './models/contact_urgence.rb'
 
 set :database_file, "config/database.yml"
 
@@ -83,7 +85,14 @@ post '/scolarite' do
 end
 
 get '/famille' do
+	dossier_eleve = get_dossier_eleve session[:identifiant]
 	erb :'3_famille'
+end
+
+post '/famille' do
+	dossier_eleve = get_dossier_eleve session[:identifiant]
+	p "----------------- params : #{params}"
+	redirect '/famille'
 end
 
 get '/administration' do
