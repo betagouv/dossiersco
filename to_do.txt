@@ -26,7 +26,7 @@ Remarques pendant la démo du 23/3
 [X] Nom du collège
 [X] Date limite démarche
 [ ] Valider le wording du message d'invitation
-[ ] Images cassées sur les boutons /eleve/:n
+[X] Images cassées sur les boutons /eleve/:n
 [ ] Logo flottant
 [ ] Bouton "Retour" sur /eleve/:n mal cablé
 [ ] Indicateur d'étape sur "3/Administration" incorrect
