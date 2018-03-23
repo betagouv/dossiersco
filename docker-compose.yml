@@ -16,6 +16,18 @@ services:
       POSTGRES_USER: dossiersco
       POSTGRES_PASSWORD: dossiersco
       RUBYOPT: -KU
+  test:
+    build: .
+    command: /bin/bash -lc "rake db:migrate db:seed && while true; do ruby tests/test_eleve_form.rb; sleep 3; done"
+    volumes:
+      - ./:/app
+    working_dir: /app
+    environment:
+      POSTGRES_HOST: postgres_test
+      POSTGRES_DB: dossiersco
+      POSTGRES_USER: dossiersco
+      POSTGRES_PASSWORD: dossiersco
+      RUBYOPT: -KU
   postgres:
     image: postgres
     restart: always
@@ -30,17 +42,3 @@ services:
       POSTGRES_DB: dossiersco
       POSTGRES_USER: dossiersco
       POSTGRES_PASSWORD: dossiersco
-
-  test:
-    build: .
-    command: /bin/bash -lc "rake db:migrate db:seed && while true; do ruby tests/test_eleve_form.rb; sleep 3; done"
-    volumes:
-      - ./:/app
-    working_dir: /app
-    environment:
-      POSTGRES_HOST: postgres_test
-      POSTGRES_DB: dossiersco
-      POSTGRES_USER: dossiersco
-      POSTGRES_PASSWORD: dossiersco
-      RUBYOPT: -KU
-

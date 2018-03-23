@@ -27,7 +27,13 @@ class EleveFormTest < Test::Unit::TestCase
 		post '/identification', identifiant: '1', date_naiss: '1995-11-19'
 		follow_redirect!
 		assert last_response.body.include? 'Le conseil de classe'
-	end
+  end
+
+  def test_entree_mauvais_identifiant
+    post '/identification', identifiant: '3', date_naiss: '1995-11-19'
+    follow_redirect!
+    assert last_response.body.include? 'Nous ne connaissons aucun élève correspondant à ces informations'
+  end
 
 	def test_nom_college_accueil
 		post '/identification', identifiant: '1', date_naiss: '1995-11-19'
