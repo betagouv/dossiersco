@@ -1,17 +1,35 @@
-[ ] Corriger les boutons Précédent et Suivants cassés
-[X] Brancher les conditions de l'accueil réinscription (classe >= 5e)
-[ ] La modification de la ville de naissance ne devrait pas modifier la date de naissance
-[X] Créer un docker-compose pour documenter la dépendance redis
-[ ] Gérer les modèles eleve et etablissement avec une classe, pour pouvoir faire etablissement.nom, eleve.nom_complet etc.
-[X] Extraire la base de test dans un fichier à part
-[ ] Installer active_support pour symbolize_keys
 [ ] Ingérer un fichier Affelnet
-[X] Tester l'accès à resp_legal_1
-[ ] Harmoniser l'accès aux entités
 [ ] Restreindre l'accès aux données d'un élève aux utilisateurs identifés
-[X] Corriger le post vers resp_legal_1
 [ ] Faire fonctionner l'encodage des tests (# encoding: utf-8)
-[ ] Choisir une évolution du système de base de données (SQL ?)
 [ ] S'équiper de primitives de test du DOM
-[X] Ajouter une config Circle CI sur Github
 [ ] Warning seeds
+
+[X] Brancher les conditions de l'accueil réinscription (classe >= 5e)
+[X] La modification de la ville de naissance ne devrait pas modifier la date de naissance
+[X] Créer un docker-compose pour documenter la dépendance redis
+[X] Gérer les modèles eleve et etablissement avec une classe, pour pouvoir faire etablissement.nom, eleve.nom_complet etc.
+[X] Extraire la base de test dans un fichier à part
+[X] Installer active_support pour symbolize_keys
+[X] Tester l'accès à resp_legal_1
+[X] Harmoniser l'accès aux entités
+[X] Corriger le post vers resp_legal_1
+[X] Choisir une évolution du système de base de données (SQL ?)
+[ ] Ajouter une config Circle CI sur Github
+
+Remarques pendant la démo du 23/3
+[ ] Clarifier "Vous êtes agent en EPLE"
+[ ] Décider de la destination du lien pour les agents
+[ ] S'assurer du fonctionnement sur mobile
+[ ] Aiguiller pour "identifiant"
+[ ] Créer la table Etablissement
+[ ] Nom du collège
+[ ] Date limite démarche
+[ ] Valider le wording du message d'invitation
+[ ] Images cassées sur les boutons /eleve/:n
+[ ] Logo flottant
+[ ] Bouton "Retour" sur /eleve/:n mal cablé
+[ ] Indicateur d'étape sur "3/Administration" incorrect
+[ ] Indicateur d'étape sur "5/Administration" incorrect
+[ ] Alignement des boutons sur "Pièces"
+[ ] Quel changement induit "Valider l'inscription"
+[ ] Infos collèges sur Validation
