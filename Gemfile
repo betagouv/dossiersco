@@ -7,5 +7,6 @@ gem 'pg'
 gem 'rake'
 
 group :test do
+	gem 'nokogiri'
 	gem 'rack-test'
 end

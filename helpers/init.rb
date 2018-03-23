@@ -1,4 +1,5 @@
 def init
+  Etablissement.destroy_all
   DossierEleve.destroy_all
   Eleve.destroy_all
 
@@ -15,15 +16,26 @@ def init
        identifiant: '1'}
   ]
 
-  eleves_ids = []
-  eleves.each do |u|
-    eleve = Eleve.create!(u)
-    DossierEleve.create!(
-        eleve_id: eleve.id,
-        demarche: "reinscription"
-    )
-    eleves_ids.push eleve.id
-  end
-  p "eleves : #{eleves_ids}"
+  eleve = Eleve.create!(eleves[0])
+  etablissement = Etablissement.create!({
+    nom: "Collège Germaine Thillon",
+    date_limite: "2018-06-06"
+  })
+  DossierEleve.create!(
+      eleve_id: eleve.id,
+      etablissement_id: etablissement.id,
+      demarche: "reinscription"
+  )
+
+  eleve = Eleve.create!(eleves[1])
+  etablissement = Etablissement.create!({
+    nom: "Collège Arago",
+    date_limite: "2018-06-03"
+  })
+  DossierEleve.create!(
+      eleve_id: eleve.id,
+      etablissement_id: etablissement.id,
+      demarche: "reinscription"
+  )
 
 end
