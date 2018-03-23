@@ -35,39 +35,33 @@ post '/identification' do
 	if eleve.date_naiss == params[:date_naiss]
 		session[:identifiant] = params[:identifiant]
 		session[:demarche] = dossier_eleve.demarche
-		redirect "/#{session[:identifiant]}/accueil"
+		redirect "/accueil"
 	else
 		session[:erreur_id_ou_date_naiss_incorrecte] = true
 		redirect '/'
 	end
 end
 
-get '/:identifiant/accueil' do
-	if params[:identifiant] != session[:identifiant]
-		redirect "/"
-  end
+get '/accueil' do
   dossier_eleve = get_dossier_eleve session[:identifiant]
 	erb :'0_accueil', locals: { dossier_eleve: dossier_eleve }
 end
 
-get '/eleve/:identifiant' do
+get '/eleve' do
   eleve = get_eleve session[:identifiant]
   erb :'1_eleve', locals: { eleve: eleve }
 end
 
 # pertinant de garder l'identifiant dans l'url ?
-post '/eleve/:identifiant' do
+post '/eleve' do
   eleve = get_eleve session[:identifiant]
 	identite_eleve = ['prenom', 'nom', 'sexe', 'ville_naiss', 'pays_naiss', 'nationalite', 'classe_ant', 'ets_ant']
 	identite_eleve.each do |info|
 		eleve[info] = params[info] if params.has_key?(info)
   end
 
-  if eleve.save!
-	  redirect '/scolarite'
-  else
-    redirect "/eleve/#{session[:identifiant]}"
-  end
+  eleve.save!
+  redirect '/scolarite'
 end
 
 get '/scolarite' do

@@ -28,7 +28,7 @@ Remarques pendant la démo du 23/3
 [ ] Valider le wording du message d'invitation
 [X] Images cassées sur les boutons /eleve/:n
 [ ] Logo flottant
-[ ] Bouton "Retour" sur /eleve/:n mal cablé
+[X] Bouton "Retour" sur /eleve/:n mal cablé
 [ ] Indicateur d'étape sur "3/Administration" incorrect
 [ ] Indicateur d'étape sur "5/Administration" incorrect
 [ ] Alignement des boutons sur "Pièces"
