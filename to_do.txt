@@ -2,7 +2,7 @@
 [ ] Restreindre l'accès aux données d'un élève aux utilisateurs identifés
 [ ] Faire fonctionner l'encodage des tests (# encoding: utf-8)
 [X] S'équiper de primitives de test du DOM
-[ ] Warning seeds
+[X] Warning seeds
 
 [X] Brancher les conditions de l'accueil réinscription (classe >= 5e)
 [X] La modification de la ville de naissance ne devrait pas modifier la date de naissance
@@ -22,8 +22,8 @@ Remarques pendant la démo du 23/3
 [ ] Décider de la destination du lien pour les agents
 [ ] S'assurer du fonctionnement sur mobile
 [ ] Aiguiller pour "identifiant"
-[ ] Créer la table Etablissement
-[ ] Nom du collège
+[X] Créer la table Etablissement
+[X] Nom du collège
 [ ] Date limite démarche
 [ ] Valider le wording du message d'invitation
 [ ] Images cassées sur les boutons /eleve/:n
