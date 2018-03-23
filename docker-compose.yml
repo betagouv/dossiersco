@@ -2,16 +2,15 @@ version: '2'
 
 services:
   app:
-    image: ruby
+    build: .
     ports:
       - 9292:9292
       - 9393:9393
     volumes:
       - ./:/app
-    command: /bin/bash -lc "bundle && rake db:migrate && bundle exec shotgun -o 0.0.0.0"
+    command: /bin/bash -lc "rake db:migrate && bundle exec shotgun -o 0.0.0.0"
     working_dir: /app
     environment:
-      NOKOGIRI_USE_SYSTEM_LIBRARIES: 1
       POSTGRES_HOST: postgres
       POSTGRES_DB: dossiersco
       POSTGRES_USER: dossiersco
@@ -33,13 +32,12 @@ services:
       POSTGRES_PASSWORD: dossiersco
 
   test:
-    image: ruby
-    command: /bin/bash -lc "bundle && rake db:migrate db:seed && while true; do ruby tests/test_eleve_form.rb; sleep 3; done"
+    build: .
+    command: /bin/bash -lc "rake db:migrate db:seed && while true; do ruby tests/test_eleve_form.rb; sleep 3; done"
     volumes:
       - ./:/app
     working_dir: /app
     environment:
-      NOKOGIRI_USE_SYSTEM_LIBRARIES: 1
       POSTGRES_HOST: postgres_test
       POSTGRES_DB: dossiersco
       POSTGRES_USER: dossiersco
