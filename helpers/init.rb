@@ -19,7 +19,7 @@ def init
   eleve = Eleve.create!(eleves[0])
   etablissement = Etablissement.create!({
     nom: "Collège Germaine Thillon",
-    date_limite: "2018-06-06"
+    date_limite: "samedi 6 juin 2018"
   })
   DossierEleve.create!(
       eleve_id: eleve.id,
@@ -30,7 +30,7 @@ def init
   eleve = Eleve.create!(eleves[1])
   etablissement = Etablissement.create!({
     nom: "Collège Arago",
-    date_limite: "2018-06-03"
+    date_limite: "samedi 3 juin 2018"
   })
   DossierEleve.create!(
       eleve_id: eleve.id,

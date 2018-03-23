@@ -1,21 +1,6 @@
 <% if session[:demarche] == "inscription" %>
 
-	<p>
-	Votre enfant
-	<strong>
-		<%= eleve.prenom %> <%= eleve.nom %>
-	</strong>
-	a été affecté au collège
-	<strong>
-		#TODO non du collège college
-		<%#= dossier_eleve.etablissement.name %> (<%#= dossier_eleve.etablissement.localite %>)
-	</strong>
-	pour son entrée en
-		sixième
-	.</p>
-
-	<p>Vous avez jusqu'au <strong>vendredi 21 juin 2018</strong> pour procéder à son inscription.
-		Le respect de cette date est nécessaire pour maintenir la place de votre enfant dans notre établissement.</p>
+<!--TODO implementer text-->
 
 <% else %>
 
@@ -24,13 +9,12 @@
 		<%= eleve.prenom %> <%= eleve.nom %>
 	</strong>
 	au collège
-	<strong>
-		#TODO non du collège college
-		<%#= dossier_eleve.etablissement.name %> (<%#= dossier_eleve.etablissement.localite %>)
+	<strong id="etablissement">
+		<%= dossier_eleve.etablissement.nom %>
 	</strong>
 	.</p>
 
-	<p>Vous devez maintenant procéder à sa réinscription sur ce site avant le <strong>samedi 3 juin 2018</strong>.</p>
+	<p>Vous devez maintenant procéder à sa réinscription sur ce site avant le <strong id="date-limite">samedi 3 juin 2018</strong>.</p>
 
 	<p>Cette étape est nécessaire pour choisir les enseignements que votre enfant suivra l'an prochain,
 		remplir une poignée de formalités administratives et mettre à jour vos coordonnées.</p>
