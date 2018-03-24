@@ -4,7 +4,7 @@
 
 rake db:create_migration NAME=create_dossier_eleves_table
 
-## Appliquer une migration
+## Applique toutes les migration
 
 rake db:migrate
 
@@ -32,10 +32,38 @@ CONTAINER ID IMAGE COMMAND                   NAMES
 
 $docker exec -it dossiersco_app_1 bash
 
+$docker-compose exec app bash
+
 ## Consulter les logs par service (désentrelacer les logs)
 
 docker-compose logs -f app
 
 # Posgres
 
-psql
+psql -U dossiersco
+
+Sélectionne la base dossiersco :
+
+\c dossiersco;
+
+Puis montre les tables (dt pour Display Tables) :
+
+\dt
+
+postgres=# ALTER DATABASE dossiersco OWNER TO pblayo;
+postgres=# ALTER USER dossiersco WITH PASSWORD 'new_password';
+
+
+## Donne des droits
+
+$ sudo -u postgres -i
+postgres@host:~$ psql
+
+postgres=# ALTER USER new_user CREATEDB;
+
+
+# Sélectionne une version particulière de ruby
+
+rbenv install 2.5.0
+rbenv local 2.2.4
+rbenv rehash (pour rendre disponibles de nouvelles commandes)
