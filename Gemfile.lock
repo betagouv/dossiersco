@@ -21,10 +21,7 @@ GEM
     mustermann (1.0.2)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
-    nokogiri (1.8.2-x64-mingw32)
-      mini_portile2 (~> 2.3.0)
     pg (1.0.0)
-    pg (1.0.0-x64-mingw32)
     rack (2.0.4)
     rack-protection (2.0.1)
       rack
@@ -48,7 +45,6 @@ GEM
 
 PLATFORMS
   ruby
-  x64-mingw32
 
 DEPENDENCIES
   activerecord
