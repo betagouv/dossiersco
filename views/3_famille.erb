@@ -51,7 +51,7 @@
 
   <hr>
 
-  <form>
+  <form action="/famille" method="POST">
 
     <%= erb :'partials/champ_dropdown', :locals => { :desc => "Lien de parenté", :variable => "lien_parente_rl1", :options => ["Choisissez...", "Mère", "Père", "Tutrice", "Tuteur", "Autre"], :selected => "" } %>
 
@@ -92,13 +92,9 @@
 
     <p>que ces coordonnées soient communiquées aux fédérations de parents d'élèves.</p>
 
-  </form>
-
   <h2>Famille (2/3) : Responsable légal 2</h2>
 
   <hr>
-
-  <form>
 
     <%= erb :'partials/champ_dropdown', :locals => { :desc => "Lien de parenté", :variable => "lien_parente_rl2", :options => ["Choisissez...", "Mère", "Père", "Tutrice", "Tuteur", "Autre"], :selected => "Père" } %>
 
@@ -154,13 +150,10 @@
 
     <p>que ces coordonnées soient communiquées aux fédérations de parents d'élèves.</p>
 
-  </form>
 
   <h2>Famille (3/3) : Autre personne à contacter en cas d'urgence</h2>
 
   <hr>
-
-  <form>
 
     <%= erb :'partials/champ_texte', :locals => { :desc => "Lien avec l'élève", :variable => "lien_elv_urg", :valeur => "", :exemple => "Lien avec l'élève" }%>
 
