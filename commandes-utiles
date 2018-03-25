@@ -67,3 +67,15 @@ postgres=# ALTER USER new_user CREATEDB;
 rbenv install 2.5.0
 rbenv local 2.2.4
 rbenv rehash (pour rendre disponibles de nouvelles commandes)
+
+# Heroku
+
+git remote add heroku https://git.heroku.com/dossiersco.git
+git push heroku master # pour pousser en prod
+heroku open
+heroku logs -t
+
+En local :
+
+heroku run bash
+heroku psql
