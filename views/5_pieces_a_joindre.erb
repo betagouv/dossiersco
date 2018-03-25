@@ -40,8 +40,8 @@
       <% end %>
     </div>
 
-  </form>
+    <%= erb :'partials/precedent_suivant', :locals => { :precedent => "administration", :suivant => "validation" } %>
 
-  <%= erb :'partials/precedent_suivant', :locals => { :precedent => "droit_image", :suivant => "validation" } %>
+  </form>
 
 </div>
