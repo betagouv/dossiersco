@@ -1,36 +1,20 @@
 [ ] Ingérer un fichier Affelnet
 [ ] Restreindre l'accès aux données d'un élève aux utilisateurs identifés
-[ ] Faire fonctionner l'encodage des tests (# encoding: utf-8)
-[X] S'équiper de primitives de test du DOM
-[X] Warning seeds
-
-[X] Brancher les conditions de l'accueil réinscription (classe >= 5e)
-[X] La modification de la ville de naissance ne devrait pas modifier la date de naissance
-[X] Créer un docker-compose pour documenter la dépendance redis
-[X] Gérer les modèles eleve et etablissement avec une classe, pour pouvoir faire etablissement.nom, eleve.nom_complet etc.
-[X] Extraire la base de test dans un fichier à part
-[X] Installer active_support pour symbolize_keys
-[X] Tester l'accès à resp_legal_1
-[X] Harmoniser l'accès aux entités
-[X] Corriger le post vers resp_legal_1
-[X] Choisir une évolution du système de base de données (SQL ?)
-[ ] Ajouter une config Circle CI sur Github
+[ ] Formulaire Famille
+[ ] Upload pièces
 
 Remarques pendant la démo du 23/3
-[X] Exception lors de la connexion avec élève inconnu
 [ ] Clarifier "Vous êtes agent en EPLE"
 [ ] Décider de la destination du lien pour les agents
-[ ] S'assurer du fonctionnement sur mobile
-[ ] Aiguiller pour "identifiant"
-[X] Créer la table Etablissement
-[X] Nom du collège
-[X] Date limite démarche
+[ ] Aiguiller les utilisateurs (profil parent) pour "identifiant"
 [ ] Valider le wording du message d'invitation
-[X] Images cassées sur les boutons /eleve/:n
-[ ] Logo flottant
-[X] Bouton "Retour" sur /eleve/:n mal cablé
-[X] Indicateur d'étape sur "3/Administration" incorrect
-[X] Indicateur d'étape sur "5/Administration" incorrect
-[ ] Alignement des boutons sur "Pièces"
 [ ] Quel changement induit "Valider l'inscription"
 [ ] Infos collèges sur Validation
+
+[ ] S'assurer du fonctionnement sur mobile
+[ ] Logo flottant
+[ ] Alignement des boutons sur "Pièces"
+
+Done
+[X] Réparer la prod
+[X] Ajouter une config Circle CI sur Github
