@@ -53,6 +53,9 @@ Puis montre les tables (dt pour Display Tables) :
 postgres=# ALTER DATABASE dossiersco OWNER TO pblayo;
 postgres=# ALTER USER dossiersco WITH PASSWORD 'new_password';
 
+## Afficher sur plusieurs lignes
+
+\x on
 
 ## Donne des droits
 

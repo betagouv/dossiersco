@@ -101,4 +101,71 @@ class EleveFormTest < Test::Unit::TestCase
 
 		assert dossier_eleve.contact_urgence.tel_principal == "0123456789"
 	end
+
+	def test_persistence_du_resp_legal_1
+		post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+		post '/famille', lien_de_parente_rl1: "Tutrice", prenom_rl1: "Philippe" , nom_rl1: "Blayo", adresse_rl1: "20 bd Segur",
+				 code_postal_rl1: "75007", ville_rl1: "Paris", tel_principal_rl1: "0612345678", tel_secondaire_rl1: "0112345678",
+				 email_rl1: "test@gmail.com", situation_emploi_rl1: "Retraite", profession_rl1: "Cadre",
+				 enfants_a_charge_secondaire_rl1: 2, enfants_a_charge_rl1: 3, communique_info_parents_eleves_rl1: 'true'
+		get '/famille'
+		doc = Nokogiri::HTML(last_response.body)
+
+		assert_equal 'Tutrice', doc.css('#lien_de_parente_rl1 option[@selected="selected"]').children.text
+		assert_equal 'Philippe', doc.css('#prenom_rl1').attr('value').text
+		assert_equal 'Blayo', doc.css('#nom_rl1').attr('value').text
+		assert_equal '20 bd Segur', doc.css('#adresse_rl1').attr('value').text
+		assert_equal '75007', doc.css('#code_postal_rl1').attr('value').text
+		assert_equal 'Paris', doc.css('#ville_rl1').attr('value').text
+		assert_equal '0612345678', doc.css('#tel_principal_rl1').attr('value').text
+		assert_equal '0112345678', doc.css('#tel_secondaire_rl1').attr('value').text
+		assert_equal 'test@gmail.com', doc.css('#email_rl1').attr('value').text
+		assert_equal 'Retraite', doc.css('#situation_emploi_rl1 option[@selected="selected"]').children.text
+		assert_equal 'Cadre', doc.css('#profession_rl1 option[@selected="selected"]').children.text
+		assert_equal '2', doc.css('#enfants_a_charge_secondaire_rl1').attr('value').text
+		assert_equal '3', doc.css('#enfants_a_charge_rl1').attr('value').text
+		assert_equal 'checked', doc.css('#communique_info_parents_eleves_rl1_true').attr('checked').text
+	end
+
+
+	def test_persistence_du_resp_legal_2
+		post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+		post '/famille', lien_de_parente_rl2: "Tutrice", prenom_rl2: "Philippe" , nom_rl2: "Blayo", adresse_rl2: "20 bd Segur",
+				 code_postal_rl2: "75007", ville_rl2: "Paris", tel_principal_rl2: "0612345678", tel_secondaire_rl2: "0112345678",
+				 email_rl2: "test@gmail.com", situation_emploi_rl2: "Retraite", profession_rl2: "Cadre",
+				  communique_info_parents_eleves_rl2: 'true'
+		get '/famille'
+		doc = Nokogiri::HTML(last_response.body)
+
+		assert_equal 'Tutrice', doc.css('#lien_de_parente_rl2 option[@selected="selected"]').children.text
+		assert_equal 'Philippe', doc.css('#prenom_rl2').attr('value').text
+		assert_equal 'Blayo', doc.css('#nom_rl2').attr('value').text
+		assert_equal '20 bd Segur', doc.css('#adresse_rl2').attr('value').text
+		assert_equal '75007', doc.css('#code_postal_rl2').attr('value').text
+		assert_equal 'Paris', doc.css('#ville_rl2').attr('value').text
+		assert_equal '0612345678', doc.css('#tel_principal_rl2').attr('value').text
+		assert_equal '0112345678', doc.css('#tel_secondaire_rl2').attr('value').text
+		assert_equal 'test@gmail.com', doc.css('#email_rl2').attr('value').text
+		assert_equal 'Retraite', doc.css('#situation_emploi_rl2 option[@selected="selected"]').children.text
+		assert_equal 'Cadre', doc.css('#profession_rl2 option[@selected="selected"]').children.text
+		assert_equal 'checked', doc.css('#communique_info_parents_eleves_rl2_true').attr('checked').text
+	end
+
+
+	def test_persistence_du_contact_urg
+		post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+		post '/famille', lien_avec_eleve_urg: "Tuteur", prenom_urg: "Philippe" , nom_urg: "Blayo", adresse_urg: "20 bd Segur",
+				 code_postal_urg: "75007", ville_urg: "Paris", tel_principal_urg: "0612345678", tel_secondaire_urg: "0112345678"
+		get '/famille'
+		doc = Nokogiri::HTML(last_response.body)
+
+		assert_equal 'Tuteur', doc.css('#lien_avec_eleve_urg').attr('value').text
+		assert_equal 'Philippe', doc.css('#prenom_urg').attr('value').text
+		assert_equal 'Blayo', doc.css('#nom_urg').attr('value').text
+		assert_equal '20 bd Segur', doc.css('#adresse_urg').attr('value').text
+		assert_equal '75007', doc.css('#code_postal_urg').attr('value').text
+		assert_equal 'Paris', doc.css('#ville_urg').attr('value').text
+		assert_equal '0612345678', doc.css('#tel_principal_urg').attr('value').text
+		assert_equal '0112345678', doc.css('#tel_secondaire_urg').attr('value').text
+	end
 end

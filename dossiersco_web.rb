@@ -17,6 +17,10 @@ enable :sessions
 set :session_secret, "secret"
 use Rack::Session::Pool
 
+identite_resp_legal = ["lien_de_parente", "prenom", "nom", "adresse", "code_postal", "ville", "tel_principal",
+											 "tel_secondaire", "email", "situation_emploi", "profession", "enfants_a_charge",
+											 "enfants_a_charge_secondaire", "communique_info_parents_eleves", "lien_avec_eleve"]
+
 get '/init' do
   init
 end
@@ -88,13 +92,35 @@ end
 
 get '/famille' do
 	dossier_eleve = get_dossier_eleve session[:identifiant]
+	resp_legal1 = RespLegal.find_by(dossier_eleve_id: dossier_eleve.id, priorite: 1)
+	resp_legal2 = RespLegal.find_by(dossier_eleve_id: dossier_eleve.id, priorite: 2)
+	contact_urgence = ContactUrgence.find_by(dossier_eleve_id: dossier_eleve.id)
+
+	identite_resp_legal.each do |i|
+		params["#{i}_rl1"] = resp_legal1[i] if !resp_legal1.nil? && !resp_legal1[i].nil?
+		params["#{i}_rl2"] = resp_legal2[i] if !resp_legal2[i].nil? && !resp_legal2[i].nil?
+		params["#{i}_urg"] = contact_urgence[i] if !contact_urgence.nil? && !contact_urgence[i].nil?
+	end
+
 	erb :'3_famille'
 end
 
 post '/famille' do
 	dossier_eleve = get_dossier_eleve session[:identifiant]
-	p "----------------- params : #{params}"
-	redirect '/famille'
+	resp_legal1 = RespLegal.find_by(dossier_eleve_id: dossier_eleve.id, priorite: 1) || RespLegal.new(priorite: 1, dossier_eleve_id: dossier_eleve.id)
+	resp_legal2 = RespLegal.find_by(dossier_eleve_id: dossier_eleve.id, priorite: 2) || RespLegal.new(priorite: 2, dossier_eleve_id: dossier_eleve.id)
+	contact_urgence = ContactUrgence.find_by(dossier_eleve_id: dossier_eleve.id) || ContactUrgence.new(dossier_eleve_id: dossier_eleve.id)
+
+	identite_resp_legal.each do |i|
+		resp_legal1[i] = params["#{i}_rl1"] if params.has_key?("#{i}_rl1")
+		resp_legal2[i] = params["#{i}_rl2"] if params.has_key?("#{i}_rl2")
+		contact_urgence[i] = params["#{i}_urg"] if params.has_key?("#{i}_urg")
+	end
+
+	resp_legal1.save!
+	resp_legal2.save!
+	contact_urgence.save!
+	redirect '/administration'
 end
 
 get '/administration' do
