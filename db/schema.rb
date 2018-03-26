@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180323110607) do
+ActiveRecord::Schema.define(version: 20180326081822) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20180323110607) do
     t.integer "enfants_a_charge"
     t.integer "enfants_a_charge_secondaire"
     t.boolean "communique_info_parents_eleves"
+    t.integer "priorite"
   end
 
   add_foreign_key "dossier_eleves", "eleves", column: "eleve_id"
