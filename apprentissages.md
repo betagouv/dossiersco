@@ -9,3 +9,7 @@
 (pour en bénéficier, utiliser docker 1.17.05, intaller docker-ce, la version
 community à partir de
 https://docs.docker.com/install/linux/docker-ce/ubuntu/#set-up-the-repository)
+
+## Pour créer un formulaire d'upload
+* ajouter "multiple" dans les <input>
+* ajouter enctype="multipart/form-data" dans <form>

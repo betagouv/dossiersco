@@ -14,6 +14,7 @@ Remarques pendant la démo du 23/3
 [ ] S'assurer du fonctionnement sur mobile
 [ ] Logo flottant
 [ ] Alignement des boutons sur "Pièces"
+[ ] Supprimer l'ancien fichier quand on modifie une pièce jointe
 
 Done
 [X] Réparer la prod
