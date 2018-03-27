@@ -98,7 +98,7 @@ get '/famille' do
 
 	identite_resp_legal.each do |i|
 		params["#{i}_rl1"] = resp_legal1[i] if !resp_legal1.nil? && !resp_legal1[i].nil?
-		params["#{i}_rl2"] = resp_legal2[i] if !resp_legal2[i].nil? && !resp_legal2[i].nil?
+		params["#{i}_rl2"] = resp_legal2[i] if !resp_legal2.nil? && !resp_legal2[i].nil?
 		params["#{i}_urg"] = contact_urgence[i] if !contact_urgence.nil? && !contact_urgence[i].nil?
 	end
 
