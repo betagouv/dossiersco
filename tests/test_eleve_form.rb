@@ -3,6 +3,7 @@ ENV['RACK_ENV'] = 'test'
 require 'nokogiri'
 require 'test/unit'
 require 'rack/test'
+require 'tempfile'
 
 require_relative '../dossiersco_web'
 require_relative '../db/seeds'
@@ -167,5 +168,57 @@ class EleveFormTest < Test::Unit::TestCase
 		assert_equal 'Paris', doc.css('#ville_urg').attr('value').text
 		assert_equal '0612345678', doc.css('#tel_principal_urg').attr('value').text
 		assert_equal '0112345678', doc.css('#tel_secondaire_urg').attr('value').text
+	end
+
+
+	def test_piece_jointe_invite_a_prendre_en_photo
+		post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+		get '/pieces_a_joindre'
+		doc = Nokogiri::HTML(last_response.body)
+
+		assert_equal 'Parcourir / Prendre en photo', doc.css('label[for=photo_identite]').text
+		assert_equal 'Parcourir / Prendre en photo', doc.css('label[for=assurance_scolaire]').text
+		assert_equal 'Parcourir / Prendre en photo', doc.css('label[for=jugement_garde_enfant]').text
+	end
+
+	def test_joindre_photo_identite
+		piece_a_joindre = Tempfile.new('fichier_temporaire')
+
+		post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+		post '/pieces_a_joindre', photo_identite: {"tempfile": piece_a_joindre.path}
+		get '/pieces_a_joindre'
+		doc = Nokogiri::HTML(last_response.body)
+
+		assert_equal 'Modifier', doc.css('label[for=photo_identite]').text
+		assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
+	end
+
+	def test_joindre_assurance_scolaire
+		piece_a_joindre = Tempfile.new('fichier_temporaire')
+
+		post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+		post '/pieces_a_joindre', assurance_scolaire: {"tempfile": piece_a_joindre.path}
+		get '/pieces_a_joindre'
+		doc = Nokogiri::HTML(last_response.body)
+
+		assert_equal 'Modifier', doc.css('label[for=assurance_scolaire]').text
+		assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
+	end
+
+	def test_joindre_jugement_garde_enfant
+		piece_a_joindre = Tempfile.new('fichier_temporaire')
+
+		post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+		post '/pieces_a_joindre', jugement_garde_enfant: {"tempfile": piece_a_joindre.path}
+		get '/pieces_a_joindre'
+		doc = Nokogiri::HTML(last_response.body)
+
+		assert_equal 'Modifier', doc.css('label[for=jugement_garde_enfant]').text
+		assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
+	end
+
+	def assert_file(chemin_du_fichier)
+		assert File.file? chemin_du_fichier
+		File.delete(chemin_du_fichier)
 	end
 end

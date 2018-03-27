@@ -3,8 +3,10 @@
   <div class="card-body">
     <p class="card-text"><%= @explication %></p>
     <div class="card-relat">
-	    <button type="button" class="btn btn-primary btn-sm"><label class="upload">Parcourir<input type="file" hidden></label></button>
-	    <button type="button" class="btn btn-secondary btn-sm" disabled>Envoyer</button>
+	    <button type="button" class="btn btn-primary btn-sm">
+        <label class="upload" for="<%= @variable %>"><%= @label %></label>
+        <input type="file" hidden name="<%= @variable %>" id="<%= @variable %>" multiple>
+      </button>
     </div>
   </div>
 </div>
