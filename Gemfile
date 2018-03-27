@@ -5,6 +5,7 @@ gem 'activerecord'
 gem 'sinatra-activerecord'
 gem 'pg'
 gem 'rake'
+gem 'carrierwave'
 
 group :test do
 	gem 'nokogiri'
