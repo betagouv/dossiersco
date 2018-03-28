@@ -128,6 +128,10 @@ get '/administration' do
 	erb :'4_administration'
 end
 
+post '/administration' do
+	redirect '/pieces_a_joindre'
+end
+
 get '/pieces_a_joindre' do
 	dossier_eleve = get_dossier_eleve session[:identifiant]
 	erb :'5_pieces_a_joindre', locals: {dossier_eleve: dossier_eleve}
