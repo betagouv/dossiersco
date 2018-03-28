@@ -104,13 +104,13 @@ class EleveFormTest < Test::Unit::TestCase
 	end
 
 	def test_persistence_du_resp_legal_1
-		post '/identification', identifiant: '2', date_naiss: '1915-12-19'
-		post '/famille', lien_de_parente_rl1: "Tutrice", prenom_rl1: "Philippe" , nom_rl1: "Blayo", adresse_rl1: "20 bd Segur",
-				 code_postal_rl1: "75007", ville_rl1: "Paris", tel_principal_rl1: "0612345678", tel_secondaire_rl1: "0112345678",
-				 email_rl1: "test@gmail.com", situation_emploi_rl1: "Retraite", profession_rl1: "Cadre",
-				 enfants_a_charge_secondaire_rl1: 2, enfants_a_charge_rl1: 3, communique_info_parents_eleves_rl1: 'true'
-		get '/famille'
-		doc = Nokogiri::HTML(last_response.body)
+		doc = soumet_formulaire '/famille',
+														lien_de_parente_rl1: "Tutrice", prenom_rl1: "Philippe", nom_rl1: "Blayo",
+														adresse_rl1: "20 bd Segur", code_postal_rl1: "75007", ville_rl1: "Paris",
+														tel_principal_rl1: "0612345678", tel_secondaire_rl1: "0112345678",
+														email_rl1: "test@gmail.com", situation_emploi_rl1: "Retraite", profession_rl1: "Cadre",
+														enfants_a_charge_secondaire_rl1: 2, enfants_a_charge_rl1: 3,
+														communique_info_parents_eleves_rl1: 'true'
 
 		assert_equal 'Tutrice', doc.css('#lien_de_parente_rl1 option[@selected="selected"]').children.text
 		assert_equal 'Philippe', doc.css('#prenom_rl1').attr('value').text
@@ -130,13 +130,12 @@ class EleveFormTest < Test::Unit::TestCase
 
 
 	def test_persistence_du_resp_legal_2
-		post '/identification', identifiant: '2', date_naiss: '1915-12-19'
-		post '/famille', lien_de_parente_rl2: "Tutrice", prenom_rl2: "Philippe" , nom_rl2: "Blayo", adresse_rl2: "20 bd Segur",
-				 code_postal_rl2: "75007", ville_rl2: "Paris", tel_principal_rl2: "0612345678", tel_secondaire_rl2: "0112345678",
-				 email_rl2: "test@gmail.com", situation_emploi_rl2: "Retraite", profession_rl2: "Cadre",
-				  communique_info_parents_eleves_rl2: 'true'
-		get '/famille'
-		doc = Nokogiri::HTML(last_response.body)
+		doc = soumet_formulaire  '/famille',
+														 lien_de_parente_rl2: "Tutrice", prenom_rl2: "Philippe" , nom_rl2: "Blayo",
+														 adresse_rl2: "20 bd Segur",code_postal_rl2: "75007", ville_rl2: "Paris",
+														 tel_principal_rl2: "0612345678", tel_secondaire_rl2: "0112345678",
+														 email_rl2: "test@gmail.com", situation_emploi_rl2: "Retraite", profession_rl2: "Cadre",
+														 communique_info_parents_eleves_rl2: 'true'
 
 		assert_equal 'Tutrice', doc.css('#lien_de_parente_rl2 option[@selected="selected"]').children.text
 		assert_equal 'Philippe', doc.css('#prenom_rl2').attr('value').text
@@ -154,11 +153,10 @@ class EleveFormTest < Test::Unit::TestCase
 
 
 	def test_persistence_du_contact_urg
-		post '/identification', identifiant: '2', date_naiss: '1915-12-19'
-		post '/famille', lien_avec_eleve_urg: "Tuteur", prenom_urg: "Philippe" , nom_urg: "Blayo", adresse_urg: "20 bd Segur",
-				 code_postal_urg: "75007", ville_urg: "Paris", tel_principal_urg: "0612345678", tel_secondaire_urg: "0112345678"
-		get '/famille'
-		doc = Nokogiri::HTML(last_response.body)
+		doc = soumet_formulaire '/famille',
+														lien_avec_eleve_urg: "Tuteur", prenom_urg: "Philippe" , nom_urg: "Blayo",
+														adresse_urg: "20 bd Segur",code_postal_urg: "75007", ville_urg: "Paris",
+														tel_principal_urg: "0612345678", tel_secondaire_urg: "0112345678"
 
 		assert_equal 'Tuteur', doc.css('#lien_avec_eleve_urg').attr('value').text
 		assert_equal 'Philippe', doc.css('#prenom_urg').attr('value').text
@@ -184,10 +182,7 @@ class EleveFormTest < Test::Unit::TestCase
 	def test_joindre_photo_identite
 		piece_a_joindre = Tempfile.new('fichier_temporaire')
 
-		post '/identification', identifiant: '2', date_naiss: '1915-12-19'
-		post '/pieces_a_joindre', photo_identite: {"tempfile": piece_a_joindre.path}
-		get '/pieces_a_joindre'
-		doc = Nokogiri::HTML(last_response.body)
+		doc = soumet_formulaire '/pieces_a_joindre', photo_identite: {"tempfile": piece_a_joindre.path}
 
 		assert_equal 'Modifier', doc.css('label[for=photo_identite]').text
 		assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
@@ -196,10 +191,7 @@ class EleveFormTest < Test::Unit::TestCase
 	def test_joindre_assurance_scolaire
 		piece_a_joindre = Tempfile.new('fichier_temporaire')
 
-		post '/identification', identifiant: '2', date_naiss: '1915-12-19'
-		post '/pieces_a_joindre', assurance_scolaire: {"tempfile": piece_a_joindre.path}
-		get '/pieces_a_joindre'
-		doc = Nokogiri::HTML(last_response.body)
+		doc = soumet_formulaire '/pieces_a_joindre', assurance_scolaire: {"tempfile": piece_a_joindre.path}
 
 		assert_equal 'Modifier', doc.css('label[for=assurance_scolaire]').text
 		assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
@@ -208,13 +200,17 @@ class EleveFormTest < Test::Unit::TestCase
 	def test_joindre_jugement_garde_enfant
 		piece_a_joindre = Tempfile.new('fichier_temporaire')
 
-		post '/identification', identifiant: '2', date_naiss: '1915-12-19'
-		post '/pieces_a_joindre', jugement_garde_enfant: {"tempfile": piece_a_joindre.path}
-		get '/pieces_a_joindre'
-		doc = Nokogiri::HTML(last_response.body)
+		doc = soumet_formulaire '/pieces_a_joindre', jugement_garde_enfant: {"tempfile": piece_a_joindre.path}
 
 		assert_equal 'Modifier', doc.css('label[for=jugement_garde_enfant]').text
 		assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
+	end
+
+	def soumet_formulaire(*arguments_du_post)
+		post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+		post *arguments_du_post
+		get arguments_du_post[0]
+		Nokogiri::HTML(last_response.body)
 	end
 
 	def assert_file(chemin_du_fichier)
