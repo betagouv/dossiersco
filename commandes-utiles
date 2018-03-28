@@ -26,13 +26,14 @@ Sortir d'irb pour refaire un require_relative
 
 ## Entre dans docker pour lancer rake
 
-$docker ps
+docker ps
 CONTAINER ID IMAGE COMMAND                   NAMES
 1caf94c1e9f8 ruby "/bin/bash -lc 'bu..." ... dossiersco_app_1
 
-$docker exec -it dossiersco_app_1 bash
+docker exec -it dossiersco_app_1 bash
 
-$docker-compose exec app bash
+docker-compose exec app bash
+docker-compose up --build --force-recreat
 
 ## Consulter les logs par service (désentrelacer les logs)
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180326081822) do
+ActiveRecord::Schema.define(version: 20180327135035) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,9 @@ ActiveRecord::Schema.define(version: 20180326081822) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "etablissement_id"
+    t.string "photo_identite"
+    t.string "assurance_scolaire"
+    t.string "jugement_garde_enfant"
     t.index ["eleve_id"], name: "index_dossier_eleves_on_eleve_id"
   end
 

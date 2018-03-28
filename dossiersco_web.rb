@@ -7,6 +7,7 @@ require './models/dossier_eleve.rb'
 require './models/resp_legal.rb'
 require './models/contact_urgence.rb'
 require './models/etablissement.rb'
+require './uploaders/fichier_uploader.rb'
 
 set :database_file, "config/database.yml"
 
@@ -128,7 +129,23 @@ get '/administration' do
 end
 
 get '/pieces_a_joindre' do
-	erb :'5_pieces_a_joindre'
+	dossier_eleve = get_dossier_eleve session[:identifiant]
+	erb :'5_pieces_a_joindre', locals: {dossier_eleve: dossier_eleve}
+end
+
+post '/pieces_a_joindre' do
+	dossier_eleve = get_dossier_eleve session[:identifiant]
+	fichiers = ["photo_identite", "assurance_scolaire", "jugement_garde_enfant"]
+	fichiers.each do |f|
+		if params[f].present? and params[f]["tempfile"].present?
+			file = File.open(params[f]["tempfile"])
+			uploader = FichierUploader.new
+			uploader.store!(file)
+			dossier_eleve[f] = uploader.file.file
+		end
+	end
+	dossier_eleve.save!
+	redirect '/validation'
 end
 
 get '/validation' do
