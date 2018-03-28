@@ -16,8 +16,8 @@
 				</div>
 				<hr>
 			</a>
-			<div id="accordeon-admin-cantine" class="collapse" role="tabpanel">
-				<form>
+			<form action="/administration" method="POST">
+				<div id="accordeon-admin-cantine" class="collapse" role="tabpanel">
 
 					<div class="form-group row">
 						<label for="cantine" class="col-sm-3 col-form-label">Choix de la cantine</label>
@@ -46,9 +46,7 @@
 						<span style="display:block; height: 10px;"></span>
 
 					</div>
-
-				</form>
-			</div>
+				</div>
 
 			<a data-toggle="collapse" data-parent="#accordeon-admin" href="#accordeon-admin-sortie" aria-expanded="false" aria-controls="accordeon-admin-sortie">
 
@@ -60,8 +58,6 @@
 			</a>
 			<div id="accordeon-admin-sortie" class="collapse" role="tabpanel">
 				<p class="mb-3">
-
-					<form>
 
 						<span style="display:block; height: 10px;"></span>
 
@@ -80,7 +76,6 @@
 
 						<span style="display:block; height: 10px;"></span>
 
-					</form>
 				</p>
 			</div>
 
@@ -94,9 +89,6 @@
 			</a>
 			<div id="accordeon-admin-medical" class="collapse" role="tabpanel">
 				<p class="mb-3">
-
-					<form>
-
 						<span style="display:block; height: 20px;"></span>
 
 						<h4>Médecin traitant</h4>
@@ -149,8 +141,6 @@
 							<textarea class="form-control" rows="5" id="comment_conf"></textarea>
 						</div>
 
-					</form>
-
 					<span style="display:block; height: 10px;"></span>
 				</p>
 			</div>
@@ -165,8 +155,6 @@
 			</a>
 			<div id="accordeon-admin-image" class="collapse" role="tabpanel">
 				<p class="mb-3">
-
-						<form>
 
 							<p>En application de l'article 9 du code civil et de l'article 121-1 du code de la propriété intellectuelle :</p>
 
@@ -200,13 +188,13 @@
 
 							<p>que mon enfant soit photographié à l'occasion des photos de classe.</p>
 
-						</form>
-				</p>
-			</div>
+					</p>
+				</div>
+
+				<%= erb :'partials/precedent_suivant', :locals => { :precedent => "famille", :suivant => "pieces_a_joindre" } %>
+			</form>
 
 	<span style="display:block; height: 20px;"></span>
-
-	<%= erb :'partials/precedent_suivant', :locals => { :precedent => "famille", :suivant => "pieces_a_joindre" } %>
 
 </div><!--/span-->
 
