@@ -5,3 +5,4 @@ dump.rdb
 !.circleci
 notes
 uploads
+secrets.*

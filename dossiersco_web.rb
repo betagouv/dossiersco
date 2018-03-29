@@ -7,6 +7,7 @@ require './models/dossier_eleve.rb'
 require './models/resp_legal.rb'
 require './models/contact_urgence.rb'
 require './models/etablissement.rb'
+require './config/initializers/carrierwave.rb'
 require './uploaders/fichier_uploader.rb'
 
 set :database_file, "config/database.yml"

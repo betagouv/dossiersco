@@ -28,6 +28,7 @@ services:
       POSTGRES_USER: dossiersco
       POSTGRES_PASSWORD: dossiersco
       RUBYOPT: -KU
+      RACK_ENV: test
   postgres:
     image: postgres
     restart: always
