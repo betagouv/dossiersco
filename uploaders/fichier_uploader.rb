@@ -1,5 +1,6 @@
 require 'carrierwave'
+require 'fog-aws'
 
 class FichierUploader  < CarrierWave::Uploader::Base
-	storage :file
+  storage :fog
 end
