@@ -11,10 +11,10 @@
 	<hr>
 
 	<% if demarche == "inscription" %>
-		<p>Le dossier d'inscription de votre enfant <strong>Etienne Puydebois</strong> pour son entrée en sixième au <strong>collège Georges Courteline (Paris 12e)</strong>  est complet.</p>
+		<p>Le dossier d'inscription de votre enfant <strong><%= "#{eleve.prenom} #{eleve.nom}"%></strong> pour son entrée en 4ème au <strong>collège Jean-François OEBEN</strong>  est complet.</p>
 		<p>Veuillez vérifier les informations ci-dessous, puis validez l'inscription.</p>
 	<% else %>
-		<p>Le dossier de réinscription de votre enfant <strong>Etienne Puydebois</strong> pour son passage en cinquième au <strong>collège Jean Luçat (Brive-la-Gaillarde)</strong> est complet.</p>
+		<p>Le dossier de réinscription de votre enfant <strong><%= "#{eleve.prenom} #{eleve.nom}"%></strong> pour son passage en 4ème au <strong>collège Jean-François OEBEN</strong> est complet.</p>
 		<p>Veuillez vérifier les informations ci-dessous, puis validez la réinscription.</p>
 	<% end %>
 
@@ -25,23 +25,7 @@
 					<strong>Langue vivante 2</strong>
 				</div>
 				<div class="col-4">
-					Espagnol
-				</div>
-				<div class="col-3">
-					<form action="/scolarite" method="get">
-						<button class="btn btn-outline-secondary btn-sm">Modifier</button>
-					</form>
-				</div>
-			</div>
-
-			<span style="display:block; height: 5px;"></span>
-
-			<div class="row">
-				<div class="col-3">
-					<strong>Option facultative</strong>
-				</div>
-				<div class="col-4">
-					Latin
+					<%= eleve.lv2 %>
 				</div>
 				<div class="col-3">
 					<form action="/scolarite" method="get">

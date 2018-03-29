@@ -153,7 +153,8 @@ post '/pieces_a_joindre' do
 end
 
 get '/validation' do
-	erb :'6_validation'
+	eleve = get_eleve session[:identifiant]
+	erb :'6_validation', locals: { eleve: eleve }
 end
 
 get '/confirmation' do
