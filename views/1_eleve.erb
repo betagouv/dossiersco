@@ -71,9 +71,10 @@ scolarite_ant = [
         {
           name: "classe_ant",
           label: "Classe",
-          type: "dropdown",
-          options: ["CM2", "CM1 (saut de classe)", "6ème (redoublement)"],
-          selected: eleve.classe_ant
+          type: "text",
+          value: eleve.classe_ant,
+          indication: "Classe",
+          disabled: false
         },
         {
           name: "ets_ant",
