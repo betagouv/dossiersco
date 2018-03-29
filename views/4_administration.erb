@@ -89,56 +89,14 @@
 			</a>
 			<div id="accordeon-admin-medical" class="collapse" role="tabpanel">
 				<p class="mb-3">
-						<span style="display:block; height: 20px;"></span>
-
-						<h4>Médecin traitant</h4>
-
 						<div class="row">
 							<div class="col">
 								<div class="form-check">
 									<label class="form-check-label">
-										<input class="form-check-input" id="meme_adresse_que_med" type="checkbox" checked="" onclick="afficher_infos_med(event)"> Le médecin traitant est le même que l'année dernière
+										<input class="form-check-input" id="meme_adresse_que_med" type="checkbox" checked="" onclick="afficher_infos_med(event)"> Je souhaite communiquer par écrit un changement de nature médical
 									</label>
 								</div>
 							</div>
-						</div>
-
-					<span style="display:block; height: 20px;"></span>
-
-						<%= erb :'partials/champ_texte', :locals => { :desc => "Nom", :variable => "nom_med_traitant", :valeur => "Dr Blanc", :exemple => "Nom du médecin traitant" }%>
-
-						<%= erb :'partials/champ_texte', :locals => { :desc => "Adresse", :variable => "adr_med_traitant", :valeur => "23 rue du Pont qui chante", :exemple => "Adresse" }%>
-
-					<%= erb :'partials/champ_texte', :locals => { :desc => "Code postal", :variable => "cp_med_traitant", :valeur => "75011", :exemple => "Code postal" }%>
-
-					<%= erb :'partials/champ_texte', :locals => { :desc => "Ville", :variable => "ville_med_traitant", :valeur => "Paris", :exemple => "Ville" }%>
-
-						<%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone", :variable => "tel_med_traitant", :valeur => "0156455612", :exemple => "Numéro de téléphone" }%>
-
-						<span style="display:block; height: 30px;"></span>
-
-						<h4>Informations complémentaires</h4>
-
-						<span style="display:block; height: 20px;"></span>
-
-						<p>Votre enfant bénéficie-t-il :</p>
-
-						<%= erb :'partials/champ_radio_custom', :locals => { :desc => "- d'un Projet d'Accueil Individualisé (PAI) ?", :variable => "PAI", :options => { :oui => "Oui", :non => "Non" }, :checked => "" }%>
-
-						<%= erb :'partials/champ_radio_custom', :locals => { :desc => "- d'un Plan d'Accompagnement Personnalisé (PAP) ?", :variable => "PAP", :options => { :oui => "Oui", :non => "Non" }, :checked => "" }%>
-
-						<span style="display:block; height: 20px;"></span>
-
-						<div class="form-group">
-							<label for="comment">Problèmes de santé que vous souhaitez porter à la connaissance de l'établissement (maladies, allergies, traitements en cours, contre-indications, précautions particulières, etc.)</label>
-							<textarea class="form-control" rows="5" id="comment"></textarea>
-						</div>
-
-						<span style="display:block; height: 20px;"></span>
-
-						<div class="form-group">
-							<label for="comment_conf">Problèmes de santé confidentiels que vous voulez porter à la connaissance de l'infirmier·ère <em>uniquement</em></label>
-							<textarea class="form-control" rows="5" id="comment_conf"></textarea>
 						</div>
 
 					<span style="display:block; height: 10px;"></span>
