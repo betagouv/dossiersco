@@ -42,7 +42,7 @@ class EleveFormTest < Test::Unit::TestCase
 		doc = Nokogiri::HTML(last_response.body)
 		assert_equal 'Collège Arago', doc.xpath("//div//h1/text()").to_s
 		assert_equal 'Collège Arago', doc.xpath("//strong[@id='etablissement']/text()").to_s.strip
-		assert_equal 'samedi 3 juin 2018', doc.xpath("//strong[@id='date-limite']/text()").to_s
+		assert_equal '20 Mai 2018', doc.xpath("//strong[@id='date-limite']/text()").to_s
 	end
 
 	def test_modification_lieu_naiss_eleve
