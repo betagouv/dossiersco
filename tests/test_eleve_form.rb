@@ -179,42 +179,10 @@ class EleveFormTest < Test::Unit::TestCase
 		assert_equal 'Parcourir / Prendre en photo', doc.css('label[for=jugement_garde_enfant]').text
 	end
 
-	def test_joindre_photo_identite
-		piece_a_joindre = Tempfile.new('fichier_temporaire')
-
-		doc = soumet_formulaire '/pieces_a_joindre', photo_identite: {"tempfile": piece_a_joindre.path}
-
-		assert_equal 'Modifier', doc.css('label[for=photo_identite]').text
-		assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
-	end
-
-	def test_joindre_assurance_scolaire
-		piece_a_joindre = Tempfile.new('fichier_temporaire')
-
-		doc = soumet_formulaire '/pieces_a_joindre', assurance_scolaire: {"tempfile": piece_a_joindre.path}
-
-		assert_equal 'Modifier', doc.css('label[for=assurance_scolaire]').text
-		assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
-	end
-
-	def test_joindre_jugement_garde_enfant
-		piece_a_joindre = Tempfile.new('fichier_temporaire')
-
-		doc = soumet_formulaire '/pieces_a_joindre', jugement_garde_enfant: {"tempfile": piece_a_joindre.path}
-
-		assert_equal 'Modifier', doc.css('label[for=jugement_garde_enfant]').text
-		assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
-	end
-
 	def soumet_formulaire(*arguments_du_post)
 		post '/identification', identifiant: '2', date_naiss: '1915-12-19'
 		post *arguments_du_post
 		get arguments_du_post[0]
 		Nokogiri::HTML(last_response.body)
-	end
-
-	def assert_file(chemin_du_fichier)
-		assert File.file? chemin_du_fichier
-		File.delete(chemin_du_fichier)
 	end
 end
