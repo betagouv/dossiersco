@@ -16,6 +16,9 @@ Remarques pendant la démo du 23/3
 [ ] Alignement des boutons sur "Pièces"
 [ ] Supprimer l'ancien fichier quand on modifie une pièce jointe
 
+[ ] En dev et intégration continue on va utiliser le filesystem
+[ ] Tester le fonctionnement de carrierwave avec un mock
+
 Done
 [X] Réparer la prod
 [X] Ajouter une config Circle CI sur Github
