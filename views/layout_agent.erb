@@ -21,10 +21,14 @@
   <span class="navbar-brand"><strong style="color: #2d9ee0;">dossiersco web</strong></span>
   <ul class="nav">
     <li class="nav-item">
-      <a class="nav-link disabled" href="#">Collège Jean Lurçat</a>
+      <a class="nav-link disabled" href="#">
+        <%= agent.etablissement.nom %>
+      </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">G. Ganet</a>
+      <a class="nav-link" href="#">
+        <%= "#{agent.prenom} #{agent.nom}" %>
+      </a>
     </li>
   </ul>
 </nav>

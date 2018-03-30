@@ -1,3 +1,3 @@
 class Agent < ActiveRecord::Base
-  belongs_to :etablissment
+  belongs_to :etablissement
 end
