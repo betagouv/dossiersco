@@ -2,6 +2,7 @@ def init
   Etablissement.destroy_all
   DossierEleve.destroy_all
   Eleve.destroy_all
+  Agent.destroy_all
 
   eleves = [
       {prenom: 'Edith',
@@ -37,4 +38,11 @@ def init
       demarche: "reinscription"
   )
 
+  etablissement = Etablissement.create!({
+      nom: "Arago",
+      date_limite: "samedi 6 juin 2018"
+  })
+  Agent.create!(password: '$2a$10$6njb4Rn4RHyFFJpP5QEJGutErgZVOr6/cCM17IKoIsiQDZQABBN2a',
+                nom: 'De Maulmont', prenom: 'Pierre', etablissement_id: etablissement.id,
+                identifiant: 'pierre')
 end

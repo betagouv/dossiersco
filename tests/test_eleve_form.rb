@@ -6,6 +6,7 @@ require 'rack/test'
 require 'tempfile'
 
 require_relative '../dossiersco_web'
+require_relative '../dossiersco_agent'
 require_relative '../db/seeds'
 
 class EleveFormTest < Test::Unit::TestCase
@@ -184,5 +185,14 @@ class EleveFormTest < Test::Unit::TestCase
 		post *arguments_du_post
 		get arguments_du_post[0]
 		Nokogiri::HTML(last_response.body)
-	end
+  end
+
+#   Tests agents
+
+  def test_entree_succes_agent
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    follow_redirect!
+    assert last_response.body.include? 'Arago'
+  end
+
 end

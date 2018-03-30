@@ -9,5 +9,17 @@ use Rack::Session::Pool
 
 
 get '/agent' do
-	erb :'agent'
+	erb :'agent/identification'
 end
+
+post '/agent' do
+
+  redirect '/tableau_de_bord'
+end
+
+get '/tableau_de_bord' do
+
+  erb :'agent/tableau_de_bord'
+end
+
+
