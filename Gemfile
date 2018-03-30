@@ -7,6 +7,7 @@ gem 'pg'
 gem 'rake'
 gem 'carrierwave'
 gem 'fog-aws'
+gem 'bcrypt', '~> 3.1'
 
 group :test do
 	gem 'nokogiri'
