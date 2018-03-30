@@ -7,6 +7,7 @@
 [ ] Remettre en service les tests d'upload
 [ ] Ne pas indiquer si l'eleve existe dans l'erreur d'autentification
 [ ] Séparer les tests en plusieurs fichiers
+[ ] Distinguer les notions de dossier initié / dossier tout court
 
 Remarques pendant la démo du 23/3
 [ ] Clarifier "Vous êtes agent en EPLE"

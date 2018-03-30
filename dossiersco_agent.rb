@@ -28,7 +28,8 @@ end
 
 get '/tableau_de_bord' do
   agent = Agent.find_by(identifiant: session[:identifiant])
+  total_dossiers = 0
   erb :'agent/tableau_de_bord',
     layout: :layout_agent,
-    locals: {agent: agent}
+    locals: {agent: agent, total_dossiers: total_dossiers}
 end
