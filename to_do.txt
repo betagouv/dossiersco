@@ -1,7 +1,10 @@
 [ ] Ingérer un fichier Affelnet
-[ ] Restreindre l'accès aux données d'un élève aux utilisateurs identifés
-[ ] Formulaire Famille
-[ ] Upload pièces
+[X] Restreindre l'accès aux données d'un élève aux utilisateurs identifés
+[X] Formulaire Famille
+[X] Upload pièces
+[ ] Afficher un feedback des fichiers uploadés
+[ ] Afficher un feedback des fichiers choisis
+[ ] Remettre en service les tests d'upload
 
 Remarques pendant la démo du 23/3
 [ ] Clarifier "Vous êtes agent en EPLE"
