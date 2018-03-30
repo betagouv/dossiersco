@@ -195,4 +195,10 @@ class EleveFormTest < Test::Unit::TestCase
     assert last_response.body.include? 'Arago'
   end
 
+  def test_entree_mauvais_identifiant_agent
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'pierre'
+    follow_redirect!
+    assert last_response.body.include? 'Ces informations ne correspondent pas à un agent enregistré'
+  end
+
 end
