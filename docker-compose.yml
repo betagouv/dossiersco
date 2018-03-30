@@ -8,7 +8,7 @@ services:
       - 9393:9393
     volumes:
       - ./:/app
-    command: /bin/bash -lc "rake db:migrate && bundle exec shotgun -o 0.0.0.0"
+    command: /bin/bash -lc "sleep 3 && rake db:migrate && bundle exec shotgun -o 0.0.0.0"
     working_dir: /app
     environment:
       POSTGRES_HOST: postgres
@@ -18,7 +18,7 @@ services:
       RUBYOPT: -KU
   test:
     build: .
-    command: /bin/bash -lc "rake db:migrate db:seed && while true; do ruby tests/test_eleve_form.rb; sleep 3; done"
+    command: /bin/bash -lc "sleep 3 && rake db:migrate db:seed && while true; do ruby tests/test_eleve_form.rb; sleep 3; done"
     volumes:
       - ./:/app
     working_dir: /app
