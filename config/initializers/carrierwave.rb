@@ -1,6 +1,6 @@
 require 'carrierwave'
 
-require_relative '../secrets.rb'
+require_relative '../secrets.rb' if File.exist? './config/secrets.rb'
 
 require 'carrierwave/storage/abstract'
 require 'carrierwave/storage/file'
