@@ -144,6 +144,7 @@ post '/pieces_a_joindre' do
 	fichiers.each do |f|
 		if params[f].present? and params[f]["tempfile"].present?
 			file = File.open(params[f]["tempfile"])
+      p "============= file : #{file} #{file.inspect}"
 			uploader = FichierUploader.new
 			uploader.store!(file)
 			dossier_eleve[f] = File.basename(file.path)
