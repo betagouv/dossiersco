@@ -163,7 +163,7 @@ get '/confirmation' do
 	erb :'7_confirmation'
 end
 
-get '/agent' do
+get '/agent_mockup' do
 	erb :'agent', layout: :layout_agent
 end
 
