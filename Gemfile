@@ -6,6 +6,7 @@ gem 'sinatra-activerecord'
 gem 'pg'
 gem 'rake'
 gem 'carrierwave'
+gem 'fog-aws'
 
 group :test do
 	gem 'nokogiri'

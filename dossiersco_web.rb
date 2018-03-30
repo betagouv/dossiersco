@@ -7,6 +7,7 @@ require './models/dossier_eleve.rb'
 require './models/resp_legal.rb'
 require './models/contact_urgence.rb'
 require './models/etablissement.rb'
+require './config/initializers/carrierwave.rb'
 require './uploaders/fichier_uploader.rb'
 
 set :database_file, "config/database.yml"
@@ -143,9 +144,10 @@ post '/pieces_a_joindre' do
 	fichiers.each do |f|
 		if params[f].present? and params[f]["tempfile"].present?
 			file = File.open(params[f]["tempfile"])
+      p "============= file : #{file} #{file.inspect}"
 			uploader = FichierUploader.new
 			uploader.store!(file)
-			dossier_eleve[f] = uploader.file.file
+			dossier_eleve[f] = File.basename(file.path)
 		end
 	end
 	dossier_eleve.save!
