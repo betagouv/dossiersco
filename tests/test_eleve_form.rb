@@ -40,8 +40,8 @@ class EleveFormTest < Test::Unit::TestCase
 		post '/identification', identifiant: '1', date_naiss: '1995-11-19'
 		follow_redirect!
 		doc = Nokogiri::HTML(last_response.body)
-		assert_equal 'Collège Arago', doc.xpath("//div//h1/text()").to_s
-		assert_equal 'Collège Arago', doc.xpath("//strong[@id='etablissement']/text()").to_s.strip
+		assert_equal 'College Jean-Francois Oeben', doc.xpath("//div//h1/text()").to_s
+		assert_equal 'College Jean-Francois Oeben', doc.xpath("//strong[@id='etablissement']/text()").to_s.strip
 		assert_equal '20 Mai 2018', doc.xpath("//strong[@id='date-limite']/text()").to_s
 	end
 
