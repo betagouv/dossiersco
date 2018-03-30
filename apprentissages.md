@@ -10,6 +10,12 @@
 community à partir de
 https://docs.docker.com/install/linux/docker-ce/ubuntu/#set-up-the-repository)
 
+* Active_Support embarque des règles anglaises de pluralisation/singularisation et ça peut mettre la zone
+* Le monkey patching est une technique avancée mais bien utile
+* La gemme gemedit permet de faire "gem edit <unegemme>", à condition d'avoir installé vim/vi et c'est pratique
+* Dans les conteneurs on est tous nus, on n'a pas les outils habituels (vim, wget, etc.) - on peut y rentrer et faire apt-get update puis apt-get install <outil>
+* Avec docker-compose exec on peut retrouver le conteneur déjà créé donc retrouver les outils qu'on y a installés
+
 ## Pour créer un formulaire d'upload
 * ajouter "multiple" dans les <input>
 * ajouter enctype="multipart/form-data" dans <form>
