@@ -14,7 +14,12 @@ def init
        nom: 'Puydebois',
        date_naiss: '1995-11-19',
        nationalite: 'francaise',
-       identifiant: '1'}
+       identifiant: '1'},
+      {prenom: '',
+       nom: '',
+       date_naiss: '1996-04-12',
+       nationalite: 'FRANCE',
+       identifiant: '1225804331'}
   ]
 
   eleve = Eleve.create!(eleves[0])
@@ -31,6 +36,16 @@ def init
   eleve = Eleve.create!(eleves[1])
   etablissement = Etablissement.create!({
      nom: "College Jean-Francois Oeben",
+     date_limite: "samedi 3 juin 2018"})
+  DossierEleve.create!(
+      eleve_id: eleve.id,
+      etablissement_id: etablissement.id,
+      demarche: "reinscription"
+  )
+
+  eleve = Eleve.create!(eleves[2])
+  etablissement = Etablissement.create!({
+     nom: "College Saint Exupery",
      date_limite: "samedi 3 juin 2018"})
   DossierEleve.create!(
       eleve_id: eleve.id,
