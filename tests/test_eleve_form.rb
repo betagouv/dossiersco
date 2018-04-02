@@ -39,6 +39,19 @@ class EleveFormTest < Test::Unit::TestCase
     assert last_response.body.include? 'Le conseil de classe'
   end
 
+  def test_entree_succes_firefox_52_0_1_eleve_1
+    post '/identification', identifiant: '1', date_naiss: '19/11/1995'
+    follow_redirect!
+    assert last_response.body.include? 'Le conseil de classe'
+  end
+
+
+  def test_entree_succes_date_avec_espaces_eleve_1
+    post '/identification', identifiant: '1', date_naiss: '19 11 1995'
+    follow_redirect!
+    assert last_response.body.include? 'Le conseil de classe'
+  end
+
   def test_entree_mauvais_identifiant
     post '/identification', identifiant: '3', date_naiss: '1995-11-19'
     follow_redirect!
