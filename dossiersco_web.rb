@@ -10,6 +10,7 @@ set :database_file, "config/database.yml"
 
 require_relative 'helpers/formulaire'
 require_relative 'helpers/init'
+require_relative 'helpers/mot_de_passe'
 
 enable :sessions
 set :session_secret, "secret"
@@ -38,7 +39,7 @@ post '/identification' do
     redirect '/'
   end
   eleve = dossier_eleve.eleve
-	if eleve.date_naiss == params[:date_naiss]
+	if eleve.date_naiss == normalise(params[:date_naiss])
 		session[:identifiant] = params[:identifiant]
 		session[:demarche] = dossier_eleve.demarche
 		redirect "/accueil"

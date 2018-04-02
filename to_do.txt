@@ -24,6 +24,7 @@ Remarques pendant la démo du 23/3
 
 [ ] En dev et intégration continue on va utiliser le filesystem
 [ ] Tester le fonctionnement de carrierwave avec un mock
+[ ] Gérer le champs date pour un login avec Internet Explorer
 
 Done
 [X] Réparer la prod
