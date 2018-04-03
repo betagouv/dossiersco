@@ -39,3 +39,26 @@ Le dernier bulletin de notes est remis lors d'un entretien facultatif avec le
 professeur principal. C'est une extraction de l'ENT (Espace Numérique de Travail)
 ou les notes sont accessibles en continue tout au long de l'année.
 Cet outil est spécifique à l'académie de Paris.
+
+# Des anciens parents d'élèves
+
+Cadre : domicile des anciens parents d'élève
+
+La mère a bien rentré l'url. Elle a hésité si c'était bien la date de
+naissance de l'élève ou pas.
+
+- La page famille, elle remplissait les champs.
+- Elle a laissé "je n'accepte pas" pour "transmettre les donnée aux asso
+de parents d'élève", mais si à l'oral elle a dit qu'elle acceptait.
+C'est le père qui a dit "coche la case".
+- Elle a remplit les champs relatifs à l'emploie. Ca ne les a pas
+choqués.
+- Pas remplit la 3ème personne à contacter en cas d'urgence.
+- Tout remplit la cantine. N'ont pas lu le règlement de la
+cantine, ont mis j'accepte direct.
+- Pour les pièces jointes, ils ont pris des fichers déjà
+présents sur l'ordinateur. (ils savent se servir du scanner)
+
+Ils ont trouvé ça rapide et facile à faire : 5 minutes.
+Ils n'auraient pas eu l'idée de prendre en photo avec le
+téléphone.
