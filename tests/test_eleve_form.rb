@@ -5,12 +5,7 @@ require 'test/unit'
 require 'rack/test'
 require 'tempfile'
 
-# require 'active_support/inflector'
-# class String
-#   def singularize(locale = :fr)
-#     ActiveSupport::Inflector.singularize(self, locale)
-#   end
-# end
+require_relative '../helpers/singulier_francais'
 
 require_relative '../dossiersco_web'
 require_relative '../dossiersco_agent'
@@ -114,7 +109,7 @@ class EleveFormTest < Test::Unit::TestCase
     RespLegal.create(dossier_eleve_id: dossier_eleve.id)
     RespLegal.create(dossier_eleve_id: dossier_eleve.id)
 
-    assert dossier_eleve.resp_legals.size == 2
+    assert dossier_eleve.resp_legal.size == 2
   end
 
   def test_dossier_eleve_possede_un_contact_urgence
@@ -228,11 +223,11 @@ class EleveFormTest < Test::Unit::TestCase
     doc = Nokogiri::HTML(last_response.body)
     selector = '#total_dossiers'
     affichage_total_dossiers = doc.css(selector).text
-    assert_equal '0', affichage_total_dossiers
+    assert_equal '4', affichage_total_dossiers
   end
 
-  # def test_singularize_dossier_eleve
-  #   assert_equal 'dossier_eleves', 'dossier_eleves'.singularize
-  # end
+  def test_singularize_dossier_eleve
+    assert_equal 'dossier_eleves', 'dossier_eleves'.singularize
+  end
 
 end

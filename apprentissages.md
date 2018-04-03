@@ -15,6 +15,7 @@ https://docs.docker.com/install/linux/docker-ce/ubuntu/#set-up-the-repository)
 * La gemme gemedit permet de faire "gem edit <unegemme>", à condition d'avoir installé vim/vi et c'est pratique
 * Dans les conteneurs on est tous nus, on n'a pas les outils habituels (vim, wget, etc.) - on peut y rentrer et faire apt-get update puis apt-get install <outil>
 * Avec docker-compose exec on peut retrouver le conteneur déjà créé donc retrouver les outils qu'on y a installés
+* Les entiers en Postgres nécessitent d'être entourés de guillemets simples
 
 ## Pour créer un formulaire d'upload
 * ajouter "multiple" dans les <input>
