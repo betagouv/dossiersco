@@ -28,6 +28,13 @@ post '/agent' do
   end
 end
 
+get '/liste_des_eleves' do
+  agent = Agent.find_by(identifiant: session[:identifiant])
+  erb :'agent/liste_des_eleves',
+      layout: :layout_agent,
+      locals: {agent: agent, dossier_eleves: agent.etablissement.dossier_eleve}
+end
+
 get '/tableau_de_bord' do
   agent = Agent.find_by(identifiant: session[:identifiant])
   total_dossiers = agent.etablissement.dossier_eleve.count
