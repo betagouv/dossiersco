@@ -78,6 +78,7 @@ git remote add heroku https://git.heroku.com/dossiersco.git
 git push heroku master # pour pousser en prod
 heroku open
 heroku logs -t
+heroku run rake db:migrate
 
 En local :
 
