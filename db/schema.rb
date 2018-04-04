@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180403132403) do
+ActiveRecord::Schema.define(version: 20180404135153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,9 @@ ActiveRecord::Schema.define(version: 20180403132403) do
     t.string "assurance_scolaire"
     t.string "jugement_garde_enfant"
     t.string "etat", default: "pas_connecte"
+    t.string "etat_photo_identite"
+    t.string "etat_assurance_scolaire"
+    t.string "etat_jugement_garde_enfant"
     t.index ["eleve_id"], name: "index_dossier_eleves_on_eleve_id"
   end
 
