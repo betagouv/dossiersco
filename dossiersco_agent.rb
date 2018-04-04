@@ -42,3 +42,9 @@ get '/tableau_de_bord' do
     layout: :layout_agent,
     locals: {agent: agent, total_dossiers: total_dossiers}
 end
+
+post '/change_etat_fichier' do
+  dossier_eleve = DossierEleve.find(params[:id])
+  dossier_eleve[params[:nom_fichier]] = params[:etat]
+  dossier_eleve.save!
+end
