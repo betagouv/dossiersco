@@ -2,7 +2,7 @@ require 'sinatra'
 require 'sinatra/activerecord'
 require 'bcrypt'
 require_relative 'helpers/singulier_francais'
-
+require_relative 'helpers/import_siecle'
 
 set :database_file, "config/database.yml"
 
@@ -41,6 +41,17 @@ get '/tableau_de_bord' do
   erb :'agent/tableau_de_bord',
     layout: :layout_agent,
     locals: {agent: agent, total_dossiers: total_dossiers}
+end
+
+get '/import_siecle' do
+  agent = Agent.find_by(identifiant: session[:identifiant])
+  erb :'agent/import_siecle'
+end
+
+post '/import_siecle' do
+  agent = Agent.find_by(identifiant: session[:identifiant])
+  import_xls params[:filename][:tempfile]
+  erb :'agent/import_siecle', locals: { message: "L'import a réussit" }
 end
 
 post '/change_etat_fichier' do
