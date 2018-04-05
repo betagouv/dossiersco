@@ -261,7 +261,7 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'dossier_eleves', 'dossier_eleves'.singularize
   end
 
-  def test_importe_fichier_siecle
+  def test_importe_eleve_fichier_siecle
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
     post '/import_siecle', name: 'import_siecle', filename: {tempfile: 'tests/test_import_siecle.xls'}
 
@@ -276,6 +276,16 @@ class EleveFormTest < Test::Unit::TestCase
     assert eleve2.identifiant == '080788306HE'
     assert eleve2.pays_naiss == 'CONGO'
     assert eleve2.ville_naiss == 'Brazaville'
+  end
+
+  def test_importe_resp_legaux_fichier_siecle
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    post '/import_siecle', name: 'import_siecle', filename: {tempfile: 'tests/test_import_siecle.xls'}
+
+    resp_legaux = RespLegal.where(nom: 'PUYDEBOIS')
+
+    assert resp_legaux.size == 2
+
   end
 
 end
