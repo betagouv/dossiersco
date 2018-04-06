@@ -12,6 +12,7 @@
 [ ] Faire une erreur propre en cas de login inexistant
 [ ] Afficher l'etat réel des pieces jointes dans la liste des éleves
 [ ] Factoriser le code de l'authentification
+[ ] Instruire la question de la variabilité des pièces justificatives
 
 Remarques pendant la démo du 23/3
 [ ] Clarifier "Vous êtes agent en EPLE"

@@ -76,6 +76,9 @@ def cree_dossier_eleve eleve, etablissement, etat
       eleve_id: e.id,
       etablissement_id: etablissement.id,
       demarche: "reinscription",
-      etat: etat
+      etat: etat,
+      etat_photo_identite: "absente",
+      etat_assurance_scolaire: "absente",
+      etat_jugement_garde_enfant: "absente"
   )
 end

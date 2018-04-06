@@ -289,4 +289,13 @@ class EleveFormTest < Test::Unit::TestCase
 
   end
 
+  def test_un_visiteur_anonyme_ne_peut_pas_valider_une_piece_jointe
+    dossier_eleve = DossierEleve.first
+    etat_préservé = dossier_eleve.etat_photo_identite
+
+    post '/change_etat_fichier', id: dossier_eleve.id, etat: 'validé', nom_fichier: 'etat_photo_identite'
+
+    dossier_eleve_en_base = DossierEleve.find(dossier_eleve.id)
+    assert_equal etat_préservé, dossier_eleve_en_base.etat_photo_identite
+  end
 end
