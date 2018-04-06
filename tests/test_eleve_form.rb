@@ -272,6 +272,7 @@ class EleveFormTest < Test::Unit::TestCase
     assert eleve.identifiant == '080788316HE'
     assert eleve.pays_naiss == 'FRANCE'
     assert eleve.ville_naiss == 'PARIS 12E  ARRONDISSEMENT'
+    assert eleve.dossier_eleve.etablissement.nom == 'Arago'
     assert eleve2.prenom == 'Prenom2_test'
     assert eleve2.identifiant == '080788306HE'
     assert eleve2.pays_naiss == 'CONGO'
