@@ -1,7 +1,7 @@
 require 'roo'
 require 'roo-xls'
 
-def import_xls fichier
+def import_xls fichier, etablissement_id
   # chargement du fichier excel affelnet
   xls_document = Roo::Spreadsheet.open fichier
 
@@ -13,7 +13,6 @@ def import_xls fichier
                 nom_resp_legal2: 118, prenom_resp_legal2: 120, tel_principal_resp_legal2: 121,
                 tel_secondaire_resp_legal2: 123, lien_parente_resp_legal2: 122, adresse_resp_legal2: 127,
                 ville_resp_legal2: 131, code_postal_resp_legal2: 132, email_resp_legal2: 125}
-
 
     sexe = xls_document.row(row)[colonnes[:sexe]]
     pays_nat = xls_document.row(row)[colonnes[:pays_nat]]
@@ -43,7 +42,7 @@ def import_xls fichier
         pays_naiss: pays_naiss,
         ville_naiss: ville_naiss)
 
-    dossier_eleve = DossierEleve.create!(eleve_id: eleve.id)
+    dossier_eleve = DossierEleve.create!(eleve_id: eleve.id, etablissement_id: etablissement_id)
 
     ['1', '2'].each do |i|
       nom_resp_legal = xls_document.row(row)[colonnes["nom_resp_legal#{i}".to_sym]]

@@ -3,22 +3,24 @@
 [X] Formulaire Famille
 [X] Upload pièces
 [ ] Afficher un feedback des fichiers uploadés
-[ ] Afficher un feedback des fichiers choisis
+[X] Afficher un feedback des fichiers choisis
 [ ] Remettre en service les tests d'upload
 [ ] Ne pas indiquer si l'eleve existe dans l'erreur d'autentification
 [ ] Séparer les tests en plusieurs fichiers
 [ ] Distinguer les notions de dossier initié / dossier tout court
+[ ] Réduire la duplication dans l'affectation des résponsables légaux dans l'import SIECLE
+[ ] Faire une erreur propre en cas de login inexistant
 
 Remarques pendant la démo du 23/3
 [ ] Clarifier "Vous êtes agent en EPLE"
-[ ] Décider de la destination du lien pour les agents
+[X] Décider de la destination du lien pour les agents
 [ ] Aiguiller les utilisateurs (profil parent) pour "identifiant"
 [ ] Valider le wording du message d'invitation
 [ ] Quel changement induit "Valider l'inscription"
 [ ] Infos collèges sur Validation
 
 [ ] S'assurer du fonctionnement sur mobile
-[ ] Logo flottant
+[X] Logo flottant
 [ ] Alignement des boutons sur "Pièces"
 [ ] Supprimer l'ancien fichier quand on modifie une pièce jointe
 

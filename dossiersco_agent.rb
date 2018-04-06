@@ -50,8 +50,8 @@ end
 
 post '/import_siecle' do
   agent = Agent.find_by(identifiant: session[:identifiant])
-  import_xls params[:filename][:tempfile]
-  erb :'agent/import_siecle', locals: { message: "L'import a réussit" }
+  import_xls params[:filename][:tempfile], agent.etablissement.id
+  erb :'agent/import_siecle', locals: { message: "L'import a réussi" }
 end
 
 post '/change_etat_fichier' do
