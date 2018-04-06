@@ -10,6 +10,8 @@
 [ ] Distinguer les notions de dossier initié / dossier tout court
 [ ] Réduire la duplication dans l'affectation des résponsables légaux dans l'import SIECLE
 [ ] Faire une erreur propre en cas de login inexistant
+[ ] Afficher l'etat réel des pieces jointes dans la liste des éleves
+[ ] Factoriser le code de l'authentification
 
 Remarques pendant la démo du 23/3
 [ ] Clarifier "Vous êtes agent en EPLE"
