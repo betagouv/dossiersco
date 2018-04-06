@@ -17,7 +17,12 @@ def import_xls fichier
 
     sexe = xls_document.row(row)[colonnes[:sexe]]
     pays_nat = xls_document.row(row)[colonnes[:pays_nat]]
-    date_naiss = xls_document.row(row)[colonnes[:date_naiss]].strftime('%Y-%m-%d')
+    date = xls_document.row(row)[colonnes[:date_naiss]]
+    if date.class == Date
+      date_naiss = date.strftime('%Y-%m-%d')
+    else
+      date_naiss = date.split('/').reverse.join('-')
+    end
     prenom = xls_document.row(row)[colonnes[:prenom]]
     nom = xls_document.row(row)[colonnes[:nom]]
     identifiant = xls_document.row(row)[colonnes[:identifiant]]
