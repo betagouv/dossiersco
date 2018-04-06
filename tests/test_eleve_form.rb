@@ -205,7 +205,7 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'Parcourir / Prendre en photo', doc.css('label[for=assurance_scolaire]').text
     assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
 
-    expected_url = "http://localhost:9393/uploads/#{File.basename(piece_a_joindre.path)}"
+    expected_url = "/uploads/#{File.basename(piece_a_joindre.path)}"
     assert_equal expected_url, doc.css("#fichier_photo_identite img").attr("src").text
     assert doc.css("#fichier_assurance_scolaire img").empty?
     assert doc.css("#fichier_jugement_garde_enfant img").empty?
