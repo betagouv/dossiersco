@@ -168,6 +168,10 @@ hr {
   bottom: 1em;
 }
 
+.document img {
+  width: 100%;
+}
+
 .mastfoot {
   padding-bottom: 0;
 }

@@ -196,15 +196,19 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'Parcourir / Prendre en photo', doc.css('label[for=jugement_garde_enfant]').text
   end
 
-
-=begin
   def test_joindre_photo_identite
     piece_a_joindre = Tempfile.new('fichier_temporaire')
 
     doc = soumet_formulaire '/pieces_a_joindre', photo_identite: {"tempfile": piece_a_joindre.path}
 
     assert_equal 'Modifier', doc.css('label[for=photo_identite]').text
+    assert_equal 'Parcourir / Prendre en photo', doc.css('label[for=assurance_scolaire]').text
     assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
+
+    expected_url = "http://localhost:9393/uploads/#{File.basename(piece_a_joindre.path)}"
+    assert_equal expected_url, doc.css("#fichier_photo_identite img").attr("src").text
+    assert doc.css("#fichier_assurance_scolaire img").empty?
+    assert doc.css("#fichier_jugement_garde_enfant img").empty?
   end
 
   def test_joindre_assurance_scolaire
@@ -224,8 +228,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'Modifier', doc.css('label[for=jugement_garde_enfant]').text
     assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
   end
-=end
-
 
   def soumet_formulaire(*arguments_du_post)
     post '/identification', identifiant: '2', date_naiss: '1915-12-19'
@@ -298,4 +300,10 @@ class EleveFormTest < Test::Unit::TestCase
     dossier_eleve_en_base = DossierEleve.find(dossier_eleve.id)
     assert_equal etat_préservé, dossier_eleve_en_base.etat_photo_identite
   end
+
+  def assert_file(chemin_du_fichier)
+    assert File.file? chemin_du_fichier
+    File.delete(chemin_du_fichier)
+  end
+
 end

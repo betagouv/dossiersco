@@ -4,16 +4,20 @@
     <p class="card-text"><%= @explication %></p>
 
 
-    <div class="card-relat">
+    <div class="card-relat document">
 
       <button type="button" class="btn btn-primary btn-sm">
-        <label class="upload" for="<%= @variable %>"><%= @label %></label>
+        <label class="upload" for="<%= @variable %>"><%= @action %></label>
         <input type="file" hidden name="<%= @variable %>" id="<%= @variable %>"
                onChange="change_fichier(this)" multiple>
 
       </button>
       <br />
-      <span id="fichier_<%= @variable %>"></span>
+      <span id="fichier_<%= @variable %>">
+        <% if @document_stocke_url.present? %>
+          <img src="<%= @document_stocke_url %>"/>
+        <% end %>
+      </span>
 
 
     </div>
