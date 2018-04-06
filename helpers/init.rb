@@ -3,6 +3,7 @@ def init
   DossierEleve.destroy_all
   Eleve.destroy_all
   Agent.destroy_all
+  RespLegal.destroy_all
 
   eleves = [
       {prenom: 'Edith',
