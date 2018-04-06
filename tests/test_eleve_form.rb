@@ -196,6 +196,37 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'Parcourir / Prendre en photo', doc.css('label[for=jugement_garde_enfant]').text
   end
 
+
+=begin
+  def test_joindre_photo_identite
+    piece_a_joindre = Tempfile.new('fichier_temporaire')
+
+    doc = soumet_formulaire '/pieces_a_joindre', photo_identite: {"tempfile": piece_a_joindre.path}
+
+    assert_equal 'Modifier', doc.css('label[for=photo_identite]').text
+    assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
+  end
+
+  def test_joindre_assurance_scolaire
+    piece_a_joindre = Tempfile.new('fichier_temporaire')
+
+    doc = soumet_formulaire '/pieces_a_joindre', assurance_scolaire: {"tempfile": piece_a_joindre.path}
+
+    assert_equal 'Modifier', doc.css('label[for=assurance_scolaire]').text
+    assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
+  end
+
+  def test_joindre_jugement_garde_enfant
+    piece_a_joindre = Tempfile.new('fichier_temporaire')
+
+    doc = soumet_formulaire '/pieces_a_joindre', jugement_garde_enfant: {"tempfile": piece_a_joindre.path}
+
+    assert_equal 'Modifier', doc.css('label[for=jugement_garde_enfant]').text
+    assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
+  end
+=end
+
+
   def soumet_formulaire(*arguments_du_post)
     post '/identification', identifiant: '2', date_naiss: '1915-12-19'
     post *arguments_du_post
@@ -228,6 +259,34 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_singularize_dossier_eleve
     assert_equal 'dossier_eleves', 'dossier_eleves'.singularize
+  end
+
+  def test_importe_eleve_fichier_siecle
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    post '/import_siecle', name: 'import_siecle', filename: {tempfile: 'tests/test_import_siecle.xls'}
+
+    eleve = Eleve.find_by(nom: 'NOM_TEST')
+    eleve2 = Eleve.find_by(nom: 'NOM2_TEST')
+
+    assert eleve.prenom == 'Prenom_test'
+    assert eleve.identifiant == '080788316HE'
+    assert eleve.pays_naiss == 'FRANCE'
+    assert eleve.ville_naiss == 'PARIS 12E  ARRONDISSEMENT'
+    assert eleve.dossier_eleve.etablissement.nom == 'Arago'
+    assert eleve2.prenom == 'Prenom2_test'
+    assert eleve2.identifiant == '080788306HE'
+    assert eleve2.pays_naiss == 'CONGO'
+    assert eleve2.ville_naiss == 'Brazaville'
+  end
+
+  def test_importe_resp_legaux_fichier_siecle
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    post '/import_siecle', name: 'import_siecle', filename: {tempfile: 'tests/test_import_siecle.xls'}
+
+    resp_legaux = RespLegal.where(nom: 'PUYDEBOIS')
+
+    assert resp_legaux.size == 2
+
   end
 
 end
