@@ -55,7 +55,12 @@ post '/import_siecle' do
 end
 
 post '/change_etat_fichier' do
-  dossier_eleve = DossierEleve.find(params[:id])
-  dossier_eleve[params[:nom_fichier]] = params[:etat]
-  dossier_eleve.save!
+  agent = Agent.find_by(identifiant: session[:identifiant])
+  if agent.nil?
+    redirect '/agent'
+  else
+    dossier_eleve = DossierEleve.find(params[:id])
+    dossier_eleve[params[:nom_fichier]] = params[:etat]
+    dossier_eleve.save!
+  end
 end
