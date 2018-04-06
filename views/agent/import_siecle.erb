@@ -14,21 +14,21 @@
   </div>
 
   <% if defined? message  %>
-    <div class="message_de_succes"><%= message %></div>
+    <div class="message_de_succes"><a href="/agent/tableau_de_bord"><%= message %></a></div>
   <% end %>
   <form action="/agent/import_siecle" method="POST" enctype="multipart/form-data">
 
     <div class="card-deck">
-        <% @document = "export SIECLE" %>
-        <% @explication = "Pour importer les données depuis SIECLE" %>
+        <% @document = "Import depuis siecle" %>
+        <% @explication = "Sélectionnez un fichier au format xls" %>
         <% @variable = "filename" %>
-        <% @label = "Parcourir" %>
+        <% @action = "Parcourir" %>
         <%= erb :'partials/carte_upload' %>
 
     </div>
 
     <div class="col">
-      <button type="submit" class="btn btn-primary float-right">Importer <img src="images/suivant.png" alt="suivant" title="suivant"></button>
+      <button type="submit" class="btn btn-primary float-right">Importer <img src="../images/suivant.png" alt="suivant" title="suivant"></button>
     </div>
 
   </form>
