@@ -25,25 +25,21 @@
 
   <form action="/pieces_a_joindre" method="POST" enctype="multipart/form-data">
 
+  <% for i in 0..(nb_documents_demandes / 2) %>
     <div class="card-deck">
-      <% for i in 0..1 %>
-        <% @document = documents_demandes[i] %>
-        <% @explication = pourquoi_on_le_demande[i] %>
-        <% @variable = noms[i] %>
-        <% @label = dossier_eleve[noms[i]].present? ? "Modifier" : "Parcourir / Prendre en photo" %>
-        <%= erb :'partials/carte_upload' %>
+      <% for j in 0..1 %>
+        <% indice_piece = j+i*2 %>
+        <% if (indice_piece < nb_documents_demandes) %>
+          <% @document = documents_demandes[indice_piece] %>
+          <% @explication = pourquoi_on_le_demande[indice_piece] %>
+          <% @variable = noms[indice_piece] %>
+          <% @action = dossier_eleve[noms[indice_piece]].present? ? "Modifier" : "Parcourir / Prendre en photo" %>
+          <% @document_stocke_url = dossier_eleve[noms[indice_piece]]  %>
+          <%= erb :'partials/carte_upload' %>
+        <% end %>
       <% end %>
     </div>
-
-    <div class="card-deck">
-      <% for i in 2..nb_documents_demandes-1 %>
-        <% @document = documents_demandes[i] %>
-        <% @explication = pourquoi_on_le_demande[i] %>
-        <% @variable = noms[i] %>
-        <% @label = dossier_eleve[noms[i]].present? ? "Modifier" : "Parcourir / Prendre en photo" %>
-        <%= erb :'partials/carte_upload' %>
-      <% end %>
-    </div>
+  <% end %>
 
     <%= erb :'partials/precedent_suivant', :locals => { :precedent => "administration", :suivant => "validation" } %>
 
