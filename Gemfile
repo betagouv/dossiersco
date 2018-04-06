@@ -7,12 +7,11 @@ gem 'pg'
 gem 'rake'
 gem 'carrierwave'
 gem 'fog-aws'
+gem 'roo'
+gem 'roo-xls'
 gem 'bcrypt', '~> 3.1'
 
 group :test do
   gem 'nokogiri'
-  gem 'shotgun'
-  gem 'roo'
-  gem 'roo-xls'
   gem 'rack-test'
 end
