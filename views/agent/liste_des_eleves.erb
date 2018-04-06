@@ -79,7 +79,7 @@
       }
     $.ajax({
         method: "POST",
-        url: "change_etat_fichier",
+        url: "/agent/change_etat_fichier",
         data: { id: id, nom_fichier: nom_fichier, etat: etat}
     })
   })

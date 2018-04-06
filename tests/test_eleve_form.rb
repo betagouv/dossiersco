@@ -263,7 +263,7 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_importe_eleve_fichier_siecle
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-    post '/import_siecle', name: 'import_siecle', filename: {tempfile: 'tests/test_import_siecle.xls'}
+    post '/agent/import_siecle', name: 'import_siecle', filename: {tempfile: 'tests/test_import_siecle.xls'}
 
     eleve = Eleve.find_by(nom: 'NOM_TEST')
     eleve2 = Eleve.find_by(nom: 'NOM2_TEST')
@@ -281,7 +281,7 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_importe_resp_legaux_fichier_siecle
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-    post '/import_siecle', name: 'import_siecle', filename: {tempfile: 'tests/test_import_siecle.xls'}
+    post '/agent/import_siecle', name: 'import_siecle', filename: {tempfile: 'tests/test_import_siecle.xls'}
 
     resp_legaux = RespLegal.where(nom: 'PUYDEBOIS')
 
@@ -293,7 +293,7 @@ class EleveFormTest < Test::Unit::TestCase
     dossier_eleve = DossierEleve.first
     etat_préservé = dossier_eleve.etat_photo_identite
 
-    post '/change_etat_fichier', id: dossier_eleve.id, etat: 'validé', nom_fichier: 'etat_photo_identite'
+    post '/agent/change_etat_fichier', id: dossier_eleve.id, etat: 'validé', nom_fichier: 'etat_photo_identite'
 
     dossier_eleve_en_base = DossierEleve.find(dossier_eleve.id)
     assert_equal etat_préservé, dossier_eleve_en_base.etat_photo_identite
