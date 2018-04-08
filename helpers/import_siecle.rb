@@ -44,22 +44,33 @@ def import_xls fichier, etablissement_id
 
     dossier_eleve = DossierEleve.create!(eleve_id: eleve.id, etablissement_id: etablissement_id)
 
+    champs_resp_legal = {}
     ['1', '2'].each do |i|
-      nom_resp_legal = xls_document.row(row)[colonnes["nom_resp_legal#{i}".to_sym]]
-      prenom_resp_legal = xls_document.row(row)[colonnes["prenom_resp_legal#{i}".to_sym]]
-      tel_principal_resp_legal = xls_document.row(row)[colonnes["tel_principal_resp_legal#{i}".to_sym]]
-      tel_secondaire_resp_legal = xls_document.row(row)[colonnes["tel_secondaire_resp_legal#{i}".to_sym]]
-      lien_parente_resp_legal = xls_document.row(row)[colonnes["lien_parente_resp_legal#{i}".to_sym]]
-      adresse_resp_legal = xls_document.row(row)[colonnes["adresse_resp_legal#{i}".to_sym]]
-      code_postal_resp_legal = xls_document.row(row)[colonnes["code_postal_resp_legal#{i}".to_sym]]
-      ville_resp_legal = xls_document.row(row)[colonnes["ville_resp_legal#{i}".to_sym]]
-      email_resp_legal = xls_document.row(row)[colonnes["email_resp_legal#{i}".to_sym]]
+      ['nom_resp_legal',
+       'prenom_resp_legal',
+       'tel_principal_resp_legal',
+       'tel_secondaire_resp_legal',
+       'lien_parente_resp_legal',
+       'adresse_resp_legal',
+       'code_postal_resp_legal',
+       'ville_resp_legal',
+       'email_resp_legal'
+      ].each do |j|
+        champs_resp_legal[j] = xls_document.row(row)[colonnes["#{j}#{i}".to_sym]]
+      end
 
-      resp_legal = RespLegal.create!(dossier_eleve_id: dossier_eleve.id, nom: nom_resp_legal, prenom: prenom_resp_legal,
-                                      tel_principal: tel_principal_resp_legal, tel_secondaire: tel_secondaire_resp_legal,
-                                      lien_de_parente: lien_parente_resp_legal, ville: ville_resp_legal,
-                                      email: email_resp_legal, adresse: adresse_resp_legal, code_postal: code_postal_resp_legal,
-                                      priorite: i.to_i)
+      resp_legal = RespLegal.create!(
+          dossier_eleve_id: dossier_eleve.id,
+          nom: champs_resp_legal['nom_resp_legal'],
+          prenom: champs_resp_legal['prenom_resp_legal'],
+          tel_principal: champs_resp_legal['tel_principal_resp_legal'],
+          tel_secondaire: champs_resp_legal['tel_secondaire_resp_legal'],
+          lien_de_parente: champs_resp_legal['lien_parente_resp_legal'],
+          ville: champs_resp_legal['ville_resp_legal'],
+          email: champs_resp_legal['email_resp_legal'],
+          adresse: champs_resp_legal['adresse_resp_legal'],
+          code_postal: champs_resp_legal['code_postal_resp_legal'],
+          priorite: i.to_i)
     end
   end
 end
