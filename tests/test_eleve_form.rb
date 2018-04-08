@@ -129,19 +129,19 @@ class EleveFormTest < Test::Unit::TestCase
                             enfants_a_charge_secondaire_rl1: 2, enfants_a_charge_rl1: 3,
                             communique_info_parents_eleves_rl1: 'true'
 
-    assert_equal 'Tutrice', doc.css('#lien_de_parente_rl1').attr('value').text
-    assert_equal 'Philippe', doc.css('#prenom_rl1').attr('value').text
-    assert_equal 'Blayo', doc.css('#nom_rl1').attr('value').text
-    assert_equal '20 bd Segur', doc.css('#adresse_rl1').attr('value').text
-    assert_equal '75007', doc.css('#code_postal_rl1').attr('value').text
-    assert_equal 'Paris', doc.css('#ville_rl1').attr('value').text
-    assert_equal '0612345678', doc.css('#tel_principal_rl1').attr('value').text
-    assert_equal '0112345678', doc.css('#tel_secondaire_rl1').attr('value').text
-    assert_equal 'test@gmail.com', doc.css('#email_rl1').attr('value').text
+    assert_attr 'Tutrice', '#lien_de_parente_rl1', doc
+    assert_attr 'Philippe', '#prenom_rl1', doc
+    assert_attr 'Blayo', '#nom_rl1', doc
+    assert_attr '20 bd Segur', '#adresse_rl1', doc
+    assert_attr '75007', '#code_postal_rl1', doc
+    assert_attr 'Paris', '#ville_rl1', doc
+    assert_attr '0612345678', '#tel_principal_rl1', doc
+    assert_attr '0112345678', '#tel_secondaire_rl1', doc
+    assert_attr 'test@gmail.com', '#email_rl1', doc
     assert_equal 'Retraite', doc.css('#situation_emploi_rl1 option[@selected="selected"]').children.text
     assert_equal 'Cadre', doc.css('#profession_rl1 option[@selected="selected"]').children.text
-    assert_equal '2', doc.css('#enfants_a_charge_secondaire_rl1').attr('value').text
-    assert_equal '3', doc.css('#enfants_a_charge_rl1').attr('value').text
+    assert_attr '2', '#enfants_a_charge_secondaire_rl1', doc
+    assert_attr '3', '#enfants_a_charge_rl1', doc
     assert_equal 'checked', doc.css('#communique_info_parents_eleves_rl1_true').attr('checked').text
   end
 
@@ -154,15 +154,15 @@ class EleveFormTest < Test::Unit::TestCase
                              email_rl2: "test@gmail.com", situation_emploi_rl2: "Retraite", profession_rl2: "Cadre",
                              communique_info_parents_eleves_rl2: 'true'
 
-    assert_equal 'Tutrice', doc.css('#lien_de_parente_rl2').attr('value').text
-    assert_equal 'Philippe', doc.css('#prenom_rl2').attr('value').text
-    assert_equal 'Blayo', doc.css('#nom_rl2').attr('value').text
-    assert_equal '20 bd Segur', doc.css('#adresse_rl2').attr('value').text
-    assert_equal '75007', doc.css('#code_postal_rl2').attr('value').text
-    assert_equal 'Paris', doc.css('#ville_rl2').attr('value').text
-    assert_equal '0612345678', doc.css('#tel_principal_rl2').attr('value').text
-    assert_equal '0112345678', doc.css('#tel_secondaire_rl2').attr('value').text
-    assert_equal 'test@gmail.com', doc.css('#email_rl2').attr('value').text
+    assert_attr 'Tutrice', '#lien_de_parente_rl2', doc
+    assert_attr 'Philippe', '#prenom_rl2', doc
+    assert_attr 'Blayo', '#nom_rl2', doc
+    assert_attr '20 bd Segur', '#adresse_rl2', doc
+    assert_attr '75007', '#code_postal_rl2', doc
+    assert_attr 'Paris', '#ville_rl2', doc
+    assert_attr '0612345678', '#tel_principal_rl2', doc
+    assert_attr '0112345678', '#tel_secondaire_rl2', doc
+    assert_attr 'test@gmail.com', '#email_rl2', doc
     assert_equal 'Retraite', doc.css('#situation_emploi_rl2 option[@selected="selected"]').children.text
     assert_equal 'Cadre', doc.css('#profession_rl2 option[@selected="selected"]').children.text
     assert_equal 'checked', doc.css('#communique_info_parents_eleves_rl2_true').attr('checked').text
@@ -175,14 +175,14 @@ class EleveFormTest < Test::Unit::TestCase
                             adresse_urg: "20 bd Segur",code_postal_urg: "75007", ville_urg: "Paris",
                             tel_principal_urg: "0612345678", tel_secondaire_urg: "0112345678"
 
-    assert_equal 'Tuteur', doc.css('#lien_avec_eleve_urg').attr('value').text
-    assert_equal 'Philippe', doc.css('#prenom_urg').attr('value').text
-    assert_equal 'Blayo', doc.css('#nom_urg').attr('value').text
-    assert_equal '20 bd Segur', doc.css('#adresse_urg').attr('value').text
-    assert_equal '75007', doc.css('#code_postal_urg').attr('value').text
-    assert_equal 'Paris', doc.css('#ville_urg').attr('value').text
-    assert_equal '0612345678', doc.css('#tel_principal_urg').attr('value').text
-    assert_equal '0112345678', doc.css('#tel_secondaire_urg').attr('value').text
+    assert_attr 'Tuteur', '#lien_avec_eleve_urg', doc
+    assert_attr 'Philippe', '#prenom_urg', doc
+    assert_attr 'Blayo', '#nom_urg', doc
+    assert_attr '20 bd Segur', '#adresse_urg', doc
+    assert_attr '75007', '#code_postal_urg', doc
+    assert_attr 'Paris', '#ville_urg', doc
+    assert_attr '0612345678', '#tel_principal_urg', doc
+    assert_attr '0112345678', '#tel_secondaire_urg', doc
   end
 
 
@@ -270,15 +270,15 @@ class EleveFormTest < Test::Unit::TestCase
     eleve = Eleve.find_by(nom: 'NOM_TEST')
     eleve2 = Eleve.find_by(nom: 'NOM2_TEST')
 
-    assert eleve.prenom == 'Prenom_test'
-    assert eleve.identifiant == '080788316HE'
-    assert eleve.pays_naiss == 'FRANCE'
-    assert eleve.ville_naiss == 'PARIS 12E  ARRONDISSEMENT'
-    assert eleve.dossier_eleve.etablissement.nom == 'Collège Germaine Thillon'
-    assert eleve2.prenom == 'Prenom2_test'
-    assert eleve2.identifiant == '080788306HE'
-    assert eleve2.pays_naiss == 'CONGO'
-    assert eleve2.ville_naiss == 'Brazaville'
+    assert_equal 'Prenom_test', eleve.prenom
+    assert_equal '080788316HE', eleve.identifiant
+    assert_equal 'FRANCE', eleve.pays_naiss
+    assert_equal 'PARIS 12E  ARRONDISSEMENT', eleve.ville_naiss
+    assert_equal 'Collège Germaine Thillon', eleve.dossier_eleve.etablissement.nom
+    assert_equal 'Prenom2_test', eleve2.prenom
+    assert_equal '080788306HE', eleve2.identifiant
+    assert_equal 'CONGO', eleve2.pays_naiss
+    assert_equal 'Brazaville', eleve2.ville_naiss
   end
 
   def test_importe_resp_legaux_fichier_siecle
@@ -287,7 +287,7 @@ class EleveFormTest < Test::Unit::TestCase
 
     resp_legaux = RespLegal.where(nom: 'PUYDEBOIS')
 
-    assert resp_legaux.size == 2
+    assert_equal 2, resp_legaux.size
 
   end
 
@@ -306,4 +306,7 @@ class EleveFormTest < Test::Unit::TestCase
     File.delete(chemin_du_fichier)
   end
 
+  def assert_attr(valeur_attendue, selecteur_css, doc)
+    assert_equal valeur_attendue, doc.css(selecteur_css).attr('value').text
+  end
 end

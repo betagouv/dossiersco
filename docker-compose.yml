@@ -18,7 +18,7 @@ services:
       RUBYOPT: -KU
   test:
     build: .
-    command: /bin/bash -lc "rake db:migrate db:seed && while true; do ruby tests/test*.rb; sleep 3; done"
+    command: /bin/bash -lc "sleep 2; rake db:migrate db:seed && while true; do ruby tests/test*.rb; sleep 2; done"
     volumes:
       - ./:/app
     working_dir: /app
