@@ -56,7 +56,7 @@ def init
   cree_dossier_eleve eleves[1], etablissement, 'pas connecté'
 
   etablissement = Etablissement.create!({
-      nom: "Arago",
+      nom: "Collège Germaine Thillon",
       date_limite: "samedi 6 juin 2018"
   })
 

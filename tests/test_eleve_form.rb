@@ -129,7 +129,7 @@ class EleveFormTest < Test::Unit::TestCase
                             enfants_a_charge_secondaire_rl1: 2, enfants_a_charge_rl1: 3,
                             communique_info_parents_eleves_rl1: 'true'
 
-    assert_equal 'Tutrice', doc.css('#lien_de_parente_rl1 option[@selected="selected"]').children.text
+    assert_equal 'Tutrice', doc.css('#lien_de_parente_rl1').attr('value').text
     assert_equal 'Philippe', doc.css('#prenom_rl1').attr('value').text
     assert_equal 'Blayo', doc.css('#nom_rl1').attr('value').text
     assert_equal '20 bd Segur', doc.css('#adresse_rl1').attr('value').text
@@ -154,7 +154,7 @@ class EleveFormTest < Test::Unit::TestCase
                              email_rl2: "test@gmail.com", situation_emploi_rl2: "Retraite", profession_rl2: "Cadre",
                              communique_info_parents_eleves_rl2: 'true'
 
-    assert_equal 'Tutrice', doc.css('#lien_de_parente_rl2 option[@selected="selected"]').children.text
+    assert_equal 'Tutrice', doc.css('#lien_de_parente_rl2').attr('value').text
     assert_equal 'Philippe', doc.css('#prenom_rl2').attr('value').text
     assert_equal 'Blayo', doc.css('#nom_rl2').attr('value').text
     assert_equal '20 bd Segur', doc.css('#adresse_rl2').attr('value').text
@@ -241,7 +241,7 @@ class EleveFormTest < Test::Unit::TestCase
   def test_entree_succes_agent
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
     follow_redirect!
-    assert last_response.body.include? 'Arago'
+    assert last_response.body.include? 'Collège Germaine Thillon'
   end
 
   def test_entree_mauvais_identifiant_agent
@@ -274,7 +274,7 @@ class EleveFormTest < Test::Unit::TestCase
     assert eleve.identifiant == '080788316HE'
     assert eleve.pays_naiss == 'FRANCE'
     assert eleve.ville_naiss == 'PARIS 12E  ARRONDISSEMENT'
-    assert eleve.dossier_eleve.etablissement.nom == 'Arago'
+    assert eleve.dossier_eleve.etablissement.nom == 'Collège Germaine Thillon'
     assert eleve2.prenom == 'Prenom2_test'
     assert eleve2.identifiant == '080788306HE'
     assert eleve2.pays_naiss == 'CONGO'

@@ -1,5 +1,13 @@
 <% resp_legal_1 = [
     {
+        name: "lien_de_parente_rl1",
+        label: "Lien de parenté",
+        type: "text",
+        value: params['lien_de_parente_rl1'],
+        indication: "Lien de parenté",
+        disabled: false
+    },
+    {
         name: "prenom_rl1",
         label: "Prénom",
         type: "text",
@@ -53,8 +61,6 @@
 
   <form action="/famille" method="POST">
 
-    <%= erb :'partials/champ_dropdown', :locals => { :desc => "Lien de parenté", :variable => "lien_de_parente_rl1", :options => ["Choisissez...", "Mère", "Père", "Tutrice", "Tuteur", "Autre"], :selected => params['lien_de_parente_rl1'] } %>
-
     <%= construire resp_legal_1 %>
 
     <span style="display:block; height: 30px;"></span>
@@ -96,7 +102,7 @@
 
   <hr>
 
-    <%= erb :'partials/champ_dropdown', :locals => { :desc => "Lien de parenté", :variable => "lien_de_parente_rl2", :options => ["Choisissez...", "Mère", "Père", "Tutrice", "Tuteur", "Autre"], :selected => params['lien_de_parente_rl2'] } %>
+    <%= erb :'partials/champ_texte', :locals => { :desc => "Lien de parenté", :variable => "lien_de_parente_rl2", :valeur => params['lien_de_parente_rl2'], :exemple => "Lien de parenté" } %>
 
     <%= erb :'partials/champ_texte', :locals => { :desc => "Prénom", :variable => "prenom_rl2", :valeur => params['prenom_rl2'], :exemple => "Prénom" }%>
 
