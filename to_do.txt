@@ -6,7 +6,6 @@
 [ ] Ne pas indiquer si l'eleve existe dans l'erreur d'autentification
 [ ] Séparer les tests en plusieurs fichiers
 [ ] Distinguer les notions de dossier initié / dossier tout court
-[ ] Réduire la duplication dans l'affectation des résponsables légaux dans l'import SIECLE
 [ ] Faire une erreur propre en cas de login inexistant
 [ ] Instruire la question de la variabilité des pièces justificatives
 
@@ -27,6 +26,7 @@
 [ ] Ingérer un fichier Affelnet
 
 Done
+[X] Réduire la duplication dans l'affectation des résponsables légaux dans l'import SIECLE
 [X] Réparer la prod
 [X] Ajouter une config Circle CI sur Github
 [X] Restreindre l'accès aux données d'un élève aux utilisateurs identifés
