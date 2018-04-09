@@ -18,6 +18,8 @@
 
   <hr>
 
+
+
   <p>Nous avons envoyé un mail de confirmation aux adresses suivantes :</p>
 
   <ul>
@@ -36,18 +38,35 @@
 
   <span style="display:block; height: 90px;"></span>
 
+  <div id="message_validation" class="message_de_succes" style="display: none;">Merci pour votre retour</div>
+
   <div class="row justify-content-md-center">
     <p><small>Qu'avez-vous pensé de cette nouvelle plateforme ?</small></p>
   </div>
 
   <div class="row justify-content-md-center">
-    <p>
-      <a href="#"><img src="images/tres_insatisfait.png" alt="Très insatisfait" title="Très insatisfait"></a>
-      <a href="#"><img src="images/insatisfait.png" alt="Insatisfait" title="Insatisfait"></a>
-      <a href="#"><img src="images/neutre.png" alt="Neutre" title="Neutre"></a>
-      <a href="#"><img src="images/satisfait.png" alt="Satisfait" title="Satisfait"></a>
-      <a href="#"><img src="images/tres_satisfait.png" alt="Très satisfait" title="Très satisfait"></a>
-    </p>
+    <% satisfaction = {1 => 'Très insatisfait', 2 => 'Insatisfait', 3 => 'Neutre', 4 => 'Satisfait', 5 => 'Très satisfait'} %>
+    <% satisfaction.each do |note, commentaire| %>
+      <% nom_fichier = commentaire.gsub(' ', '_').gsub('è', 'e').downcase %>
+      <img class="smiley-satisfaction" src="images/<%= nom_fichier %>.png" data-note="<%= note %>"
+           alt="<%= commentaire %>" title="<%= commentaire %>">
+    <% end %>
   </div>
-
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        $('.smiley-satisfaction').click(function() {
+            var note = $(this).data('note');
+            $.ajax({
+                method: "POST",
+                url: "/satisfaction",
+                data: { note: note},
+                success : function() {
+                    $('#message_validation').show('slow')
+                }
+            });
+        })
+    })
+</script>
