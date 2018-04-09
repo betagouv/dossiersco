@@ -7,7 +7,8 @@ def import_xls fichier, etablissement_id
 
   (xls_document.first_row+1..xls_document.last_row).each do |row|
     colonnes = {sexe: 0, pays_nat: 1, prenom: 6, nom: 4, date_naiss: 9, identifiant: 11,
-                ville_naiss_etrangere: 20, commune_naiss: 21, pays_naiss: 22, nom_resp_legal1: 99, prenom_resp_legal1: 101,
+                ville_naiss_etrangere: 20, commune_naiss: 21, pays_naiss: 22, classe: 36,
+                nom_resp_legal1: 99, prenom_resp_legal1: 101,
                 tel_principal_resp_legal1: 102, tel_secondaire_resp_legal1: 104, lien_parente_resp_legal1: 103,
                 adresse_resp_legal1: 108, ville_resp_legal1: 112, code_postal_resp_legal1: 113, email_resp_legal1: 106,
                 nom_resp_legal2: 118, prenom_resp_legal2: 120, tel_principal_resp_legal2: 121,
@@ -15,6 +16,11 @@ def import_xls fichier, etablissement_id
                 ville_resp_legal2: 131, code_postal_resp_legal2: 132, email_resp_legal2: 125}
 
     sexe = xls_document.row(row)[colonnes[:sexe]]
+    if sexe == 'M'
+      sexe = 'Masculin'
+    elsif sexe == 'F'
+      sexe = 'Féminin'
+    end
     pays_nat = xls_document.row(row)[colonnes[:pays_nat]]
     date = xls_document.row(row)[colonnes[:date_naiss]]
     if date.class == Date
@@ -31,8 +37,10 @@ def import_xls fichier, etablissement_id
     else
       ville_naiss = xls_document.row(row)[colonnes[:ville_naiss_etrangere]]
     end
+    classe_ant = xls_document.row(row)[colonnes[:classe]]
 
-    eleve = Eleve.create!(
+    eleve = Eleve.find_or_initialize_by(identifiant: identifiant)
+    eleve.update_attributes!(
         identifiant: identifiant,
         sexe: sexe,
         nationalite: pays_nat,
@@ -40,9 +48,15 @@ def import_xls fichier, etablissement_id
         prenom: prenom,
         nom: nom,
         pays_naiss: pays_naiss,
-        ville_naiss: ville_naiss)
+        ville_naiss: ville_naiss,
+        classe_ant: classe_ant
+    )
 
-    dossier_eleve = DossierEleve.create!(eleve_id: eleve.id, etablissement_id: etablissement_id)
+    dossier_eleve = DossierEleve.find_or_initialize_by(eleve_id: eleve.id)
+    dossier_eleve.update_attributes!(
+        eleve_id: eleve.id,
+        etablissement_id: etablissement_id
+    )
 
     champs_resp_legal = {}
     ['1', '2'].each do |i|
@@ -55,11 +69,10 @@ def import_xls fichier, etablissement_id
        'code_postal_resp_legal',
        'ville_resp_legal',
        'email_resp_legal'
-      ].each do |j|
-        champs_resp_legal[j] = xls_document.row(row)[colonnes["#{j}#{i}".to_sym]]
-      end
+      ].each { |j| champs_resp_legal[j] = xls_document.row(row)[colonnes["#{j}#{i}".to_sym]] }
 
-      resp_legal = RespLegal.create!(
+      resp_legal = RespLegal.find_or_initialize_by(dossier_eleve_id: dossier_eleve.id, priorite: i.to_i)
+      resp_legal.update_attributes!(
           dossier_eleve_id: dossier_eleve.id,
           nom: champs_resp_legal['nom_resp_legal'],
           prenom: champs_resp_legal['prenom_resp_legal'],

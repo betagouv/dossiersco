@@ -241,7 +241,7 @@ class EleveFormTest < Test::Unit::TestCase
   def test_entree_succes_agent
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
     follow_redirect!
-    assert last_response.body.include? 'Collège Germaine Thillon'
+    assert last_response.body.include? 'Collège Germaine Tillion'
   end
 
   def test_entree_mauvais_identifiant_agent
@@ -256,7 +256,7 @@ class EleveFormTest < Test::Unit::TestCase
     doc = Nokogiri::HTML(last_response.body)
     selector = '#total_dossiers'
     affichage_total_dossiers = doc.css(selector).text
-    assert_equal '4', affichage_total_dossiers
+    assert_equal '5', affichage_total_dossiers
   end
 
   def test_singularize_dossier_eleve
@@ -270,15 +270,18 @@ class EleveFormTest < Test::Unit::TestCase
     eleve = Eleve.find_by(nom: 'NOM_TEST')
     eleve2 = Eleve.find_by(nom: 'NOM2_TEST')
 
+    assert_equal 'Masculin', eleve.sexe
     assert_equal 'Prenom_test', eleve.prenom
     assert_equal '080788316HE', eleve.identifiant
     assert_equal 'FRANCE', eleve.pays_naiss
     assert_equal 'PARIS 12E  ARRONDISSEMENT', eleve.ville_naiss
-    assert_equal 'Collège Germaine Thillon', eleve.dossier_eleve.etablissement.nom
+    assert_equal '4ème 5 SEGPA', eleve.classe_ant
+    assert_equal 'Collège Germaine Tillion', eleve.dossier_eleve.etablissement.nom
     assert_equal 'Prenom2_test', eleve2.prenom
     assert_equal '080788306HE', eleve2.identifiant
     assert_equal 'CONGO', eleve2.pays_naiss
     assert_equal 'Brazaville', eleve2.ville_naiss
+    assert_equal nil, eleve2.classe_ant
   end
 
   def test_importe_resp_legaux_fichier_siecle

@@ -1,7 +1,7 @@
 # Résumé
 
 A l'entrée : 4/7 n'ont pas réussit à taper l'url et ont atterit sur la recherche.
-Emoticon : 3 4 4 4 5
+Emoticon : 3 4 4 4 4 5
 
 # Une parent d'élève
 
@@ -76,7 +76,7 @@ A l'entrée la majorité attérissent sur la recherche google :
 - taper :// est le plus difficile (dans http://) pour une mère peu à l'aise
 avec l'outil numérique
 
-Dans administration les V ressemblent à des coches => a retirer.
+Dans administration les V ressemblent à des coches => a retirer. [fait]
 Les émoticons devraient avoir des labels séparés.
 Les collèges et les adresses mail en dur troublent beaucoup de parents.
 

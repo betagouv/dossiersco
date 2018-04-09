@@ -21,8 +21,9 @@
   <p>Nous avons envoyé un mail de confirmation aux adresses suivantes :</p>
 
   <ul>
-    <li>catherine.puydebois@example.fr</li>
-    <li>hubert.puydebois@example.fr</li>
+    <% dossier_eleve.resp_legal.each do |resp_legal| %>
+      <%= "<li>#{resp_legal.email}</li>" if resp_legal.email.present? %>
+    <% end %>
   </ul>
 
   <span style="display:block; height: 20px;"></span>
@@ -40,7 +41,13 @@
   </div>
 
   <div class="row justify-content-md-center">
-    <p><a href="#"><img src="images/satisfaction.png" alt="satisfaction" title="satisfaction"></a></p>
+    <p>
+      <a href="#"><img src="images/tres_insatisfait.png" alt="Très insatisfait" title="Très insatisfait"></a>
+      <a href="#"><img src="images/insatisfait.png" alt="Insatisfait" title="Insatisfait"></a>
+      <a href="#"><img src="images/neutre.png" alt="Neutre" title="Neutre"></a>
+      <a href="#"><img src="images/satisfait.png" alt="Satisfait" title="Satisfait"></a>
+      <a href="#"><img src="images/tres_satisfait.png" alt="Très satisfait" title="Très satisfait"></a>
+    </p>
   </div>
 
 </div>

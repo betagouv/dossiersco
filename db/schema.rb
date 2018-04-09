@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180404135153) do
+ActiveRecord::Schema.define(version: 20180409113801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20180404135153) do
     t.string "photo_identite"
     t.string "assurance_scolaire"
     t.string "jugement_garde_enfant"
-    t.string "etat", default: "pas_connecte"
+    t.string "etat", default: "pas connecté"
     t.string "etat_photo_identite"
     t.string "etat_assurance_scolaire"
     t.string "etat_jugement_garde_enfant"

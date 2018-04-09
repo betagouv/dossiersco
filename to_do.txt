@@ -1,7 +1,5 @@
 [ ] Afficher un feedback des fichiers uploadés
-[ ] Remettre en service les tests d'upload
 [ ] Afficher l'etat réel des pieces jointes dans la liste des éleves
-[ ] Afficher le bon collège à l'étape validation
 
 [ ] Ne pas indiquer si l'eleve existe dans l'erreur d'autentification
 [ ] Séparer les tests en plusieurs fichiers
@@ -13,20 +11,22 @@
 [ ] Aiguiller les utilisateurs (profil parent) pour "identifiant"
 [ ] Valider le wording du message d'invitation
 [ ] Quel changement induit "Valider l'inscription"
-[ ] Infos collèges sur Validation
 
 [ ] S'assurer du fonctionnement sur mobile
 [ ] Alignement des boutons sur "Pièces"
 [ ] Supprimer l'ancien fichier quand on modifie une pièce jointe
 
-[ ] En dev et intégration continue on va utiliser le filesystem
 [ ] Tester le fonctionnement de carrierwave avec un mock
 [ ] Gérer le champs date pour un login avec Internet Explorer
 
 [ ] Ingérer un fichier Affelnet
 
 Done
+[X] Infos collèges sur Validation
+[X] Afficher le bon collège à l'étape validation
 [X] Réduire la duplication dans l'affectation des résponsables légaux dans l'import SIECLE
+[X] Remettre en service les tests d'upload
+[X] En dev et intégration continue on va utiliser le filesystem
 [X] Réparer la prod
 [X] Ajouter une config Circle CI sur Github
 [X] Restreindre l'accès aux données d'un élève aux utilisateurs identifés
