@@ -272,6 +272,11 @@ hr {
   margin-bottom: 30px;
 }
 
+.separation {
+  border-bottom: 1px solid #b3b5b7;
+  padding: 0;
+}
+
 /*
  * Off Canvas
  * --------------------------------------------------

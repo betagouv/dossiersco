@@ -45,21 +45,16 @@ def init
   ]
 
   etablissement = Etablissement.create!({
-    nom: "Collège Germaine Thillon",
-    date_limite: "samedi 6 juin 2018"
-  })
-  cree_dossier_eleve eleves[0], etablissement, 'pas connecté'
-
-  etablissement = Etablissement.create!({
      nom: "College Jean-Francois Oeben",
      date_limite: "samedi 3 juin 2018"})
   cree_dossier_eleve eleves[1], etablissement, 'pas connecté'
 
   etablissement = Etablissement.create!({
-      nom: "Collège Germaine Thillon",
+      nom: "Collège Germaine Tillion",
       date_limite: "samedi 6 juin 2018"
   })
 
+  cree_dossier_eleve eleves[0], etablissement, 'pas connecté'
   cree_dossier_eleve eleves[2], etablissement, 'pas connecté'
   cree_dossier_eleve eleves[3], etablissement, 'connecté'
   cree_dossier_eleve eleves[4], etablissement, 'en attente de validation'
