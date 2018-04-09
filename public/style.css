@@ -277,6 +277,10 @@ hr {
   padding: 0;
 }
 
+.smiley-satisfaction {
+    cursor: pointer;
+}
+
 /*
  * Off Canvas
  * --------------------------------------------------

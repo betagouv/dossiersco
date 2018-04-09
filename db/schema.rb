@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180409113801) do
+ActiveRecord::Schema.define(version: 20180409145959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20180409113801) do
     t.string "etat_photo_identite"
     t.string "etat_assurance_scolaire"
     t.string "etat_jugement_garde_enfant"
+    t.integer "satisfaction", default: 0
     t.index ["eleve_id"], name: "index_dossier_eleves_on_eleve_id"
   end
 
