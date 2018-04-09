@@ -163,6 +163,12 @@ get '/confirmation' do
 	erb :'7_confirmation', locals: { eleve: eleve, dossier_eleve: dossier_eleve }
 end
 
+post '/satisfaction' do
+  dossier_eleve = get_dossier_eleve session[:identifiant]
+  dossier_eleve.satisfaction = params[:note]
+  dossier_eleve.save!
+end
+
 # REINSCRIPTIONS
 
 get '/r0' do
