@@ -1,3 +1,8 @@
+# Résumé
+
+A l'entrée : 4/7 n'ont pas réussit à taper l'url et ont atterit sur la recherche.
+Emoticon : 3 4 4 4 5
+
 # Une parent d'élève
 
 Cadre : son bureau
@@ -62,3 +67,19 @@ présents sur l'ordinateur. (ils savent se servir du scanner)
 Ils ont trouvé ça rapide et facile à faire : 5 minutes.
 Ils n'auraient pas eu l'idée de prendre en photo avec le
 téléphone.
+
+# 4 parents d'élèves + la principale adjointe
+
+A l'entrée la majorité attérissent sur la recherche google :
+- 1 sur heroku
+- les autres sur la page github
+- taper :// est le plus difficile (dans http://) pour une mère peu à l'aise
+avec l'outil numérique
+
+Dans administration les V ressemblent à des coches => a retirer.
+Les émoticons devraient avoir des labels séparés.
+Les collèges et les adresses mail en dur troublent beaucoup de parents.
+
+Aucun ne pense à accéder au site par son téléphone. Une des parents nous
+s'il y a une appli pour le mobile et est étonnée qu'il soit possible
+d'accéder au site sur mobile depuis un navigateur sans application.
