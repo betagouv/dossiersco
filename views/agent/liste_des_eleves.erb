@@ -37,7 +37,7 @@
               <a href="<%= dossier_eleve.photo_identite %>">
                 <i class="fas fa-file-image"></i>
               </a>
-              <i class="fas fa-check-circle etat" style="<%= 'color: lightgreen' if dossier_eleve.etat_photo_identite == 'valide' %>"></i>
+              <i class="fas fa-check-circle etat" style="<%= 'color: #00cf00' if dossier_eleve.etat_photo_identite == 'valide' %>"></i>
               <i class="fas fa-times-circle etat" style="<%= 'color: red' if dossier_eleve.etat_photo_identite == 'invalide' %>"></i>
             <% end %>
           </th>
@@ -46,7 +46,7 @@
               <a href="<%= dossier_eleve.assurance_scolaire %>">
                 <i class="fas fa-file-image"></i>
               </a>
-              <i class="fas fa-check-circle etat" style="<%= 'color: lightgreen' if dossier_eleve.etat_assurance_scolaire == 'valide' %>"></i>
+              <i class="fas fa-check-circle etat" style="<%= 'color: #00cf00' if dossier_eleve.etat_assurance_scolaire == 'valide' %>"></i>
               <i class="fas fa-times-circle etat" style="<%= 'color: red' if dossier_eleve.etat_assurance_scolaire == 'invalide' %>"></i>
             <% end %>
           </th>
@@ -55,7 +55,7 @@
               <a href="<%= dossier_eleve.jugement_garde_enfant %>">
                 <i class="fas fa-file-image"></i>
               </a>
-              <i class="fas fa-check-circle etat" style="<%= 'color: lightgreen' if dossier_eleve.etat_assurance_scolaire == 'valide' %>"></i>
+              <i class="fas fa-check-circle etat" style="<%= 'color: #00cf00' if dossier_eleve.etat_assurance_scolaire == 'valide' %>"></i>
               <i class="fas fa-times-circle etat" style="<%= 'color: red' if dossier_eleve.etat_assurance_scolaire == 'invalide' %>"></i>
             <% end %>
           </th>
@@ -72,10 +72,12 @@
       var nom_fichier = $(this).parent().data('nom-fichier');
       if ($(this).hasClass('fa-check-circle')) {
           var etat = 'valide';
-          $(this).css('color', '#00ff0c');
+          $(this).css('color', '#00cf00');
+          $(this).parent().find('.fa-times-circle').css('color', '#383f45');
       } else {
           var etat = 'invalide';
           $(this).css('color', 'red');
+          $(this).parent().find('.fa-check-circle').css('color', '#383f45');
       }
     $.ajax({
         method: "POST",
