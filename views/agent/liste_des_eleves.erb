@@ -37,8 +37,8 @@
               <a href="<%= dossier_eleve.photo_identite %>">
                 <i class="fas fa-file-image"></i>
               </a>
-              <i class="fas fa-check-circle etat"></i>
-              <i class="fas fa-times-circle etat"></i>
+              <i class="fas fa-check-circle etat" style="<%= 'color: lightgreen' if dossier_eleve.etat_photo_identite == 'valide' %>"></i>
+              <i class="fas fa-times-circle etat" style="<%= 'color: red' if dossier_eleve.etat_photo_identite == 'invalide' %>"></i>
             <% end %>
           </th>
           <th class="text-center" data-nom-fichier="etat_assurance_scolaire">
@@ -46,8 +46,8 @@
               <a href="<%= dossier_eleve.assurance_scolaire %>">
                 <i class="fas fa-file-image"></i>
               </a>
-              <i class="fas fa-check-circle etat"></i>
-              <i class="fas fa-times-circle etat"></i>
+              <i class="fas fa-check-circle etat" style="<%= 'color: lightgreen' if dossier_eleve.etat_assurance_scolaire == 'valide' %>"></i>
+              <i class="fas fa-times-circle etat" style="<%= 'color: red' if dossier_eleve.etat_assurance_scolaire == 'invalide' %>"></i>
             <% end %>
           </th>
           <th class="text-center" data-nom-fichier="etat_jugement_garde_enfant">
@@ -55,8 +55,8 @@
               <a href="<%= dossier_eleve.jugement_garde_enfant %>">
                 <i class="fas fa-file-image"></i>
               </a>
-              <i class="fas fa-check-circle etat"></i>
-              <i class="fas fa-times-circle etat"></i>
+              <i class="fas fa-check-circle etat" style="<%= 'color: lightgreen' if dossier_eleve.etat_assurance_scolaire == 'valide' %>"></i>
+              <i class="fas fa-times-circle etat" style="<%= 'color: red' if dossier_eleve.etat_assurance_scolaire == 'invalide' %>"></i>
             <% end %>
           </th>
         </tr>
@@ -69,7 +69,7 @@
 <script type="text/javascript" charset="utf-8">
   $('.etat').click(function() {
       var id = $(this).parent().parent().attr('id');
-      var nom_fichier = $(this).parent().data('nom-fichier')
+      var nom_fichier = $(this).parent().data('nom-fichier');
       if ($(this).hasClass('fa-check-circle')) {
           var etat = 'valide';
           $(this).css('color', '#00ff0c');
