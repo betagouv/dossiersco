@@ -148,7 +148,7 @@ hr {
 }
 
 .wrapper-continuer {
-  float: right;  
+  float: right;
 }
 
 .card {
@@ -163,13 +163,13 @@ hr {
 }
 
 .card-relat {
-  position: absolute;
   top: 5.3em;
   bottom: 1em;
 }
 
 .document img {
   width: 100%;
+    margin-top: 15px;
 }
 
 .mastfoot {
@@ -248,10 +248,6 @@ hr {
   background-color: grey;
 }
 
-
-
-
-
 .form-control.scol {
   margin: .4rem 0rem .4rem;
 }
@@ -279,6 +275,33 @@ hr {
 
 .smiley-satisfaction {
     cursor: pointer;
+}
+
+.image-piece-a-joindre {
+    margin-top: 15px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/*modal*/
+.modal-dialog {
+    height: 90vh;
+    width: 90vw;
+    max-width: none;
+}
+.modal-content {
+    height: 100%;
+    margin: auto;
+}
+.modal-body {
+    height: 80%;
+}
+.modal-body iframe {
+    height: 100%;
+    width: 100%;
+}
+iframe {
+    border: none;
 }
 
 /*

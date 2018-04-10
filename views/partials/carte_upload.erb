@@ -13,21 +13,20 @@
 
       </button>
       <br />
-      <span id="fichier_<%= @variable %>">
-        <% if @document_stocke_url.present? %>
-          <img src="<%= @document_stocke_url %>"/>
-        <% end %>
-      </span>
-
-
+        <div class="image-piece-a-joindre" id="fichier_<%= @variable %>"
+             <% if @document_stocke_url.present? %>
+             style="background-image: url('<%= @document_stocke_url %>'); height: 200px; max-width: 350px;"
+              <% end %>>
+        </div>
     </div>
   </div>
 </div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
   $(document).ready(function(){
     change_fichier = function(o){
-        $('span[id=fichier_'+o.id+']').html(o.files[0].name);
+        $('#fichier_'+o.id).html(o.files[0].name);
         $('label[for='+o.id+']').html('Modifier')
     }});
 </script>

@@ -206,7 +206,8 @@ class EleveFormTest < Test::Unit::TestCase
     assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
 
     expected_url = "/uploads/#{File.basename(piece_a_joindre.path)}"
-    assert_equal expected_url, doc.css("#fichier_photo_identite img").attr("src").text
+    assert_equal "background-image: url('#{expected_url}'); height: 200px; max-width: 350px;",
+                 doc.css("#fichier_photo_identite").attr("style").text
     assert doc.css("#fichier_assurance_scolaire img").empty?
     assert doc.css("#fichier_jugement_garde_enfant img").empty?
   end
