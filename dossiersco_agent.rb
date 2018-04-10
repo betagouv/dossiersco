@@ -54,6 +54,11 @@ post '/agent/import_siecle' do
   erb :'agent/import_siecle', locals: { message: "L'import a réussi" }
 end
 
+get '/agent/eleve/:identifiant' do
+  eleve = Eleve.find_by(identifiant: params[:identifiant])
+  erb :'agent/eleve', locals: { eleve: eleve }
+end
+
 post '/agent/change_etat_fichier' do
     dossier_eleve = DossierEleve.find(params[:id])
     dossier_eleve[params[:nom_fichier]] = params[:etat]
