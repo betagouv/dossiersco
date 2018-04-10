@@ -305,6 +305,15 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal etat_préservé, dossier_eleve_en_base.etat_photo_identite
   end
 
+  def test_un_agent_visualise_un_eleve
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+
+    get '/agent/eleve/2'
+
+    assert last_response.body.include? 'Edith'
+    assert last_response.body.include? 'Piaf'
+  end
+
   def assert_file(chemin_du_fichier)
     assert File.file? chemin_du_fichier
     File.delete(chemin_du_fichier)

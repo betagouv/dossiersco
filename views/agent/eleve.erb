@@ -1,0 +1,104 @@
+<% identite = [
+        {
+          name: "prenom",
+          label: "Prénom",
+          type: "text",
+          value: eleve.prenom,
+          indication: "Prénom",
+          disabled: false
+        },
+        {
+          name: "nom",
+          label: "Nom",
+          type: "text",
+          value: eleve.nom,
+          indication: "Nom",
+          disabled: false
+        },
+        {
+          name: "sexe",
+          label: "Sexe",
+          type: "radio",
+          options: ["Féminin", "Masculin"],
+          checked: eleve.sexe,
+        },
+        {
+          type: "espace",
+          hauteur: 20,
+        },
+        {
+          name: "date_naiss",
+          label: "Né le",
+          type: "date",
+          value: eleve.date_naiss,
+          indication: "",
+          disabled: true
+        },
+        {
+          name: "ville_naiss",
+          label: "à",
+          type: "text",
+          value: eleve.ville_naiss,
+          indication: "Ville de naissance",
+          disabled: false
+        },
+        {
+          name: "pays_naiss",
+          label: "Pays",
+          type: "text",
+          value: eleve.pays_naiss,
+          indication: "Pays de naissance",
+          disabled: false
+        },
+        {
+          type: "espace",
+          hauteur: 20,
+        },
+        {
+          name: "nationalite",
+          label: "Nationalité",
+          type: "text",
+          value: eleve.nationalite,
+          indication: "Nationalité",
+          disabled: false
+        },
+        {
+          type: "espace",
+          hauteur: 10,
+        }]
+
+scolarite_ant = [
+        {
+          name: "classe_ant",
+          label: "Classe",
+          type: "text",
+          value: eleve.classe_ant,
+          indication: "Classe",
+          disabled: false
+        },
+        {
+          name: "ets_ant",
+          label: "Etablissement",
+          type: "text",
+          value: eleve.dossier_eleve.etablissement.nom,
+          indication: "Etablissement",
+          disabled: false
+        }] %>
+
+<% @section = 1 %>
+
+<div class="col-12 col-md-8">
+
+    <h2>Identité de l'élève</h2>
+
+    <hr>
+
+    <%= construire identite %>
+
+    <h2>Scolarité de l'année 2017/2018</h2>
+
+    <hr>
+
+    <%= construire scolarite_ant %>
+
+</div>
