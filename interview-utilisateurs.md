@@ -5,6 +5,9 @@ Emoticon : 3 4 4 4 4 5
 
 ## Résumé des tests au 10/04/2018
 
+Le principal intérêt pour les parents est de pouvoir faire l'inscription
+d'où ils veulent et quand ils veulent.
+
 Le problème principal reste le passage du monde physique au monde numérique.
 
 Cette difficulté s'incarne dans 2 problèmes principaux :
@@ -107,3 +110,12 @@ Les collèges et les adresses mail en dur troublent beaucoup de parents.
 Aucun ne pense à accéder au site par son téléphone. Une des parents nous
 s'il y a une appli pour le mobile et est étonnée qu'il soit possible
 d'accéder au site sur mobile depuis un navigateur sans application.
+
+### Un intérêt marqué
+
+Plusieurs parents attendent pendant plus de 30 minutes pour pouvoir
+faire le test utilisateur. Une mère de famille nous dit qu'elle ne
+sera pas en métropole lors de la période d'inscription et voit dans
+cette inscription en ligne un grand intérêt. Quand elle apprends
+que l'inscription peut se faire sur mobile elle espère même pouvoir
+la faire depuis une plage.
