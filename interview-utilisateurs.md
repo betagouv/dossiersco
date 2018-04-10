@@ -3,7 +3,31 @@
 A l'entrée : 4/7 n'ont pas réussit à taper l'url et ont atterit sur la recherche.
 Emoticon : 3 4 4 4 4 5
 
-# Une parent d'élève
+## Résumé des tests au 10/04/2018
+
+Le problème principal reste le passage du monde physique au monde numérique.
+
+Cette difficulté s'incarne dans 2 problèmes principaux :
+
+### Se connecter
+Taper les caractères `://` (dans http://) est pour certains parents une barrière infranchissable.
+Plusieurs pistes :
+- Retirer le http:// (mais il faut vérifier que la navigation peut se faire en https si on tape directement dossiersco.herokuapp.com) Je serais intéressé par un retour de @morendil sur le sujet.
+- Utiliser au maximum les canaux numériques du mail et du sms où il n'y aura qu'à suivre un lien.
+- Mettre un QR code pour faciliter l'accès par un mobile.
+- Le référencement Google sera décisif pour beaucoup de parents qui partent du papier. Ce référencement est déjà plutôt bon sur dossiersco, mais on tombe sur dossiersco access. Il faudrait mettre en avant dossiersco web en reprenant les termes du papier dans :
+  - un billet de Pierre de Maulmont dans un forum : http://gestionnaires.actifforum.com/t35912-dossiersco-dossiers-d-inscription-pre-remplis-par-openacademie
+  - intendancezone.net
+
+### Les pièces jointes
+Aucun parent n'a chargé la moindre pièce jointe de lui-même. Le biais du lieu du test utilisateur l'explique peut-être en partie, mais ça reste à vérifier.
+- La principale piste est de mettre en avant au maximum le mobile. Aucun des parents n'a eu l'idée de se connecter au site depuis son mobile, bien que la plupart savait prendre des photo avec. Certains ne voyaient pas comment transférer une photo depuis leur mobile vers l'ordinateur. Mon hypothèse (à vérifier) serait que s'il accèdent au site directement sur mobile, ce sera évident.
+- Une piste orthogonale pour le quotient familiale serait de fournir l'alternative d'entrer le numéro d'imposition et d'invoquer API particulier, mais les parents boursiers auraient à le rentrer deux fois.
+
+
+# Détail des test utilisateurs
+
+## Une parent d'élève, professeur dans un lycée
 
 Cadre : son bureau
 
@@ -16,7 +40,7 @@ Un membre de dossierSco pourrait-il assister à l'inscription ?
 - Non, comme ça se passe dans notre chambre, ça fait parti de mon intimité. C'est tout en désordre.
 
 
-# La secrétaire d'une directrice
+## La secrétaire d'une directrice
 
 Cadre : un déjeuner à la cantine
 
@@ -26,7 +50,7 @@ Cadre : un déjeuner à la cantine
 Idée : proposer d'imprimer en un click les dossiers de tous les élèves.
 Pourquoi ? pour prévenir la peur de ne pas pouvoir revenir à l'ancienne méthode en cas de problème
 
-# Un parent d'élève du collège Édouard Pailleron (19ème)
+## Un parent d'élève du collège Édouard Pailleron (19ème)
 
 Cadre : au téléphone.
 
@@ -45,7 +69,7 @@ professeur principal. C'est une extraction de l'ENT (Espace Numérique de Travai
 ou les notes sont accessibles en continue tout au long de l'année.
 Cet outil est spécifique à l'académie de Paris.
 
-# Des anciens parents d'élèves
+## Des anciens parents d'élèves
 
 Cadre : domicile des anciens parents d'élève
 
@@ -68,7 +92,7 @@ Ils ont trouvé ça rapide et facile à faire : 5 minutes.
 Ils n'auraient pas eu l'idée de prendre en photo avec le
 téléphone.
 
-# 4 parents d'élèves + la principale adjointe
+## 4 parents d'élèves + la principale adjointe
 
 A l'entrée la majorité attérissent sur la recherche google :
 - 1 sur heroku
