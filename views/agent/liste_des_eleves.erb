@@ -43,7 +43,7 @@
           </th>
           <th class="text-center" data-nom-fichier="etat_assurance_scolaire">
             <% if dossier_eleve.assurance_scolaire.present? %>
-              <a href="<%= dossier_eleve.assurance_scolaire %>">
+              <a class="lien-piece-jointe" data-toggle="modal" data-target="#modal-pieces-jointes" data-url="<%= dossier_eleve.assurance_scolaire %>">
                 <i class="fas fa-file-image"></i>
               </a>
               <i class="fas fa-check-circle etat" style="<%= 'color: #00cf00' if dossier_eleve.etat_assurance_scolaire == 'valide' %>"></i>
@@ -52,7 +52,7 @@
           </th>
           <th class="text-center" data-nom-fichier="etat_jugement_garde_enfant">
             <% if dossier_eleve.jugement_garde_enfant.present? %>
-              <a href="<%= dossier_eleve.jugement_garde_enfant %>">
+              <a class="lien-piece-jointe"  data-toggle="modal" data-target="#modal-pieces-jointes" data-url="<%= dossier_eleve.jugement_garde_enfant %>">
                 <i class="fas fa-file-image"></i>
               </a>
               <i class="fas fa-check-circle etat" style="<%= 'color: #00cf00' if dossier_eleve.etat_assurance_scolaire == 'valide' %>"></i>
