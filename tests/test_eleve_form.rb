@@ -282,7 +282,8 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal '080788306HE', eleve2.identifiant
     assert_equal 'CONGO', eleve2.pays_naiss
     assert_equal 'Brazaville', eleve2.ville_naiss
-    assert_equal nil, eleve2.classe_ant
+    assert_equal '4EME HORAIRES AMENAGES MUSIQUE', eleve2.niveau_classe_ant
+    assert_nil eleve2.classe_ant
   end
 
   def test_compte_taux_de_portables_dans_siecle
@@ -290,6 +291,7 @@ class EleveFormTest < Test::Unit::TestCase
     post '/agent/import_siecle', name: 'import_siecle', filename: {tempfile: 'tests/test_import_siecle.xls'}
     doc = Nokogiri::HTML(last_response.body)
     assert_match "100% de téléphones portables", doc.css('.message_de_succes').text
+    assert_match "50% d'emails", doc.css('.message_de_succes').text
   end
 
   def test_un_visiteur_anonyme_ne_peut_pas_valider_une_piece_jointe
