@@ -2,19 +2,20 @@ require 'roo'
 require 'roo-xls'
 
 def import_xls fichier, etablissement_id
-  # chargement du fichier excel affelnet
+  colonnes = {sexe: 0, pays_nat: 1, prenom: 6, nom: 4, date_naiss: 9, identifiant: 11,
+              ville_naiss_etrangere: 20, commune_naiss: 21, pays_naiss: 22, classe: 36,
+              nom_resp_legal1: 99, prenom_resp_legal1: 101,
+              tel_principal_resp_legal1: 102, tel_secondaire_resp_legal1: 104, lien_parente_resp_legal1: 103,
+              adresse_resp_legal1: 108, ville_resp_legal1: 112, code_postal_resp_legal1: 113, email_resp_legal1: 106,
+              nom_resp_legal2: 118, prenom_resp_legal2: 120, tel_principal_resp_legal2: 121,
+              tel_secondaire_resp_legal2: 123, lien_parente_resp_legal2: 122, adresse_resp_legal2: 127,
+              ville_resp_legal2: 131, code_postal_resp_legal2: 132, email_resp_legal2: 125}
+
   xls_document = Roo::Spreadsheet.open fichier
+  lignes_siecle = (xls_document.first_row + 1..xls_document.last_row)
 
-  (xls_document.first_row+1..xls_document.last_row).each do |row|
-    colonnes = {sexe: 0, pays_nat: 1, prenom: 6, nom: 4, date_naiss: 9, identifiant: 11,
-                ville_naiss_etrangere: 20, commune_naiss: 21, pays_naiss: 22, classe: 36,
-                nom_resp_legal1: 99, prenom_resp_legal1: 101,
-                tel_principal_resp_legal1: 102, tel_secondaire_resp_legal1: 104, lien_parente_resp_legal1: 103,
-                adresse_resp_legal1: 108, ville_resp_legal1: 112, code_postal_resp_legal1: 113, email_resp_legal1: 106,
-                nom_resp_legal2: 118, prenom_resp_legal2: 120, tel_principal_resp_legal2: 121,
-                tel_secondaire_resp_legal2: 123, lien_parente_resp_legal2: 122, adresse_resp_legal2: 127,
-                ville_resp_legal2: 131, code_postal_resp_legal2: 132, email_resp_legal2: 125}
-
+  portables = 0
+  lignes_siecle.each do |row|
     sexe = xls_document.row(row)[colonnes[:sexe]]
     if sexe == 'M'
       sexe = 'Masculin'
@@ -58,7 +59,9 @@ def import_xls fichier, etablissement_id
         etablissement_id: etablissement_id
     )
 
+
     champs_resp_legal = {}
+    portable = false
     ['1', '2'].each do |i|
       ['nom_resp_legal',
        'prenom_resp_legal',
@@ -84,6 +87,9 @@ def import_xls fichier, etablissement_id
           adresse: champs_resp_legal['adresse_resp_legal'],
           code_postal: champs_resp_legal['code_postal_resp_legal'],
           priorite: i.to_i)
+      portable = true if resp_legal.tel_principal =~ /^0[67]/ or resp_legal.tel_secondaire =~ /^0[67]/
     end
+    portables += 1 if portable
   end
+  (portables * 100) / (xls_document.last_row-1)
 end
