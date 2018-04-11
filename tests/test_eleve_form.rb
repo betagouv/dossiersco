@@ -285,14 +285,11 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal nil, eleve2.classe_ant
   end
 
-  def test_importe_resp_legaux_fichier_siecle
+  def test_compte_taux_de_portables_dans_siecle
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
     post '/agent/import_siecle', name: 'import_siecle', filename: {tempfile: 'tests/test_import_siecle.xls'}
-
-    resp_legaux = RespLegal.where(nom: 'PUYDEBOIS')
-
-    assert_equal 2, resp_legaux.size
-
+    doc = Nokogiri::HTML(last_response.body)
+    assert_match "100% de téléphones portables", doc.css('.message_de_succes').text
   end
 
   def test_un_visiteur_anonyme_ne_peut_pas_valider_une_piece_jointe
