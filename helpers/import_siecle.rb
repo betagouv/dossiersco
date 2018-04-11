@@ -3,7 +3,7 @@ require 'roo-xls'
 
 def import_xls fichier, etablissement_id
   colonnes = {sexe: 0, pays_nat: 1, prenom: 6, nom: 4, date_naiss: 9, identifiant: 11,
-              ville_naiss_etrangere: 20, commune_naiss: 21, pays_naiss: 22, classe: 36,
+              ville_naiss_etrangere: 20, commune_naiss: 21, pays_naiss: 22, niveau_classe_ant: 33, classe: 36,
               nom_resp_legal1: 99, prenom_resp_legal1: 101,
               tel_principal_resp_legal1: 102, tel_secondaire_resp_legal1: 104, lien_parente_resp_legal1: 103,
               adresse_resp_legal1: 108, ville_resp_legal1: 112, code_postal_resp_legal1: 113, email_resp_legal1: 106,
@@ -15,6 +15,8 @@ def import_xls fichier, etablissement_id
   lignes_siecle = (xls_document.first_row + 1..xls_document.last_row)
 
   portables = 0
+  emails = 0
+  nb_eleves_importes = 0
   lignes_siecle.each do |row|
     sexe = xls_document.row(row)[colonnes[:sexe]]
     if sexe == 'M'
@@ -38,7 +40,9 @@ def import_xls fichier, etablissement_id
     else
       ville_naiss = xls_document.row(row)[colonnes[:ville_naiss_etrangere]]
     end
-    classe_ant = xls_document.row(row)[colonnes[:classe]]
+    class_ant = xls_document.row(row)[colonnes[:classe]]
+    niveau_classe_ant = xls_document.row(row)[colonnes[:niveau_classe_ant]]
+    next if niveau_classe_ant.nil?
 
     eleve = Eleve.find_or_initialize_by(identifiant: identifiant)
     eleve.update_attributes!(
@@ -50,7 +54,8 @@ def import_xls fichier, etablissement_id
         nom: nom,
         pays_naiss: pays_naiss,
         ville_naiss: ville_naiss,
-        classe_ant: classe_ant
+        classe_ant: class_ant,
+        niveau_classe_ant: niveau_classe_ant
     )
 
     dossier_eleve = DossierEleve.find_or_initialize_by(eleve_id: eleve.id)
@@ -59,9 +64,9 @@ def import_xls fichier, etablissement_id
         etablissement_id: etablissement_id
     )
 
-
     champs_resp_legal = {}
     portable = false
+    email = false
     ['1', '2'].each do |i|
       ['nom_resp_legal',
        'prenom_resp_legal',
@@ -88,8 +93,12 @@ def import_xls fichier, etablissement_id
           code_postal: champs_resp_legal['code_postal_resp_legal'],
           priorite: i.to_i)
       portable = true if resp_legal.tel_principal =~ /^0[67]/ or resp_legal.tel_secondaire =~ /^0[67]/
+      email = true if resp_legal.email =~ /@.*\./
     end
     portables += 1 if portable
+    emails += 1 if email
+    nb_eleves_importes += 1
   end
-  (portables * 100) / (xls_document.last_row-1)
+  {portable: (portables * 100) / nb_eleves_importes, email: (emails * 100) / nb_eleves_importes,
+   eleves: nb_eleves_importes}
 end

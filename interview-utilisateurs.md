@@ -16,11 +16,15 @@ Cette difficulté s'incarne dans 2 problèmes principaux :
 Taper les caractères `://` (dans http://) est pour certains parents une barrière infranchissable.
 Plusieurs pistes :
 - Retirer le http:// (mais il faut vérifier que la navigation peut se faire en https si on tape directement dossiersco.herokuapp.com) Je serais intéressé par un retour de @morendil sur le sujet.
-- Utiliser au maximum les canaux numériques du mail et du sms où il n'y aura qu'à suivre un lien.
+- Utiliser au maximum les canaux numériques du mail et du sms où il n'y aura qu'à suivre un lien. Voir statistiques plus bas
 - Mettre un QR code pour faciliter l'accès par un mobile.
 - Le référencement Google sera décisif pour beaucoup de parents qui partent du papier. Ce référencement est déjà plutôt bon sur dossiersco, mais on tombe sur dossiersco access. Il faudrait mettre en avant dossiersco web en reprenant les termes du papier dans :
   - un billet de Pierre de Maulmont dans un forum : http://gestionnaires.actifforum.com/t35912-dossiersco-dossiers-d-inscription-pre-remplis-par-openacademie
   - intendancezone.net
+
+Taux de renseignement des portables et emails par famille, sur deux collèges :
+- 98% de téléphones portables et 78% d'emails
+- 96% de téléphones portables et 72% d'emails
 
 ### Les pièces jointes
 Aucun parent n'a chargé la moindre pièce jointe de lui-même. Le biais du lieu du test utilisateur l'explique peut-être en partie, mais ça reste à vérifier.

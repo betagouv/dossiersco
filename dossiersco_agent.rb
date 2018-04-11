@@ -50,9 +50,12 @@ get '/agent/import_siecle' do
 end
 
 post '/agent/import_siecle' do
-  pourcentage_telephone = import_xls params[:filename][:tempfile], agent.etablissement.id
+  statistiques = import_xls params[:filename][:tempfile], agent.etablissement.id
   erb :'agent/import_siecle',
-      locals: { message: "L'import a réussi. #{pourcentage_telephone}% de téléphones portables" }
+      locals: { message: "#{statistiques[:eleves]} élèves importés : "+
+          "#{statistiques[:portable]}% de téléphones portables et "+
+          "#{statistiques[:email]}% d'emails"
+      }
 end
 
 get '/agent/eleve/:identifiant' do
