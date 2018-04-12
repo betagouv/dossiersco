@@ -1,7 +1,7 @@
 require 'roo'
 require 'roo-xls'
 
-def import_xls fichier, etablissement_id
+def import_xls fichier, etablissement_id, nom_a_importer=nil, prenom_a_importer=nil
   colonnes = {sexe: 0, pays_nat: 1, prenom: 6, nom: 4, date_naiss: 9, identifiant: 11,
               ville_naiss_etrangere: 20, commune_naiss: 21, pays_naiss: 22, niveau_classe_ant: 33, classe: 36,
               nom_resp_legal1: 99, prenom_resp_legal1: 101,
@@ -42,7 +42,10 @@ def import_xls fichier, etablissement_id
     end
     class_ant = xls_document.row(row)[colonnes[:classe]]
     niveau_classe_ant = xls_document.row(row)[colonnes[:niveau_classe_ant]]
+
     next if niveau_classe_ant.nil?
+    next if (nom_a_importer != nil and nom_a_importer != '') and nom != nom_a_importer
+    next if (prenom_a_importer != nil and prenom_a_importer != '') and prenom != prenom_a_importer
 
     eleve = Eleve.find_or_initialize_by(identifiant: identifiant)
     eleve.update_attributes!(

@@ -266,7 +266,7 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_importe_eleve_fichier_siecle
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-    post '/agent/import_siecle', name: 'import_siecle', filename: {tempfile: 'tests/test_import_siecle.xls'}
+    post '/agent/import_siecle', nom_eleve: "", prenom_eleve: "", name: 'import_siecle', filename: {tempfile: 'tests/test_import_siecle.xls'}
 
     eleve = Eleve.find_by(nom: 'NOM_TEST')
     eleve2 = Eleve.find_by(nom: 'NOM2_TEST')
@@ -311,6 +311,15 @@ class EleveFormTest < Test::Unit::TestCase
 
     assert last_response.body.include? 'Edith'
     assert last_response.body.include? 'Piaf'
+  end
+
+  def test_un_agent_importe_un_eleve
+    DossierEleve.destroy_all
+    Eleve.destroy_all
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    post '/agent/import_siecle', nom_eleve: 'NOM_TEST', prenom_eleve: 'Prenom_test',
+         name: 'import_siecle', filename: {tempfile: 'tests/test_import_siecle.xls'}
+    assert_equal 1, Eleve.all.size
   end
 
   def assert_file(chemin_du_fichier)

@@ -50,7 +50,7 @@ get '/agent/import_siecle' do
 end
 
 post '/agent/import_siecle' do
-  statistiques = import_xls params[:filename][:tempfile], agent.etablissement.id
+  statistiques = import_xls params[:filename][:tempfile], agent.etablissement.id, params[:nom_eleve], params[:prenom_eleve]
   erb :'agent/import_siecle',
       locals: { message: "#{statistiques[:eleves]} élèves importés : "+
           "#{statistiques[:portable]}% de téléphones portables et "+
