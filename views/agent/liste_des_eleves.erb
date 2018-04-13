@@ -28,12 +28,12 @@
     </tr></thead>
     <tbody>
       <% dossier_eleves.each do |dossier_eleve| %>
-        <tr id="<%= dossier_eleve.id %>" class='clickable-row' style='cursor:pointer'
-         data-href='/agent/eleve/<%= dossier_eleve.eleve.identifiant %>'>
-          <th><%= dossier_eleve.eleve.classe_ant %></th>
-          <th><%= dossier_eleve.eleve.prenom %></th>
-          <th><%= dossier_eleve.eleve.nom %></th>
-          <th><%= dossier_eleve.etat %></th>
+        <% cliquable = "class='clickable-row' data-href='/agent/eleve/#{dossier_eleve.eleve.identifiant}'" %>
+        <tr id="<%= dossier_eleve.id %>" style='cursor:pointer'>
+          <th <%= cliquable %> ><%= dossier_eleve.eleve.classe_ant %></th>
+          <th <%= cliquable %> ><%= dossier_eleve.eleve.prenom %></th>
+          <th <%= cliquable %> ><%= dossier_eleve.eleve.nom %></th>
+          <th <%= cliquable %> ><%= dossier_eleve.etat %></th>
           <th class="text-center" data-nom-fichier="etat_photo_identite">
             <% if dossier_eleve.photo_identite.present? %>
               <a class="lien-piece-jointe" data-toggle="modal" data-target="#modal-pieces-jointes" data-url="<%= dossier_eleve.photo_identite %>">
