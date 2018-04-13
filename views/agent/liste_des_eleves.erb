@@ -27,7 +27,8 @@
     </tr></thead>
     <tbody>
       <% dossier_eleves.each do |dossier_eleve| %>
-        <tr id="<%= dossier_eleve.id %>">
+        <tr id="<%= dossier_eleve.id %>" class='clickable-row' style='cursor:pointer'
+         data-href='/agent/eleve/<%= dossier_eleve.eleve.identifiant %>'>
           <th><%= dossier_eleve.eleve.identifiant %></th>
           <th><%= dossier_eleve.eleve.prenom %></th>
           <th><%= dossier_eleve.eleve.nom %></th>
@@ -76,7 +77,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <iframe id="iframe-piece-jointe" src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen></iframe>
+        <iframe id="iframe-piece-jointe" src="" allowfullscreen></iframe>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
@@ -112,4 +113,9 @@
         data: { id: id, nom_fichier: nom_fichier, etat: etat}
     })
   })
+  jQuery(document).ready(function($) {
+    $(".clickable-row").click(function() {
+        window.location = $(this).data("href");
+    });
+});
 </script>
