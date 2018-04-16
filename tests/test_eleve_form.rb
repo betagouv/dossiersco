@@ -322,6 +322,18 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 1, Eleve.all.size
   end
 
+  def test_une_famille_remplit_letape_administration
+    post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+    post '/administration', demi_pensionnaire: true, autorise_sortie: true,
+      renseignements_medicaux: true, autorise_photo_de_classe: false
+    get '/administration'
+
+    assert last_response.body.gsub(/\s/,'').include? "id='demi_pensionnaire' checked".gsub(/\s/,'')
+    assert last_response.body.gsub(/\s/,'').include? "id='autorise_sortie' checked".gsub(/\s/,'')
+    assert last_response.body.gsub(/\s/,'').include? "id='renseignements_medicaux' checked".gsub(/\s/,'')
+    assert last_response.body.gsub(/\s/,'').include? "id='autorise_photo_de_classe' checked".gsub(/\s/,'')
+  end
+
   def assert_file(chemin_du_fichier)
     assert File.file? chemin_du_fichier
     File.delete(chemin_du_fichier)
