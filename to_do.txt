@@ -36,3 +36,23 @@ Done
 [X] Factoriser le code de l'authentification
 [X] Logo flottant
 [X] Décider de la destination du lien pour les agents
+
+
+open lab du 16
+[ ] generer les pdf pour les parents
+[ ] enlever la notion de conseil de classe sur la page d'accueil
+[ ] rappeler les doc à joindre sur la page d'accueil
+[ ] changer cantine en demi-pension ou restauration scolaire
+[ ] plusieurs prenom dans la partie élève (nécessaire pour l'inscription au brevet)
+[ ] bloquer la lv2 sauf pour les 5eme, rappeler la lv1 ?
+[ ] droit a l'image rajouter "et dans le cadre des sorties scolaire"
+inscription-college.gouv
+tarif de cantine uniquement pour paris, fonctionnement différent pour les autres académies
+personnaliser la liste des pj pour chaque collège (Creteil va demander la photocopie du livret de famille)
+champs du formulaire vérouillés par défaut avec bouton pour les modifier,
+    moins de risques d'erreurs et de confusion de la part des parents
+enlever Scolarité de l'année en cours sur la page élève
+déduire les options de l'etablissement grace a la base siecle
+reprendre la nomenclature de siecle pour la profession
+proposer en dl un pdf pour les renseignement médiacauxx
+etape 5 spécifier que c'est bien le représentant de l'éleve qui fait l'inscription
