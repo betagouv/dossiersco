@@ -39,9 +39,12 @@
 							<a href="images/reglement_dp.png" target="_blank"><img src="images/reglement_dp_small.png" alt="règlement demi-pension"></a>
 						</p>
 
-						<%= erb :'partials/champ_check', :locals => { :desc => "J'ai lu et j'accepte le règlement du service de demi-pension." }%>
+						<%= erb :'partials/champ_check', :locals => { :desc => "J'ai lu et j'accepte le règlement du service de
+						  demi-pension.", name: 'check_reglement_cantine', condition: dossier_eleve.check_reglement_cantine }%>
 
-						<%= erb :'partials/champ_check', :locals => { :desc => "Je m'engage à régler les frais de demi-pension en respectant les délais impartis inhérents au bon fonctionnement du service." }%>
+						<%= erb :'partials/champ_check', :locals => { :desc => "Je m'engage à régler les frais de demi-pension en
+						  respectant les délais impartis inhérents au bon fonctionnement du service.", name: 'check_paiement_cantine',
+              condition: dossier_eleve.check_paiement_cantine}%>
 
 						<span style="display:block; height: 10px;"></span>
 
@@ -63,9 +66,9 @@
 						<div class="form-check form-check-inline">
 							<label class="form-check-label">
 								<input class="form-check-input" type="radio" name="autorise_sortie" value="false"
-								<% if !dossier_eleve.autorise_sortie %>
+								  <% if !dossier_eleve.autorise_sortie %>
 						          checked
-					            <% end %>> Je n'autorise pas
+                  <% end %>> Je n'autorise pas
 							</label>
 						</div>
 
@@ -123,13 +126,15 @@
 </div><!--/span-->
 
 <script>
+  if (<%= dossier_eleve.demi_pensionnaire %>) {
+      document.querySelector('#dp').style.display = 'block'
+  }
 
 	function afficher_dp(e){
 		document.querySelector('#dp').style.display = 'block'
 	}
 
 	function masquer_dp(e){
-		console.log("yu")
 		document.querySelector('#dp').style.display = 'none'
 	}
 
@@ -144,7 +149,6 @@
 		document.getElementById("ville_med_traitant").value = meme_adresse_que_med.checked ? "Paris" : "";
 		document.getElementById("tel_med_traitant").value = meme_adresse_que_med.checked ? "0156455612" : "";
 	}
-
 </script>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

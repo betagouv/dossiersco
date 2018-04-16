@@ -132,8 +132,15 @@ post '/administration' do
 	dossier_eleve.demi_pensionnaire = params['demi_pensionnaire']
 	dossier_eleve.autorise_sortie = params['autorise_sortie']
 	dossier_eleve.renseignements_medicaux = params['renseignements_medicaux']
+  dossier_eleve.check_reglement_cantine = params['check_reglement_cantine']
+  dossier_eleve.check_paiement_cantine = params['check_paiement_cantine']
 	dossier_eleve.save!
-	redirect '/pieces_a_joindre'
+  if dossier_eleve.renseignements_medicaux &&
+      (!dossier_eleve.check_reglement_cantine || !dossier_eleve.check_paiement_cantine)
+    erb :'4_administration', locals: {dossier_eleve: dossier_eleve}
+  else
+	  redirect '/pieces_a_joindre'
+  end
 end
 
 get '/pieces_a_joindre' do
