@@ -15,13 +15,18 @@
 				<div id="accordeon-admin-cantine">
 
 					<div class="form-group row">
-						<label for="cantine" class="col-sm-3 col-form-label">Choix de la cantine</label>
 						<div class="col-sm-6">
 							<label class="col-sm-7 form-check-label">
-								<input type="radio" name="cantine" class="form-check-input trigger" onclick="afficher_dp(event)"> Demi-pensionnaire
+								<input type="radio" name="demi_pensionnaire" value="true" class="form-check-input trigger" onclick="afficher_dp(event)" id='demi_pensionnaire'
+								<% if dossier_eleve.demi_pensionnaire %>
+						          checked
+					            <% end %>> Demi-pensionnaire
 							</label>
 							<label class="col-sm-4 form-check-label">
-								<input type="radio" name="cantine" class="form-check-input trigger" onclick="masquer_dp(event)"> Externe
+								<input type="radio" name="demi_pensionnaire" value="false" class="form-check-input trigger" onclick="masquer_dp(event)" id='externe'
+								<% if ! dossier_eleve.demi_pensionnaire %>
+						          checked
+					            <% end %>> Externe
 							</label>
 						</div>
 					</div>
@@ -46,15 +51,21 @@
 				<div class="row">
 					<div class="col separation"><h2 class="not-first">Autorisation de sortie</h2></div>
 				</div>
-			<div id="accordeon-admin-sortie">
 						<div class="form-check form-check-inline">
 							<label class="form-check-label">
-								<input class="form-check-input" type="radio" name="autorisation_sortie" value="oui"> J'autorise
+								<input class="form-check-input" type="radio" name="autorise_sortie" value="true"
+								id='autorise_sortie'
+								<% if dossier_eleve.autorise_sortie %>
+						          checked
+					            <% end %>> J'autorise
 							</label>
 						</div>
 						<div class="form-check form-check-inline">
 							<label class="form-check-label">
-								<input class="form-check-input" type="radio" name="autorisation_sortie" value="non"> Je n'autorise pas
+								<input class="form-check-input" type="radio" name="autorise_sortie" value="false"
+								<% if !dossier_eleve.autorise_sortie %>
+						          checked
+					            <% end %>> Je n'autorise pas
 							</label>
 						</div>
 
@@ -62,62 +73,47 @@
 
 						<span style="display:block; height: 10px;"></span>
 
-			</div>
 
 				<div class="row">
 					<div class="col separation"><h2 class="not-first">Renseignements médicaux</h2></div>
 				</div>
-			<div id="accordeon-admin-medical">
-						<div class="row">
-							<div class="col">
-								<div class="form-check">
-									<label class="form-check-label">
-										<input class="form-check-input" id="meme_adresse_que_med" type="checkbox" onclick="afficher_infos_med(event)"> Je souhaite communiquer par écrit une information médicale (si c'est pertinent pour mon enfant)
-									</label>
-								</div>
-							</div>
+				<div class="row">
+					<div class="col">
+						<div class="form-check">
+							<label class="form-check-label">
+								<input class="form-check-input" type="checkbox" value='true' name="renseignements_medicaux" onclick="afficher_infos_med(event)" id='renseignements_medicaux'
+								<% if dossier_eleve.renseignements_medicaux %>
+									checked
+								<% end %>> Je souhaite communiquer par écrit une information médicale (si c'est pertinent pour mon enfant)
+							</label>
 						</div>
+					</div>
+				</div>
 
-					<span style="display:block; height: 10px;"></span>
-			</div>
+				<span style="display:block; height: 10px;"></span>
 
 				<div class="row">
 					<div class="col separation"><h2 class="not-first">Droit à l'image</h2></div>
 				</div>
-			<div id="accordeon-admin-image">
-							<p>En application de l'article 9 du code civil et de l'article 121-1 du code de la propriété intellectuelle :</p>
 
-							<span style="display:block; height: 20px;"></span>
-
-							<div class="form-check form-check-inline">
-								<label class="form-check-label">
-									<input class="form-check-input" type="radio" name="droit_image_diffusion" value="oui"> J'autorise
-								</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<label class="form-check-label">
-									<input class="form-check-input" type="radio" name="droit_image_diffusion" value="non"> Je n'autorise pas
-								</label>
-							</div>
-
-							<p>le collège à diffuser des photographies ou images filmées de mon enfant et/ou ses réalisations scolaires sur le site académique et sur le site du collège, en dehors de toute exploitation commerciale, pour une durée indéterminée.</p>
-
-							<span style="display:block; height: 20px;"></span>
-
-							<div class="form-check form-check-inline">
-								<label class="form-check-label">
-									<input class="form-check-input" type="radio" name="droit_image_photo" value="oui"> J'accepte
-								</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<label class="form-check-label">
-									<input class="form-check-input" type="radio" name="droit_image_photo" value="non"> Je n'accepte pas
-								</label>
-							</div>
-
-							<p>que mon enfant soit photographié à l'occasion des photos de classe.</p>
-
+				<div class="form-check form-check-inline">
+					<label class="form-check-label">
+						<input class="form-check-input" type="radio" name="droit_image_photo" value="true" id='autorise_photo_de_classe'
+						<% if dossier_eleve.autorise_photo_de_classe %>
+							checked
+						<% end %>> J'accepte
+					</label>
 				</div>
+				<div class="form-check form-check-inline">
+					<label class="form-check-label">
+						<input class="form-check-input" type="radio" name="droit_image_photo" value="false"
+						<% if !dossier_eleve.autorise_photo_de_classe %>
+							checked
+						<% end %>> Je n'accepte pas
+					</label>
+				</div>
+
+				<p>que mon enfant soit photographié à l'occasion des photos de classe.</p>
 
 				<%= erb :'partials/precedent_suivant', :locals => { :precedent => "famille", :suivant => "pieces_a_joindre" } %>
 			</form>

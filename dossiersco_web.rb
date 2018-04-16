@@ -123,10 +123,16 @@ post '/famille' do
 end
 
 get '/administration' do
-	erb :'4_administration'
+	dossier_eleve = get_dossier_eleve session[:identifiant]
+	erb :'4_administration', locals: {dossier_eleve: dossier_eleve}
 end
 
 post '/administration' do
+	dossier_eleve = get_dossier_eleve session[:identifiant]
+	dossier_eleve.demi_pensionnaire = params['demi_pensionnaire']
+	dossier_eleve.autorise_sortie = params['autorise_sortie']
+	dossier_eleve.renseignements_medicaux = params['renseignements_medicaux']
+	dossier_eleve.save!
 	redirect '/pieces_a_joindre'
 end
 
