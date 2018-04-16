@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180413124418) do
+ActiveRecord::Schema.define(version: 20180416095721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,8 @@ ActiveRecord::Schema.define(version: 20180413124418) do
     t.boolean "autorise_sortie", default: false
     t.boolean "renseignements_medicaux", default: false
     t.boolean "autorise_photo_de_classe", default: true
+    t.boolean "check_reglement_cantine", default: false
+    t.boolean "check_paiement_cantine", default: false
     t.index ["eleve_id"], name: "index_dossier_eleves_on_eleve_id"
   end
 

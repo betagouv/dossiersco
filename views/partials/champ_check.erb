@@ -1,5 +1,8 @@
 <div class="form-check">
 	<label class="form-check-label">
-		<input class="form-check-input" type="checkbox"> <%= desc %>
+		<input class="form-check-input" type="checkbox" name="<%= name %>" value='true' id="<%= name %>"
+       <% if condition %>
+       checked
+       <% end %>> <%= desc %>
 	</label>
 </div>
