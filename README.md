@@ -6,4 +6,4 @@ Dans le répertoire dossiersco, lancer :
 
     docker-compose up
 
-L'accès à l'application se fait ensuite par http://localhost:9393/
+L'accès à l'application se fait ensuite par http://0.0.0.0:9393/
