@@ -43,16 +43,8 @@
           hauteur: 20,
         },
         {
-          name: "date_naiss",
-          label: "Né le",
-          type: "date",
-          value: eleve.date_naiss,
-          indication: "",
-          disabled: true
-        },
-        {
           name: "ville_naiss",
-          label: "à",
+          label: "Ville de naissance",
           type: "text",
           value: eleve.ville_naiss,
           indication: "Ville de naissance",
@@ -60,7 +52,7 @@
         },
         {
           name: "pays_naiss",
-          label: "Pays",
+          label: "Pays de naissance",
           type: "text",
           value: eleve.pays_naiss,
           indication: "Pays de naissance",
@@ -72,10 +64,10 @@
         },
         {
           name: "nationalite",
-          label: "Nationalité",
+          label: "Pays de nationalité",
           type: "text",
           value: eleve.nationalite,
-          indication: "Nationalité",
+          indication: "Pays de nationalité",
           disabled: false
         },
         {
@@ -83,23 +75,25 @@
           hauteur: 10,
         }]
 
-scolarite_ant = [
+    enseignement_obligatoire = [
         {
-          name: "classe_ant",
-          label: "Classe",
-          type: "text",
-          value: eleve.classe_ant,
-          indication: "Classe",
-          disabled: false
-        },
-        {
-          name: "ets_ant",
-          label: "Etablissement",
-          type: "text",
-          value: eleve.dossier_eleve.etablissement.nom,
-          indication: "Etablissement",
-          disabled: false
-        }] %>
+          name: "lv2",
+          label: "Langue Vivante 2",
+          type: "radio",
+          checked: eleve.lv2,
+          options: ["Allemand", "Espagnol"]
+        }
+    ]
+    enseignement_facultatif = [
+    {
+        name: "latin",
+        label: "Langue Vivante 2",
+        type: "checkbox",
+    }
+]
+
+%>
+
 
 <% @section = 1 %>
 <%= erb :'partials/navigation' %>
@@ -108,23 +102,40 @@ scolarite_ant = [
 
   <span style="display:block; height: 50px;"></span>
 
-  <p><em>Vous noterez que certains champs du formulaire sont déjà remplis, suite
-    à votre inscription l'an dernier. Nous avons préféré ne pas vous les
-    redemander ; néanmoins, vous pouvez toujours les corriger.</em></p>
+  <p><em>Veuillez corriger les informations incorrectes :</em></p>
 
   <form action="/eleve"  method="post">
 
-    <h2>Identité de l'élève</h2>
+    <h3>Identité de l'élève</h3>
 
     <hr>
 
     <%= construire identite %>
 
-    <h2>Scolarité de l'année 2017/2018</h2>
+    <span style="display:block; height: 20px;"></span>
 
+    <h3>Enseignement obligatoire</h3>
     <hr>
 
-    <%= construire scolarite_ant %>
+    <%= construire enseignement_obligatoire %>
+
+    <span style="display:block; height: 20px;"></span>
+
+    <h3>Enseignement facultatif</h3>
+    <hr>
+
+    <p><em>Le choix d'un enseignement facultatif engage votre enfant à le suivre jusqu'à la fin de sa scolarité au collège.</em></p>
+
+    <div class="form-group row">
+      <div class="col-5 padding-top-8">Langues et Cultures de l'Antiquité</div>
+      <div class="col">
+        <div class="form-check">
+          <label class="form-check-label">
+            <input class="form-check-input" type="checkbox"> Latin
+          </label>
+        </div>
+      </div>
+    </div>
 
     <%= erb :'partials/nouveau_precedent_suivant', :locals => { :precedent => "accueil"} %>
 

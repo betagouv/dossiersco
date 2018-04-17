@@ -51,7 +51,7 @@ tarif de cantine uniquement pour paris, fonctionnement différent pour les autre
 personnaliser la liste des pj pour chaque collège (Creteil va demander la photocopie du livret de famille)
 champs du formulaire vérouillés par défaut avec bouton pour les modifier,
     moins de risques d'erreurs et de confusion de la part des parents
-enlever Scolarité de l'année en cours sur la page élève
+[X] enlever Scolarité de l'année en cours sur la page élève
 déduire les options de l'etablissement grace a la base siecle
 reprendre la nomenclature de siecle pour la profession
 proposer en dl un pdf pour les renseignement médiacauxx

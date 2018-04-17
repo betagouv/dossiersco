@@ -62,31 +62,14 @@ end
 # pertinant de garder l'identifiant dans l'url ?
 post '/eleve' do
   eleve = get_eleve session[:identifiant]
-	identite_eleve = ['prenom', 'prenom_2', 'prenom_3', 'nom', 'sexe', 'ville_naiss', 'pays_naiss', 'nationalite', 'classe_ant', 'ets_ant']
+	identite_eleve = ['prenom', 'prenom_2', 'prenom_3', 'nom', 'sexe', 'ville_naiss', 'pays_naiss', 'nationalite', 'classe_ant', 'ets_ant',
+		'lv2']
 	identite_eleve.each do |info|
 		eleve[info] = params[info] if params.has_key?(info)
   end
 
   eleve.save!
-  redirect '/scolarite'
-end
-
-get '/scolarite' do
-  dossier_eleve = get_dossier_eleve session[:identifiant]
-	erb :'2_scolarite', locals: {eleve: dossier_eleve.eleve}
-end
-
-post '/scolarite' do
-	eleve = get_eleve session[:identifiant]
-	enseignements_eleve = ['lv2']
-	enseignements_eleve.each do |enseignement|
-		eleve[enseignement] = params[enseignement] if params.has_key?(enseignement)
-  end
-  if eleve.save!
-    redirect '/famille'
-  else
-    redirect '/scolarite'
-  end
+  redirect '/famille'
 end
 
 get '/famille' do
