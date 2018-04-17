@@ -43,7 +43,7 @@ open lab du 16
 [X] enlever la notion de conseil de classe sur la page d'accueil
 [X] rappeler les doc à joindre sur la page d'accueil
 [X] changer cantine en demi-pension ou restauration scolaire
-[ ] plusieurs prenom dans la partie élève (nécessaire pour l'inscription au brevet)
+[X] plusieurs prenom dans la partie élève (nécessaire pour l'inscription au brevet)
 [ ] bloquer la lv2 sauf pour les 5eme, rappeler la lv1 ?
 [X] droit a l'image rajouter "et dans le cadre des sorties scolaire"
 inscription-college.gouv

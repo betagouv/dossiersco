@@ -62,7 +62,7 @@ end
 # pertinant de garder l'identifiant dans l'url ?
 post '/eleve' do
   eleve = get_eleve session[:identifiant]
-	identite_eleve = ['prenom', 'nom', 'sexe', 'ville_naiss', 'pays_naiss', 'nationalite', 'classe_ant', 'ets_ant']
+	identite_eleve = ['prenom', 'prenom_2', 'prenom_3', 'nom', 'sexe', 'ville_naiss', 'pays_naiss', 'nationalite', 'classe_ant', 'ets_ant']
 	identite_eleve.each do |info|
 		eleve[info] = params[info] if params.has_key?(info)
   end
