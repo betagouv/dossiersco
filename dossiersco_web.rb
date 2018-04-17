@@ -135,7 +135,7 @@ post '/administration' do
   dossier_eleve.check_reglement_cantine = params['check_reglement_cantine']
   dossier_eleve.check_paiement_cantine = params['check_paiement_cantine']
 	dossier_eleve.save!
-  if dossier_eleve.renseignements_medicaux &&
+  if dossier_eleve.demi_pensionnaire &&
       (!dossier_eleve.check_reglement_cantine || !dossier_eleve.check_paiement_cantine)
     erb :'4_administration', locals: {dossier_eleve: dossier_eleve}
   else
