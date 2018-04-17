@@ -9,6 +9,7 @@ def init
       {prenom: 'Edith',
        nom: 'Piaf',
        date_naiss: '1915-12-19',
+       niveau_classe_ant: '6EME',
        nationalite: 'francaise',
        identifiant: '2'
       },
@@ -20,25 +21,32 @@ def init
       },
       {prenom: 'Philippe',
        nom: 'Blayo',
+       niveau_classe_ant: '5EME SECTION SPORTIVE',
+       classe_ant: '5EME 1',
        date_naiss: '1970-01-01',
        nationalite: 'FRANCE',
        identifiant: '3'
       },
       {prenom: 'Pierre',
        nom: 'Blayo',
-       date_naiss: '1980-01-01',
+       niveau_classe_ant: '4EME ULIS',
+       date_naiss: '1970-01-01',
        nationalite: 'FRANCE',
        identifiant: '4'
       },
       {prenom: 'Eugène',
        nom: 'Blayo',
-       date_naiss: '1990-01-01',
+       niveau_classe_ant: '5EME',
+       classe_ant: '5EME 1',
+       date_naiss: '1970-01-01',
        nationalite: 'FRANCE',
        identifiant: '5'
       },
       {prenom: 'Emile',
        nom: 'Blayo',
-       date_naiss: '2000-01-01',
+       niveau_classe_ant: '6EME',
+       classe_ant: '6EME 1',
+       date_naiss: '1970-01-01',
        nationalite: 'FRANCE',
        identifiant: '6'
       }

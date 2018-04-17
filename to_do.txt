@@ -44,7 +44,7 @@ open lab du 16
 [X] rappeler les doc à joindre sur la page d'accueil
 [X] changer cantine en demi-pension ou restauration scolaire
 [X] plusieurs prenom dans la partie élève (nécessaire pour l'inscription au brevet)
-[ ] bloquer la lv2 sauf pour les 5eme, rappeler la lv1 ?
+[X] bloquer la lv2 sauf pour les 5eme
 [X] droit a l'image rajouter "et dans le cadre des sorties scolaire"
 inscription-college.gouv
 tarif de cantine uniquement pour paris, fonctionnement différent pour les autres académies
@@ -56,3 +56,4 @@ déduire les options de l'etablissement grace a la base siecle
 reprendre la nomenclature de siecle pour la profession
 proposer en dl un pdf pour les renseignement médiacauxx
 etape 5 spécifier que c'est bien le représentant de l'éleve qui fait l'inscription
+rappeler la lv1 ?
