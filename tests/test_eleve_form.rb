@@ -31,20 +31,20 @@ class EleveFormTest < Test::Unit::TestCase
   def test_entree_succes_eleve_1
     post '/identification', identifiant: '1', date_naiss: '1995-11-19'
     follow_redirect!
-    assert last_response.body.include? 'Le conseil de classe'
+    assert last_response.body.include? 'Pour inscrire votre enfant'
   end
 
   def test_entree_succes_firefox_52_0_1_eleve_1
     post '/identification', identifiant: '1', date_naiss: '19/11/1995'
     follow_redirect!
-    assert last_response.body.include? 'Le conseil de classe'
+    assert last_response.body.include? 'Pour inscrire votre enfant'
   end
 
 
   def test_entree_succes_date_avec_espaces_eleve_1
     post '/identification', identifiant: '1', date_naiss: '19 11 1995'
     follow_redirect!
-    assert last_response.body.include? 'Le conseil de classe'
+    assert last_response.body.include? 'Pour inscrire votre enfant'
   end
 
   def test_entree_mauvais_identifiant
@@ -266,13 +266,16 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_importe_eleve_fichier_siecle
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-    post '/agent/import_siecle', nom_eleve: "", prenom_eleve: "", name: 'import_siecle', filename: {tempfile: 'tests/test_import_siecle.xls'}
+    post '/agent/import_siecle', nom_eleve: "", prenom_eleve: "", name: 'import_siecle',
+         filename: {tempfile: 'tests/test_import_siecle.xls'}
 
     eleve = Eleve.find_by(nom: 'NOM_TEST')
     eleve2 = Eleve.find_by(nom: 'NOM2_TEST')
 
     assert_equal 'Masculin', eleve.sexe
     assert_equal 'Prenom_test', eleve.prenom
+    assert_equal 'Prenom_test_2', eleve.prenom_2
+    assert_equal 'Prenom_test_3', eleve.prenom_3
     assert_equal '080788316HE', eleve.identifiant
     assert_equal 'FRANCE', eleve.pays_naiss
     assert_equal 'PARIS 12E  ARRONDISSEMENT', eleve.ville_naiss

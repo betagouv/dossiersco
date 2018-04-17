@@ -2,7 +2,7 @@ require 'roo'
 require 'roo-xls'
 
 def import_xls fichier, etablissement_id, nom_a_importer=nil, prenom_a_importer=nil
-  colonnes = {sexe: 0, pays_nat: 1, prenom: 6, nom: 4, date_naiss: 9, identifiant: 11,
+  colonnes = {sexe: 0, pays_nat: 1, prenom: 6, prenom_2: 7, prenom_3: 8, nom: 4, date_naiss: 9, identifiant: 11,
               ville_naiss_etrangere: 20, commune_naiss: 21, pays_naiss: 22, niveau_classe_ant: 33, classe: 36,
               nom_resp_legal1: 99, prenom_resp_legal1: 101,
               tel_principal_resp_legal1: 102, tel_secondaire_resp_legal1: 104, lien_parente_resp_legal1: 103,
@@ -32,6 +32,8 @@ def import_xls fichier, etablissement_id, nom_a_importer=nil, prenom_a_importer=
       date_naiss = date.split('/').reverse.join('-')
     end
     prenom = xls_document.row(row)[colonnes[:prenom]]
+    prenom_2 = xls_document.row(row)[colonnes[:prenom_2]]
+    prenom_3 = xls_document.row(row)[colonnes[:prenom_3]]
     nom = xls_document.row(row)[colonnes[:nom]]
     identifiant = xls_document.row(row)[colonnes[:identifiant]]
     pays_naiss = xls_document.row(row)[colonnes[:pays_naiss]]
@@ -54,6 +56,8 @@ def import_xls fichier, etablissement_id, nom_a_importer=nil, prenom_a_importer=
         nationalite: pays_nat,
         date_naiss: date_naiss,
         prenom: prenom,
+        prenom_2: prenom_2,
+        prenom_3: prenom_3,
         nom: nom,
         pays_naiss: pays_naiss,
         ville_naiss: ville_naiss,
