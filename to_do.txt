@@ -21,39 +21,29 @@
 
 [ ] Ingérer un fichier Affelnet
 
-Done
-[X] Infos collèges sur Validation
-[X] Afficher le bon collège à l'étape validation
-[X] Réduire la duplication dans l'affectation des résponsables légaux dans l'import SIECLE
-[X] Remettre en service les tests d'upload
-[X] En dev et intégration continue on va utiliser le filesystem
-[X] Réparer la prod
-[X] Ajouter une config Circle CI sur Github
-[X] Restreindre l'accès aux données d'un élève aux utilisateurs identifés
-[X] Formulaire Famille
-[X] Upload pièces
-[X] Afficher un feedback des fichiers choisis
-[X] Factoriser le code de l'authentification
-[X] Logo flottant
-[X] Décider de la destination du lien pour les agents
-
 
 open lab du 16
 [ ] generer les pdf pour les parents
-[X] enlever la notion de conseil de classe sur la page d'accueil
-[X] rappeler les doc à joindre sur la page d'accueil
-[X] changer cantine en demi-pension ou restauration scolaire
-[X] plusieurs prenom dans la partie élève (nécessaire pour l'inscription au brevet)
-[X] bloquer la lv2 sauf pour les 5eme
-[X] droit a l'image rajouter "et dans le cadre des sorties scolaire"
 inscription-college.gouv
-tarif de cantine uniquement pour paris, fonctionnement différent pour les autres académies
-personnaliser la liste des pj pour chaque collège (Creteil va demander la photocopie du livret de famille)
+[ ] tarif de cantine uniquement pour paris, fonctionnement différent pour les autres académies
+[ ] personnaliser la liste des pj pour chaque collège (Creteil va demander la photocopie du livret de famille)
 champs du formulaire vérouillés par défaut avec bouton pour les modifier,
     moins de risques d'erreurs et de confusion de la part des parents
-[X] enlever Scolarité de l'année en cours sur la page élève
-déduire les options de l'etablissement grace a la base siecle
+[ ] déduire les options de l'etablissement grace a la base siecle
 reprendre la nomenclature de siecle pour la profession
-proposer en dl un pdf pour les renseignement médiacauxx
+proposer en download un pdf pour les renseignement médiacaux
 etape 5 spécifier que c'est bien le représentant de l'éleve qui fait l'inscription
 rappeler la lv1 ?
+
+Réunion avec Pierre le 18/04/2018
+
+Pièces à joindre :
+- Livret de famille
+- Photos
+- Justificatif de domicile
+- Jugement de divorce ou de séparation
+- Attestation d'assurance
+- QF (seulement pour Paris)
+
+Faire un test de passage de l'ordinateur au portable
+[ ] Ramener le parent sur la dernière étape incomplète
