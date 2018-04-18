@@ -83,7 +83,7 @@ hr {
 }
 
 .bg-primary {
-  background-color: #2d9ee0;
+  background-color: #00669D;
 }
 
 .col-nav {
@@ -100,7 +100,7 @@ hr {
 }
 
 .this-nav {
-  color: #2d9ee0;
+  color: #00669D;
   font-weight: bold;
 }
 
@@ -120,15 +120,15 @@ hr {
 }
 
 .navbar-light .navbar-nav .active>.nav-link {
-    color: #2d9ee0;
+    color: #00669D;
 }
 
 /*
  * Buttons
  */
 .btn-primary {
-  background-color: #2d9ee0;
-  border-color: #2d9ee0;
+  background-color: #00669D;
+  border-color: #00669D;
     -webkit-appearance: none !important;
     -webkit-border-radius: 0 !important;
     appearance: none !important;
@@ -241,7 +241,7 @@ hr {
 }
 
 .badge-primary {
-  background-color: #2d9ee0;
+  background-color: #00669D;
 }
 
 .badge-secondary {
@@ -271,6 +271,15 @@ hr {
 .message_de_succes {
   width: 100%;
   background-color: lightgreen;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.message_echec {
+  width: 100%;
+  background-color: #BB0000;
+  color: #FFFFFF;
   padding: 10px;
   text-align: center;
   margin-bottom: 30px;
