@@ -352,6 +352,26 @@ class EleveFormTest < Test::Unit::TestCase
     assert last_response.body.gsub(/\s/,'').include? "id='autorise_photo_de_classe' checked".gsub(/\s/,'')
   end
 
+  def test_un_agent_ajoute_une_nouvelle_option
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+
+    post '/agent/options', nom: 'Latin', niveau_debut: '4ème'
+
+    get '/agent/options'
+    assert_match /Latin/, last_response.body
+  end
+
+
+  def test_un_agent_ajoute_deux_fois_la_meme_option
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+
+    post '/agent/options', nom: 'Latin', niveau_debut: '4ème'
+    post '/agent/options', nom: 'latin', niveau_debut: '4ème'
+
+    assert_match /latin existe déjà/, last_response.body
+  end
+
+
   def assert_file(chemin_du_fichier)
     assert File.file? chemin_du_fichier
     File.delete(chemin_du_fichier)
