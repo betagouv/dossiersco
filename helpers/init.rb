@@ -57,6 +57,10 @@ def init
      date_limite: "samedi 3 juin 2018"})
   cree_dossier_eleve eleves[1], etablissement, 'pas connecté'
 
+  Agent.create!(password: '$2a$10$6njb4Rn4RHyFFJpP5QEJGutErgZVOr6/cCM17IKoIsiQDZQABBN2a',
+                nom: 'César', prenom: 'Jules', etablissement_id: etablissement.id,
+                identifiant: 'jules')
+
   etablissement = Etablissement.create!({
       nom: "Collège Germaine Tillion",
       date_limite: "samedi 6 juin 2018"

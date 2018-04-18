@@ -68,3 +68,35 @@ post '/agent/change_etat_fichier' do
     dossier_eleve[params[:nom_fichier]] = params[:etat]
     dossier_eleve.save!
 end
+
+get '/agent/options' do
+  agent = Agent.find_by(identifiant: session[:identifiant])
+  etablissement = agent.etablissement
+  options = etablissement.option
+  erb :'agent/options', locals: {options: options}
+end
+
+post '/agent/options' do
+  agent = Agent.find_by(identifiant: session[:identifiant])
+  etablissement = agent.etablissement
+  option = Option.find_by(
+    nom: params[:nom].upcase.capitalize,
+    etablissement: etablissement.id)
+
+  if !params[:nom].present?
+    message = "Une option doit comporter un nom"
+    erb :'agent/options', locals: {options: etablissement.option, message: message}
+  elsif !params[:niveau_debut].present?
+    message = "Une option doit comporter un niveau de début"
+    erb :'agent/options', locals: {options: etablissement.option, message: message}
+  elsif option.present? && (option.nom == params[:nom].upcase.capitalize)
+    message = "#{params[:nom]} existe déjà"
+    erb :'agent/options', locals: {options: etablissement.option, message: message}
+  else
+    option = Option.create!(
+       nom: params[:nom].upcase.capitalize,
+       niveau_debut: params[:niveau_debut],
+       etablissement_id: etablissement.id)
+    erb :'agent/options', locals: {options: etablissement.option}
+  end
+end
