@@ -25,7 +25,7 @@ get '/init' do
 end
 
 get '/' do
-	erb :'#_identification', layout: false
+	erb :'#_identification'
 end
 
 post '/identification' do
