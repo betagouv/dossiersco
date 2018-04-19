@@ -6,12 +6,7 @@ html,
 body {
   overflow-x: hidden; /* Prevent scroll on narrow devices */
   background-color: #f8f8fa;
-}
-
-body {
   color: #383f45;
-  padding-top: 50px;
-  padding-bottom: 100px;
 }
 
 footer {
@@ -121,6 +116,10 @@ hr {
 
 .navbar-light .navbar-nav .active>.nav-link {
     color: #00669D;
+}
+
+.navbar {
+  height: 50px;
 }
 
 /*
@@ -321,6 +320,19 @@ iframe {
     border: none;
 }
 
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.lead {
+  padding: 20px 0;
+}
+
+.logo {
+    max-width: 10%;
+    height: 100%;
+}
+
 /*
  * Off Canvas
  * --------------------------------------------------
@@ -367,5 +379,10 @@ iframe {
     position: absolute;
     top: 0;
     width: 50%; /* 6 columns */
+  }
+
+  .logo {
+    max-width: 25%;
+    height: 100%;
   }
 }
