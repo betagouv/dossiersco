@@ -249,6 +249,18 @@ class EleveFormTest < Test::Unit::TestCase
     assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
   end
 
+
+  def test_ramène_parent_à_dernière_étape_incomplète
+    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    post '/eleve', Espagnol: true, Latin: true
+
+    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    follow_redirect!
+
+    assert_match /Famille .*: Responsable légal 1/, last_response.body
+  end
+
+
   def soumet_formulaire(*arguments_du_post)
     post '/identification', identifiant: '2', date_naiss: '1915-12-19'
     post *arguments_du_post
@@ -256,7 +268,9 @@ class EleveFormTest < Test::Unit::TestCase
     Nokogiri::HTML(last_response.body)
   end
 
+##############################################################################
 #   Tests agents
+##############################################################################
 
   def test_entree_succes_agent
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'

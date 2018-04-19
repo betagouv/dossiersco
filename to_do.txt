@@ -46,4 +46,5 @@ Pièces à joindre :
 - QF (seulement pour Paris)
 
 Faire un test de passage de l'ordinateur au portable
-[ ] Ramener le parent sur la dernière étape incomplète
+[X] Ramener le parent sur la dernière étape incomplète
+[ ] Expliquer comment prendre une photo ou scanner les pièces jointes
