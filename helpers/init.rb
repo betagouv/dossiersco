@@ -21,8 +21,8 @@ def init
       },
       {prenom: 'Philippe',
        nom: 'Blayo',
-       niveau_classe_ant: '5EME SECTION SPORTIVE',
-       classe_ant: '5EME 1',
+       niveau_classe_ant: '3EME SECTION SPORTIVE',
+       classe_ant: '3EME 1',
        date_naiss: '1970-01-01',
        nationalite: 'FRANCE',
        identifiant: '3'
@@ -52,28 +52,31 @@ def init
       }
   ]
 
-  etablissement = Etablissement.create!({
+  oeben = Etablissement.create!({
      nom: "College Jean-Francois Oeben",
      date_limite: "samedi 3 juin 2018"})
-  cree_dossier_eleve eleves[1], etablissement, 'pas connecté'
+  cree_dossier_eleve eleves[1], oeben, 'pas connecté'
 
   Agent.create!(password: '$2a$10$6njb4Rn4RHyFFJpP5QEJGutErgZVOr6/cCM17IKoIsiQDZQABBN2a',
-                nom: 'César', prenom: 'Jules', etablissement_id: etablissement.id,
+                nom: 'César', prenom: 'Jules', etablissement_id: oeben.id,
                 identifiant: 'jules')
 
-  etablissement = Etablissement.create!({
+  tillion = Etablissement.create!({
       nom: "Collège Germaine Tillion",
       date_limite: "samedi 6 juin 2018"
   })
 
-  cree_dossier_eleve eleves[0], etablissement, 'pas connecté'
-  cree_dossier_eleve eleves[2], etablissement, 'pas connecté'
-  cree_dossier_eleve eleves[3], etablissement, 'connecté'
-  cree_dossier_eleve eleves[4], etablissement, 'en attente de validation'
-  cree_dossier_eleve eleves[5], etablissement, 'validé'
+  Option.create!(etablissement_id: tillion.id, nom: 'Espagnol', niveau_debut: 5, obligatoire: true)
+  Option.create!(etablissement_id: tillion.id, nom: 'Latin', niveau_debut: 5)
+
+  cree_dossier_eleve eleves[0], tillion, 'pas connecté'
+  cree_dossier_eleve eleves[2], tillion, 'pas connecté'
+  cree_dossier_eleve eleves[3], tillion, 'connecté'
+  cree_dossier_eleve eleves[4], tillion, 'en attente de validation'
+  cree_dossier_eleve eleves[5], tillion, 'validé'
 
   Agent.create!(password: '$2a$10$6njb4Rn4RHyFFJpP5QEJGutErgZVOr6/cCM17IKoIsiQDZQABBN2a',
-                nom: 'De Maulmont', prenom: 'Pierre', etablissement_id: etablissement.id,
+                nom: 'De Maulmont', prenom: 'Pierre', etablissement_id: tillion.id,
                 identifiant: 'pierre')
 end
 

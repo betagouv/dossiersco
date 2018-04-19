@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180418090149) do
+ActiveRecord::Schema.define(version: 20180419092203) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,7 +69,6 @@ ActiveRecord::Schema.define(version: 20180418090149) do
     t.string "nationalite"
     t.string "classe_ant"
     t.string "ets_ant"
-    t.string "lv2"
     t.string "date_naiss"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -77,6 +76,11 @@ ActiveRecord::Schema.define(version: 20180418090149) do
     t.string "niveau_classe_ant"
     t.string "prenom_2"
     t.string "prenom_3"
+  end
+
+  create_table "eleves_options", force: :cascade do |t|
+    t.integer "eleve_id"
+    t.integer "option_id"
   end
 
   create_table "etablissements", force: :cascade do |t|
@@ -88,6 +92,7 @@ ActiveRecord::Schema.define(version: 20180418090149) do
     t.string "nom"
     t.integer "niveau_debut"
     t.integer "etablissement_id"
+    t.boolean "obligatoire", default: false
   end
 
   create_table "resp_legals", force: :cascade do |t|

@@ -79,9 +79,13 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_persistence_des_choix_enseignements
     post '/identification', identifiant: '2', date_naiss: '1915-12-19'
-    post '/eleve', lv2: 'Espagnol'
+    post '/eleve', Espagnol: true, Latin: true
     get '/eleve'
-    assert last_response.body.gsub(/\s/,'').include? '<input name="lv2" value="Espagnol" type="radio" class="form-check-input" checked>'.gsub(/\s/,'')
+
+    assert last_response.body.gsub(/\s/,'').include?(
+     "<input class='form-check-input' type='checkbox' name='Espagnol' value='true' id='Espagnol' checked >".gsub(/\s/,''))
+    assert last_response.body.gsub(/\s/,'').include?(
+     "<input class='form-check-input' type='checkbox' name='Latin' value='true' id='Latin' checked >".gsub(/\s/,''))
   end
 
   def test_affiche_2ème_et_3ème_prénoms_en_4ème_pour_brevet_des_collèges
@@ -352,15 +356,16 @@ class EleveFormTest < Test::Unit::TestCase
     assert last_response.body.gsub(/\s/,'').include? "id='autorise_photo_de_classe' checked".gsub(/\s/,'')
   end
 
-  def test_un_agent_ajoute_une_nouvelle_option
+  def test_un_agent_ajoute_une_nouvelle_option_obligatoire
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
 
-    post '/agent/options', nom: 'Latin', niveau_debut: '4ème'
+    post '/agent/options', nom: 'Allemand', niveau_debut: '4ème', obligatoire: true
 
-    get '/agent/options'
-    assert_match /Latin/, last_response.body
+    post '/identification', identifiant: '5', date_naiss: '1970-01-01'
+    get '/eleve'
+    assert_match /Allemand/, last_response.body
+    assert_match /obligatoire/, last_response.body
   end
-
 
   def test_un_agent_ajoute_deux_fois_la_meme_option
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
@@ -369,6 +374,17 @@ class EleveFormTest < Test::Unit::TestCase
     post '/agent/options', nom: 'latin', niveau_debut: '4ème'
 
     assert_match /latin existe déjà/, last_response.body
+  end
+
+  def test_un_agent_ajoute_une_nouvelle_option_facultative
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+
+    post '/agent/options', nom: 'Grec', niveau_debut: '3ème', obligatoire: false
+
+    post '/identification', identifiant: '4', date_naiss: '1970-01-01'
+    get '/eleve'
+    assert_match /Grec/, last_response.body
+    assert_match /facultatif/, last_response.body
   end
 
 
