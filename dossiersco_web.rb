@@ -56,19 +56,30 @@ end
 
 get '/eleve' do
   eleve = get_eleve session[:identifiant]
-  erb :'1_eleve', locals: { eleve: eleve }
+  options = options_eligibles_classees eleve, eleve.dossier_eleve.etablissement.id
+  erb :'1_eleve', locals: { eleve: eleve,
+   options_obligatoires: options[:obligatoire],
+   options_facultatives: options[:facultative] }
 end
 
-# pertinant de garder l'identifiant dans l'url ?
 post '/eleve' do
   eleve = get_eleve session[:identifiant]
-	identite_eleve = ['prenom', 'prenom_2', 'prenom_3', 'nom', 'sexe', 'ville_naiss', 'pays_naiss', 'nationalite', 'classe_ant', 'ets_ant',
-		'lv2']
-	identite_eleve.each do |info|
-		eleve[info] = params[info] if params.has_key?(info)
+  identite_eleve = ['prenom', 'prenom_2', 'prenom_3', 'nom', 'sexe', 'ville_naiss', 'pays_naiss', 'nationalite', 'classe_ant', 'ets_ant']
+  options = options_eligibles eleve, eleve.dossier_eleve.etablissement.id
+  nom_options = options.map { |option| option.nom }
+  identite_eleve.each do |info|
+	eleve[info] = params[info] if params.has_key?(info)
   end
 
+  nom_options.each do |nom_option|
+    if params.has_key?(nom_option)
+      eleve.option << Option.find_by(nom: nom_option, etablissement_id: eleve.dossier_eleve.etablissement.id)
+    else
+      eleve.option.delete eleve.option.select { |o| o.nom == nom_option }
+    end
+  end
   eleve.save!
+
   redirect '/famille'
 end
 

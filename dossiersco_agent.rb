@@ -96,7 +96,8 @@ post '/agent/options' do
     option = Option.create!(
        nom: params[:nom].upcase.capitalize,
        niveau_debut: params[:niveau_debut],
-       etablissement_id: etablissement.id)
+       etablissement_id: etablissement.id,
+       obligatoire: params[:obligatoire])
     erb :'agent/options', locals: {options: etablissement.option}
   end
 end
