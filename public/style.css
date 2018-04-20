@@ -7,6 +7,7 @@ body {
   overflow-x: hidden; /* Prevent scroll on narrow devices */
   background-color: #f8f8fa;
   color: #383f45;
+  padding-bottom: 30px;
 }
 
 footer {
@@ -18,7 +19,6 @@ img {
 }
 
 h2 {
-  margin-top: 60px;
   color: #606468;
 }
 
@@ -39,10 +39,6 @@ h4 {
   bottom: .2em;
   right: 1em;
   text-align: right;
-}
-
-.chevron-accordeon {
-  padding : .1em .2em .1em .1em;
 }
 
 hr {
@@ -125,6 +121,10 @@ hr {
 /*
  * Buttons
  */
+.btn {
+  cursor: pointer;
+}
+
 .btn-primary {
   background-color: #00669D;
   border-color: #00669D;
@@ -331,6 +331,11 @@ iframe {
 .logo {
     max-width: 10%;
     height: 100%;
+    margin-right: 20px;
+}
+
+.erreur {
+  color: #BB0000;
 }
 
 /*
