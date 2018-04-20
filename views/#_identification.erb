@@ -1,48 +1,40 @@
 <div class="site-wrapper">
-
-		<div class="site-wrapper-inner">
-
-			<div class="cover-container">
-
-				<div class="padding">
-					<h1 class="cover-heading text-center">Inscription au collège</h1>
-					<p class="lead text-center">Quelques clics pour inscrire votre enfant.</p>
-				</div>
-
-				<div class="container">
-
-					<form class="form-signin" action="/identification" method="post">
-
-						<% if session[:erreur_id_ou_date_naiss_incorrecte] %>
-							<p class="erreur">Nous ne connaissons aucun élève correspondant à ces informations.</p>
-						<% end %>
-
-						<% if session[:erreur_id_ou_date_naiss_absente] %>
-							<p class="erreur">Veuillez indiquer votre identifiant et la date de naissance de l'élève.</p>
-						<% end %>
-
-						<% session.clear %>
-
-						<label class="col-form-label" for="formGroupExampleInput">Identifiant</label>
-						<input name="identifiant" type="text" class="form-control" id="formGroupExampleInput" placeholder="Exemple : 2206004705B" autofocus>
-
-						<label class="col-form-label" for="formGroupExampleInput">Date de naissance de l'élève</label>
-						<input name="date_naiss" type="text" class="form-control" id="formGroupExampleInput" placeholder="jj/mm/aaaa">
-
-						<button class="btn btn-lg btn-primary btn-block margin-top-20">Connexion</button>
-
-					</form>
-
-				</div>
-
-			<footer class="mastfoot">
-				<div class="inner">
-					<p class="text-center">Vous êtes agent en EPLE ? Entrez par <a href="/agent">ici</a>.</p>
-				</div>
-			</footer>
-
-			</div>
-
+	<div class="site-wrapper-inner">
+		<div class="padding">
+			<h1 class="text-center">Inscription au collège</h1>
+			<p class="lead text-center">Quelques clics pour inscrire votre enfant.</p>
 		</div>
 
+		<div class="container">
+			<div class="row">
+				<form class="form-signin col-md-5 mx-auto" action="/identification" method="post">
+
+					<% if session[:erreur_id_ou_date_naiss_incorrecte] %>
+						<p class="erreur">Nous ne connaissons aucun élève correspondant à ces informations.</p>
+					<% end %>
+
+					<% if session[:erreur_id_ou_date_naiss_absente] %>
+						<p class="erreur">Veuillez indiquer votre identifiant et la date de naissance de l'élève.</p>
+					<% end %>
+
+					<% session.clear %>
+
+					<label class="col-form-label" for="formGroupExampleInput">Identifiant</label>
+					<input name="identifiant" type="text" class="form-control" id="formGroupExampleInput" placeholder="Exemple : 2206004705B" autofocus>
+
+					<label class="col-form-label" for="formGroupExampleInput">Date de naissance de l'élève</label>
+					<input name="date_naiss" type="text" class="form-control" id="formGroupExampleInput" placeholder="jj/mm/aaaa">
+
+					<button class="btn btn-lg btn-primary btn-block margin-top-20">Connexion</button>
+
+				</form>
+			</div>
+		</div>
+
+		<footer class="mastfoot">
+			<div class="inner">
+				<p class="text-center">Vous êtes agent en EPLE ? Entrez par <a href="/agent">ici</a>.</p>
+			</div>
+		</footer>
 	</div>
+</div>

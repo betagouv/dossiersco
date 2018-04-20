@@ -14,7 +14,7 @@
 	<% sections_liens = ["eleve", "famille", "administration", "pieces_a_joindre", "validation"] %>
 <% end %>
 
-<div class="row">
+<div class="row mb-5">
 
 	<% for une_section in (1..@section-1) do %>
 		<a href="/<%= sections_liens[une_section-1] %>" class="col col-nav nav-number other-nav">
