@@ -1,14 +1,11 @@
 <% demarche = "inscription" %>
-
 <% @section = 5 %>
 
 <%= erb :'partials/navigation' %>
 
-<div class="col-12 col-md-8">
+<div class="col-12">
 
-	<h2>Validation</h2>
-
-	<hr>
+	<h2 class="separation">Validation</h2>
 
 	<% if demarche == "inscription" %>
 		<p>Le dossier d'inscription de votre enfant <strong><%= "#{eleve.prenom} #{eleve.nom}"%></strong> pour son entrée en 4ème au <strong><%= dossier_eleve.etablissement.nom %></strong>  est complet.</p>
@@ -20,39 +17,35 @@
 
 	<div class="card">
 		<div class="card-body">
-			<div class="row">
+			<div class="row mb-2">
 				<div class="col-3">
 					<strong>Langue vivante 2</strong>
 				</div>
 				<div class="col-4">
-					<%= eleve.lv2 %>
+					<%#= eleve.lv2 %>
 				</div>
 				<div class="col-3">
-					<form action="/scolarite" method="get">
+					<a href="/eleve">
 						<button class="btn btn-outline-secondary btn-sm">Modifier</button>
-					</form>
+					</a>
 				</div>
 			</div>
 
-			<span style="display:block; height: 5px;"></span>
-
-			<div class="row">
+			<div class="row mb-2">
 				<div class="col-3">
-					<strong>Cantine</strong>
+					<strong>Restaurant scolaire</strong>
 				</div>
 				<div class="col-4">
 					Demi-pensionnaire
 				</div>
 				<div class="col-3">
-					<form action="/administration" method="get">
+					<a href="/administration">
 						<button class="btn btn-outline-secondary btn-sm">Modifier</button>
-					</form>
+					</a>
 				</div>
 			</div>
 
-			<span style="display:block; height: 5px;"></span>
-
-			<div class="row">
+			<div class="row mb-2">
 				<div class="col-3">
 					<strong>Sortie</strong>
 				</div>
@@ -60,29 +53,26 @@
 					Autorisé
 				</div>
 				<div class="col-3">
-					<form action="/administration" method="get">
+					<a href="/administration">
 						<button class="btn btn-outline-secondary btn-sm">Modifier</button>
-					</form>
+					</a>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<span style="display:block; height: 20px;"></span>
-
 	<%= erb :'partials/champ_check', locals: { desc: "Je certifie sur l'honneur l'exactitude des informations communiquées et m'engage à tenir le collège informé de tout changement de situation ou de coordonnées.",
 	name: 'certifie_sur_honneur', condition: false }%>
 
-	<span style="display:block; height: 30px;"></span>
-
-	<div class="row justify-content-md-center">
-		<form action="/confirmation" method="get">
-			<% if demarche == "inscription" %>
-				<button class="btn btn-primary">Valider l'inscription</button>
-			<% else %>
-				<button class="btn btn-primary">Valider la réinscription</button>
-			<% end %>
-		</form>
+	<div class="row mt-5">
+		<div class="mx-auto">
+			<a href="/confirmation">
+				<% if demarche == "inscription" %>
+					<button class="btn btn-primary">Valider l'inscription</button>
+				<% else %>
+					<button class="btn btn-primary">Valider la réinscription</button>
+				<% end %>
+			</a>
+		</div>
 	</div>
-
 </div>

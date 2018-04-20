@@ -1,8 +1,7 @@
 <div class="col-12 col-md-8">
 
-    <h2>Options de l'établissement</h2>
+    <h2 class="separation">Options de l'établissement</h2>
 
-    <hr>
   <% if defined? message  %>
     <div class="message_echec"><%= message %></div>
   <% end %>
@@ -13,7 +12,7 @@
 <% end %>
 </ul>
 
-    <form action='/agent/options' method='POST'>
+    <form class="separation" action='/agent/options' method='POST'>
       <label for='nom'>Nom</label>
       <input name='nom' type='text' placeholder='Ex : Latin' />
       <label for='niveau_debut' style='margin-left:10px'>Niveau de début</label>
@@ -24,7 +23,6 @@
     </form>
 
 <br>
-    <hr>
 
     <div>
       <button class='btn btn-primary'>

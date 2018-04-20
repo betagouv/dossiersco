@@ -1,10 +1,6 @@
-/*
- * Style tweaks
- * --------------------------------------------------
- */
 html,
 body {
-  overflow-x: hidden; /* Prevent scroll on narrow devices */
+  overflow-x: hidden;
   background-color: #f8f8fa;
   color: #383f45;
   padding-bottom: 30px;
@@ -130,7 +126,6 @@ hr {
   border-color: #00669D;
     -webkit-appearance: none !important;
     -webkit-border-radius: 0 !important;
-    appearance: none !important;
     -moz-appearance: none !important;
     -webkit-appearance: none !important;
     border-radius: 0 !important;
@@ -201,11 +196,6 @@ hr {
 .row.my-menu {
   margin-left: 20px;
 }
-
-
-
-
-
 
 /*Badges*/
 
@@ -286,7 +276,8 @@ hr {
 
 .separation {
   border-bottom: 1px solid #b3b5b7;
-  padding: 0;
+  padding: 0 0 10px 0;
+  margin-bottom: 20px;
 }
 
 .smiley-satisfaction {

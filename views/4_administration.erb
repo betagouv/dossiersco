@@ -1,130 +1,108 @@
-<% demarche = "inscription" %>
-
 <% @section = 3 %>
 
 <%= erb :'partials/navigation' %>
 
-<div class="col-12 col-md-8">
+<div class="col-12">
 
-			<span style="display:block; height: 50px;"></span>
+	<h2 class="col separation">Restauration scolaire</h2>
 
-				<div class="row">
-					<div class="col separation"><h2 class="not-first">Restauration scolaire</h2></div>
-				</div>
-			<form action="/administration" method="POST">
-				<div id="accordeon-admin-cantine">
+	<form action="/administration" method="POST">
+		<div id="accordeon-admin-cantine">
 
-					<div class="form-group row">
-						<div class="col-sm-6">
-							<label class="col-sm-7 form-check-label">
-								<input type="radio" name="demi_pensionnaire" value="true" class="form-check-input trigger" onclick="afficher_dp(event)" id='demi_pensionnaire'
-								<% if dossier_eleve.demi_pensionnaire %>
-						          checked
-					            <% end %>> Demi-pensionnaire
-							</label>
-							<label class="col-sm-4 form-check-label">
-								<input type="radio" name="demi_pensionnaire" value="false" class="form-check-input trigger" onclick="masquer_dp(event)" id='externe'
-								<% if ! dossier_eleve.demi_pensionnaire %>
-						          checked
-					            <% end %>> Externe
-							</label>
-						</div>
-					</div>
-
-					<div id="dp" style="display: none;">
-
-						<span style="display:block; height: 20px;"></span>
-
-						<p>Consulter le règlement du service de demi-pension :
-							<a href="images/reglement_dp.png" target="_blank"><img src="images/reglement_dp_small.png" alt="règlement demi-pension"></a>
-						</p>
-
-						<%= erb :'partials/champ_check', :locals => { :desc => "J'ai lu et j'accepte le règlement du service de
-						  demi-pension.", name: 'check_reglement_cantine', condition: dossier_eleve.check_reglement_cantine }%>
-
-						<%= erb :'partials/champ_check', :locals => { :desc => "Je m'engage à régler les frais de demi-pension en
-						  respectant les délais impartis inhérents au bon fonctionnement du service.", name: 'check_paiement_cantine',
-              condition: dossier_eleve.check_paiement_cantine}%>
-
-						<span style="display:block; height: 10px;"></span>
-
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col separation"><h2 class="not-first">Autorisation de sortie</h2></div>
-				</div>
-						<div class="form-check form-check-inline">
-							<label class="form-check-label">
-								<input class="form-check-input" type="radio" name="autorise_sortie" value="true"
-								id='autorise_sortie'
-								<% if dossier_eleve.autorise_sortie %>
-						          checked
-					            <% end %>> J'autorise
-							</label>
-						</div>
-						<div class="form-check form-check-inline">
-							<label class="form-check-label">
-								<input class="form-check-input" type="radio" name="autorise_sortie" value="false"
-								  <% if !dossier_eleve.autorise_sortie %>
-						          checked
-                  <% end %>> Je n'autorise pas
-							</label>
-						</div>
-
-						<p>mon enfant à quitter le collège après le dernier cours de l'après-midi (ou après le repas s'il n'a pas cours l'après-midi), en cas d'absence de professeur et sous mon entière responsabilité.</p>
-
-						<span style="display:block; height: 10px;"></span>
-
-
-				<div class="row">
-					<div class="col separation"><h2 class="not-first">Renseignements médicaux</h2></div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<div class="form-check">
-							<label class="form-check-label">
-								<input class="form-check-input" type="checkbox" value='true' name="renseignements_medicaux" onclick="afficher_infos_med(event)" id='renseignements_medicaux'
-								<% if dossier_eleve.renseignements_medicaux %>
+			<div class="form-group row">
+				<div class="col-sm-6">
+					<label class="col-sm-7 form-check-label">
+						<input type="radio" name="demi_pensionnaire" value="true" class="form-check-input trigger" onclick="afficher_dp(event)" id='demi_pensionnaire'
+						<% if dossier_eleve.demi_pensionnaire %>
 									checked
-								<% end %>> Je souhaite envoyer par écrit au secrétariat une information médicale (si c'est pertinent pour mon enfant)
-							</label>
-						</div>
-					</div>
-				</div>
-
-				<span style="display:block; height: 10px;"></span>
-
-				<div class="row">
-					<div class="col separation"><h2 class="not-first">Droit à l'image</h2></div>
-				</div>
-
-				<div class="form-check form-check-inline">
-					<label class="form-check-label">
-						<input class="form-check-input" type="radio" name="droit_image_photo" value="true" id='autorise_photo_de_classe'
-						<% if dossier_eleve.autorise_photo_de_classe %>
-							checked
-						<% end %>> J'accepte
+									<% end %>> Demi-pensionnaire
+					</label>
+					<label class="col-sm-4 form-check-label">
+						<input type="radio" name="demi_pensionnaire" value="false" class="form-check-input trigger" onclick="masquer_dp(event)" id='externe'
+						<% if ! dossier_eleve.demi_pensionnaire %>
+									checked
+									<% end %>> Externe
 					</label>
 				</div>
-				<div class="form-check form-check-inline">
-					<label class="form-check-label">
-						<input class="form-check-input" type="radio" name="droit_image_photo" value="false"
-						<% if !dossier_eleve.autorise_photo_de_classe %>
+			</div>
+
+			<div id="dp" style="display: none;">
+
+				<p>Consulter le règlement du service de demi-pension :
+					<a href="images/reglement_dp.png" target="_blank"><img src="images/reglement_dp_small.png" alt="règlement demi-pension"></a>
+				</p>
+
+				<%= erb :'partials/champ_check', :locals => { :desc => "J'ai lu et j'accepte le règlement du service de
+					demi-pension.", name: 'check_reglement_cantine', condition: dossier_eleve.check_reglement_cantine }%>
+
+				<%= erb :'partials/champ_check', :locals => { :desc => "Je m'engage à régler les frais de demi-pension en
+					respectant les délais impartis inhérents au bon fonctionnement du service.", name: 'check_paiement_cantine',
+					condition: dossier_eleve.check_paiement_cantine}%>
+			</div>
+		</div>
+
+		<h2 class="separation mt-4">Autorisation de sortie</h2>
+
+		<div class="form-check form-check-inline">
+			<label class="form-check-label">
+				<input class="form-check-input" type="radio" name="autorise_sortie" value="true"
+				id='autorise_sortie'
+				<% if dossier_eleve.autorise_sortie %>
 							checked
-						<% end %>> Je n'accepte pas
+							<% end %>> J'autorise
+			</label>
+		</div>
+		<div class="form-check form-check-inline">
+			<label class="form-check-label">
+				<input class="form-check-input" type="radio" name="autorise_sortie" value="false"
+					<% if !dossier_eleve.autorise_sortie %>
+							checked
+					<% end %>> Je n'autorise pas
+			</label>
+		</div>
+
+		<p>mon enfant à quitter le collège après le dernier cours de l'après-midi (ou après le repas s'il n'a pas cours l'après-midi), en cas d'absence de professeur et sous mon entière responsabilité.</p>
+
+		<h2 class="separation mt-4">Renseignements médicaux</h2>
+
+		<div class="row">
+			<div class="col">
+				<div class="form-check">
+					<label class="form-check-label">
+						<input class="form-check-input" type="checkbox" value='true' name="renseignements_medicaux" onclick="afficher_infos_med(event)" id='renseignements_medicaux'
+						<% if dossier_eleve.renseignements_medicaux %>
+							checked
+						<% end %>> Je souhaite envoyer par écrit au secrétariat une information médicale (si c'est pertinent pour mon enfant)
 					</label>
 				</div>
+			</div>
+		</div>
 
-				<p>que mon enfant soit photographié à l'occasion des photos de classe
-				 et dans le cadre des sorties scolaires.</p>
+		<h2 class="separation mt-4">Droit à l'image</h2>
 
-				<%= erb :'partials/precedent_suivant', :locals => { :precedent => "famille", :suivant => "pieces_a_joindre" } %>
-			</form>
+		<div class="form-check form-check-inline">
+			<label class="form-check-label">
+				<input class="form-check-input" type="radio" name="droit_image_photo" value="true" id='autorise_photo_de_classe'
+				<% if dossier_eleve.autorise_photo_de_classe %>
+					checked
+				<% end %>> J'accepte
+			</label>
+		</div>
+		<div class="form-check form-check-inline">
+			<label class="form-check-label">
+				<input class="form-check-input" type="radio" name="droit_image_photo" value="false"
+				<% if !dossier_eleve.autorise_photo_de_classe %>
+					checked
+				<% end %>> Je n'accepte pas
+			</label>
+		</div>
 
-	<span style="display:block; height: 20px;"></span>
+		<p>que mon enfant soit photographié à l'occasion des photos de classe
+			et dans le cadre des sorties scolaires.</p>
 
-</div><!--/span-->
+    <%= erb :'partials/nouveau_precedent_suivant', :locals => { :precedent => "famille"} %>
+	</form>
+</div>
 
 <script>
   if (<%= dossier_eleve.demi_pensionnaire %>) {
