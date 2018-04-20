@@ -1,53 +1,12 @@
-<% demarche = session[demarche] %>
-
-<% if demarche == "inscription" %>
-	<% nb_sections = 6 %>
-	<% nav_numbers_light = ["①", "②", "③", "④", "⑤", "⑥"] %>
-	<% nav_numbers_bold = ["➊", "➋", "➌", "➍", "➎", "➏"] %>
-	<% sections = ["Elève", "Scolarité", "Famille", "Administration", "Pièces à joindre", "Validation"] %>
-	<% sections_liens = ["eleve", "scolarite", "famille", "administration", "pieces_a_joindre", "validation"] %>
-<% else %>
-	<% nb_sections = 5 %>
-	<% nav_numbers_light = ["①", "②", "③", "④", "⑤"] %>
-	<% nav_numbers_bold = ["➊", "➋", "➌", "➍", "➎"] %>
-	<% sections = ["Elève", "Famille", "Administration", "Pièces à joindre", "Validation"] %>
-	<% sections_liens = ["eleve", "famille", "administration", "pieces_a_joindre", "validation"] %>
-<% end %>
-
-<div class="row mb-5">
-
-	<% for une_section in (1..@section-1) do %>
-		<a href="/<%= sections_liens[une_section-1] %>" class="col col-nav nav-number other-nav">
-			<div><%= nav_numbers_light[une_section-1]%></div>
-		</a>
-	<% end %>
-
-	<% if @section != nb_sections + 1 %>
-		<div class="col col-nav nav-number this-nav"><%= nav_numbers_bold[@section-1]%></div>
-	<% end %>
-
-	<% for une_section in (@section+1..nb_sections) do %>
-		<a href="/<%= sections_liens[une_section-1] %>" class="col col-nav nav-number other-nav">
-			<div><%= nav_numbers_light[une_section-1]%></div>
-		</a>
-	<% end %>
-
-	<div class="w-100"></div>
-
-	<% for une_section in (1..@section-1) do %>
-		<a href="/<%= sections_liens[une_section-1] %>" class="col col-nav other-nav">
-			<div><%= sections[une_section-1]%></div>
-		</a>
-	<% end %>
-
-	<% if @section != nb_sections + 1 %>
-		<div class="col col-nav this-nav"><%= sections[@section-1]%></div>
-	<% end %>
-
-	<% for une_section in (@section+1..nb_sections) do %>
-		<a href="/<%= sections_liens[une_section-1] %>" class="col col-nav other-nav">
-			<div><%= sections[une_section-1]%></div>
-		</a>
-	<% end %>
-
+<div class="container mt-5 mb-4">
+	<div class="wrapper">	
+		<div class="arrow-steps clearfix">
+			<a class="step <%= 'current' if @section >= 1 %>" href='/eleve'><span>Elève</span></a> 
+			<a class="step <%= 'current' if @section >= 2 %>" href='/famille'><span>Famille</span></a>
+			<a class="step <%= 'current' if @section >= 3 %>" href='/administration'><span>Administration</span></a>
+			<a class="step <%= 'current' if @section >= 4 %>" href='/pieces_a_joindre'><span>Pièces à joindre</span></a>
+			<a class="step <%= 'current' if @section >= 5 %>" href='/validation'><span>Validation</span></a>
+			<a class="step <%= 'current' if @section >= 6 %>" href='/confirmation'><span>Terminé</span></a>
+		</div>
+	</div>
 </div>

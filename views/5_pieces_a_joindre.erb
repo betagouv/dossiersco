@@ -1,17 +1,9 @@
-<% demarche = "réinscription" %>
+<% @section = 4 %>
+<% nb_documents_demandes = 3 %>
+<% documents_demandes = ["Photo d'identité de l'élève", "Attestation d'assurance scolaire", "Extrait du jugement relatif à la garde de l'enfant"] %>
+<% pourquoi_on_le_demande = ["Pour coller une photo récente sur les carnets de correspondance", "Pour participer aux sorties et voyages scolaires, notamment", "En cas de séparation, de divorce ou de tutelle datant de moins d'un an"]%>
+<% noms = ["photo_identite", "assurance_scolaire", "jugement_garde_enfant"]%>
 
-<% if demarche == "inscription" %>
-  <% @section = 5 %>
-  <% nb_documents_demandes = 4 %>
-  <% documents_demandes = ["Photo d'identité de l'élève", "Pièce d'identité de l'élève", "Attestation d'assurance scolaire", "Notification du tarif de cantine"] %>
-  <% pourquoi_on_le_demande = ["Pour faire les trombinoscopes en attendant les photos de classe", "Pour vérifier l'orthographe du nom et du prénom de l'élève", "Pour participer aux sorties et voyages scolaires", "Pour facturer équitablement la cantine"]%>
-<% else %>
-  <% @section = 4 %>
-  <% nb_documents_demandes = 3 %>
-  <% documents_demandes = ["Photo d'identité de l'élève", "Attestation d'assurance scolaire", "Extrait du jugement relatif à la garde de l'enfant"] %>
-  <% pourquoi_on_le_demande = ["Pour coller une photo récente sur les carnets de correspondance", "Pour participer aux sorties et voyages scolaires, notamment", "En cas de séparation, de divorce ou de tutelle datant de moins d'un an"]%>
-  <% noms = ["photo_identite", "assurance_scolaire", "jugement_garde_enfant"]%>
-<% end %>
 
 <%= erb :'partials/navigation' %>
 
