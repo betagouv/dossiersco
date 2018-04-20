@@ -51,8 +51,7 @@
 
 <div class="col-12">
 
-  <h2>Famille (1/3) : Responsable légal 1</h2>
-  <hr>
+  <h2 class="separation">Famille (1/3) : Responsable légal 1</h2>
 
   <form action="/famille" method="POST">
 
@@ -93,8 +92,7 @@
 
     <p>que ces coordonnées soient communiquées aux fédérations de parents d'élèves.</p>
 
-  <h2 class="mt-5">Famille (2/3) : Responsable légal 2</h2>
-  <hr>
+  <h2 class="mt-5 separation">Famille (2/3) : Responsable légal 2</h2>
 
     <%= erb :'partials/champ_texte', :locals => { :desc => "Lien de parenté", :variable => "lien_de_parente_rl2", :valeur => params['lien_de_parente_rl2'], :exemple => "Lien de parenté" } %>
 
@@ -150,8 +148,7 @@
 
     <p>que ces coordonnées soient communiquées aux fédérations de parents d'élèves.</p>
 
-  <h2 class="mt-5">Famille (3/3) : Autre personne à contacter en cas d'urgence</h2>
-  <hr>
+  <h2 class="mt-5 separation">Famille (3/3) : Autre personne à contacter en cas d'urgence</h2>
 
     <%= erb :'partials/champ_texte', :locals => { :desc => "Lien avec l'élève", :variable => "lien_avec_eleve_urg", :valeur => params['lien_avec_eleve_urg'], :exemple => "Lien avec l'élève" }%>
 

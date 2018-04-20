@@ -1,24 +1,15 @@
-<% demarche = session[demarche] %>
-
-<% if demarche == "inscription" %>
-  <% @section = 7 %>
-<% else %>
-  <% @section = 6 %>
-<% end %>
+<% demarche = "inscription" %>
+<% @section = 6 %>
 
 <%= erb :'partials/navigation' %>
 
-<div class="col-12 col-md-8">
+<div class="col-12">
 
   <% if demarche == "inscription" %>
-    <h2>Inscription validée</h2>
+    <h2 class="separation">Inscription validée</h2>
   <% else %>
-    <h2>Réinscription validée</h2>
+    <h2 class="separation">Réinscription validée</h2>
   <% end %>
-
-  <hr>
-
-
 
   <p>Nous avons envoyé un mail de confirmation aux adresses suivantes :</p>
 
@@ -28,15 +19,11 @@
     <% end %>
   </ul>
 
-  <span style="display:block; height: 20px;"></span>
-
   <% if demarche == "inscription" %>
     <p><strong>Information :</strong> nous invitons les parents qui souhaitent visiter le collège et rencontrer nos équipes à une soirée de bienvenue le vendredi 30 juin de 17h à 20h.</p>
   <% end %>
 
-  <p>A bientôt au <%= dossier_eleve.etablissement.nom %> !</p>
-
-  <span style="display:block; height: 90px;"></span>
+  <p class='mb-5'>A bientôt au <%= dossier_eleve.etablissement.nom %> !</p>
 
   <div id="message_validation" class="message_de_succes" style="display: none;">Merci pour votre retour</div>
 
@@ -56,17 +43,17 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" charset="utf-8">
-    $(document).ready(function() {
-        $('.smiley-satisfaction').click(function() {
-            var note = $(this).data('note');
-            $.ajax({
-                method: "POST",
-                url: "/satisfaction",
-                data: { note: note},
-                success : function() {
-                    $('#message_validation').show('slow')
-                }
-            });
-        })
-    })
+  $(document).ready(function() {
+      $('.smiley-satisfaction').click(function() {
+          var note = $(this).data('note');
+          $.ajax({
+              method: "POST",
+              url: "/satisfaction",
+              data: { note: note},
+              success : function() {
+                  $('#message_validation').show('slow')
+              }
+          });
+      })
+  })
 </script>
