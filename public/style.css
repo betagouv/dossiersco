@@ -18,33 +18,6 @@ h2, h4 {
   color: #606468;
 }
 
-.padding-top-8 {
-  padding-top: 8px;
-}
-
-.posit-relat {
-  position: relative;
-}
-
-.posit-absol {
-  position: absolute;
-  bottom: .2em;
-  right: 1em;
-  text-align: right;
-}
-
-hr {
-  margin-top: 0px;
-  margin-bottom: 20px;
-  border: none;
-  height: 1px;
-  background-color: #b3b5b7;
-}
-
-.not-first {
-  margin-top: 8px;
-}
-
 .col-12 a {
   text-decoration: none;
 }
@@ -152,9 +125,6 @@ hr {
 /*
  * Navbar
  */
-.navbar-collapse {
-  margin-left: 136px;
-}
 
 .navbar-light .navbar-nav .active>.nav-link {
     color: #003189;
@@ -182,20 +152,6 @@ hr {
   border-color: #003089d5;
 }
 
-.btn-continuer {
-  width: -webkit-fill-available;
-  margin-top: 20px;
-}
-
-.btn-continuer-scol {
-  width: -webkit-fill-available;
-  margin-top: 30px;
-}
-
-.wrapper-continuer {
-  float: right;
-}
-
 .card {
   margin-bottom: 20px;
   padding-bottom: 0;
@@ -219,25 +175,6 @@ hr {
 
 .mastfoot {
   padding-bottom: 0;
-}
-
-.aligner-progressions {
-  vertical-align: top;
-}
-
-.col-auto {
-  padding-left: 0;
-  padding-right: 20px;
-  padding-bottom: 10px;
-}
-
-.col-auto.col-auto-progression-secondaire {
-  padding-top: 10px;
-  padding-right: 10px;
-}
-
-.row.my-menu {
-  margin-left: 20px;
 }
 
 /*Badges*/
@@ -354,10 +291,6 @@ iframe {
     border: none;
 }
 
-.margin-top-20 {
-    margin-top: 20px;
-}
-
 .lead {
   padding: 20px 0;
 }
@@ -372,10 +305,6 @@ iframe {
   color: #BB0000;
 }
 
-/*
- * Off Canvas
- * --------------------------------------------------
- */
 @media screen and (max-width: 767px) {
   .row-offcanvas {
     position: relative;
