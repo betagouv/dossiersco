@@ -13,8 +13,8 @@ require_relative 'helpers/init'
 require_relative 'helpers/mot_de_passe'
 
 enable :sessions
-set :session_secret, "secret"
-use Rack::Session::Cookie, :key => 'rack.session', :path => '/', :secret => 'some-random-string'
+set :session_secret, SecureRandom.base64(10)
+use Rack::Session::Cookie, :key => 'rack.session', :path => '/'
 
 identite_resp_legal = ["lien_de_parente", "prenom", "nom", "adresse", "code_postal", "ville", "tel_principal",
 											 "tel_secondaire", "email", "situation_emploi", "profession", "enfants_a_charge",
@@ -41,7 +41,6 @@ post '/identification' do
   eleve = dossier_eleve.eleve
 	if eleve.date_naiss == normalise(params[:date_naiss])
 		session[:identifiant] = params[:identifiant]
-    p "===================== /identification session[:identifiant] : #{session[:identifiant]}"
 		session[:demarche] = dossier_eleve.demarche
 		redirect "/#{dossier_eleve.etape}"
 	else
@@ -56,7 +55,6 @@ get '/accueil' do
 end
 
 get '/eleve' do
-  p "===================== session[:identifiant] : #{session[:identifiant]}"
   eleve = get_eleve session[:identifiant]
   options = options_eligibles_classees eleve, eleve.dossier_eleve.etablissement.id
   erb :'1_eleve', locals: { eleve: eleve,
@@ -86,7 +84,6 @@ post '/eleve' do
 end
 
 get '/famille' do
-  p "===================== session[:identifiant] : #{session[:identifiant]}"
 	dossier_eleve = get_dossier_eleve session[:identifiant]
 	resp_legal1 = RespLegal.find_by(dossier_eleve_id: dossier_eleve.id, priorite: 1)
 	resp_legal2 = RespLegal.find_by(dossier_eleve_id: dossier_eleve.id, priorite: 2)
@@ -120,7 +117,6 @@ post '/famille' do
 end
 
 get '/administration' do
-  p "===================== session[:identifiant] : #{session[:identifiant]}"
 	dossier_eleve = get_dossier_eleve session[:identifiant]
 	erb :'4_administration', locals: {dossier_eleve: dossier_eleve}
 end
