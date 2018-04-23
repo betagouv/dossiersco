@@ -14,7 +14,7 @@ require_relative 'helpers/mot_de_passe'
 
 enable :sessions
 set :session_secret, "secret"
-use Rack::Session::Pool
+use Rack::Session::Cookie, :key => 'rack.session', :path => '/', :secret => 'some-random-string'
 
 identite_resp_legal = ["lien_de_parente", "prenom", "nom", "adresse", "code_postal", "ville", "tel_principal",
 											 "tel_secondaire", "email", "situation_emploi", "profession", "enfants_a_charge",
