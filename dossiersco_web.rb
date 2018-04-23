@@ -55,6 +55,7 @@ get '/accueil' do
 end
 
 get '/eleve' do
+  p "===================== session[:identifiant] : #{session[:identifiant]}"
   eleve = get_eleve session[:identifiant]
   options = options_eligibles_classees eleve, eleve.dossier_eleve.etablissement.id
   erb :'1_eleve', locals: { eleve: eleve,
@@ -84,6 +85,7 @@ post '/eleve' do
 end
 
 get '/famille' do
+  p "===================== session[:identifiant] : #{session[:identifiant]}"
 	dossier_eleve = get_dossier_eleve session[:identifiant]
 	resp_legal1 = RespLegal.find_by(dossier_eleve_id: dossier_eleve.id, priorite: 1)
 	resp_legal2 = RespLegal.find_by(dossier_eleve_id: dossier_eleve.id, priorite: 2)
@@ -117,6 +119,7 @@ post '/famille' do
 end
 
 get '/administration' do
+  p "===================== session[:identifiant] : #{session[:identifiant]}"
 	dossier_eleve = get_dossier_eleve session[:identifiant]
 	erb :'4_administration', locals: {dossier_eleve: dossier_eleve}
 end
