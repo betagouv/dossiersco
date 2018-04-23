@@ -46,7 +46,7 @@ get '/agent/tableau_de_bord' do
 end
 
 get '/agent/import_siecle' do
-  erb :'agent/import_siecle'
+  erb :'agent/import_siecle', layout: :layout_agent
 end
 
 post '/agent/import_siecle' do
@@ -55,12 +55,12 @@ post '/agent/import_siecle' do
       locals: { message: "#{statistiques[:eleves]} élèves importés : "+
           "#{statistiques[:portable]}% de téléphones portables et "+
           "#{statistiques[:email]}% d'emails"
-      }
+      }, layout: :layout_agent
 end
 
 get '/agent/eleve/:identifiant' do
   eleve = Eleve.find_by(identifiant: params[:identifiant])
-  erb :'agent/eleve', locals: { eleve: eleve }
+  erb :'agent/eleve', locals: { eleve: eleve }, layout: :layout_agent
 end
 
 post '/agent/change_etat_fichier' do
@@ -73,7 +73,7 @@ get '/agent/options' do
   agent = Agent.find_by(identifiant: session[:identifiant])
   etablissement = agent.etablissement
   options = etablissement.option
-  erb :'agent/options', locals: {options: options}
+  erb :'agent/options', locals: {options: options}, layout: :layout_agent
 end
 
 post '/agent/options' do
@@ -85,19 +85,25 @@ post '/agent/options' do
 
   if !params[:nom].present?
     message = "Une option doit comporter un nom"
-    erb :'agent/options', locals: {options: etablissement.option, message: message}
+    erb :'agent/options', locals: {options: etablissement.option, message: message},
+    layout: :layout_agent
+
   elsif !params[:niveau_debut].present?
     message = "Une option doit comporter un niveau de début"
-    erb :'agent/options', locals: {options: etablissement.option, message: message}
+    erb :'agent/options', locals: {options: etablissement.option, message: message},
+    layout: :layout_agent
   elsif option.present? && (option.nom == params[:nom].upcase.capitalize)
     message = "#{params[:nom]} existe déjà"
-    erb :'agent/options', locals: {options: etablissement.option, message: message}
+    erb :'agent/options', locals: {options: etablissement.option, message: message},
+    layout: :layout_agent
   else
     option = Option.create!(
        nom: params[:nom].upcase.capitalize,
        niveau_debut: params[:niveau_debut],
        etablissement_id: etablissement.id,
        obligatoire: params[:obligatoire])
-    erb :'agent/options', locals: {options: etablissement.option}
+    erb :'agent/options',
+      locals: {options: etablissement.option, agent: agent}, layout: :layout_agent
+
   end
 end
