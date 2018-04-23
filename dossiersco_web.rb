@@ -41,6 +41,7 @@ post '/identification' do
   eleve = dossier_eleve.eleve
 	if eleve.date_naiss == normalise(params[:date_naiss])
 		session[:identifiant] = params[:identifiant]
+    p "===================== /identification session[:identifiant] : #{session[:identifiant]}"
 		session[:demarche] = dossier_eleve.demarche
 		redirect "/#{dossier_eleve.etape}"
 	else
