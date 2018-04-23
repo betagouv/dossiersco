@@ -8,13 +8,9 @@
 
 	<h2 class="separation">Validation</h2>
 
-	<% if demarche == "inscription" %>
-		<p>Le dossier d'inscription de votre enfant <strong><%= "#{eleve.prenom} #{eleve.nom}"%></strong> pour son entrée en 4ème au <strong><%= dossier_eleve.etablissement.nom %></strong>  est complet.</p>
+		<p>Le dossier d'inscription de votre enfant <strong><%= "#{eleve.prenom} #{eleve.nom}"%></strong> pour son entrée en <%= eleve.niveau_classe_ant[0].to_i - 1 %>ème au <strong><%= dossier_eleve.etablissement.nom %></strong>  est complet.</p>
 		<p>Veuillez vérifier les informations ci-dessous, puis validez l'inscription.</p>
-	<% else %>
-		<p>Le dossier de réinscription de votre enfant <strong><%= "#{eleve.prenom} #{eleve.nom}"%></strong> pour son passage en 4ème au <strong><%= dossier_eleve.etablissement.nom %></strong> est complet.</p>
-		<p>Veuillez vérifier les informations ci-dessous, puis validez la réinscription.</p>
-	<% end %>
+
 
 	<div class="card">
 		<div class="card-body">
