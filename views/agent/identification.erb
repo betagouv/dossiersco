@@ -6,7 +6,7 @@
 
       <div class="container">
 
-        <form class="form-signin" action="/agent" method="post">
+        <form class="form-signin col-md-4 mx-auto" action="/agent" method="post">
 
           <% if session[:erreur_login] %>
             <p class="erreur"><%= session[:erreur_login] %></p>
@@ -19,7 +19,7 @@
           <label class="col-form-label" for="mot-de-passe">Mot de passe</label>
           <input name="mot_de_passe" type="password" class="form-control" id="mot-de-passe" >
 
-          <button class="btn btn-lg btn-primary btn-block">Connexion</button>
+          <button class="btn btn-lg btn-primary btn-block mt-3">Connexion</button>
 
         </form>
 
