@@ -5,11 +5,8 @@
 
     <div class="card-relat document">
 
-      <div type="button" class="btn btn-secondary btn-sm">
-        <label class="upload" for="<%= @variable %>"><%= @action %></label>
-        <input type="file" hidden name="<%= @variable %>" id="<%= @variable %>"
+        <input data-btnClass="btn btn-primary" data-text="Parcourir" class='filestyle' type="file" name="<%= @variable %>" id="<%= @variable %>"
                multiple>
-      </div>
       <span id="fichier_<%= @variable %>"></span>
       <br />
       <div class="image-piece-a-joindre" id="image_<%= @variable %>"
@@ -20,12 +17,3 @@
     </div>
   </div>
 </div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
-  $(document).ready(function(){
-    $('input').on('input change', function(){
-        $('#fichier_'+this.id).html(this.files[0].name);
-        $('label[for='+this.id+']').html('Modifier')
-    })});
-</script>

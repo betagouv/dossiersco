@@ -21,7 +21,6 @@
             <% @document = documents_demandes[indice_piece] %>
             <% @explication = pourquoi_on_le_demande[indice_piece] %>
             <% @variable = noms[indice_piece] %>
-            <% @action = dossier_eleve[noms[indice_piece]].present? ? "Modifier" : "Parcourir / Prendre en photo" %>
             <% @document_stocke_url = dossier_eleve[noms[indice_piece]]  %>
             <%= erb :'partials/carte_upload' %>
           <% end %>
@@ -31,3 +30,6 @@
     <%= erb :'partials/nouveau_precedent_suivant', :locals => { :precedent => "administration"} %>
   </form>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js"> </script>

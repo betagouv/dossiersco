@@ -210,9 +210,9 @@ class EleveFormTest < Test::Unit::TestCase
     get '/pieces_a_joindre'
     doc = Nokogiri::HTML(last_response.body)
 
-    assert_equal 'Parcourir / Prendre en photo', doc.css('label[for=photo_identite]').text
-    assert_equal 'Parcourir / Prendre en photo', doc.css('label[for=assurance_scolaire]').text
-    assert_equal 'Parcourir / Prendre en photo', doc.css('label[for=jugement_garde_enfant]').text
+    assert doc.css("#fichier_photo_identite img").empty?
+    assert doc.css("#fichier_assurance_scolaire img").empty?
+    assert doc.css("#fichier_jugement_garde_enfant img").empty?
   end
 
   def test_joindre_photo_identite
@@ -220,8 +220,6 @@ class EleveFormTest < Test::Unit::TestCase
 
     doc = soumet_formulaire '/pieces_a_joindre', photo_identite: {"tempfile": piece_a_joindre.path}
 
-    assert_equal 'Modifier', doc.css('label[for=photo_identite]').text
-    assert_equal 'Parcourir / Prendre en photo', doc.css('label[for=assurance_scolaire]').text
     assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
 
     expected_url = "/uploads/#{File.basename(piece_a_joindre.path)}"
@@ -236,7 +234,6 @@ class EleveFormTest < Test::Unit::TestCase
 
     doc = soumet_formulaire '/pieces_a_joindre', assurance_scolaire: {"tempfile": piece_a_joindre.path}
 
-    assert_equal 'Modifier', doc.css('label[for=assurance_scolaire]').text
     assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
   end
 
@@ -245,7 +242,6 @@ class EleveFormTest < Test::Unit::TestCase
 
     doc = soumet_formulaire '/pieces_a_joindre', jugement_garde_enfant: {"tempfile": piece_a_joindre.path}
 
-    assert_equal 'Modifier', doc.css('label[for=jugement_garde_enfant]').text
     assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
   end
 
