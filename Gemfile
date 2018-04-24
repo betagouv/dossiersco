@@ -10,6 +10,7 @@ gem 'fog-aws'
 gem 'roo'
 gem 'roo-xls'
 gem 'bcrypt', '~> 3.1'
+gem 'prawn'
 
 group :test do
   gem 'nokogiri'
