@@ -13,8 +13,7 @@ require_relative 'helpers/init'
 require_relative 'helpers/mot_de_passe'
 
 enable :sessions
-set :session_secret, SecureRandom.base64(10)
-use Rack::Session::Cookie, :key => 'rack.session', :path => '/'
+use Rack::Session::Cookie, :key => 'rack.session', :path => '/', :secret => SecureRandom.base64(10)
 
 identite_resp_legal = ["lien_de_parente", "prenom", "nom", "adresse", "code_postal", "ville", "tel_principal",
 											 "tel_secondaire", "email", "situation_emploi", "profession", "enfants_a_charge",
