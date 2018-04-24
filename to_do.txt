@@ -4,7 +4,7 @@
 [ ] Ne pas indiquer si l'eleve existe dans l'erreur d'autentification
 [ ] Séparer les tests en plusieurs fichiers
 [ ] Distinguer les notions de dossier initié / dossier tout court
-[ ] Faire une erreur propre en cas de login inexistant
+[X] Faire une erreur propre en cas de login inexistant
 [ ] Instruire la question de la variabilité des pièces justificatives
 
 [ ] Clarifier "Vous êtes agent en EPLE"
@@ -17,13 +17,13 @@
 [ ] Supprimer l'ancien fichier quand on modifie une pièce jointe
 
 [ ] Tester le fonctionnement de carrierwave avec un mock
-[ ] Gérer le champs date pour un login avec Internet Explorer
+[X] Gérer le champs date pour un login avec Internet Explorer
 
 [ ] Ingérer un fichier Affelnet
 
 
 open lab du 16
-[ ] generer les pdf pour les parents
+[/] generer les pdf pour les parents
 inscription-college.gouv
 [ ] tarif de cantine uniquement pour paris, fonctionnement différent pour les autres académies
 [ ] personnaliser la liste des pj pour chaque collège (Creteil va demander la photocopie du livret de famille)
@@ -31,7 +31,7 @@ champs du formulaire vérouillés par défaut avec bouton pour les modifier,
     moins de risques d'erreurs et de confusion de la part des parents
 [ ] déduire les options de l'etablissement grace a la base siecle
 reprendre la nomenclature de siecle pour la profession
-proposer en download un pdf pour les renseignement médiacaux
+proposer en download un pdf pour les renseignement médicaux
 etape 5 spécifier que c'est bien le représentant de l'éleve qui fait l'inscription
 rappeler la lv1 ?
 
