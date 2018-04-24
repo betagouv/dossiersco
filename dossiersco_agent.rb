@@ -4,6 +4,7 @@ require 'bcrypt'
 require_relative 'helpers/singulier_francais'
 require_relative 'helpers/import_siecle'
 require_relative 'helpers/agent'
+require_relative 'helpers/pdf'
 
 set :database_file, "config/database.yml"
 
@@ -104,6 +105,17 @@ post '/agent/options' do
        obligatoire: params[:obligatoire])
     erb :'agent/options',
       locals: {options: etablissement.option, agent: agent}, layout: :layout_agent
-
   end
+end
+
+get '/agent/pdf' do
+  erb :'agent/courrier', :layout_agent
+end
+
+post '/agent/pdf' do
+  content_type 'application/pdf'
+  eleve = Eleve.find_by identifiant: params[:identifiant]
+  pdf = genere_pdf eleve
+  agent = Agent.find_by(identifiant: session[:identifiant])
+  pdf.render
 end

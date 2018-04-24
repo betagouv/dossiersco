@@ -54,7 +54,12 @@ def init
 
   oeben = Etablissement.create!({
      nom: "College Jean-Francois Oeben",
-     date_limite: "samedi 3 juin 2018"})
+     date_limite: "samedi 3 juin 2018",
+     adresse: "21 Rue de Reuilly",
+     ville: "Paris",
+     code_postal: '75012',
+     dates_permanence: "mercredi 19 juin de 8h à 19h"
+  })
   cree_dossier_eleve eleves[1], oeben, 'pas connecté'
 
   Agent.create!(password: '$2a$10$6njb4Rn4RHyFFJpP5QEJGutErgZVOr6/cCM17IKoIsiQDZQABBN2a',
@@ -63,7 +68,11 @@ def init
 
   tillion = Etablissement.create!({
       nom: "Collège Germaine Tillion",
-      date_limite: "samedi 6 juin 2018"
+      date_limite: "samedi 6 juin 2018",
+      adresse: "8 Avenue Vincent d'Indy",
+      ville: 'Paris',
+      code_postal: '75012',
+      dates_permanence: "lundi 17 et mardi 18 juin de 10h à 20h"
   })
 
   Option.create!(etablissement_id: tillion.id, nom: 'Espagnol', niveau_debut: 5, obligatoire: true)

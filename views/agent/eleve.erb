@@ -95,4 +95,12 @@ scolarite_ant = [
     <h2 class="separation">Scolarité de l'année 2017/2018</h2>
 
     <%= construire scolarite_ant %>
+
+    <div style='text-align: center; width:100%'>
+    <form action='/agent/pdf' method='POST' target='_blank' >
+      <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
+      <button class='btn-primary btn-lg' type='submit'>Générer un courrier</button>
+    </form>
+    (Déplasser ensuite la souri en haut de l'écran)
+  </div>
 </div>

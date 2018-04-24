@@ -401,6 +401,13 @@ class EleveFormTest < Test::Unit::TestCase
     assert_match /facultatif/, last_response.body
   end
 
+  def test_un_agent_genere_un_pdf
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+
+    post '/agent/pdf', identifiant: 3
+
+    assert_equal 'application/pdf', last_response.original_headers['Content-Type']
+  end
 
   def assert_file(chemin_du_fichier)
     assert File.file? chemin_du_fichier

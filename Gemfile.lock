@@ -49,7 +49,11 @@ GEM
     mustermann (1.0.2)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
+    pdf-core (0.7.0)
     pg (1.0.0)
+    prawn (2.2.2)
+      pdf-core (~> 0.7.0)
+      ttfunk (~> 1.5)
     rack (2.0.4)
     rack-protection (2.0.1)
       rack
@@ -79,6 +83,7 @@ GEM
       ruby-ole (>= 1.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
+    ttfunk (1.5.1)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
 
@@ -92,6 +97,7 @@ DEPENDENCIES
   fog-aws
   nokogiri
   pg
+  prawn
   rack-test
   rake
   roo
