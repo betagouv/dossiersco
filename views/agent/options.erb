@@ -8,7 +8,9 @@
 <ul>
 <% options.each do |option| %>
   <li><%= option.nom %> <%= option.niveau_debut %>ème
-   <%= option.obligatoire ? 'Obligatoire': 'Facultatif'%></li>
+   <%= option.obligatoire ? 'Obligatoire': 'Facultatif'%>
+   <%= option.groupe %>
+  </li>
 <% end %>
 </ul>
 
@@ -18,7 +20,8 @@
       <label for='niveau_debut' style='margin-left:10px'>Niveau de début</label>
       <input name='niveau_debut' type='text' placeholder='Ex : 4' />
       <label for='obligatoire' style='margin-left:10px'>Obligatoire</label>
-      <input name='obligatoire' type='checkbox' value='true' />
+      <input id='obligatoire' name='obligatoire' type='checkbox' value='true' />
+      <input id='groupe' name='groupe' type='text' class='d-none' placeholder='Ex : Langue vivante 2' />
       <button class='btn btn-primary' type='submit' style='margin-left:10px'>Ajouter</button>
     </form>
 
@@ -31,3 +34,13 @@
     </div>
 
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+  $('#obligatoire').click(function() {
+    if ( $('#obligatoire').is(':checked') ) {
+      $('#groupe').removeClass('d-none')
+    } else {
+      $('#groupe').addClass('d-none')
+    }
+  });
+</script>
