@@ -397,6 +397,18 @@ class EleveFormTest < Test::Unit::TestCase
     assert_match /facultatif/, last_response.body
   end
 
+  def test_un_agent_supprime_option
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    post '/agent/options', nom: 'Musique', niveau_debut: '3ème'
+    get '/agent/options'
+    assert_match /Musique/, last_response.body
+
+    post '/agent/supprime_option', option_id: Option.last.id
+
+    get '/agent/options'
+    assert_no_match /Musique/, last_response.body
+  end
+
   def test_un_agent_genere_un_pdf
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
 

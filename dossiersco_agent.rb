@@ -109,6 +109,10 @@ post '/agent/options' do
   end
 end
 
+post '/agent/supprime_option' do
+  Option.find(params[:option_id]).delete
+end
+
 get '/agent/pdf' do
   erb :'agent/courrier', :layout_agent
 end

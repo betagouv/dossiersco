@@ -5,16 +5,30 @@
   <% if defined? message  %>
     <div class="message_echec"><%= message %></div>
   <% end %>
-<ul>
-<% options.each do |option| %>
-  <li><%= option.nom %> <%= option.niveau_debut %>ème
-   <%= option.obligatoire ? 'Obligatoire': 'Facultatif'%>
-   <%= option.groupe %>
-  </li>
-<% end %>
-</ul>
 
-    <form class="separation" action='/agent/options' method='POST'>
+<table class="table table-striped table-sm">
+  <thead>
+    <tr>
+        <th>nom</th>
+        <th>début</th>
+        <th>obligatoire</th>
+        <th>groupe</th>
+        <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% options.each do |option| %>
+      <tr>
+        <td><%= option.nom %></td>
+        <td><%= option.niveau_debut %>ème</td>
+        <td><%= option.obligatoire ? 'Oui': 'Non'%></td>
+        <td><%= option.groupe %></td>
+        <td><i class="fas fa-trash-alt" style="color: #BB0000; cursor: pointer" data-id='<%= option.id %>'></i></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+    <form action='/agent/options' method='POST'>
       <label for='nom'>Nom</label>
       <input name='nom' type='text' placeholder='Ex : Latin' />
       <label for='niveau_debut' style='margin-left:10px'>Niveau de début</label>
@@ -24,15 +38,6 @@
       <input id='groupe' name='groupe' type='text' class='d-none' placeholder='Ex : Langue vivante 2' />
       <button class='btn btn-primary' type='submit' style='margin-left:10px'>Ajouter</button>
     </form>
-
-<br>
-
-    <div>
-      <button class='btn btn-primary'>
-      <a href='/agent/tableau_de_bord' style='color:#FFFFFF'>Retour</a>
-      </button>
-    </div>
-
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" charset="utf-8">
@@ -43,4 +48,17 @@
       $('#groupe').addClass('d-none')
     }
   });
+  $('.fa-trash-alt').click(function() {
+    var $this = $(this);
+    var option_id = $this.data('id');
+    $.ajax({
+      method: "POST",
+      url: "/agent/supprime_option",
+      data: { option_id: option_id },
+      success : function() {
+        console.log($this.parent().parent());
+          $this.parent().parent().remove()
+      }
+    });
+  })
 </script>
