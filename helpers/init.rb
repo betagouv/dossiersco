@@ -11,12 +11,14 @@ def init
        date_naiss: '1915-12-19',
        niveau_classe_ant: '6EME',
        nationalite: 'francaise',
+       sexe: 'Féminin',
        identifiant: '2'
       },
       {prenom: 'Etienne',
        nom: 'Puydebois',
        date_naiss: '1995-11-19',
        nationalite: 'francaise',
+       sexe: 'Masculin',
        identifiant: '1'
       },
       {prenom: 'Philippe',
@@ -25,6 +27,7 @@ def init
        classe_ant: '3EME 1',
        date_naiss: '1970-01-01',
        nationalite: 'FRANCE',
+       sexe: 'Masculin',
        identifiant: '3'
       },
       {prenom: 'Pierre',
@@ -32,6 +35,7 @@ def init
        niveau_classe_ant: '4EME ULIS',
        date_naiss: '1970-01-01',
        nationalite: 'FRANCE',
+       sexe: 'Masculin',
        identifiant: '4'
       },
       {prenom: 'Eugène',
@@ -40,6 +44,7 @@ def init
        classe_ant: '5EME 1',
        date_naiss: '1970-01-01',
        nationalite: 'FRANCE',
+       sexe: 'Masculin',
        identifiant: '5'
       },
       {prenom: 'Emile',
@@ -48,6 +53,7 @@ def init
        classe_ant: '6EME 1',
        date_naiss: '1970-01-01',
        nationalite: 'FRANCE',
+       sexe: 'Masculin',
        identifiant: '6'
       }
   ]
@@ -75,8 +81,12 @@ def init
       dates_permanence: "lundi 17 et mardi 18 juin de 10h à 20h"
   })
 
-  Option.create!(etablissement_id: tillion.id, nom: 'Espagnol', niveau_debut: 5, obligatoire: true)
+  Option.create!(etablissement_id: tillion.id, nom: 'Espagnol', niveau_debut: 5,
+   obligatoire: true, groupe: 'Langue vivante 2')
+  Option.create!(etablissement_id: tillion.id, nom: 'Allemand', niveau_debut: 5,
+   obligatoire: true, groupe: 'Langue vivante 2')
   Option.create!(etablissement_id: tillion.id, nom: 'Latin', niveau_debut: 5)
+  Option.create!(etablissement_id: tillion.id, nom: 'Grec', niveau_debut: 5)
 
   cree_dossier_eleve eleves[0], tillion, 'pas connecté'
   cree_dossier_eleve eleves[2], tillion, 'pas connecté'

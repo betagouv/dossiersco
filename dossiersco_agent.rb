@@ -102,7 +102,8 @@ post '/agent/options' do
        nom: params[:nom].upcase.capitalize,
        niveau_debut: params[:niveau_debut],
        etablissement_id: etablissement.id,
-       obligatoire: params[:obligatoire])
+       obligatoire: params[:obligatoire],
+       groupe: params[:groupe].present? ? params[:groupe].capitalize : 'Option')
     erb :'agent/options',
       locals: {options: etablissement.option, agent: agent}, layout: :layout_agent
   end

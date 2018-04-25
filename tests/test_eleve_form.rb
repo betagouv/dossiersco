@@ -83,7 +83,7 @@ class EleveFormTest < Test::Unit::TestCase
     get '/eleve'
 
     assert last_response.body.gsub(/\s/,'').include?(
-     "<input class='form-check-input' type='checkbox' name='Espagnol' value='true' id='Espagnol' checked >".gsub(/\s/,''))
+     '<input name="Langue vivante 2" value="Espagnol" type="radio" class="form-check-input" checked>'.gsub(/\s/,''))
     assert last_response.body.gsub(/\s/,'').include?(
      "<input class='form-check-input' type='checkbox' name='Latin' value='true' id='Latin' checked >".gsub(/\s/,''))
   end
@@ -369,11 +369,11 @@ class EleveFormTest < Test::Unit::TestCase
   def test_un_agent_ajoute_une_nouvelle_option_obligatoire
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
 
-    post '/agent/options', nom: 'Allemand', niveau_debut: '4ème', obligatoire: true
+    post '/agent/options', nom: 'Italien', niveau_debut: '4ème', obligatoire: true
 
     post '/identification', identifiant: '5', date_naiss: '1970-01-01'
     get '/eleve'
-    assert_match /Allemand/, last_response.body
+    assert_match /Italien/, last_response.body
     assert_match /obligatoire/, last_response.body
   end
 
@@ -389,11 +389,11 @@ class EleveFormTest < Test::Unit::TestCase
   def test_un_agent_ajoute_une_nouvelle_option_facultative
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
 
-    post '/agent/options', nom: 'Grec', niveau_debut: '3ème', obligatoire: false
+    post '/agent/options', nom: 'Musique', niveau_debut: '3ème', obligatoire: false
 
     post '/identification', identifiant: '4', date_naiss: '1970-01-01'
     get '/eleve'
-    assert_match /Grec/, last_response.body
+    assert_match /Musique/, last_response.body
     assert_match /facultatif/, last_response.body
   end
 

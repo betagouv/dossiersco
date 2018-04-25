@@ -14,15 +14,15 @@ helpers do
     Eleve.find_by(identifiant: identifiant)
   end
 
-  def options_eligibles_classees eleve, etablissement_id
-    options = options_eligibles eleve, etablissement_id
+  def options_du_niveau_classees eleve, etablissement_id
+    options = options_du_niveau eleve, etablissement_id
     {
       obligatoire: options.select { |option| option.obligatoire },
       facultative: options.select { |option| !option.obligatoire }
     }
   end
 
-  def options_eligibles eleve, etablissement_id
+  def options_du_niveau eleve, etablissement_id
     if eleve.niveau_classe_ant.nil?
       niveau_debut = 6
     else
