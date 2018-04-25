@@ -4,21 +4,18 @@
 [ ] Ne pas indiquer si l'eleve existe dans l'erreur d'autentification
 [ ] Séparer les tests en plusieurs fichiers
 [ ] Distinguer les notions de dossier initié / dossier tout court
-[X] Faire une erreur propre en cas de login inexistant
 [ ] Instruire la question de la variabilité des pièces justificatives
 
-[ ] Clarifier "Vous êtes agent en EPLE"
+[X] Clarifier "Vous êtes agent en EPLE"
 [ ] Aiguiller les utilisateurs (profil parent) pour "identifiant"
 [ ] Valider le wording du message d'invitation
 [ ] Quel changement induit "Valider l'inscription"
 
-[ ] S'assurer du fonctionnement sur mobile
-[ ] Alignement des boutons sur "Pièces"
+[X] S'assurer du fonctionnement sur mobile
+[X] Alignement des boutons sur "Pièces"
 [ ] Supprimer l'ancien fichier quand on modifie une pièce jointe
 
 [ ] Tester le fonctionnement de carrierwave avec un mock
-[X] Gérer le champs date pour un login avec Internet Explorer
-
 [ ] Ingérer un fichier Affelnet
 
 
@@ -46,5 +43,4 @@ Pièces à joindre :
 - QF (seulement pour Paris)
 
 Faire un test de passage de l'ordinateur au portable
-[X] Ramener le parent sur la dernière étape incomplète
 [ ] Expliquer comment prendre une photo ou scanner les pièces jointes
