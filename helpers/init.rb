@@ -101,7 +101,7 @@ end
 
 def cree_dossier_eleve eleve, etablissement, etat
   e = Eleve.create!(eleve)
-  DossierEleve.create!(
+  dossier_eleve = DossierEleve.create!(
       eleve_id: e.id,
       etablissement_id: etablissement.id,
       demarche: "reinscription",
@@ -110,4 +110,18 @@ def cree_dossier_eleve eleve, etablissement, etat
       etat_assurance_scolaire: "absente",
       etat_jugement_garde_enfant: "absente"
   )
+  RespLegal.create!(dossier_eleve_id: dossier_eleve.id,
+    lien_de_parente: 'Mère', prenom: 'Gertrude', nom: 'Martin',
+    adresse: '42 rue de la fin', code_postal: '75020', ville: 'Paris',
+    tel_principal: '0123456789', tel_secondaire: '0987654321', email: 'gertrude.martin@email.com',
+    situation_emploi: 'Employé', profession: 'concierge', enfants_a_charge: 3, 
+    enfants_a_charge_secondaire: 2, communique_info_parents_eleves: true,
+    priorite: 1)
+  RespLegal.create!(dossier_eleve_id: dossier_eleve.id,
+    lien_de_parente: 'Père', prenom: 'Jean', nom: 'Blayo',
+    adresse: '42 rue du départ', code_postal: '75018', ville: 'Paris',
+    tel_principal: '0123456789', tel_secondaire: '', email: 'jean.martin@email.com',
+    situation_emploi: 'Employé', profession: 'banque', enfants_a_charge: 2, 
+    enfants_a_charge_secondaire: 2, communique_info_parents_eleves: false,
+    priorite: 2)
 end
