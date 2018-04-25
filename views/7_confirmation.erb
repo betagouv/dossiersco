@@ -20,7 +20,8 @@
   </ul>
 
   <% if demarche == "inscription" %>
-    <p><strong>Information :</strong> nous invitons les parents qui souhaitent visiter le collège et rencontrer nos équipes à une soirée de bienvenue le vendredi 30 juin de 17h à 20h.</p>
+    <p>Une permanence est assuré si vous souhaitez venir nous rencontrer :
+    <%= dossier_eleve.etablissement.dates_permanence %></p>
   <% end %>
 
   <p class='mb-5'>A bientôt au <%= dossier_eleve.etablissement.nom %> !</p>

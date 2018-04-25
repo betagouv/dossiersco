@@ -81,7 +81,8 @@ post '/eleve' do
 
   nom_options.each do |nom_option|
     if params.has_key?(nom_option) or params.has_value?(nom_option)
-      eleve.option << Option.find_by(nom: nom_option, etablissement_id: eleve.dossier_eleve.etablissement.id)
+      option_choisit = Option.find_by(nom: nom_option, etablissement_id: eleve.dossier_eleve.etablissement.id)
+      eleve.option << option_choisit unless eleve.option.include? option_choisit
     else
       eleve.option.delete eleve.option.select { |o| o.nom == nom_option }
     end
