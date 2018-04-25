@@ -1,4 +1,5 @@
 require 'prawn'
+Prawn::Font::AFM.hide_m17n_warning = true
 
 helpers do
   def genere_pdf eleve
