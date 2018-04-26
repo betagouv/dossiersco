@@ -4,6 +4,7 @@ def init
   Eleve.destroy_all
   Agent.destroy_all
   RespLegal.destroy_all
+  Option.destroy_all
 
   eleves = [
       {prenom: 'Edith',
