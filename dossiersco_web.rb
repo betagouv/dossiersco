@@ -191,6 +191,14 @@ post '/satisfaction' do
   dossier_eleve.save!
 end
 
+post '/commentaire' do
+  dossier_eleve = get_dossier_eleve session[:identifiant]
+  dossier_eleve.commentaire = params[:commentaire]
+  dossier_eleve.save!
+  redirect '/confirmation'
+end
+
+
 def sauve_et_redirect dossier_eleve, etape
   dossier_eleve.etape = etape
   dossier_eleve.save!
