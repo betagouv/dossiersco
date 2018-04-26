@@ -7,6 +7,8 @@ require './config/initializers/carrierwave.rb'
 require './uploaders/fichier_uploader.rb'
 require './helpers/s3.rb'
 
+require './config/secrets.rb'
+
 set :database_file, "config/database.yml"
 
 require_relative 'helpers/formulaire'
@@ -151,9 +153,7 @@ get '/pieces_a_joindre' do
 	dossier_eleve = get_dossier_eleve session[:identifiant]
   fichiers = ["photo_identite", "assurance_scolaire", "jugement_garde_enfant"]
   fichiers.each do |f|
-    p "======================"
-    p get_fichier_s3(dossier_eleve[f])
-    p " =========="
+    get_fichier_s3(dossier_eleve[f])
   end
 	erb :'5_pieces_a_joindre', locals: {dossier_eleve: dossier_eleve}
 end
