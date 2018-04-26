@@ -8,7 +8,7 @@ helpers do
         region: ENV['S3_REGION']
       })
       bucket = connection.directories.new(key: 'dossierscoweb')
-      bucket.files.get(nom_fichier)
+      bucket.files.get("/dossierscoweb/dossierscoweb/uploads/#{nom_fichier}")
     end
   end
 end
