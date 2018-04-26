@@ -5,6 +5,8 @@ class FichierUploader  < CarrierWave::Uploader::Base
 	def url
 		if ENV['RACK_ENV'] == "test" || !ENV['S3_KEY']
 			"/uploads/"
+		else
+			""
 		end
 	end
 end
