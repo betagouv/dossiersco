@@ -122,15 +122,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert last_response.body.include? 'réinscription'
   end
 
-  def test_dossier_eleve_possede_deux_resp_legaux
-    dossier_eleve = DossierEleve.first
-
-    RespLegal.create(dossier_eleve_id: dossier_eleve.id)
-    RespLegal.create(dossier_eleve_id: dossier_eleve.id)
-
-    assert dossier_eleve.resp_legal.size == 2
-  end
-
   def test_dossier_eleve_possede_un_contact_urgence
     dossier_eleve = DossierEleve.first
 
