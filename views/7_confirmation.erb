@@ -26,23 +26,29 @@
 
   <p class='mb-5'>A bientôt au <%= dossier_eleve.etablissement.nom %> !</p>
 
-  <div id="message_validation" class="message_de_succes" style="display: none;">Merci pour votre retour</div>
-
-  <div class="row justify-content-md-center">
+  <div id='question-satisfaction' class="row justify-content-md-center">
     <p><small>Qu'avez-vous pensé de cette nouvelle plateforme ?</small></p>
   </div>
 
-  <div class="row justify-content-center">
+  <div id='satisfaction' class="row justify-content-center">
     <% satisfaction = {1 => 'Très insatisfait', 2 => 'Insatisfait', 3 => 'Neutre', 4 => 'Satisfait', 5 => 'Très satisfait'} %>
     <% satisfaction.each do |note, commentaire| %>
       <% nom_fichier = commentaire.gsub(' ', '_').gsub('è', 'e').downcase %>
-      <a class="smiley-satisfaction" href='#'>
-        <img src="images/<%= nom_fichier %>.png" data-note="<%= note %>"
+      <a class="smiley-satisfaction" href='#' data-note="<%= note %>">
+        <img src="images/<%= nom_fichier %>.png"
              alt="<%= commentaire %>" title="<%= commentaire %>">
       </a>
     <% end %>
   </div>
+  <div id='commentaire' class='d-none'>
+      <input id='commentaire-textarea' type='textarea' name='commentaire' />
+      <input id='envoyer-commentaire' value='Commenter' type='submit' />
+  </div>
+  <div id="merci_pour_commentaire" class="message_de_succes" style="display: none;">Merci pour votre commentaire</div>
+
 </div>
+
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" charset="utf-8">
@@ -57,7 +63,23 @@
                   $('#message_validation').show('slow')
               }
           });
+          $('#commentaire').removeClass('d-none');
+          $('#commentaire-textarea').focus();
       })
-      $('.smiley-satisfaction:last').focus()
+      $('#envoyer-commentaire').click(function() {
+        var commentaire = $(this).val();
+        $.ajax({
+            method: "POST",
+            url: "/commentaire",
+            data: { commentaire: commentaire},
+            success : function() {
+              $('#satisfaction').hide('slow')
+              $('#question-satisfaction').hide('slow')
+              $('#commentaire').addClass('d-none');
+              $('#merci_pour_commentaire').show('slow')
+            }
+        })
+      });
+      $('.smiley-satisfaction:last').focus();
   })
 </script>
