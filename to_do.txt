@@ -1,7 +1,7 @@
 [ ] Afficher un feedback des fichiers uploadés
 [ ] Afficher l'etat réel des pieces jointes dans la liste des éleves
 
-[ ] Ne pas indiquer si l'eleve existe dans l'erreur d'autentification
+[X] Ne pas indiquer si l'eleve existe dans l'erreur d'autentification
 [ ] Séparer les tests en plusieurs fichiers
 [ ] Distinguer les notions de dossier initié / dossier tout court
 [ ] Instruire la question de la variabilité des pièces justificatives
@@ -26,7 +26,6 @@ champs du formulaire vérouillés par défaut avec bouton pour les modifier,
 [ ] déduire les options de l'etablissement grace a la base siecle
 [ ] reprendre la nomenclature de siecle pour la profession
 [ ] proposer en download un pdf pour les renseignement médicaux
-[X] etape 5 spécifier que c'est bien le représentant de l'éleve qui fait l'inscription
 rappeler la lv1 ?
 
 Réunion avec Pierre le 18/04/2018
