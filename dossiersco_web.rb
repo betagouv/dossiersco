@@ -149,6 +149,15 @@ post '/administration' do
   end
 end
 
+get '/piece/:s3_key' do
+  fichier = get_fichier_s3(params[:s3_key])
+  url = fichier.url(Time.now.to_i + 30)
+  stream = open url
+  stream do |out|
+    open(url) {|stream| copy_stream(stream, out) }
+  end
+end
+
 get '/pieces_a_joindre' do
 	dossier_eleve = get_dossier_eleve session[:identifiant]
   fichiers = ["photo_identite", "assurance_scolaire", "jugement_garde_enfant"]
