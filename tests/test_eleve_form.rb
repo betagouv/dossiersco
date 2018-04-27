@@ -50,7 +50,7 @@ class EleveFormTest < Test::Unit::TestCase
   def test_entree_mauvais_identifiant
     post '/identification', identifiant: '3', date_naiss: '1995-11-19'
     follow_redirect!
-    assert last_response.body.include? 'Nous ne connaissons aucun élève correspondant à ces informations'
+    assert last_response.body.include? "L'élève a bien comme identifiant 3 et comme date de naissance le 19 novembre 1995 ?"
   end
 
   def test_nom_college_accueil
