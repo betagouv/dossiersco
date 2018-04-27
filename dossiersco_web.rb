@@ -32,12 +32,12 @@ end
 
 post '/identification' do
 	if params[:identifiant].empty? || params[:date_naiss].empty?
-		session[:erreur_id_ou_date_naiss_absente] = true
+		session[:message_erreur] = "Veuillez renseigner l'identifiant et la date de naissance de l'élève."
 		redirect '/'
 	end
 	dossier_eleve = get_dossier_eleve params[:identifiant]
   if dossier_eleve.nil?
-    session[:erreur_id_ou_date_naiss_incorrecte] = true
+    session[:message_erreur] = message_erreur_identification params[:identifiant], params[:date_naiss]
     redirect '/'
   end
   eleve = dossier_eleve.eleve
@@ -46,7 +46,7 @@ post '/identification' do
 		session[:demarche] = dossier_eleve.demarche
 		redirect "/#{dossier_eleve.etape}"
 	else
-		session[:erreur_id_ou_date_naiss_incorrecte] = true
+		session[:message_erreur] = message_erreur_identification params[:identifiant], params[:date_naiss]
 		redirect '/'
 	end
 end

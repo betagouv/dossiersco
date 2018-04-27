@@ -92,10 +92,10 @@
 
     <p>que ces coordonnées soient communiquées aux fédérations de parents d'élèves.</p>
 
-<a href="#" id='ajouter_resp_legal_2' class='<%= "d-none" if resp_legal_2.nom.present? %> btn btn-outline-primary' >
+<a href="#" id='ajouter_resp_legal_2' class='<%= "d-none" if resp_legal_2.present? %> btn btn-outline-primary' >
     Ajouter un second responsable legal
 </a>
-<div id='resp_legal_2' class='<%= "d-none" unless resp_legal_2.nom.present? %>' >
+<div id='resp_legal_2' class='<%= "d-none" unless resp_legal_2.present? %>' >
   <h2 class="mt-5 separation">Famille (2/3) : Responsable légal 2</h2>
 
     <%= erb :'partials/champ_texte', :locals => { :desc => "Lien de parenté", :variable => "lien_de_parente_rl2", :valeur => params['lien_de_parente_rl2'], :exemple => "Lien de parenté" } %>
@@ -153,10 +153,10 @@
     <p>que ces coordonnées soient communiquées aux fédérations de parents d'élèves.</p>
 </div>
 
-<a href="#" id='ajouter_contact_urgence' class='<%= "d-none" if contact_urgence.nom.present? %> btn btn-outline-primary' >
+<a href="#" id='ajouter_contact_urgence' class='<%= "d-none" if contact_urgence.present? %> btn btn-outline-primary' >
     Ajouter un contact en cas d'urgence
 </a>
-<div id='contact_urgence' class='<%= "d-none" unless contact_urgence.nom.present? %>' >
+<div id='contact_urgence' class='<%= "d-none" unless contact_urgence.present? %>' >
   <h2 class="mt-5 separation">Famille (3/3) : Autre personne à contacter en cas d'urgence</h2>
 
     <%= erb :'partials/champ_texte', :locals => { :desc => "Lien avec l'élève", :variable => "lien_avec_eleve_urg", :valeur => params['lien_avec_eleve_urg'], :exemple => "Lien avec l'élève" }%>

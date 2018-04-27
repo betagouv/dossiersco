@@ -9,13 +9,10 @@
 			<div class="row">
 				<form class="form-signin col-md-4 mx-auto" action="/identification" method="post">
 
-					<% if session[:erreur_id_ou_date_naiss_incorrecte] %>
-						<p class="erreur">Nous ne connaissons aucun élève correspondant à ces informations.</p>
+					<% if session[:message_erreur] %>
+						<p class="erreur"><%= session[:message_erreur] %></p>
 					<% end %>
 
-					<% if session[:erreur_id_ou_date_naiss_absente] %>
-						<p class="erreur">Veuillez indiquer votre identifiant et la date de naissance de l'élève.</p>
-					<% end %>
 
 					<% session.clear %>
 
