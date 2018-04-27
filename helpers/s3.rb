@@ -8,9 +8,8 @@ helpers do
         region: ENV['S3_REGION'],
         path_style: true # indispensable pour éviter l'erreur "hostname does not match the server certificate"
       })
-      p "========================================= #{connection.inspect} ======================================================="
       bucket = connection.directories.get('dossierscoweb')
-      p "========================================= #{bucket.inspect} ======================================================="
+      p "========================================= #{bucket.files.inspect} ======================================================="
       bucket.files.get("/uploads/#{nom_fichier}")
     end
   end
