@@ -16,7 +16,12 @@ https://docs.docker.com/install/linux/docker-ce/ubuntu/#set-up-the-repository)
 * Dans les conteneurs on est tous nus, on n'a pas les outils habituels (vim, wget, etc.) - on peut y rentrer et faire apt-get update puis apt-get install <outil>
 * Avec docker-compose exec on peut retrouver le conteneur déjà créé donc retrouver les outils qu'on y a installés
 * Les entiers en Postgres nécessitent d'être entourés de guillemets simples
+* Faire du streaming pour afficher une image
 
 ## Pour créer un formulaire d'upload
 * ajouter "multiple" dans les <input>
 * ajouter enctype="multipart/form-data" dans <form>
+
+## Chercher dans la doc
+http://devdocs.io/ruby/
+
