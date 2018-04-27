@@ -40,9 +40,9 @@
       </a>
     <% end %>
   </div>
-  <div id='commentaire' class='d-none'>
-      <input id='commentaire-textarea' type='textarea' name='commentaire' />
-      <input id='envoyer-commentaire' value='Commenter' type='submit' />
+  <div id='commentaire' class='d-none mt-3'>
+      <textarea id='commentaire-textarea' name='commentaire' class="form-control"></textarea>
+      <input id='envoyer-commentaire' value='Envoyer' type='submit' class='btn btn-primary mt-2'/>
   </div>
   <div id="merci_pour_commentaire" class="message_de_succes" style="display: none;">Merci pour votre commentaire</div>
 
@@ -67,7 +67,7 @@
           $('#commentaire-textarea').focus();
       })
       $('#envoyer-commentaire').click(function() {
-        var commentaire = $(this).val();
+        var commentaire = $('#commentaire-textarea').val();
         $.ajax({
             method: "POST",
             url: "/commentaire",
