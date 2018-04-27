@@ -6,13 +6,10 @@
 [ ] Distinguer les notions de dossier initié / dossier tout court
 [ ] Instruire la question de la variabilité des pièces justificatives
 
-[X] Clarifier "Vous êtes agent en EPLE"
 [ ] Aiguiller les utilisateurs (profil parent) pour "identifiant"
 [ ] Valider le wording du message d'invitation
 [ ] Quel changement induit "Valider l'inscription"
 
-[X] S'assurer du fonctionnement sur mobile
-[X] Alignement des boutons sur "Pièces"
 [ ] Supprimer l'ancien fichier quand on modifie une pièce jointe
 
 [ ] Tester le fonctionnement de carrierwave avec un mock
@@ -27,9 +24,9 @@ inscription-college.gouv
 champs du formulaire vérouillés par défaut avec bouton pour les modifier,
     moins de risques d'erreurs et de confusion de la part des parents
 [ ] déduire les options de l'etablissement grace a la base siecle
-reprendre la nomenclature de siecle pour la profession
-proposer en download un pdf pour les renseignement médicaux
-etape 5 spécifier que c'est bien le représentant de l'éleve qui fait l'inscription
+[ ] reprendre la nomenclature de siecle pour la profession
+[ ] proposer en download un pdf pour les renseignement médicaux
+[X] etape 5 spécifier que c'est bien le représentant de l'éleve qui fait l'inscription
 rappeler la lv1 ?
 
 Réunion avec Pierre le 18/04/2018

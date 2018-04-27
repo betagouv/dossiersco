@@ -60,7 +60,7 @@
 		</div>
 	</div>
 
-	<%= erb :'partials/champ_check', locals: { desc: "Je certifie sur l'honneur l'exactitude des informations communiquées et m'engage à tenir le collège informé de tout changement de situation ou de coordonnées.",
+	<%= erb :'partials/champ_check', locals: { desc: "En tant que responsable légal de #{dossier_eleve.eleve.prenom}, je certifie sur l'honneur l'exactitude des informations communiquées et m'engage à tenir le collège informé de tout changement de situation ou de coordonnées.",
 	name: 'certifie_sur_honneur', condition: false }%>
 
 	<div class="row mt-5">
