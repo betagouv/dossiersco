@@ -107,7 +107,9 @@ get '/famille' do
 		params["#{i}_urg"] = contact_urgence[i] if !contact_urgence.nil? && !contact_urgence[i].nil?
 	end
 
-	erb :'3_famille'
+  resp_legal_2 = dossier_eleve.resp_legal.select {|resp_legal| resp_legal.priorite == 2}.first
+
+  erb :'3_famille', locals: {resp_legal_2: resp_legal_2, contact_urgence: dossier_eleve.contact_urgence}
 end
 
 post '/famille' do
