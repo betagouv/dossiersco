@@ -7,8 +7,6 @@ require './config/initializers/carrierwave.rb'
 require './uploaders/fichier_uploader.rb'
 require './helpers/s3.rb'
 
-require './config/secrets.rb'
-
 set :database_file, "config/database.yml"
 
 require_relative 'helpers/formulaire'
