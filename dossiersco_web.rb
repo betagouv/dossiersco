@@ -151,7 +151,8 @@ end
 
 get '/piece/:s3_key' do
   fichier = get_fichier_s3(params[:s3_key])
-  url = fichier.url(Time.now.to_i + 3000)
+  p "========================================= params[:s3_key] #{params[:s3_key]} ======================================================="
+  url = fichier.url(Time.now.to_i + 300)
   p "========================================= #{url} ======================================================="
   stream = open url
   stream do |out|
