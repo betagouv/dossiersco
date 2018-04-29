@@ -11,7 +11,7 @@
       <br />
       <div class="image-piece-a-joindre" id="image_<%= @variable %>"
              <% if @document_stocke_url.present? %>
-             style="background-image: url('<%= @document_stocke_url %>'); height: 200px; max-width: 350px;"
+             style="background-image: url('<%= 'piece/'+@document_stocke_url %>'); height: 200px; max-width: 350px;"
               <% end %>>
       </div>
     </div>
