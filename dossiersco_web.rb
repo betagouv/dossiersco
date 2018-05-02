@@ -151,13 +151,7 @@ end
 
 get '/piece/:s3_key' do
   fichier = get_fichier_s3(params[:s3_key])
-  p "========================================= params[:s3_key] #{params[:s3_key]} ======================================================="
-  url = fichier.url(Time.now.to_i + 300)
-  p "========================================= #{url} ======================================================="
-  stream = open url
-  stream do |out|
-    open(url) {|stream| copy_stream(stream, out) }
-  end
+  open fichier.url(Time.now.to_i + 30)
 end
 
 get '/pieces_a_joindre' do
