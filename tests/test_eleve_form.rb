@@ -59,7 +59,7 @@ class EleveFormTest < Test::Unit::TestCase
     doc = Nokogiri::HTML(last_response.body)
     assert_equal 'College Jean-Francois Oeben', doc.xpath("//div//h1/text()").to_s
     assert_equal 'College Jean-Francois Oeben', doc.xpath("//strong[@id='etablissement']/text()").to_s.strip
-    assert_equal '20 Mai 2018', doc.xpath("//strong[@id='date-limite']/text()").to_s
+    assert_equal 'samedi 3 juin 2018', doc.xpath("//strong[@id='date-limite']/text()").to_s
   end
 
   def test_modification_lieu_naiss_eleve
@@ -116,10 +116,10 @@ class EleveFormTest < Test::Unit::TestCase
     assert last_response.body.include? '(Troisième prénom)'
   end
 
-  def test_accueil_et_réinscription
+  def test_accueil_et_inscription
     post '/identification', identifiant: '1', date_naiss: '1995-11-19'
     follow_redirect!
-    assert last_response.body.include? 'réinscription'
+    assert last_response.body.include? 'inscription'
   end
 
   def test_dossier_eleve_possede_un_contact_urgence
