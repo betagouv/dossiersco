@@ -1,6 +1,5 @@
 champs mandatory en html
-lang=en => fr
-2ème ou 3ème prénom
+2ème ou 3ème prénom, préciser "optionnel"
 input = tel
 appostrophe française ’
 
