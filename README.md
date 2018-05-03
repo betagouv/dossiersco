@@ -1,6 +1,6 @@
 [![CircleCI](https://circleci.com/gh/betagouv/dossiersco.svg?style=svg)](https://circleci.com/gh/betagouv/dossiersco)
 
-# dossiersco web
+# dossiersco
 
 Dans le répertoire dossiersco, lancer :
 
