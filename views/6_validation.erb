@@ -38,7 +38,7 @@
 					<%= dossier_eleve.demi_pensionnaire ? 'Demi-pensionnaire' : 'Externe' %>
 				</div>
 				<div class="col-3">
-					<a href="/administration">
+					<a id='demi-pensionnaire' href="/administration">
 						<div class="btn btn-outline-secondary btn-sm">Modifier</div>
 					</a>
 				</div>
@@ -72,5 +72,9 @@
 	</div>
 </div>
 <script>
-  document.getElementById('modifier-<%=eleve.option.first.nom%>').focus();
+	<% if eleve.option.first %>
+  	document.getElementById('modifier-<%=eleve.option.first.nom%>').focus();
+  <% else %>
+  	document.getElementById('demi-pensionnaire').focus();
+  <% end %>
 </script>

@@ -21,15 +21,18 @@
 		<li>Une photo de votre enfant</li>
 		<li>Le justificatif de quotient familial</li>
 	</ul>
-	<p>et mettre à jour vos coordonnées sur ce site avant le <strong id="date-limite">20 Mai 2018</strong>.</p>
+	<p>et mettre à jour vos coordonnées sur ce site avant le <strong id="date-limite">dossier_eleve.etablissement.date_limite</strong>.</p>
 
 	<span style="display:block; height: 30px;"></span>
 
 	<div class="row justify-content-center">
-		<form action="/eleve" method="get">
+		<a id='commencer-inscription' href="/eleve">
 			<button class="btn btn-primary">
-				<%= erb :'partials/message_bouton_commencer' %>
+				Commencer l’inscription
 			</button>
-		</form>
+		</a>
 	</div>
 </div>
+<script>
+  document.getElementById('commencer-inscription').focus();
+</script>
