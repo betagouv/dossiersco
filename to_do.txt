@@ -1,3 +1,11 @@
+informations incorrectes : ajouter "ou manquantes"
+champs mandatory en html
+lang=en => fr
+2ème ou 3ème prénom
+point à la fin d'informations médicales
+input = tel
+appostrophe française ’
+
 [ ] Afficher un feedback des fichiers uploadés
 [ ] Afficher l'etat réel des pieces jointes dans la liste des éleves
 
