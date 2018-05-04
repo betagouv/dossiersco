@@ -172,7 +172,7 @@ post '/pieces_a_joindre' do
 			file = File.open(params[f]["tempfile"])
 			uploader = FichierUploader.new
 			uploader.store!(file)
-			dossier_eleve[f] = uploader.url + File.basename(file.path)
+			dossier_eleve[f] = File.basename(file.path)
 		end
 	end
 	dossier_eleve.save!
