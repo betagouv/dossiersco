@@ -150,6 +150,7 @@ post '/administration' do
 end
 
 get '/piece/:s3_key' do
+  # Vérifier les droits d'accès
   fichier = get_fichier_s3(params[:s3_key])
   open fichier.url(Time.now.to_i + 30)
 end

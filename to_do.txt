@@ -1,50 +1,42 @@
+[ ] auto-upload des pièces jointes
+[ ] validation de façon à éviter les Internal Server Error
+[ ] validation des infos en base e.g. dates limites d’inscription
+[ ] assouplir la modélisation des pièces jointes (en affichage et en base) (edited)
+[ ] page d’erreur “catch all” qui rassure (edited)
+[ ] supprimer les éléments de façade (par ex dashboard niveaux élèves)
+[ ] raisonner en classes et pas seulement en élèves côté agent
+[ ] gestion des comms et relances aux familles (edited)
+[ ] analyse de sécurité des moyens de transmission des secrets de connexion
+[ ] intégration d’une brique d’envoi de SMS
+[ ] intégration d’une brique d’envoi transactionnel mail
+[ ] feedback sur les pièces jointes fournies
+[ ] passage sur Heroku payant avec backups
+[ ] débrancher /init sur la prod
+[ ] Feedback sur l'obligation de cocher les cases administration
+[ ] Corriger l'affichage des pièces côté agent
+[ ] Afficher le règlement demi-pension dans une boite "fermable"
+[ ] Vérifier les droits d'accès aux pièces jointes (avec tests)
+
 champs mandatory en html
 2ème ou 3ème prénom, préciser "optionnel"
 input = tel
 appostrophe française ’
 
-
 Ancien todo :
-
-[ ] Afficher un feedback des fichiers uploadés
-[ ] Afficher l'etat réel des pieces jointes dans la liste des éleves
-
-[X] Ne pas indiquer si l'eleve existe dans l'erreur d'autentification
 [ ] Séparer les tests en plusieurs fichiers
-[ ] Distinguer les notions de dossier initié / dossier tout court
-[ ] Instruire la question de la variabilité des pièces justificatives
-
-[ ] Aiguiller les utilisateurs (profil parent) pour "identifiant"
-[ ] Valider le wording du message d'invitation
-[ ] Quel changement induit "Valider l'inscription"
-
 [ ] Supprimer l'ancien fichier quand on modifie une pièce jointe
-
-[ ] Tester le fonctionnement de carrierwave avec un mock
 [ ] Ingérer un fichier Affelnet
-
 
 open lab du 16
 [/] generer les pdf pour les parents
 inscription-college.gouv
 [ ] tarif de cantine uniquement pour paris, fonctionnement différent pour les autres académies
-[ ] personnaliser la liste des pj pour chaque collège (Creteil va demander la photocopie du livret de famille)
-champs du formulaire vérouillés par défaut avec bouton pour les modifier,
-    moins de risques d'erreurs et de confusion de la part des parents
 [ ] déduire les options de l'etablissement grace a la base siecle
 [ ] reprendre la nomenclature de siecle pour la profession
 [ ] proposer en download un pdf pour les renseignement médicaux
 rappeler la lv1 ?
 
 Réunion avec Pierre le 18/04/2018
-
-Pièces à joindre :
-- Livret de famille
-- Photos
-- Justificatif de domicile
-- Jugement de divorce ou de séparation
-- Attestation d'assurance
-- QF (seulement pour Paris)
 
 Faire un test de passage de l'ordinateur au portable
 [ ] Expliquer comment prendre une photo ou scanner les pièces jointes
