@@ -35,7 +35,7 @@
           <th <%= cliquable %> ><%= dossier_eleve.etat %></th>
           <th class="text-center" data-nom-fichier="etat_photo_identite">
             <% if dossier_eleve.photo_identite.present? %>
-              <a class="lien-piece-jointe" data-toggle="modal" data-target="#modal-pieces-jointes" data-url="<%= dossier_eleve.photo_identite %>">
+              <a class="lien-piece-jointe" data-toggle="modal" data-target="#modal-pieces-jointes" data-url="<%= FichierUploader::route_lecture + "/" + dossier_eleve.photo_identite %>">
                 <i class="fas fa-file-image"></i>
               </a>
               <i class="fas fa-check-circle etat" style="<%= 'color: #00cf00' if dossier_eleve.etat_photo_identite == 'valide' %>"></i>
@@ -66,36 +66,11 @@
   </table>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="modal-pieces-jointes" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="titre-modal-pj"></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <iframe id="iframe-piece-jointe" src="" allowfullscreen></iframe>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" charset="utf-8">
-  $('.lien-piece-jointe').click(function() {
-      var url = $(this).data('url');
-      $('#iframe-piece-jointe').attr('src', url);
-  });
 
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<%= erb :'partials/image_box' %>
+<script type="text/javascript" charset="utf-8">
   $('.etat').click(function() {
       var id = $(this).parent().parent().attr('id');
       var nom_fichier = $(this).parent().data('nom-fichier');
@@ -141,8 +116,8 @@
             sortAscending:  ": activer pour trier la colonne par ordre croissant",
             sortDescending: ": activer pour trier la colonne par ordre décroissant"
         }
-    }
+      }
+    });
   });
-});
 
 </script>
