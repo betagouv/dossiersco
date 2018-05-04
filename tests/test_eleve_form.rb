@@ -224,17 +224,37 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_affichage_preview_jpg_famille
     eleve = Eleve.find_by(identifiant: 6)
-    eleve.dossier_eleve.assurance_scolaire = 'assurance.jpg'
+    eleve.dossier_eleve.assurance_scolaire = 'assurance_photo.jpg'
     eleve.dossier_eleve.save!
     post '/identification', identifiant: '6', date_naiss: '1970-01-01'
     get '/pieces_a_joindre'
     doc = Nokogiri::HTML(last_response.body)
     documents_route = FichierUploader::route_lecture
-    expected_url = documents_route+"/assurance.jpg"
+    expected_url = documents_route+"/assurance_photo.jpg"
     assert_equal "background-image: url('#{expected_url}'); height: 200px; max-width: 350px;",
                  doc.css("#image_assurance_scolaire").attr("style").text
+    assert doc.css('#image_assurance_scolaire').attr("class").text.split.include?("lien-piece-jointe")
+    assert_equal "modal", doc.css('#image_assurance_scolaire').attr("data-toggle").text
+    assert_equal "#modal-pieces-jointes", doc.css('#image_assurance_scolaire').attr("data-target").text
+    assert_equal expected_url, doc.css('#image_assurance_scolaire').attr("data-url").text
   end
 
+  def test_affichage_preview_pdf_famille
+    eleve = Eleve.find_by(identifiant: 6)
+    eleve.dossier_eleve.assurance_scolaire = 'assurance_scannee.pdf'
+    eleve.dossier_eleve.save!
+    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    get '/pieces_a_joindre'
+    doc = Nokogiri::HTML(last_response.body)
+    documents_route = FichierUploader::route_lecture
+    expected_url = documents_route+"/assurance_scannee.pdf"
+    assert_equal "background-image: url('/images/reglement_dp_small.png'); height: 200px; max-width: 350px;",
+                 doc.css("#image_assurance_scolaire").attr("style").text
+    assert doc.css('#image_assurance_scolaire').attr("class").text.split.include?("lien-piece-jointe")
+    assert_equal "modal", doc.css('#image_assurance_scolaire').attr("data-toggle").text
+    assert_equal "#modal-pieces-jointes", doc.css('#image_assurance_scolaire').attr("data-target").text
+    assert_equal expected_url, doc.css('#image_assurance_scolaire').attr("data-url").text
+  end
 
   def test_ramène_parent_à_dernière_étape_incomplète
     post '/identification', identifiant: '6', date_naiss: '1970-01-01'
