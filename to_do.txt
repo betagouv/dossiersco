@@ -16,6 +16,8 @@
 [ ] Corriger l'affichage des pièces côté agent
 [ ] Afficher le règlement demi-pension dans une boite "fermable"
 [ ] Vérifier les droits d'accès aux pièces jointes (avec tests)
+[ ] Logique de validation des dossiers
+[ ] Allonger la durée de session
 
 champs mandatory en html
 2ème ou 3ème prénom, préciser "optionnel"
@@ -23,6 +25,7 @@ input = tel
 appostrophe française ’
 
 Ancien todo :
+[ ] Tester liste_des_eleves
 [ ] Séparer les tests en plusieurs fichiers
 [ ] Supprimer l'ancien fichier quand on modifie une pièce jointe
 [ ] Ingérer un fichier Affelnet
