@@ -206,20 +206,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert doc.css("#fichier_jugement_garde_enfant img").empty?
   end
 
-  def test_joindre_photo_identite
-    piece_a_joindre = Tempfile.new('fichier_temporaire')
-
-    doc = soumet_formulaire '/pieces_a_joindre', photo_identite: {"tempfile": piece_a_joindre.path}
-
-    assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
-
-    expected_url = "/uploads/#{File.basename(piece_a_joindre.path)}"
-    # assert_equal "background-image: url('#{expected_url}'); height: 200px; max-width: 350px;",
-    #              doc.css("#image_photo_identite").attr("style").text
-    assert doc.css("#fichier_assurance_scolaire img").empty?
-    assert doc.css("#fichier_jugement_garde_enfant img").empty?
-  end
-
   def test_joindre_assurance_scolaire
     piece_a_joindre = Tempfile.new('fichier_temporaire')
 
@@ -234,6 +220,19 @@ class EleveFormTest < Test::Unit::TestCase
     doc = soumet_formulaire '/pieces_a_joindre', jugement_garde_enfant: {"tempfile": piece_a_joindre.path}
 
     assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
+  end
+
+  def test_affichage_preview_jpg_famille
+    eleve = Eleve.find_by(identifiant: 6)
+    eleve.dossier_eleve.assurance_scolaire = 'assurance.jpg'
+    eleve.dossier_eleve.save!
+    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    get '/pieces_a_joindre'
+    doc = Nokogiri::HTML(last_response.body)
+    documents_route = FichierUploader::route_lecture
+    expected_url = documents_route+"/assurance.jpg"
+    assert_equal "background-image: url('#{expected_url}'); height: 200px; max-width: 350px;",
+                 doc.css("#image_assurance_scolaire").attr("style").text
   end
 
 

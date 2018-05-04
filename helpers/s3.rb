@@ -9,7 +9,7 @@ helpers do
         path_style: true # indispensable pour éviter l'erreur "hostname does not match the server certificate"
       })
       bucket = connection.directories.get('dossierscoweb')
-      bucket.files.get("uploads/#{nom_fichier}")
+      bucket.files.get(nom_fichier)
     end
   end
 end
