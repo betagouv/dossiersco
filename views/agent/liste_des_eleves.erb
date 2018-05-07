@@ -35,7 +35,7 @@
           <th <%= cliquable %> ><%= dossier_eleve.etat %></th>
           <th class="text-center" data-nom-fichier="etat_photo_identite">
             <% if dossier_eleve.photo_identite.present? %>
-              <a class="lien-piece-jointe" data-toggle="modal" data-target="#modal-pieces-jointes" data-url="<%= FichierUploader::route_lecture + "/" + dossier_eleve.photo_identite %>">
+              <a class="lien-piece-jointe" data-toggle="modal" data-target="#modal-pieces-jointes" data-url="<%= FichierUploader::route_lecture(dossier_eleve.eleve.identifiant, 'photo_identite') + "/" + dossier_eleve.photo_identite %>">
                 <i class="fas fa-file-image"></i>
               </a>
               <i class="fas fa-check-circle etat" style="<%= 'color: #00cf00' if dossier_eleve.etat_photo_identite == 'valide' %>"></i>
@@ -44,7 +44,7 @@
           </th>
           <th class="text-center" data-nom-fichier="etat_assurance_scolaire">
             <% if dossier_eleve.assurance_scolaire.present? %>
-              <a class="lien-piece-jointe" data-toggle="modal" data-target="#modal-pieces-jointes" data-url="<%= dossier_eleve.assurance_scolaire %>">
+              <a class="lien-piece-jointe" data-toggle="modal" data-target="#modal-pieces-jointes" data-url="<%= FichierUploader::route_lecture(dossier_eleve.eleve.identifiant, 'assurance_scolaire') + "/" + dossier_eleve.assurance_scolaire %>">
                 <i class="fas fa-file-image"></i>
               </a>
               <i class="fas fa-check-circle etat" style="<%= 'color: #00cf00' if dossier_eleve.etat_assurance_scolaire == 'valide' %>"></i>
@@ -53,11 +53,11 @@
           </th>
           <th class="text-center" data-nom-fichier="etat_jugement_garde_enfant">
             <% if dossier_eleve.jugement_garde_enfant.present? %>
-              <a class="lien-piece-jointe"  data-toggle="modal" data-target="#modal-pieces-jointes" data-url="<%= dossier_eleve.jugement_garde_enfant %>">
+              <a class="lien-piece-jointe" data-toggle="modal" data-target="#modal-pieces-jointes" data-url="<%= FichierUploader::route_lecture(dossier_eleve.eleve.identifiant, 'jugement_garde_enfant') + "/" + dossier_eleve.jugement_garde_enfant %>">
                 <i class="fas fa-file-image"></i>
               </a>
-              <i class="fas fa-check-circle etat" style="<%= 'color: #00cf00' if dossier_eleve.etat_assurance_scolaire == 'valide' %>"></i>
-              <i class="fas fa-times-circle etat" style="<%= 'color: red' if dossier_eleve.etat_assurance_scolaire == 'invalide' %>"></i>
+              <i class="fas fa-check-circle etat" style="<%= 'color: #00cf00' if dossier_eleve.etat_jugement_garde_enfant == 'valide' %>"></i>
+              <i class="fas fa-times-circle etat" style="<%= 'color: red' if dossier_eleve.etat_jugement_garde_enfant == 'invalide' %>"></i>
             <% end %>
           </th>
         </tr>
