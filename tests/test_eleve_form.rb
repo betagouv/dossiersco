@@ -427,6 +427,24 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'application/pdf', last_response.original_headers['Content-Type']
   end
 
+  def test_une_personne_non_identifiée_ne_peut_accéder_à_pièces
+    get "/piece/6/assurance_scolaire/nimportequoi"
+
+    assert_equal 302, last_response.status
+  end
+
+  def test_famille_peut_accédeer_à_une_pièce_de_son_dossier
+    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+
+    piece_a_joindre = Tempfile.new('fichier_temporaire')
+
+    doc = soumet_formulaire '/pieces_a_joindre', assurance_scolaire: {"tempfile": piece_a_joindre.path}
+
+    get "/piece/6/assurance_scolaire/#{File.basename(piece_a_joindre.path)}"
+
+    assert_equal 200, last_response.status
+  end
+
   def assert_file(chemin_du_fichier)
     assert File.file? chemin_du_fichier
     File.delete(chemin_du_fichier)
