@@ -165,14 +165,12 @@ get '/piece/:dossier_eleve/:code_piece/:s3_key' do
   if usager_autorisé and objet_conforme
     fichier = get_fichier_s3(params[:s3_key])
     open fichier.url(Time.now.to_i + 30)
-    if fichier.end_with? 'pdf'
+    if params[:s3_key].end_with? 'pdf'
       content_type 'application/pdf'
-    elsif fichier.end_with? 'jpg' or fichier.end_with? 'jpeg'
+    elsif params[:s3_key].end_with? 'jpg' or params[:s3_key].end_with? 'jpeg'
       content_type 'image/jpeg'
-    elsif fichier.end_with? 'png'
+    elsif params[:s3_key].end_with? 'png'
       content_type 'image/png'
-    else
-      content_type 'image'
     end
   else
     redirect '/'
