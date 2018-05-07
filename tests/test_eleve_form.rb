@@ -438,7 +438,7 @@ class EleveFormTest < Test::Unit::TestCase
 
     piece_a_joindre = Tempfile.new('fichier_temporaire')
 
-    doc = soumet_formulaire '/pieces_a_joindre', assurance_scolaire: {"tempfile": piece_a_joindre.path}
+    post '/pieces_a_joindre', assurance_scolaire: {"tempfile": piece_a_joindre.path}
 
     get "/piece/6/assurance_scolaire/#{File.basename(piece_a_joindre.path)}"
 

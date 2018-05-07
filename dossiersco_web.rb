@@ -163,10 +163,10 @@ get '/piece/:dossier_eleve/:code_piece/:s3_key' do
   objet_conforme = objet_demandé == objet_présent 
 
   if usager_autorisé and objet_conforme
-    redirect '/'
-  else
     fichier = get_fichier_s3(params[:s3_key])
     open fichier.url(Time.now.to_i + 30)
+  else
+    redirect '/'
   end
 end
 
