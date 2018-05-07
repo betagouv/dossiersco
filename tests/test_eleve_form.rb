@@ -229,7 +229,7 @@ class EleveFormTest < Test::Unit::TestCase
     post '/identification', identifiant: '6', date_naiss: '1970-01-01'
     get '/pieces_a_joindre'
     doc = Nokogiri::HTML(last_response.body)
-    documents_route = FichierUploader::route_lecture
+    documents_route = FichierUploader::route_lecture '6', 'assurance_scolaire'
     expected_url = documents_route+"/assurance_photo.jpg"
     assert_equal "background-image: url('#{expected_url}'); height: 200px; max-width: 350px;",
                  doc.css("#image_assurance_scolaire").attr("style").text
@@ -246,7 +246,7 @@ class EleveFormTest < Test::Unit::TestCase
     post '/identification', identifiant: '6', date_naiss: '1970-01-01'
     get '/pieces_a_joindre'
     doc = Nokogiri::HTML(last_response.body)
-    documents_route = FichierUploader::route_lecture
+    documents_route = FichierUploader::route_lecture '6', 'assurance_scolaire'
     expected_url = documents_route+"/assurance_scannee.pdf"
     assert_equal "background-image: url('/images/reglement_dp_small.png'); height: 200px; max-width: 350px;",
                  doc.css("#image_assurance_scolaire").attr("style").text
