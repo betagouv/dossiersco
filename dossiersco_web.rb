@@ -156,7 +156,7 @@ get '/piece/:dossier_eleve/:code_piece/:s3_key' do
   agent = Agent.find_by(identifiant: session[:identifiant])
   agent_autorisé = agent.present? and (dossier_eleve.etablissement == agent.etablissement)
 
-  usager_autorisé = famille_autorisé or agent_autorisé
+  usager_autorisé = famille_autorisé || agent_autorisé
 
   objet_demandé = params[:s3_key]
   objet_présent = dossier_eleve[params[:code_piece]]
