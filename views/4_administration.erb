@@ -28,13 +28,6 @@
 
 			<div id="dp" style="display: none;">
 
-				<p>Consulter le règlement du service de demi-pension :
-					<a href="images/reglement_dp.png" target="_blank"><img src="images/reglement_dp_small.png" alt="règlement demi-pension"></a>
-				</p>
-
-				<%= erb :'partials/champ_check', :locals => { :desc => "J'ai lu et j'accepte le règlement du service de
-					demi-pension.", name: 'check_reglement_cantine', condition: dossier_eleve.check_reglement_cantine }%>
-
 				<%= erb :'partials/champ_check', :locals => { :desc => "Je m'engage à régler les frais de demi-pension en
 					respectant les délais impartis inhérents au bon fonctionnement du service.", name: 'check_paiement_cantine',
 					condition: dossier_eleve.check_paiement_cantine}%>
