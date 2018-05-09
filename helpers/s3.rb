@@ -1,5 +1,6 @@
 helpers do
   def get_fichier_s3 nom_fichier
+    emplacement_fichier = "uploads/#{nom_fichier}"
     if ENV['S3_KEY'].present?
       connection = Fog::Storage.new({
         provider: 'AWS',
@@ -9,7 +10,12 @@ helpers do
         path_style: true # indispensable pour éviter l'erreur "hostname does not match the server certificate"
       })
       bucket = connection.directories.get('dossierscoweb')
-      bucket.files.get("uploads/#{nom_fichier}")
+      bucket.files.get(emplacement_fichier)
+    else
+      def emplacement_fichier.url(x)
+        return "http://neverssl.com" 
+      end
+      emplacement_fichier
     end
   end
 end

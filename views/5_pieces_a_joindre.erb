@@ -22,6 +22,7 @@
             <% @explication = pourquoi_on_le_demande[indice_piece] %>
             <% @variable = noms[indice_piece] %>
             <% @document_stocke_url = dossier_eleve[noms[indice_piece]]  %>
+            <% @dossier_eleve = dossier_eleve %>
             <%= erb :'partials/carte_upload' %>
           <% end %>
         <% end %>

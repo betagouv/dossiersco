@@ -147,10 +147,35 @@ post '/administration' do
   end
 end
 
-get '/piece/:s3_key' do
+get '/piece/:dossier_eleve/:code_piece/:s3_key' do
+  dossier_eleve = get_dossier_eleve params[:dossier_eleve]
+
   # Vérifier les droits d'accès
-  fichier = get_fichier_s3(params[:s3_key])
-  open fichier.url(Time.now.to_i + 30)
+  famille_autorisé = params[:dossier_eleve] == session[:identifiant]
+
+  agent = Agent.find_by(identifiant: session[:identifiant])
+  agent_autorisé = agent.present? and (dossier_eleve.etablissement == agent.etablissement)
+
+  usager_autorisé = famille_autorisé || agent_autorisé
+
+  objet_demandé = params[:s3_key]
+  objet_présent = dossier_eleve[params[:code_piece]]
+  objet_conforme = objet_demandé == objet_présent 
+
+  if usager_autorisé and objet_conforme
+    response.headers['Content-Type'] = ''
+    fichier = get_fichier_s3(params[:s3_key])
+    open fichier.url(Time.now.to_i + 30)
+    # if params[:s3_key].end_with? 'pdf'
+    #   content_type 'application/pdf'
+    # elsif params[:s3_key].end_with? 'jpg' or params[:s3_key].end_with? 'jpeg'
+    #   content_type 'image/jpeg'
+    # elsif params[:s3_key].end_with? 'png'
+    #   content_type 'image/png'
+    # end
+  else
+    redirect '/'
+  end
 end
 
 get '/pieces_a_joindre' do

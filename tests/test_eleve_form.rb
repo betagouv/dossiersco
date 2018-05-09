@@ -229,7 +229,7 @@ class EleveFormTest < Test::Unit::TestCase
     post '/identification', identifiant: '6', date_naiss: '1970-01-01'
     get '/pieces_a_joindre'
     doc = Nokogiri::HTML(last_response.body)
-    documents_route = FichierUploader::route_lecture
+    documents_route = FichierUploader::route_lecture '6', 'assurance_scolaire'
     expected_url = documents_route+"/assurance_photo.jpg"
     assert_equal "background-image: url('#{expected_url}'); height: 200px; max-width: 350px;",
                  doc.css("#image_assurance_scolaire").attr("style").text
@@ -246,7 +246,7 @@ class EleveFormTest < Test::Unit::TestCase
     post '/identification', identifiant: '6', date_naiss: '1970-01-01'
     get '/pieces_a_joindre'
     doc = Nokogiri::HTML(last_response.body)
-    documents_route = FichierUploader::route_lecture
+    documents_route = FichierUploader::route_lecture '6', 'assurance_scolaire'
     expected_url = documents_route+"/assurance_scannee.pdf"
     assert_equal "background-image: url('/images/reglement_dp_small.png'); height: 200px; max-width: 350px;",
                  doc.css("#image_assurance_scolaire").attr("style").text
@@ -425,6 +425,24 @@ class EleveFormTest < Test::Unit::TestCase
     post '/agent/pdf', identifiant: 3
 
     assert_equal 'application/pdf', last_response.original_headers['Content-Type']
+  end
+
+  def test_une_personne_non_identifiée_ne_peut_accéder_à_pièces
+    get "/piece/6/assurance_scolaire/nimportequoi"
+
+    assert_equal 302, last_response.status
+  end
+
+  def test_famille_peut_accédeer_à_une_pièce_de_son_dossier
+    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+
+    piece_a_joindre = Tempfile.new('fichier_temporaire')
+
+    post '/pieces_a_joindre', assurance_scolaire: {"tempfile": piece_a_joindre.path}
+
+    get "/piece/6/assurance_scolaire/#{File.basename(piece_a_joindre.path)}"
+
+    assert_equal 200, last_response.status
   end
 
   def assert_file(chemin_du_fichier)
