@@ -195,33 +195,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert_attr '0112345678', '#tel_secondaire_urg', doc
   end
 
-
-  def test_piece_jointe_invite_a_prendre_en_photo
-    post '/identification', identifiant: '2', date_naiss: '1915-12-19'
-    get '/pieces_a_joindre'
-    doc = Nokogiri::HTML(last_response.body)
-
-    assert doc.css("#fichier_photo_identite img").empty?
-    assert doc.css("#fichier_assurance_scolaire img").empty?
-    assert doc.css("#fichier_jugement_garde_enfant img").empty?
-  end
-
-  def test_joindre_assurance_scolaire
-    piece_a_joindre = Tempfile.new('fichier_temporaire')
-
-    doc = soumet_formulaire '/pieces_a_joindre', assurance_scolaire: {"tempfile": piece_a_joindre.path}
-
-    assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
-  end
-
-  def test_joindre_jugement_garde_enfant
-    piece_a_joindre = Tempfile.new('fichier_temporaire')
-
-    doc = soumet_formulaire '/pieces_a_joindre', jugement_garde_enfant: {"tempfile": piece_a_joindre.path}
-
-    assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
-  end
-
   def test_affichage_preview_jpg_famille
     eleve = Eleve.find_by(identifiant: 6)
     eleve.dossier_eleve.assurance_scolaire = 'assurance_photo.jpg'
@@ -241,7 +214,10 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_affichage_preview_pdf_famille
     eleve = Eleve.find_by(identifiant: 6)
-    eleve.dossier_eleve.assurance_scolaire = 'assurance_scannee.pdf'
+    eleve.dossier_eleve.piece_jointe = PieceJointe.create(
+      clef: assurance_scannee.pdf,
+      dossier_eleve_id: dossier_eleve.id, )
+    .clef = 'assurance_scannee.pdf'
     eleve.dossier_eleve.save!
     post '/identification', identifiant: '6', date_naiss: '1970-01-01'
     get '/pieces_a_joindre'
@@ -417,6 +393,16 @@ class EleveFormTest < Test::Unit::TestCase
 
     get '/agent/options'
     assert_no_match /Musique/, last_response.body
+  end
+
+  def test_un_agent_ajoute_une_nouvelle_piece_attendue
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+
+    post '/agent/piece_attendues', nom: 'Photo d’identité', explication: 'Pour coller sur le carnet'
+
+    post '/identification', identifiant: '5', date_naiss: '1970-01-01'
+    get '/pieces_a_joindre'
+    assert_match /Photo d’identité/, last_response.body
   end
 
   def test_un_agent_genere_un_pdf

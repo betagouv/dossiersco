@@ -180,10 +180,6 @@ end
 
 get '/pieces_a_joindre' do
 	dossier_eleve = get_dossier_eleve session[:identifiant]
-  fichiers = ["photo_identite", "assurance_scolaire", "jugement_garde_enfant"]
-  fichiers.each do |f|
-    get_fichier_s3(dossier_eleve[f])
-  end
 	erb :'5_pieces_a_joindre', locals: {dossier_eleve: dossier_eleve}
 end
 
