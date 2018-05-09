@@ -89,6 +89,12 @@ def init
   Option.create!(etablissement_id: tillion.id, nom: 'Latin', niveau_debut: 5)
   Option.create!(etablissement_id: tillion.id, nom: 'Grec', niveau_debut: 5)
 
+  quotien_familial = PieceAttendue.create!(
+       nom: "Quotien familial",
+       code: "quotien_familial",
+       explication: "Pour déterminer le tarif du restaurant",
+       etablissement_id: tillion.id)
+
   cree_dossier_eleve eleves[0], tillion, 'pas connecté'
   cree_dossier_eleve eleves[2], tillion, 'pas connecté'
   cree_dossier_eleve eleves[3], tillion, 'connecté'
