@@ -197,8 +197,10 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_affichage_preview_jpg_famille
     eleve = Eleve.find_by(identifiant: 6)
-    eleve.dossier_eleve.assurance_scolaire = 'assurance_photo.jpg'
-    eleve.dossier_eleve.save!
+    piece_attendue = PieceAttendue.find_by(code: 'assurance_scolaire', 
+      etablissement_id: eleve.dossier_eleve.etablissement.id)
+    piece_jointe = PieceJointe.create(clef: 'assurance_photo.jpg', dossier_eleve_id: eleve.dossier_eleve.id, 
+      piece_attendue_id: piece_attendue.id)  
     post '/identification', identifiant: '6', date_naiss: '1970-01-01'
     get '/pieces_a_joindre'
     doc = Nokogiri::HTML(last_response.body)
@@ -214,11 +216,10 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_affichage_preview_pdf_famille
     eleve = Eleve.find_by(identifiant: 6)
-    eleve.dossier_eleve.piece_jointe = PieceJointe.create(
-      clef: assurance_scannee.pdf,
-      dossier_eleve_id: dossier_eleve.id, )
-    .clef = 'assurance_scannee.pdf'
-    eleve.dossier_eleve.save!
+    piece_attendue = PieceAttendue.find_by(code: 'assurance_scolaire', 
+      etablissement_id: eleve.dossier_eleve.etablissement.id)
+    piece_jointe = PieceJointe.create(clef: 'assurance_scannee.pdf', dossier_eleve_id: eleve.dossier_eleve.id, 
+      piece_attendue_id: piece_attendue.id)  
     post '/identification', identifiant: '6', date_naiss: '1970-01-01'
     get '/pieces_a_joindre'
     doc = Nokogiri::HTML(last_response.body)
