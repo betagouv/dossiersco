@@ -159,8 +159,9 @@ get '/piece/:dossier_eleve/:code_piece/:s3_key' do
   usager_autorisé = famille_autorisé || agent_autorisé
 
   objet_demandé = params[:s3_key]
-  objet_présent = dossier_eleve[params[:code_piece]]
-  objet_conforme = objet_demandé == objet_présent 
+  objet_présent = PieceJointe.find_by(dossier_eleve_id: dossier_eleve.id, clef: params[:s3_key])
+  clef_objet_présent = objet_présent.clef if objet_présent.present?
+  objet_conforme = objet_demandé == clef_objet_présent 
 
   if usager_autorisé and objet_conforme
     response.headers['Content-Type'] = ''
@@ -179,22 +180,28 @@ get '/piece/:dossier_eleve/:code_piece/:s3_key' do
 end
 
 get '/pieces_a_joindre' do
-	dossier_eleve = get_dossier_eleve session[:identifiant]
+  dossier_eleve = get_dossier_eleve session[:identifiant]
 	erb :'5_pieces_a_joindre', locals: {dossier_eleve: dossier_eleve}
 end
 
 post '/pieces_a_joindre' do
-	dossier_eleve = get_dossier_eleve session[:identifiant]
-	fichiers = ["photo_identite", "assurance_scolaire", "jugement_garde_enfant"]
-	fichiers.each do |f|
-		if params[f].present? and params[f]["tempfile"].present?
-			file = File.open(params[f]["tempfile"])
-			uploader = FichierUploader.new
-			uploader.store!(file)
-			dossier_eleve[f] = File.basename(file.path)
-		end
-	end
-	dossier_eleve.save!
+  dossier_eleve = get_dossier_eleve session[:identifiant]
+  params.each do |code, piece|
+    if params[code].present? and params[code]["tempfile"].present?
+      file = File.open(params[code]["tempfile"])
+      uploader = FichierUploader.new
+      uploader.store!(file)
+      nom_du_fichier = File.basename(file.path)
+      piece_attendue = PieceAttendue.find_by(code: code, etablissement_id: dossier_eleve.etablissement_id)
+      piece_jointe = PieceJointe.find_by(piece_attendue_id: piece_attendue.id, dossier_eleve_id: dossier_eleve.id)
+      if piece_jointe.present?
+        piece_jointe.update(clef: nom_du_fichier)
+      else
+        piece_jointe = PieceJointe.create!(clef: nom_du_fichier, piece_attendue_id: piece_attendue.id, dossier_eleve_id: dossier_eleve.id)
+      end
+    end
+  end
+
 	sauve_et_redirect dossier_eleve, 'validation'
 end
 
