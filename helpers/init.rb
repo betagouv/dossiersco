@@ -81,13 +81,21 @@ def init
       code_postal: '75012',
       dates_permanence: "lundi 17 et mardi 18 juin de 10h à 20h"
   })
-
+  
   Option.create!(etablissement_id: tillion.id, nom: 'Espagnol', niveau_debut: 5,
-   obligatoire: true, groupe: 'Langue vivante 2')
+  obligatoire: true, groupe: 'Langue vivante 2')
   Option.create!(etablissement_id: tillion.id, nom: 'Allemand', niveau_debut: 5,
-   obligatoire: true, groupe: 'Langue vivante 2')
+  obligatoire: true, groupe: 'Langue vivante 2')
   Option.create!(etablissement_id: tillion.id, nom: 'Latin', niveau_debut: 5)
   Option.create!(etablissement_id: tillion.id, nom: 'Grec', niveau_debut: 5)
+  
+  PieceAttendue.create!(nom: "Assurance scolaire", code: "assurance_scolaire", 
+    explication: "assurance de l'éleve 2018/2019", etablissement_id: tillion.id)
+  quotien_familial = PieceAttendue.create!(
+       nom: "Quotien familial",
+       code: "quotien_familial",
+       explication: "Pour déterminer le tarif du restaurant",
+       etablissement_id: tillion.id)
 
   cree_dossier_eleve eleves[0], tillion, 'pas connecté'
   cree_dossier_eleve eleves[2], tillion, 'pas connecté'
@@ -106,11 +114,8 @@ def cree_dossier_eleve eleve, etablissement, etat
       eleve_id: e.id,
       etablissement_id: etablissement.id,
       demarche: "reinscription",
-      etat: etat,
-      etat_photo_identite: "absente",
-      etat_assurance_scolaire: "absente",
-      etat_jugement_garde_enfant: "absente"
-  )
+      etat: etat
+      )
   RespLegal.create!(dossier_eleve_id: dossier_eleve.id,
     lien_de_parente: 'Mère', prenom: 'Gertrude', nom: 'Martin',
     adresse: '42 rue de la fin', code_postal: '75020', ville: 'Paris',

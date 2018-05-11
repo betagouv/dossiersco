@@ -13,9 +13,9 @@
 [ ] passage sur Heroku payant avec backups
 [ ] débrancher /init sur la prod
 [ ] Feedback sur l'obligation de cocher les cases administration
-[ ] Corriger l'affichage des pièces côté agent
+[X] Corriger l'affichage des pièces côté agent
 [ ] Afficher le règlement demi-pension dans une boite "fermable"
-[ ] Vérifier les droits d'accès aux pièces jointes (avec tests)
+[X] Vérifier les droits d'accès aux pièces jointes (avec tests)
 [ ] Logique de validation des dossiers
 [ ] Allonger la durée de session
 
