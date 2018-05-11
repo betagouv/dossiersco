@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180509095509) do
+ActiveRecord::Schema.define(version: 20180511081347) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,13 +43,7 @@ ActiveRecord::Schema.define(version: 20180509095509) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "etablissement_id"
-    t.string "photo_identite"
-    t.string "assurance_scolaire"
-    t.string "jugement_garde_enfant"
     t.string "etat", default: "pas connecté"
-    t.string "etat_photo_identite"
-    t.string "etat_assurance_scolaire"
-    t.string "etat_jugement_garde_enfant"
     t.integer "satisfaction", default: 0
     t.boolean "demi_pensionnaire", default: false
     t.boolean "autorise_sortie", default: false
@@ -112,6 +106,7 @@ ActiveRecord::Schema.define(version: 20180509095509) do
     t.string "clef"
     t.integer "dossier_eleve_id"
     t.integer "piece_attendue_id"
+    t.string "etat"
   end
 
   create_table "resp_legals", force: :cascade do |t|
