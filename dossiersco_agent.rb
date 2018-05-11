@@ -65,9 +65,8 @@ get '/agent/eleve/:identifiant' do
 end
 
 post '/agent/change_etat_fichier' do
-    dossier_eleve = DossierEleve.find(params[:id])
-    dossier_eleve[params[:nom_fichier]] = params[:etat]
-    dossier_eleve.save!
+  piece = PieceJointe.find(params[:id])
+  piece.update(etat: params[:etat])
 end
 
 get '/agent/options' do
@@ -149,7 +148,13 @@ post '/agent/supprime_option' do
 end
 
 post '/agent/supprime_piece_attendue' do
-  PieceAttendue.find(params[:piece_attendue_id]).delete
+  pieces_existantes = PieceJointe.where(piece_attendue_id: params[:piece_attendue_id])
+  if pieces_existantes.size >= 1
+    message = 'Cette piece ne peut être supprimé'
+    raise
+  else
+    PieceAttendue.find(params[:piece_attendue_id]).delete
+  end
 end
 
 get '/agent/pdf' do
