@@ -184,7 +184,7 @@ get '/pieces_a_joindre' do
 	erb :'5_pieces_a_joindre', locals: {dossier_eleve: dossier_eleve}
 end
 
-post '/pieces_a_joindre' do
+post '/enregistre_piece_jointe' do
   dossier_eleve = get_dossier_eleve session[:identifiant]
   params.each do |code, piece|
     if params[code].present? and params[code]["tempfile"].present?
@@ -201,8 +201,11 @@ post '/pieces_a_joindre' do
       end
     end
   end
+  redirect '/pieces_a_joindre'
+end
 
-	sauve_et_redirect dossier_eleve, 'validation'
+post '/pieces_a_joindre' do
+	redirect '/validation'
 end
 
 get '/validation' do

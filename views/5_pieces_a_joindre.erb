@@ -7,25 +7,53 @@
 
   <h2 class="separation">Pièces à joindre</h2>
 
-  <form action="/pieces_a_joindre" method="POST" enctype="multipart/form-data">
-
-    <div class='row'>
-      <% dossier_eleve.etablissement.piece_attendue.each do |piece| %>
+  <div class="card-deck row">
+    <% dossier_eleve.etablissement.piece_attendue.each do |piece| %>
+      <form class="col-6" action="/enregistre_piece_jointe" method="POST" enctype="multipart/form-data">
         <% piece_jointe = PieceJointe.find_by(
           piece_attendue_id: piece.id,
           dossier_eleve_id: dossier_eleve.id) %>
-        <div class="card-deck col-6">
-          <% @document = piece.nom %>
-          <% @explication = piece.explication %>
-          <% @variable = piece.code %>
-          <% @document_stocke_url = piece_jointe.present? ? piece_jointe.clef : '' %>
-          <% @dossier_eleve = dossier_eleve %>
-          <%= erb :'partials/carte_upload' %>
+          <% document_stocke_url = piece_jointe.present? ? piece_jointe.clef : '' %>
+        <div class="card <%= "bordure-verte" if piece_jointe.present? %>">
+          <h5 class="card-header"><%= piece.nom %></h5>
+          <div class="card-body">
+            <p class="card-text"><%= piece.explication %></p>
+            <div class="card-relat document">
+
+                <input data-btnClass="btn btn-primary" data-text="Parcourir" class='filestyle' type="file" name="<%= piece.code %>" id="<%= @variable %>"
+                      multiple>
+              <span id="fichier_<%= piece.code %>"></span>
+              <br />
+              <div class="image-piece-a-joindre lien-piece-jointe" id="image_<%= piece.code %>"
+                    <% if document_stocke_url.present?
+                        eleve_identifiant = dossier_eleve.nil? ? '' : dossier_eleve.eleve.identifiant
+                        document_route = FichierUploader::route_lecture(eleve_identifiant, piece.code)+"/"+document_stocke_url
+                        image_url = document_stocke_url.ends_with?('.pdf') ? "/images/reglement_dp_small.png" : document_route
+                      %>
+                      style="background-image: url('<%= image_url %>'); height: 200px; max-width: 350px;"
+                      data-toggle="modal"
+                      data-target="#modal-pieces-jointes"
+                      data-url="<%= document_route %>"
+                    <% end %>>
+              </div>
+            </div>
+          </div>
+        <button type="submit">Soumettre</button>
         </div>
-      <% end %>
+
+      </form>
+    <% end %>
+  </div>
+  <div class="row mt-5">
+    <div class="col-10 col-sm-6 col-md-4 mx-auto order-sm-2 mb-3">
+        <a href='/validation' class="btn btn-primary float-right w-100">Enregistrer et continuer 
+        <img src="/images/suivant.png" alt="suivant" title="suivant"></a>
     </div>
-    <%= erb :'partials/nouveau_precedent_suivant', :locals => { :precedent => "administration"} %>
-  </form>
+    <div class="col-10 col-sm-3 col-md-2 mx-auto order-sm-1">
+        <a class="btn btn-primary w-100" href="/administration">
+        <img src="/images/precedent.png" alt="précédent" title="précédent"> Retour</a>
+    </div>
+  </div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
