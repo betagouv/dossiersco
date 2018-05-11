@@ -195,37 +195,12 @@ class EleveFormTest < Test::Unit::TestCase
     assert_attr '0112345678', '#tel_secondaire_urg', doc
   end
 
-
-  def test_piece_jointe_invite_a_prendre_en_photo
-    post '/identification', identifiant: '2', date_naiss: '1915-12-19'
-    get '/pieces_a_joindre'
-    doc = Nokogiri::HTML(last_response.body)
-
-    assert doc.css("#fichier_photo_identite img").empty?
-    assert doc.css("#fichier_assurance_scolaire img").empty?
-    assert doc.css("#fichier_jugement_garde_enfant img").empty?
-  end
-
-  def test_joindre_assurance_scolaire
-    piece_a_joindre = Tempfile.new('fichier_temporaire')
-
-    doc = soumet_formulaire '/pieces_a_joindre', assurance_scolaire: {"tempfile": piece_a_joindre.path}
-
-    assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
-  end
-
-  def test_joindre_jugement_garde_enfant
-    piece_a_joindre = Tempfile.new('fichier_temporaire')
-
-    doc = soumet_formulaire '/pieces_a_joindre', jugement_garde_enfant: {"tempfile": piece_a_joindre.path}
-
-    assert_file "public/uploads/#{File.basename(piece_a_joindre.path)}"
-  end
-
   def test_affichage_preview_jpg_famille
     eleve = Eleve.find_by(identifiant: 6)
-    eleve.dossier_eleve.assurance_scolaire = 'assurance_photo.jpg'
-    eleve.dossier_eleve.save!
+    piece_attendue = PieceAttendue.find_by(code: 'assurance_scolaire', 
+      etablissement_id: eleve.dossier_eleve.etablissement.id)
+    piece_jointe = PieceJointe.create(clef: 'assurance_photo.jpg', dossier_eleve_id: eleve.dossier_eleve.id, 
+      piece_attendue_id: piece_attendue.id)  
     post '/identification', identifiant: '6', date_naiss: '1970-01-01'
     get '/pieces_a_joindre'
     doc = Nokogiri::HTML(last_response.body)
@@ -241,8 +216,10 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_affichage_preview_pdf_famille
     eleve = Eleve.find_by(identifiant: 6)
-    eleve.dossier_eleve.assurance_scolaire = 'assurance_scannee.pdf'
-    eleve.dossier_eleve.save!
+    piece_attendue = PieceAttendue.find_by(code: 'assurance_scolaire', 
+      etablissement_id: eleve.dossier_eleve.etablissement.id)
+    piece_jointe = PieceJointe.create(clef: 'assurance_scannee.pdf', dossier_eleve_id: eleve.dossier_eleve.id, 
+      piece_attendue_id: piece_attendue.id)  
     post '/identification', identifiant: '6', date_naiss: '1970-01-01'
     get '/pieces_a_joindre'
     doc = Nokogiri::HTML(last_response.body)
@@ -337,13 +314,17 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_un_visiteur_anonyme_ne_peut_pas_valider_une_piece_jointe
-    dossier_eleve = DossierEleve.first
-    etat_préservé = dossier_eleve.etat_photo_identite
+    dossier_eleve = DossierEleve.last
+    piece_attendue = PieceAttendue.find_by(code: 'assurance_scolaire', 
+      etablissement_id: dossier_eleve.etablissement.id)
+    piece_jointe = PieceJointe.create(clef: 'assurance_scannee.pdf', dossier_eleve_id: dossier_eleve.id, 
+      piece_attendue_id: piece_attendue.id)  
+    etat_préservé = piece_jointe.etat
 
-    post '/agent/change_etat_fichier', id: dossier_eleve.id, etat: 'validé', nom_fichier: 'etat_photo_identite'
+    post '/agent/change_etat_fichier', id: piece_jointe.id, etat: 'validé'
 
-    dossier_eleve_en_base = DossierEleve.find(dossier_eleve.id)
-    assert_equal etat_préservé, dossier_eleve_en_base.etat_photo_identite
+    nouvel_etat_piece = PieceJointe.find(piece_jointe.id).etat
+    assert_equal etat_préservé, nouvel_etat_piece
   end
 
   def test_un_agent_visualise_un_eleve
@@ -417,6 +398,16 @@ class EleveFormTest < Test::Unit::TestCase
 
     get '/agent/options'
     assert_no_match /Musique/, last_response.body
+  end
+
+  def test_un_agent_ajoute_une_nouvelle_piece_attendue
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+
+    post '/agent/piece_attendues', nom: 'Photo d’identité', explication: 'Pour coller sur le carnet'
+
+    post '/identification', identifiant: '5', date_naiss: '1970-01-01'
+    get '/pieces_a_joindre'
+    assert_match /Photo d’identité/, last_response.body
   end
 
   def test_un_agent_genere_un_pdf

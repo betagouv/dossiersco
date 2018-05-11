@@ -21,45 +21,32 @@
       <th>Prénom</th>
       <th>Nom</th>
       <th>Etat</th>
-      <th>Photo</th>
-      <th>Assurance</th>
-      <th>Garde</th>
+      <% agent.etablissement.piece_attendue.each do |piece| %>
+        <th><%= piece.nom %></th>  
+      <% end %>
     </tr></thead>
     <tbody>
       <% dossier_eleves.each do |dossier_eleve| %>
         <% cliquable = "class='clickable-row' data-href='/agent/eleve/#{dossier_eleve.eleve.identifiant}'" %>
         <tr id="<%= dossier_eleve.id %>" style='cursor:pointer'>
-          <th <%= cliquable %> ><%= dossier_eleve.eleve.classe_ant %></th>
-          <th <%= cliquable %> ><%= dossier_eleve.eleve.prenom %></th>
-          <th <%= cliquable %> ><%= dossier_eleve.eleve.nom %></th>
-          <th <%= cliquable %> ><%= dossier_eleve.etat %></th>
-          <th class="text-center" data-nom-fichier="etat_photo_identite">
-            <% if dossier_eleve.photo_identite.present? %>
-              <a class="lien-piece-jointe" data-toggle="modal" data-target="#modal-pieces-jointes" data-url="<%= FichierUploader::route_lecture(dossier_eleve.eleve.identifiant, 'photo_identite') + "/" + dossier_eleve.photo_identite %>">
-                <i class="fas fa-file-image"></i>
-              </a>
-              <i class="fas fa-check-circle etat" style="<%= 'color: #00cf00' if dossier_eleve.etat_photo_identite == 'valide' %>"></i>
-              <i class="fas fa-times-circle etat" style="<%= 'color: red' if dossier_eleve.etat_photo_identite == 'invalide' %>"></i>
-            <% end %>
-          </th>
-          <th class="text-center" data-nom-fichier="etat_assurance_scolaire">
-            <% if dossier_eleve.assurance_scolaire.present? %>
-              <a class="lien-piece-jointe" data-toggle="modal" data-target="#modal-pieces-jointes" data-url="<%= FichierUploader::route_lecture(dossier_eleve.eleve.identifiant, 'assurance_scolaire') + "/" + dossier_eleve.assurance_scolaire %>">
-                <i class="fas fa-file-image"></i>
-              </a>
-              <i class="fas fa-check-circle etat" style="<%= 'color: #00cf00' if dossier_eleve.etat_assurance_scolaire == 'valide' %>"></i>
-              <i class="fas fa-times-circle etat" style="<%= 'color: red' if dossier_eleve.etat_assurance_scolaire == 'invalide' %>"></i>
-            <% end %>
-          </th>
-          <th class="text-center" data-nom-fichier="etat_jugement_garde_enfant">
-            <% if dossier_eleve.jugement_garde_enfant.present? %>
-              <a class="lien-piece-jointe" data-toggle="modal" data-target="#modal-pieces-jointes" data-url="<%= FichierUploader::route_lecture(dossier_eleve.eleve.identifiant, 'jugement_garde_enfant') + "/" + dossier_eleve.jugement_garde_enfant %>">
-                <i class="fas fa-file-image"></i>
-              </a>
-              <i class="fas fa-check-circle etat" style="<%= 'color: #00cf00' if dossier_eleve.etat_jugement_garde_enfant == 'valide' %>"></i>
-              <i class="fas fa-times-circle etat" style="<%= 'color: red' if dossier_eleve.etat_jugement_garde_enfant == 'invalide' %>"></i>
-            <% end %>
-          </th>
+          <td <%= cliquable %> ><%= dossier_eleve.eleve.classe_ant %></td>
+          <td <%= cliquable %> ><%= dossier_eleve.eleve.prenom %></td>
+          <td <%= cliquable %> ><%= dossier_eleve.eleve.nom %></td>
+          <td <%= cliquable %> ><%= dossier_eleve.etat %></td>
+
+          <% agent.etablissement.piece_attendue.each do |piece| %>
+            <% piece_jointe = PieceJointe.find_by(dossier_eleve_id: dossier_eleve.id, piece_attendue_id: piece.id) %>
+          <%= piece_jointe.etat if piece_jointe.present?%>
+            <td class="text-center" data-piece-id="<%= piece_jointe.id if piece_jointe.present? %>">
+              <% if piece_jointe.present? %>
+                <a class="lien-piece-jointe" href="<%= FichierUploader::route_lecture(dossier_eleve.eleve.identifiant, piece.code) + "/" + piece_jointe.clef %>" target="_blank">
+                  <i class="fas fa-file-image"></i>
+                </a>
+                <i class="fas fa-check-circle etat" style="<%= 'color: #00cf00' if piece_jointe.etat == 'valide' %>"></i>
+                <i class="fas fa-times-circle etat" style="<%= 'color: red' if piece_jointe.etat == 'invalide' %>"></i>
+              <% end %>
+            </td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>
@@ -67,13 +54,10 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<%= erb :'partials/image_box' %>
 <script type="text/javascript" charset="utf-8">
   $('.etat').click(function() {
-      var id = $(this).parent().parent().attr('id');
-      var nom_fichier = $(this).parent().data('nom-fichier');
+      var id = $(this).parent().data('piece-id');
       if ($(this).hasClass('fa-check-circle')) {
           var etat = 'valide';
           $(this).css('color', '#00cf00');
@@ -86,7 +70,7 @@
     $.ajax({
         method: "POST",
         url: "/agent/change_etat_fichier",
-        data: { id: id, nom_fichier: nom_fichier, etat: etat}
+        data: { id: id, etat: etat}
     })
   })
   jQuery(document).ready(function($) {

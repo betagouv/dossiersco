@@ -65,9 +65,8 @@ get '/agent/eleve/:identifiant' do
 end
 
 post '/agent/change_etat_fichier' do
-    dossier_eleve = DossierEleve.find(params[:id])
-    dossier_eleve[params[:nom_fichier]] = params[:etat]
-    dossier_eleve.save!
+  piece = PieceJointe.find(params[:id])
+  piece.update(etat: params[:etat])
 end
 
 get '/agent/options' do
@@ -109,8 +108,53 @@ post '/agent/options' do
   end
 end
 
+get '/agent/piece_attendues' do
+  agent = Agent.find_by(identifiant: session[:identifiant])
+  etablissement = agent.etablissement
+  piece_attendues = etablissement.piece_attendue
+  erb :'agent/piece_attendues', locals: {piece_attendues: piece_attendues}, layout: :layout_agent
+end
+
+post '/agent/piece_attendues' do
+  agent = Agent.find_by(identifiant: session[:identifiant])
+  etablissement = agent.etablissement
+  code_piece = params[:nom].gsub(/[^a-zA-Z0-9]/, '_').upcase.downcase
+  piece_attendue = PieceAttendue.find_by(
+    code: code_piece,
+    etablissement: etablissement.id)
+
+  if !params[:nom].present?
+    message = "Une pièce doit comporter un nom"
+    erb :'agent/piece_attendues', locals: {piece_attendues: etablissement.piece_attendue, message: message},
+    layout: :layout_agent
+
+  elsif piece_attendue.present? && (piece_attendue.nom == code_piece)
+    message = "#{params[:nom]} existe déjà"
+    erb :'agent/piece_attendues', locals: {piece_attendues: etablissement.piece_attendue, message: message},
+    layout: :layout_agent
+  else
+    piece_attendue = PieceAttendue.create!(
+       nom: params[:nom],
+       explication: params[:explication],
+       etablissement_id: etablissement.id,
+       code: code_piece)
+    erb :'agent/piece_attendues',
+      locals: {piece_attendues: etablissement.piece_attendue, agent: agent}, layout: :layout_agent
+  end
+end
+
 post '/agent/supprime_option' do
   Option.find(params[:option_id]).delete
+end
+
+post '/agent/supprime_piece_attendue' do
+  pieces_existantes = PieceJointe.where(piece_attendue_id: params[:piece_attendue_id])
+  if pieces_existantes.size >= 1
+    message = 'Cette piece ne peut être supprimé'
+    raise
+  else
+    PieceAttendue.find(params[:piece_attendue_id]).delete
+  end
 end
 
 get '/agent/pdf' do
