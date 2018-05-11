@@ -114,11 +114,8 @@ def cree_dossier_eleve eleve, etablissement, etat
       eleve_id: e.id,
       etablissement_id: etablissement.id,
       demarche: "reinscription",
-      etat: etat,
-      etat_photo_identite: "absente",
-      etat_assurance_scolaire: "absente",
-      etat_jugement_garde_enfant: "absente"
-  )
+      etat: etat
+      )
   RespLegal.create!(dossier_eleve_id: dossier_eleve.id,
     lien_de_parente: 'Mère', prenom: 'Gertrude', nom: 'Martin',
     adresse: '42 rue de la fin', code_postal: '75020', ville: 'Paris',
