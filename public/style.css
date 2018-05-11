@@ -281,6 +281,10 @@ h2, h4 {
     background-repeat: no-repeat;
 }
 
+.bordure-verte {
+  border: 2px solid #00bf00;
+}
+
 /*modal*/
 .modal-dialog {
     height: 90vh;
