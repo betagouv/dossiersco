@@ -18,8 +18,9 @@
 
 	<p>Veuillez vous munir des pièces administratives suivantes :</p>
 	<ul>
-		<li>Une photo de votre enfant</li>
-		<li>Le justificatif de quotient familial</li>
+		<% dossier_eleve.etablissement.piece_attendue.each do |piece| %>
+		<li><%= piece.nom %></li>
+		<% end %>
 	</ul>
 	<p>et mettre à jour vos coordonnées sur ce site avant le <strong id="date-limite"><%= dossier_eleve.etablissement.date_limite %></strong>.</p>
 
