@@ -31,6 +31,7 @@
 				<%= erb :'partials/champ_check', :locals => { :desc => "Je m'engage à régler les frais de demi-pension en
 					respectant les délais impartis inhérents au bon fonctionnement du service.", name: 'check_paiement_cantine',
 					condition: dossier_eleve.check_paiement_cantine}%>
+					<p style="color: red"><%= message_cantine if defined? message_cantine %></p>
 			</div>
 		</div>
 
@@ -90,8 +91,7 @@
 			</label>
 		</div>
 
-		<p>que mon enfant soit photographié à l'occasion des photos de classe
-			et dans le cadre des sorties scolaires.</p>
+		<p>que mon enfant soit photographié à l'occasion des photos de classe.</p>
 
     <%= erb :'partials/nouveau_precedent_suivant', :locals => { :precedent => "famille"} %>
 	</form>
