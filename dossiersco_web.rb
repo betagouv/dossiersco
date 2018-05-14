@@ -38,6 +38,10 @@ post '/identification' do
     session[:message_erreur] = message_erreur_identification params[:identifiant], params[:date_naiss]
     redirect '/'
   end
+  if normalise(params[:date_naiss]).nil?
+    session[:message_erreur] = "Nous n'avons pas reconnu la date de naissance de l'élève."
+    redirect '/'
+  end
   eleve = dossier_eleve.eleve
 	if eleve.date_naiss == normalise(params[:date_naiss])
 		session[:identifiant] = params[:identifiant]

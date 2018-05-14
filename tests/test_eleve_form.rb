@@ -14,6 +14,7 @@ require_relative '../db/seeds'
 
 class EleveFormTest < Test::Unit::TestCase
   include Rack::Test::Methods
+  include MotDePasse
 
   def app
     Sinatra::Application
@@ -21,6 +22,12 @@ class EleveFormTest < Test::Unit::TestCase
 
   def setup
     init
+  end
+
+  def test_normalise_date_naissance
+    assert_equal "2018-05-14", normalise("14 05 2018")
+    assert_equal "2018-05-14", normalise("14/05/2018")
+    assert_equal nil, normalise("foo")
   end
 
   def test_accueil
@@ -51,6 +58,12 @@ class EleveFormTest < Test::Unit::TestCase
     post '/identification', identifiant: '3', date_naiss: '1995-11-19'
     follow_redirect!
     assert last_response.body.include? "L'élève a bien comme identifiant 3 et comme date de naissance le 19 novembre 1995 ?"
+  end
+
+  def test_entree_mauvaise_date
+    post '/identification', identifiant: '3', date_naiss: 'foo'
+    follow_redirect!
+    assert last_response.body.include? "Nous n'avons pas reconnu la date de naissance de l'élève."
   end
 
   def test_nom_college_accueil
