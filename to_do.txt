@@ -1,5 +1,5 @@
 [ ] auto-upload des pièces jointes
-[ ] validation de façon à éviter les Internal Server Error
+[X] validation de façon à éviter les Internal Server Error
 [ ] validation des infos en base e.g. dates limites d’inscription
 [ ] assouplir la modélisation des pièces jointes (en affichage et en base) (edited)
 [ ] page d’erreur “catch all” qui rassure (edited)
