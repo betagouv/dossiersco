@@ -1,4 +1,4 @@
-helpers do
+module MotDePasse
 	def normalise date
     return date if date =~ /\d{4}-\d\d-\d\d/
     if date =~ /^(\d\d)\/(\d\d)\/(\d{4})/ or date =~ /^(\d\d)\s(\d\d)\s(\d{4})/
@@ -16,3 +16,5 @@ helpers do
     "L'élève a bien comme identifiant #{identifiant} et comme date de naissance le #{jour} #{mois_de_l_année[mois]} #{annee} ?"
   end
 end
+
+Sinatra::Application.helpers MotDePasse
