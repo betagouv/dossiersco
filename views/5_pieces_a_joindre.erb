@@ -14,7 +14,7 @@
           piece_attendue_id: piece.id,
           dossier_eleve_id: dossier_eleve.id) %>
           <% document_stocke_url = piece_jointe.present? ? piece_jointe.clef : '' %>
-        <div class="card <%= "bordure-verte" if piece_jointe.present? %>">
+        <div class="card <%= piece_jointe.etat if piece_jointe.present? %>">
           <h5 class="card-header"><%= piece.nom %></h5>
           <div class="card-body">
             <p class="card-text"><%= piece.explication %></p>
@@ -39,6 +39,7 @@
             </div>
           </div>
         <button type="submit">Soumettre</button>
+        <p><%= "Fichier #{piece_jointe.etat}" if piece_jointe.present? %></p>
         </div>
 
       </form>

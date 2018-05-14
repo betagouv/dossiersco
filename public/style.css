@@ -281,8 +281,14 @@ h2, h4 {
     background-repeat: no-repeat;
 }
 
-.bordure-verte {
+.valide {
   border: 2px solid #00bf00;
+}
+.invalide {
+  border: 2px solid #BB0000;
+}
+.soumis {
+  border: 2px dashed #00bf00;
 }
 
 /*modal*/
