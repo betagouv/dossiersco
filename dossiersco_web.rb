@@ -141,7 +141,7 @@ post '/administration' do
   dossier_eleve.check_paiement_cantine = params['check_paiement_cantine']
 	dossier_eleve.save!
   if dossier_eleve.demi_pensionnaire && !dossier_eleve.check_paiement_cantine
-    erb :'4_administration', locals: {dossier_eleve: dossier_eleve}
+    erb :'4_administration', locals: {dossier_eleve: dossier_eleve, message_cantine: "Vous devez accepter les conditions ci-dessus"}
   else
 	  sauve_et_redirect dossier_eleve, 'pieces_a_joindre'
   end
@@ -184,7 +184,7 @@ get '/pieces_a_joindre' do
 	erb :'5_pieces_a_joindre', locals: {dossier_eleve: dossier_eleve}
 end
 
-post '/pieces_a_joindre' do
+post '/enregistre_piece_jointe' do
   dossier_eleve = get_dossier_eleve session[:identifiant]
   params.each do |code, piece|
     if params[code].present? and params[code]["tempfile"].present?
@@ -195,14 +195,17 @@ post '/pieces_a_joindre' do
       piece_attendue = PieceAttendue.find_by(code: code, etablissement_id: dossier_eleve.etablissement_id)
       piece_jointe = PieceJointe.find_by(piece_attendue_id: piece_attendue.id, dossier_eleve_id: dossier_eleve.id)
       if piece_jointe.present?
-        piece_jointe.update(clef: nom_du_fichier)
+        piece_jointe.update(etat: 'soumis', clef: nom_du_fichier)
       else
-        piece_jointe = PieceJointe.create!(clef: nom_du_fichier, piece_attendue_id: piece_attendue.id, dossier_eleve_id: dossier_eleve.id)
+        piece_jointe = PieceJointe.create!(etat: 'soumis', clef: nom_du_fichier, piece_attendue_id: piece_attendue.id, dossier_eleve_id: dossier_eleve.id)
       end
     end
   end
+  redirect '/pieces_a_joindre'
+end
 
-	sauve_et_redirect dossier_eleve, 'validation'
+post '/pieces_a_joindre' do
+	redirect '/validation'
 end
 
 get '/validation' do

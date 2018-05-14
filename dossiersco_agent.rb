@@ -80,20 +80,20 @@ post '/agent/options' do
   agent = Agent.find_by(identifiant: session[:identifiant])
   etablissement = agent.etablissement
   option = Option.find_by(
-    nom: params[:nom].upcase.capitalize,
+    nom: params[:nom].upcase.capitalize, 
+    niveau_debut: params[:niveau_debut],
     etablissement: etablissement.id)
 
   if !params[:nom].present?
     message = "Une option doit comporter un nom"
     erb :'agent/options', locals: {options: etablissement.option, message: message},
     layout: :layout_agent
-
   elsif !params[:niveau_debut].present?
     message = "Une option doit comporter un niveau de début"
     erb :'agent/options', locals: {options: etablissement.option, message: message},
     layout: :layout_agent
-  elsif option.present? && (option.nom == params[:nom].upcase.capitalize)
-    message = "#{params[:nom]} existe déjà"
+  elsif option.present? && (option.nom == params[:nom].upcase.capitalize) && (option.niveau_debut == params[:niveau_debut].to_i)
+    message = "#{params[:nom]} existe déjà pour le niveau #{params[:niveau_debut]}ème"
     erb :'agent/options', locals: {options: etablissement.option, message: message},
     layout: :layout_agent
   else
