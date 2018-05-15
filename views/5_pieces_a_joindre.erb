@@ -7,6 +7,7 @@
 
   <h2 class="separation">Pièces à joindre</h2>
 
+  <p>A scanner ou prendre en photo sur votre téléphone portable.</p>
   <div class="card-deck row">
     <% dossier_eleve.etablissement.piece_attendue.each do |piece| %>
       <form class="col-6" action="/enregistre_piece_jointe" method="POST" enctype="multipart/form-data">
