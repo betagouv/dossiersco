@@ -8,7 +8,6 @@ require './uploaders/fichier_uploader.rb'
 require './helpers/s3.rb'
 
 set :database_file, "config/database.yml"
-set :server_settings, :timeout => 120
 
 require_relative 'helpers/formulaire'
 require_relative 'helpers/init'
