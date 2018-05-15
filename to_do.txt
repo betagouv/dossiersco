@@ -14,7 +14,7 @@
 [ ] Feedback sur l'obligation de cocher les cases administration
 [/] Corriger l'affichage des pièces côté agent
 [ ] Logique de validation des dossiers
-[ ] Allonger la durée de session
+[X] Allonger la durée de session
 [ ] Ajouter sentry https://sentry.io/for/sinatra/ https://sentry.io/for/open-source/
 
 champs mandatory en html
