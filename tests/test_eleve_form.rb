@@ -104,8 +104,8 @@ class EleveFormTest < Test::Unit::TestCase
   def test_affiche_2ème_et_3ème_prénoms_en_4ème_pour_brevet_des_collèges
     post '/identification', identifiant: '4', date_naiss: '1970-01-01'
     get '/eleve'
-    assert last_response.body.include? '(Deuxième prénom)'
-    assert last_response.body.include? '(Troisième prénom)'
+    assert last_response.body.include? 'Deuxième prénom'
+    assert last_response.body.include? 'Troisième prénom'
   end
 
   def test_n_affiche_pas_2ème_et_3ème_prénoms_en_5ème
@@ -125,8 +125,8 @@ class EleveFormTest < Test::Unit::TestCase
   def test_affiche_2ème_et_3ème_prénoms_en_CM2
     post '/identification', identifiant: '1', date_naiss: '1995-11-19'
     get '/eleve'
-    assert last_response.body.include? '(Deuxième prénom)'
-    assert last_response.body.include? '(Troisième prénom)'
+    assert last_response.body.include? 'Deuxième prénom'
+    assert last_response.body.include? 'Troisième prénom'
   end
 
   def test_accueil_et_inscription
