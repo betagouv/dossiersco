@@ -1,27 +1,24 @@
+[ ] corriger le timeout d'import siecle en prod
+[ ] exporter les données vers siecle
 [ ] auto-upload des pièces jointes
-[X] validation de façon à éviter les Internal Server Error
 [ ] validation des infos en base e.g. dates limites d’inscription
-[ ] assouplir la modélisation des pièces jointes (en affichage et en base) (edited)
 [ ] page d’erreur “catch all” qui rassure (edited)
-[ ] supprimer les éléments de façade (par ex dashboard niveaux élèves)
 [ ] raisonner en classes et pas seulement en élèves côté agent
 [ ] gestion des comms et relances aux familles (edited)
 [ ] analyse de sécurité des moyens de transmission des secrets de connexion
 [ ] intégration d’une brique d’envoi de SMS
 [ ] intégration d’une brique d’envoi transactionnel mail
-[ ] feedback sur les pièces jointes fournies
+[/] feedback sur les pièces jointes fournies
 [ ] passage sur Heroku payant avec backups
 [ ] débrancher /init sur la prod
 [ ] Feedback sur l'obligation de cocher les cases administration
-[X] Corriger l'affichage des pièces côté agent
-[ ] Afficher le règlement demi-pension dans une boite "fermable"
-[X] Vérifier les droits d'accès aux pièces jointes (avec tests)
+[/] Corriger l'affichage des pièces côté agent
 [ ] Logique de validation des dossiers
 [ ] Allonger la durée de session
+[ ] Ajouter sentry https://sentry.io/for/sinatra/ https://sentry.io/for/open-source/
 
 champs mandatory en html
 2ème ou 3ème prénom, préciser "optionnel"
-input = tel
 appostrophe française ’
 
 Ancien todo :
@@ -41,5 +38,4 @@ rappeler la lv1 ?
 
 Réunion avec Pierre le 18/04/2018
 
-Faire un test de passage de l'ordinateur au portable
 [ ] Expliquer comment prendre une photo ou scanner les pièces jointes
