@@ -10,7 +10,7 @@
   <p>A scanner ou prendre en photo sur votre téléphone portable.</p>
   <div class="card-deck row">
     <% dossier_eleve.etablissement.piece_attendue.each do |piece| %>
-      <form class="col-6" action="/enregistre_piece_jointe" method="POST" enctype="multipart/form-data">
+      <form class="col-6 forms" action="/enregistre_piece_jointe" method="POST" enctype="multipart/form-data">
         <% piece_jointe = PieceJointe.find_by(
           piece_attendue_id: piece.id,
           dossier_eleve_id: dossier_eleve.id) %>
@@ -38,9 +38,9 @@
                     <% end %>>
               </div>
             </div>
+            <p><%= "Fichier #{piece_jointe.etat}" if piece_jointe.present? %></p>
           </div>
-        <button type="submit">Soumettre</button>
-        <p><%= "Fichier #{piece_jointe.etat}" if piece_jointe.present? %></p>
+          <button class="soumettre d-none" type="submit">Soumettre</button>
         </div>
 
       </form>
@@ -62,5 +62,13 @@
 <%= erb :'partials/image_box' %>
 <script type="text/javascript" src="/js/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js"> </script>
 <script>
-  document.getElementById('<%=dossier_eleve.etablissement.piece_attendue.first.nom%>').focus();
+  $(document).ready(function() {
+    $('input[type=file]')[0].focus();
+
+    $('.forms').change(function() {
+      console.log($(this).find( "input[type=file]" ).prop('files'))
+      var data = $(this).serialize()
+      $(this).find( ".soumettre" ).click()
+    })
+  });
 </script>
