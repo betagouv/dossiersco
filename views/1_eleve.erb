@@ -6,7 +6,8 @@
           type: "text",
           value: eleve.prenom,
           indication: "Prénom",
-          disabled: false
+          disabled: false,
+          required: 'required'
         }]
 
     autres_prenoms = [
@@ -34,14 +35,15 @@
           type: "text",
           value: eleve.nom,
           indication: "Nom",
-          disabled: false
+          disabled: false,
+          required: 'required'
         },
         {
           name: "sexe",
           label: "Sexe",
           type: "radio",
           options: ["Féminin", "Masculin"],
-          checked: eleve.sexe,
+          checked: eleve.sexe
         },
         {
           type: "espace",
@@ -53,7 +55,8 @@
           type: "text",
           value: eleve.ville_naiss,
           indication: "Ville de naissance",
-          disabled: false
+          disabled: false,
+          required: 'required'
         },
         {
           name: "pays_naiss",
@@ -61,7 +64,8 @@
           type: "text",
           value: eleve.pays_naiss,
           indication: "Pays de naissance",
-          disabled: false
+          disabled: false,
+          required: 'required'
         },
         {
           type: "espace",
@@ -73,7 +77,8 @@
           type: "text",
           value: eleve.nationalite,
           indication: "Pays de nationalité",
-          disabled: false
+          disabled: false,
+          required: 'required'
         },
         {
           type: "espace",
