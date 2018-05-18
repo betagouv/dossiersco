@@ -17,11 +17,11 @@ rake db:seed
 
 rake db:rollback
 
-## Pour tester une migration
+## Créer le hash d'un mot de passe
 
-irb(main):001:0> require_relative 'dossiersco_web'
+irb:> BCrypt::Password.create('motDePasse')
 
-Sortir d'irb pour refaire un require_relative
+Copier-coller le hash dans seeds.rb
 
 
 ## Entre dans docker pour lancer rake
