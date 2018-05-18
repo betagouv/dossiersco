@@ -44,7 +44,7 @@ helpers do
         end
       end
       move_down 70
-      text "Si vous ne souhaitez pas faire l'inscription en ligne, rendez-vous au collège : #{eleve.dossier_eleve.etablissement.dates_permanence}."
+      text "Si vous ne souhaitez pas faire l'inscription en ligne, rendez-vous au collège : #{eleve.dossier_eleve.etablissement.message_permanence}."
     end
   end
 end

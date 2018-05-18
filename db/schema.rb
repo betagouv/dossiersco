@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180511081347) do
+ActiveRecord::Schema.define(version: 20180518124014) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(version: 20180511081347) do
     t.string "adresse"
     t.string "ville"
     t.string "code_postal"
-    t.string "dates_permanence"
+    t.string "message_permanence"
   end
 
   create_table "options", force: :cascade do |t|

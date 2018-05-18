@@ -21,7 +21,7 @@
 
   <% if demarche == "inscription" %>
     <p>Une permanence est assuré si vous souhaitez venir nous rencontrer :
-    <%= dossier_eleve.etablissement.dates_permanence %></p>
+    <%= dossier_eleve.etablissement.message_permanence %></p>
   <% end %>
 
   <p class='mb-5'>A bientôt au <%= dossier_eleve.etablissement.nom %> !</p>
