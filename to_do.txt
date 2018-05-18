@@ -1,6 +1,6 @@
 [ ] corriger le timeout d'import siecle en prod
 [ ] exporter les données vers siecle
-[ ] auto-upload des pièces jointes
+[X] auto-upload des pièces jointes
 [ ] validation des infos en base e.g. dates limites d’inscription
 [ ] page d’erreur “catch all” qui rassure (edited)
 [ ] raisonner en classes et pas seulement en élèves côté agent
