@@ -65,7 +65,7 @@ def init
      adresse: "21 Rue de Reuilly",
      ville: "Paris",
      code_postal: '75012',
-     dates_permanence: "mercredi 19 juin de 8h à 19h"
+     message_permanence: "mercredi 19 juin de 8h à 19h"
   })
   cree_dossier_eleve eleves[1], oeben, 'pas connecté'
 
@@ -79,7 +79,7 @@ def init
       adresse: "8 Avenue Vincent d'Indy",
       ville: 'Paris',
       code_postal: '75012',
-      dates_permanence: "lundi 17 et mardi 18 juin de 10h à 20h"
+      message_permanence: "lundi 17 et mardi 18 juin de 10h à 20h"
   })
   
   Option.create!(etablissement_id: tillion.id, nom: 'Espagnol', niveau_debut: 5,
