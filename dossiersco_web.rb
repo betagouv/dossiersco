@@ -18,7 +18,24 @@ use Rack::Session::Cookie, :key => 'rack.session', :path => '/', :secret => Secu
 
 identite_resp_legal = ["lien_de_parente", "prenom", "nom", "adresse", "code_postal", "ville", "tel_principal",
 											 "tel_secondaire", "email", "situation_emploi", "profession", "enfants_a_charge",
-											 "enfants_a_charge_secondaire", "communique_info_parents_eleves", "lien_avec_eleve"]
+                       "enfants_a_charge_secondaire", "communique_info_parents_eleves", "lien_avec_eleve"]
+                       
+code_situation = {'0': 'Choisissez...', '1': 'occupe un emploi', '2': 'Au chômage', '3': 'Pré retraité, retraité ou retiré', 
+  '4': 'Personne sans activité professionnelle'}
+
+code_profession = {'0': 'Choisissez...', '10': 'agriculteur exploitant', '21': 'artisan', '22': 'commerçant et assimilé', 
+  '23': "chef d'entreprise de 10 salariés et+", '31': 'profession libérale', '33': 'cadre de la fonction publique', 
+  '34': 'professeur, profession scientifique', '35': "profession de l'information, des arts et des spectacles", 
+  '37': "cadre administratif, commercial d'entreprise", '38': "ingénieur, cadre technique d'entreprise", 
+  '42': "instituteur et assimilé", '43': "profession intermédiaire de la santé et du travail social", 
+  '44': 'Clergé, religieux', '45': "Profession intermédiaire administrative de la fonction publique", 
+  '46': "Profession intermédiaire administrative et commerciale des entreprises", '47': "Technicien", 
+  '48': "Contremaître, agent de maîtrise", '52': "Employé civil et agent de service de la fonction publique", 
+  '53': 'Policier, militaire', '54': "Employé administratif d'entreprise", '55': "Employé de commerce", 
+  '56': "Personnel service direct aux particuliers", '61': "Ouvrier qualifié", '66': "Ouvrier non qualifié", 
+  '69': "Ouvrier agricole", '71': "Retraité agriculteur exploitant", 
+  '72': "Retraité artisan, commerçant, chef d'entreprise", '73': "Retraité cadre, profession interm édiaire", 
+  '76': "Retraité employé, ouvrier", '82': "Personne sans activité professionnelle" }
 
 get '/init' do
   init
@@ -111,7 +128,8 @@ get '/famille' do
 
   resp_legal_2 = dossier_eleve.resp_legal.select {|resp_legal| resp_legal.priorite == 2}.first
 
-  erb :'3_famille', locals: {resp_legal_2: resp_legal_2, contact_urgence: dossier_eleve.contact_urgence}
+  erb :'3_famille', locals: {resp_legal_2: resp_legal_2, contact_urgence: dossier_eleve.contact_urgence, 
+    code_profession: code_profession, code_situation: code_situation}
 end
 
 post '/famille' do
