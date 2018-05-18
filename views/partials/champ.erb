@@ -27,6 +27,7 @@ disabled		pour	disabled
 			<% if disabled %>
 				disabled
 			<% end %>
+			<%= required if defined? required %>
 		>
 	</div>
 </div>
@@ -65,6 +66,7 @@ selected	"CM2"
 				> <%= option %>
 				</option>
 			<% end %>
+			<%= required if defined? required %>
 		</select>
 	</div>
 </div>
@@ -96,6 +98,7 @@ checked			anglais: pour cocher Anglais par défaut
 						checked
 					<% end %>
 				> <%= option %>
+				<%= required if defined? required %>
 			</label>
     	<% end %> 		
 	</div>

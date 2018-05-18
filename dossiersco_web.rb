@@ -20,10 +20,10 @@ identite_resp_legal = ["lien_de_parente", "prenom", "nom", "adresse", "code_post
 											 "tel_secondaire", "email", "situation_emploi", "profession", "enfants_a_charge",
                        "enfants_a_charge_secondaire", "communique_info_parents_eleves", "lien_avec_eleve"]
                        
-code_situation = {'0': 'Choisissez...', '1': 'occupe un emploi', '2': 'Au chômage', '3': 'Pré retraité, retraité ou retiré', 
+code_situation = {'0': '', '1': 'occupe un emploi', '2': 'Au chômage', '3': 'Pré retraité, retraité ou retiré', 
   '4': 'Personne sans activité professionnelle'}
 
-code_profession = {'0': 'Choisissez...', '10': 'agriculteur exploitant', '21': 'artisan', '22': 'commerçant et assimilé', 
+code_profession = {'0': '', '10': 'agriculteur exploitant', '21': 'artisan', '22': 'commerçant et assimilé', 
   '23': "chef d'entreprise de 10 salariés et+", '31': 'profession libérale', '33': 'cadre de la fonction publique', 
   '34': 'professeur, profession scientifique', '35': "profession de l'information, des arts et des spectacles", 
   '37': "cadre administratif, commercial d'entreprise", '38': "ingénieur, cadre technique d'entreprise", 
