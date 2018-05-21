@@ -321,9 +321,9 @@ class EleveFormTest < Test::Unit::TestCase
     assert_nil doc.css("button[type=submit]")
   end
 
-  def test_importe_eleve_fichier_siecle
+  def test_traiter_import_eleve_fichier_siecle
     tache_import = TacheImport.create(url: 'file://tests/test_import_siecle.xls', statut: 'en_attente')
-    get '/traiter_imports'
+    get '/agent/traiter_imports'
 
     eleve = Eleve.find_by(nom: 'NOM_TEST')
     eleve2 = Eleve.find_by(nom: 'NOM2_TEST')
@@ -467,7 +467,7 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 302, last_response.status
   end
 
-  def test_famille_peut_accédeer_à_une_pièce_de_son_dossier
+  def test_famille_peut_accéder_à_une_pièce_de_son_dossier
     post '/identification', identifiant: '6', date_naiss: '1970-01-01'
 
     piece_a_joindre = Tempfile.new('fichier_temporaire')
