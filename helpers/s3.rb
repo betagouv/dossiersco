@@ -12,9 +12,11 @@ helpers do
       bucket = connection.directories.get('dossierscoweb')
       bucket.files.get(emplacement_fichier)
     else
-      def emplacement_fichier.url(x)
-        return "file://#{x}"
-      end
+      # Pour émuler l'objet "File" de Fog::Storage::AWS, on dote la chaîne
+      # "emplacement_fichier" d'une méthode de singleton nommée "url" qui renvoie
+      # tout simplement le nom du fichier (donc l'objet "emplacement_fichier" lui-même)
+      # cf https://apidock.com/ruby/Object/define_singleton_method
+      emplacement_fichier.define_singleton_method(:url) {|x| "public/#{emplacement_fichier}"}
       emplacement_fichier
     end
   end
