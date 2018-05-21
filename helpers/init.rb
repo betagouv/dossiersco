@@ -1,10 +1,10 @@
 def init
-  Etablissement.destroy_all
+  RespLegal.destroy_all
   DossierEleve.destroy_all
   Eleve.destroy_all
   Agent.destroy_all
-  RespLegal.destroy_all
   Option.destroy_all
+  Etablissement.destroy_all
 
   eleves = [
       {prenom: 'Edith',
