@@ -58,7 +58,12 @@ end
 
 post '/agent/import_siecle' do
   fichier_s3 = get_fichier_s3 params[:filename][:tempfile]
-  tache = TacheImport.create(url: fichier_s3, etablissement_id: agent.etablissement.id, statut: 'en_attente')
+  tache = TacheImport.create(
+    url: fichier_s3.url(Time.now.to_i + 30),
+    etablissement_id: agent.etablissement.id,
+    statut: 'en_attente',
+    nom_a_importer: params[:nom_eleve],
+    prenom_a_importer: params[:prenom_eleve])
   erb :'agent/import_siecle',
       locals: { message: "",
           tache: tache

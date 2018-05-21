@@ -1,6 +1,5 @@
 helpers do
   def get_fichier_s3 nom_fichier
-    emplacement_fichier = "uploads/#{nom_fichier}"
     if ENV['S3_KEY'].present?
       connection = Fog::Storage.new({
         provider: 'AWS',
@@ -10,14 +9,16 @@ helpers do
         path_style: true # indispensable pour éviter l'erreur "hostname does not match the server certificate"
       })
       bucket = connection.directories.get('dossierscoweb')
-      bucket.files.get(emplacement_fichier)
+      bucket.files.get("uploads/#{nom_fichier}")
     else
-      # Pour émuler l'objet "File" de Fog::Storage::AWS, on dote la chaîne
-      # "emplacement_fichier" d'une méthode de singleton nommée "url" qui renvoie
-      # tout simplement le nom du fichier (donc l'objet "emplacement_fichier" lui-même)
-      # cf https://apidock.com/ruby/Object/define_singleton_method
-      emplacement_fichier.define_singleton_method(:url) {|x| "public/#{emplacement_fichier}"}
-      emplacement_fichier
+      # On crée un objet qui émule le comportement de l'objet Fog::Storage::AWS::File
+      # à savoir une méthode URL avec un paramètre de délai de validité et qui renvoie
+      # une URL (en remote) ou un chemin de fichier (en local)
+      fichier = Object.new
+      fichier.define_singleton_method(:url) do |x|
+        nom_fichier.start_with?("tests/") ? nom_fichier : "public/uploads/#{nom_fichier}"
+      end
+      fichier
     end
   end
 end

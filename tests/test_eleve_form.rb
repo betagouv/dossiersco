@@ -304,7 +304,7 @@ class EleveFormTest < Test::Unit::TestCase
     assert_match "L'import de cette base sera réalisé prochainement.", doc.css('.statut-import').text
 
     tache_import = TacheImport.find_by(statut: 'en_attente')
-    assert_equal(tache_import.url, 'uploads/tests/test_import_siecle.xls')
+    assert_equal(tache_import.url, 'tests/test_import_siecle.xls')
   end
 
   def test_affiche_statut_import
@@ -356,13 +356,15 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal(tache_import.url, 'tests/test_import_siecle.xls')
   end
 
-  # def test_compte_taux_de_portables_dans_siecle
-  #   post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-  #   post '/agent/import_siecle', name: 'import_siecle', filename: {tempfile: 'tests/test_import_siecle.xls'}
-  #   doc = Nokogiri::HTML(last_response.body)
-  #   assert_match "100% de téléphones portables", doc.css('.message_de_succes').text
-  #   assert_match "50% d'emails", doc.css('.message_de_succes').text
-  # end
+  def test_compte_taux_de_portables_dans_siecle
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    post '/agent/import_siecle', name: 'import_siecle', filename: {tempfile: 'tests/test_import_siecle.xls'}
+    get '/api/traiter_imports'
+    get '/agent/import_siecle'
+    doc = Nokogiri::HTML(last_response.body)
+    assert_match "100% de téléphones portables", doc.css('.message_de_succes').text
+    assert_match "50% d'emails", doc.css('.message_de_succes').text
+  end
 
   def test_un_visiteur_anonyme_ne_peut_pas_valider_une_piece_jointe
     dossier_eleve = DossierEleve.last
@@ -387,14 +389,24 @@ class EleveFormTest < Test::Unit::TestCase
     assert last_response.body.include? 'Piaf'
   end
 
-  # def test_un_agent_importe_un_eleve
-  #   DossierEleve.destroy_all
-  #   Eleve.destroy_all
-  #   post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-  #   post '/agent/import_siecle', nom_eleve: 'NOM_TEST', prenom_eleve: 'Prenom_test',
-  #        name: 'import_siecle', filename: {tempfile: 'tests/test_import_siecle.xls'}
-  #   assert_equal 1, Eleve.all.size
-  # end
+  def test_un_agent_importe_un_eleve
+    nb_eleves_au_depart = Eleve.all.size
+
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    post '/agent/import_siecle', nom_eleve: 'NOM_TEST', prenom_eleve: 'Prenom_test',
+         name: 'import_siecle', filename: {tempfile: 'tests/test_import_siecle.xls'}
+
+    agent = Agent.find_by(identifiant: 'pierre')
+    tache_import = TacheImport.find_by(statut: 'en_attente',
+          etablissement_id: agent.etablissement.id)
+
+    assert_equal('NOM_TEST', tache_import.nom_a_importer)
+    assert_equal('Prenom_test', tache_import.prenom_a_importer)
+
+    get '/api/traiter_imports'
+
+    assert_equal nb_eleves_au_depart+1, Eleve.all.size
+  end
 
   def test_une_famille_remplit_letape_administration
     post '/identification', identifiant: '2', date_naiss: '1915-12-19'
