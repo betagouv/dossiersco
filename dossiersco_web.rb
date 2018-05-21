@@ -37,8 +37,10 @@ code_profession = {'0': '', '10': 'agriculteur exploitant', '21': 'artisan', '22
   '72': "Retraité artisan, commerçant, chef d'entreprise", '73': "Retraité cadre, profession interm édiaire", 
   '76': "Retraité employé, ouvrier", '82': "Personne sans activité professionnelle" }
 
-get '/init' do
-  init
+configure :test, :development, :staging do
+  get '/init' do
+    init
+  end
 end
 
 get '/' do
