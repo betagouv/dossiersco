@@ -12,6 +12,7 @@ gem 'roo'
 gem 'roo-xls'
 gem 'bcrypt', '~> 3.1'
 gem 'prawn'
+gem 'sentry-raven'
 
 group :test do
   gem 'nokogiri'
