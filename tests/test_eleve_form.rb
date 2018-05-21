@@ -321,6 +321,11 @@ class EleveFormTest < Test::Unit::TestCase
     assert_empty doc.css("button[type=submit]")
   end
 
+  def test_traiter_zero_imports
+    get '/api/traiter_imports'
+    assert_equal 200, last_response.status
+  end
+
   def test_traiter_import_eleve_fichier_siecle
     etablissement = Etablissement.find_by(nom: 'Collège Germaine Tillion')
     tache_import = TacheImport.create(url: 'tests/test_import_siecle.xls', statut: 'en_attente',
