@@ -1,9 +1,12 @@
 def init
   RespLegal.destroy_all
+  ContactUrgence.destroy_all
   DossierEleve.destroy_all
   Eleve.destroy_all
   Agent.destroy_all
   Option.destroy_all
+  PieceAttendue.destroy_all
+  PieceJointe.destroy_all
   Etablissement.destroy_all
 
   eleves = [
@@ -81,15 +84,15 @@ def init
       code_postal: '75012',
       message_permanence: "lundi 17 et mardi 18 juin de 10h à 20h"
   })
-  
+
   Option.create!(etablissement_id: tillion.id, nom: 'Espagnol', niveau_debut: 5,
   obligatoire: true, groupe: 'Langue vivante 2')
   Option.create!(etablissement_id: tillion.id, nom: 'Allemand', niveau_debut: 5,
   obligatoire: true, groupe: 'Langue vivante 2')
   Option.create!(etablissement_id: tillion.id, nom: 'Latin', niveau_debut: 5)
   Option.create!(etablissement_id: tillion.id, nom: 'Grec', niveau_debut: 5)
-  
-  PieceAttendue.create!(nom: "Assurance scolaire", code: "assurance_scolaire", 
+
+  PieceAttendue.create!(nom: "Assurance scolaire", code: "assurance_scolaire",
     explication: "assurance de l'éleve 2018/2019", etablissement_id: tillion.id)
   quotien_familial = PieceAttendue.create!(
        nom: "Quotien familial",
@@ -120,14 +123,14 @@ def cree_dossier_eleve eleve, etablissement, etat
     lien_de_parente: 'Mère', prenom: 'Gertrude', nom: 'Martin',
     adresse: '42 rue de la fin', code_postal: '75020', ville: 'Paris',
     tel_principal: '0123456789', tel_secondaire: '0987654321', email: 'gertrude.martin@email.com',
-    situation_emploi: 'Employé', profession: 'concierge', enfants_a_charge: 3, 
+    situation_emploi: 'Employé', profession: 'concierge', enfants_a_charge: 3,
     enfants_a_charge_secondaire: 2, communique_info_parents_eleves: true,
     priorite: 1)
   RespLegal.create!(dossier_eleve_id: dossier_eleve.id,
     lien_de_parente: 'Père', prenom: 'Jean', nom: 'Blayo',
     adresse: '42 rue du départ', code_postal: '75018', ville: 'Paris',
     tel_principal: '0123456789', tel_secondaire: '', email: 'jean.martin@email.com',
-    situation_emploi: 'Employé', profession: 'banque', enfants_a_charge: 2, 
+    situation_emploi: 'Employé', profession: 'banque', enfants_a_charge: 2,
     enfants_a_charge_secondaire: 2, communique_info_parents_eleves: false,
     priorite: 2)
 end
