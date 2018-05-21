@@ -11,7 +11,7 @@
 [/] feedback sur les pièces jointes fournies
 [ ] passage sur Heroku payant avec backups
 [ ] débrancher /init sur la prod
-[ ] Feedback sur l'obligation de cocher les cases administration
+[X] Feedback sur l'obligation de cocher les cases administration
 [/] Corriger l'affichage des pièces côté agent
 [ ] Logique de validation des dossiers
 [X] Allonger la durée de session
