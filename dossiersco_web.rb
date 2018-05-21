@@ -7,6 +7,11 @@ require './config/initializers/carrierwave.rb'
 require './uploaders/fichier_uploader.rb'
 require './helpers/s3.rb'
 
+configure :staging, :production do
+  require 'rack/ssl-enforcer'
+  use Rack::SslEnforcer
+end
+
 set :database_file, "config/database.yml"
 
 require_relative 'helpers/formulaire'
