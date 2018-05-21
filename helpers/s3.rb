@@ -13,7 +13,7 @@ helpers do
       bucket.files.get(emplacement_fichier)
     else
       def emplacement_fichier.url(x)
-        return "http://neverssl.com" 
+        return "file://#{x}"
       end
       emplacement_fichier
     end

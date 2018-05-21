@@ -300,6 +300,31 @@ class EleveFormTest < Test::Unit::TestCase
     post '/agent/import_siecle', nom_eleve: "", prenom_eleve: "", name: 'import_siecle',
          filename: {tempfile: 'tests/test_import_siecle.xls'}
 
+    doc = Nokogiri::HTML(last_response.body)
+    assert_match "L'import de cette base sera réalisé prochainement.", doc.css('.statut').text
+
+    tache_import = TacheImport.find_by(statut: 'en_attente')
+    assert_equal(tache_import.url, 'file://tests/test_import_siecle.xls')
+  end
+
+  def test_affiche_statut_import
+    agent = Agent.find_by(identifiant: 'pierre')
+    tache_import = TacheImport.create(
+        url: 'file://tests/test_import_siecle.xls',
+        statut: 'en_cours',
+        etablissement_id: agent.etablissement.id)
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+
+    get '/agent/import_siecle'
+    doc = Nokogiri::HTML(last_response.body)
+    assert_match "L'import de cette base est en cours.", doc.css('.statut').text
+    assert_nil doc.css("button[type=submit]")
+  end
+
+  def test_importe_eleve_fichier_siecle
+    tache_import = TacheImport.create(url: 'file://tests/test_import_siecle.xls', statut: 'en_attente')
+    get '/traiter_imports'
+
     eleve = Eleve.find_by(nom: 'NOM_TEST')
     eleve2 = Eleve.find_by(nom: 'NOM2_TEST')
 
@@ -318,6 +343,9 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'Brazaville', eleve2.ville_naiss
     assert_equal '4EME HORAIRES AMENAGES MUSIQUE', eleve2.niveau_classe_ant
     assert_nil eleve2.classe_ant
+
+    tache_import = TacheImport.find_by(statut: 'terminée')
+    assert_equal(tache_import.url, 'file://tests/test_import_siecle.xls')
   end
 
   def test_compte_taux_de_portables_dans_siecle
