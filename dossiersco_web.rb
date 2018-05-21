@@ -205,6 +205,23 @@ get '/pieces_a_joindre' do
 	erb :'5_pieces_a_joindre', locals: {dossier_eleve: dossier_eleve}
 end
 
+post '/pieces_a_joindre' do
+  dossier_eleve = get_dossier_eleve session[:identifiant]
+  pieces_attendues = dossier_eleve.etablissement.piece_attendue
+  pieces_obligatoires = false
+  pieces_attendues.each do |piece| 
+  piece_jointe = piece.piece_jointe
+    if !piece_jointe.present? && piece.obligatoire
+      pieces_obligatoires = true
+    end
+  end
+  if pieces_obligatoires
+    erb :'5_pieces_a_joindre', locals: {dossier_eleve: dossier_eleve, message: 'Veuillez télécharger les pièces obligatoires'}     
+  else
+    redirect '/validation'    
+  end
+end
+
 post '/enregistre_piece_jointe' do
   dossier_eleve = get_dossier_eleve session[:identifiant]
   params.each do |code, piece|
@@ -226,7 +243,7 @@ post '/enregistre_piece_jointe' do
 end
 
 post '/pieces_a_joindre' do
-	redirect '/validation'
+  redirect '/validation'
 end
 
 get '/validation' do

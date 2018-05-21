@@ -7,7 +7,12 @@
 
   <h2 class="separation">Pièces à joindre</h2>
 
+  <% if defined? message  %>
+    <div class="message_echec"><%= message %></div>
+  <% end %>
+
   <p>A scanner ou prendre en photo sur votre téléphone portable.</p>
+  <p>Les pièce précédées d'un * sont obligatoires</p>
   <div class="card-deck row">
     <% dossier_eleve.etablissement.piece_attendue.each do |piece| %>
       <form class="col-6 forms" action="/enregistre_piece_jointe" method="POST" enctype="multipart/form-data">
@@ -16,13 +21,14 @@
           dossier_eleve_id: dossier_eleve.id) %>
           <% document_stocke_url = piece_jointe.present? ? piece_jointe.clef : '' %>
         <div class="card <%= piece_jointe.etat if piece_jointe.present? %>">
-          <h5 class="card-header"><%= piece.nom %></h5>
+          <h5 class="card-header"><%= '*' if piece.obligatoire %> <%= piece.nom %></h5>
+          <p></p>
           <div class="card-body">
             <p class="card-text"><%= piece.explication %></p>
             <div class="card-relat document">
 
                 <input data-btnClass="btn btn-primary" data-text="Parcourir" class='filestyle' type="file" name="<%= piece.code %>" id="<%= @variable %>"
-                      multiple>
+                      multiple >
               <span id="fichier_<%= piece.code %>"></span>
               <br />
               <div class="image-piece-a-joindre lien-piece-jointe" id="image_<%= piece.code %>"
@@ -46,16 +52,9 @@
       </form>
     <% end %>
   </div>
-  <div class="row mt-5">
-    <div class="col-10 col-sm-6 col-md-4 mx-auto order-sm-2 mb-3">
-        <a href='/validation' class="btn btn-primary float-right w-100">Enregistrer et continuer 
-        <img src="/images/suivant.png" alt="suivant" title="suivant"></a>
-    </div>
-    <div class="col-10 col-sm-3 col-md-2 mx-auto order-sm-1">
-        <a class="btn btn-primary w-100" href="/administration">
-        <img src="/images/precedent.png" alt="précédent" title="précédent"> Retour</a>
-    </div>
-  </div>
+  <form action="/pieces_a_joindre" method='POST'>
+    <%= erb :'partials/nouveau_precedent_suivant', :locals => { :precedent => "famille"} %>
+  </form>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
