@@ -12,10 +12,6 @@
     </div>
   </div>
 
-  <% if defined? message  %>
-    <div class="message_de_succes"><a href="/agent/tableau_de_bord"><%= message %></a></div>
-  <% end %>
-
   <% if tache.present? %>
     <div class="statut-import">
       <p>Vous avez soumis un fichier de données SIECLE.</p>
@@ -26,6 +22,7 @@
         <p>L'import de cette base est en cours.</p>
       <% when 'terminée' %>
         <p>Cette base a bien été importée.</p>
+        <div class="message_de_succes"><a href="/agent/tableau_de_bord"><%= tache.message %></a></div>
       <% end %>
     </div>
   <% end %>

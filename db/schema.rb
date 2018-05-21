@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180521132737) do
+ActiveRecord::Schema.define(version: 20180521154108) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -134,6 +134,9 @@ ActiveRecord::Schema.define(version: 20180521132737) do
     t.string "url"
     t.integer "etablissement_id"
     t.datetime "created_at"
+    t.string "nom_a_importer"
+    t.string "prenom_a_importer"
+    t.string "message"
   end
 
   add_foreign_key "dossier_eleves", "eleves", column: "eleve_id"
