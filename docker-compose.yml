@@ -16,6 +16,7 @@ services:
       POSTGRES_USER: dossiersco
       POSTGRES_PASSWORD: dossiersco
       RUBYOPT: -KU
+      RACK_ENV: development
   test:
     build: .
     command: /bin/bash -lc "sleep 1; rake db:migrate db:seed && while true; do ruby tests/test*.rb; sleep 1; done"

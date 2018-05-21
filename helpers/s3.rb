@@ -16,7 +16,8 @@ helpers do
       # une URL (en remote) ou un chemin de fichier (en local)
       fichier = Object.new
       fichier.define_singleton_method(:url) do |x|
-        nom_fichier.start_with?("tests/") ? nom_fichier : "public/uploads/#{nom_fichier}"
+        is_local_upload = nom_fichier.start_with?("tests/") || nom_fichier.start_with?("/tmp")
+        is_local_upload ? nom_fichier : "public/uploads/#{nom_fichier}"
       end
       fichier
     end
