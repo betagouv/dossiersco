@@ -136,6 +136,7 @@ post '/agent/piece_attendues' do
     piece_attendue = PieceAttendue.create!(
        nom: params[:nom],
        explication: params[:explication],
+       obligatoire: params[:obligatoire],
        etablissement_id: etablissement.id,
        code: code_piece)
     erb :'agent/piece_attendues',

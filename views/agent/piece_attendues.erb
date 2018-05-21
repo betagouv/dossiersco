@@ -12,6 +12,7 @@
     <tr>
         <th>nom</th>
         <th>explication</th>
+        <th>Obligatoire</th>
         <th></th>
     </tr>
   </thead>
@@ -20,6 +21,7 @@
       <tr>
         <td><%= piece_attendue.nom %></td>
         <td><%= piece_attendue.explication %></td>
+        <td><%= piece_attendue.obligatoire ? 'Oui' : 'Non' %></td>
         <td><i class="fas fa-trash-alt" style="color: #BB0000; cursor: pointer" data-id='<%= piece_attendue.id %>'></i></td>
       </tr>
     <% end %>
@@ -30,6 +32,8 @@
       <input name='nom' type='text' placeholder='Ex : Livret de famille' />
       <label for='explication' style='margin-left:10px'>Explication</label>
       <input name='explication' type='text' />
+      <label for='obligatoire' style='margin-left:10px'>Obligatoire</label>
+      <input name='obligatoire' type='checkbox' />
       <button class='btn btn-primary' type='submit' style='margin-left:10px'>Ajouter</button>
     </form>
 </div>
