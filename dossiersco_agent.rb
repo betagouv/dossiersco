@@ -52,16 +52,26 @@ get '/agent/tableau_de_bord' do
 end
 
 get '/agent/import_siecle' do
-  erb :'agent/import_siecle', layout: :layout_agent
+  tache = agent.etablissement.tache_import.last
+  erb :'agent/import_siecle', layout: :layout_agent, locals: {tache: tache, message: ""}
 end
 
 post '/agent/import_siecle' do
-  statistiques = import_xls params[:filename][:tempfile], agent.etablissement.id, params[:nom_eleve], params[:prenom_eleve]
+  fichier_s3 = get_fichier_s3 params[:filename][:tempfile]
+  tache = TacheImport.create(
+    url: fichier_s3.url(Time.now.to_i + 30),
+    etablissement_id: agent.etablissement.id,
+    statut: 'en_attente',
+    nom_a_importer: params[:nom_eleve],
+    prenom_a_importer: params[:prenom_eleve])
   erb :'agent/import_siecle',
-      locals: { message: "#{statistiques[:eleves]} élèves importés : "+
-          "#{statistiques[:portable]}% de téléphones portables et "+
-          "#{statistiques[:email]}% d'emails"
+      locals: { message: "",
+          tache: tache
       }, layout: :layout_agent
+end
+
+get '/api/traiter_imports' do
+  traiter_imports
 end
 
 get '/agent/eleve/:identifiant' do
@@ -75,17 +85,15 @@ post '/agent/change_etat_fichier' do
 end
 
 get '/agent/options' do
-  agent = Agent.find_by(identifiant: session[:identifiant])
   etablissement = agent.etablissement
   options = etablissement.option
   erb :'agent/options', locals: {options: options}, layout: :layout_agent
 end
 
 post '/agent/options' do
-  agent = Agent.find_by(identifiant: session[:identifiant])
   etablissement = agent.etablissement
   option = Option.find_by(
-    nom: params[:nom].upcase.capitalize, 
+    nom: params[:nom].upcase.capitalize,
     niveau_debut: params[:niveau_debut],
     etablissement: etablissement.id)
 
@@ -114,14 +122,12 @@ post '/agent/options' do
 end
 
 get '/agent/piece_attendues' do
-  agent = Agent.find_by(identifiant: session[:identifiant])
   etablissement = agent.etablissement
   piece_attendues = etablissement.piece_attendue
   erb :'agent/piece_attendues', locals: {piece_attendues: piece_attendues}, layout: :layout_agent
 end
 
 post '/agent/piece_attendues' do
-  agent = Agent.find_by(identifiant: session[:identifiant])
   etablissement = agent.etablissement
   code_piece = params[:nom].gsub(/[^a-zA-Z0-9]/, '_').upcase.downcase
   piece_attendue = PieceAttendue.find_by(

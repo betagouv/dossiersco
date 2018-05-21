@@ -148,7 +148,7 @@ class EleveFormTest < Test::Unit::TestCase
                             lien_de_parente_rl1: "Tutrice", prenom_rl1: "Philippe", nom_rl1: "Blayo",
                             adresse_rl1: "20 bd Segur", code_postal_rl1: "75007", ville_rl1: "Paris",
                             tel_principal_rl1: "0612345678", tel_secondaire_rl1: "0112345678",
-                            email_rl1: "test@gmail.com", situation_emploi_rl1: "Pré retraité, retraité ou retiré", 
+                            email_rl1: "test@gmail.com", situation_emploi_rl1: "Pré retraité, retraité ou retiré",
                             profession_rl1: "Retraité cadre, profession interm édiaire",
                             enfants_a_charge_secondaire_rl1: 2, enfants_a_charge_rl1: 3,
                             communique_info_parents_eleves_rl1: 'true'
@@ -175,8 +175,8 @@ class EleveFormTest < Test::Unit::TestCase
                              lien_de_parente_rl2: "Tutrice", prenom_rl2: "Philippe" , nom_rl2: "Blayo",
                              adresse_rl2: "20 bd Segur",code_postal_rl2: "75007", ville_rl2: "Paris",
                              tel_principal_rl2: "0612345678", tel_secondaire_rl2: "0112345678",
-                             email_rl2: "test@gmail.com", situation_emploi_rl2: "Pré retraité, retraité ou retiré", 
-                             profession_rl2: "Retraité cadre, profession interm édiaire", 
+                             email_rl2: "test@gmail.com", situation_emploi_rl2: "Pré retraité, retraité ou retiré",
+                             profession_rl2: "Retraité cadre, profession interm édiaire",
                              communique_info_parents_eleves_rl2: 'true'
 
     assert_attr 'Tutrice', '#lien_de_parente_rl2', doc
@@ -212,10 +212,10 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_affichage_preview_jpg_famille
     eleve = Eleve.find_by(identifiant: 6)
-    piece_attendue = PieceAttendue.find_by(code: 'assurance_scolaire', 
+    piece_attendue = PieceAttendue.find_by(code: 'assurance_scolaire',
       etablissement_id: eleve.dossier_eleve.etablissement.id)
-    piece_jointe = PieceJointe.create(clef: 'assurance_photo.jpg', dossier_eleve_id: eleve.dossier_eleve.id, 
-      piece_attendue_id: piece_attendue.id)  
+    piece_jointe = PieceJointe.create(clef: 'assurance_photo.jpg', dossier_eleve_id: eleve.dossier_eleve.id,
+      piece_attendue_id: piece_attendue.id)
     post '/identification', identifiant: '6', date_naiss: '1970-01-01'
     get '/pieces_a_joindre'
     doc = Nokogiri::HTML(last_response.body)
@@ -231,10 +231,10 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_affichage_preview_pdf_famille
     eleve = Eleve.find_by(identifiant: 6)
-    piece_attendue = PieceAttendue.find_by(code: 'assurance_scolaire', 
+    piece_attendue = PieceAttendue.find_by(code: 'assurance_scolaire',
       etablissement_id: eleve.dossier_eleve.etablissement.id)
-    piece_jointe = PieceJointe.create(clef: 'assurance_scannee.pdf', dossier_eleve_id: eleve.dossier_eleve.id, 
-      piece_attendue_id: piece_attendue.id)  
+    piece_jointe = PieceJointe.create(clef: 'assurance_scannee.pdf', dossier_eleve_id: eleve.dossier_eleve.id,
+      piece_attendue_id: piece_attendue.id)
     post '/identification', identifiant: '6', date_naiss: '1970-01-01'
     get '/pieces_a_joindre'
     doc = Nokogiri::HTML(last_response.body)
@@ -300,6 +300,39 @@ class EleveFormTest < Test::Unit::TestCase
     post '/agent/import_siecle', nom_eleve: "", prenom_eleve: "", name: 'import_siecle',
          filename: {tempfile: 'tests/test_import_siecle.xls'}
 
+    doc = Nokogiri::HTML(last_response.body)
+    assert_match "L'import de cette base sera réalisé prochainement.", doc.css('.statut-import').text
+
+    tache_import = TacheImport.find_by(statut: 'en_attente')
+    assert_equal(tache_import.url, 'tests/test_import_siecle.xls')
+  end
+
+  def test_affiche_statut_import
+    agent = Agent.find_by(identifiant: 'pierre')
+    tache_import = TacheImport.create(
+        url: 'tests/test_import_siecle.xls',
+        statut: 'en_cours',
+        etablissement_id: agent.etablissement.id)
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+
+    get '/agent/import_siecle'
+    doc = Nokogiri::HTML(last_response.body)
+    assert_match "L'import de cette base est en cours.", doc.css('.statut-import').text
+    assert_empty doc.css("button[type=submit]")
+  end
+
+  def test_traiter_zero_imports
+    get '/api/traiter_imports'
+    assert_equal 200, last_response.status
+  end
+
+  def test_traiter_import_eleve_fichier_siecle
+    etablissement = Etablissement.find_by(nom: 'Collège Germaine Tillion')
+    tache_import = TacheImport.create(url: 'tests/test_import_siecle.xls', statut: 'en_attente',
+      etablissement_id: etablissement.id)
+    get '/api/traiter_imports'
+    assert_equal 200, last_response.status
+
     eleve = Eleve.find_by(nom: 'NOM_TEST')
     eleve2 = Eleve.find_by(nom: 'NOM2_TEST')
 
@@ -318,11 +351,16 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'Brazaville', eleve2.ville_naiss
     assert_equal '4EME HORAIRES AMENAGES MUSIQUE', eleve2.niveau_classe_ant
     assert_nil eleve2.classe_ant
+
+    tache_import = TacheImport.find_by(statut: 'terminée')
+    assert_equal(tache_import.url, 'tests/test_import_siecle.xls')
   end
 
   def test_compte_taux_de_portables_dans_siecle
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
     post '/agent/import_siecle', name: 'import_siecle', filename: {tempfile: 'tests/test_import_siecle.xls'}
+    get '/api/traiter_imports'
+    get '/agent/import_siecle'
     doc = Nokogiri::HTML(last_response.body)
     assert_match "100% de téléphones portables", doc.css('.message_de_succes').text
     assert_match "50% d'emails", doc.css('.message_de_succes').text
@@ -330,10 +368,10 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_un_visiteur_anonyme_ne_peut_pas_valider_une_piece_jointe
     dossier_eleve = DossierEleve.last
-    piece_attendue = PieceAttendue.find_by(code: 'assurance_scolaire', 
+    piece_attendue = PieceAttendue.find_by(code: 'assurance_scolaire',
       etablissement_id: dossier_eleve.etablissement.id)
-    piece_jointe = PieceJointe.create(clef: 'assurance_scannee.pdf', dossier_eleve_id: dossier_eleve.id, 
-      piece_attendue_id: piece_attendue.id)  
+    piece_jointe = PieceJointe.create(clef: 'assurance_scannee.pdf', dossier_eleve_id: dossier_eleve.id,
+      piece_attendue_id: piece_attendue.id)
     etat_préservé = piece_jointe.etat
 
     post '/agent/change_etat_fichier', id: piece_jointe.id, etat: 'validé'
@@ -352,12 +390,22 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_un_agent_importe_un_eleve
-    DossierEleve.destroy_all
-    Eleve.destroy_all
+    nb_eleves_au_depart = Eleve.all.size
+
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
     post '/agent/import_siecle', nom_eleve: 'NOM_TEST', prenom_eleve: 'Prenom_test',
          name: 'import_siecle', filename: {tempfile: 'tests/test_import_siecle.xls'}
-    assert_equal 1, Eleve.all.size
+
+    agent = Agent.find_by(identifiant: 'pierre')
+    tache_import = TacheImport.find_by(statut: 'en_attente',
+          etablissement_id: agent.etablissement.id)
+
+    assert_equal('NOM_TEST', tache_import.nom_a_importer)
+    assert_equal('Prenom_test', tache_import.prenom_a_importer)
+
+    get '/api/traiter_imports'
+
+    assert_equal nb_eleves_au_depart+1, Eleve.all.size
   end
 
   def test_une_famille_remplit_letape_administration
@@ -439,7 +487,7 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 302, last_response.status
   end
 
-  def test_famille_peut_accédeer_à_une_pièce_de_son_dossier
+  def test_famille_peut_accéder_à_une_pièce_de_son_dossier
     post '/identification', identifiant: '6', date_naiss: '1970-01-01'
 
     piece_a_joindre = Tempfile.new('fichier_temporaire')

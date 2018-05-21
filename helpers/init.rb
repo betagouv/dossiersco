@@ -7,6 +7,7 @@ def init
   Option.destroy_all
   PieceAttendue.destroy_all
   PieceJointe.destroy_all
+  TacheImport.destroy_all
   Etablissement.destroy_all
 
   eleves = [
