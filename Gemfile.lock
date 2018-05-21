@@ -57,6 +57,7 @@ GEM
     rack (2.0.4)
     rack-protection (2.0.1)
       rack
+    rack-ssl-enforcer (0.2.9)
     rack-test (1.0.0)
       rack (>= 1.0, < 3)
     rake (12.3.1)
@@ -98,6 +99,7 @@ DEPENDENCIES
   nokogiri
   pg
   prawn
+  rack-ssl-enforcer
   rack-test
   rake
   roo

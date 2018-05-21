@@ -6,6 +6,11 @@ require_relative 'helpers/import_siecle'
 require_relative 'helpers/agent'
 require_relative 'helpers/pdf'
 
+configure :staging, :production do
+  require 'rack/ssl-enforcer'
+  use Rack::SslEnforcer
+end
+
 set :database_file, "config/database.yml"
 
 enable :sessions
