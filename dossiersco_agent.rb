@@ -66,10 +66,7 @@ post '/agent/import_siecle' do
 end
 
 get '/api/traiter_imports' do
-  tache = TacheImport.find_by(statut: 'en_attente')
-  tache.update(statut: 'en_cours')
-  import_xls tache.url, tache.etablissement_id, nom_a_importer=nil, prenom_a_importer=nil
-  tache.update(statut: 'terminée')
+  traiter_imports
 end
 
 get '/agent/eleve/:identifiant' do
