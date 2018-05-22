@@ -1,6 +1,6 @@
 [ ] corriger le timeout d'import siecle en prod
+[ ] lire et stocker les options existantes (pour les exporter ensuite vers siecle)
 [ ] exporter les données vers siecle
-[X] auto-upload des pièces jointes
 [ ] validation des infos en base e.g. dates limites d’inscription
 [ ] page d’erreur “catch all” qui rassure (edited)
 [ ] raisonner en classes et pas seulement en élèves côté agent
@@ -10,14 +10,11 @@
 [ ] intégration d’une brique d’envoi transactionnel mail
 [/] feedback sur les pièces jointes fournies
 [ ] passage sur Heroku payant avec backups
-[ ] débrancher /init sur la prod
-[X] Feedback sur l'obligation de cocher les cases administration
+[X] débrancher /init sur la prod
 [/] Corriger l'affichage des pièces côté agent
 [ ] Logique de validation des dossiers
-[X] Allonger la durée de session
-[X] Ajouter sentry https://sentry.io/for/sinatra/ https://sentry.io/for/open-source/
 
-champs mandatory en html
+[X] champs mandatory en html
 2ème ou 3ème prénom, préciser "optionnel"
 appostrophe française ’
 
