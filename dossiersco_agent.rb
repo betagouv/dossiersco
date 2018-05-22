@@ -59,7 +59,10 @@ end
 post '/agent/import_siecle' do
   tempfile = params[:filename][:tempfile]
   tempfile = tempfile.path if tempfile.respond_to? :path
-  fichier_s3 = get_fichier_s3 tempfile
+  file = File.open(tempfile)
+  uploader = FichierUploader.new
+  uploader.store!(file)
+  fichier_s3 = get_fichier_s3 File.basename(tempfile)
   tache = TacheImport.create(
     url: fichier_s3.url(Time.now.to_i + 30),
     etablissement_id: agent.etablissement.id,
