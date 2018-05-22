@@ -1,3 +1,5 @@
+require_relative 'import_siecle'
+
 module AgentHelpers
   def agent
     Agent.find_by(identifiant: session[:identifiant])
