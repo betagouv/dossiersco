@@ -79,6 +79,7 @@ git push heroku master # pour pousser en prod
 heroku open
 heroku logs -t
 heroku run rake db:migrate
+heroku run irb --noreadline
 
 En local :
 
