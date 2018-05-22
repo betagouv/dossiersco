@@ -1,4 +1,4 @@
-[ ] corriger le timeout d'import siecle en prod
+[X] corriger le timeout d'import siecle en prod
 [ ] lire et stocker les options existantes (pour les exporter ensuite vers siecle)
 [ ] exporter les données vers siecle
 [ ] validation des infos en base e.g. dates limites d’inscription
