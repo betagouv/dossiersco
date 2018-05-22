@@ -53,7 +53,7 @@ end
 
 get '/agent/import_siecle' do
   tache = agent.etablissement.tache_import.last
-  erb :'agent/import_siecle', layout: :layout_agent, locals: {tache: tache, message: ""}
+  erb :'agent/import_siecle', layout: :layout_agent, locals: {agent: agent, tache: tache, message: ""}
 end
 
 post '/agent/import_siecle' do
@@ -81,7 +81,7 @@ end
 
 get '/agent/eleve/:identifiant' do
   eleve = Eleve.find_by(identifiant: params[:identifiant])
-  erb :'agent/eleve', locals: { eleve: eleve }, layout: :layout_agent
+  erb :'agent/eleve', locals: {agent: agent, eleve: eleve }, layout: :layout_agent
 end
 
 post '/agent/change_etat_fichier' do
@@ -92,7 +92,7 @@ end
 get '/agent/options' do
   etablissement = agent.etablissement
   options = etablissement.option
-  erb :'agent/options', locals: {options: options}, layout: :layout_agent
+  erb :'agent/options', locals: {agent: agent, options: options}, layout: :layout_agent
 end
 
 post '/agent/options' do
@@ -129,7 +129,7 @@ end
 get '/agent/piece_attendues' do
   etablissement = agent.etablissement
   piece_attendues = etablissement.piece_attendue
-  erb :'agent/piece_attendues', locals: {piece_attendues: piece_attendues}, layout: :layout_agent
+  erb :'agent/piece_attendues', locals: {agent: agent, piece_attendues: piece_attendues}, layout: :layout_agent
 end
 
 post '/agent/piece_attendues' do
@@ -158,6 +158,11 @@ post '/agent/piece_attendues' do
     erb :'agent/piece_attendues',
       locals: {piece_attendues: etablissement.piece_attendue, agent: agent}, layout: :layout_agent
   end
+end
+
+get '/agent/export' do
+  erb :'agent/export',
+  locals: {agent: agent}, layout: :layout_agent
 end
 
 post '/agent/supprime_option' do
