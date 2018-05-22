@@ -1,9 +1,11 @@
 <div class="container mt-5 mb-4">
   <div class="wrapper">
     <div class="arrow-steps clearfix">
-      <a class="step" href='/agent/import_siecle'>
-        <span>Import</span>
-      </a>
+      <% if agent.identifiant == 'pierre' %>
+        <a class="step" href='/agent/import_siecle'>
+          <span>Import</span>
+        </a>
+      <% end %>
       <a class="step" href='/agent/options'>
         <span>Options</span>
       </a>
