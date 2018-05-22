@@ -1,6 +1,6 @@
-[X] corriger le timeout d'import siecle en prod
-[ ] lire et stocker les options existantes (pour les exporter ensuite vers siecle)
-[ ] exporter les données vers siecle
+[ ] la principale voit le nombre d'inscrits à chaque option, le plus tôt possible en juin, notamment les bi-langues (deal breaker Beaumarchais)
+    -> une solution possible : [ ] lire et stocker les options existantes
+[ ] exporter les données vers siecle (critique pour Beaumarchais)
 [ ] validation des infos en base e.g. dates limites d’inscription
 [ ] page d’erreur “catch all” qui rassure (edited)
 [ ] raisonner en classes et pas seulement en élèves côté agent
@@ -10,13 +10,12 @@
 [ ] intégration d’une brique d’envoi transactionnel mail
 [/] feedback sur les pièces jointes fournies
 [ ] passage sur Heroku payant avec backups
-[X] débrancher /init sur la prod
 [/] Corriger l'affichage des pièces côté agent
 [ ] Logique de validation des dossiers
 
-[X] champs mandatory en html
-2ème ou 3ème prénom, préciser "optionnel"
-appostrophe française ’
+[ ] proposer en download un pdf pour les renseignement médicaux (Beaumarchais + open lab)
+[ ] 2ème ou 3ème prénoms, préciser "optionnel"
+appostrophe française ’ (en cours)
 
 Ancien todo :
 [ ] Tester liste_des_eleves
@@ -29,8 +28,7 @@ open lab du 16
 inscription-college.gouv
 [ ] tarif de cantine uniquement pour paris, fonctionnement différent pour les autres académies
 [ ] déduire les options de l'etablissement grace a la base siecle
-[ ] reprendre la nomenclature de siecle pour la profession
-[ ] proposer en download un pdf pour les renseignement médicaux
+[X] reprendre la nomenclature de siecle pour la profession
 rappeler la lv1 ?
 
 Réunion avec Pierre le 18/04/2018
