@@ -64,7 +64,7 @@ post '/agent/import_siecle' do
   uploader.store!(file)
   fichier_s3 = get_fichier_s3 File.basename(tempfile)
   tache = TacheImport.create(
-    url: fichier_s3.url(Time.now.to_i + 30),
+    url: fichier_s3.url(Time.now.to_i + 1200),
     etablissement_id: agent.etablissement.id,
     statut: 'en_attente',
     nom_a_importer: params[:nom_eleve],
