@@ -13,6 +13,7 @@
 [/] Corriger l'affichage des pièces côté agent
 [ ] Logique de validation des dossiers
 
+[ ] visualiser qu'un parent a changé d'adresse (Beaumarchais)
 [ ] proposer en download un pdf pour les renseignement médicaux (Beaumarchais + open lab)
 [ ] 2ème ou 3ème prénoms, préciser "optionnel"
 appostrophe française ’ (en cours)
