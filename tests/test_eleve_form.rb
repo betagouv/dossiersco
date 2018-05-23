@@ -357,13 +357,22 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal(tache_import.url, 'tests/test_import_siecle.xls')
   end
 
-  # def test_deduie_les_options_dun_college
-  #   etablissement = Etablissement.find_by(nom: 'Collège Germaine Tillion')
-  #   import_xls 'tests/test_import_siecle.xls', etablissement.id
+  def test_import_des_options
+    etablissement = Etablissement.find_by(nom: 'College Jean-Francois Oeben')
+    lignes_siecle = [
+      {11 => '1', 9 => "18/05/1991", 37 => "AGL1", 38 => "TEST LV1", 39 => "O", 33 => '4'},
+      {11 => '1', 9 => "18/05/1991", 37 => "ESP2", 38 => "LANGUE LV2", 39 => "F", 33 => '4'},
+      {11 => '1', 9 => "18/05/1991", 37 => "AGL1", 38 => "TEST LV1", 39 => "O", 33 => '4'}
+    ]
 
-  #   option = etablissement.options.select { |o| o.nom == 'Anglais'}
-  #   assert_equal 1, option.count
-  # end
+    lignes_siecle.each { |ligne| import_ligne etablissement.id, ligne }
+
+    options = etablissement.option
+    noms = options.collect(&:nom)
+    assert_equal 2, options.count
+    assert noms.include? 'TEST LV1'
+    assert noms.include? 'LANGUE LV2'
+  end
 
   def test_compte_taux_de_portables_dans_siecle
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'

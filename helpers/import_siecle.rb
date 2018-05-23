@@ -1,14 +1,14 @@
 require 'roo'
 require 'roo-xls'
-
 COLONNES = {sexe: 0, nationalite: 1, prenom: 6, prenom_2: 7, prenom_3: 8, nom: 4, date_naiss: 9, identifiant: 11,
             ville_naiss_etrangere: 20, commune_naiss: 21, pays_naiss: 22, niveau_classe_ant: 33, classe_ant: 36,
             nom_resp_legal1: 99, prenom_resp_legal1: 101,
-            tel_principal_resp_legal1: 102, tel_secondaire_resp_legal1: 104, lien_de_parente_resp_legal1: 103,
+            tel_principal_resp_legal1: 102, tel_secondaire_resp_legal1: 104, lien_parente_resp_legal1: 103,
             adresse_resp_legal1: 108, ville_resp_legal1: 112, code_postal_resp_legal1: 113, email_resp_legal1: 106,
             nom_resp_legal2: 118, prenom_resp_legal2: 120, tel_principal_resp_legal2: 121,
-            tel_secondaire_resp_legal2: 123, lien_de_parente_resp_legal2: 122, adresse_resp_legal2: 127,
-            ville_resp_legal2: 131, code_postal_resp_legal2: 132, email_resp_legal2: 125}
+            tel_secondaire_resp_legal2: 123, lien_parente_resp_legal2: 122, adresse_resp_legal2: 127,
+            ville_resp_legal2: 131, code_postal_resp_legal2: 132, email_resp_legal2: 125,
+            cle_gestion: 37, libelle: 38, code_modalite: 39}
 
 def import_xls fichier, etablissement_id, nom_a_importer=nil, prenom_a_importer=nil
   xls_document = Roo::Spreadsheet.open fichier
@@ -30,7 +30,8 @@ def import_xls fichier, etablissement_id, nom_a_importer=nil, prenom_a_importer=
    eleves: nb_eleves_importes}
 end
 
-def import_ligne etablissement_id, ligne_siecle, nom_a_importer, prenom_a_importer
+def import_ligne etablissement_id, ligne_siecle, nom_a_importer=nil, prenom_a_importer=nil
+
   resultat = {portable: false, email: false, eleve_importe: false}
 
   champs_eleve = [:sexe,:nationalite, :date_naiss, :prenom, :prenom_2, :prenom_3, :nom,
@@ -69,6 +70,7 @@ def import_ligne etablissement_id, ligne_siecle, nom_a_importer, prenom_a_import
     donnees_resp_legal[:dossier_eleve_id] = dossier_eleve.id
     donnees_resp_legal[:priorite] = i.to_i
 
+
     resp_legal = RespLegal.find_or_initialize_by(dossier_eleve_id: dossier_eleve.id, priorite: i.to_i)
     resp_legal.update_attributes!(donnees_resp_legal)
 
@@ -104,3 +106,9 @@ def traiter_donnees_eleve donnees_eleve
 
   return donnees_eleve
 end
+
+def import_options etablissement_id, ligne_siecle, eleve
+  option = Option.find_or_initialize_by(etablissement_id: etablissement_id, nom: ligne_siecle[COLONNES[:libelle]])
+  option.save
+end
+
