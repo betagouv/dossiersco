@@ -1,22 +1,36 @@
+Evolutions fonctionnelles importantes:
 [ ] la principale voit le nombre d'inscrits à chaque option, le plus tôt possible en juin, notamment les bi-langues (deal breaker Beaumarchais)
     -> une solution possible : [ ] lire et stocker les options existantes
-[ ] exporter les données vers siecle (critique pour Beaumarchais)
-[ ] validation des infos en base e.g. dates limites d’inscription
-[ ] page d’erreur “catch all” qui rassure (edited)
+[ ] Pouvoir accepter ou non une option pédagogique (Tillion)
 [ ] raisonner en classes et pas seulement en élèves côté agent
-[ ] gestion des comms et relances aux familles (edited)
-[ ] analyse de sécurité des moyens de transmission des secrets de connexion
-[ ] intégration d’une brique d’envoi de SMS
-[ ] intégration d’une brique d’envoi transactionnel mail
 [ ] afficher un commentaire quand une pièce jointe est rejetée
-[ ] passage sur Heroku payant avec backups
-[/] Corriger l'affichage des pièces côté agent
-[ ] Logique de validation des dossiers
-
 [ ] visualiser qu'un parent a changé d'adresse (Beaumarchais)
 [ ] proposer en download un pdf pour les renseignement médicaux (Beaumarchais + open lab)
+
+Améliorer l'ergonomie
+[ ] Expliquer comment prendre une photo ou scanner les pièces jointes
+
+Observation de l'usage:
+[ ] Vérifier l'horodatage des modifs
+[ ] Intégrer un tracker Piwik
+[ ] Faire fonctionner Sentry
+[ ] Emailing (Mailjet? autre?) parents (en complément des actions "recherche de feedback" parents)
+
+Important mais moins urgent:
+[ ] exporter les données vers siecle (critique pour Beaumarchais)
+[ ] analyse de sécurité des moyens de transmission des secrets de connexion
+
+Gestion des relances:
+[ ] gestion des comms et relances aux familles (edited)
+[ ] intégration d’une brique d’envoi de SMS
+[ ] intégration d’une brique d’envoi transactionnel mail
+
+Mineurs:
+[ ] page d’erreur “catch all” qui rassure (edited)
+[ ] page 404 personnalisée
+[ ] passage sur Heroku payant avec backups
 [ ] 2ème ou 3ème prénoms, préciser "optionnel"
-appostrophe française ’ (en cours)
+[ ] apostrophe française ’ (en cours)
 
 Ancien todo :
 [ ] Tester liste_des_eleves
@@ -29,9 +43,10 @@ open lab du 16
 inscription-college.gouv
 [ ] tarif de cantine uniquement pour paris, fonctionnement différent pour les autres académies
 [ ] déduire les options de l'etablissement grace a la base siecle
-[X] reprendre la nomenclature de siecle pour la profession
 rappeler la lv1 ?
 
-Réunion avec Pierre le 18/04/2018
-
-[ ] Expliquer comment prendre une photo ou scanner les pièces jointes
+Terminé:
+[/] validation des infos en base e.g. dates limites d’inscription
+[X] Corriger l'affichage des pièces côté agent
+[X] Logique de validation des dossiers
+[X] reprendre la nomenclature de siecle pour la profession
