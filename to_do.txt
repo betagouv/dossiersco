@@ -8,7 +8,7 @@
 [ ] analyse de sécurité des moyens de transmission des secrets de connexion
 [ ] intégration d’une brique d’envoi de SMS
 [ ] intégration d’une brique d’envoi transactionnel mail
-[/] feedback sur les pièces jointes fournies
+[ ] afficher un commentaire quand une pièce jointe est rejetée
 [ ] passage sur Heroku payant avec backups
 [/] Corriger l'affichage des pièces côté agent
 [ ] Logique de validation des dossiers
