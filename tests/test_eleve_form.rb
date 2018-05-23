@@ -368,8 +368,9 @@ class EleveFormTest < Test::Unit::TestCase
     lignes_siecle.each { |ligne| import_ligne etablissement.id, ligne }
 
     options = etablissement.option
-    noms = options.collect(&:nom)
     assert_equal 2, options.count
+
+    noms = options.collect(&:nom)
     assert noms.include? 'TEST LV1'
     assert noms.include? 'LANGUE LV2'
   end
