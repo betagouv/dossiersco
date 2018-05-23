@@ -1,16 +1,16 @@
 require 'roo'
 require 'roo-xls'
 
-def import_xls fichier, etablissement_id, nom_a_importer=nil, prenom_a_importer=nil
-  colonnes = {sexe: 0, nationalite: 1, prenom: 6, prenom_2: 7, prenom_3: 8, nom: 4, date_naiss: 9, identifiant: 11,
-              ville_naiss_etrangere: 20, commune_naiss: 21, pays_naiss: 22, niveau_classe_ant: 33, classe_ant: 36,
-              nom_resp_legal1: 99, prenom_resp_legal1: 101,
-              tel_principal_resp_legal1: 102, tel_secondaire_resp_legal1: 104, lien_parente_resp_legal1: 103,
-              adresse_resp_legal1: 108, ville_resp_legal1: 112, code_postal_resp_legal1: 113, email_resp_legal1: 106,
-              nom_resp_legal2: 118, prenom_resp_legal2: 120, tel_principal_resp_legal2: 121,
-              tel_secondaire_resp_legal2: 123, lien_parente_resp_legal2: 122, adresse_resp_legal2: 127,
-              ville_resp_legal2: 131, code_postal_resp_legal2: 132, email_resp_legal2: 125}
+COLONNES = {sexe: 0, nationalite: 1, prenom: 6, prenom_2: 7, prenom_3: 8, nom: 4, date_naiss: 9, identifiant: 11,
+            ville_naiss_etrangere: 20, commune_naiss: 21, pays_naiss: 22, niveau_classe_ant: 33, classe_ant: 36,
+            nom_resp_legal1: 99, prenom_resp_legal1: 101,
+            tel_principal_resp_legal1: 102, tel_secondaire_resp_legal1: 104, lien_de_parente_resp_legal1: 103,
+            adresse_resp_legal1: 108, ville_resp_legal1: 112, code_postal_resp_legal1: 113, email_resp_legal1: 106,
+            nom_resp_legal2: 118, prenom_resp_legal2: 120, tel_principal_resp_legal2: 121,
+            tel_secondaire_resp_legal2: 123, lien_de_parente_resp_legal2: 122, adresse_resp_legal2: 127,
+            ville_resp_legal2: 131, code_postal_resp_legal2: 132, email_resp_legal2: 125}
 
+def import_xls fichier, etablissement_id, nom_a_importer=nil, prenom_a_importer=nil
   xls_document = Roo::Spreadsheet.open fichier
   lignes_siecle = (xls_document.first_row + 1..xls_document.last_row)
 
@@ -20,7 +20,7 @@ def import_xls fichier, etablissement_id, nom_a_importer=nil, prenom_a_importer=
   lignes_siecle.each do |row|
     ligne_siecle = xls_document.row(row)
 
-    resultat = import_ligne etablissement_id, ligne_siecle, colonnes, nom_a_importer, prenom_a_importer
+    resultat = import_ligne etablissement_id, ligne_siecle, nom_a_importer, prenom_a_importer
 
     portables += 1 if resultat[:portable]
     emails += 1 if resultat[:email]
@@ -30,15 +30,16 @@ def import_xls fichier, etablissement_id, nom_a_importer=nil, prenom_a_importer=
    eleves: nb_eleves_importes}
 end
 
-def import_ligne etablissement_id, ligne_siecle, colonnes, nom_a_importer, prenom_a_importer
+def import_ligne etablissement_id, ligne_siecle, nom_a_importer, prenom_a_importer
   resultat = {portable: false, email: false, eleve_importe: false}
 
-  champs_eleve = [:sexe,:nationalite, :date_naiss, :prenom, :prenom_2, :prenom_3, :nom, :identifiant, :pays_naiss,
-    :commune_naiss, :ville_naiss_etrangere, :classe_ant, :niveau_classe_ant]
+  champs_eleve = [:sexe,:nationalite, :date_naiss, :prenom, :prenom_2, :prenom_3, :nom,
+    :identifiant, :pays_naiss, :commune_naiss, :ville_naiss_etrangere, :classe_ant,
+    :niveau_classe_ant]
 
   donnees_eleve = {}
   champs_eleve.each do |champ|
-    donnees_eleve[champ] = ligne_siecle[colonnes[champ]]
+    donnees_eleve[champ] = ligne_siecle[COLONNES[champ]]
   end
 
   donnees_eleve = traiter_donnees_eleve donnees_eleve
@@ -56,38 +57,27 @@ def import_ligne etablissement_id, ligne_siecle, colonnes, nom_a_importer, preno
       etablissement_id: etablissement_id
   )
 
-  champs_resp_legal = {}
-  portable = false
-  email = false
+  champs_resp_legal = [:nom, :prenom, :tel_principal, :tel_secondaire, :lien_de_parente,
+    :adresse, :code_postal, :ville, :email]
+
+  donnees_resp_legal = {}
   ['1', '2'].each do |i|
-    ['nom_resp_legal',
-     'prenom_resp_legal',
-     'tel_principal_resp_legal',
-     'tel_secondaire_resp_legal',
-     'lien_parente_resp_legal',
-     'adresse_resp_legal',
-     'code_postal_resp_legal',
-     'ville_resp_legal',
-     'email_resp_legal'
-    ].each { |j| champs_resp_legal[j] = ligne_siecle[colonnes["#{j}#{i}".to_sym]] }
+    champs_resp_legal.each do |champ|
+      donnees_resp_legal[champ] = ligne_siecle[COLONNES["#{champ}_resp_legal#{i}".to_sym]]
+    end
+
+    donnees_resp_legal[:dossier_eleve_id] = dossier_eleve.id
+    donnees_resp_legal[:priorite] = i.to_i
 
     resp_legal = RespLegal.find_or_initialize_by(dossier_eleve_id: dossier_eleve.id, priorite: i.to_i)
-    resp_legal.update_attributes!(
-        dossier_eleve_id: dossier_eleve.id,
-        nom: champs_resp_legal['nom_resp_legal'],
-        prenom: champs_resp_legal['prenom_resp_legal'],
-        tel_principal: champs_resp_legal['tel_principal_resp_legal'],
-        tel_secondaire: champs_resp_legal['tel_secondaire_resp_legal'],
-        lien_de_parente: champs_resp_legal['lien_parente_resp_legal'],
-        ville: champs_resp_legal['ville_resp_legal'],
-        email: champs_resp_legal['email_resp_legal'],
-        adresse: champs_resp_legal['adresse_resp_legal'],
-        code_postal: champs_resp_legal['code_postal_resp_legal'],
-        priorite: i.to_i)
+    resp_legal.update_attributes!(donnees_resp_legal)
+
     resultat[:portable] = true if resp_legal.tel_principal =~ /^0[67]/ or resp_legal.tel_secondaire =~ /^0[67]/
     resultat[:email] = true if resp_legal.email =~ /@.*\./
-    resultat[:eleve_importe] = true
   end
+
+  resultat[:eleve_importe] = true
+
   return resultat
 end
 
