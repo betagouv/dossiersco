@@ -357,6 +357,14 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal(tache_import.url, 'tests/test_import_siecle.xls')
   end
 
+  # def test_deduie_les_options_dun_college
+  #   etablissement = Etablissement.find_by(nom: 'Collège Germaine Tillion')
+  #   import_xls 'tests/test_import_siecle.xls', etablissement.id
+
+  #   option = etablissement.options.select { |o| o.nom == 'Anglais'}
+  #   assert_equal 1, option.count
+  # end
+
   def test_compte_taux_de_portables_dans_siecle
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
     post '/agent/import_siecle', name: 'import_siecle', filename: Rack::Test::UploadedFile.new("tests/test_import_siecle.xls")
