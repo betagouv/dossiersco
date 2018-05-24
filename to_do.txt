@@ -17,7 +17,6 @@ Améliorer l'ergonomie
 [ ] Expliquer comment prendre une photo ou scanner les pièces jointes
 
 Observation de l'usage:
-[ ] Vérifier l'horodatage des modifs
 [ ] Intégrer un tracker Piwik
 [ ] Faire fonctionner Sentry
 [ ] Emailing (Mailjet? autre?) parents (en complément des actions "recherche de feedback" parents)
@@ -53,6 +52,7 @@ Peut exiger une 2è passe:
 [/] afficher un commentaire quand une pièce jointe est rejetée
 
 Terminé:
+[X] Vérifier l'horodatage des modifs
 [X] déduire les options de l'etablissement grace a la base siecle
 [X] rappeler la lv1 ?
 [X] Tester liste_des_eleves
