@@ -44,7 +44,17 @@
                     <% end %>>
               </div>
             </div>
-            <p><%= "Fichier #{piece_jointe.etat}" if piece_jointe.present? %></p>
+            <p><%=
+              case piece_jointe.etat
+              when 'soumis'
+                "Votre document est transmis à l'établissement."
+              when 'invalide'
+                "Votre document ne peut pas être pris en compte par l'établissement pour cette inscription. Merci de contacter le secrétariat de l'établissement."
+              when 'valide'
+                "Votre document a été examiné et approuvé par l'établissement."
+              else
+              end if piece_jointe.present?
+              %></p>
           </div>
           <button class="soumettre d-none" type="submit">Soumettre</button>
         </div>
