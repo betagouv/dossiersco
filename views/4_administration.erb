@@ -63,12 +63,17 @@
 			<div class="col">
 				<div class="form-check">
 					<label class="form-check-label">
-						<input class="form-check-input" type="checkbox" value='true' name="renseignements_medicaux" onclick="afficher_infos_med(event)" id='renseignements_medicaux'
+						<input class="form-check-input" type="checkbox" value='true' name="renseignements_medicaux"  id='renseignements_medicaux'
 						<% if dossier_eleve.renseignements_medicaux %>
 							checked
 						<% end %>> Je souhaite envoyer par écrit au secrétariat une information médicale (si c'est pertinent pour mon enfant).
 					</label>
 				</div>
+				<% if dossier_eleve.etablissement.message_infirmerie.present? %>
+					<div id="message-infirmerie" class="d-none">
+						<%= dossier_eleve.etablissement.message_infirmerie %>
+					</div>
+				<% end %>
 			</div>
 		</div>
 
@@ -97,6 +102,7 @@
 	</form>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
   if (<%= dossier_eleve.demi_pensionnaire %>) {
       document.querySelector('#dp').style.display = 'block'
@@ -113,14 +119,18 @@
 	function afficher_reduction_tarif(e){
 		document.querySelector('#reduction_tarif').style.display = chk_reduction_tarif.checked ? 'block' : 'none'
 	}
-
-	function afficher_infos_med(e){
-		document.getElementById("nom_med_traitant").value = meme_adresse_que_med.checked ? "Dr Blanc" : "";
-		document.getElementById("adr_med_traitant").value = meme_adresse_que_med.checked ? "23 rue du Pont qui chante" : "";
-		document.getElementById("cp_med_traitant").value = meme_adresse_que_med.checked ? "75011" : "";
-		document.getElementById("ville_med_traitant").value = meme_adresse_que_med.checked ? "Paris" : "";
-		document.getElementById("tel_med_traitant").value = meme_adresse_que_med.checked ? "0156455612" : "";
+	if (<%= dossier_eleve.renseignements_medicaux %>) {
+		$('#message-infirmerie').removeClass('d-none')
 	}
+
+	$('#renseignements_medicaux').click(function(event) {
+		if (event.target.checked) {
+			$('#message-infirmerie').removeClass('d-none')
+		}
+		else {
+			$('#message-infirmerie').addClass('d-none')
+		}
+	})
 </script>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
