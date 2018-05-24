@@ -360,19 +360,51 @@ class EleveFormTest < Test::Unit::TestCase
   def test_import_des_options
     etablissement = Etablissement.find_by(nom: 'College Jean-Francois Oeben')
     lignes_siecle = [
-      {11 => '1', 9 => "18/05/1991", 37 => "AGL1", 38 => "TEST LV1", 39 => "O", 33 => '4'},
-      {11 => '1', 9 => "18/05/1991", 37 => "ESP2", 38 => "LANGUE LV2", 39 => "F", 33 => '4'},
-      {11 => '1', 9 => "18/05/1991", 37 => "AGL1", 38 => "TEST LV1", 39 => "O", 33 => '4'}
+      {11 => '1', 9 => "18/05/1991", 37 => "AGL1", 38 => "ANGLAIS LV1", 39 => "O", 33 => '4'},
+      {11 => '2', 9 => "18/05/1991", 37 => "ESP2", 38 => "ESPAGNOL LV2", 39 => "F", 33 => '4'},
+      {11 => '3', 9 => "18/05/1991", 37 => "AGL1", 38 => "ANGLAIS LV1", 39 => "O", 33 => '4'}
     ]
 
     lignes_siecle.each { |ligne| import_ligne etablissement.id, ligne }
 
     options = etablissement.option
+
     assert_equal 2, options.count
 
+    eleve1 = Eleve.find_by(identifiant: "1")
+    nom_option_eleve1 = eleve1.option.collect(&:nom)
+    assert nom_option_eleve1.include? 'Anglais'
     noms = options.collect(&:nom)
-    assert noms.include? 'TEST LV1'
-    assert noms.include? 'LANGUE LV2'
+    assert noms.include? 'Anglais'
+    assert noms.include? 'Espagnol'
+  end
+
+  def test_creer_des_options
+    Option.destroy_all
+    etablissement_id = Etablissement.find_by(nom: 'College Jean-Francois Oeben').id
+    colonnes_siecle = [
+      {id: etablissement_id, libelle: 'ANGLAIS LV1', cle_gestion: 'AGL1', code: 'O',
+        nom_attendu: 'Anglais', groupe_attendu: 'Langue vivante 1', obligatoire: true},
+      {id: etablissement_id, libelle: 'ESPAGNOL LV2', cle_gestion: 'ESP2', code: 'O',
+        nom_attendu: 'Espagnol', groupe_attendu: 'Langue vivante 2', obligatoire: true},
+      {id: etablissement_id, libelle: 'ESPAGNOL LV2 ND', cle_gestion: 'ES2ND', code: 'O',
+        nom_attendu: 'Espagnol non débutant', groupe_attendu: 'Langue vivante 2', obligatoire: true},
+      {id: etablissement_id, libelle: 'ALLEMAND LV2', cle_gestion: 'ALL2', code: 'O',
+        nom_attendu: 'Allemand', groupe_attendu: 'Langue vivante 2', obligatoire: true},
+      {id: etablissement_id, libelle: 'ALLEMAND LV2 ND', cle_gestion: 'AL2ND', code: 'O',
+        nom_attendu: 'Allemand non débutant', groupe_attendu: 'Langue vivante 2', obligatoire: true},
+      {id: etablissement_id, libelle: 'LCA LATIN', cle_gestion: 'LCALA', code: 'F',
+        nom_attendu: 'Latin', groupe_attendu: "Langues et cultures de l'antiquité", obligatoire: false},
+      {id: etablissement_id, libelle: 'LCA GREC', cle_gestion: 'LCAGR', code: 'F',
+        nom_attendu: 'Grec', groupe_attendu: "Langues et cultures de l'antiquité", obligatoire: false},
+    ]
+
+    colonnes_siecle.each do |colonne|
+      creer_option colonne[:id], colonne[:libelle], colonne[:cle_gestion], colonne[:code]
+
+      option = Option.where(nom: colonne[:nom_attendu], groupe: colonne[:groupe_attendu], obligatoire: colonne[:obligatoire])
+      assert_equal 1, option.count
+    end
   end
 
   def test_compte_taux_de_portables_dans_siecle
