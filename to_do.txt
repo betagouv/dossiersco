@@ -3,8 +3,7 @@ Evolutions fonctionnelles importantes:
     -> une solution possible : [ ] lire et stocker les options existantes
 [ ] Pouvoir accepter ou non une option pédagogique (Tillion)
 [ ] raisonner en classes et pas seulement en élèves côté agent
-[ ] afficher un commentaire quand une pièce jointe est rejetée
-[ ] visualiser qu'un parent a changé d'adresse (Beaumarchais)
+[/] afficher un commentaire quand une pièce jointe est rejetée
 [ ] proposer en download un pdf pour les renseignement médicaux (Beaumarchais + open lab)
 
 Améliorer l'ergonomie
@@ -46,6 +45,7 @@ inscription-college.gouv
 rappeler la lv1 ?
 
 Terminé:
+[X] visualiser qu'un parent a changé d'adresse (Beaumarchais)
 [/] validation des infos en base e.g. dates limites d’inscription
 [X] Corriger l'affichage des pièces côté agent
 [X] Logique de validation des dossiers

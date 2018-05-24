@@ -21,6 +21,7 @@
       <th>Prénom</th>
       <th>Nom</th>
       <th>Etat</th>
+      <th>🚚</th>
       <% agent.etablissement.piece_attendue.each do |piece| %>
         <th><%= piece.nom %></th>
       <% end %>
@@ -33,6 +34,9 @@
           <td <%= cliquable %> ><%= dossier_eleve.eleve.prenom %></td>
           <td <%= cliquable %> ><%= dossier_eleve.eleve.nom %></td>
           <td <%= cliquable %> ><%= dossier_eleve.etat %></td>
+          <td <%= cliquable %> >
+            <%= dossier_eleve.resp_legal.collect(&:changement_adresse).any? ? "✓" : "" %>
+          </td>
 
           <% agent.etablissement.piece_attendue.each do |piece| %>
             <% piece_jointe = PieceJointe.find_by(dossier_eleve_id: dossier_eleve.id, piece_attendue_id: piece.id) %>
