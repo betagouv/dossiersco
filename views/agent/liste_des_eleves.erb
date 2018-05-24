@@ -22,7 +22,7 @@
       <th>Nom</th>
       <th>Etat</th>
       <% agent.etablissement.piece_attendue.each do |piece| %>
-        <th><%= piece.nom %></th>  
+        <th><%= piece.nom %></th>
       <% end %>
     </tr></thead>
     <tbody>
@@ -39,7 +39,7 @@
           <%= piece_jointe.etat if piece_jointe.present?%>
             <td class="text-center" data-piece-id="<%= piece_jointe.id if piece_jointe.present? %>">
               <% if piece_jointe.present? %>
-                <a class="lien-piece-jointe" href="<%= FichierUploader::route_lecture(dossier_eleve.eleve.identifiant, piece.code) + "/" + piece_jointe.clef %>" target="_blank">
+                <a class="lien-piece-jointe" data-toggle="modal" data-target="#modal-pieces-jointes" data-url="<%= FichierUploader::route_lecture(dossier_eleve.eleve.identifiant, piece.code) + "/" + piece_jointe.clef %>">
                   <i class="fas fa-file-image"></i>
                 </a>
                 <i class="fas fa-check-circle etat" style="<%= 'color: #00cf00' if piece_jointe.etat == 'valide' %>"></i>
@@ -55,6 +55,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<%= erb :'partials/image_box' %>
 <script type="text/javascript" charset="utf-8">
   $('.etat').click(function() {
       var id = $(this).parent().data('piece-id');
