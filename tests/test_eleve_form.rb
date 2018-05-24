@@ -169,7 +169,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'checked', doc.css('#communique_info_parents_eleves_rl1_true').attr('checked').text
   end
 
-
   def test_persistence_du_resp_legal_2
     doc = soumet_formulaire  '/famille',
                              lien_de_parente_rl2: "Tutrice", prenom_rl2: "Philippe" , nom_rl2: "Blayo",
@@ -193,7 +192,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'checked', doc.css('#communique_info_parents_eleves_rl2_true').attr('checked').text
   end
 
-
   def test_persistence_du_contact_urg
     doc = soumet_formulaire '/famille',
                             lien_avec_eleve_urg: "Tuteur", prenom_urg: "Philippe" , nom_urg: "Blayo",
@@ -208,6 +206,45 @@ class EleveFormTest < Test::Unit::TestCase
     assert_attr 'Paris', '#ville_urg', doc
     assert_attr '0612345678', '#tel_principal_urg', doc
     assert_attr '0112345678', '#tel_secondaire_urg', doc
+  end
+
+  def test_changement_adresse
+    post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+    get '/famille'
+    doc = Nokogiri::HTML(last_response.body)
+    champs = [:lien_de_parente, :prenom, :nom, :adresse, :code_postal, :ville,
+              :tel_principal, :tel_secondaire, :email]
+
+    donnees = {}
+    champs.each do |champ|
+      ['rl1','rl2'].each do |rl|
+        champ_qualifie = "#{champ}_#{rl}"
+        selecteur = "\##{champ_qualifie}"
+        valeur = doc.css(selecteur).attr('value').text
+        donnees[champ_qualifie] = valeur
+      end
+    end
+
+    # Pas de changement d'adresse
+    donnees['tel_principal_rl1'] = "Changement de numéro"
+    doc = soumet_formulaire '/famille', donnees
+    champs.each do |champ|
+      ['rl1','rl2'].each do |rl|
+        champ_qualifie = "#{champ}_#{rl}"
+        selecteur = "\##{champ_qualifie}"
+        assert_attr donnees[champ_qualifie], selecteur, doc
+      end
+    end
+
+    eleve = Eleve.find_by(identifiant: 2)
+    assert !eleve.dossier_eleve.resp_legal.collect(&:changement_adresse).any?
+
+    # Changement d'adresse
+    donnees['adresse_rl1'] = "Nouvelle adresse"
+    doc = soumet_formulaire '/famille', donnees
+
+    eleve = Eleve.find_by(identifiant: 2)
+    assert eleve.dossier_eleve.resp_legal.collect(&:changement_adresse).any?
   end
 
   def test_affichage_preview_jpg_famille
@@ -531,6 +568,20 @@ class EleveFormTest < Test::Unit::TestCase
     post '/agent/pdf', identifiant: 3
 
     assert_equal 'application/pdf', last_response.original_headers['Content-Type']
+  end
+
+  def test_affiche_changement_adresse_liste_eleves
+    # Si on a un changement d'adresse
+    eleve = Eleve.find_by(identifiant: 2)
+    resp_legal = eleve.dossier_eleve.resp_legal.first
+    resp_legal.changement_adresse = true
+    resp_legal.save
+
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    get '/agent/liste_des_eleves'
+
+    doc = Nokogiri::HTML(last_response.body)
+    assert_equal "✓", doc.css("tbody > tr:nth-child(1) > td:nth-child(5)").text.strip
   end
 
   def test_une_personne_non_identifiée_ne_peut_accéder_à_pièces
