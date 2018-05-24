@@ -7,8 +7,7 @@ COLONNES = {sexe: 0, nationalite: 1, prenom: 6, prenom_2: 7, prenom_3: 8, nom: 4
             adresse_resp_legal1: 108, ville_resp_legal1: 112, code_postal_resp_legal1: 113, email_resp_legal1: 106,
             nom_resp_legal2: 118, prenom_resp_legal2: 120, tel_principal_resp_legal2: 121,
             tel_secondaire_resp_legal2: 123, lien_de_parente_resp_legal2: 122, adresse_resp_legal2: 127,
-            ville_resp_legal2: 131, code_postal_resp_legal2: 132, email_resp_legal2: 125,
-            cle_gestion: 37, libelle: 38, code_modalite: 39}
+            ville_resp_legal2: 131, code_postal_resp_legal2: 132, email_resp_legal2: 125}
 
 def import_xls fichier, etablissement_id, nom_a_importer=nil, prenom_a_importer=nil
   xls_document = Roo::Spreadsheet.open fichier
@@ -109,7 +108,44 @@ def traiter_donnees_eleve donnees_eleve
 end
 
 def import_options etablissement_id, ligne_siecle, eleve
-  option = Option.find_or_initialize_by(etablissement_id: etablissement_id, nom: ligne_siecle[COLONNES[:libelle]])
-  option.save!
+  colonnes_options = [
+    {cle_gestion: 37, libelle: 38, code_modalite: 39},
+    {cle_gestion: 41, libelle: 42, code_modalite: 43},
+    {cle_gestion: 45, libelle: 46, code_modalite: 47},
+    {cle_gestion: 49, libelle: 50, code_modalite: 51},
+    {cle_gestion: 53, libelle: 54, code_modalite: 55},
+    {cle_gestion: 57, libelle: 58, code_modalite: 59},
+    {cle_gestion: 61, libelle: 62, code_modalite: 63},
+    {cle_gestion: 65, libelle: 66, code_modalite: 67},
+    {cle_gestion: 69, libelle: 70, code_modalite: 71},
+    {cle_gestion: 73, libelle: 74, code_modalite: 75}
+  ]
+  colonnes_options.each do |colonne|
+    libelle = ligne_siecle[colonne[:libelle]]
+
+    unless libelle.nil?
+      cle_gestion = ligne_siecle[colonne[:cle_gestion]]
+      code_modalite = ligne_siecle[colonne[:code_modalite]]
+
+      option = creer_option etablissement_id, libelle, cle_gestion, code_modalite
+      eleve.option << option
+    end
+  end
 end
 
+def creer_option etablissement_id, libelle, cle_gestion, code_modalite
+  cle_groupes = {AGL1: "Langue vivante 1", ESP2: "Langue vivante 2", ES2ND: "Langue vivante 2",
+    ALL2: "Langue vivante 2", AL2ND: "Langue vivante 2", LCALA: "Langues et cultures de l'antiquité",
+    LCAGR: "Langues et cultures de l'antiquité"}
+  cle_noms = {'ANGLAIS LV1': 'Anglais', 'ESPAGNOL LV2': 'Espagnol', 'ESPAGNOL LV2 ND': 'Espagnol non débutant',
+    'ALLEMAND LV2': 'Allemand', 'ALLEMAND LV2 ND': 'Allemand non débutant', 'LCA LATIN': 'Latin', 'LCA GREC': 'Grec'}
+
+  obligatoire = code_modalite == 'O'
+  groupe = cle_groupes[cle_gestion.to_sym]
+  nom = cle_noms[libelle.to_sym]
+
+  option = Option.find_or_initialize_by(etablissement_id: etablissement_id, nom: nom,
+  obligatoire: obligatoire, groupe: groupe)
+  option.save!
+  option
+end
