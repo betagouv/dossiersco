@@ -1,9 +1,16 @@
 Evolutions fonctionnelles importantes:
+[ ] Le PDF "parents" n'est pas exploitable en l'état:
+  - date en anglais
+  - les noms des pièces jointes ne sont pas corrects
+  - il manque la date limite pour la démarche
+  - l'URL n'est pas la bonne
+  - le message de permanence crée une redondance
+
 [ ] la principale voit le nombre d'inscrits à chaque option, le plus tôt possible en juin, notamment les bi-langues (deal breaker Beaumarchais)
     -> une solution possible : [ ] lire et stocker les options existantes
 [ ] Pouvoir accepter ou non une option pédagogique (Tillion)
 [ ] raisonner en classes et pas seulement en élèves côté agent
-[/] afficher un commentaire quand une pièce jointe est rejetée
+[ ] En fin de parcours, envoyer vraiment un mail de confirmation
 [ ] proposer en download un pdf pour les renseignement médicaux (Beaumarchais + open lab)
 
 Améliorer l'ergonomie
@@ -28,25 +35,28 @@ Mineurs:
 [ ] page d’erreur “catch all” qui rassure (edited)
 [ ] page 404 personnalisée
 [ ] passage sur Heroku payant avec backups
+[ ] améliorer l'affichage de la pagination liste_des_eleves
 [ ] 2ème ou 3ème prénoms, préciser "optionnel"
 [ ] apostrophe française ’ (en cours)
 
-Ancien todo :
-[ ] Tester liste_des_eleves
+Améliorer les tests ou l'exploitabilité:
+[ ] Tester l'import des options de rang > 1
 [ ] Séparer les tests en plusieurs fichiers
 [ ] Supprimer l'ancien fichier quand on modifie une pièce jointe
-[ ] Ingérer un fichier Affelnet
 
-open lab du 16
-[/] generer les pdf pour les parents
-inscription-college.gouv
+Ne sera pas fait (cette année) mais on y pense:
+[ ] Gérer l'inscription; ingérer un fichier Affelnet
 [ ] tarif de cantine uniquement pour paris, fonctionnement différent pour les autres académies
-[ ] déduire les options de l'etablissement grace a la base siecle
-rappeler la lv1 ?
+
+Peut exiger une 2è passe:
+[/] validation des infos en base e.g. dates limites d’inscription
+[/] afficher un commentaire quand une pièce jointe est rejetée
 
 Terminé:
+[X] déduire les options de l'etablissement grace a la base siecle
+[X] rappeler la lv1 ?
+[X] Tester liste_des_eleves
 [X] visualiser qu'un parent a changé d'adresse (Beaumarchais)
-[/] validation des infos en base e.g. dates limites d’inscription
 [X] Corriger l'affichage des pièces côté agent
 [X] Logique de validation des dossiers
 [X] reprendre la nomenclature de siecle pour la profession
