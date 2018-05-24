@@ -593,7 +593,7 @@ class EleveFormTest < Test::Unit::TestCase
     get '/agent/liste_des_eleves'
 
     doc = Nokogiri::HTML(last_response.body)
-    assert_equal "connecté", doc.css("tbody > tr:nth-child(5) > td:nth-child(4)").text.strip
+    assert_equal "connecté", doc.css("tbody > tr:nth-child(1) > td:nth-child(4)").text.strip
   end
 
   def test_changement_statut_famille_en_cours_de_validation
@@ -606,7 +606,7 @@ class EleveFormTest < Test::Unit::TestCase
     get '/agent/liste_des_eleves'
 
     doc = Nokogiri::HTML(last_response.body)
-    assert_equal "en attente de validation", doc.css("tbody > tr:nth-child(5) > td:nth-child(4)").text.strip
+    assert_equal "en attente de validation", doc.css("tbody > tr:nth-child(1) > td:nth-child(4)").text.strip
   end
 
   def test_une_personne_non_identifiée_ne_peut_accéder_à_pièces
