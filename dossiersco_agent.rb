@@ -39,9 +39,10 @@ post '/agent' do
 end
 
 get '/agent/liste_des_eleves' do
+  dossier_eleves = agent.etablissement.dossier_eleve.sort_by { |dossier| dossier.eleve.identifiant}
   erb :'agent/liste_des_eleves',
       layout: :layout_agent,
-      locals: {agent: agent, dossier_eleves: agent.etablissement.dossier_eleve}
+      locals: {agent: agent, dossier_eleves: dossier_eleves}
 end
 
 get '/agent/tableau_de_bord' do
