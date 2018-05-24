@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180524100144) do
+ActiveRecord::Schema.define(version: 20180524132427) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20180524100144) do
     t.string "ville"
     t.string "tel_principal"
     t.string "tel_secondaire"
+    t.datetime "updated_at"
   end
 
   create_table "dossier_eleves", force: :cascade do |t|
@@ -85,6 +86,7 @@ ActiveRecord::Schema.define(version: 20180524100144) do
     t.string "ville"
     t.string "code_postal"
     t.string "message_permanence"
+    t.datetime "updated_at"
   end
 
   create_table "options", force: :cascade do |t|
@@ -128,6 +130,7 @@ ActiveRecord::Schema.define(version: 20180524100144) do
     t.boolean "communique_info_parents_eleves"
     t.integer "priorite"
     t.boolean "changement_adresse", default: false
+    t.datetime "updated_at"
   end
 
   create_table "tache_imports", force: :cascade do |t|
@@ -138,6 +141,7 @@ ActiveRecord::Schema.define(version: 20180524100144) do
     t.string "nom_a_importer"
     t.string "prenom_a_importer"
     t.string "message"
+    t.datetime "updated_at"
   end
 
   add_foreign_key "dossier_eleves", "eleves", column: "eleve_id"

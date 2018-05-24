@@ -29,7 +29,7 @@ code_situation = {'0': '', '1': 'occupe un emploi', '2': 'Au chômage', '3': 'Pr
   '4': 'Personne sans activité professionnelle'}
 
 code_profession = {'0': '', '10': 'agriculteur exploitant', '21': 'artisan', '22': 'commerçant et assimilé',
-  '23': "chef d'entreprise de 10 salariés et+", '31': 'profession libérale', '33': 'cadre de la fonction publique', 
+  '23': "chef d'entreprise de 10 salariés et+", '31': 'profession libérale', '33': 'cadre de la fonction publique',
   '34': 'professeur, profession scientifique', '35': "profession de l'information, des arts et des spectacles",
   '37': "cadre administratif, commercial d'entreprise", '38': "ingénieur, cadre technique d'entreprise",
   '42': "instituteur et assimilé", '43': "profession intermédiaire de la santé et du travail social",
@@ -65,6 +65,9 @@ post '/identification' do
   if normalise(params[:date_naiss]).nil?
     session[:message_erreur] = "Nous n'avons pas reconnu la date de naissance de l'élève."
     redirect '/'
+  end
+  if dossier_eleve.etat == 'pas connecté'
+    dossier_eleve.update(etat: 'connecté')
   end
   eleve = dossier_eleve.eleve
 	if eleve.date_naiss == normalise(params[:date_naiss])
@@ -226,7 +229,7 @@ post '/pieces_a_joindre' do
     end
   end
   if pieces_obligatoires
-    erb :'5_pieces_a_joindre', locals: {dossier_eleve: dossier_eleve, message: 'Veuillez télécharger les pièces obligatoires'}     
+    erb :'5_pieces_a_joindre', locals: {dossier_eleve: dossier_eleve, message: 'Veuillez télécharger les pièces obligatoires'}
   else
     redirect '/validation'
   end
@@ -264,7 +267,10 @@ end
 
 get '/confirmation' do
 	eleve = get_eleve session[:identifiant]
-	dossier_eleve = get_dossier_eleve session[:identifiant]
+  dossier_eleve = get_dossier_eleve session[:identifiant]
+  if dossier_eleve.etat != 'validé'
+    dossier_eleve.update(etat: 'en attente de validation')
+  end
 	erb :'7_confirmation', locals: { eleve: eleve, dossier_eleve: dossier_eleve }
 end
 
