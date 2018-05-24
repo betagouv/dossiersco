@@ -584,6 +584,31 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal "✓", doc.css("tbody > tr:nth-child(1) > td:nth-child(5)").text.strip
   end
 
+  def test_changement_statut_famille_connecte
+    post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+    dossier_eleve = Eleve.find_by(identifiant: '2').dossier_eleve
+    assert_equal 'connecté', dossier_eleve.etat
+
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    get '/agent/liste_des_eleves'
+
+    doc = Nokogiri::HTML(last_response.body)
+    assert_equal "connecté", doc.css("tbody > tr:nth-child(1) > td:nth-child(4)").text.strip
+  end
+
+  def test_changement_statut_famille_en_cours_de_validation
+    post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+    get '/confirmation'
+    dossier_eleve = Eleve.find_by(identifiant: '2').dossier_eleve
+    assert_equal 'en attente de validation', dossier_eleve.etat
+
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    get '/agent/liste_des_eleves'
+
+    doc = Nokogiri::HTML(last_response.body)
+    assert_equal "en attente de validation", doc.css("tbody > tr:nth-child(1) > td:nth-child(4)").text.strip
+  end
+
   def test_une_personne_non_identifiée_ne_peut_accéder_à_pièces
     get "/piece/6/assurance_scolaire/nimportequoi"
 

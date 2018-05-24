@@ -2,9 +2,9 @@ def init
   RespLegal.destroy_all
   ContactUrgence.destroy_all
   DossierEleve.destroy_all
+  Option.destroy_all
   Eleve.destroy_all
   Agent.destroy_all
-  Option.destroy_all
   PieceAttendue.destroy_all
   PieceJointe.destroy_all
   TacheImport.destroy_all
