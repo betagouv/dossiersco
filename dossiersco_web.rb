@@ -145,6 +145,9 @@ post '/famille' do
 	resp_legal2 = RespLegal.find_by(dossier_eleve_id: dossier_eleve.id, priorite: 2) || RespLegal.new(priorite: 2, dossier_eleve_id: dossier_eleve.id)
 	contact_urgence = ContactUrgence.find_by(dossier_eleve_id: dossier_eleve.id) || ContactUrgence.new(dossier_eleve_id: dossier_eleve.id)
 
+  resp_legal1.changement_adresse = true if resp_legal1.adresse != params['adresse_rl1']
+  resp_legal2.changement_adresse = true if resp_legal2.adresse != params['adresse_rl2']
+
 	identite_resp_legal.each do |i|
 		resp_legal1[i] = params["#{i}_rl1"] if params.has_key?("#{i}_rl1")
 		resp_legal2[i] = params["#{i}_rl2"] if params.has_key?("#{i}_rl2")
