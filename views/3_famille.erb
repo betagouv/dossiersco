@@ -190,7 +190,7 @@
   })
   $('#ajouter_resp_legal_2').click(
     function(e){
-        $(this).addClass('d-none');
+        $(this).html('d-none');
         $('#resp_legal_2').removeClass('d-none');
         $('#lien_de_parente_rl2').focus();
         e.preventDefault(); // Empêche un reload de la page
@@ -198,15 +198,30 @@
             scrollTop: $('#resp_legal_2').offset().top
         }, 1000);
     })
-  $('#ajouter_contact_urgence').click(
-    function(e){
-        $(this).addClass('d-none');
-        $('#contact_urgence').removeClass('d-none');
-        $('#lien_avec_eleve_urg').focus();
-        e.preventDefault(); // Empêche un reload de la page
-        $('html, body').animate({
-            scrollTop: $('#contact_urgence').offset().top
-        }, 1000);
+  $('#ajouter_contact_urgence').click(function(e) {
+        if ($('#contact_urgence').hasClass('d-none')) {
+          console.log('if')
+          $(this).html("Ne pas ajouter un contact en cas d'urgence");
+          $('#contact_urgence').removeClass('d-none');
+          $('#lien_avec_eleve_urg').focus();
+          e.preventDefault(); // Empêche un reload de la page
+          $('html, body').animate({
+              scrollTop: $('#contact_urgence').offset().top
+          }, 1000);
+        }
+        else {
+          $(this).html("Ajouter un contact en cas d'urgence");
+          $('#contact_urgence').addClass('d-none');
+          $('#lien_avec_eleve_urg').focus();
+          $("input[name='lien_avec_eleve_urg']").val('');
+          $("input[name='prenom_urg']").val('');
+          $("input[name='nom_urg']").val('');
+          $("input[name='tel_principal_urg']").val('');
+          $("input[name='tel_secondaire_urg']").val('');
+          $("html, body").animate({
+            scrollTop: $(document).height()
+          }, 1000);
+        }
     })
 
 </script>

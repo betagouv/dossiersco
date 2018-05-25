@@ -146,7 +146,9 @@ h2, h4 {
   border-color: #003189;
 }
 
-.btn-outline-primary {
+.btn-outline-primary,
+.btn-outline-primary:focus {
+  box-shadow: none;
   color: #003189;
   border-color: #003189;
 }
@@ -157,8 +159,8 @@ h2, h4 {
   border-color: #003089d5;
 }
 
-.btn-outline-primary:hover,
-.btn-outline-primary:focus {
+.btn-outline-primary:hover {
+  color: white;
   background-color: #003089d5;
   border-color: #003089d5;
 }
