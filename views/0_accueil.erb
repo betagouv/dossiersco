@@ -19,7 +19,10 @@
 	<p>Veuillez vous munir des pièces administratives suivantes :</p>
 	<ul>
 		<% dossier_eleve.etablissement.piece_attendue.each do |piece| %>
-		<li><%= piece.nom %></li>
+			<li><%= piece.nom %></li>
+			<% if piece.explication.present? %>
+				<p>Pourquoi : <%= piece.explication %></p>
+			<% end %>
 		<% end %>
 	</ul>
 	<p>et mettre à jour vos coordonnées sur ce site avant le <strong id="date-limite"><%= dossier_eleve.etablissement.date_limite %></strong>.</p>
