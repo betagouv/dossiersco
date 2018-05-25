@@ -1,20 +1,27 @@
 Evolutions fonctionnelles importantes:
-[ ] Le PDF "parents" n'est pas exploitable en l'état:
-  - date en anglais
-  - les noms des pièces jointes ne sont pas corrects
-  - il manque la date limite pour la démarche
-  - l'URL n'est pas la bonne
-  - le message de permanence crée une redondance
-
-[ ] la principale voit le nombre d'inscrits à chaque option, le plus tôt possible en juin, notamment les bi-langues (deal breaker Beaumarchais)
-    -> une solution possible : [ ] lire et stocker les options existantes
+[ ] Le PDF "parents" n'est pas exploitable en l'état (cf ci-dessous)
+[ ] Pouvoir générer les PDF d'une classe entière
 [ ] Pouvoir accepter ou non une option pédagogique (Tillion)
-[ ] raisonner en classes et pas seulement en élèves côté agent
 [ ] En fin de parcours, envoyer vraiment un mail de confirmation
-[ ] proposer en download un pdf pour les renseignement médicaux (Beaumarchais + open lab)
+[ ] En fin de parcours, enregistrer la confirmation et la date de "signature"
+[ ] Ajouter une colonne "Envoyer un message" à la liste des élèves -> lien vers page élève
+[ ] Ajouter une boite de dialogue à la page élève pour envoyer un message à la famille
 
-Améliorer l'ergonomie
-[ ] Expliquer comment prendre une photo ou scanner les pièces jointes
+Améliorations critiques du PDF:
+[ ] afficher la date en français
+[ ] afficher le nom et le "pourquoi" des PJ
+[ ] afficher la date limite de la démarche
+[ ] reprendre la bonne URL
+[ ] rendre la phrase d'intro du message de permanence plus générique
+[ ] se rapprocher, notamment avec logo Académie de Paris inclus, de la version GDoc
+
+Améliorer la liste des élèves
+[ ] Trier par défaut par classe puis par état
+[ ] Afficher par défaut 30 élèves par page, et pouvoir prendre des multiples (60, 90)
+[ ] Proposer un menu déroulant des classes (6A, 6B etc) et filtrer par classe lors du choix
+[ ] Afficher sur une seule ligne la recherche, filtre et nb élèves
+[ ] Masquer les onglets d'édition des options et PJ attendues
+[ ] améliorer l'affichage de la pagination
 
 Observation de l'usage:
 [ ] Intégrer un tracker Piwik
@@ -31,13 +38,15 @@ Gestion des relances:
 [ ] intégration d’une brique d’envoi transactionnel mail
 
 Mineurs:
+[ ] Encourager l'ajout d'adresse mail quand elle n'est pas saisie
+[ ] permettre à un user admin (pierre) de basculer d'un établissement à l'autre
 [ ] page d’erreur “catch all” qui rassure (edited)
 [ ] page 404 personnalisée
 [ ] passage sur Heroku payant avec backups
-[ ] améliorer l'affichage de la pagination liste_des_eleves
 [ ] 2ème ou 3ème prénoms, préciser "optionnel"
 [ ] apostrophe française ’ (en cours)
 [ ] La valeur de 'demarche' codée en dur
+[ ] Bug sur la case d'engagement demi-pension
 
 Améliorer les tests ou l'exploitabilité:
 [ ] Tester l'import des options de rang > 1
@@ -53,6 +62,8 @@ Peut exiger une 2è passe:
 [/] afficher un commentaire quand une pièce jointe est rejetée
 
 Terminé:
+[X] proposer en download un pdf pour les renseignement médicaux (Beaumarchais + open lab)
+[X] Expliquer comment prendre une photo ou scanner les pièces jointes
 [X] Vérifier l'horodatage des modifs
 [X] déduire les options de l'etablissement grace a la base siecle
 [X] rappeler la lv1 ?
@@ -61,3 +72,5 @@ Terminé:
 [X] Corriger l'affichage des pièces côté agent
 [X] Logique de validation des dossiers
 [X] reprendre la nomenclature de siecle pour la profession
+[/] la principale voit le nombre d'inscrits à chaque option, le plus tôt possible en juin, notamment les bi-langues (deal breaker Beaumarchais)
+    -> une solution possible : [/] lire et stocker les options existantes
