@@ -173,14 +173,6 @@
 
     <span style="display:block; height: 30px;"></span>
 
-    <%= erb :'partials/champ_texte', :locals => { :desc => "Adresse", :variable => "adresse_urg", :valeur => params['adresse_urg'], :exemple => "Numéro et nom de voie" }%>
-
-    <%= erb :'partials/champ_texte', :locals => { :desc => "Code postal", :variable => "code_postal_urg", :valeur => params['code_postal_urg'], :exemple => "Code postal" }%>
-
-    <%= erb :'partials/champ_texte', :locals => { :desc => "Ville", :variable => "ville_urg", :valeur => params['ville_urg'], :exemple => "Ville" }%>
-
-    <span style="display:block; height: 30px;"></span>
-
     <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone principal", :variable => "tel_principal_urg", :valeur => params['tel_principal_urg'], :exemple => "Numéro de téléphone" }%>
 
     <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone secondaire", :variable => "tel_secondaire_urg", :valeur => params['tel_secondaire_urg'], :exemple => "Numéro de téléphone" }%>

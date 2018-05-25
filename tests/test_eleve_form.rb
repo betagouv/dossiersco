@@ -195,15 +195,11 @@ class EleveFormTest < Test::Unit::TestCase
   def test_persistence_du_contact_urg
     doc = soumet_formulaire '/famille',
                             lien_avec_eleve_urg: "Tuteur", prenom_urg: "Philippe" , nom_urg: "Blayo",
-                            adresse_urg: "20 bd Segur",code_postal_urg: "75007", ville_urg: "Paris",
                             tel_principal_urg: "0612345678", tel_secondaire_urg: "0112345678"
 
     assert_attr 'Tuteur', '#lien_avec_eleve_urg', doc
     assert_attr 'Philippe', '#prenom_urg', doc
     assert_attr 'Blayo', '#nom_urg', doc
-    assert_attr '20 bd Segur', '#adresse_urg', doc
-    assert_attr '75007', '#code_postal_urg', doc
-    assert_attr 'Paris', '#ville_urg', doc
     assert_attr '0612345678', '#tel_principal_urg', doc
     assert_attr '0112345678', '#tel_secondaire_urg', doc
   end
