@@ -377,14 +377,13 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal '080788316HE', eleve.identifiant
     assert_equal 'FRANCE', eleve.pays_naiss
     assert_equal 'PARIS 12E  ARRONDISSEMENT', eleve.ville_naiss
-    assert_equal '4ème 5 SEGPA', eleve.classe_ant
+    assert_equal '4A', eleve.classe_ant
     assert_equal 'Collège Germaine Tillion', eleve.dossier_eleve.etablissement.nom
     assert_equal 'Prenom2_test', eleve2.prenom
     assert_equal '080788306HE', eleve2.identifiant
     assert_equal 'CONGO', eleve2.pays_naiss
     assert_equal 'Brazaville', eleve2.ville_naiss
     assert_equal '4EME HORAIRES AMENAGES MUSIQUE', eleve2.niveau_classe_ant
-    assert_nil eleve2.classe_ant
 
     tache_import = TacheImport.find_by(statut: 'terminée')
     assert_equal(tache_import.url, 'tests/test_import_siecle.xls')
