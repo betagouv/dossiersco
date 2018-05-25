@@ -105,20 +105,20 @@ end
 post '/eleve' do
   eleve = get_eleve session[:identifiant]
   identite_eleve = ['prenom', 'prenom_2', 'prenom_3', 'nom', 'sexe', 'ville_naiss', 'pays_naiss', 'nationalite', 'classe_ant', 'ets_ant']
-  options = options_du_niveau eleve, eleve.dossier_eleve.etablissement.id
-  nom_options = options.map { |option| option.nom }
   identite_eleve.each do |info|
 	 eleve[info] = params[info] if params.has_key?(info)
   end
 
-  nom_options.each do |nom_option|
-    if params.has_key?(nom_option) or params.has_value?(nom_option)
-      option_choisit = Option.find_by(nom: nom_option, etablissement_id: eleve.dossier_eleve.etablissement.id)
-      eleve.option << option_choisit unless eleve.option.include? option_choisit
-    else
-      eleve.option.delete eleve.option.select { |o| o.nom == nom_option }
-    end
-  end
+  # options = options_du_niveau eleve, eleve.dossier_eleve.etablissement.id
+  # nom_options = options.map { |option| option.nom }
+  # nom_options.each do |nom_option|
+  #   if params.has_key?(nom_option) or params.has_value?(nom_option)
+  #     option_choisit = Option.find_by(nom: nom_option, etablissement_id: eleve.dossier_eleve.etablissement.id)
+  #     eleve.option << option_choisit unless eleve.option.include? option_choisit
+  #   else
+  #     eleve.option.delete eleve.option.select { |o| o.nom == nom_option }
+  #   end
+  # end
   eleve.save!
 
   sauve_et_redirect eleve.dossier_eleve, 'famille'
