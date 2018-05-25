@@ -60,16 +60,18 @@
 		</div>
 	</div>
 
-	<%= erb :'partials/champ_check', locals: { desc: "En tant que responsable légal de #{dossier_eleve.eleve.prenom}, je certifie sur l'honneur l'exactitude des informations communiquées et m'engage à tenir le collège informé de tout changement de situation ou de coordonnées.",
-	name: 'certifie_sur_honneur', condition: false }%>
+	<form action='/validation' method='POST'>
 
-	<div class="row mt-5">
-		<div class="mx-auto">
-			<a href="/confirmation">
-					<div class="btn btn-primary">Valider l'inscription</div>
-			</a>
+		<%= erb :'partials/champ_check', locals: { desc: "En tant que responsable légal de #{dossier_eleve.eleve.prenom}, je certifie sur l'honneur l'exactitude des informations communiquées et m'engage à tenir le collège informé de tout changement de situation ou de coordonnées.",
+		name: 'signature', condition: dossier_eleve.signature }%>
+
+		<div class="row mt-5">
+			<div class="mx-auto">
+				<button type='submit' class="btn btn-primary">Valider l'inscription</button>
+			</div>
 		</div>
-	</div>
+	</form>
+
 </div>
 <script>
 	<% if eleve.option.first %>
