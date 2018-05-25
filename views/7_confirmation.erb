@@ -1,4 +1,4 @@
-<% demarche = "inscription" %>
+<% demarche = "reinscription" %>
 <% @section = 6 %>
 
 <%= erb :'partials/navigation' %>
@@ -11,18 +11,13 @@
     <h2 class="separation">Réinscription validée</h2>
   <% end %>
 
-  <p>Nous avons envoyé un mail de confirmation aux adresses suivantes :</p>
+  <p>Vous recevrez prochainement un courriel de confirmation aux adresses suivantes :</p>
 
   <ul>
     <% dossier_eleve.resp_legal.each do |resp_legal| %>
       <%= "<li>#{resp_legal.email}</li>" if resp_legal.email.present? %>
     <% end %>
   </ul>
-
-  <% if demarche == "inscription" %>
-    <p>Une permanence est assurée si vous souhaitez venir nous rencontrer :
-    <%= dossier_eleve.etablissement.message_permanence %></p>
-  <% end %>
 
   <p class='mb-5'>A bientôt au <%= dossier_eleve.etablissement.nom %> !</p>
 
