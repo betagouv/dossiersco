@@ -37,6 +37,7 @@ Mineurs:
 [ ] améliorer l'affichage de la pagination liste_des_eleves
 [ ] 2ème ou 3ème prénoms, préciser "optionnel"
 [ ] apostrophe française ’ (en cours)
+[ ] La valeur de 'demarche' codée en dur
 
 Améliorer les tests ou l'exploitabilité:
 [ ] Tester l'import des options de rang > 1
