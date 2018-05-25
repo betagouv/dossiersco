@@ -34,7 +34,7 @@ h2, h4 {
   clear: both;
   content: "";
   display: block;
-  
+
   height: 0;
 }
  .arrow-steps .step {
@@ -51,7 +51,7 @@ h2, h4 {
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
-	user-select: none; 
+	user-select: none;
   transition: background-color 0.2s ease;
 }
 
@@ -65,7 +65,7 @@ h2, h4 {
 	height: 0;
 	border-top: 19px solid transparent;
 	border-bottom: 17px solid transparent;
-	border-left: 17px solid #d9e3f7;	
+	border-left: 17px solid #d9e3f7;
 	z-index: 2;
   transition: border-color 0.2s ease;
 }
@@ -73,7 +73,7 @@ h2, h4 {
 .arrow-steps .step:before {
 	right: auto;
 	left: 0;
-	border-left: 17px solid #f8f8fa;	
+	border-left: 17px solid #f8f8fa;
 	z-index: 0;
 }
 
@@ -115,7 +115,7 @@ h2, h4 {
 }
 
 .arrow-steps .step.current:after {
-	border-left: 17px solid #003189;	
+	border-left: 17px solid #003189;
 }
 
 .step:hover {
@@ -163,6 +163,11 @@ h2, h4 {
   border-color: #003089d5;
 }
 
+.disabled, .disabled:hover {
+  background-color: #a5a5a5 !important;
+  border-color: #a5a5a5 !important;
+}
+
 .card {
   margin-bottom: 20px;
   padding-bottom: 0;
@@ -171,7 +176,6 @@ h2, h4 {
 .card-body {
   position: relative;
   padding-bottom: 10px;
-  min-height: 8.5em;
 }
 
 .card-relat {

@@ -5,14 +5,23 @@
 
 <div class="col-12">
 
-  <h2 class="separation">Pièces à joindres</h2>
+  <h2 class="separation">Pièces à joindre</h2>
 
   <% if defined? message  %>
     <div class="message_echec"><%= message %></div>
   <% end %>
-
-  <p>A scanner ou prendre en photo sur votre téléphone portable.</p>
-  <p>Les pièce précédées d'un * sont obligatoires</p>
+  <div class='card'>
+    <div class='card-body'>
+      <p>Les pièces précédées d'un * sont obligatoires.</p>
+    </div>
+  </div>
+  <div class='card'>
+    <div class='card-body'>
+      <p>Si vous disposez d'un scanner, vous pouvez nous transmettre des documents au format PDF ou image.</p>
+      <p>Vous pouvez également utiliser un appareil mobile avec connexion Internet (smartphone, tablette) pour prendre la photo d'un document.</p>
+      <p>Dans ce cas, connectez-vous sur dossiersco.fr, vous serez automatiquement redirigé sur cette page. Pensez à rafraîchir cette page pour visualiser les documents avant de continuer</p>
+    </div>
+  </div>
   <div class="card-deck row">
     <% dossier_eleve.etablissement.piece_attendue.each do |piece| %>
       <form class="col-6 forms" action="/enregistre_piece_jointe" method="POST" enctype="multipart/form-data">
@@ -75,9 +84,9 @@
     $('input[type=file]')[0].focus();
 
     $('.forms').change(function() {
-      console.log($(this).find( "input[type=file]" ).prop('files'))
       var data = $(this).serialize()
       $(this).find( ".soumettre" ).click()
+      $("button[type='submit']").attr("disabled", "disabled").addClass('disabled')
     })
   });
 </script>
