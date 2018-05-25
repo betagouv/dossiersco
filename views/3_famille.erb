@@ -109,13 +109,13 @@
     <%= erb :'partials/champ_texte', :locals => { :desc => "Prénom", :variable => "prenom_rl2", :valeur => params['prenom_rl2'], :exemple => "Prénom" }%>
 
     <%= erb :'partials/champ_texte', :locals => { :desc => "Nom", :variable => "nom_rl2", :valeur => params['nom_rl2'], :exemple => "Nom" }%>
-    
+
     <div class="row">
       <div class="col-sm-4"></div>
       <div class="col-sm-5 col-sm-offset-4">
         <div class="form-check">
           <label class="form-check-label">
-            <input class="form-check-input" id="meme_adresse_que_rl1" type="checkbox"> <small>Même adresse que le responsable légal 1</small>
+            <div class="btn btn-outline-primary" id="meme_adresse_que_rl1" ><small>Recopier l'adresse du responsable légal 1</small></div>
           </label>
         </div>
       </div>
@@ -183,14 +183,10 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
-  $('#meme_adresse_que_rl1').click(
-  function(e){
-    if(meme_adresse_que_rl1.checked) {
-        console.log($("#adresse_rl2").val())
-        $("#adresse_rl2").val($("#adresse_rl1").val());
-        $("#code_postal_rl2").val($("#code_postal_rl1").val());
-        $("#ville_rl2").val($("#ville_rl1").val());
-    }
+  $('#meme_adresse_que_rl1').click(function() {
+      $("#adresse_rl2").val($("#adresse_rl1").val());
+      $("#code_postal_rl2").val($("#code_postal_rl1").val());
+      $("#ville_rl2").val($("#ville_rl1").val());
   })
   $('#ajouter_resp_legal_2').click(
     function(e){
