@@ -265,6 +265,16 @@ get '/validation' do
 	erb :'6_validation', locals: { eleve: eleve, dossier_eleve: dossier_eleve }
 end
 
+post '/validation' do
+  dossier_eleve = get_dossier_eleve session[:identifiant]
+  unless dossier_eleve.date_signature.present? || !dossier_eleve.signature
+    dossier_eleve.signature = params[:signature]
+    dossier_eleve.date_signature = Time.now
+    dossier_eleve.save
+  end
+  redirect '/confirmation'
+end
+
 get '/confirmation' do
 	eleve = get_eleve session[:identifiant]
   dossier_eleve = get_dossier_eleve session[:identifiant]
