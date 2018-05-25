@@ -1,6 +1,6 @@
 <%	case type
 	when "text", "date"
-=begin 
+=begin
 
 VARIABLES
 
@@ -37,7 +37,7 @@ disabled		pour	disabled
 <span style="display:block; height: <%= hauteur %>px;"></span>
 
 <%	when "dropdown"
-=begin 
+=begin
 
 VARIABLES
 
@@ -72,7 +72,7 @@ selected	"CM2"
 </div>
 
 <%	when "radio"
-=begin 
+=begin
 
 VARIABLES
 
@@ -100,7 +100,26 @@ checked			anglais: pour cocher Anglais par défaut
 				> <%= option %>
 				<%= required if defined? required %>
 			</label>
-    	<% end %> 		
+		<% end %>
+	</div>
+</div>
+
+<%	when "info"
+=begin
+
+VARIABLES
+
+name
+label 			"LV1"
+valeur			"Anglais"
+
+=end
+%>
+
+<div class="form-group row">
+	<label class="col-sm-4 col-form-label"><%= label %></label>
+	<div class="col-sm-6">
+		<%= valeur %>
 	</div>
 </div>
 
