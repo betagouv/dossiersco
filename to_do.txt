@@ -24,8 +24,8 @@ Améliorer la liste des élèves
 [ ] améliorer l'affichage de la pagination
 
 Observation de l'usage:
-[ ] Intégrer un tracker Piwik
-[ ] Faire fonctionner Sentry
+[X] Intégrer un tracker Piwik
+[X] Faire fonctionner Sentry
 [ ] Emailing (Mailjet? autre?) parents (en complément des actions "recherche de feedback" parents)
 
 Important mais moins urgent:
