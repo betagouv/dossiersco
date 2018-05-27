@@ -28,8 +28,7 @@ end
 post '/agent' do
   agent = Agent.find_by(identifiant: params[:identifiant])
   mdp_saisi = params[:mot_de_passe]
-  mdp_crypte = BCrypt::Password.new(agent.password)
-  if mdp_crypte == mdp_saisi
+  if agent && (BCrypt::Password.new(agent.password) == mdp_saisi)
     session[:identifiant] = agent.identifiant
     redirect '/agent/tableau_de_bord'
   else
