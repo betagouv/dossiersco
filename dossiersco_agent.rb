@@ -1,6 +1,11 @@
 require 'sinatra'
 require 'sinatra/activerecord'
 require 'bcrypt'
+
+require './config/initializers/mailjet.rb'
+require './config/initializers/actionmailer.rb'
+require './config/initializers/carrierwave.rb'
+
 require_relative 'helpers/singulier_francais'
 require_relative 'helpers/import_siecle'
 require_relative 'helpers/agent'

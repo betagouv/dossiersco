@@ -1,3 +1,4 @@
+# Configurer Sentry en premier, pour capturer les exceptions
 require 'raven'
 
 Raven.configure do |config|
