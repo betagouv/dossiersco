@@ -24,8 +24,6 @@ Améliorer la liste des élèves
 [ ] améliorer l'affichage de la pagination
 
 Observation de l'usage:
-[X] Intégrer un tracker Piwik
-[X] Faire fonctionner Sentry
 [ ] Emailing (Mailjet? autre?) parents (en complément des actions "recherche de feedback" parents)
 
 Important mais moins urgent:
@@ -34,8 +32,6 @@ Important mais moins urgent:
 
 Gestion des relances:
 [ ] gestion des comms et relances aux familles (edited)
-[ ] intégration d’une brique d’envoi de SMS
-[ ] intégration d’une brique d’envoi transactionnel mail
 
 Mineurs:
 [ ] Encourager l'ajout d'adresse mail quand elle n'est pas saisie
@@ -62,6 +58,10 @@ Peut exiger une 2è passe:
 [/] afficher un commentaire quand une pièce jointe est rejetée
 
 Terminé:
+[X] intégration d’une brique d’envoi de SMS
+[X] intégration d’une brique d’envoi transactionnel mail
+[X] Intégrer un tracker Piwik
+[X] Faire fonctionner Sentry
 [X] proposer en download un pdf pour les renseignement médicaux (Beaumarchais + open lab)
 [X] Expliquer comment prendre une photo ou scanner les pièces jointes
 [X] Vérifier l'horodatage des modifs
