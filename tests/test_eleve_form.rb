@@ -571,6 +571,18 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'application/pdf', last_response.original_headers['Content-Type']
   end
 
+  def test_valide_et_annule_une_inscription
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+
+    post '/agent/valider_inscription', identifiant: '4'
+    eleve = Eleve.find_by(identifiant: '4')
+    assert_equal 'validé', eleve.dossier_eleve.etat
+
+    eleve = Eleve.find_by(identifiant: '4')
+    post '/agent/valider_inscription', identifiant: '4'
+    assert_equal 'en attente de validation', eleve.dossier_eleve.etat
+  end
+
   def test_affiche_changement_adresse_liste_eleves
     # Si on a un changement d'adresse
     eleve = Eleve.find_by(identifiant: 2)
