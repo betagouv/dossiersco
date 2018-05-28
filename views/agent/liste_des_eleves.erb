@@ -79,8 +79,10 @@
     })
   })
   jQuery(document).ready(function($) {
-    $(".clickable-row").click(function() {
-        window.location = $(this).data("href");
+    $(".clickable-row").click(function(event) {
+      var href = $(this).data("href")
+      if (event.metaKey) { window.open(href, '_blank') }
+      else { window.location.replace(href) }
     });
     $('#table_liste_des_eleves').DataTable({
       "order": [[ 0, "desc" ]],
