@@ -96,11 +96,17 @@ scolarite_ant = [
 
     <%= construire scolarite_ant %>
 
+    <h2 class="separation">Options</h2>
+
+    <% eleve.option.each do |option| %>
+      <p><strong><%= option.groupe %></strong> : <%= option.nom %></p>
+    <% end %>
+
+    <% dossier_valide = eleve.dossier_eleve.etat == 'validé' %>
     <div style='text-align: center; width:100%'>
-    <form action='/agent/pdf' method='POST' target='_blank' >
+    <form action='/agent/valider_inscription' method='POST'>
       <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
-      <button class='btn-primary btn-lg' type='submit'>Générer un courrier</button>
+      <button class="<%= dossier_valide ? 'btn-danger' : 'btn-primary' %>  btn btn-lg" type='submit'><%= dossier_valide ? "Annuler l'inscription" : "Valider l'inscription" %></button>
     </form>
-    (Déplacer ensuite la souris en haut de l'écran)
   </div>
 </div>
