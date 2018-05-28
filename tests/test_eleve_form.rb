@@ -628,6 +628,17 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 200, last_response.status
   end
 
+  def test_mailer
+    ActionMailer::Base.delivery_method = :test
+    get '/testmail/DossierSCO'
+    mail = ActionMailer::Base.deliveries.last
+    assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
+    assert_equal 'contact@dossiersco.beta.gouv.fr', mail['to'].to_s
+    assert_equal 'Test', mail['subject'].to_s
+    part = mail.html_part || mail.text_part || mail
+    assert part.body.decoded.include? "Bonjour DossierSCO"
+  end
+
   def assert_file(chemin_du_fichier)
     assert File.file? chemin_du_fichier
     File.delete(chemin_du_fichier)

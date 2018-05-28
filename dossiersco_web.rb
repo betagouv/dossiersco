@@ -1,9 +1,13 @@
 require 'sinatra'
 require 'json'
 require 'sinatra/activerecord'
+require 'action_mailer'
+
+require './config/initializers/mailjet.rb'
+require './config/initializers/actionmailer.rb'
+require './config/initializers/carrierwave.rb'
 
 require './helpers/models.rb'
-require './config/initializers/carrierwave.rb'
 require './uploaders/fichier_uploader.rb'
 require './helpers/s3.rb'
 
@@ -297,6 +301,22 @@ post '/commentaire' do
   redirect '/confirmation'
 end
 
+# Route de test uniquement
+get '/testmail/:nom' do
+  class TestMailer < ActionMailer::Base
+    default from: "contact@dossiersco.beta.gouv.fr"
+    default to: "contact@dossiersco.beta.gouv.fr"
+    def testmail(nom)
+      @nom = nom
+      mail(subject: "Test") do |format|
+        format.text
+      end
+    end
+  end
+  nom = params[:nom] || 'testeur'
+  mail = TestMailer.testmail(nom)
+  mail.deliver_now
+end
 
 def sauve_et_redirect dossier_eleve, etape
   dossier_eleve.etape = etape

@@ -13,6 +13,8 @@ gem 'roo-xls'
 gem 'bcrypt', '~> 3.1'
 gem 'prawn'
 gem 'sentry-raven'
+gem 'mailjet'
+gem 'actionmailer'
 
 group :test do
   gem 'nokogiri'
