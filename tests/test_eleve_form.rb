@@ -400,21 +400,29 @@ class EleveFormTest < Test::Unit::TestCase
     lignes_siecle = [
       {11 => '1', 9 => "18/05/1991", 37 => "AGL1", 38 => "ANGLAIS LV1", 39 => "O", 33 => '4'},
       {11 => '2', 9 => "18/05/1991", 37 => "ESP2", 38 => "ESPAGNOL LV2", 39 => "F", 33 => '4'},
-      {11 => '3', 9 => "18/05/1991", 37 => "AGL1", 38 => "ANGLAIS LV1", 39 => "O", 33 => '4'}
+      {11 => '3', 9 => "18/05/1991", 37 => "AGL1", 38 => "ANGLAIS LV1", 39 => "O", 33 => '4'},
+      {11 => '4', 9 => "18/05/1991", 41 => "DANSE", 42 => "DANSE", 43 => "F", 33 => '4'}
     ]
 
     lignes_siecle.each { |ligne| import_ligne etablissement.id, ligne }
 
     options = etablissement.option
 
-    assert_equal 2, options.count
+    assert_equal 3, options.count
+    noms = options.collect(&:nom)
+    assert noms.include? 'Anglais'
+    assert noms.include? 'Espagnol'
+    assert noms.include? 'Danse'
 
     eleve1 = Eleve.find_by(identifiant: "1")
     nom_option_eleve1 = eleve1.option.collect(&:nom)
     assert nom_option_eleve1.include? 'Anglais'
-    noms = options.collect(&:nom)
-    assert noms.include? 'Anglais'
-    assert noms.include? 'Espagnol'
+
+    eleve4 = Eleve.find_by(identifiant: "4")
+    groupes = eleve4.option.collect(&:groupe)
+    assert groupes.include? 'Autres enseignements'
+    noms = eleve4.option.collect(&:nom)
+    assert noms.include? 'Danse'
   end
 
   def test_creer_des_options
