@@ -85,6 +85,8 @@
       else { window.location.replace(href) }
     });
     $('#table_liste_des_eleves').DataTable({
+      "pageLength": 30,
+      "lengthMenu": [ 30, 60, 90, 120 ],
       "order": [[ 0, "desc" ]],
       language: {
         processing:     "Traitement en cours...",
@@ -103,6 +105,8 @@
             next:       "Suivant",
             last:       "Dernier"
         },
+        responsive: true,
+        dom: 'Bfrtip',
         aria: {
             sortAscending:  ": activer pour trier la colonne par ordre croissant",
             sortDescending: ": activer pour trier la colonne par ordre décroissant"
