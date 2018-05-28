@@ -91,19 +91,8 @@ end
 
 get '/eleve' do
   eleve = get_eleve session[:identifiant]
-  options = options_du_niveau_classees eleve, eleve.dossier_eleve.etablissement.id
-  options_obligatoires = {}
-  options[:obligatoire].each do |option|
-    option_du_groupe = options_obligatoires[option[:groupe]]
-    if option_du_groupe.nil?
-      options_obligatoires[option[:groupe]] = [option]
-    else
-      option_du_groupe << option
-    end
-  end
-  erb :'1_eleve', locals: { eleve: eleve,
-   options_obligatoires: options_obligatoires,
-   options_facultatives: options[:facultative] }
+  options_du_niveau = options_du_niveau eleve, eleve.dossier_eleve.etablissement.id
+  erb :'1_eleve', locals: { eleve: eleve, options_du_niveau: options_du_niveau }
 end
 
 post '/eleve' do

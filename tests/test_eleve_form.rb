@@ -90,16 +90,30 @@ class EleveFormTest < Test::Unit::TestCase
     assert last_response.body.include? 'Piaf'
   end
 
-  # def test_persistence_des_choix_enseignements
-  #   post '/identification', identifiant: '2', date_naiss: '1915-12-19'
-  #   post '/eleve', Espagnol: true, Latin: true
-  #   get '/eleve'
+  def test_nouvelles_options
+    oeben = Etablissement.find_by(nom: "College Jean-Francois Oeben")
+    Option.create!(etablissement_id: oeben.id, nom: 'Grec', groupe:'Langes anciennes', niveau_debut: 3)
 
-  #   assert last_response.body.gsub(/\s/,'').include?(
-  #    '<input name="Langue vivante 2" value="Espagnol" type="radio" class="form-check-input" checked>'.gsub(/\s/,''))
-  #   assert last_response.body.gsub(/\s/,'').include?(
-  #    "<input class='form-check-input' type='checkbox' name='Latin' value='true' id='Latin' checked >".gsub(/\s/,''))
-  # end
+    # Etienne: 4e -> 3e donc on lui propose Grec en option
+    post '/identification', identifiant: '1', date_naiss: '1995-11-19'
+    get '/eleve'
+
+    doc = Nokogiri::HTML(last_response.body)
+    assert_not_nil doc.css("input[name='Grec'][type='checkbox']").first
+    assert_nil doc.css("input[name='Grec'][type='checkbox'][checked]").first
+  end
+
+  def test_restitution_des_choix_enseignements
+    oeben = Etablissement.find_by(nom: "College Jean-Francois Oeben")
+    Option.create!(etablissement_id: oeben.id, nom: 'Grec', groupe:'Langes anciennes', niveau_debut: 3)
+
+    # Etienne: 4e -> 3e donc on lui propose Grec en option
+    post '/identification', identifiant: '1', date_naiss: '1995-11-19'
+
+    post '/eleve', Grec: true
+    get '/eleve'
+    assert_not_nil doc.css("input[name='Grec'][type='checkbox'][checked]").first
+  end
 
   def test_affiche_2ème_et_3ème_prénoms_en_4ème_pour_brevet_des_collèges
     post '/identification', identifiant: '4', date_naiss: '1970-01-01'
