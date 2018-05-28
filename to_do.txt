@@ -20,7 +20,7 @@ Améliorer la liste des élèves
 [ ] Afficher par défaut 30 élèves par page, et pouvoir prendre des multiples (60, 90)
 [ ] Proposer un menu déroulant des classes (6A, 6B etc) et filtrer par classe lors du choix
 [ ] Afficher sur une seule ligne la recherche, filtre et nb élèves
-[ ] Masquer les onglets d'édition des options et PJ attendues
+[X] Masquer les onglets d'édition des options et PJ attendues
 [ ] améliorer l'affichage de la pagination
 
 Observation de l'usage:
