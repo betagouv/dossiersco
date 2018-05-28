@@ -102,16 +102,22 @@ post '/eleve' do
 	 eleve[info] = params[info] if params.has_key?(info)
   end
 
-  # options = options_du_niveau eleve, eleve.dossier_eleve.etablissement.id
-  # nom_options = options.map { |option| option.nom }
-  # nom_options.each do |nom_option|
-  #   if params.has_key?(nom_option) or params.has_value?(nom_option)
-  #     option_choisit = Option.find_by(nom: nom_option, etablissement_id: eleve.dossier_eleve.etablissement.id)
-  #     eleve.option << option_choisit unless eleve.option.include? option_choisit
-  #   else
-  #     eleve.option.delete eleve.option.select { |o| o.nom == nom_option }
-  #   end
-  # end
+  options = options_du_niveau eleve, eleve.dossier_eleve.etablissement.id
+  nom_options = options.map { |option| option.nom }
+  nom_options.each do |nom_option|
+    if params[nom_option].present?
+      option_existante = eleve.option.collect(&:nom).include? nom_option
+      if !option_existante
+        # demande pour l'année à venir
+        option_choisie = Option.find_by(nom: nom_option, etablissement_id: eleve.dossier_eleve.etablissement.id)
+        demande = Demande.find_or_initialize_by(eleve: eleve, option: option_choisie)
+        eleve.demande.delete demande if params[nom_option] == 'false'
+        eleve.demande << demande if params[nom_option] == 'true'
+      else
+        # abandon
+      end
+    end
+  end
   eleve.save!
 
   sauve_et_redirect eleve.dossier_eleve, 'famille'

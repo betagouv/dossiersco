@@ -112,7 +112,15 @@ class EleveFormTest < Test::Unit::TestCase
 
     post '/eleve', Grec: true
     get '/eleve'
+    doc = Nokogiri::HTML(last_response.body)
+
     assert_not_nil doc.css("input[name='Grec'][type='checkbox'][checked]").first
+
+    post '/eleve', Grec: false
+    get '/eleve'
+    doc = Nokogiri::HTML(last_response.body)
+
+    assert_nil doc.css("input[name='Grec'][type='checkbox'][checked]").first
   end
 
   def test_affiche_2ème_et_3ème_prénoms_en_4ème_pour_brevet_des_collèges

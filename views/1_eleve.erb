@@ -137,8 +137,8 @@
           type: "check",
           label: opt.groupe,
           name: opt.nom,
-          desc: opt.nom,
-          condition: false
+          desc: "Je demande l'option: #{opt.nom}",
+          condition: eleve.demande.any? { |demande| demande.option.nom == opt.nom}
           }]
         %>
         <%= construire check %>
