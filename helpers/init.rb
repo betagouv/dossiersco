@@ -22,6 +22,7 @@ def init
       {prenom: 'Etienne',
        nom: 'Puydebois',
        date_naiss: '1995-11-19',
+       niveau_classe_ant: '4EME',
        nationalite: 'francaise',
        sexe: 'Masculin',
        identifiant: '1'
@@ -90,8 +91,8 @@ def init
   obligatoire: true, groupe: 'Langue vivante 2')
   Option.create!(etablissement_id: tillion.id, nom: 'Allemand', niveau_debut: 5,
   obligatoire: true, groupe: 'Langue vivante 2')
-  Option.create!(etablissement_id: tillion.id, nom: 'Latin', niveau_debut: 5)
-  Option.create!(etablissement_id: tillion.id, nom: 'Grec', niveau_debut: 5)
+  Option.create!(etablissement_id: tillion.id, nom: 'Latin', niveau_debut: 5, groupe: 'Langues anciennes')
+  Option.create!(etablissement_id: tillion.id, nom: 'Grec', niveau_debut: 5, groupe: 'Langues anciennes')
 
   PieceAttendue.create!(nom: "Assurance scolaire", code: "assurance_scolaire",
     explication: "assurance de l'éleve 2018/2019", etablissement_id: tillion.id)
