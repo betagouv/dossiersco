@@ -195,3 +195,15 @@ post '/agent/pdf' do
   agent = Agent.find_by(identifiant: session[:identifiant])
   pdf.render
 end
+
+post   '/agent/valider_inscription' do
+  eleve = Eleve.find_by identifiant: params[:identifiant]
+  dossier_eleve = eleve.dossier_eleve
+  dossier_valide = dossier_eleve.etat == 'validé'
+  if dossier_valide
+    dossier_eleve.update(etat: 'en attente de validation')
+  else
+    dossier_eleve.update(etat: 'validé')
+  end
+  redirect "/agent/liste_des_eleves"
+end
