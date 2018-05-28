@@ -136,9 +136,10 @@ end
 def creer_option etablissement_id, libelle, cle_gestion, code_modalite
   cle_groupes = {AGL1: "Langue vivante 1", ESP2: "Langue vivante 2", ES2ND: "Langue vivante 2",
     ALL2: "Langue vivante 2", AL2ND: "Langue vivante 2", LCALA: "Langues et cultures de l'antiquité",
-    LCAGR: "Langues et cultures de l'antiquité"}
+    LCAGR: "Langues et cultures de l'antiquité", DANSE: "Autres enseignements"}
   cle_noms = {'ANGLAIS LV1': 'Anglais', 'ESPAGNOL LV2': 'Espagnol', 'ESPAGNOL LV2 ND': 'Espagnol non débutant',
-    'ALLEMAND LV2': 'Allemand', 'ALLEMAND LV2 ND': 'Allemand non débutant', 'LCA LATIN': 'Latin', 'LCA GREC': 'Grec'}
+    'ALLEMAND LV2': 'Allemand', 'ALLEMAND LV2 ND': 'Allemand non débutant', 'LCA LATIN': 'Latin', 'LCA GREC': 'Grec',
+    'DANSE': 'Danse'}
 
   obligatoire = code_modalite == 'O'
   groupe = cle_groupes[cle_gestion.to_sym]
