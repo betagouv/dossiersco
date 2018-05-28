@@ -271,11 +271,9 @@ end
 
 post '/validation' do
   dossier_eleve = get_dossier_eleve session[:identifiant]
-  unless dossier_eleve.date_signature.present? || !dossier_eleve.signature
-    dossier_eleve.signature = params[:signature]
-    dossier_eleve.date_signature = Time.now
-    dossier_eleve.save
-  end
+  dossier_eleve.signature = params[:signature]
+  dossier_eleve.date_signature = Time.now
+  dossier_eleve.save
   redirect '/confirmation'
 end
 
