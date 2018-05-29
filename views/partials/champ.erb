@@ -88,7 +88,7 @@ checked			anglais: pour cocher Anglais par défaut
 	<label class="col-sm-4 col-form-label"><%= label %></label>
 	<div class="col-sm-6">
 		<% options.each do |option|%>
-      		<label class="col-sm-4 form-check-label">
+			<label class="col-sm-4 form-check-label">
 				<input
 					name="<%= name %>"
 					value="<%= option %>"
@@ -101,6 +101,30 @@ checked			anglais: pour cocher Anglais par défaut
 				<%= required if defined? required %>
 			</label>
 		<% end %>
+	</div>
+</div>
+
+<%	when "check"
+=begin
+
+VARIABLES
+
+name
+name 			"Grec"
+name 			"Grec"
+desc			"Grec"
+condition		true/false
+
+=end
+%>
+
+<div class="form-group row">
+	<label class="col-sm-4 col-form-label"><%= label %></label>
+	<div class="col-sm-6">
+		<input class='form-check-input' type='checkbox' name='<%= name %>' value='true' id='<%= name %>'
+		<% if condition %>
+		checked
+		<% end %>> <%= desc %>
 	</div>
 </div>
 
