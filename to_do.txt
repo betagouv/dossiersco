@@ -1,19 +1,8 @@
 Evolutions fonctionnelles importantes:
-[ ] Le PDF "parents" n'est pas exploitable en l'état (cf ci-dessous)
-[ ] Pouvoir générer les PDF d'une classe entière
-[ ] Pouvoir accepter ou non une option pédagogique (Tillion)
 [ ] En fin de parcours, envoyer vraiment un mail de confirmation
 [ ] Ajouter une colonne "Envoyer un message" à la liste des élèves -> lien vers page élève
 [ ] Ajouter une boite de dialogue à la page élève pour envoyer un message à la famille
-[ ] L'import des options doit tenir compte de l'option Oeben (danse)
-
-Améliorations critiques du PDF:
-[ ] afficher la date en français
-[ ] afficher le nom et le "pourquoi" des PJ
-[ ] afficher la date limite de la démarche
-[ ] reprendre la bonne URL
-[ ] rendre la phrase d'intro du message de permanence plus générique
-[ ] se rapprocher, notamment avec logo Académie de Paris inclus, de la version GDoc
+[ ] Gérer les abandons d'options pédagogiques
 
 Améliorer la liste des élèves
 [ ] Trier par défaut par classe puis par état
@@ -25,6 +14,7 @@ Observation de l'usage:
 [ ] Emailing (Mailjet? autre?) parents (en complément des actions "recherche de feedback" parents)
 
 Important mais moins urgent:
+[ ] Notifier la famille des options pédagogiques affectées (Tillion)
 [ ] exporter les données vers siecle (critique pour Beaumarchais)
 [ ] analyse de sécurité des moyens de transmission des secrets de connexion
 
@@ -33,29 +23,38 @@ Gestion des relances:
 
 Mineurs:
 [ ] Encourager l'ajout d'adresse mail quand elle n'est pas saisie
-[ ] permettre à un user admin (pierre) de basculer d'un établissement à l'autre
 [ ] page d’erreur “catch all” qui rassure (edited)
 [ ] page 404 personnalisée
-[ ] passage sur Heroku payant avec backups
 [ ] 2ème ou 3ème prénoms, préciser "optionnel"
 [ ] apostrophe française ’ (en cours)
 [ ] La valeur de 'demarche' codée en dur
 [ ] Bug sur la case d'engagement demi-pension
+[ ] permettre à un user admin (pierre) de basculer d'un établissement à l'autre
 
 Améliorer les tests ou l'exploitabilité:
-[ ] Tester l'import des options de rang > 1
 [ ] Séparer les tests en plusieurs fichiers
 [ ] Supprimer l'ancien fichier quand on modifie une pièce jointe
 
 Ne sera pas fait (cette année) mais on y pense:
 [ ] Gérer l'inscription; ingérer un fichier Affelnet
 [ ] tarif de cantine uniquement pour paris, fonctionnement différent pour les autres académies
+[ ] Prise en charge de la génération du PDF parents dans l'appli
+[ ] Pouvoir générer les invitations PDF d'une classe entière
+[ ] Invitation parents (PDF): afficher la date en français
+[ ] Invitation parents (PDF): afficher le nom et le "pourquoi" des PJ
+[ ] Invitation parents (PDF): afficher la date limite de la démarche
+[ ] Invitation parents (PDF): reprendre la bonne URL
+[ ] Invitation parents (PDF): rendre la phrase d'intro du message de permanence plus générique
+[ ] Invitation parents (PDF): se rapprocher, notamment avec logo Académie de Paris inclus, de la version GDoc
 
 Peut exiger une 2è passe:
+[/] Tester l'import des options de rang > 1
 [/] validation des infos en base e.g. dates limites d’inscription
 [/] afficher un commentaire quand une pièce jointe est rejetée
 
 Terminé:
+[X] L'import des options doit tenir compte de l'option Oeben (danse)
+[X] passage sur Heroku payant avec backups
 [X] En fin de parcours, enregistrer la confirmation et la date de "signature"
 [X] Masquer les onglets d'édition des options et PJ attendues
 [X] améliorer l'affichage de la pagination
