@@ -210,7 +210,7 @@ post   '/agent/valider_inscription' do
   redirect "/agent/liste_des_eleves"
 end
 
-post '/contacter_une_famille' do
+post '/agent/contacter_une_famille' do
   eleve = Eleve.find_by(identifiant: params[:identifiant])
   emails = eleve.dossier_eleve.resp_legal.map{ |resp_legal| resp_legal.email }
   mail = AgentMailer.contacter_une_famille(params[:message], emails)
