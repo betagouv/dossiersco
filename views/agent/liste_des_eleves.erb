@@ -84,7 +84,7 @@
       else { window.location.replace(href) }
     });
     $('#table_liste_des_eleves').DataTable({
-      "order": [[ 0, "desc" ]],
+      "order": [[ 0, "desc" ], [3, "asc"]],
       "lengthMenu": [ 30, 60, 90, 120 ],
       language: {
         processing:     "Traitement en cours...",
@@ -107,6 +107,26 @@
             sortAscending:  ": activer pour trier la colonne par ordre croissant",
             sortDescending: ": activer pour trier la colonne par ordre décroissant"
         }
+      },
+      initComplete: function() {
+        // Cf. https://datatables.net/examples/api/multi_filter_select.html
+        this.api().columns([0,3]).every( function () {
+                var column = this;
+                var select = $('<select><option value=""></option></select><br/>')
+                    .prependTo( $(column.header()) )
+                    .on( 'click', function () { return false;} )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
       }
     });
   });
