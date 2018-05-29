@@ -1,8 +1,8 @@
 Evolutions fonctionnelles importantes:
-[ ] En fin de parcours, envoyer vraiment un mail de confirmation
 [ ] Ajouter une colonne "Envoyer un message" à la liste des élèves -> lien vers page élève
 [ ] Ajouter une boite de dialogue à la page élève pour envoyer un message à la famille
 [ ] Gérer les abandons d'options pédagogiques
+[ ] En fin de parcours, envoyer vraiment un mail de confirmation
 
 Améliorer la liste des élèves
 [ ] Trier par défaut par classe puis par état
