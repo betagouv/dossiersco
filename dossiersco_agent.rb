@@ -44,9 +44,12 @@ end
 
 get '/agent/liste_des_eleves' do
   dossier_eleves = agent.etablissement.dossier_eleve.sort_by { |dossier| dossier.eleve.identifiant}
+  classes = dossier_eleves.map { |dossier| dossier.eleve.classe_ant }
+                          .select {|dossier| dossier.present? }
+                          .uniq.sort.reverse
   erb :'agent/liste_des_eleves',
       layout: :layout_agent,
-      locals: {agent: agent, dossier_eleves: dossier_eleves}
+      locals: {agent: agent, dossier_eleves: dossier_eleves, classes: classes}
 end
 
 get '/agent/tableau_de_bord' do
