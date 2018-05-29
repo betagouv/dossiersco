@@ -294,6 +294,13 @@ post '/commentaire' do
   redirect '/confirmation'
 end
 
+post '/envoyer_email_confirmation' do
+  dossier_eleve = get_dossier_eleve session[:identifiant]
+  emails = dossier_eleve.resp_legal.map{ |resp_legal| resp_legal.email }
+  mail = AgentMailer.envoyer_mail_confirmation(emails)
+  mail.deliver_now
+end
+
 # Route de test uniquement
 get '/testmail/:nom' do
   class TestMailer < ActionMailer::Base
@@ -316,3 +323,4 @@ def sauve_et_redirect dossier_eleve, etape
   dossier_eleve.save!
   redirect "/#{etape}"
 end
+

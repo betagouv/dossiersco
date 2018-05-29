@@ -11,6 +11,8 @@ require_relative 'helpers/import_siecle'
 require_relative 'helpers/agent'
 require_relative 'helpers/pdf'
 
+require './mailers/agent_mailer.rb'
+
 configure :staging, :production do
   require 'rack/ssl-enforcer'
   use Rack::SslEnforcer
@@ -206,4 +208,11 @@ post   '/agent/valider_inscription' do
     dossier_eleve.update(etat: 'validé')
   end
   redirect "/agent/liste_des_eleves"
+end
+
+post '/contacter_une_famille' do
+  eleve = Eleve.find_by(identifiant: params[:identifiant])
+  emails = eleve.dossier_eleve.resp_legal.map{ |resp_legal| resp_legal.email }
+  mail = AgentMailer.contacter_une_famille(params[:message], emails)
+  mail.deliver_now
 end

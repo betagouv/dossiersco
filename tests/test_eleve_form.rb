@@ -709,6 +709,10 @@ class EleveFormTest < Test::Unit::TestCase
     assert part.body.decoded.include? "Bonjour DossierSCO"
   end
 
+  def test_un_agent_envoi_un_mail_a_une_famille
+
+  end
+
   def assert_file(chemin_du_fichier)
     assert File.file? chemin_du_fichier
     File.delete(chemin_du_fichier)
