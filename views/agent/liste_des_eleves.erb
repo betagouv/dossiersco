@@ -17,7 +17,13 @@
   <table border="0" cellspacing="5" cellpadding="5">
     <tbody>
       <tr>
+        <% niveau_classe_precedente = classes[0][0] %>
         <% classes.each do |classe| %>
+          <% niveau_classe_courrante = classe[0] %>
+          <% if niveau_classe_courrante != niveau_classe_precedente %>
+            </tr><tr>
+          <% end %>
+          <% niveau_classe_precedente = niveau_classe_courrante %>
           <td><button class="classe" data-classe="<%= classe%>"><%= classe%></button></td>
         <% end %>
       </tr>
