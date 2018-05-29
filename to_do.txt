@@ -6,7 +6,7 @@ Evolutions fonctionnelles importantes:
 
 Améliorer la liste des élèves
 [ ] Trier par défaut par classe puis par état
-[ ] Afficher par défaut 30 élèves par page, et pouvoir prendre des multiples (60, 90)
+[X] Afficher par défaut 30 élèves par page, et pouvoir prendre des multiples (60, 90)
 [ ] Proposer un menu déroulant des classes (6A, 6B etc) et filtrer par classe lors du choix
 [ ] Afficher sur une seule ligne la recherche, filtre et nb élèves
 
