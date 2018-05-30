@@ -24,6 +24,7 @@ Mineurs:
 [ ] La valeur de 'demarche' codée en dur
 [ ] Bug sur la case d'engagement demi-pension
 [ ] permettre à un user admin (pierre) de basculer d'un établissement à l'autre
+[ ] permettre la déconnexion de l'application pour plus de sécurité
 
 Améliorer les tests ou l'exploitabilité:
 [ ] Séparer les tests en plusieurs fichiers
