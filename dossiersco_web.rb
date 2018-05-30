@@ -22,9 +22,6 @@ require_relative 'helpers/formulaire'
 require_relative 'helpers/init'
 require_relative 'helpers/mot_de_passe'
 
-enable :sessions
-use Rack::Session::Cookie, :key => 'rack.session', :path => '/', :secret => SecureRandom.base64(10), :expire_after => 86400
-
 identite_resp_legal = ["lien_de_parente", "prenom", "nom", "adresse", "code_postal", "ville", "tel_principal",
 											 "tel_secondaire", "email", "situation_emploi", "profession", "enfants_a_charge",
                        "enfants_a_charge_secondaire", "communique_info_parents_eleves", "lien_avec_eleve"]
@@ -58,8 +55,10 @@ before '/*' do
   piece_jointe = request.path_info.start_with?("/piece")
   agent = request.path_info.start_with?("/agent")
   api = request.path_info.start_with?("/api")
-  pass if home || identification || piece_jointe || agent || api
+  init = request.path_info.start_with?("/init")
+  pass if home || identification || piece_jointe || agent || api || init
   pass if eleve.present?
+  return if home
   session[:message_erreur] = "Vous avez été déconnecté par mesure de sécurité. Merci de vous identifier avant de continuer."
   redirect '/'
 end
@@ -85,8 +84,7 @@ post '/identification' do
   if dossier_eleve.etat == 'pas connecté'
     dossier_eleve.update(etat: 'connecté')
   end
-  eleve = dossier_eleve.eleve
-	if eleve.date_naiss == normalise(params[:date_naiss])
+	if dossier_eleve.eleve.date_naiss == normalise(params[:date_naiss])
 		session[:identifiant] = params[:identifiant]
 		session[:demarche] = dossier_eleve.demarche
 		redirect "/#{dossier_eleve.etape}"
