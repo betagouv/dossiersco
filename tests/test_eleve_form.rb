@@ -714,7 +714,9 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_mailer
-    get '/testmail/DossierSCO'
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    ActionMailer::Base.delivery_method = :test
+    get '/agent/testmail/DossierSCO'
     mail = ActionMailer::Base.deliveries.last
     assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
     assert_equal 'contact@dossiersco.beta.gouv.fr', mail['to'].to_s

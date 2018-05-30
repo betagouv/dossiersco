@@ -218,3 +218,20 @@ post '/agent/contacter_une_famille' do
   mail = AgentMailer.contacter_une_famille(eleve, params[:message])
   mail.deliver_now
 end
+
+# Route de test uniquement
+get '/agent/testmail/:nom' do
+  class TestMailer < ActionMailer::Base
+    default from: "contact@dossiersco.beta.gouv.fr"
+    default to: "contact@dossiersco.beta.gouv.fr"
+    def testmail(nom)
+      @nom = nom
+      mail(subject: "Test") do |format|
+        format.text
+      end
+    end
+  end
+  nom = params[:nom] || 'testeur'
+  mail = TestMailer.testmail(nom)
+  mail.deliver_now
+end
