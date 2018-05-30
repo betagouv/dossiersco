@@ -315,6 +315,18 @@ class EleveFormTest < Test::Unit::TestCase
     assert_match /Famille .*: Responsable légal 1/, last_response.body
   end
 
+  def test_envoyer_un_mail_quand_la_demande_dinscription_est_valide
+    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    post '/envoyer_email_confirmation', identifiant: '6'
+
+    mail = ActionMailer::Base.deliveries.last
+    assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
+    assert_equal 'test@test.com', mail['to'].addresses.first.to_s
+    assert_equal 'test2@test.com', mail['to'].addresses.last.to_s
+    assert_equal "Validation de demande d'inscription", mail['subject'].to_s
+    part = mail.html_part || mail.text_part || mail
+    assert part.body.decoded.include? "La demande de réinscription de Emile Blayo a été transmise à l'etablissement."
+  end
 
   def soumet_formulaire(*arguments_du_post)
     post '/identification', identifiant: '2', date_naiss: '1915-12-19'
@@ -723,17 +735,17 @@ class EleveFormTest < Test::Unit::TestCase
     assert part.body.decoded.include? "Message de test"
   end
 
-  def test_envoyer_un_mail_quand_la_demande_dinscription_est_valide
-    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
-    post '/envoyer_email_confirmation', identifiant: '6'
+  def test_envoi_un_mail_quand_un_agent_valide_un_dossier
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    post '/agent/valider_inscription', identifiant: '4'
 
     mail = ActionMailer::Base.deliveries.last
     assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
     assert_equal 'test@test.com', mail['to'].addresses.first.to_s
     assert_equal 'test2@test.com', mail['to'].addresses.last.to_s
-    assert_equal "Validation de demande d'inscription", mail['subject'].to_s
+    assert_equal "Validation d'inscription", mail['subject'].to_s
     part = mail.html_part || mail.text_part || mail
-    assert part.body.decoded.include? "La demande de réinscription de Emile Blayo a été transmise à l'etablissement."
+    assert part.body.decoded.include? "L'inscription de Pierre Blayo a été validé par l'etablissement."
   end
 
   def assert_file(chemin_du_fichier)

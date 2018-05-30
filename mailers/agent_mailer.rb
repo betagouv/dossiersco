@@ -9,9 +9,15 @@ class AgentMailer < ActionMailer::Base
         end
     end
 
-    def envoyer_mail_confirmation(emails, prenom, nom)
-        @prenom = prenom
-        @nom = nom
+    def mail_validation_inscription(emails, eleve)
+        @eleve = eleve
+        mail(subject: "Validation d'inscription", to: emails) do |format|
+            format.text
+        end
+    end
+
+    def envoyer_mail_confirmation(emails, eleve)
+        @eleve = eleve
         mail(subject: "Validation de demande d'inscription", to: emails) do |format|
             format.text
         end
