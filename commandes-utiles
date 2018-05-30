@@ -1,36 +1,20 @@
 # Active record
 
-## Créer une migration
+## Migrations et données
 
 rake db:create_migration NAME=create_dossier_eleves_table
-
-## Applique toutes les migration
-
 rake db:migrate
-
-
-## Applique le fichier seeds
-
 rake db:seed
-
-## Annule la dernière migration
-
 rake db:rollback
+
+rake traiter_imports
 
 ## Créer le hash d'un mot de passe
 
+irb:> require 'bcrypt'
 irb:> BCrypt::Password.create('motDePasse')
 
-Copier-coller le hash dans seeds.rb
-
-
 ## Entre dans docker pour lancer rake
-
-docker ps
-CONTAINER ID IMAGE COMMAND                   NAMES
-1caf94c1e9f8 ruby "/bin/bash -lc 'bu..." ... dossiersco_app_1
-
-docker exec -it dossiersco_app_1 bash
 
 docker-compose exec app bash
 docker-compose up --build --force-recreat
@@ -80,6 +64,8 @@ heroku open
 heroku logs -t
 heroku run rake db:migrate
 heroku run irb --noreadline
+
+heroku run irb -a dossiersco-staging
 
 En local :
 
