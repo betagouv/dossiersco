@@ -613,6 +613,15 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'en attente de validation', eleve.dossier_eleve.etat
   end
 
+  # def test_liste_classes
+  #   post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+  #   get '/agent/liste_des_eleves'
+
+  #   doc = Nokogiri::HTML(last_response.body)
+  #   assert doc.css("select[name='classes'] option").collect(&:text).include? "6EME"
+  #   assert doc.css("select[name='classes'] option").collect(&:text).include? "4EME ULIS"
+  # end
+
   def test_affiche_changement_adresse_liste_eleves
     # Si on a un changement d'adresse
     eleve = Eleve.find_by(identifiant: 2)
