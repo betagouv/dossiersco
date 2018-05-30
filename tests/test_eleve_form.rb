@@ -447,6 +447,20 @@ class EleveFormTest < Test::Unit::TestCase
     assert noms.include? 'Danse'
   end
 
+  # def test_import_dun_fichier_avec_plusieurd_lignes_par_eleve
+  #   nombre_eleves_debut = Eleve.all.count
+  #   post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+  #   etablissement = Etablissement.find_by(nom: 'Collège Germaine Tillion')
+  #   tache_import = TacheImport.create(url: 'tests/test_import_multi_lignes.xlsx', statut: 'en_attente',
+  #     etablissement_id: etablissement.id)
+  #   get '/api/traiter_imports'
+  #   assert_equal 200, last_response.status
+  #   nombre_eleves_importes = Eleve.all.count - nombre_eleves_debut
+  #   assert_equal 31, nombre_eleves_importes
+
+
+  # end
+
   def test_creer_des_options
     Option.destroy_all
     etablissement_id = Etablissement.find_by(nom: 'College Jean-Francois Oeben').id
