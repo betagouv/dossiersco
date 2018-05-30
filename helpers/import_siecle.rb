@@ -43,13 +43,15 @@ def import_ligne etablissement_id, ligne_siecle, nom_a_importer=nil, prenom_a_im
   end
 
   donnees_eleve = traiter_donnees_eleve donnees_eleve
-  p donnees_eleve[:nom]
-  p !donnees_eleve[:date_sortie].blank?.inspect
-  return resultat if donnees_eleve[:niveau_classe_ant].nil? || !donnees_eleve[:date_sortie].blank?
+
+  return resultat if donnees_eleve[:niveau_classe_ant].nil? || !donnees_eleve[:date_sortie].nil?
   return resultat if (nom_a_importer != nil and nom_a_importer != '') and donnees_eleve[:nom] != nom_a_importer
   return resultat if (prenom_a_importer != nil and prenom_a_importer != '') and donnees_eleve[:prenom] != prenom_a_importer
 
   eleve = Eleve.find_or_initialize_by(identifiant: donnees_eleve[:identifiant])
+
+  return resultat if eleve.id.present? && donnees_eleve[:classe_ant] != eleve.classe_ant
+
   eleve.update_attributes!(donnees_eleve)
 
   import_options etablissement_id, ligne_siecle, eleve
