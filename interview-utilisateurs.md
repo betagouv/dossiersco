@@ -1,7 +1,7 @@
 # Résumé
 
-A l'entrée : 4/7 n'ont pas réussit à taper l'url et ont atterit sur la recherche.
-Emoticon : 3 4 4 4 4 5
+A l'entrée : 4/8 n'ont pas réussit à taper l'url et ont atterit sur la recherche.
+Emoticon : 3 4 4 4 4 5 4
 
 ## Résumé des tests au 10/04/2018
 
@@ -123,3 +123,28 @@ sera pas en métropole lors de la période d'inscription et voit dans
 cette inscription en ligne un grand intérêt. Quand elle apprends
 que l'inscription peut se faire sur mobile elle espère même pouvoir
 la faire depuis une plage.
+
+# Test à domicile du 31/05/2018
+
+16 minutes écoulées entre la remise du courrier et la fin de
+la dernière étape. Evaluation : 4
+Perception du temps : moins de 5 minutes
+"Très pratique, éviter les dossiers manuscrits et les redites d'informations inchangées"
+
+Apprentissages : 
+- utiliser le wording demandé par Tillion pour la caf. Le wording
+employé n'a pas été compris : "Attestation d’assurance individuelle"
+"Pour que votre enfant puisse participer aux sorties scolaires."
+- une inscription en ligne réduit le risque qu'un papier reste
+dans le cartable de l'élève plusieurs semaines pour être rendu
+chiffoné => réduit le stress.
+- ce serait bien d'indiquer dans la dernière page l'élève pour
+faire une copie d'écran qui constituerait une preuve en attendant
+l'arrivée du mail.
+- l'inscription en ligne permet d'archiver sous forme numérique
+sur son ordinateur plutôt que sous forme papier.
+- le terme "complet" à l'étape validation a été compris comme
+"le collège est complet". Tout ça pour ça !
+- ce serait bien d'indiquer le format de la date dès le courrier
+- découverte d'un bug : "Enregistrer et continuer" ne fonctionne
+pas si demi-pentionnaire est coché.
