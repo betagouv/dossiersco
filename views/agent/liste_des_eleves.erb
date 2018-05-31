@@ -25,6 +25,7 @@
       <% agent.etablissement.piece_attendue.each do |piece| %>
         <th><%= piece.nom %></th>
       <% end %>
+      <th><i class="far fa-envelope"></i></th>
     </tr></thead>
     <tbody>
       <% dossier_eleves.each do |dossier_eleve| %>
@@ -50,6 +51,9 @@
               <% end %>
             </td>
           <% end %>
+
+            <td><a href="/agent/eleve/<%= dossier_eleve.eleve.identifiant %>"><i class="far fa-envelope"></i></a></td>
+
         </tr>
       <% end %>
     </tbody>
