@@ -389,6 +389,7 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_traiter_import_eleve_fichier_siecle
+    nombre_eleves_debut = Eleve.all.count
     etablissement = Etablissement.find_by(nom: 'Collège Germaine Tillion')
     tache_import = TacheImport.create(url: 'tests/test_import_siecle.xls', statut: 'en_attente',
       etablissement_id: etablissement.id)
@@ -397,7 +398,9 @@ class EleveFormTest < Test::Unit::TestCase
 
     eleve = Eleve.find_by(nom: 'NOM_TEST')
     eleve2 = Eleve.find_by(nom: 'NOM2_TEST')
+    nombre_eleves_importes = Eleve.all.count - nombre_eleves_debut
 
+    assert_equal 2, nombre_eleves_importes
     assert_equal 'Masculin', eleve.sexe
     assert_equal 'Prenom_test', eleve.prenom
     assert_equal 'Prenom_test_2', eleve.prenom_2
@@ -445,6 +448,22 @@ class EleveFormTest < Test::Unit::TestCase
     assert groupes.include? 'Autres enseignements'
     noms = eleve4.option.collect(&:nom)
     assert noms.include? 'Danse'
+  end
+
+  def test_import_dun_fichier_avec_plusieurd_lignes_par_eleve
+    nombre_eleves_debut = Eleve.all.count
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    etablissement = Etablissement.find_by(nom: 'Collège Germaine Tillion')
+    tache_import = TacheImport.create(url: 'tests/test_import_multi_lignes.xlsx', statut: 'en_attente',
+      etablissement_id: etablissement.id)
+    get '/api/traiter_imports'
+    assert_equal 200, last_response.status
+
+    nombre_eleves_importes = Eleve.all.count - nombre_eleves_debut
+    assert_equal 31, nombre_eleves_importes
+
+    eleve = Eleve.find_by(identifiant: '070823218DD')
+    assert_equal 2, eleve.option.count
   end
 
   def test_creer_des_options
