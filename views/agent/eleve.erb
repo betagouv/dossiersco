@@ -104,6 +104,12 @@ scolarite_ant = [
 
     <h2 class="separation">Envoyer un message</h2>
 
+    <div class='card'>
+      <div class='card-body'>
+        <p>Ce formulaire envoie un message à la famille de l'élève. Précisez par exemple si les pièces justificatives ne sont pas conformes, et ce que la famille doit transmettre.</p>
+      </div>
+    </div>
+
     <form action="/agent/contacter_une_famille" method="POST" class="text-center">
       <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
       <textarea name='message' class="form-control" rows="6"></textarea>

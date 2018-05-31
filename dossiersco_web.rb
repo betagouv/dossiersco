@@ -296,9 +296,7 @@ end
 
 post '/envoyer_email_confirmation' do
   dossier_eleve = get_dossier_eleve session[:identifiant]
-  eleve = dossier_eleve.eleve
-  emails = dossier_eleve.resp_legal.map{ |resp_legal| resp_legal.email }
-  mail = AgentMailer.envoyer_mail_confirmation(emails, eleve)
+  mail = AgentMailer.envoyer_mail_confirmation(dossier_eleve.eleve)
   mail.deliver_now
 end
 

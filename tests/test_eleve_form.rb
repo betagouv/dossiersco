@@ -323,9 +323,10 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
     assert_equal 'test@test.com', mail['to'].addresses.first.to_s
     assert_equal 'test2@test.com', mail['to'].addresses.last.to_s
-    assert_equal "Validation de demande d'inscription", mail['subject'].to_s
+    assert_equal "Réinscription de votre enfant au collège", mail['subject'].to_s
     part = mail.html_part || mail.text_part || mail
-    assert part.body.decoded.include? "La demande de réinscription de Emile Blayo a été transmise à l'etablissement."
+    assert part.body.decoded.include? "réinscription de votre enfant Emile Blayo"
+    assert part.body.decoded.include? "Tillion"
   end
 
   def soumet_formulaire(*arguments_du_post)
@@ -730,9 +731,10 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
     assert_equal 'test@test.com', mail['to'].addresses.first.to_s
     assert_equal 'test2@test.com', mail['to'].addresses.last.to_s
-    assert_equal 'TODO', mail['subject'].to_s
+    assert_equal 'Réinscription de votre enfant au collège', mail['subject'].to_s
     part = mail.html_part || mail.text_part || mail
-    assert part.body.decoded.include? "Message de test"
+    assert part.body.decoded.include? "Tillion"
+    assert part.body.decoded.include? "Emile"
   end
 
   def test_envoi_un_mail_quand_un_agent_valide_un_dossier
@@ -743,9 +745,10 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
     assert_equal 'test@test.com', mail['to'].addresses.first.to_s
     assert_equal 'test2@test.com', mail['to'].addresses.last.to_s
-    assert_equal "Validation d'inscription", mail['subject'].to_s
+    assert_equal "Réinscription de votre enfant au collège", mail['subject'].to_s
     part = mail.html_part || mail.text_part || mail
-    assert part.body.decoded.include? "L'inscription de Pierre Blayo a été validé par l'etablissement."
+    assert part.body.decoded.include? "Votre enfant est bien inscrit."
+    assert part.body.decoded.include? "Pierre"
   end
 
   def assert_file(chemin_du_fichier)

@@ -207,7 +207,7 @@ post '/agent/valider_inscription' do
   else
     emails = dossier_eleve.resp_legal.map{ |resp_legal| resp_legal.email }
     dossier_eleve.update(etat: 'validé')
-    mail = AgentMailer.mail_validation_inscription(emails, eleve)
+    mail = AgentMailer.mail_validation_inscription(eleve)
     mail.deliver_now
   end
   redirect "/agent/liste_des_eleves"
@@ -215,7 +215,6 @@ end
 
 post '/agent/contacter_une_famille' do
   eleve = Eleve.find_by(identifiant: params[:identifiant])
-  emails = eleve.dossier_eleve.resp_legal.map{ |resp_legal| resp_legal.email }
-  mail = AgentMailer.contacter_une_famille(params[:message], emails)
+  mail = AgentMailer.contacter_une_famille(eleve, params[:message])
   mail.deliver_now
 end
