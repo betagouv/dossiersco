@@ -108,6 +108,9 @@ def init
   cree_dossier_eleve eleves[4], tillion, 'en attente de validation'
   cree_dossier_eleve eleves[5], tillion, 'validé'
 
+  e5 = Eleve.find_by(identifiant: eleves[5][:identifiant]).dossier_eleve
+  e5.update(commentaire: "Pas mal", satisfaction: 4)
+
   Agent.create!(password: '$2a$10$6njb4Rn4RHyFFJpP5QEJGutErgZVOr6/cCM17IKoIsiQDZQABBN2a',
                 nom: 'De Maulmont', prenom: 'Pierre', etablissement_id: tillion.id,
                 identifiant: 'pierre')
