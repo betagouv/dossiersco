@@ -764,4 +764,16 @@ class EleveFormTest < Test::Unit::TestCase
   def assert_attr(valeur_attendue, selecteur_css, doc)
     assert_equal valeur_attendue, doc.css(selecteur_css).attr('value').text
   end
+
+  def test_affichage_des_option_cote_eleve
+    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    eleve = Eleve.find_by(identifiant: '6')
+
+    resultat = genere_options_demandables eleve
+
+    assert_equal 'LV1', resultat[:name]
+    assert_equal 'radio', resultat[:type]
+    assert resultat[:option].includ? 'anglais'
+    assert resultat[:option].includ? 'allemand'
+  end
 end
