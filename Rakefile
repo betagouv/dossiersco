@@ -24,5 +24,6 @@ task :stats do
             dossiers_etablissement.each do |etat, dossiers_etat|
                 print " #{etat}:#{dossiers_etat.count}"
             end
+            print "\n"
         end
 end
