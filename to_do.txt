@@ -14,6 +14,9 @@ Gestion des relances:
 
 Mineurs:
 [ ] Encourager l'ajout d'adresse mail quand elle n'est pas saisie
+[ ] Redirection après l'envoi d'un message à la famille
+[ ] Transmettre les notes de satisfaction et messages en fin de parcours aux agents de l'établissement
+[ ] Permettre aux familles d'adresser un message à l'établissement ?
 [ ] page d’erreur “catch all” qui rassure (edited)
 [ ] page 404 personnalisée
 [ ] 2ème ou 3ème prénoms, préciser "optionnel"
