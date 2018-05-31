@@ -145,6 +145,9 @@ l'arrivée du mail.
 sur son ordinateur plutôt que sous forme papier.
 - le terme "complet" à l'étape validation a été compris comme
 "le collège est complet". Tout ça pour ça !
-- ce serait bien d'indiquer le format de la date dès le courrier
 - découverte d'un bug : "Enregistrer et continuer" ne fonctionne
 pas si demi-pentionnaire est coché.
+Courrier :
+- ce serait bien d'indiquer le format de la date dès le courrier
+- En quoi je vais avoir besoin de justificatifs ? (pour les
+scanner, pour recopier les informations ?)
