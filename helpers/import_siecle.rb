@@ -44,7 +44,7 @@ def import_ligne etablissement_id, ligne_siecle, nom_a_importer=nil, prenom_a_im
 
   donnees_eleve = traiter_donnees_eleve donnees_eleve
 
-  return resultat if donnees_eleve[:niveau_classe_ant].nil? || !donnees_eleve[:date_sortie].nil?
+  return resultat if donnees_eleve[:niveau_classe_ant].nil? || !ligne_siecle[COLONNES[:date_sortie]].nil?
   return resultat if (nom_a_importer != nil and nom_a_importer != '') and donnees_eleve[:nom] != nom_a_importer
   return resultat if (prenom_a_importer != nil and prenom_a_importer != '') and donnees_eleve[:prenom] != prenom_a_importer
 
