@@ -22,6 +22,8 @@ class EleveFormTest < Test::Unit::TestCase
 
   def setup
     init
+    ActionMailer::Base.delivery_method = :test
+    ActionMailer::Base.deliveries = []
   end
 
   def test_normalise_date_naissance
@@ -313,6 +315,19 @@ class EleveFormTest < Test::Unit::TestCase
     assert_match /Famille .*: Responsable légal 1/, last_response.body
   end
 
+  def test_envoyer_un_mail_quand_la_demande_dinscription_est_valide
+    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    post '/envoyer_email_confirmation', identifiant: '6'
+
+    mail = ActionMailer::Base.deliveries.last
+    assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
+    assert_equal 'test@test.com', mail['to'].addresses.first.to_s
+    assert_equal 'test2@test.com', mail['to'].addresses.last.to_s
+    assert_equal "Réinscription de votre enfant au collège", mail['subject'].to_s
+    part = mail.html_part || mail.text_part || mail
+    assert part.body.decoded.include? "réinscription de votre enfant Emile Blayo"
+    assert part.body.decoded.include? "Tillion"
+  end
 
   def soumet_formulaire(*arguments_du_post)
     post '/identification', identifiant: '2', date_naiss: '1915-12-19'
@@ -699,7 +714,6 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_mailer
-    ActionMailer::Base.delivery_method = :test
     get '/testmail/DossierSCO'
     mail = ActionMailer::Base.deliveries.last
     assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
@@ -707,6 +721,34 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'Test', mail['subject'].to_s
     part = mail.html_part || mail.text_part || mail
     assert part.body.decoded.include? "Bonjour DossierSCO"
+  end
+
+  def test_un_agent_envoi_un_mail_a_une_famille
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    post '/agent/contacter_une_famille', identifiant: '6', message: 'Message de test'
+
+    mail = ActionMailer::Base.deliveries.last
+    assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
+    assert_equal 'test@test.com', mail['to'].addresses.first.to_s
+    assert_equal 'test2@test.com', mail['to'].addresses.last.to_s
+    assert_equal 'Réinscription de votre enfant au collège', mail['subject'].to_s
+    part = mail.html_part || mail.text_part || mail
+    assert part.body.decoded.include? "Tillion"
+    assert part.body.decoded.include? "Emile"
+  end
+
+  def test_envoi_un_mail_quand_un_agent_valide_un_dossier
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    post '/agent/valider_inscription', identifiant: '4'
+
+    mail = ActionMailer::Base.deliveries.last
+    assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
+    assert_equal 'test@test.com', mail['to'].addresses.first.to_s
+    assert_equal 'test2@test.com', mail['to'].addresses.last.to_s
+    assert_equal "Réinscription de votre enfant au collège", mail['subject'].to_s
+    part = mail.html_part || mail.text_part || mail
+    assert part.body.decoded.include? "Votre enfant est bien inscrit."
+    assert part.body.decoded.include? "Pierre"
   end
 
   def assert_file(chemin_du_fichier)
