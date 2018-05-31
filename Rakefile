@@ -21,9 +21,16 @@ task :stats do
         end
         .each_pair do |etablissement_id, dossiers_etablissement|
             print "#{Etablissement.find(etablissement_id).nom}:"
+            avec_feedback = []
             dossiers_etablissement.each do |etat, dossiers_etat|
                 print " #{etat}:#{dossiers_etat.count}"
+                if (etat.include? "valid")
+                    avec_feedback.push(*dossiers_etat)
+                end
             end
-            print "\n"
+            notes = avec_feedback.collect(&:satisfaction)
+            print " satisfaction (moy):#{notes.sum/notes.count}" if notes.count
+            print avec_feedback.collect(&:commentaire).join("\n")
+            print "\n\n"
         end
 end
