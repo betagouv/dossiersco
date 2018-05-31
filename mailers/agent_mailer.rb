@@ -1,25 +1,30 @@
 class AgentMailer < ActionMailer::Base
     default from: "contact@dossiersco.beta.gouv.fr"
-    default to: "lucien.mollard@beta.beta.gouv.fr"
 
-    def contacter_une_famille(message, emails)
+    def emails
+        @eleve.dossier_eleve.resp_legal.map{ |resp_legal| resp_legal.email }
+    end
+
+    def contacter_une_famille(eleve, message)
         @message = message
-        mail(subject: "TODO", to: emails) do |format|
+        @eleve = eleve
+        mail(subject: "Réinscription de votre enfant au collège", to: emails) do |format|
             format.text
         end
     end
 
-    def mail_validation_inscription(emails, eleve)
+    def envoyer_mail_confirmation(eleve)
         @eleve = eleve
-        mail(subject: "Validation d'inscription", to: emails) do |format|
+        mail(subject: "Réinscription de votre enfant au collège", to: emails) do |format|
             format.text
         end
     end
 
-    def envoyer_mail_confirmation(emails, eleve)
+    def mail_validation_inscription(eleve)
         @eleve = eleve
-        mail(subject: "Validation de demande d'inscription", to: emails) do |format|
+        mail(subject: "Réinscription de votre enfant au collège", to: emails) do |format|
             format.text
         end
     end
+
 end
