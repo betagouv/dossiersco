@@ -111,6 +111,23 @@ def init
   e5 = Eleve.find_by(identifiant: eleves[5][:identifiant]).dossier_eleve
   e5.update(commentaire: "Pas mal", satisfaction: 4)
 
+  eleve = Eleve.find_by(identifiant: '6')
+  montee = Montee.create
+
+  anglais = Option.create(nom: 'anglais', groupe: 'LV1', modalite: 'obligatoire')
+  allemand = Option.create(nom: 'allemand', groupe: 'LV1', modalite: 'obligatoire')
+  anglais_d = Demandabilite.create montee_id: montee.id, option_id: anglais.id
+  allemand_d = Demandabilite.create montee_id: montee.id, option_id: allemand.id
+  latin = Option.create(nom: 'latin', groupe: 'LCA', modalite: 'facultative')
+  grec = Option.create(nom: 'grec', groupe: 'LCA', modalite: 'facultative')
+  latin_d = Demandabilite.create montee_id: montee.id, option_id: latin.id
+  grec_d = Demandabilite.create montee_id: montee.id, option_id: grec.id
+  eleve.update(montee: montee)
+  montee.demandabilite << anglais_d
+  montee.demandabilite << allemand_d
+  montee.demandabilite << latin_d
+  montee.demandabilite << grec_d
+
   Agent.create!(password: '$2a$10$6njb4Rn4RHyFFJpP5QEJGutErgZVOr6/cCM17IKoIsiQDZQABBN2a',
                 nom: 'De Maulmont', prenom: 'Pierre', etablissement_id: tillion.id,
                 identifiant: 'pierre')

@@ -132,17 +132,8 @@
 
       <h3 class="separation">Vos choix pour l'année prochaine</h3>
 
-      <% options_du_niveau.sort_by(&:groupe).each do |opt| %>
-        <% check = [{
-          type: "check",
-          label: opt.groupe,
-          name: opt.nom,
-          desc: "Je demande l'option: #{opt.nom}",
-          condition: eleve.demande.any? { |demande| demande.option.nom == opt.nom}
-          }]
-        %>
-        <%= construire check %>
-      <% end %>
+      <%= construire eleve.genere_demandes_possibles if eleve.montee.present? %>
+
 
     <%= erb :'partials/nouveau_precedent_suivant', :locals => { :precedent => "accueil"} %>
   </form>
