@@ -12,7 +12,7 @@ class Eleve < ActiveRecord::Base
     groupes_obligatoires = []
     groupes_facultatives = []
     options_par_groupe.each do |groupe, options|
-      if (groupe.size > 1 && options.first.modalite == 'obligatoire')
+      if (options.first.modalite == 'obligatoire')
         groupes_obligatoires << options
       elsif (options.first.modalite == 'facultative')
         groupes_facultatives << options
