@@ -770,23 +770,40 @@ class EleveFormTest < Test::Unit::TestCase
  
     options_par_groupe = options.group_by {|o| o.groupe}
     groupes_obligatoires = []
+    groupes_facultatives = []
     options_par_groupe.each do |groupe, options|
       if (groupe.size > 1 && options.first.modalite == 'obligatoire')
         groupes_obligatoires << options
+      elsif (options.first.modalite == 'facultative')
+        groupes_facultatives << options
       end
     end
-    options_de_l_eleve = []
-    groupes_obligatoires.each do |options|
-      options_de_l_eleve << {
+    obligatoire(groupes_obligatoires) + facultative(groupes_facultatives)
+  end
+
+  def obligatoire options_du_groupe
+    options_du_groupe.map do |options|
+      {
         name: options.first.groupe,
         type: 'radio',
         option: options.collect(&:nom)
       }
     end
-    options_de_l_eleve
   end
 
-  def test_affichage_des_option_cote_eleve
+  def facultative options_du_groupe
+    options_du_groupe.map do |options|
+      options.map do |option|
+        {
+          name: option.nom,
+          label: option.groupe,
+          type: "checkbox"
+        }
+      end
+    end.flatten
+  end
+
+  def test_affichage_d_options_ogligatoires_a_choisir
     post '/identification', identifiant: '6', date_naiss: '1970-01-01'
     eleve = Eleve.find_by(identifiant: '6')
     montee = Montee.create
@@ -806,5 +823,29 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'radio', resultat[:type]
     assert resultat[:option].include? 'anglais'
     assert resultat[:option].include? 'allemand'
+  end
+
+  def test_affichage_d_options_facultatives_a_choisir
+    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    eleve = Eleve.find_by(identifiant: '6')
+    montee = Montee.create
+
+    latin = Option.create(nom: 'latin', groupe: 'LCA', modalite: 'facultative')
+    grec = Option.create(nom: 'grec', groupe: 'LCA', modalite: 'facultative')
+    latin_d = Demandabilite.create montee_id: montee.id, option_id: latin.id
+    grec_d = Demandabilite.create montee_id: montee.id, option_id: grec.id
+    montee.demandabilite << latin_d
+    montee.demandabilite << grec_d
+    eleve.montee = montee
+    eleve.save
+
+    resultat = genere_demandes_possibles(eleve)
+
+    assert_equal 'LCA', resultat[0][:label]
+    assert_equal 'LCA', resultat[1][:label]
+    assert_equal 'checkbox', resultat[0][:type]
+    assert_equal 'checkbox', resultat[1][:type]
+    assert resultat[0][:name].include? 'latin'
+    assert resultat[1][:name].include? 'grec'
   end
 end
