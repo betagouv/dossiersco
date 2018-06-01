@@ -765,15 +765,46 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal valeur_attendue, doc.css(selecteur_css).attr('value').text
   end
 
+  def genere_demandes_possibles(eleve)
+    options = eleve.montee.demandabilite.map { |d| d.option }
+ 
+    options_par_groupe = options.group_by {|o| o.groupe}
+    groupes_obligatoires = []
+    options_par_groupe.each do |groupe, options|
+      if (groupe.size > 1 && options.first.modalite == 'obligatoire')
+        groupes_obligatoires << options
+      end
+    end
+    options_de_l_eleve = []
+    groupes_obligatoires.each do |options|
+      options_de_l_eleve << {
+        name: options.first.groupe,
+        type: 'radio',
+        option: options.collect(&:nom)
+      }
+    end
+    options_de_l_eleve
+  end
+
   def test_affichage_des_option_cote_eleve
     post '/identification', identifiant: '6', date_naiss: '1970-01-01'
     eleve = Eleve.find_by(identifiant: '6')
+    montee = Montee.create
 
-    resultat = genere_options_demandables eleve
+    anglais = Option.create(nom: 'anglais', groupe: 'LV1', modalite: 'obligatoire')
+    allemand = Option.create(nom: 'allemand', groupe: 'LV1', modalite: 'obligatoire')
+    anglais_d = Demandabilite.create montee_id: montee.id, option_id: anglais.id
+    allemand_d = Demandabilite.create montee_id: montee.id, option_id: allemand.id
+    montee.demandabilite << anglais_d
+    montee.demandabilite << allemand_d
+    eleve.montee = montee
+    eleve.save
+
+    resultat = genere_demandes_possibles(eleve)[0]
 
     assert_equal 'LV1', resultat[:name]
     assert_equal 'radio', resultat[:type]
-    assert resultat[:option].includ? 'anglais'
-    assert resultat[:option].includ? 'allemand'
+    assert resultat[:option].include? 'anglais'
+    assert resultat[:option].include? 'allemand'
   end
 end
