@@ -22,9 +22,6 @@ require_relative 'helpers/formulaire'
 require_relative 'helpers/init'
 require_relative 'helpers/mot_de_passe'
 
-enable :sessions
-use Rack::Session::Cookie, :key => 'rack.session', :path => '/', :secret => SecureRandom.base64(10), :expire_after => 86400
-
 identite_resp_legal = ["lien_de_parente", "prenom", "nom", "adresse", "code_postal", "ville", "tel_principal",
 											 "tel_secondaire", "email", "situation_emploi", "profession", "enfants_a_charge",
                        "enfants_a_charge_secondaire", "communique_info_parents_eleves", "lien_avec_eleve"]
@@ -52,6 +49,20 @@ configure :test, :development, :staging do
   end
 end
 
+before '/*' do
+  identification = request.path_info == "/identification"
+  home = request.path_info == "/"
+  piece_jointe = request.path_info.start_with?("/piece")
+  agent = request.path_info.start_with?("/agent")
+  api = request.path_info.start_with?("/api")
+  init = request.path_info.start_with?("/init")
+  pass if home || identification || piece_jointe || agent || api || init
+  pass if eleve.present?
+  return if home
+  session[:message_erreur] = "Vous avez été déconnecté par mesure de sécurité. Merci de vous identifier avant de continuer."
+  redirect '/'
+end
+
 get '/' do
 	erb :'#_identification'
 end
@@ -73,8 +84,7 @@ post '/identification' do
   if dossier_eleve.etat == 'pas connecté'
     dossier_eleve.update(etat: 'connecté')
   end
-  eleve = dossier_eleve.eleve
-	if eleve.date_naiss == normalise(params[:date_naiss])
+	if dossier_eleve.eleve.date_naiss == normalise(params[:date_naiss])
 		session[:identifiant] = params[:identifiant]
 		session[:demarche] = dossier_eleve.demarche
 		redirect "/#{dossier_eleve.etape}"
@@ -85,21 +95,19 @@ post '/identification' do
 end
 
 get '/accueil' do
-  dossier_eleve = get_dossier_eleve session[:identifiant]
-	erb :'0_accueil', locals: { dossier_eleve: dossier_eleve }
+	erb :'0_accueil', locals: { dossier_eleve: eleve.dossier_eleve }
 end
 
 get '/eleve' do
-  eleve = get_eleve session[:identifiant]
   options_du_niveau = options_du_niveau eleve, eleve.dossier_eleve.etablissement.id
   erb :'1_eleve', locals: { eleve: eleve, options_du_niveau: options_du_niveau }
 end
 
 post '/eleve' do
-  eleve = get_eleve session[:identifiant]
+  eleve_a_modifier = eleve
   identite_eleve = ['prenom', 'prenom_2', 'prenom_3', 'nom', 'sexe', 'ville_naiss', 'pays_naiss', 'nationalite', 'classe_ant', 'ets_ant']
   identite_eleve.each do |info|
-	 eleve[info] = params[info] if params.has_key?(info)
+	 eleve_a_modifier[info] = params[info] if params.has_key?(info)
   end
 
   options = options_du_niveau eleve, eleve.dossier_eleve.etablissement.id
@@ -111,20 +119,20 @@ post '/eleve' do
         # demande pour l'année à venir
         option_choisie = Option.find_by(nom: nom_option, etablissement_id: eleve.dossier_eleve.etablissement.id)
         demande = Demande.find_or_initialize_by(eleve: eleve, option: option_choisie)
-        eleve.demande.delete demande if params[nom_option] == 'false'
-        eleve.demande << demande if params[nom_option] == 'true'
+        eleve_a_modifier.demande.delete demande if params[nom_option] == 'false'
+        eleve_a_modifier.demande << demande if params[nom_option] == 'true'
       else
         # abandon
       end
     end
   end
-  eleve.save!
+  eleve_a_modifier.save!
 
   sauve_et_redirect eleve.dossier_eleve, 'famille'
 end
 
 get '/famille' do
-	dossier_eleve = get_dossier_eleve session[:identifiant]
+	dossier_eleve = eleve.dossier_eleve
 	resp_legal1 = RespLegal.find_by(dossier_eleve_id: dossier_eleve.id, priorite: 1)
 	resp_legal2 = RespLegal.find_by(dossier_eleve_id: dossier_eleve.id, priorite: 2)
 	contact_urgence = ContactUrgence.find_by(dossier_eleve_id: dossier_eleve.id)
@@ -142,7 +150,7 @@ get '/famille' do
 end
 
 post '/famille' do
-	dossier_eleve = get_dossier_eleve session[:identifiant]
+  dossier_eleve = eleve.dossier_eleve
 	resp_legal1 = RespLegal.find_by(dossier_eleve_id: dossier_eleve.id, priorite: 1) || RespLegal.new(priorite: 1, dossier_eleve_id: dossier_eleve.id)
 	resp_legal2 = RespLegal.find_by(dossier_eleve_id: dossier_eleve.id, priorite: 2) || RespLegal.new(priorite: 2, dossier_eleve_id: dossier_eleve.id)
 	contact_urgence = ContactUrgence.find_by(dossier_eleve_id: dossier_eleve.id) || ContactUrgence.new(dossier_eleve_id: dossier_eleve.id)
@@ -163,12 +171,11 @@ post '/famille' do
 end
 
 get '/administration' do
-	dossier_eleve = get_dossier_eleve session[:identifiant]
-	erb :'4_administration', locals: {dossier_eleve: dossier_eleve}
+	erb :'4_administration', locals: {dossier_eleve: eleve.dossier_eleve}
 end
 
 post '/administration' do
-	dossier_eleve = get_dossier_eleve session[:identifiant]
+	dossier_eleve = eleve.dossier_eleve
 	dossier_eleve.demi_pensionnaire = params['demi_pensionnaire']
 	dossier_eleve.autorise_sortie = params['autorise_sortie']
 	dossier_eleve.renseignements_medicaux = params['renseignements_medicaux']
@@ -213,12 +220,11 @@ get '/piece/:dossier_eleve/:code_piece/:s3_key' do
 end
 
 get '/pieces_a_joindre' do
-  dossier_eleve = get_dossier_eleve session[:identifiant]
-	erb :'5_pieces_a_joindre', locals: {dossier_eleve: dossier_eleve}
+	erb :'5_pieces_a_joindre', locals: {dossier_eleve: eleve.dossier_eleve}
 end
 
 post '/pieces_a_joindre' do
-  dossier_eleve = get_dossier_eleve session[:identifiant]
+  dossier_eleve = eleve.dossier_eleve
   pieces_attendues = dossier_eleve.etablissement.piece_attendue
   pieces_obligatoires = false
   pieces_attendues.each do |piece|
@@ -235,7 +241,7 @@ post '/pieces_a_joindre' do
 end
 
 post '/enregistre_piece_jointe' do
-  dossier_eleve = get_dossier_eleve session[:identifiant]
+  dossier_eleve = eleve.dossier_eleve
   params.each do |code, piece|
     if params[code].present? and params[code]["tempfile"].present?
       file = File.open(params[code]["tempfile"])
@@ -259,13 +265,11 @@ post '/pieces_a_joindre' do
 end
 
 get '/validation' do
-	eleve = get_eleve session[:identifiant]
-	dossier_eleve = get_dossier_eleve session[:identifiant]
-	erb :'6_validation', locals: { eleve: eleve, dossier_eleve: dossier_eleve }
+	erb :'6_validation', locals: { eleve: eleve, dossier_eleve: eleve.dossier_eleve }
 end
 
 post '/validation' do
-  dossier_eleve = get_dossier_eleve session[:identifiant]
+  dossier_eleve = eleve.dossier_eleve
   dossier_eleve.signature = params[:signature]
   dossier_eleve.date_signature = Time.now
   dossier_eleve.save
@@ -273,8 +277,7 @@ post '/validation' do
 end
 
 get '/confirmation' do
-	eleve = get_eleve session[:identifiant]
-  dossier_eleve = get_dossier_eleve session[:identifiant]
+  dossier_eleve = eleve.dossier_eleve
   if dossier_eleve.etat != 'validé'
     dossier_eleve.update(etat: 'en attente de validation')
   end
@@ -282,13 +285,13 @@ get '/confirmation' do
 end
 
 post '/satisfaction' do
-  dossier_eleve = get_dossier_eleve session[:identifiant]
+  dossier_eleve = eleve.dossier_eleve
   dossier_eleve.satisfaction = params[:note]
   dossier_eleve.save!
 end
 
 post '/commentaire' do
-  dossier_eleve = get_dossier_eleve session[:identifiant]
+  dossier_eleve = eleve.dossier_eleve
   dossier_eleve.commentaire = params[:commentaire]
   dossier_eleve.save!
   redirect '/confirmation'
@@ -297,23 +300,6 @@ end
 post '/envoyer_email_confirmation' do
   dossier_eleve = get_dossier_eleve session[:identifiant]
   mail = AgentMailer.envoyer_mail_confirmation(dossier_eleve.eleve)
-  mail.deliver_now
-end
-
-# Route de test uniquement
-get '/testmail/:nom' do
-  class TestMailer < ActionMailer::Base
-    default from: "contact@dossiersco.beta.gouv.fr"
-    default to: "contact@dossiersco.beta.gouv.fr"
-    def testmail(nom)
-      @nom = nom
-      mail(subject: "Test") do |format|
-        format.text
-      end
-    end
-  end
-  nom = params[:nom] || 'testeur'
-  mail = TestMailer.testmail(nom)
   mail.deliver_now
 end
 
