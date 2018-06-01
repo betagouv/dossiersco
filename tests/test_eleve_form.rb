@@ -97,32 +97,12 @@ class EleveFormTest < Test::Unit::TestCase
     Option.create!(etablissement_id: oeben.id, nom: 'Grec', groupe:'Langes anciennes', niveau_debut: 3)
 
     # Etienne: 4e -> 3e donc on lui propose Grec en option
-    post '/identification', identifiant: '1', date_naiss: '1995-11-19'
+    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
     get '/eleve'
 
     doc = Nokogiri::HTML(last_response.body)
-    assert_not_nil doc.css("input[name='Grec'][type='checkbox']").first
-    assert_nil doc.css("input[name='Grec'][type='checkbox'][checked]").first
-  end
-
-  def test_restitution_des_choix_enseignements
-    oeben = Etablissement.find_by(nom: "College Jean-Francois Oeben")
-    Option.create!(etablissement_id: oeben.id, nom: 'Grec', groupe:'Langes anciennes', niveau_debut: 3)
-
-    # Etienne: 4e -> 3e donc on lui propose Grec en option
-    post '/identification', identifiant: '1', date_naiss: '1995-11-19'
-
-    post '/eleve', Grec: true
-    get '/eleve'
-    doc = Nokogiri::HTML(last_response.body)
-
-    assert_not_nil doc.css("input[name='Grec'][type='checkbox'][checked]").first
-
-    post '/eleve', Grec: false
-    get '/eleve'
-    doc = Nokogiri::HTML(last_response.body)
-
-    assert_nil doc.css("input[name='Grec'][type='checkbox'][checked]").first
+    assert_not_nil doc.css("input[name='grec'][type='checkbox']").first
+    assert_nil doc.css("input[name='grec'][type='checkbox'][checked]").first
   end
 
   def test_affiche_2ème_et_3ème_prénoms_en_4ème_pour_brevet_des_collèges
@@ -765,44 +745,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal valeur_attendue, doc.css(selecteur_css).attr('value').text
   end
 
-  def genere_demandes_possibles(eleve)
-    options = eleve.montee.demandabilite.map { |d| d.option }
- 
-    options_par_groupe = options.group_by {|o| o.groupe}
-    groupes_obligatoires = []
-    groupes_facultatives = []
-    options_par_groupe.each do |groupe, options|
-      if (groupe.size > 1 && options.first.modalite == 'obligatoire')
-        groupes_obligatoires << options
-      elsif (options.first.modalite == 'facultative')
-        groupes_facultatives << options
-      end
-    end
-    obligatoire(groupes_obligatoires) + facultative(groupes_facultatives)
-  end
-
-  def obligatoire options_du_groupe
-    options_du_groupe.map do |options|
-      {
-        name: options.first.groupe,
-        type: 'radio',
-        option: options.collect(&:nom)
-      }
-    end
-  end
-
-  def facultative options_du_groupe
-    options_du_groupe.map do |options|
-      options.map do |option|
-        {
-          name: option.nom,
-          label: option.groupe,
-          type: "checkbox"
-        }
-      end
-    end.flatten
-  end
-
   def test_affichage_d_options_ogligatoires_a_choisir
     post '/identification', identifiant: '6', date_naiss: '1970-01-01'
     eleve = Eleve.find_by(identifiant: '6')
@@ -817,12 +759,12 @@ class EleveFormTest < Test::Unit::TestCase
     eleve.montee = montee
     eleve.save
 
-    resultat = genere_demandes_possibles(eleve)[0]
+    resultat = eleve.genere_demandes_possibles[0]
 
     assert_equal 'LV1', resultat[:name]
     assert_equal 'radio', resultat[:type]
-    assert resultat[:option].include? 'anglais'
-    assert resultat[:option].include? 'allemand'
+    assert resultat[:options].include? 'anglais'
+    assert resultat[:options].include? 'allemand'
   end
 
   def test_affichage_d_options_facultatives_a_choisir
@@ -839,12 +781,12 @@ class EleveFormTest < Test::Unit::TestCase
     eleve.montee = montee
     eleve.save
 
-    resultat = genere_demandes_possibles(eleve)
+    resultat = eleve.genere_demandes_possibles
 
     assert_equal 'LCA', resultat[0][:label]
     assert_equal 'LCA', resultat[1][:label]
-    assert_equal 'checkbox', resultat[0][:type]
-    assert_equal 'checkbox', resultat[1][:type]
+    assert_equal 'check', resultat[0][:type]
+    assert_equal 'check', resultat[1][:type]
     assert resultat[0][:name].include? 'latin'
     assert resultat[1][:name].include? 'grec'
   end
