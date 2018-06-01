@@ -10,6 +10,10 @@ helpers do
     DossierEleve.joins(:eleve).find_by(eleves: {identifiant: identifiant})
   end
 
+  def eleve
+    Eleve.find_by(identifiant: session[:identifiant])
+  end
+
   def get_eleve identifiant
     Eleve.find_by(identifiant: identifiant)
   end
