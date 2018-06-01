@@ -29,8 +29,9 @@ task :stats do
                 end
             end
             notes = avec_feedback.collect(&:satisfaction)
-            print " satisfaction (moy):#{notes.sum/notes.count}" if notes.count
-            print avec_feedback.collect(&:commentaire).join("\n")
-            print "\n\n"
+            print " satisfaction #{notes} (moy):#{'%.2f' % ((notes.sum+0.0)/notes.count)}" if notes.count > 0
+            print "\n"
+            print avec_feedback.collect(&:commentaire).reject(&:nil?).reject(&:empty?).join("\n")
+            print "\n"
         end
 end
