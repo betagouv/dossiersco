@@ -20,6 +20,7 @@ end
 
 set :database_file, "config/database.yml"
 
+set :session_secret, ENV['SESSION_SECRET']
 use Rack::Session::Cookie, secret: ENV['SESSION_SECRET']
 
 before '/agent/*' do
