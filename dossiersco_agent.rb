@@ -21,7 +21,7 @@ end
 set :database_file, "config/database.yml"
 
 set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
-use Rack::Session::Cookie, :secret => ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }, expire_after: 60
+use Rack::Session::Cookie, :secret => ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }, expire_after: 86400 
 
 before '/agent/*' do
   redirect '/agent' unless agent.present?
