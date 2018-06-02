@@ -20,14 +20,9 @@ end
 
 set :database_file, "config/database.yml"
 
-configure :staging, :production do
-  use Rack::Session::Pool
-end
-
-configure :development do
-  set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
-  use Rack::Session::Cookie, :secret => ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }, expire_after: 86400
-end
+enable :sessions
+set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
+use Rack::Session::Cookie, :secret => ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }, expire_after: 86400
 
 before '/agent/*' do
   redirect '/agent' unless agent.present?
