@@ -2,6 +2,7 @@ require_relative 'import_siecle'
 
 module AgentHelpers
   def agent
+    p "session:#{session.inspect}"
     Agent.find_by(identifiant: session[:identifiant])
   end
   def traiter_imports
