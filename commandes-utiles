@@ -63,6 +63,7 @@ git push heroku master # pour pousser en prod
 heroku open
 heroku logs -t
 heroku run rake db:migrate
+heroku run rake stats
 heroku run irb --noreadline
 
 heroku run irb -a dossiersco-staging
