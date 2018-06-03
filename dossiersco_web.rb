@@ -49,6 +49,7 @@ code_profession = {'0': '', '10': 'agriculteur exploitant', '21': 'artisan', '22
 configure :test, :development, :staging do
   get '/init' do
     init
+    redirect '/'
   end
 end
 
