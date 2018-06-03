@@ -28,10 +28,7 @@
 
 			<div id="dp" style="display: none;">
 
-				<%= erb :'partials/champ_check', :locals => { :desc => "Je m'engage à régler les frais de demi-pension en
-					respectant les délais impartis inhérents au bon fonctionnement du service.", name: 'check_paiement_cantine',
-					condition: dossier_eleve.check_paiement_cantine}%>
-					<p style="color: red"><%= message_cantine if defined? message_cantine %></p>
+				<p>Je m'engage à régler les frais de demi-pension en respectant les délais impartis inhérents au bon fonctionnement du service.</p>
 			</div>
 		</div>
 
