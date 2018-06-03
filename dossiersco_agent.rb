@@ -37,7 +37,7 @@ post '/agent' do
   mdp_saisi = params[:mot_de_passe]
   if agent && (BCrypt::Password.new(agent.password) == mdp_saisi)
     session[:identifiant] = agent.identifiant
-    redirect '/agent/tableau_de_bord'
+    redirect '/agent/liste_des_eleves'
   else
     session[:erreur_login] = "Ces informations ne correspondent pas à un agent enregistré"
     redirect '/agent'
@@ -49,13 +49,6 @@ get '/agent/liste_des_eleves' do
   erb :'agent/liste_des_eleves',
       layout: :layout_agent,
       locals: {agent: agent, dossier_eleves: dossier_eleves}
-end
-
-get '/agent/tableau_de_bord' do
-  total_dossiers = agent.etablissement.dossier_eleve.count
-  erb :'agent/tableau_de_bord',
-    layout: :layout_agent,
-    locals: {agent: agent, total_dossiers: total_dossiers}
 end
 
 get '/agent/import_siecle' do
