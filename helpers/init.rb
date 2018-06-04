@@ -128,6 +128,11 @@ def init
   montee.demandabilite << latin_d
   montee.demandabilite << grec_d
 
+
+  eleve = Eleve.find_by(identifiant: '5')
+  eleve.option << Option.create(nom: 'latin', groupe: 'LCA', modalite: 'obligatoire')
+  eleve.option << Option.create(nom: 'grec', groupe: 'LCA', modalite: 'obligatoire')
+
   Agent.create!(password: '$2a$10$6njb4Rn4RHyFFJpP5QEJGutErgZVOr6/cCM17IKoIsiQDZQABBN2a',
                 nom: 'De Maulmont', prenom: 'Pierre', etablissement_id: tillion.id,
                 identifiant: 'pierre')
