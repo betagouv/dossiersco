@@ -63,6 +63,7 @@ def init
        identifiant: '6'
       }
   ]
+  eleves.each { |eleve| eleve.update(ville_naiss: 'Paris', pays_naiss: 'France') }
 
   oeben = Etablissement.create!({
      nom: "College Jean-Francois Oeben",
@@ -128,10 +129,16 @@ def init
   montee.demandabilite << latin_d
   montee.demandabilite << grec_d
 
+  eleve_5eme = Eleve.find_by(identifiant: '5')
+  eleve_5eme.option << Option.create(nom: 'latin', groupe: 'LCA', modalite: 'obligatoire')
+  eleve_5eme.option << Option.create(nom: 'grec', groupe: 'LCA', modalite: 'obligatoire')
 
-  eleve = Eleve.find_by(identifiant: '5')
-  eleve.option << Option.create(nom: 'latin', groupe: 'LCA', modalite: 'obligatoire')
-  eleve.option << Option.create(nom: 'grec', groupe: 'LCA', modalite: 'obligatoire')
+  eleve_4eme = Eleve.find_by(identifiant: '4')
+  montee_4eme = Montee.create
+  eleve_4eme.update(montee: montee_4eme)
+  latin_obligatoire = Option.create(nom: 'latin', groupe: 'LCA', modalite: 'obligatoire')
+  latin_obligatoire_d = Demandabilite.create montee_id: montee_4eme.id, option_id: latin_obligatoire.id
+  montee_4eme.demandabilite << latin_obligatoire_d
 
   Agent.create!(password: '$2a$10$6njb4Rn4RHyFFJpP5QEJGutErgZVOr6/cCM17IKoIsiQDZQABBN2a',
                 nom: 'De Maulmont', prenom: 'Pierre', etablissement_id: tillion.id,

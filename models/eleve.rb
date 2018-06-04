@@ -11,14 +11,17 @@ class Eleve < ActiveRecord::Base
     options_par_groupe = options.group_by {|o| o.groupe}
     groupes_obligatoires = []
     groupes_facultatives = []
+    groupes_obligatoires_sans_choix = []
     options_par_groupe.each do |groupe, options|
-      if (options.first.modalite == 'obligatoire')
+      if options.size == 1
+        groupes_obligatoires_sans_choix << options
+      elsif options.first.modalite == 'obligatoire'
         groupes_obligatoires << options
-      elsif (options.first.modalite == 'facultative')
+      elsif options.first.modalite == 'facultative'
         groupes_facultatives << options
       end
     end
-    obligatoire(groupes_obligatoires) + facultative(groupes_facultatives)
+    obligatoire(groupes_obligatoires) + facultative(groupes_facultatives) + obligatoire_sans_choix(groupes_obligatoires_sans_choix)
   end
 
   def obligatoire options_du_groupe
@@ -45,5 +48,15 @@ class Eleve < ActiveRecord::Base
         }
       end
     end.flatten
+  end
+
+  def obligatoire_sans_choix options_du_groupe
+    options_du_groupe.map do |options|
+      {
+        name: options.first.nom,
+        label: options.first.groupe,
+        type: "hidden"
+      }
+    end
   end
 end

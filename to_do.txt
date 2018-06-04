@@ -49,10 +49,6 @@ Peut exiger une 2è passe:
 [/] validation des infos en base e.g. dates limites d’inscription
 [/] afficher un commentaire quand une pièce jointe est rejetée
 
-Notes :
-    Champs de type hidden dans le formulaire des options pour l'envoyer dans les parametres
-    + l'afficher comme text sur la page élèves
-
 Terminé:
 [X] En fin de parcours, envoyer vraiment un mail de confirmation
 [X] Ajouter une colonne "Envoyer un message" à la liste des élèves -> lien vers page élève
