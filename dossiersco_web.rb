@@ -117,14 +117,28 @@ post '/eleve' do
 	 eleve_a_modifier[info] = params[info] if params.has_key?(info)
   end
 
+  # Pour chacune des options vérifier si elle est choisie directement
   options = eleve.montee.present? ? eleve.montee.demandabilite.collect(&:option) : []
-  nom_options = options.map { |option| option.nom }
-  nom_options.each do |nom_option|
-    if params[nom_option].present?
-      option_choisie = Option.find_by(nom: nom_option, etablissement_id: eleve.dossier_eleve.etablissement.id)
+  options.each do |option|
+    if params[option.nom].present?
+      demande = Demande.find_or_initialize_by(eleve: eleve, option: option)
+      eleve_a_modifier.demande.delete demande if params[option.nom] == 'false'
+      eleve_a_modifier.demande << demande if params[option.nom] == 'true'
+    end
+  end
+
+  # Ensuite on va itérer sur les groupes
+  options.collect(&:groupe).uniq.each do |groupe|
+    if params[groupe].present?
+      # On découvre l'option retenue
+      option_choisie = options.find {|option| option.nom == params[groupe]}
       demande = Demande.find_or_initialize_by(eleve: eleve, option: option_choisie)
-      eleve_a_modifier.demande.delete demande if params[nom_option] == 'false'
-      eleve_a_modifier.demande << demande if params[nom_option] == 'true'
+      # On supprime les autres (choix mutuellement exclusif)
+      eleve_a_modifier.demande.each do |demande_presente|
+        eleve_a_modifier.demande.delete demande_presente if demande_presente.option.groupe == groupe
+      end
+      # On garde celle retenue
+      eleve_a_modifier.demande << demande
     end
   end
   eleve_a_modifier.save!

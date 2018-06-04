@@ -710,6 +710,18 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'radio', resultat[:type]
     assert resultat[:options].include? 'anglais'
     assert resultat[:options].include? 'allemand'
+
+    assert_equal 0, eleve.demande.count
+
+    post '/eleve', LV1: 'allemand'
+    eleve = Eleve.find_by(identifiant: '6')
+    assert_equal 1, eleve.demande.count
+    assert_equal 'allemand', eleve.demande.first.option.nom
+
+    post '/eleve', LV1: 'anglais'
+    eleve = Eleve.find_by(identifiant: '6')
+    assert_equal 1, eleve.demande.count
+    assert_equal 'anglais', eleve.demande.first.option.nom
   end
 
   def test_affichage_d_options_facultatives_a_choisir
@@ -734,6 +746,11 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'check', resultat[1][:type]
     assert resultat[0][:name].include? 'latin'
     assert resultat[1][:name].include? 'grec'
+
+    post '/eleve', grec: 'true'
+    eleve = Eleve.find_by(identifiant: '6')
+    assert_equal 1, eleve.demande.count
+    assert_equal 'grec', eleve.demande.first.option.nom
   end
 
   def test_affichage_obligatoire_sans_choix
