@@ -22,7 +22,7 @@ Mineurs:
 [ ] 2ème ou 3ème prénoms, préciser "optionnel"
 [ ] apostrophe française ’ (en cours)
 [ ] La valeur de 'demarche' codée en dur
-[ ] Bug sur la case d'engagement demi-pension
+[X] Bug sur la case d'engagement demi-pension
 [ ] permettre à un user admin (pierre) de basculer d'un établissement à l'autre
 [ ] permettre la déconnexion de l'application pour plus de sécurité
 
