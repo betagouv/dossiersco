@@ -136,9 +136,13 @@ def init
   eleve_4eme = Eleve.find_by(identifiant: '4')
   montee_4eme = Montee.create
   eleve_4eme.update(montee: montee_4eme)
-  latin_obligatoire = Option.create(nom: 'latin', groupe: 'LCA', modalite: 'obligatoire')
-  latin_obligatoire_d = Demandabilite.create montee_id: montee_4eme.id, option_id: latin_obligatoire.id
-  montee_4eme.demandabilite << latin_obligatoire_d
+  grec_obligatoire = Option.create(nom: 'grec', groupe: 'LCA', modalite: 'obligatoire')
+  grec_obligatoire_d = Demandabilite.create montee_id: montee_4eme.id, option_id: grec_obligatoire.id
+  latin = Option.create(nom: 'latin', groupe: 'LCA', modalite: 'facultative')
+  latin_d = Abandonnabilite.create montee_id: montee_4eme.id, option_id: latin.id
+  eleve_4eme.option << latin
+  montee_4eme.demandabilite << grec_obligatoire_d
+  montee_4eme.abandonnabilite << latin_d
 
   Agent.create!(password: '$2a$10$6njb4Rn4RHyFFJpP5QEJGutErgZVOr6/cCM17IKoIsiQDZQABBN2a',
                 nom: 'De Maulmont', prenom: 'Pierre', etablissement_id: tillion.id,

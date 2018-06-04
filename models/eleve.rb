@@ -59,4 +59,19 @@ class Eleve < ActiveRecord::Base
       }
     end
   end
+
+  def genere_abandons_possibles
+    return unless self.montee.present?
+    noms_options = self.option.map { |o| o.nom }
+    options = self.montee.abandonnabilite.map { |d| d.option }.select { |o| noms_options.include? o.nom }
+    options.map do |option|
+      {
+        name: option.nom,
+        label: "Poursuivre l'option",
+        type: "check",
+        condition: true,
+        desc: option.nom
+      }
+    end
+  end
 end
