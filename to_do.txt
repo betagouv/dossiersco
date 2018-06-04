@@ -1,4 +1,6 @@
 Evolutions fonctionnelles importantes:
+[ ] Gérer 2 lignes d'adresse (conformité SIECLE), corriger les imports
+[ ] Limiter les faux positifs lors de la détection des déménagements
 [ ] Gérer les abandons d'options pédagogiques
 
 Observation de l'usage:
