@@ -790,4 +790,25 @@ class EleveFormTest < Test::Unit::TestCase
     assert resultat[0][:name].include? 'latin'
     assert resultat[1][:name].include? 'grec'
   end
+
+  def test_affichage_obligatoire_sans_choix
+    post '/identification', identifiant: '5', date_naiss: '1970-01-01'
+    eleve = Eleve.find_by(identifiant: '5')
+    
+    get '/eleve'
+
+    doc = Nokogiri::HTML(last_response.body)
+    assert_equal "latin", doc.css("body > main > div.col-sm-12 > form > div:nth-child(13) > div").text.strip
+    assert_equal "grec", doc.css("body > main > div.col-sm-12 > form > div:nth-child(14) > div").text.strip
+  end
+
+  def test_ne_pas_afficher_options_choisies_precedemment
+    e = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01')
+    dossier_eleve = DossierEleve.create!(eleve_id: e.id, etablissement_id: Etablissement.first.id)
+    post '/identification', identifiant: 'XXX', date_naiss: '1970-01-01'
+    
+    get '/eleve'
+
+    assert ! last_response.body.include?("Options choisies précédemment")
+  end
 end
