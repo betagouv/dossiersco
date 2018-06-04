@@ -130,13 +130,13 @@ def import_options etablissement_id, ligne_siecle, eleve
       cle_gestion = ligne_siecle[colonne[:cle_gestion]]
       code_modalite = ligne_siecle[colonne[:code_modalite]]
 
-      option = creer_option etablissement_id, libelle, cle_gestion, code_modalite
+      option = creer_option libelle, cle_gestion, code_modalite
       eleve.option << option
     end
   end
 end
 
-def creer_option etablissement_id, libelle, cle_gestion, code_modalite
+def creer_option libelle, cle_gestion, code_modalite
   cle_groupes = {AGL1: "Langue vivante 1", ESP2: "Langue vivante 2", ES2ND: "Langue vivante 2",
     ALL2: "Langue vivante 2", AL2ND: "Langue vivante 2", LCALA: "Langues et cultures de l'antiquité",
     LCAGR: "Langues et cultures de l'antiquité", DANSE: "Autres enseignements"}
@@ -148,8 +148,7 @@ def creer_option etablissement_id, libelle, cle_gestion, code_modalite
   groupe = cle_groupes[cle_gestion.to_sym]
   nom = cle_noms[libelle.to_sym]
 
-  option = Option.find_or_initialize_by(etablissement_id: etablissement_id, nom: nom,
-  obligatoire: obligatoire, groupe: groupe)
+  option = Option.find_or_initialize_by(nom: nom, groupe: groupe, modalite: obligatoire ? 'obligatoire' : 'facultative')
   option.save!
   option
 end

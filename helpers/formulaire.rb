@@ -18,21 +18,4 @@ helpers do
     Eleve.find_by(identifiant: identifiant)
   end
 
-  def options_du_niveau_classees eleve, etablissement_id
-    options = options_du_niveau eleve, etablissement_id
-    {
-      obligatoire: options.select { |option| option.obligatoire },
-      facultative: options.select { |option| !option.obligatoire }
-    }
-  end
-
-  def options_du_niveau eleve, etablissement_id
-    if eleve.niveau_classe_ant.nil?
-      niveau_debut = 6
-    else
-      niveau_debut = eleve.niveau_classe_ant[0].to_i - 1
-    end
-
-    Option.where etablissement_id: etablissement_id, niveau_debut: niveau_debut
-  end
 end
