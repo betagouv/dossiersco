@@ -185,11 +185,7 @@ post '/administration' do
 	dossier_eleve.renseignements_medicaux = params['renseignements_medicaux']
   dossier_eleve.check_paiement_cantine = params['check_paiement_cantine']
 	dossier_eleve.save!
-  if dossier_eleve.demi_pensionnaire && !dossier_eleve.check_paiement_cantine
-    erb :'4_administration', locals: {dossier_eleve: dossier_eleve, message_cantine: "Vous devez accepter les conditions ci-dessus"}
-  else
-	  sauve_et_redirect dossier_eleve, 'pieces_a_joindre'
-  end
+	sauve_et_redirect dossier_eleve, 'pieces_a_joindre'
 end
 
 get '/piece/:dossier_eleve/:code_piece/:s3_key' do
