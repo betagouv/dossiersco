@@ -51,6 +51,13 @@ get '/agent/liste_des_eleves' do
       locals: {agent: agent, dossier_eleves: dossier_eleves}
 end
 
+get '/agent/tableau_de_bord' do
+  total_dossiers = agent.etablissement.dossier_eleve.count
+  erb :'agent/tableau_de_bord',
+    layout: :layout_agent,
+    locals: {agent: agent, total_dossiers: total_dossiers}
+end
+
 get '/agent/import_siecle' do
   tache = agent.etablissement.tache_import.last
   erb :'agent/import_siecle', layout: :layout_agent, locals: {agent: agent, tache: tache, message: ""}
