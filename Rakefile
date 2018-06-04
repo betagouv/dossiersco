@@ -33,5 +33,6 @@ task :stats do
             print "\n"
             print avec_feedback.collect(&:commentaire).reject(&:nil?).reject(&:empty?).join("\n")
             print "\n"
+            print "-------------------------------------\n"
         end
 end
