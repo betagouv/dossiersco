@@ -60,17 +60,20 @@ class CreateMontee < ActiveRecord::Migration[5.1]
           when /5EME/
             # Rien
           when "6EME" # Non bilangue
-            montee.demandabilite << allemand
-            montee.demandabilite << espagnol
-            montee.demandabilite << latin
+            montee.demandabilite << Demandabilite.create(montee_id: montee.id, option_id: allemand.id)
+            montee.demandabilite << Demandabilite.create(montee_id: montee.id, option_id: espagnol.id)
+            montee.demandabilite << Demandabilite.create(montee_id: montee.id, option_id: latin.id)
           when /4EME/
-            montee.demandabilite << grec
-            montee.abandonnabilite << latin
+            montee.demandabilite << Demandabilite.create(montee_id: montee.id, option_id: grec.id)
+            montee.abandonnabilite << Abandonnabilite.create(montee_id: montee.id, option_id: latin.id)
           else
         end
-        eleves = Eleve.where(etablissement_id: etablissement, niveau_classe_ant: mef)
+        montee.save
+        dossiers = DossierEleve.joins(:eleve).where(eleves: {niveau_classe_ant: mef}, etablissement_id: etablissement)
+        eleves = dossiers.collect(&:eleve)
         eleves.each do |eleve|
           eleve.montee = montee
+          eleve.save
         end
       end
     end
@@ -92,19 +95,21 @@ class CreateMontee < ActiveRecord::Migration[5.1]
           when /5EME/
             # Rien
           when /BILANGUE/
-            montee.demandabilite << latin
+            montee.demandabilite << Demandabilite.create(montee_id: montee.id, option_id: latin.id)
           when "6EME" # Non bilangue
-            montee.demandabilite << allemand
-            montee.demandabilite << espagnol
-            montee.demandabilite << latin
+            montee.demandabilite << Demandabilite.create(montee_id: montee.id, option_id: allemand.id)
+            montee.demandabilite << Demandabilite.create(montee_id: montee.id, option_id: espagnol.id)
+            montee.demandabilite << Demandabilite.create(montee_id: montee.id, option_id: latin.id)
           when "4EME"
-            montee.demandabilite << grec
-            montee.abandonnabilite << latin
+            montee.demandabilite << Demandabilite.create(montee_id: montee.id, option_id: grec.id)
+            montee.abandonnabilite << Abandonnabilite.create(montee_id: montee.id, option_id: latin.id)
         end
-
-        eleves = Eleve.where(etablissement_id: etablissement, niveau_classe_ant: mef)
+        montee.save
+        dossiers = DossierEleve.joins(:eleve).where(eleves: {niveau_classe_ant: mef}, etablissement_id: etablissement)
+        eleves = dossiers.collect(&:eleve)
         eleves.each do |eleve|
           eleve.montee = montee
+          eleve.save
         end
       end
     end
