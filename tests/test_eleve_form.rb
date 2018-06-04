@@ -806,9 +806,18 @@ class EleveFormTest < Test::Unit::TestCase
     e = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01')
     dossier_eleve = DossierEleve.create!(eleve_id: e.id, etablissement_id: Etablissement.first.id)
     post '/identification', identifiant: 'XXX', date_naiss: '1970-01-01'
-    
+
     get '/eleve'
 
     assert ! last_response.body.include?("Options choisies précédemment")
+  end
+
+  def test_affiche_option_obligatoire_nouvelle_pour_cette_montee
+    post '/identification', identifiant: '4', date_naiss: '1970-01-01'
+
+    get '/eleve'
+
+    doc = Nokogiri::HTML(last_response.body)
+    assert_equal "latin", doc.css("body > main > div.col-sm-12 > form > div:nth-child(15) > div > p").text.strip
   end
 end
