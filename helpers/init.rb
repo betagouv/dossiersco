@@ -88,13 +88,6 @@ def init
       message_permanence: "lundi 17 et mardi 18 juin de 10h à 20h"
   })
 
-  Option.create!(etablissement_id: tillion.id, nom: 'Espagnol', niveau_debut: 5,
-  obligatoire: true, groupe: 'Langue vivante 2')
-  Option.create!(etablissement_id: tillion.id, nom: 'Allemand', niveau_debut: 5,
-  obligatoire: true, groupe: 'Langue vivante 2')
-  Option.create!(etablissement_id: tillion.id, nom: 'Latin', niveau_debut: 5, groupe: 'Langues anciennes')
-  Option.create!(etablissement_id: tillion.id, nom: 'Grec', niveau_debut: 5, groupe: 'Langues anciennes')
-
   PieceAttendue.create!(nom: "Assurance scolaire", code: "assurance_scolaire",
     explication: "assurance de l'éleve 2018/2019", etablissement_id: tillion.id)
   quotien_familial = PieceAttendue.create!(

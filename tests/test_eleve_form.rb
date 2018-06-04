@@ -92,19 +92,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert last_response.body.include? 'Piaf'
   end
 
-  def test_nouvelles_options
-    oeben = Etablissement.find_by(nom: "College Jean-Francois Oeben")
-    Option.create!(etablissement_id: oeben.id, nom: 'Grec', groupe:'Langes anciennes', niveau_debut: 3)
-
-    # Etienne: 4e -> 3e donc on lui propose Grec en option
-    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
-    get '/eleve'
-
-    doc = Nokogiri::HTML(last_response.body)
-    assert_not_nil doc.css("input[name='grec'][type='checkbox']").first
-    assert_nil doc.css("input[name='grec'][type='checkbox'][checked]").first
-  end
-
   def test_affiche_2ème_et_3ème_prénoms_en_4ème_pour_brevet_des_collèges
     post '/identification', identifiant: '4', date_naiss: '1970-01-01'
     get '/eleve'
@@ -417,6 +404,7 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_import_des_options
+    Option.destroy_all
     etablissement = Etablissement.find_by(nom: 'College Jean-Francois Oeben')
     lignes_siecle = [
       {11 => '1', 9 => "18/05/1991", 37 => "AGL1", 38 => "ANGLAIS LV1", 39 => "O", 33 => '4'},
@@ -427,7 +415,7 @@ class EleveFormTest < Test::Unit::TestCase
 
     lignes_siecle.each { |ligne| import_ligne etablissement.id, ligne }
 
-    options = etablissement.option
+    options = Option.all
 
     assert_equal 3, options.count
     noms = options.collect(&:nom)
@@ -466,26 +454,26 @@ class EleveFormTest < Test::Unit::TestCase
     Option.destroy_all
     etablissement_id = Etablissement.find_by(nom: 'College Jean-Francois Oeben').id
     colonnes_siecle = [
-      {id: etablissement_id, libelle: 'ANGLAIS LV1', cle_gestion: 'AGL1', code: 'O',
-        nom_attendu: 'Anglais', groupe_attendu: 'Langue vivante 1', obligatoire: true},
-      {id: etablissement_id, libelle: 'ESPAGNOL LV2', cle_gestion: 'ESP2', code: 'O',
-        nom_attendu: 'Espagnol', groupe_attendu: 'Langue vivante 2', obligatoire: true},
-      {id: etablissement_id, libelle: 'ESPAGNOL LV2 ND', cle_gestion: 'ES2ND', code: 'O',
-        nom_attendu: 'Espagnol non débutant', groupe_attendu: 'Langue vivante 2', obligatoire: true},
-      {id: etablissement_id, libelle: 'ALLEMAND LV2', cle_gestion: 'ALL2', code: 'O',
-        nom_attendu: 'Allemand', groupe_attendu: 'Langue vivante 2', obligatoire: true},
-      {id: etablissement_id, libelle: 'ALLEMAND LV2 ND', cle_gestion: 'AL2ND', code: 'O',
-        nom_attendu: 'Allemand non débutant', groupe_attendu: 'Langue vivante 2', obligatoire: true},
-      {id: etablissement_id, libelle: 'LCA LATIN', cle_gestion: 'LCALA', code: 'F',
-        nom_attendu: 'Latin', groupe_attendu: "Langues et cultures de l'antiquité", obligatoire: false},
-      {id: etablissement_id, libelle: 'LCA GREC', cle_gestion: 'LCAGR', code: 'F',
-        nom_attendu: 'Grec', groupe_attendu: "Langues et cultures de l'antiquité", obligatoire: false},
+      {libelle: 'ANGLAIS LV1', cle_gestion: 'AGL1', code: 'O',
+        nom_attendu: 'Anglais', groupe_attendu: 'Langue vivante 1'},
+      {libelle: 'ESPAGNOL LV2', cle_gestion: 'ESP2', code: 'O',
+        nom_attendu: 'Espagnol', groupe_attendu: 'Langue vivante 2'},
+      {libelle: 'ESPAGNOL LV2 ND', cle_gestion: 'ES2ND', code: 'O',
+        nom_attendu: 'Espagnol non débutant', groupe_attendu: 'Langue vivante 2'},
+      {libelle: 'ALLEMAND LV2', cle_gestion: 'ALL2', code: 'O',
+        nom_attendu: 'Allemand', groupe_attendu: 'Langue vivante 2'},
+      {libelle: 'ALLEMAND LV2 ND', cle_gestion: 'AL2ND', code: 'O',
+        nom_attendu: 'Allemand non débutant', groupe_attendu: 'Langue vivante 2'},
+      {libelle: 'LCA LATIN', cle_gestion: 'LCALA', code: 'F',
+        nom_attendu: 'Latin', groupe_attendu: "Langues et cultures de l'antiquité"},
+      {libelle: 'LCA GREC', cle_gestion: 'LCAGR', code: 'F',
+        nom_attendu: 'Grec', groupe_attendu: "Langues et cultures de l'antiquité"},
     ]
 
     colonnes_siecle.each do |colonne|
-      creer_option colonne[:id], colonne[:libelle], colonne[:cle_gestion], colonne[:code]
+      creer_option colonne[:libelle], colonne[:cle_gestion], colonne[:code]
 
-      option = Option.where(nom: colonne[:nom_attendu], groupe: colonne[:groupe_attendu], obligatoire: colonne[:obligatoire])
+      option = Option.where(nom: colonne[:nom_attendu], groupe: colonne[:groupe_attendu])
       assert_equal 1, option.count
     end
   end
@@ -553,49 +541,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert last_response.body.gsub(/\s/,'').include? "id='autorise_sortie' checked".gsub(/\s/,'')
     assert last_response.body.gsub(/\s/,'').include? "id='renseignements_medicaux' checked".gsub(/\s/,'')
     assert last_response.body.gsub(/\s/,'').include? "id='autorise_photo_de_classe' checked".gsub(/\s/,'')
-  end
-
-  # def test_un_agent_ajoute_une_nouvelle_option_obligatoire
-  #   post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-
-  #   post '/agent/options', nom: 'Italien', niveau_debut: '4ème', obligatoire: true
-
-  #   post '/identification', identifiant: '5', date_naiss: '1970-01-01'
-  #   get '/eleve'
-  #   assert_match /Italien/, last_response.body
-  #   assert_match /obligatoire/, last_response.body
-  # end
-
-  def test_un_agent_ajoute_deux_fois_la_meme_option
-    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-
-    post '/agent/options', nom: 'Latin', niveau_debut: '4ème'
-    post '/agent/options', nom: 'latin', niveau_debut: '4ème'
-
-    assert_match /latin existe déjà/, last_response.body
-  end
-
-  # def test_un_agent_ajoute_une_nouvelle_option_facultative
-  #   post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-
-  #   post '/agent/options', nom: 'Musique', niveau_debut: '3ème', obligatoire: false
-
-  #   post '/identification', identifiant: '4', date_naiss: '1970-01-01'
-  #   get '/eleve'
-  #   assert_match /Musique/, last_response.body
-  #   assert_match /facultatif/, last_response.body
-  # end
-
-  def test_un_agent_supprime_option
-    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-    post '/agent/options', nom: 'Musique', niveau_debut: '3ème'
-    get '/agent/options'
-    assert_match /Musique/, last_response.body
-
-    post '/agent/supprime_option', option_id: Option.last.id
-
-    get '/agent/options'
-    assert_no_match /Musique/, last_response.body
   end
 
   def test_un_agent_ajoute_une_nouvelle_piece_attendue

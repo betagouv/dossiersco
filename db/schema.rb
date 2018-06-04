@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180604141716) do
+ActiveRecord::Schema.define(version: 20180531145310) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,14 +106,12 @@ ActiveRecord::Schema.define(version: 20180604141716) do
   end
 
   create_table "montees", force: :cascade do |t|
-    t.string "division_ant"
+    t.integer "niveau_ant"
+    t.integer "etablissement_id"
   end
 
   create_table "options", force: :cascade do |t|
     t.string "nom"
-    t.integer "niveau_debut"
-    t.integer "etablissement_id"
-    t.boolean "obligatoire", default: false
     t.string "groupe"
     t.string "modalite"
   end
