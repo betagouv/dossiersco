@@ -794,7 +794,7 @@ class EleveFormTest < Test::Unit::TestCase
   def test_affichage_obligatoire_sans_choix
     post '/identification', identifiant: '5', date_naiss: '1970-01-01'
     eleve = Eleve.find_by(identifiant: '5')
-    
+
     get '/eleve'
 
     doc = Nokogiri::HTML(last_response.body)
@@ -802,22 +802,50 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal "grec", doc.css("body > main > div.col-sm-12 > form > div:nth-child(14) > div").text.strip
   end
 
-  def test_ne_pas_afficher_options_choisies_precedemment
-    e = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01')
+  def test_afficher_option_a_choisir_que_quand_choix_possible
+    montee = Montee.create
+    e = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01', montee: montee)
     dossier_eleve = DossierEleve.create!(eleve_id: e.id, etablissement_id: Etablissement.first.id)
     post '/identification', identifiant: 'XXX', date_naiss: '1970-01-01'
 
     get '/eleve'
 
     assert ! last_response.body.include?("Options choisies précédemment")
+    assert ! last_response.body.include?("Vos options pour l'année prochaine")
   end
 
   def test_affiche_option_obligatoire_nouvelle_pour_cette_montee
-    post '/identification', identifiant: '4', date_naiss: '1970-01-01'
+    montee = Montee.create
+    eleve = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01', montee: montee)
+    dossier_eleve = DossierEleve.create!(eleve_id: eleve.id, etablissement_id: Etablissement.first.id)
 
+    grec_obligatoire = Option.create(nom: 'grec', groupe: 'LCA', modalite: 'obligatoire')
+    grec_obligatoire_d = Demandabilite.create montee_id: montee.id, option_id: grec_obligatoire.id
+    montee.demandabilite << grec_obligatoire_d
+
+    post '/identification', identifiant: 'XXX', date_naiss: '1970-01-01'
     get '/eleve'
 
     doc = Nokogiri::HTML(last_response.body)
-    assert_equal "latin", doc.css("body > main > div.col-sm-12 > form > div:nth-child(15) > div > p").text.strip
+    assert_equal "grec", doc.css("body > main > div.col-sm-12 > form > div:nth-child(15) > div > p").text.strip
+  end
+
+  def test_affiche_option_abandonnable
+    eleve = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01')
+    dossier_eleve = DossierEleve.create!(eleve_id: eleve.id, etablissement_id: Etablissement.first.id)
+    montee = Montee.create
+    latin = Option.create(nom: 'latin', groupe: 'LCA', modalite: 'facultative')
+    latin_d = Abandonnabilite.create montee_id: montee.id, option_id: latin.id
+    eleve.option << latin
+    montee.abandonnabilite << latin_d
+    eleve.update(montee: montee)
+
+    post '/identification', identifiant: 'XXX', date_naiss: '1970-01-01'
+    get '/eleve'
+
+    resultat = eleve.genere_abandons_possibles
+
+    assert_equal "Poursuivre l'option", resultat[0][:label]
+    assert_equal 'latin', resultat[0][:name]
   end
 end
