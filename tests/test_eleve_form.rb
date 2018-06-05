@@ -205,7 +205,7 @@ class EleveFormTest < Test::Unit::TestCase
       ['rl1','rl2'].each do |rl|
         champ_qualifie = "#{champ}_#{rl}"
         selecteur = "\##{champ_qualifie}"
-        valeur = doc.css(selecteur).attr('value').text
+        valeur = doc.css(selecteur).text || doc.css(selecteur).attr('value').text
         donnees[champ_qualifie] = valeur
       end
     end
@@ -478,7 +478,7 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_compte_taux_de_portables_dans_siecle
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-    post '/agent/import_siecle', name: 'import_siecle', filename: Rack::Test::UploadedFile.new("tests/test_import_siecle.xls")
+    post '/agent/import_siecle', name: 'import_siecle', traitement: 'tout', filename: Rack::Test::UploadedFile.new("tests/test_import_siecle.xls")
     get '/api/traiter_imports'
     get '/agent/import_siecle'
     doc = Nokogiri::HTML(last_response.body)
@@ -514,7 +514,7 @@ class EleveFormTest < Test::Unit::TestCase
 
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
     post '/agent/import_siecle', nom_eleve: 'NOM_TEST', prenom_eleve: 'Prenom_test',
-         name: 'import_siecle',
+         name: 'import_siecle', traitement: 'tout',
          filename: Rack::Test::UploadedFile.new("tests/test_import_siecle.xls")
 
     agent = Agent.find_by(identifiant: 'pierre')
@@ -685,7 +685,10 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def assert_attr(valeur_attendue, selecteur_css, doc)
-    assert_equal valeur_attendue, doc.css(selecteur_css).attr('value').text
+    valeur_trouvee = doc.css(selecteur_css).attr('value') ? # c'est un input ?
+        doc.css(selecteur_css).attr('value').text # oui
+      : doc.css(selecteur_css).text # non, on suppose un textarea
+    assert_equal valeur_attendue, valeur_trouvee
   end
 
   def test_affichage_d_options_ogligatoires_a_choisir
