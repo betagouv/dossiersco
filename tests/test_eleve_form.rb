@@ -321,8 +321,9 @@ class EleveFormTest < Test::Unit::TestCase
 
     mail = ActionMailer::Base.deliveries.last
     assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
-    assert_equal 'test@test.com', mail['to'].addresses.first.to_s
-    assert_equal 'test2@test.com', mail['to'].addresses.last.to_s
+    assert mail['to'].addresses.collect(&:to_s).include? 'test@test.com'
+    assert mail['to'].addresses.collect(&:to_s).include? 'test2@test.com'
+    assert mail['to'].addresses.collect(&:to_s).include? 'contact@dossiersco.beta.gouv.fr'
     assert_equal "Réinscription de votre enfant au collège", mail['subject'].to_s
     part = mail.html_part || mail.text_part || mail
     assert part.body.decoded.include? "réinscription de votre enfant Emile Blayo"
@@ -731,8 +732,9 @@ class EleveFormTest < Test::Unit::TestCase
 
     mail = ActionMailer::Base.deliveries.last
     assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
-    assert_equal 'test@test.com', mail['to'].addresses.first.to_s
-    assert_equal 'test2@test.com', mail['to'].addresses.last.to_s
+    assert mail['to'].addresses.collect(&:to_s).include? 'test@test.com'
+    assert mail['to'].addresses.collect(&:to_s).include? 'test2@test.com'
+    assert mail['to'].addresses.collect(&:to_s).include? 'contact@dossiersco.beta.gouv.fr'
     assert_equal 'Réinscription de votre enfant au collège', mail['subject'].to_s
     part = mail.html_part || mail.text_part || mail
     assert part.body.decoded.include? "Tillion"
@@ -745,8 +747,9 @@ class EleveFormTest < Test::Unit::TestCase
 
     mail = ActionMailer::Base.deliveries.last
     assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
-    assert_equal 'test@test.com', mail['to'].addresses.first.to_s
-    assert_equal 'test2@test.com', mail['to'].addresses.last.to_s
+    assert mail['to'].addresses.collect(&:to_s).include? 'test@test.com'
+    assert mail['to'].addresses.collect(&:to_s).include? 'test2@test.com'
+    assert mail['to'].addresses.collect(&:to_s).include? 'contact@dossiersco.beta.gouv.fr'
     assert_equal "Réinscription de votre enfant au collège", mail['subject'].to_s
     part = mail.html_part || mail.text_part || mail
     assert part.body.decoded.include? "Votre enfant est bien inscrit."
