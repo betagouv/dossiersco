@@ -1,7 +1,7 @@
 Evolutions fonctionnelles importantes:
+[ ] Afficher les demandes et abandons à l'étape "validation"
 [ ] Gérer 2 lignes d'adresse (conformité SIECLE), corriger les imports
 [ ] Limiter les faux positifs lors de la détection des déménagements
-[ ] Gérer les abandons d'options pédagogiques
 
 Observation de l'usage:
 [ ] Emailing (Mailjet? autre?) parents (en complément des actions "recherche de feedback" parents)
@@ -50,6 +50,7 @@ Peut exiger une 2è passe:
 [/] afficher un commentaire quand une pièce jointe est rejetée
 
 Terminé:
+[X] Gérer les abandons d'options pédagogiques
 [X] En fin de parcours, envoyer vraiment un mail de confirmation
 [X] Ajouter une colonne "Envoyer un message" à la liste des élèves -> lien vers page élève
 [X] Ajouter une boite de dialogue à la page élève pour envoyer un message à la famille
