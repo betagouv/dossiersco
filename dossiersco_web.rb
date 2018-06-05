@@ -18,8 +18,8 @@ end
 
 set :database_file, "config/database.yml"
 
-enable :sessions
-use Rack::Session::Cookie, :key => 'rack.session', :path => '/', :secret => SecureRandom.base64(10), :expire_after => 86400
+set :session_secret, ENV['SESSION_SECRET']
+use Rack::Session::Cookie, :key => 'dossiersco', :path => '/', :secret => ENV['SESSION_SECRET'], :expire_after => 604800
 
 require_relative 'helpers/formulaire'
 require_relative 'helpers/init'
