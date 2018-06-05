@@ -1,6 +1,7 @@
 .DS_Store
 dump.rdb
 .*
+!.locale
 !.gitignore
 !.circleci
 notes
