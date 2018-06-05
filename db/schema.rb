@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_05_104731) do
+ActiveRecord::Schema.define(version: 2018_06_05_113026) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,6 +155,9 @@ ActiveRecord::Schema.define(version: 2018_06_05_104731) do
     t.integer "priorite"
     t.boolean "changement_adresse", default: false
     t.datetime "updated_at"
+    t.string "adresse_ant"
+    t.string "ville_ant"
+    t.string "code_postal_ant"
   end
 
   create_table "tache_imports", force: :cascade do |t|
@@ -166,6 +169,7 @@ ActiveRecord::Schema.define(version: 2018_06_05_104731) do
     t.string "prenom_a_importer"
     t.string "message"
     t.datetime "updated_at"
+    t.string "traitement", default: "tout"
   end
 
   add_foreign_key "dossier_eleves", "eleves", column: "eleve_id"

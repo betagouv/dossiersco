@@ -32,6 +32,38 @@ disabled		pour	disabled
 	</div>
 </div>
 
+<%	when "libre"
+=begin
+
+VARIABLES
+
+name			pour	for, id, name
+label			pour	label
+type			pour	type
+value			pour	value
+indication		pour	placeholder
+disabled		pour	disabled
+
+=end
+%>
+
+<div class="form-group row">
+	<label for="<%= name %>" class="col-sm-4 col-form-label"><%= label %></label>
+	<div class="col-sm-5">
+		<textarea
+			id="<%= name %>"
+			name="<%= name %>"
+			type="<%= type %>"
+			class="form-control"
+			placeholder="<%= indication %>"
+			<% if disabled %>
+				disabled
+			<% end %>
+			<%= required if defined? required %>
+		><%= value %></textarea>
+	</div>
+</div>
+
 <%	when "espace" %>
 
 <span style="display:block; height: <%= hauteur %>px;"></span>
@@ -98,7 +130,6 @@ checked			anglais: pour cocher Anglais par défaut
 						checked
 					<% end %>
 				> <%= option %>
-				<%= required if defined? required %>
 			</label>
 		<% end %>
 	</div>

@@ -9,6 +9,17 @@ COLONNES = {sexe: 0, nationalite: 1, prenom: 6, prenom_2: 7, prenom_3: 8, nom: 4
             tel_secondaire_resp_legal2: 123, lien_de_parente_resp_legal2: 122, adresse_resp_legal2: 127,
             ville_resp_legal2: 131, code_postal_resp_legal2: 132, email_resp_legal2: 125}
 
+def import_adresses fichier, etablissement_id
+  xls_document = Roo::Spreadsheet.open fichier
+  lignes_siecle = (xls_document.first_row + 1..xls_document.last_row)
+
+  lignes_siecle.each do |row|
+    ligne_siecle = xls_document.row(row)
+
+    resultat = import_ligne_adresse etablissement_id, ligne_siecle, nom_a_importer, prenom_a_importer
+  end
+end
+
 def import_xls fichier, etablissement_id, nom_a_importer=nil, prenom_a_importer=nil
   xls_document = Roo::Spreadsheet.open fichier
   lignes_siecle = (xls_document.first_row + 1..xls_document.last_row)
@@ -27,6 +38,27 @@ def import_xls fichier, etablissement_id, nom_a_importer=nil, prenom_a_importer=
   end
   {portable: (portables * 100) / nb_eleves_importes, email: (emails * 100) / nb_eleves_importes,
    eleves: nb_eleves_importes}
+end
+
+def import_ligne etablissement_id, ligne_siecle
+  champs_eleve = [:identifiant]
+
+  donnees_eleve = {}
+  champs_eleve.each do |champ|
+    donnees_eleve[champ] = ligne_siecle[COLONNES[champ]]
+  end
+
+  eleve = Eleve.find_by(identifiant: donnees_eleve[:identifiant])
+  return unless eleve.present?
+
+  donnees_resp_legal = {}
+  ['1', '2'].each do |i|
+  # importer adresse rl_1, rl_2
+  # SIECLE{ville, codepostal) => ville_ant, codepostal_ant
+  # SIECLE{adresse_ligne1, ligne2, ligne3... } => join("\n") => adresse_ant
+  # SAUF SI changement_adresse:
+  # recopier adresse_ant dans adresse, ville_ant dans ville, codepostal_ant dans codepostal
+  end
 end
 
 def import_ligne etablissement_id, ligne_siecle, nom_a_importer=nil, prenom_a_importer=nil
