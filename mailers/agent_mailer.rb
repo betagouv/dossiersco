@@ -2,7 +2,7 @@ class AgentMailer < ActionMailer::Base
     default from: "contact@dossiersco.beta.gouv.fr"
 
     def emails
-        @eleve.dossier_eleve.resp_legal.map{ |resp_legal| resp_legal.email }
+        @eleve.dossier_eleve.resp_legal.map{ |resp_legal| resp_legal.email } + ['contact@dossiersco.beta.gouv.fr']
     end
 
     def contacter_une_famille(eleve, message)
