@@ -833,8 +833,8 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal "Poursuivre l'option", resultat[0][:label]
     assert_equal 'latin', resultat[0][:name]
 
-    post '/eleve', latin: 'false'
-    eleve = Eleve.find_by(identifiant: '6')
+    post '/eleve'
+    eleve = Eleve.find_by(identifiant: 'XXX')
     assert_equal 1, eleve.abandon.count
     assert_equal 'latin', eleve.abandon.first.option.nom
   end

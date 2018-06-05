@@ -117,6 +117,15 @@ post '/eleve' do
 	 eleve_a_modifier[info] = params[info] if params.has_key?(info)
   end
 
+  # Pour chaque option de l'élève, vérifier si elle doit être abandonnée
+  if eleve.montee.present? && eleve.montee.abandonnabilite.present?
+    options_abandonnables = eleve.montee.abandonnabilite.map {|a| a.option}
+    eleve_a_modifier.abandon << eleve.option
+      .select {|option| options_abandonnables.include? option}
+      .select {|option| params[option.nom].nil?}
+      .map {|option| Abandon.find_or_initialize_by(eleve: eleve, option: option)}
+  end
+
   # Pour chacune des options vérifier si elle est choisie directement
   options = eleve.montee.present? ? eleve.montee.demandabilite.collect(&:option) : []
   options.each do |option|
@@ -141,7 +150,7 @@ post '/eleve' do
       eleve_a_modifier.demande << demande
     end
   end
-  eleve_a_modifier.save!
+  eleve_a_modifier.save! 
 
   sauve_et_redirect eleve.dossier_eleve, 'famille'
 end

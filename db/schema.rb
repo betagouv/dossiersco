@@ -10,13 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180531145310) do
+ActiveRecord::Schema.define(version: 20180605104731) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "abandonnabilites", force: :cascade do |t|
     t.integer "montee_id"
+    t.integer "option_id"
+  end
+
+  create_table "abandons", force: :cascade do |t|
+    t.integer "eleve_id"
     t.integer "option_id"
   end
 
