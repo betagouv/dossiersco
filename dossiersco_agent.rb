@@ -20,10 +20,6 @@ end
 
 set :database_file, "config/database.yml"
 
-enable :sessions
-set :session_secret, "secret"
-use Rack::Session::Pool
-
 before '/agent/*' do
   redirect '/agent' unless agent.present?
 end
