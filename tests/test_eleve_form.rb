@@ -753,7 +753,7 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'grec', eleve.demande.first.option.nom
   end
 
-  def test_une_option_facultative
+  def test_une_option_facultative_pas_encore_demandee
     post '/identification', identifiant: '6', date_naiss: '1970-01-01'
     eleve = Eleve.find_by(identifiant: '6')
     montee = Montee.create
@@ -768,7 +768,33 @@ class EleveFormTest < Test::Unit::TestCase
 
     assert_equal 'LCA', resultat[0][:label]
     assert_equal 'check', resultat[0][:type]
+    assert_equal false, resultat[0][:condition]
     assert resultat[0][:name].include? 'grec'
+
+    post '/eleve', grec: 'true'
+    eleve = Eleve.find_by(identifiant: '6')
+    assert_equal 1, eleve.demande.count
+    assert_equal 'grec', eleve.demande.first.option.nom
+  end
+
+  def test_une_option_facultative_demandee
+    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    eleve = Eleve.find_by(identifiant: '6')
+    montee = Montee.create
+
+    grec = Option.create(nom: 'grec', groupe: 'LCA', modalite: 'facultative')
+    grec_d = Demandabilite.create montee_id: montee.id, option_id: grec.id
+    montee.demandabilite << grec_d
+    eleve.montee = montee
+    eleve.demande << Demande.create(eleve: eleve, option: grec)
+    eleve.save
+
+    resultat = eleve.genere_demandes_possibles
+
+    assert_equal 'LCA', resultat[0][:label]
+    assert_equal 'check', resultat[0][:type]
+    assert_equal true, resultat[0][:condition]
+    assert resultat[0][:name].include?('grec')
 
     post '/eleve', grec: 'true'
     eleve = Eleve.find_by(identifiant: '6')
@@ -837,5 +863,9 @@ class EleveFormTest < Test::Unit::TestCase
     eleve = Eleve.find_by(identifiant: 'XXX')
     assert_equal 1, eleve.abandon.count
     assert_equal 'latin', eleve.abandon.first.option.nom
+
+    resultat = eleve.genere_abandons_possibles
+
+    assert_equal false, resultat[0][:condition]
   end
 end

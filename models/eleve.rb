@@ -39,6 +39,14 @@ class Eleve < ActiveRecord::Base
     end
   end
 
+  def options_demandees
+    self.demande.map(&:option)
+  end
+
+  def options_abandonnees
+    self.abandon.map(&:option)
+  end
+
   def facultative options_du_groupe
     options_du_groupe.flat_map do |options|
       options.map do |option|
@@ -46,7 +54,7 @@ class Eleve < ActiveRecord::Base
           name: option.nom,
           label: option.groupe,
           type: "check",
-          condition: false,
+          condition: options_demandees.include?(option),
           desc: option.nom
         }
       end
@@ -72,7 +80,7 @@ class Eleve < ActiveRecord::Base
         name: option.nom,
         label: "Poursuivre l'option",
         type: "check",
-        condition: true,
+        condition: !options_abandonnees.include?(option),
         desc: option.nom
       }
     end
