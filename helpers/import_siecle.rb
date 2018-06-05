@@ -16,7 +16,7 @@ def import_adresses fichier, etablissement_id
   lignes_siecle.each do |row|
     ligne_siecle = xls_document.row(row)
 
-    resultat = import_ligne_adresse etablissement_id, ligne_siecle, nom_a_importer, prenom_a_importer
+    resultat = import_ligne_adresse etablissement_id, ligne_siecle
   end
 end
 
@@ -40,26 +40,42 @@ def import_xls fichier, etablissement_id, nom_a_importer=nil, prenom_a_importer=
    eleves: nb_eleves_importes}
 end
 
-def import_ligne etablissement_id, ligne_siecle
-  champs_eleve = [:identifiant]
-
-  donnees_eleve = {}
-  champs_eleve.each do |champ|
-    donnees_eleve[champ] = ligne_siecle[COLONNES[champ]]
-  end
-
-  eleve = Eleve.find_by(identifiant: donnees_eleve[:identifiant])
+def import_ligne_adresse etablissement_id, ligne_siecle
+  eleve = Eleve.find_by(identifiant: ligne_siecle[COLONNES[:identifiant]])
   return unless eleve.present?
 
+  champs_resp_legal = [:code_postal, :ville]
+
+['1', '2'].each do |i|
   donnees_resp_legal = {}
-  ['1', '2'].each do |i|
-  # importer adresse rl_1, rl_2
-  # SIECLE{ville, codepostal) => ville_ant, codepostal_ant
-  # SIECLE{adresse_ligne1, ligne2, ligne3... } => join("\n") => adresse_ant
-  # SAUF SI changement_adresse:
-  # recopier adresse_ant dans adresse, ville_ant dans ville, codepostal_ant dans codepostal
+  champs_resp_legal.each do |champ|
+    donnees_resp_legal[champ] = ligne_siecle[COLONNES["#{champ}_resp_legal#{i}".to_sym]]
+  end
+
+  resp_legal = RespLegal.find_by(priorite: i.to_i, dossier_eleve_id: eleve.dossier_eleve.id)
+  resp_legal.update(
+      ville_ant: donnees_resp_legal[:ville],
+      adresse_ant: (concatener_adresse ligne_siecle, resp_legal.priorite),
+      code_postal_ant: donnees_resp_legal[:code_postal])
+
+    if !resp_legal.changement_adresse
+      resp_legal.update(
+        ville: donnees_resp_legal[:ville],
+        adresse: (concatener_adresse ligne_siecle, resp_legal.priorite),
+        code_postal: donnees_resp_legal[:code_postal])
+    end
   end
 end
+
+def concatener_adresse ligne_siecle, priorite
+  colonnes_adresse = { 'resp_legal1' => [108, 109, 110, 111], 'resp_legal2' => [127, 128, 129, 130]}
+  adresse = ""
+  colonnes_adresse["resp_legal#{priorite}"].each do |colonne|
+    adresse << "#{ligne_siecle[colonne]} \n " unless ligne_siecle[colonne].nil?
+  end
+  adresse
+end
+
 
 def import_ligne etablissement_id, ligne_siecle, nom_a_importer=nil, prenom_a_importer=nil
 
