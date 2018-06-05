@@ -753,6 +753,29 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'grec', eleve.demande.first.option.nom
   end
 
+  def test_une_option_facultative
+    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    eleve = Eleve.find_by(identifiant: '6')
+    montee = Montee.create
+
+    grec = Option.create(nom: 'grec', groupe: 'LCA', modalite: 'facultative')
+    grec_d = Demandabilite.create montee_id: montee.id, option_id: grec.id
+    montee.demandabilite << grec_d
+    eleve.montee = montee
+    eleve.save
+
+    resultat = eleve.genere_demandes_possibles
+
+    assert_equal 'LCA', resultat[0][:label]
+    assert_equal 'check', resultat[0][:type]
+    assert resultat[0][:name].include? 'grec'
+
+    post '/eleve', grec: 'true'
+    eleve = Eleve.find_by(identifiant: '6')
+    assert_equal 1, eleve.demande.count
+    assert_equal 'grec', eleve.demande.first.option.nom
+  end
+
   def test_affichage_obligatoire_sans_choix
     post '/identification', identifiant: '5', date_naiss: '1970-01-01'
     eleve = Eleve.find_by(identifiant: '5')

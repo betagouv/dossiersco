@@ -53,7 +53,7 @@ class CreateMontee < ActiveRecord::Migration[5.1]
           "4EME HORAIRES AMENAGES MUSIQUE",
           "4EME"]
       mefs.each do |mef|
-        montee = Montee.create(niveau_ant: mef, etablissement_id: etablissement)
+        montee = Montee.create(niveau_ant: mef, etablissement_id: etablissement.id)
         case mef
           when /SEGPA/
             # Rien
@@ -88,7 +88,7 @@ class CreateMontee < ActiveRecord::Migration[5.1]
           "4EME UPE2A (EX CL. ACCUEIL)",
           "4EME"]
       mefs.each do |mef|
-        montee = Montee.create(niveau_ant: mef, etablissement_id: etablissement)
+        montee = Montee.create(niveau_ant: mef, etablissement_id: etablissement.id)
         case mef
           when /UPE2A/ # 6è, 5è ou 4è
             # Rien
