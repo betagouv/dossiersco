@@ -15,19 +15,44 @@
 	<div class="card">
 		<div class="card-body">
 			<% eleve.option.each do |option| %>
-			<div class="row mb-2">
-				<div class="col-3">
-					<strong><%= option.groupe.present? ? option.groupe : 'Option' %></strong>
+				<div class="row mb-2">
+					<div class="col-3">
+						<strong><%= option.groupe.present? ? option.groupe : 'Option' %></strong>
+					</div>
+					<div class="col-4">
+						<%= option.nom %>
+					</div>
 				</div>
-				<div class="col-4">
-					<%= option.nom %>
+			<% end %>
+			<% eleve.demande.each do |demande| %>
+				<div class="row mb-2">
+					<div class="col-3">
+						<strong><%= demande.option.groupe.present? ? demande.option.groupe : 'demande' %></strong>
+					</div>
+					<div class="col-4">
+						Je demande l'inscription à l'option <%= demande.option.nom %>
+					</div>
+					<div class="col-3">
+						<a id='modifier-<%=demande.option.nom%>' href="/eleve">
+							<div class="btn btn-outline-secondary btn-sm">Modifier</div>
+						</a>
+					</div>
 				</div>
-				<div class="col-3">
-					<a id='modifier-<%=option.nom%>' href="/eleve">
-						<div class="btn btn-outline-secondary btn-sm">Modifier</div>
-					</a>
+			<% end %>
+			<% eleve.abandon.each do |abandon| %>
+				<div class="row mb-2">
+					<div class="col-3">
+						<strong><%= abandon.option.groupe.present? ? abandon.option.groupe : 'abandon' %></strong>
+					</div>
+					<div class="col-4">
+						Je souhaite me désister de l'option <%= abandon.option.nom %>
+					</div>
+					<div class="col-3">
+						<a id='modifier-<%=abandon.option.nom%>' href="/eleve">
+							<div class="btn btn-outline-secondary btn-sm">Modifier</div>
+						</a>
+					</div>
 				</div>
-			</div>
 			<% end %>
 
 			<div class="row mb-2">
