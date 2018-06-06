@@ -302,6 +302,25 @@ class EleveFormTest < Test::Unit::TestCase
     Nokogiri::HTML(last_response.body)
   end
 
+  def test_affichage_des_options_choisis_sur_la_page_validation
+    eleve = Eleve.create(identifiant: 'xxx', date_naiss: '1970-01-01', niveau_classe_ant: '3')
+    etablissement = Etablissement.create(nom: 'college test')
+    dossier_eleve = DossierEleve.create(eleve_id: eleve.id, etablissement_id: etablissement.id)
+    eleve.option << Option.create(nom: 'anglais', groupe: 'LV1')
+    option_choisie = Option.create(nom: 'grec', groupe: 'LCA')
+    demande = Demande.create(option_id: option_choisie.id, eleve_id: eleve.id)
+    option_abandonnee = Option.create(nom: 'latin', groupe: 'LCA')
+    abandon = Abandon.create(option_id: option_abandonnee.id, eleve_id: eleve.id)
+
+    post '/identification', identifiant: 'xxx', date_naiss: '1970-01-01'
+    get '/validation'
+
+    assert last_response.body.include? 'anglais'
+    assert last_response.body.include? "Je demande l'inscription à l'option grec"
+    assert last_response.body.include? "Je souhaite me désister de l'option latin"
+  end
+
+
 ##############################################################################
 #   Tests agents
 ##############################################################################
