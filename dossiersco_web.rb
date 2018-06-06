@@ -106,7 +106,7 @@ get '/accueil' do
 end
 
 get '/eleve' do
-  options_du_niveau = options_du_niveau eleve, eleve.dossier_eleve.etablissement.id
+  options_du_niveau = eleve.montee.present? ? eleve.montee.demandabilite.collect(&:option) : []
   erb :'1_eleve', locals: { eleve: eleve, options_du_niveau: options_du_niveau }
 end
 
@@ -117,23 +117,40 @@ post '/eleve' do
 	 eleve_a_modifier[info] = params[info] if params.has_key?(info)
   end
 
-  options = options_du_niveau eleve, eleve.dossier_eleve.etablissement.id
-  nom_options = options.map { |option| option.nom }
-  nom_options.each do |nom_option|
-    if params[nom_option].present?
-      option_existante = eleve.option.collect(&:nom).include? nom_option
-      if !option_existante
-        # demande pour l'année à venir
-        option_choisie = Option.find_by(nom: nom_option, etablissement_id: eleve.dossier_eleve.etablissement.id)
-        demande = Demande.find_or_initialize_by(eleve: eleve, option: option_choisie)
-        eleve_a_modifier.demande.delete demande if params[nom_option] == 'false'
-        eleve_a_modifier.demande << demande if params[nom_option] == 'true'
-      else
-        # abandon
-      end
+  # Pour chaque option de l'élève, vérifier si elle doit être abandonnée
+  if eleve.montee.present? && eleve.montee.abandonnabilite.present?
+    options_abandonnables = eleve.montee.abandonnabilite.map {|a| a.option}
+    eleve_a_modifier.abandon << eleve.option
+      .select {|option| options_abandonnables.include? option}
+      .select {|option| params[option.nom].nil?}
+      .map {|option| Abandon.find_or_initialize_by(eleve: eleve, option: option)}
+  end
+
+  # Pour chacune des options vérifier si elle est choisie directement
+  options = eleve.montee.present? ? eleve.montee.demandabilite.collect(&:option) : []
+  options.each do |option|
+    if params[option.nom].present?
+      demande = Demande.find_or_initialize_by(eleve: eleve, option: option)
+      eleve_a_modifier.demande.delete demande if params[option.nom] == 'false'
+      eleve_a_modifier.demande << demande if params[option.nom] == 'true'
     end
   end
-  eleve_a_modifier.save!
+
+  # Ensuite on va itérer sur les groupes
+  options.collect(&:groupe).uniq.each do |groupe|
+    if params[groupe].present?
+      # On découvre l'option retenue
+      option_choisie = options.find {|option| option.nom == params[groupe]}
+      demande = Demande.find_or_initialize_by(eleve: eleve, option: option_choisie)
+      # On supprime les autres (choix mutuellement exclusif)
+      eleve_a_modifier.demande.each do |demande_presente|
+        eleve_a_modifier.demande.delete demande_presente if demande_presente.option.groupe == groupe
+      end
+      # On garde celle retenue
+      eleve_a_modifier.demande << demande
+    end
+  end
+  eleve_a_modifier.save! 
 
   sauve_et_redirect eleve.dossier_eleve, 'famille'
 end

@@ -9,8 +9,6 @@ require_relative '../helpers/singulier_francais'
 
 require_relative '../dossiersco_web'
 require_relative '../dossiersco_agent'
-require_relative '../db/seeds'
-
 
 class EleveFormTest < Test::Unit::TestCase
   include Rack::Test::Methods
@@ -90,39 +88,6 @@ class EleveFormTest < Test::Unit::TestCase
     post '/eleve', prenom: 'Edith'
     get '/eleve'
     assert last_response.body.include? 'Piaf'
-  end
-
-  def test_nouvelles_options
-    oeben = Etablissement.find_by(nom: "College Jean-Francois Oeben")
-    Option.create!(etablissement_id: oeben.id, nom: 'Grec', groupe:'Langes anciennes', niveau_debut: 3)
-
-    # Etienne: 4e -> 3e donc on lui propose Grec en option
-    post '/identification', identifiant: '1', date_naiss: '1995-11-19'
-    get '/eleve'
-
-    doc = Nokogiri::HTML(last_response.body)
-    assert_not_nil doc.css("input[name='Grec'][type='checkbox']").first
-    assert_nil doc.css("input[name='Grec'][type='checkbox'][checked]").first
-  end
-
-  def test_restitution_des_choix_enseignements
-    oeben = Etablissement.find_by(nom: "College Jean-Francois Oeben")
-    Option.create!(etablissement_id: oeben.id, nom: 'Grec', groupe:'Langes anciennes', niveau_debut: 3)
-
-    # Etienne: 4e -> 3e donc on lui propose Grec en option
-    post '/identification', identifiant: '1', date_naiss: '1995-11-19'
-
-    post '/eleve', Grec: true
-    get '/eleve'
-    doc = Nokogiri::HTML(last_response.body)
-
-    assert_not_nil doc.css("input[name='Grec'][type='checkbox'][checked]").first
-
-    post '/eleve', Grec: false
-    get '/eleve'
-    doc = Nokogiri::HTML(last_response.body)
-
-    assert_nil doc.css("input[name='Grec'][type='checkbox'][checked]").first
   end
 
   def test_affiche_2ème_et_3ème_prénoms_en_4ème_pour_brevet_des_collèges
@@ -437,6 +402,7 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_import_des_options
+    Option.destroy_all
     etablissement = Etablissement.find_by(nom: 'College Jean-Francois Oeben')
     lignes_siecle = [
       {11 => '1', 9 => "18/05/1991", 37 => "AGL1", 38 => "ANGLAIS LV1", 39 => "O", 33 => '4'},
@@ -447,7 +413,7 @@ class EleveFormTest < Test::Unit::TestCase
 
     lignes_siecle.each { |ligne| import_ligne etablissement.id, ligne }
 
-    options = etablissement.option
+    options = Option.all
 
     assert_equal 3, options.count
     noms = options.collect(&:nom)
@@ -486,26 +452,26 @@ class EleveFormTest < Test::Unit::TestCase
     Option.destroy_all
     etablissement_id = Etablissement.find_by(nom: 'College Jean-Francois Oeben').id
     colonnes_siecle = [
-      {id: etablissement_id, libelle: 'ANGLAIS LV1', cle_gestion: 'AGL1', code: 'O',
-        nom_attendu: 'Anglais', groupe_attendu: 'Langue vivante 1', obligatoire: true},
-      {id: etablissement_id, libelle: 'ESPAGNOL LV2', cle_gestion: 'ESP2', code: 'O',
-        nom_attendu: 'Espagnol', groupe_attendu: 'Langue vivante 2', obligatoire: true},
-      {id: etablissement_id, libelle: 'ESPAGNOL LV2 ND', cle_gestion: 'ES2ND', code: 'O',
-        nom_attendu: 'Espagnol non débutant', groupe_attendu: 'Langue vivante 2', obligatoire: true},
-      {id: etablissement_id, libelle: 'ALLEMAND LV2', cle_gestion: 'ALL2', code: 'O',
-        nom_attendu: 'Allemand', groupe_attendu: 'Langue vivante 2', obligatoire: true},
-      {id: etablissement_id, libelle: 'ALLEMAND LV2 ND', cle_gestion: 'AL2ND', code: 'O',
-        nom_attendu: 'Allemand non débutant', groupe_attendu: 'Langue vivante 2', obligatoire: true},
-      {id: etablissement_id, libelle: 'LCA LATIN', cle_gestion: 'LCALA', code: 'F',
-        nom_attendu: 'Latin', groupe_attendu: "Langues et cultures de l'antiquité", obligatoire: false},
-      {id: etablissement_id, libelle: 'LCA GREC', cle_gestion: 'LCAGR', code: 'F',
-        nom_attendu: 'Grec', groupe_attendu: "Langues et cultures de l'antiquité", obligatoire: false},
+      {libelle: 'ANGLAIS LV1', cle_gestion: 'AGL1', code: 'O',
+        nom_attendu: 'Anglais', groupe_attendu: 'Langue vivante 1'},
+      {libelle: 'ESPAGNOL LV2', cle_gestion: 'ESP2', code: 'O',
+        nom_attendu: 'Espagnol', groupe_attendu: 'Langue vivante 2'},
+      {libelle: 'ESPAGNOL LV2 ND', cle_gestion: 'ES2ND', code: 'O',
+        nom_attendu: 'Espagnol non débutant', groupe_attendu: 'Langue vivante 2'},
+      {libelle: 'ALLEMAND LV2', cle_gestion: 'ALL2', code: 'O',
+        nom_attendu: 'Allemand', groupe_attendu: 'Langue vivante 2'},
+      {libelle: 'ALLEMAND LV2 ND', cle_gestion: 'AL2ND', code: 'O',
+        nom_attendu: 'Allemand non débutant', groupe_attendu: 'Langue vivante 2'},
+      {libelle: 'LCA LATIN', cle_gestion: 'LCALA', code: 'F',
+        nom_attendu: 'Latin', groupe_attendu: "Langues et cultures de l'antiquité"},
+      {libelle: 'LCA GREC', cle_gestion: 'LCAGR', code: 'F',
+        nom_attendu: 'Grec', groupe_attendu: "Langues et cultures de l'antiquité"},
     ]
 
     colonnes_siecle.each do |colonne|
-      creer_option colonne[:id], colonne[:libelle], colonne[:cle_gestion], colonne[:code]
+      creer_option colonne[:libelle], colonne[:cle_gestion], colonne[:code]
 
-      option = Option.where(nom: colonne[:nom_attendu], groupe: colonne[:groupe_attendu], obligatoire: colonne[:obligatoire])
+      option = Option.where(nom: colonne[:nom_attendu], groupe: colonne[:groupe_attendu])
       assert_equal 1, option.count
     end
   end
@@ -573,49 +539,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert last_response.body.gsub(/\s/,'').include? "id='autorise_sortie' checked".gsub(/\s/,'')
     assert last_response.body.gsub(/\s/,'').include? "id='renseignements_medicaux' checked".gsub(/\s/,'')
     assert last_response.body.gsub(/\s/,'').include? "id='autorise_photo_de_classe' checked".gsub(/\s/,'')
-  end
-
-  # def test_un_agent_ajoute_une_nouvelle_option_obligatoire
-  #   post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-
-  #   post '/agent/options', nom: 'Italien', niveau_debut: '4ème', obligatoire: true
-
-  #   post '/identification', identifiant: '5', date_naiss: '1970-01-01'
-  #   get '/eleve'
-  #   assert_match /Italien/, last_response.body
-  #   assert_match /obligatoire/, last_response.body
-  # end
-
-  def test_un_agent_ajoute_deux_fois_la_meme_option
-    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-
-    post '/agent/options', nom: 'Latin', niveau_debut: '4ème'
-    post '/agent/options', nom: 'latin', niveau_debut: '4ème'
-
-    assert_match /latin existe déjà/, last_response.body
-  end
-
-  # def test_un_agent_ajoute_une_nouvelle_option_facultative
-  #   post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-
-  #   post '/agent/options', nom: 'Musique', niveau_debut: '3ème', obligatoire: false
-
-  #   post '/identification', identifiant: '4', date_naiss: '1970-01-01'
-  #   get '/eleve'
-  #   assert_match /Musique/, last_response.body
-  #   assert_match /facultatif/, last_response.body
-  # end
-
-  def test_un_agent_supprime_option
-    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-    post '/agent/options', nom: 'Musique', niveau_debut: '3ème'
-    get '/agent/options'
-    assert_match /Musique/, last_response.body
-
-    post '/agent/supprime_option', option_id: Option.last.id
-
-    get '/agent/options'
-    assert_no_match /Musique/, last_response.body
   end
 
   def test_un_agent_ajoute_une_nouvelle_piece_attendue
@@ -763,5 +686,184 @@ class EleveFormTest < Test::Unit::TestCase
 
   def assert_attr(valeur_attendue, selecteur_css, doc)
     assert_equal valeur_attendue, doc.css(selecteur_css).attr('value').text
+  end
+
+  def test_affichage_d_options_ogligatoires_a_choisir
+    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    eleve = Eleve.find_by(identifiant: '6')
+    montee = Montee.create
+
+    anglais = Option.create(nom: 'anglais', groupe: 'LV1', modalite: 'obligatoire')
+    allemand = Option.create(nom: 'allemand', groupe: 'LV1', modalite: 'obligatoire')
+    anglais_d = Demandabilite.create montee_id: montee.id, option_id: anglais.id
+    allemand_d = Demandabilite.create montee_id: montee.id, option_id: allemand.id
+    montee.demandabilite << anglais_d
+    montee.demandabilite << allemand_d
+    eleve.montee = montee
+    eleve.save
+
+    resultat = eleve.genere_demandes_possibles[0]
+
+    assert_equal 'LV1', resultat[:name]
+    assert_equal 'radio', resultat[:type]
+    assert resultat[:options].include? 'anglais'
+    assert resultat[:options].include? 'allemand'
+
+    assert_equal 0, eleve.demande.count
+
+    post '/eleve', LV1: 'allemand'
+    eleve = Eleve.find_by(identifiant: '6')
+    assert_equal 1, eleve.demande.count
+    assert_equal 'allemand', eleve.demande.first.option.nom
+
+    post '/eleve', LV1: 'anglais'
+    eleve = Eleve.find_by(identifiant: '6')
+    assert_equal 1, eleve.demande.count
+    assert_equal 'anglais', eleve.demande.first.option.nom
+  end
+
+  def test_affichage_d_options_facultatives_a_choisir
+    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    eleve = Eleve.find_by(identifiant: '6')
+    montee = Montee.create
+
+    latin = Option.create(nom: 'latin', groupe: 'LCA', modalite: 'facultative')
+    grec = Option.create(nom: 'grec', groupe: 'LCA', modalite: 'facultative')
+    latin_d = Demandabilite.create montee_id: montee.id, option_id: latin.id
+    grec_d = Demandabilite.create montee_id: montee.id, option_id: grec.id
+    montee.demandabilite << latin_d
+    montee.demandabilite << grec_d
+    eleve.montee = montee
+    eleve.save
+
+    resultat = eleve.genere_demandes_possibles
+
+    assert_equal 'LCA', resultat[0][:label]
+    assert_equal 'LCA', resultat[1][:label]
+    assert_equal 'check', resultat[0][:type]
+    assert_equal 'check', resultat[1][:type]
+    assert resultat[0][:name].include? 'latin'
+    assert resultat[1][:name].include? 'grec'
+
+    post '/eleve', grec: 'true'
+    eleve = Eleve.find_by(identifiant: '6')
+    assert_equal 1, eleve.demande.count
+    assert_equal 'grec', eleve.demande.first.option.nom
+  end
+
+  def test_une_option_facultative_pas_encore_demandee
+    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    eleve = Eleve.find_by(identifiant: '6')
+    montee = Montee.create
+
+    grec = Option.create(nom: 'grec', groupe: 'LCA', modalite: 'facultative')
+    grec_d = Demandabilite.create montee_id: montee.id, option_id: grec.id
+    montee.demandabilite << grec_d
+    eleve.montee = montee
+    eleve.save
+
+    resultat = eleve.genere_demandes_possibles
+
+    assert_equal 'LCA', resultat[0][:label]
+    assert_equal 'check', resultat[0][:type]
+    assert_equal false, resultat[0][:condition]
+    assert resultat[0][:name].include? 'grec'
+
+    post '/eleve', grec: 'true'
+    eleve = Eleve.find_by(identifiant: '6')
+    assert_equal 1, eleve.demande.count
+    assert_equal 'grec', eleve.demande.first.option.nom
+  end
+
+  def test_une_option_facultative_demandee
+    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    eleve = Eleve.find_by(identifiant: '6')
+    montee = Montee.create
+
+    grec = Option.create(nom: 'grec', groupe: 'LCA', modalite: 'facultative')
+    grec_d = Demandabilite.create montee_id: montee.id, option_id: grec.id
+    montee.demandabilite << grec_d
+    eleve.montee = montee
+    eleve.demande << Demande.create(eleve: eleve, option: grec)
+    eleve.save
+
+    resultat = eleve.genere_demandes_possibles
+
+    assert_equal 'LCA', resultat[0][:label]
+    assert_equal 'check', resultat[0][:type]
+    assert_equal true, resultat[0][:condition]
+    assert resultat[0][:name].include?('grec')
+
+    post '/eleve', grec: 'true'
+    eleve = Eleve.find_by(identifiant: '6')
+    assert_equal 1, eleve.demande.count
+    assert_equal 'grec', eleve.demande.first.option.nom
+  end
+
+  def test_affichage_obligatoire_sans_choix
+    post '/identification', identifiant: '5', date_naiss: '1970-01-01'
+    eleve = Eleve.find_by(identifiant: '5')
+
+    get '/eleve'
+
+    doc = Nokogiri::HTML(last_response.body)
+    assert_equal "latin", doc.css("body > main > div.col-sm-12 > form > div:nth-child(13) > div").text.strip
+    assert_equal "grec", doc.css("body > main > div.col-sm-12 > form > div:nth-child(14) > div").text.strip
+  end
+
+  def test_afficher_option_a_choisir_que_quand_choix_possible
+    montee = Montee.create
+    e = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01', montee: montee)
+    dossier_eleve = DossierEleve.create!(eleve_id: e.id, etablissement_id: Etablissement.first.id)
+    post '/identification', identifiant: 'XXX', date_naiss: '1970-01-01'
+
+    get '/eleve'
+
+    assert ! last_response.body.include?("Options choisies précédemment")
+    assert ! last_response.body.include?("Vos options pour l'année prochaine")
+  end
+
+  def test_affiche_option_obligatoire_nouvelle_pour_cette_montee
+    montee = Montee.create
+    eleve = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01', montee: montee)
+    dossier_eleve = DossierEleve.create!(eleve_id: eleve.id, etablissement_id: Etablissement.first.id)
+
+    grec_obligatoire = Option.create(nom: 'grec', groupe: 'LCA', modalite: 'obligatoire')
+    grec_obligatoire_d = Demandabilite.create montee_id: montee.id, option_id: grec_obligatoire.id
+    montee.demandabilite << grec_obligatoire_d
+
+    post '/identification', identifiant: 'XXX', date_naiss: '1970-01-01'
+    get '/eleve'
+
+    doc = Nokogiri::HTML(last_response.body)
+    assert_equal "grec", doc.css("body > main > div.col-sm-12 > form > div:nth-child(15) > div > p").text.strip
+  end
+
+  def test_affiche_option_abandonnable
+    eleve = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01')
+    dossier_eleve = DossierEleve.create!(eleve_id: eleve.id, etablissement_id: Etablissement.first.id)
+    montee = Montee.create
+    latin = Option.create(nom: 'latin', groupe: 'LCA', modalite: 'facultative')
+    latin_d = Abandonnabilite.create montee_id: montee.id, option_id: latin.id
+    eleve.option << latin
+    montee.abandonnabilite << latin_d
+    eleve.update(montee: montee)
+
+    post '/identification', identifiant: 'XXX', date_naiss: '1970-01-01'
+    get '/eleve'
+
+    resultat = eleve.genere_abandons_possibles
+
+    assert_equal "Poursuivre l'option", resultat[0][:label]
+    assert_equal 'latin', resultat[0][:name]
+
+    post '/eleve'
+    eleve = Eleve.find_by(identifiant: 'XXX')
+    assert_equal 1, eleve.abandon.count
+    assert_equal 'latin', eleve.abandon.first.option.nom
+
+    resultat = eleve.genere_abandons_possibles
+
+    assert_equal false, resultat[0][:condition]
   end
 end
