@@ -30,6 +30,11 @@
   <% unless tache.present? && tache.statut != 'terminée' %>
     <form action="/agent/import_siecle" method="POST" enctype="multipart/form-data">
 
+        <label for="traitement">Traitement:</label>
+        <input type="radio" name="traitement" value="tout">Tout</input>
+        <input type="radio" name="traitement" value="adresses">Adresses</input>
+
+
       <div class="card-deck">
           <% @document = "Import depuis siecle" %>
           <% @explication = "Sélectionnez un fichier au format xls" %>

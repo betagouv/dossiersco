@@ -28,7 +28,7 @@
     },
     {   name: "adresse_rl1",
         label: "Adresse",
-        type: "text",
+        type: "libre",
         value: params['adresse_rl1'],
         indication: "Numéro et nom de voie",
         disabled: false,
@@ -123,7 +123,16 @@
 
     <span style="display:block; height: 5px;"></span>
 
-    <%= erb :'partials/champ_texte', :locals => { :desc => "Adresse", :variable => "adresse_rl2", :valeur => params['adresse_rl2'], :exemple => "Numéro et nom de voie" }%>
+    <%= construire [{
+          name: "adresse_rl2",
+          label: "Adresse",
+          type: "libre",
+          value: params['adresse_rl2'],
+          indication: "Numéro et nom de voie",
+          disabled: false,
+          required: 'required'
+        }]
+    %>
 
     <%= erb :'partials/champ_texte', :locals => { :desc => "Code postal", :variable => "code_postal_rl2", :valeur => params['code_postal_rl2'], :exemple => "Code postal" }%>
 
