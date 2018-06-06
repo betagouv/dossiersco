@@ -1,7 +1,8 @@
 Evolutions fonctionnelles importantes:
-[ ] Afficher les demandes et abandons à l'étape "validation"
-[ ] Gérer 2 lignes d'adresse (conformité SIECLE), corriger les imports
+[ ] Si un seul enfant à charge (non allocataire CAF), afficher lien calculette
+[ ] Afficher l'adresse avant/après en cas de changement d'adresse
 [ ] Limiter les faux positifs lors de la détection des déménagements
+[ ] Afficher un picto pour les demi-pensionnaires dans la liste des élèves
 
 Observation de l'usage:
 [ ] Emailing (Mailjet? autre?) parents (en complément des actions "recherche de feedback" parents)
@@ -24,7 +25,6 @@ Mineurs:
 [ ] 2ème ou 3ème prénoms, préciser "optionnel"
 [ ] apostrophe française ’ (en cours)
 [ ] La valeur de 'demarche' codée en dur
-[X] Bug sur la case d'engagement demi-pension
 [ ] permettre à un user admin (pierre) de basculer d'un établissement à l'autre
 [ ] permettre la déconnexion de l'application pour plus de sécurité
 
@@ -33,6 +33,8 @@ Améliorer les tests ou l'exploitabilité:
 [ ] Supprimer l'ancien fichier quand on modifie une pièce jointe
 
 Ne sera pas fait (cette année) mais on y pense:
+[ ] Gérer l'adhésion au FSE (foyer socio-éducatif) suggestion Tillion
+[ ] Générer les formulaires infirmerie préremplis, à diffuser par le collège ou imprimer
 [ ] Gérer l'inscription; ingérer un fichier Affelnet
 [ ] tarif de cantine uniquement pour paris, fonctionnement différent pour les autres académies
 [ ] Prise en charge de la génération du PDF parents dans l'appli
@@ -50,6 +52,9 @@ Peut exiger une 2è passe:
 [/] afficher un commentaire quand une pièce jointe est rejetée
 
 Terminé:
+[X] Gérer 2 lignes d'adresse (conformité SIECLE), corriger les imports
+[X] Afficher les demandes et abandons à l'étape "validation"
+[X] Bug sur la case d'engagement demi-pension
 [X] Gérer les abandons d'options pédagogiques
 [X] En fin de parcours, envoyer vraiment un mail de confirmation
 [X] Ajouter une colonne "Envoyer un message" à la liste des élèves -> lien vers page élève
