@@ -9,8 +9,6 @@ require_relative '../helpers/singulier_francais'
 
 require_relative '../dossiersco_web'
 require_relative '../dossiersco_agent'
-require_relative '../db/seeds'
-
 
 class EleveFormTest < Test::Unit::TestCase
   include Rack::Test::Methods
