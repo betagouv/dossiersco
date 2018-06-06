@@ -54,6 +54,8 @@ configure :test, :development, :staging do
 end
 
 before '/*' do
+  agent_before = agent
+  eleve_before = eleve
   identification = request.path_info == "/identification"
   home = request.path_info == "/"
   piece_jointe = request.path_info.start_with?("/piece")
@@ -61,7 +63,8 @@ before '/*' do
   api = request.path_info.start_with?("/api")
   init = request.path_info.start_with?("/init")
   pass if home || identification || piece_jointe || agent || api || init
-  pass if eleve.present?
+  pass if eleve_before.present?
+  pass if agent_before.present?
   return if home
   session[:message_erreur] = "Vous avez été déconnecté par mesure de sécurité. Merci de vous identifier avant de continuer."
   redirect '/'
