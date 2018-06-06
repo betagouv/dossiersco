@@ -205,7 +205,7 @@ class EleveFormTest < Test::Unit::TestCase
       ['rl1','rl2'].each do |rl|
         champ_qualifie = "#{champ}_#{rl}"
         selecteur = "\##{champ_qualifie}"
-        valeur = doc.css(selecteur).attr('value').text
+        valeur = doc.css(selecteur).text || doc.css(selecteur).attr('value').text
         donnees[champ_qualifie] = valeur
       end
     end
@@ -448,6 +448,44 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 2, eleve.option.count
   end
 
+  def test_importe_uniquement_les_adresses
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    etablissement = Etablissement.find_by(nom: 'Collège Germaine Tillion')
+    TacheImport.create(url: 'tests/test_import_adresses.xlsx', statut: 'en_attente',
+      etablissement_id: etablissement.id, traitement: 'tout')
+    get '/api/traiter_imports'
+    assert_equal 200, last_response.status
+
+    dossier_eleve1 = Eleve.find_by(identifiant: "070823218DD").dossier_eleve
+    resp_legal1 = dossier_eleve1.resp_legal.select { |r| r.lien_de_parente == 'MERE'}.first
+    resp_legal1.update(changement_adresse: true, ville: 'Vernon', code_postal: '27200', adresse: 'Route de Magny')
+
+    TacheImport.create(url: 'tests/test_import_adresses.xlsx', statut: 'en_attente',
+      etablissement_id: etablissement.id, traitement: 'adresses')
+    get '/api/traiter_imports'
+    assert_equal 200, last_response.status
+
+    dossier_eleve1 = Eleve.find_by(identifiant: "070823218DD").dossier_eleve
+    resp_legal1 = dossier_eleve1.resp_legal.select { |r| r.lien_de_parente == 'MERE'}.first
+
+    dossier_eleve2 = Eleve.find_by(identifiant: "072342399CH").dossier_eleve
+    resp_legal2 = dossier_eleve2.resp_legal.select { |r| r.lien_de_parente == 'MERE'}.first
+
+    assert_equal 'Vernon', resp_legal1.ville
+    assert_equal '27200', resp_legal1.code_postal
+    assert_equal 'Route de Magny', resp_legal1.adresse
+    assert_equal 'PARIS', resp_legal1.ville_ant
+    assert_equal '75017', resp_legal1.code_postal_ant
+    assert_equal "5 rue VILLARET DE JOYEUSE \n" + " ", resp_legal1.adresse_ant
+
+    assert_equal 'PARIS', resp_legal2.ville_ant
+    assert_equal 'PARIS', resp_legal2.ville
+    assert_equal '75017', resp_legal2.code_postal_ant
+    assert_equal '75017', resp_legal2.code_postal
+    assert_equal "10 \n" + " 10 rue VILLARET DE JOYEUSE \n" + " batiment C \n" + " au fond à droite \n" + " ", resp_legal2.adresse
+    assert_equal "10 \n" + " 10 rue VILLARET DE JOYEUSE \n" + " batiment C \n" + " au fond à droite \n" + " ", resp_legal2.adresse_ant
+  end
+
   def test_creer_des_options
     Option.destroy_all
     etablissement_id = Etablissement.find_by(nom: 'College Jean-Francois Oeben').id
@@ -478,7 +516,7 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_compte_taux_de_portables_dans_siecle
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-    post '/agent/import_siecle', name: 'import_siecle', filename: Rack::Test::UploadedFile.new("tests/test_import_siecle.xls")
+    post '/agent/import_siecle', name: 'import_siecle', traitement: 'tout', filename: Rack::Test::UploadedFile.new("tests/test_import_siecle.xls")
     get '/api/traiter_imports'
     get '/agent/import_siecle'
     doc = Nokogiri::HTML(last_response.body)
@@ -514,7 +552,7 @@ class EleveFormTest < Test::Unit::TestCase
 
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
     post '/agent/import_siecle', nom_eleve: 'NOM_TEST', prenom_eleve: 'Prenom_test',
-         name: 'import_siecle',
+         name: 'import_siecle', traitement: 'tout',
          filename: Rack::Test::UploadedFile.new("tests/test_import_siecle.xls")
 
     agent = Agent.find_by(identifiant: 'pierre')
@@ -685,7 +723,10 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def assert_attr(valeur_attendue, selecteur_css, doc)
-    assert_equal valeur_attendue, doc.css(selecteur_css).attr('value').text
+    valeur_trouvee = doc.css(selecteur_css).attr('value') ? # c'est un input ?
+        doc.css(selecteur_css).attr('value').text # oui
+      : doc.css(selecteur_css).text # non, on suppose un textarea
+    assert_equal valeur_attendue, valeur_trouvee
   end
 
   def test_affichage_d_options_ogligatoires_a_choisir

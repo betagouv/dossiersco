@@ -72,7 +72,8 @@ post '/agent/import_siecle' do
     etablissement_id: agent.etablissement.id,
     statut: 'en_attente',
     nom_a_importer: params[:nom_eleve],
-    prenom_a_importer: params[:prenom_eleve])
+    prenom_a_importer: params[:prenom_eleve],
+    traitement: params[:traitement])
   erb :'agent/import_siecle',
       locals: { message: "",
           tache: tache
