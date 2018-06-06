@@ -2,6 +2,7 @@ Evolutions fonctionnelles importantes:
 [ ] Si un seul enfant à charge (non allocataire CAF), afficher lien calculette
 [ ] Afficher l'adresse avant/après en cas de changement d'adresse
 [ ] Limiter les faux positifs lors de la détection des déménagements
+[ ] Afficher un picto pour les demi-pensionnaires dans la liste des élèves
 
 Observation de l'usage:
 [ ] Emailing (Mailjet? autre?) parents (en complément des actions "recherche de feedback" parents)
