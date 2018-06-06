@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180528213920) do
+ActiveRecord::Schema.define(version: 2018_06_05_104731) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "abandonnabilites", force: :cascade do |t|
+    t.integer "montee_id"
+    t.integer "option_id"
+  end
+
+  create_table "abandons", force: :cascade do |t|
+    t.integer "eleve_id"
+    t.integer "option_id"
+  end
 
   create_table "agents", force: :cascade do |t|
     t.string "identifiant"
@@ -33,6 +43,11 @@ ActiveRecord::Schema.define(version: 20180528213920) do
     t.string "tel_principal"
     t.string "tel_secondaire"
     t.datetime "updated_at"
+  end
+
+  create_table "demandabilites", force: :cascade do |t|
+    t.integer "montee_id"
+    t.integer "option_id"
   end
 
   create_table "demandes", force: :cascade do |t|
@@ -76,6 +91,7 @@ ActiveRecord::Schema.define(version: 20180528213920) do
     t.string "niveau_classe_ant"
     t.string "prenom_2"
     t.string "prenom_3"
+    t.integer "montee_id"
   end
 
   create_table "eleves_options", force: :cascade do |t|
@@ -94,12 +110,15 @@ ActiveRecord::Schema.define(version: 20180528213920) do
     t.text "message_infirmerie"
   end
 
+  create_table "montees", force: :cascade do |t|
+    t.integer "niveau_ant"
+    t.integer "etablissement_id"
+  end
+
   create_table "options", force: :cascade do |t|
     t.string "nom"
-    t.integer "niveau_debut"
-    t.integer "etablissement_id"
-    t.boolean "obligatoire", default: false
     t.string "groupe"
+    t.string "modalite"
   end
 
   create_table "piece_attendues", force: :cascade do |t|

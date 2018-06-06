@@ -63,6 +63,7 @@ def init
        identifiant: '6'
       }
   ]
+  eleves.each { |eleve| eleve.update(ville_naiss: 'Paris', pays_naiss: 'France') }
 
   oeben = Etablissement.create!({
      nom: "College Jean-Francois Oeben",
@@ -87,13 +88,6 @@ def init
       message_permanence: "lundi 17 et mardi 18 juin de 10h à 20h"
   })
 
-  Option.create!(etablissement_id: tillion.id, nom: 'Espagnol', niveau_debut: 5,
-  obligatoire: true, groupe: 'Langue vivante 2')
-  Option.create!(etablissement_id: tillion.id, nom: 'Allemand', niveau_debut: 5,
-  obligatoire: true, groupe: 'Langue vivante 2')
-  Option.create!(etablissement_id: tillion.id, nom: 'Latin', niveau_debut: 5, groupe: 'Langues anciennes')
-  Option.create!(etablissement_id: tillion.id, nom: 'Grec', niveau_debut: 5, groupe: 'Langues anciennes')
-
   PieceAttendue.create!(nom: "Assurance scolaire", code: "assurance_scolaire",
     explication: "assurance de l'éleve 2018/2019", etablissement_id: tillion.id)
   quotien_familial = PieceAttendue.create!(
@@ -110,6 +104,38 @@ def init
 
   e5 = Eleve.find_by(identifiant: eleves[5][:identifiant]).dossier_eleve
   e5.update(commentaire: "Pas mal", satisfaction: 4)
+
+  eleve = Eleve.find_by(identifiant: '6')
+  montee = Montee.create
+
+  anglais = Option.create(nom: 'anglais', groupe: 'LV1', modalite: 'obligatoire')
+  allemand = Option.create(nom: 'allemand', groupe: 'LV1', modalite: 'obligatoire')
+  anglais_d = Demandabilite.create montee_id: montee.id, option_id: anglais.id
+  allemand_d = Demandabilite.create montee_id: montee.id, option_id: allemand.id
+  latin = Option.create(nom: 'latin', groupe: 'LCA', modalite: 'facultative')
+  grec = Option.create(nom: 'grec', groupe: 'LCA', modalite: 'facultative')
+  latin_d = Demandabilite.create montee_id: montee.id, option_id: latin.id
+  grec_d = Demandabilite.create montee_id: montee.id, option_id: grec.id
+  eleve.update(montee: montee)
+  montee.demandabilite << anglais_d
+  montee.demandabilite << allemand_d
+  montee.demandabilite << latin_d
+  montee.demandabilite << grec_d
+
+  eleve_5eme = Eleve.find_by(identifiant: '5')
+  eleve_5eme.option << Option.create(nom: 'latin', groupe: 'LCA', modalite: 'obligatoire')
+  eleve_5eme.option << Option.create(nom: 'grec', groupe: 'LCA', modalite: 'obligatoire')
+
+  eleve_4eme = Eleve.find_by(identifiant: '4')
+  montee_4eme = Montee.create
+  eleve_4eme.update(montee: montee_4eme)
+  grec_obligatoire = Option.create(nom: 'grec', groupe: 'LCA', modalite: 'obligatoire')
+  grec_obligatoire_d = Demandabilite.create montee_id: montee_4eme.id, option_id: grec_obligatoire.id
+  latin = Option.create(nom: 'latin', groupe: 'LCA', modalite: 'facultative')
+  latin_d = Abandonnabilite.create montee_id: montee_4eme.id, option_id: latin.id
+  eleve_4eme.option << latin
+  montee_4eme.demandabilite << grec_obligatoire_d
+  montee_4eme.abandonnabilite << latin_d
 
   Agent.create!(password: '$2a$10$6njb4Rn4RHyFFJpP5QEJGutErgZVOr6/cCM17IKoIsiQDZQABBN2a',
                 nom: 'De Maulmont', prenom: 'Pierre', etablissement_id: tillion.id,

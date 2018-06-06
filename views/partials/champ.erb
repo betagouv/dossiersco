@@ -78,7 +78,7 @@ VARIABLES
 
 name
 label 			"LV1"
-options			{anglais: "Anglais", allemand: "Allemand"}
+options			['Anglais", 'Allemand']
 checked			anglais: pour cocher Anglais par défaut
 
 =end
@@ -144,6 +144,16 @@ valeur			"Anglais"
 	<label class="col-sm-4 col-form-label"><%= label %></label>
 	<div class="col-sm-6">
 		<%= valeur %>
+	</div>
+</div>
+
+<%	when "hidden" %>
+
+<div class="form-group row">
+	<label class="col-sm-4 col-form-label"><%= label %></label>
+	<div class="col-sm-6">
+		<input class='form-check-input' type='hidden' name='<%= name %>' value='true' id='<%= name %>' >
+    <p><%= name %></p>
 	</div>
 </div>
 
