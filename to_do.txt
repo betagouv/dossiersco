@@ -15,8 +15,8 @@ Gestion des relances:
 Mineurs:
 [ ] Encourager l'ajout d'adresse mail quand elle n'est pas saisie
 [ ] Permettre aux familles d'adresser un message à l'établissement ?
-[ ] page d’erreur “catch all” qui rassure (edited)
-[ ] page 404 personnalisée
+[X] page d’erreur “catch all” qui rassure (edited)
+[X] page 404 personnalisée
 [ ] 2ème ou 3ème prénoms, préciser "optionnel"
 [ ] apostrophe française ’ (en cours)
 [ ] La valeur de 'demarche' codée en dur
