@@ -902,11 +902,11 @@ class EleveFormTest < Test::Unit::TestCase
     grec_obligatoire_d = Demandabilite.create montee_id: montee.id, option_id: grec_obligatoire.id
     montee.demandabilite << grec_obligatoire_d
 
-    post '/identification', identifiant: 'XXX', date_naiss: '1970-01-01'
-    get '/eleve'
+    resultat = eleve.genere_demandes_possibles
 
-    doc = Nokogiri::HTML(last_response.body)
-    assert_equal "grec", doc.css("body > main > div.col-sm-12 > form > div:nth-child(15) > div > p").text.strip
+    assert_equal "LCA", resultat[0][:label]
+    assert_equal 'grec', resultat[0][:name]
+    assert_equal 'hidden', resultat[0][:type]
   end
 
   def test_affiche_option_abandonnable
