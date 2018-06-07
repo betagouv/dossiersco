@@ -14,16 +14,6 @@
 
 	<div class="card">
 		<div class="card-body">
-			<% eleve.option.each do |option| %>
-				<div class="row mb-2">
-					<div class="col-3">
-						<strong><%= option.groupe.present? ? option.groupe : 'Option' %></strong>
-					</div>
-					<div class="col-4">
-						<%= option.nom %>
-					</div>
-				</div>
-			<% end %>
 			<% eleve.demande.each do |demande| %>
 				<div class="row mb-2">
 					<div class="col-3">

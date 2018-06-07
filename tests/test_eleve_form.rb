@@ -805,7 +805,7 @@ class EleveFormTest < Test::Unit::TestCase
     assert resultat[0][:name].include? 'latin'
     assert resultat[1][:name].include? 'grec'
 
-    post '/eleve', grec: 'true'
+    post '/eleve', grec_present: 'true', grec: 'true'
     eleve = Eleve.find_by(identifiant: '6')
     assert_equal 1, eleve.demande.count
     assert_equal 'grec', eleve.demande.first.option.nom
@@ -829,7 +829,7 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal false, resultat[0][:condition]
     assert resultat[0][:name].include? 'grec'
 
-    post '/eleve', grec: 'true'
+    post '/eleve', grec_present: 'true', grec: 'true'
     eleve = Eleve.find_by(identifiant: '6')
     assert_equal 1, eleve.demande.count
     assert_equal 'grec', eleve.demande.first.option.nom
@@ -854,10 +854,20 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal true, resultat[0][:condition]
     assert resultat[0][:name].include?('grec')
 
-    post '/eleve', grec: 'true'
+    post '/eleve', grec_present: 'true', grec: 'true'
     eleve = Eleve.find_by(identifiant: '6')
     assert_equal 1, eleve.demande.count
     assert_equal 'grec', eleve.demande.first.option.nom
+
+    resultat = eleve.genere_demandes_possibles
+    assert_equal true, resultat[0][:condition]
+
+    post '/eleve', grec_present: 'true'
+    eleve = Eleve.find_by(identifiant: '6')
+    assert_equal 0, eleve.demande.count
+
+    resultat = eleve.genere_demandes_possibles
+    assert_equal false, resultat[0][:condition]
   end
 
   def test_affichage_obligatoire_sans_choix
@@ -892,11 +902,11 @@ class EleveFormTest < Test::Unit::TestCase
     grec_obligatoire_d = Demandabilite.create montee_id: montee.id, option_id: grec_obligatoire.id
     montee.demandabilite << grec_obligatoire_d
 
-    post '/identification', identifiant: 'XXX', date_naiss: '1970-01-01'
-    get '/eleve'
+    resultat = eleve.genere_demandes_possibles
 
-    doc = Nokogiri::HTML(last_response.body)
-    assert_equal "grec", doc.css("body > main > div.col-sm-12 > form > div:nth-child(15) > div > p").text.strip
+    assert_equal "LCA", resultat[0][:label]
+    assert_equal 'grec', resultat[0][:name]
+    assert_equal 'hidden', resultat[0][:type]
   end
 
   def test_affiche_option_abandonnable
@@ -916,14 +926,24 @@ class EleveFormTest < Test::Unit::TestCase
 
     assert_equal "Poursuivre l'option", resultat[0][:label]
     assert_equal 'latin', resultat[0][:name]
+    assert_equal 'check', resultat[0][:type]
 
-    post '/eleve'
+    # Si la checkbox n'est pas cochée le navigateur ne transmet pas la valeur
+    post '/eleve', latin_present: true
     eleve = Eleve.find_by(identifiant: 'XXX')
     assert_equal 1, eleve.abandon.count
     assert_equal 'latin', eleve.abandon.first.option.nom
 
     resultat = eleve.genere_abandons_possibles
-
+    assert_equal "Poursuivre l'option", resultat[0][:label]
     assert_equal false, resultat[0][:condition]
+
+    post '/eleve', latin_present: true, latin: true
+    eleve = Eleve.find_by(identifiant: 'XXX')
+    assert_equal 0, eleve.abandon.count
+
+    resultat = eleve.genere_abandons_possibles
+    assert_equal "Poursuivre l'option", resultat[0][:label]
+    assert_equal true, resultat[0][:condition]
   end
 end
