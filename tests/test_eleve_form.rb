@@ -948,4 +948,22 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal "Poursuivre l'option", resultat[0][:label]
     assert_equal true, resultat[0][:condition]
   end
+
+  def test_affiche_404
+    # Sans identification, on est redirigé vers l'identification
+    get '/unepagequinexistepas'
+    assert last_response.redirect?
+
+    post '/identification', identifiant: '5', date_naiss: '1970-01-01'
+    get '/unepagequinexistepas'
+    assert last_response.body.include? "une page qui n'existe pas"
+  end
+
+  def test_erreur_interne
+    Sinatra::Application::set :environment, 'production'
+    get '/unepagequileveuneexception'
+    assert last_response.body.include? "une erreur technique"
+    Sinatra::Application::set :environment, 'development'
+  end
+
 end
