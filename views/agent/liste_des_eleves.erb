@@ -40,7 +40,7 @@
           <td <%= cliquable %> ><%= dossier_eleve.eleve.nom %></td>
           <td <%= cliquable %> ><%= dossier_eleve.etat %></td>
           <td <%= cliquable %> >
-            <%= dossier_eleve.resp_legal.collect(&:changement_adresse).any? ? "✓" : "" %>
+            <%= dossier_eleve.resp_legal.first.changement_adresse ? "✓" : "" %>
           </td>
 
           <% agent.etablissement.piece_attendue.each do |piece| %>
