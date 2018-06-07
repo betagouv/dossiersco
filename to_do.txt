@@ -15,8 +15,6 @@ Gestion des relances:
 Mineurs:
 [ ] Encourager l'ajout d'adresse mail quand elle n'est pas saisie
 [ ] Permettre aux familles d'adresser un message à l'établissement ?
-[ ] page d’erreur “catch all” qui rassure (edited)
-[ ] page 404 personnalisée
 [ ] 2ème ou 3ème prénoms, préciser "optionnel"
 [ ] apostrophe française ’ (en cours)
 [ ] La valeur de 'demarche' codée en dur
@@ -46,6 +44,8 @@ Peut exiger une 2è passe:
 [/] afficher un commentaire quand une pièce jointe est rejetée
 
 Terminé:
+[X] page d’erreur “catch all” qui rassure (edited)
+[X] page 404 personnalisée
 [X] permettre à un user admin (pierre) de basculer d'un établissement à l'autre
 [X] Si un seul enfant à charge (non allocataire CAF), afficher lien calculette
 [X] Transmettre les notes de satisfaction et messages en fin de parcours aux agents de l'établissement

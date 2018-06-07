@@ -53,6 +53,10 @@ configure :test, :development, :staging do
   end
 end
 
+before '/unepagequileveuneexception' do
+  raise ArgumentError
+end
+
 before '/*' do
   agent_before = agent
   eleve_before = eleve
@@ -322,6 +326,14 @@ post '/envoyer_email_confirmation' do
   dossier_eleve = get_dossier_eleve session[:identifiant]
   mail = AgentMailer.envoyer_mail_confirmation(dossier_eleve.eleve)
   mail.deliver_now
+end
+
+not_found do
+  erb :not_found
+end
+
+error do
+  erb :error
 end
 
 def sauve_et_redirect dossier_eleve, etape
