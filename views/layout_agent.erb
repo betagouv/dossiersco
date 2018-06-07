@@ -32,6 +32,10 @@
 
   <div class="row row-offcanvas row-offcanvas-right justify-content-center">
 
+  <% if (defined? message_info) && (!message_info.nil?) %>
+    <div class="message_de_succes"><%= message_info %></div>
+  <% end %>
+
     <%= yield %>
 
   </div><!--/row-->

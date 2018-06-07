@@ -42,9 +42,11 @@ end
 
 get '/agent/liste_des_eleves' do
   dossier_eleves = agent.etablissement.dossier_eleve.sort_by { |dossier| dossier.eleve.identifiant}
+  message_info = session[:message_info]
+  session.delete :message_info
   erb :'agent/liste_des_eleves',
       layout: :layout_agent,
-      locals: {agent: agent, dossier_eleves: dossier_eleves}
+      locals: {agent: agent, dossier_eleves: dossier_eleves, message_info: message_info}
 end
 
 get '/agent/tableau_de_bord' do
@@ -215,6 +217,8 @@ post '/agent/contacter_une_famille' do
   eleve = Eleve.find_by(identifiant: params[:identifiant])
   mail = AgentMailer.contacter_une_famille(eleve, params[:message])
   mail.deliver_now
+  session[:message_info] = "Votre message a été envoyé."
+  redirect "/agent/liste_des_eleves"
 end
 
 # Route de test uniquement
