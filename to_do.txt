@@ -20,7 +20,6 @@ Mineurs:
 [ ] 2ème ou 3ème prénoms, préciser "optionnel"
 [ ] apostrophe française ’ (en cours)
 [ ] La valeur de 'demarche' codée en dur
-[ ] permettre à un user admin (pierre) de basculer d'un établissement à l'autre
 [ ] permettre la déconnexion de l'application pour plus de sécurité
 
 Améliorer les tests ou l'exploitabilité:
@@ -47,6 +46,7 @@ Peut exiger une 2è passe:
 [/] afficher un commentaire quand une pièce jointe est rejetée
 
 Terminé:
+[X] permettre à un user admin (pierre) de basculer d'un établissement à l'autre
 [X] Si un seul enfant à charge (non allocataire CAF), afficher lien calculette
 [X] Transmettre les notes de satisfaction et messages en fin de parcours aux agents de l'établissement
 [X] Redirection après l'envoi d'un message à la famille
