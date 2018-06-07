@@ -85,6 +85,86 @@ scolarite_ant = [
           disabled: false
         }] %>
 
+<% resp_legal_1 = [
+    {
+        name: "lien_de_parente_rl1",
+        label: "Lien de parenté",
+        type: "text",
+        value: eleve.dossier_eleve.resp_legal.first.lien_de_parente,
+        indication: "Lien de parenté",
+        disabled: true,
+        required: 'required'
+    },
+    {
+        name: "prenom_rl1",
+        label: "Prénom",
+        type: "text",
+        value: eleve.dossier_eleve.resp_legal.first.prenom,
+        indication: "Prénom",
+        disabled: true,
+        required: 'required'
+    },
+    {
+        name: "nom_rl1",
+        label: "Nom",
+        type: "text",
+        value: eleve.dossier_eleve.resp_legal.first.nom,
+        indication: "Nom",
+        disabled: true,
+        required: 'required'
+    },
+    {   name: "adresse_rl1",
+        label: "Adresse",
+        type: "libre",
+        value: eleve.dossier_eleve.resp_legal.first.adresse,
+        indication: "Numéro et nom de voie",
+        disabled: true,
+        required: 'required',
+        lines: 3
+    },
+    {   name: "code_postal_rl1",
+        label: "Code postal",
+        type: "text",
+        value: eleve.dossier_eleve.resp_legal.first.code_postal,
+        indication: "Code postal",
+        disabled: true,
+        required: 'required'
+    },
+    {   name: "ville_rl1",
+        label: "Ville",
+        type: "text",
+        value: eleve.dossier_eleve.resp_legal.first.ville,
+        indication: "Ville",
+        disabled: true,
+        required: 'required'
+    },
+    {   name: "adresse_rl1",
+        label: "Ancienne adresse",
+        type: "libre",
+        value: eleve.dossier_eleve.resp_legal.first.adresse_ant,
+        indication: "Numéro et nom de voie",
+        disabled: true,
+        required: 'required',
+        lines: 3
+    },
+    {   name: "code_postal_rl1",
+        label: "Code postal",
+        type: "text",
+        value: eleve.dossier_eleve.resp_legal.first.code_postal_ant,
+        indication: "Code postal",
+        disabled: true,
+        required: 'required'
+    },
+    {   name: "ville_rl1",
+        label: "Ville",
+        type: "text",
+        value: eleve.dossier_eleve.resp_legal.first.ville_ant,
+        indication: "Ville",
+        disabled: true,
+        required: 'required'
+    }]
+%>
+
 <% @section = 1 %>
 
 <div class="col-12 col-md-8">
@@ -105,6 +185,10 @@ scolarite_ant = [
     <h2 class="separation">Identité de l'élève</h2>
 
     <%= construire identite %>
+
+    <h2 class="separation">Domicile de l'élève</h2>
+
+    <%= construire resp_legal_1 %>
 
     <h2 class="separation">Scolarité de l'année 2017/2018</h2>
 
