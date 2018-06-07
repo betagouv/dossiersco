@@ -33,7 +33,9 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_message_erreur_identification
     assert_equal 'Veuillez fournir identifiant et date de naissance', message_erreur_identification(nil, '14-05-2018')
+    assert_equal 'Veuillez fournir identifiant et date de naissance', message_erreur_identification('', '14-05-2018')
     assert_equal 'Veuillez fournir identifiant et date de naissance', message_erreur_identification('XXX', nil)
+    assert_equal 'Veuillez fournir identifiant et date de naissance', message_erreur_identification('XXX', '')
   end
 
   def test_accueil
