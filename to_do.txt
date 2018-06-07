@@ -1,7 +1,5 @@
 Evolutions fonctionnelles importantes:
 [ ] Si un seul enfant à charge (non allocataire CAF), afficher lien calculette
-[ ] Afficher l'adresse avant/après en cas de changement d'adresse
-[ ] Limiter les faux positifs lors de la détection des déménagements
 [ ] Afficher un picto pour les demi-pensionnaires dans la liste des élèves
 
 Observation de l'usage:
@@ -52,6 +50,8 @@ Peut exiger une 2è passe:
 [/] afficher un commentaire quand une pièce jointe est rejetée
 
 Terminé:
+[X] Afficher l'adresse avant/après en cas de changement d'adresse
+[X] Limiter les faux positifs lors de la détection des déménagements
 [X] Gérer 2 lignes d'adresse (conformité SIECLE), corriger les imports
 [X] Afficher les demandes et abandons à l'étape "validation"
 [X] Bug sur la case d'engagement demi-pension
