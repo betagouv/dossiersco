@@ -29,6 +29,22 @@
 			<div id="dp" style="display: none;">
 
 				<p class="text-danger">En validant cette étape, je m'engage à régler les frais de demi-pension dans les délais impartis.</p>
+				<br />
+				<p>Pour déterminer le tarif de la demi-pension pour votre enfant, l'établissement vous demande un justificatif.
+					Sans ce justificatif, le tarif maximal vous sera appliqué.</p>
+				<p>Pour obtenir ce document : </p>
+				<ul>
+					<li>
+						<span <%= dossier_eleve.allocataire ?  'class="font-weight-bold"' : '' %>>Si vous êtes allocataire de la Caisse d'Allocation Famliliales</span>, le document vous a été adressé par la CAF.
+						Il suffit de le scanner ou prendre en photo à l'étape suivante.
+					</li>
+					<li>
+						<span <%= dossier_eleve.allocataire ? '' : 'class="font-weight-bold"' %> >Si vous n'êtes pas allocataire</span>, merci de vous rendre sur le
+						<a href="https://calculette-colleges-restauration.paris.fr/calculetteQF/" target="_blanck">site de la Ville de Paris</a>,
+						pour renseigner votre situation et obtenir le justificatif à transmettre à l'étape suivante.
+						(Le site va s'ouvrir dans un nouvel onglet. Vous pourrez continuer sur DossierSCO sans avoir besoin de vous reconnecter.)<br />
+					</li>
+				</ul>
 			</div>
 		</div>
 
