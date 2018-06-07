@@ -14,8 +14,6 @@ Gestion des relances:
 
 Mineurs:
 [ ] Encourager l'ajout d'adresse mail quand elle n'est pas saisie
-[ ] Redirection après l'envoi d'un message à la famille
-[ ] Transmettre les notes de satisfaction et messages en fin de parcours aux agents de l'établissement
 [ ] Permettre aux familles d'adresser un message à l'établissement ?
 [ ] page d’erreur “catch all” qui rassure (edited)
 [ ] page 404 personnalisée
@@ -50,6 +48,8 @@ Peut exiger une 2è passe:
 
 Terminé:
 [X] Si un seul enfant à charge (non allocataire CAF), afficher lien calculette
+[X] Transmettre les notes de satisfaction et messages en fin de parcours aux agents de l'établissement
+[X] Redirection après l'envoi d'un message à la famille
 [X] Afficher l'adresse avant/après en cas de changement d'adresse
 [X] Limiter les faux positifs lors de la détection des déménagements
 [X] Gérer 2 lignes d'adresse (conformité SIECLE), corriger les imports
