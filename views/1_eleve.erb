@@ -134,6 +134,12 @@
 
       <% if eleve.montee.present? and eleve.montee.demandabilite.size > 0 || eleve.montee.abandonnabilite.size > 0 %>
         <h3 class="separation">Vos options pour l'année prochaine</h3>
+          <div class='card'>
+            <div class='card-body'>
+              <p>Le choix d'une option engage votre enfant à suivre cet enseignement jusqu'à la fin de sa scolarité.</p>
+              <p>L'option latin permet d'obtenir des points pour le Diplôme National du Brevet.</p>
+            </div>
+          </div>
 
         <%= construire eleve.genere_demandes_possibles if eleve.montee.present? %>
         <%= construire eleve.genere_abandons_possibles if eleve.montee.present? %>
