@@ -57,6 +57,11 @@ get '/agent/tableau_de_bord' do
     locals: {agent: agent, total_dossiers: total_dossiers, satisfaction: notes, moyenne: moyenne, commentaires: commentaires}
 end
 
+post '/agent/tableau_de_bord' do
+  agent.update(etablissement_id: params[:etablissement])
+  redirect '/agent/tableau_de_bord'
+end
+
 get '/agent/import_siecle' do
   tache = agent.etablissement.tache_import.last
   erb :'agent/import_siecle', layout: :layout_agent, locals: {agent: agent, tache: tache, message: ""}
