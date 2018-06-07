@@ -27,7 +27,13 @@ class EleveFormTest < Test::Unit::TestCase
   def test_normalise_date_naissance
     assert_equal "2018-05-14", normalise("14 05 2018")
     assert_equal "2018-05-14", normalise("14/05/2018")
+    assert_equal "2018-05-14", normalise("___14!___05_A_2018_")
     assert_equal nil, normalise("foo")
+  end
+
+  def test_message_erreur_identification
+    assert_equal 'Veuillez fournir identifiant et date de naissance', message_erreur_identification(nil, '14-05-2018')
+    assert_equal 'Veuillez fournir identifiant et date de naissance', message_erreur_identification('XXX', nil)
   end
 
   def test_accueil
