@@ -4,4 +4,8 @@ class DossierEleve < ActiveRecord::Base
   has_many :resp_legal
   has_one :contact_urgence
   has_many :piece_jointe
+
+  def allocataire
+    self.resp_legal.first.enfants_a_charge > 1
+  end
 end
