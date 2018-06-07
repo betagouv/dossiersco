@@ -780,6 +780,8 @@ class EleveFormTest < Test::Unit::TestCase
     eleve = Eleve.find_by(identifiant: '6')
     assert_equal 1, eleve.demande.count
     assert_equal 'anglais', eleve.demande.first.option.nom
+
+    assert_equal 'anglais', eleve.genere_demandes_possibles[0][:checked]
   end
 
   def test_affichage_d_options_facultatives_a_choisir

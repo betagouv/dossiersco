@@ -29,12 +29,15 @@ class Eleve < ActiveRecord::Base
 
   def obligatoire options_du_groupe
     options_du_groupe.map do |options|
+      noms_options_du_groupe = options.collect(&:nom)
+      noms_demandes = self.demande.map(&:option).map(&:nom)
+      options_du_groupe_demandees = noms_demandes & noms_options_du_groupe
       {
         label: options.first.groupe,
         name: options.first.groupe,
         type: 'radio',
         options: options.collect(&:nom),
-        checked: false
+        checked: options_du_groupe_demandees.size == 1 ? options_du_groupe_demandees[0] : ''
       }
     end
   end
