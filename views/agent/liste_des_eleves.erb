@@ -47,7 +47,9 @@
             <% piece_jointe = PieceJointe.find_by(dossier_eleve_id: dossier_eleve.id, piece_attendue_id: piece.id) %>
             <td class="text-center" data-piece-id="<%= piece_jointe.id if piece_jointe.present? %>">
               <% if piece_jointe.present? %>
-                <a class="lien-piece-jointe" data-toggle="modal" data-target="#modal-pieces-jointes" data-url="<%= FichierUploader::route_lecture(dossier_eleve.eleve.identifiant, piece.code) + "/" + piece_jointe.clef %>">
+                <a class="lien-piece-jointe" data-toggle="modal" data-target="#modal-pieces-jointes"
+                    data-url="<%= FichierUploader::route_lecture(dossier_eleve.eleve.identifiant, piece.code) + "/" + piece_jointe.clef %>"
+                    data-ext="<%= piece_jointe.ext %>">
                   <i class="fas fa-file-image"></i>
                 </a>
                 <i class="fas fa-check-circle etat" style="<%= 'color: #00cf00' if piece_jointe.etat == 'valide' %>"></i>
