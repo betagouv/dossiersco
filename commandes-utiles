@@ -97,3 +97,6 @@ eleves_3e = DossierEleve.joins(:eleve).where.not("eleves.niveau_classe_ant simil
 
 # Afficher un cookie (pour debug)
 Marshal.load(Base64.decode64(CGI.unescape(cookie.split("\n").join).split('--').first))
+--
+OpenSSL::HMAC.hexdigest(OpenSSL::Digest::SHA1.new, session_secret, CGI.unescape(cookie.split('--')[0])) == cookie.split('--')[1]
+où session_secret est la valeur de la variable d’environnement SESSION_SECRET
