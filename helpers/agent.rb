@@ -12,12 +12,13 @@ module AgentHelpers
 
   def stats etablissement
     avec_feedback = []
+    etats = []
     DossierEleve
         .where.not(etat: "pas connecté")
         .select { |e| e.etablissement_id == etablissement.id }
         .group_by(&:etat)
         .each_pair do |etat, dossiers_etat|
-            print " #{etat}:#{dossiers_etat.count}"
+            etats.push("#{etat}:#{dossiers_etat.count}")
             if (etat.include? "valid")
                 avec_feedback.push(*dossiers_etat)
             end
@@ -25,8 +26,8 @@ module AgentHelpers
     notes = avec_feedback.collect(&:satisfaction)
     notes_renseignees = notes.select {|n| n > 0}
     moyenne = notes_renseignees.count > 0 ? "#{'%.2f' % ((notes_renseignees.sum+0.0)/notes_renseignees.count)}" : ""
-    commentaires = avec_feedback.collect(&:commentaire).reject(&:nil?).reject(&:empty?).join("\n")
-    return notes, moyenne, commentaires
+    commentaires = avec_feedback.collect(&:commentaire).reject(&:nil?).reject(&:empty?)
+    return etats, notes, moyenne, commentaires
   end
 end
 
