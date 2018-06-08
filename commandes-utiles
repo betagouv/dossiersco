@@ -94,3 +94,6 @@ malraux = DossierEleve.where(etablissement_id: 227)
 
 # Supprimer les élèves qui ne sont pas en 6è, 5è ou 4è
 eleves_3e = DossierEleve.joins(:eleve).where.not("eleves.niveau_classe_ant similar to '(6|5|4)%'")
+
+# Afficher un cookie (pour debug)
+Marshal.load(Base64.decode64(CGI.unescape(cookie.split("\n").join).split('--').first))
