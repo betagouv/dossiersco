@@ -1,4 +1,3 @@
-<!-- Modal, cf https://www.w3schools.com/bootstrap/bootstrap_modal.asp -->
 <div class="modal fade" id="modal-pieces-jointes" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -8,8 +7,8 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <iframe id="iframe-piece-jointe" src="" allowfullscreen></iframe>
+      <div class="modal-body" id="affichage-doc">
+        <!-- Zone d'affichage du document -->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
@@ -18,13 +17,23 @@
   </div>
 </div>
 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 <script type="text/javascript" charset="utf-8">
-  $('.lien-piece-jointe').click(function() {
+  $(document).ready(function () {
+    $('.lien-piece-jointe').click(function() {
       var url = $(this).data('url');
-      $('#iframe-piece-jointe').attr('src', url);
-  });
+      var ext = $(this).data('ext');
+
+      if (ext === 'pdf') {
+        $('#affichage-doc').html("<iframe id='iframe-piece-jointe' src='" + url + "' ></iframe>")
+      }
+      else {
+        $('#affichage-doc').html("<img id='iframe-piece-jointe' src='" + url + "' style='height: 100%'>")
+      }
+    });
+    $('#modal-pieces-jointes').on('hide.bs.modal', function (e) {
+        $('#iframe-piece-jointe').attr('src', ' ');
+    })
+  })
 </script>
