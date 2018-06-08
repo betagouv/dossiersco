@@ -660,6 +660,18 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal "✓", doc.css("tbody > tr:nth-child(1) > td:nth-child(5)").text.strip
   end
 
+  def test_affiche_demi_pensionnaire
+    eleve = Eleve.find_by(identifiant: 2)
+    dossier_eleve = eleve.dossier_eleve
+    dossier_eleve.update(demi_pensionnaire: true)
+
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    get '/agent/liste_des_eleves'
+
+    doc = Nokogiri::HTML(last_response.body)
+    assert_equal "✓", doc.css("tbody > tr:nth-child(1) > td:nth-child(6)").text.strip
+  end
+
   def test_changement_statut_famille_connecte
     post '/identification', identifiant: '2', date_naiss: '1915-12-19'
     dossier_eleve = Eleve.find_by(identifiant: '2').dossier_eleve

@@ -4,7 +4,6 @@ Observation de l'usage:
 [ ] Emailing (Mailjet? autre?) parents (en complément des actions "recherche de feedback" parents)
 
 Important mais moins urgent:
-[ ] Afficher un picto pour les demi-pensionnaires dans la liste des élèves
 [ ] Notifier la famille des options pédagogiques affectées (Tillion)
 [ ] exporter les données vers siecle (critique pour Beaumarchais)
 [ ] analyse de sécurité des moyens de transmission des secrets de connexion
