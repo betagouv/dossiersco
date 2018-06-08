@@ -285,6 +285,7 @@ h2, h4 {
     margin-top: 15px;
     background-size: contain;
     background-repeat: no-repeat;
+    cursor: pointer;
 }
 
 .valide {

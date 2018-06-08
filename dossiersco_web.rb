@@ -225,12 +225,13 @@ get '/piece/:dossier_eleve/:code_piece/:s3_key' do
   objet_conforme = objet_demandé == clef_objet_présent
 
   if usager_autorisé and objet_conforme
-    fichier = get_fichier_s3(params[:s3_key])
-    if params[:s3_key].end_with? 'pdf'
+    objet_normalise = objet_demandé.downcase
+    fichier = get_fichier_s3(objet_normalise)
+    if objet_normalise.end_with? 'pdf'
       content_type 'application/pdf'
-    elsif params[:s3_key].end_with? 'jpg' or params[:s3_key].end_with? 'jpeg'
+    elsif objet_normalise.end_with? 'jpg' or objet_normalise.end_with? 'jpeg'
       content_type 'image/jpeg'
-    elsif params[:s3_key].end_with? 'png'
+    elsif objet_normalise.end_with? 'png'
       content_type 'image/png'
     end
     open fichier.url(Time.now.to_i + 30)
