@@ -1,8 +1,10 @@
 module MotDePasse
 	def normalise date
     return date if date =~ /\d{4}-\d\d-\d\d/
-    if date =~ /(\d\d)[^\d]+(\d\d)[^\d]+(\d\d\d\d)/
-      return "#{$3}-#{$2}-#{$1}"
+    if date =~ /([\d]{1,2})[^\d]+([\d]{1,2})[^\d]+([\d]{4})/
+      jour = $1.length == 1 ? "0#{$1}" : $1
+      mois = $2.length == 1 ? "0#{$2}" : $2
+      return "#{$3}-#{mois}-#{jour}"
     end
   end
 
