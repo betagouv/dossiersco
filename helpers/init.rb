@@ -153,6 +153,8 @@ def cree_dossier_eleve eleve, etablissement, etat
       eleve_id: e.id,
       etablissement_id: etablissement.id,
       demarche: "reinscription",
+      satisfaction: e.identifiant % 5,
+      commentaire: 'Très bien',
       etat: etat
       )
   RespLegal.create!(dossier_eleve_id: dossier_eleve.id,
