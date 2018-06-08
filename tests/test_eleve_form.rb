@@ -27,7 +27,16 @@ class EleveFormTest < Test::Unit::TestCase
   def test_normalise_date_naissance
     assert_equal "2018-05-14", normalise("14 05 2018")
     assert_equal "2018-05-14", normalise("14/05/2018")
+    assert_equal "2018-01-01", normalise("1/1/2018")
+    assert_equal "2018-05-14", normalise("___14!___05_A_2018_")
     assert_equal nil, normalise("foo")
+  end
+
+  def test_message_erreur_identification
+    assert_equal 'Veuillez fournir identifiant et date de naissance', message_erreur_identification(nil, '14-05-2018')
+    assert_equal 'Veuillez fournir identifiant et date de naissance', message_erreur_identification('', '14-05-2018')
+    assert_equal 'Veuillez fournir identifiant et date de naissance', message_erreur_identification('XXX', nil)
+    assert_equal 'Veuillez fournir identifiant et date de naissance', message_erreur_identification('XXX', '')
   end
 
   def test_accueil
@@ -54,16 +63,16 @@ class EleveFormTest < Test::Unit::TestCase
     assert last_response.body.include? 'Pour réinscrire votre enfant'
   end
 
-  def test_entree_mauvais_identifiant
+  def test_entree_mauvaise_date
     post '/identification', identifiant: '3', date_naiss: '1995-11-19'
     follow_redirect!
-    assert last_response.body.include? "L'élève a bien comme identifiant 3 et comme date de naissance le 19 novembre 1995 ?"
+    assert last_response.body.include? "Nous n'avons pas reconnu ces identifiants, merci de les vérifier."
   end
 
-  def test_entree_mauvaise_date
-    post '/identification', identifiant: '3', date_naiss: 'foo'
+  def test_entree_mauvais_identifiant_et_date
+    post '/identification', identifiant: 'toto', date_naiss: 'foo'
     follow_redirect!
-    assert last_response.body.include? "Nous n'avons pas reconnu la date de naissance de l'élève."
+    assert last_response.body.include? "Nous n'avons pas reconnu ces identifiants, merci de les vérifier."
   end
 
   def test_nom_college_accueil

@@ -84,23 +84,18 @@ post '/identification' do
 		redirect '/'
 	end
 	dossier_eleve = get_dossier_eleve params[:identifiant]
-  if dossier_eleve.nil?
-    session[:message_erreur] = message_erreur_identification params[:identifiant], params[:date_naiss]
-    redirect '/'
-  end
-  if normalise(params[:date_naiss]).nil?
-    session[:message_erreur] = "Nous n'avons pas reconnu la date de naissance de l'élève."
-    redirect '/'
-  end
-  if dossier_eleve.etat == 'pas connecté'
-    dossier_eleve.update(etat: 'connecté')
-  end
-	if dossier_eleve.eleve.date_naiss == normalise(params[:date_naiss])
+  date_saisie = normalise(params[:date_naiss]) || 'pas-de-date'
+	if dossier_eleve.present? && (dossier_eleve.eleve.date_naiss == date_saisie)
+    if dossier_eleve.etat == 'pas connecté'
+      dossier_eleve.update(etat: 'connecté')
+    end
 		session[:identifiant] = params[:identifiant]
 		session[:demarche] = dossier_eleve.demarche
 		redirect "/#{dossier_eleve.etape}"
 	else
-		session[:message_erreur] = message_erreur_identification params[:identifiant], params[:date_naiss]
+    # Emettre un message générique quelle que soit l'erreur pour éviter
+    # de "fuiter" de l'information sur l'existence ou non des identifiants
+    session[:message_erreur] = "Nous n'avons pas reconnu ces identifiants, merci de les vérifier."
 		redirect '/'
 	end
 end
