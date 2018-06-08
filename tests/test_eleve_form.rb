@@ -63,16 +63,16 @@ class EleveFormTest < Test::Unit::TestCase
     assert last_response.body.include? 'Pour réinscrire votre enfant'
   end
 
-  def test_entree_mauvais_identifiant
+  def test_entree_mauvaise_date
     post '/identification', identifiant: '3', date_naiss: '1995-11-19'
     follow_redirect!
-    assert last_response.body.include? "L'élève a bien comme identifiant 3 et comme date de naissance le 19 novembre 1995 ?"
+    assert last_response.body.include? "Nous n'avons pas reconnu ces identifiants, merci de les vérifier."
   end
 
-  def test_entree_mauvaise_date
-    post '/identification', identifiant: '3', date_naiss: 'foo'
+  def test_entree_mauvais_identifiant_et_date
+    post '/identification', identifiant: 'toto', date_naiss: 'foo'
     follow_redirect!
-    assert last_response.body.include? "Nous n'avons pas reconnu la date de naissance de l'élève."
+    assert last_response.body.include? "Nous n'avons pas reconnu ces identifiants, merci de les vérifier."
   end
 
   def test_nom_college_accueil
