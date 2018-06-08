@@ -26,6 +26,7 @@
       <th>Nom</th>
       <th>Etat</th>
       <th><i class="fas fa-truck"></i></th>
+      <th><i class="fas fa-utensils"></i></th>
       <% agent.etablissement.piece_attendue.each do |piece| %>
         <th><%= piece.nom %></th>
       <% end %>
@@ -41,6 +42,9 @@
           <td <%= cliquable %> ><%= dossier_eleve.etat %></td>
           <td <%= cliquable %> >
             <%= dossier_eleve.resp_legal.first.changement_adresse ? "✓" : "" %>
+          </td>
+          <td <%= cliquable %> >
+            <%= dossier_eleve.demi_pensionnaire ? "✓" : "" %>
           </td>
 
           <% agent.etablissement.piece_attendue.each do |piece| %>
