@@ -4,7 +4,6 @@ Observation de l'usage:
 [ ] Emailing (Mailjet? autre?) parents (en complément des actions "recherche de feedback" parents)
 
 Important mais moins urgent:
-[X] Afficher un picto pour les demi-pensionnaires dans la liste des élèves
 [ ] Notifier la famille des options pédagogiques affectées (Tillion)
 [ ] exporter les données vers siecle (critique pour Beaumarchais)
 [ ] analyse de sécurité des moyens de transmission des secrets de connexion
@@ -44,7 +43,6 @@ Peut exiger une 2è passe:
 [/] afficher un commentaire quand une pièce jointe est rejetée
 
 Terminé:
-[X] Afficher un picto pour les demi-pensionnaires dans la liste des élèves
 [X] page d’erreur “catch all” qui rassure (edited)
 [X] page 404 personnalisée
 [X] permettre à un user admin (pierre) de basculer d'un établissement à l'autre
