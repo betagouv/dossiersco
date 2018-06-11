@@ -6,6 +6,7 @@ class DossierEleve < ActiveRecord::Base
   has_many :piece_jointe
 
   def allocataire
-    self.resp_legal.first.enfants_a_charge > 1
+    enfants = self.resp_legal.first.enfants_a_charge || 0
+    enfants > 1
   end
 end
