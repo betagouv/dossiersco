@@ -329,6 +329,22 @@ class EleveFormTest < Test::Unit::TestCase
     assert last_response.body.include? "Je souhaite me désister de l'option latin"
   end
 
+  def test_affichage_info_sur_options
+    eleve = Eleve.find_by(identifiant: 6)
+    eleve.update(montee: Montee.create)
+    option = Option.create(nom: 'grec', groupe: 'LCA', modalite:'facultative', info: '(sous réserve)')
+    demandabilite = Demandabilite.create(option: option, montee: eleve.montee)
+    demande = Demande.create(option_id: option.id, eleve_id: eleve.id)
+
+    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+
+    get '/validation'
+    assert last_response.body.include? "Je demande l'inscription à l'option grec"
+
+    get '/eleve'
+    assert last_response.body.include? 'grec (sous réserve)'
+  end
+
 
 ##############################################################################
 #   Tests agents
