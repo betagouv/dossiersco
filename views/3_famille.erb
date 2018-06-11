@@ -194,18 +194,21 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
-  var email_rl1 = $('input[name=email_rl1]').val()
-  var email_rl2 = $('input[name=email_rl2]').val()
-  var span_email = "<span id='span-email' style='font-size: 12px'>Attention, aucune adresse email est renseignée</span>"
+  var input_email_rl1 = $('input[name=email_rl1]')
+  var input_email_rl2 = $('input[name=email_rl2]')
+  var span_email = "<span class='span-email' style='font-size: 12px'>Attention, vous n'avez renseigné aucune adresse email</span>"
 
-  if (!email_rl1 != '' || !email_rl2 != '') {
-    $('input[name=email_rl1]').css('border', '1px solid orange')
-    $('input[name=email_rl1]').parent().append(span_email)
+  if (!input_email_rl1.val() != '' && !input_email_rl2.val() != '') {
+    input_email_rl1.css('border', '1px solid orange')
+    input_email_rl1.parent().append(span_email)
+    input_email_rl2.css('border', '1px solid orange')
+    input_email_rl2.parent().append(span_email)
   }
 
   $('input[type=email]').change( function() {
-    $('input[name=email_rl1]').css('border', '1px solid rgba(0,0,0,.15)')
-    $('#span-email').remove()
+    input_email_rl1.css('border', '1px solid rgba(0,0,0,.15)')
+    input_email_rl2.css('border', '1px solid rgba(0,0,0,.15)')
+    $('.span-email').remove()
   })
 
   $('#meme_adresse_que_rl1').click(function() {
