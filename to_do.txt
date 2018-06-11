@@ -12,9 +12,7 @@ Gestion des relances:
 [ ] gestion des comms et relances aux familles (edited)
 
 Mineurs:
-[ ] Encourager l'ajout d'adresse mail quand elle n'est pas saisie
 [ ] Permettre aux familles d'adresser un message à l'établissement ?
-[ ] 2ème ou 3ème prénoms, préciser "optionnel"
 [ ] apostrophe française ’ (en cours)
 [ ] La valeur de 'demarche' codée en dur
 [ ] permettre la déconnexion de l'application pour plus de sécurité
@@ -45,5 +43,7 @@ Peut exiger une 2è passe:
 [/] afficher un commentaire quand une pièce jointe est rejetée
 
 Terminé:
+[X] Encourager l'ajout d'adresse mail quand elle n'est pas saisie
+[X] 2ème ou 3ème prénoms, préciser "optionnel"
 [/] la principale voit le nombre d'inscrits à chaque option, le plus tôt possible en juin, notamment les bi-langues (deal breaker Beaumarchais)
     -> une solution possible : [/] lire et stocker les options existantes
