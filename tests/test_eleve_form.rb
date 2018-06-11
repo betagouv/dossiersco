@@ -744,6 +744,9 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_un_agent_envoi_un_mail_a_une_famille
+    agent = Agent.find_by(identifiant: 'pierre')
+    agent.etablissement.update(email: 'etablissement@email.com')
+
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
     post '/agent/contacter_une_famille', identifiant: '6', message: 'Message de test'
 
@@ -751,7 +754,10 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
     assert mail['to'].addresses.collect(&:to_s).include? 'test@test.com'
     assert mail['to'].addresses.collect(&:to_s).include? 'test2@test.com'
+    assert mail['to'].addresses.collect(&:to_s).include? 'etablissement@email.com'
     assert mail['to'].addresses.collect(&:to_s).include? 'contact@dossiersco.beta.gouv.fr'
+    assert mail['reply_to'].addresses.collect(&:to_s).include? 'etablissement@email.com'
+    assert mail['reply_to'].addresses.collect(&:to_s).include? 'contact@dossiersco.beta.gouv.fr'
     assert_equal 'Réinscription de votre enfant au collège', mail['subject'].to_s
     part = mail.html_part || mail.text_part || mail
     assert part.body.decoded.include? "Tillion"
