@@ -70,7 +70,7 @@
 
     <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone secondaire", :variable => "tel_secondaire_rl1", :valeur => params['tel_secondaire_rl1'], :exemple => "Numéro de téléphone" }%>
 
-    <%= erb :'partials/champ_email', :locals => { :desc => "Email principal", :variable => "email_rl1", :valeur => params['email_rl1'], :exemple => "Adresse email", :required => "required" }%>
+    <%= erb :'partials/champ_email', :locals => { :desc => "Email principal", :variable => "email_rl1", :valeur => params['email_rl1'], :exemple => "Adresse email", :required => false }%>
 
     <span style="display:block; height: 30px;"></span>
 
@@ -194,6 +194,23 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
+  var input_email_rl1 = $('input[name=email_rl1]')
+  var input_email_rl2 = $('input[name=email_rl2]')
+  var span_email = "<span class='span-email' style='font-size: 12px'>Merci de renseigner votre adresse mail, si vous en avez une. L'établissement peut alors vous contacter plus rapidement s'il y a quelque chose à vous signaler concernant votre inscription.</span>"
+
+  if (!input_email_rl1.val() != '' && !input_email_rl2.val() != '') {
+    input_email_rl1.css('border', '1px solid orange')
+    input_email_rl1.parent().append(span_email)
+    input_email_rl2.css('border', '1px solid orange')
+    input_email_rl2.parent().append(span_email)
+  }
+
+  $('input[type=email]').change( function() {
+    input_email_rl1.css('border', '1px solid rgba(0,0,0,.15)')
+    input_email_rl2.css('border', '1px solid rgba(0,0,0,.15)')
+    $('.span-email').remove()
+  })
+
   $('#meme_adresse_que_rl1').click(function() {
       $("#adresse_rl2").val($("#adresse_rl1").val());
       $("#code_postal_rl2").val($("#code_postal_rl1").val());
