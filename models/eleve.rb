@@ -58,7 +58,7 @@ class Eleve < ActiveRecord::Base
           label: option.groupe,
           type: "check",
           condition: options_demandees.include?(option),
-          desc: option.nom
+          desc: option.nom_et_info
         }
       end
     end
@@ -84,7 +84,7 @@ class Eleve < ActiveRecord::Base
         label: "Poursuivre l'option",
         type: "check",
         condition: !options_abandonnees.include?(option),
-        desc: option.nom
+        desc: option.nom_et_info
       }
     end
   end
