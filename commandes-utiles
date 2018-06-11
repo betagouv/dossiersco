@@ -95,5 +95,12 @@ malraux = DossierEleve.where(etablissement_id: 227)
 # Supprimer les élèves qui ne sont pas en 6è, 5è ou 4è
 eleves_3e = DossierEleve.joins(:eleve).where.not("eleves.niveau_classe_ant similar to '(6|5|4)%'")
 
+# Afficher les emails de relace pour un établissement
+require_relative 'dossiersco_web.rb'
+DossierEleve.joins(:eleve).where(etat: 'pas connecté', etablissement_id: 226).map {|d| ["#{d.eleve.prenom} #{d.eleve.nom}", d.resp_legal.map {|r| "#{r.email} #{r.prenom} #{r.nom} #{r.lien_de_parente} #{r.priorite}"}]}
+
 # Afficher un cookie (pour debug)
 Marshal.load(Base64.decode64(CGI.unescape(cookie.split("\n").join).split('--').first))
+--
+OpenSSL::HMAC.hexdigest(OpenSSL::Digest::SHA1.new, session_secret, CGI.unescape(cookie.split('--')[0])) == cookie.split('--')[1]
+où session_secret est la valeur de la variable d’environnement SESSION_SECRET
