@@ -28,6 +28,11 @@ get '/agent' do
   erb :'agent/identification'
 end
 
+get '/agent/deconnexion' do
+  session.clear
+  redirect '/agent'
+end
+
 post '/agent' do
   agent = Agent.find_by(identifiant: params[:identifiant])
   mdp_saisi = params[:mot_de_passe]
