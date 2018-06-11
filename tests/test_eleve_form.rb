@@ -613,6 +613,7 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_une_famille_remplit_letape_administration
     post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+    get '/administration'
     post '/administration', demi_pensionnaire: true, autorise_sortie: true,
       renseignements_medicaux: true, autorise_photo_de_classe: false
     get '/administration'
