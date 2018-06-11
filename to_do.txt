@@ -12,7 +12,6 @@ Important mais moins urgent:
 
 Mineurs:
 [ ] Optimiser le temps de chargement de la liste des élèves ?
-[ ] Mettre l'établissement en copie des messages et en reply-to
 [ ] Proposer un bouton "Cet élève est sorti·e de l'établissement" => etat "sortant"
 [ ] Conserver les options de tri et filtrage au rechargement liste des élèves
 [ ] Permettre aux familles d'adresser un message à l'établissement ?
@@ -45,6 +44,7 @@ Peut exiger une 2è passe:
 [/] afficher un commentaire quand une pièce jointe est rejetée
 
 Terminé:
+[X] Mettre l'établissement en copie des messages et en reply-to
 [X] Encourager l'ajout d'adresse mail quand elle n'est pas saisie
 [X] 2ème ou 3ème prénoms, préciser "optionnel"
 [X] La valeur de 'demarche' codée en dur
