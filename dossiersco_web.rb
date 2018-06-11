@@ -99,6 +99,11 @@ post '/identification' do
 	end
 end
 
+get '/deconnexion' do
+  session.clear
+  redirect '/'
+end
+
 get '/accueil' do
 	erb :'0_accueil', locals: { dossier_eleve: eleve.dossier_eleve }
 end

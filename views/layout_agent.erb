@@ -19,12 +19,15 @@
 
 <body>
 
-<a href='/agent/liste_des_eleves'>
   <nav class="navbar navbar-light navbar-expand-md" style="background-color: transparent;">
-    <img src='/images/republique_francaise.svg' class='logo'>
-    <span class="navbar-brand">Dossiersco</span>
+    <a href='/agent/liste_des_eleves'>
+      <img style="height: auto" src='/images/republique_francaise.svg' class='logo'>
+      <span class="navbar-brand">Dossiersco</span>
+    </a>
+    <% if session[:identifiant].present? %>
+      <a class="ml-auto p-2 col-2 text-right" href="/agent/deconnexion">Se deconnecter</a>
+    <% end %>
   </nav>
-</a>
 
 <%= erb :'agent/navigation' %>
 
