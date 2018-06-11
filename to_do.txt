@@ -17,7 +17,6 @@ Mineurs:
 [ ] Conserver les options de tri et filtrage au rechargement liste des élèves
 [ ] Permettre aux familles d'adresser un message à l'établissement ?
 [ ] apostrophe française ’ (en cours)
-[ ] La valeur de 'demarche' codée en dur
 [ ] permettre la déconnexion de l'application pour plus de sécurité
 
 Améliorer les tests ou l'exploitabilité:
@@ -48,5 +47,6 @@ Peut exiger une 2è passe:
 Terminé:
 [X] Encourager l'ajout d'adresse mail quand elle n'est pas saisie
 [X] 2ème ou 3ème prénoms, préciser "optionnel"
+[X] La valeur de 'demarche' codée en dur
 [/] la principale voit le nombre d'inscrits à chaque option, le plus tôt possible en juin, notamment les bi-langues (deal breaker Beaumarchais)
     -> une solution possible : [/] lire et stocker les options existantes

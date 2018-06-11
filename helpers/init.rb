@@ -152,7 +152,6 @@ def cree_dossier_eleve eleve, etablissement, etat
   dossier_eleve = DossierEleve.create!(
       eleve_id: e.id,
       etablissement_id: etablissement.id,
-      demarche: "reinscription",
       satisfaction: e.identifiant % 5,
       commentaire: 'Très bien',
       etat: etat
