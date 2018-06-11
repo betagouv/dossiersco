@@ -1,4 +1,5 @@
 Evolutions fonctionnelles importantes:
+[ ] Pouvoir émettre des relances en masse (par classe et/ou par statut)
 
 Observation de l'usage:
 [ ] Emailing (Mailjet? autre?) parents (en complément des actions "recherche de feedback" parents)
@@ -7,11 +8,13 @@ Important mais moins urgent:
 [ ] Notifier la famille des options pédagogiques affectées (Tillion)
 [ ] exporter les données vers siecle (critique pour Beaumarchais)
 [ ] analyse de sécurité des moyens de transmission des secrets de connexion
-
-Gestion des relances:
-[ ] gestion des comms et relances aux familles (edited)
+[ ] Edition d'un état d'avancement des dossiers par classe (pour les PP)
 
 Mineurs:
+[ ] Optimiser le temps de chargement de la liste des élèves ?
+[ ] Mettre l'établissement en copie des messages et en reply-to
+[ ] Proposer un bouton "Cet élève est sorti·e de l'établissement" => etat "sortant"
+[ ] Conserver les options de tri et filtrage au rechargement liste des élèves
 [ ] Permettre aux familles d'adresser un message à l'établissement ?
 [ ] apostrophe française ’ (en cours)
 [ ] La valeur de 'demarche' codée en dur
