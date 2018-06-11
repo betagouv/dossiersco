@@ -160,7 +160,7 @@ def cree_dossier_eleve eleve, etablissement, etat
     lien_de_parente: 'Mère', prenom: 'Gertrude', nom: 'Martin',
     adresse: '42 rue de la fin', code_postal: '75020', ville: 'Paris',
     tel_principal: '0123456789', tel_secondaire: '0987654321', email: 'test@test.com',
-    situation_emploi: 'Employé', profession: 'concierge', enfants_a_charge: 3,
+    situation_emploi: 'Employé', profession: 'concierge', enfants_a_charge: nil,
     enfants_a_charge_secondaire: 2, communique_info_parents_eleves: true,
     priorite: 1)
   RespLegal.create!(dossier_eleve_id: dossier_eleve.id,
