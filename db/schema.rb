@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_07_133616) do
+ActiveRecord::Schema.define(version: 2018_06_11_120115) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,7 +58,6 @@ ActiveRecord::Schema.define(version: 2018_06_07_133616) do
 
   create_table "dossier_eleves", force: :cascade do |t|
     t.bigint "eleve_id"
-    t.string "demarche"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "etablissement_id"

@@ -90,7 +90,6 @@ post '/identification' do
       dossier_eleve.update(etat: 'connecté')
     end
 		session[:identifiant] = params[:identifiant]
-		session[:demarche] = dossier_eleve.demarche
 		redirect "/#{dossier_eleve.etape}"
 	else
     # Emettre un message générique quelle que soit l'erreur pour éviter
