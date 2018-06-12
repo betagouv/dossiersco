@@ -19,7 +19,7 @@
 						<strong><%= demande.option.groupe.present? ? demande.option.groupe : 'demande' %></strong>
 					</div>
 					<div class="col-4">
-						Je demande l'inscription à l'option <%= demande.option.nom %>
+						Je demande l'inscription à l'option <strong><%= demande.option.nom %></strong>
 					</div>
 					<div class="col-3">
 						<a id='modifier-<%=demande.option.nom%>' href="/eleve">
@@ -34,7 +34,7 @@
 						<strong><%= abandon.option.groupe.present? ? abandon.option.groupe : 'abandon' %></strong>
 					</div>
 					<div class="col-4">
-						Je souhaite me désister de l'option <%= abandon.option.nom %>
+						Je souhaite me désister de l'option <strong><%= abandon.option.nom %></strong>
 					</div>
 					<div class="col-3">
 						<a id='modifier-<%=abandon.option.nom%>' href="/eleve">
