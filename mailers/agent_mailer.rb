@@ -23,4 +23,8 @@ class AgentMailer < ActionMailer::Base
     def mail_validation_inscription(eleve)
         contacter_une_famille eleve, ''
     end
+
+    def invitation_parents(eleve)
+        contacter_une_famille eleve, ''
+    end
 end
