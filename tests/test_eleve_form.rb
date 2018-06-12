@@ -325,8 +325,8 @@ class EleveFormTest < Test::Unit::TestCase
     get '/validation'
 
     assert last_response.body.include? 'anglais'
-    assert last_response.body.include? "Je demande l'inscription à l'option grec"
-    assert last_response.body.include? "Je souhaite me désister de l'option latin"
+    assert last_response.body.include? "Je demande l'inscription à l'option <strong>grec</strong>"
+    assert last_response.body.include? "Je souhaite me désister de l'option <strong>latin</strong>"
   end
 
   def test_affichage_info_sur_options
@@ -339,7 +339,7 @@ class EleveFormTest < Test::Unit::TestCase
     post '/identification', identifiant: '6', date_naiss: '1970-01-01'
 
     get '/validation'
-    assert last_response.body.include? "Je demande l'inscription à l'option grec"
+    assert last_response.body.include? "Je demande l'inscription à l'option <strong>grec</strong>"
 
     get '/eleve'
     assert last_response.body.include? 'grec (sous réserve)'
