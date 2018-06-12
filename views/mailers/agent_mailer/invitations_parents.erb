@@ -1,0 +1,28 @@
+Madame, Monsieur,
+
+Votre enfant <%= @eleve.prenom %> <%= @eleve.nom %> est actuellement inscrit au <%= @eleve.dossier_eleve.etablissement.nom %>.
+
+Pour compléter et valider sa réinscription pour la prochaine année scolaire, nous
+vous proposons de vous rendre à l'adresse ci-dessous:
+
+https://dossiersco.fr
+
+Veuillez vous munir des pièces suivantes: <% @eleve.dossier_eleve.etablissement.piece_attendue.each do |piece| %>
+- <%= piece.nom %><% if piece.explication.present? %>
+(<%= piece.explication %>)<% end %><% end %>
+
+Pour le bon déroulement de l’inscription en ligne, merci de vous connecter
+et de vérifier les informations vous concernant avant le <%= @eleve.dossier_eleve.etablissement.date_limite %>.
+
+Vos identifiants sont : <%= @eleve.identifiant %>
+et la date de naissance de votre enfant.
+
+Votre collège s’efforce de renforcer le lien entre l’institution et les familles,
+notamment par la mise en place de démarches plus souples. En réalisant la démarche
+en ligne vous n’avez pas à nous remettre le dossier papier. Cet outil numérique
+relève d’une démarche d’innovation ; nous sommes très intéressés par vos retours.
+
+Si vous ne souhaitez pas réaliser cette démarche par Internet, veuillez prendre
+contact avec le collège.
+
+La Principale
