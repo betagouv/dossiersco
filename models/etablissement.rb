@@ -5,6 +5,6 @@ class Etablissement < ActiveRecord::Base
   has_many :piece_attendue
 
   def classes
-  	dossier_eleve.collect(&:eleve).collect(&:classe_ant).uniq
+    dossier_eleve.collect(&:eleve).collect(&:classe_ant).reject(&:nil?).uniq
   end
 end
