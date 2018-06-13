@@ -99,7 +99,9 @@ end
 
 get '/agent/eleve/:identifiant' do
   eleve = Eleve.find_by(identifiant: params[:identifiant])
-  erb :'agent/eleve', locals: {agent: agent, eleve: eleve }, layout: :layout_agent
+  emails_presents = false
+  eleve.dossier_eleve.resp_legal.each { |r| (emails_presents = true) if r.email.present?}
+  erb :'agent/eleve', locals: {emails_presents: emails_presents, agent: agent, eleve: eleve }, layout: :layout_agent
 end
 
 post '/agent/change_etat_fichier' do
