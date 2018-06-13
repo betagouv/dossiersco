@@ -449,10 +449,10 @@ class EleveFormTest < Test::Unit::TestCase
     Option.destroy_all
     etablissement = Etablissement.find_by(nom: 'College Jean-Francois Oeben')
     lignes_siecle = [
-      {11 => '1', 9 => "18/05/1991", 37 => "AGL1", 38 => "ANGLAIS LV1", 39 => "O", 33 => '4'},
-      {11 => '2', 9 => "18/05/1991", 37 => "ESP2", 38 => "ESPAGNOL LV2", 39 => "F", 33 => '4'},
-      {11 => '3', 9 => "18/05/1991", 37 => "AGL1", 38 => "ANGLAIS LV1", 39 => "O", 33 => '4'},
-      {11 => '4', 9 => "18/05/1991", 41 => "DANSE", 42 => "DANSE", 43 => "F", 33 => '4'}
+      {11 => '1', 9 => "18/05/1991", 37 => "AGL1", 38 => "ANGLAIS LV1", 39 => "O", 33 => '4', 34 => '4EME 1'},
+      {11 => '2', 9 => "18/05/1991", 37 => "ESP2", 38 => "ESPAGNOL LV2", 39 => "F", 33 => '4', 34 => '6EME 1'},
+      {11 => '3', 9 => "18/05/1991", 37 => "AGL1", 38 => "ANGLAIS LV1", 39 => "O", 33 => '4', 34 => '3EME 1'},
+      {11 => '4', 9 => "18/05/1991", 41 => "DANSE", 42 => "DANSE", 43 => "F", 33 => '4', 34 => '4EME 1'}
     ]
 
     lignes_siecle.each { |ligne| import_ligne etablissement.id, ligne }
@@ -1045,4 +1045,21 @@ class EleveFormTest < Test::Unit::TestCase
     Sinatra::Application::set :environment, 'development'
   end
 
+  def test_stats
+    get '/stats'
+    doc = Nokogiri::HTML(last_response.body)
+    # Etablissements
+    assert_equal Etablissement.count, doc.css(".etablissement").count
+    names = doc.css(".etablissement > .row > .nom").collect(&:text).collect(&:strip)
+    assert names.include? "Collège Germaine Tillion"
+    # Classes - on a 4 classes sur Tillion et 2 sur Oeben dont 2 du même nom entre
+    # les deux établissements
+    names = doc.css(".etablissement .classe > .row > .nom").collect(&:text).collect(&:strip)
+    assert_equal 6, doc.css(".etablissement .classe").count
+    assert_equal 2, (names.select {|x| x == "3EME 1"}).count
+    # Statuts - 100% de non connectés à Oeben
+    pas_connecte = ".etablissement .progress .bg-secondary"
+    assert_equal "100", doc.css(pas_connecte).first.text().strip
+    assert_equal "width: 100%", doc.css(pas_connecte).first.attr("style").text().strip
+  end
 end
