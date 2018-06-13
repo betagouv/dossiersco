@@ -212,15 +212,19 @@ end
 post '/agent/valider_inscription' do
   eleve = Eleve.find_by identifiant: params[:identifiant]
   dossier_eleve = eleve.dossier_eleve
-  dossier_valide = dossier_eleve.etat == 'validé'
-  if dossier_valide
-    dossier_eleve.update(etat: 'en attente de validation')
-  else
-    emails = dossier_eleve.resp_legal.map{ |resp_legal| resp_legal.email }
-    dossier_eleve.update(etat: 'validé')
-    mail = AgentMailer.mail_validation_inscription(eleve)
-    mail.deliver_now
-  end
+  emails = dossier_eleve.resp_legal.map{ |resp_legal| resp_legal.email }
+  dossier_eleve.update(etat: 'validé')
+  mail = AgentMailer.mail_validation_inscription(eleve)
+  mail.deliver_now
+
+  redirect "/agent/liste_des_eleves"
+end
+
+post '/agent/eleve_sortant' do
+  eleve = Eleve.find_by identifiant: params[:identifiant]
+  dossier_eleve = eleve.dossier_eleve
+  dossier_eleve.update(etat: 'sortant')
+
   redirect "/agent/liste_des_eleves"
 end
 
