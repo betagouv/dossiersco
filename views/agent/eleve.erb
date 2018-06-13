@@ -200,12 +200,18 @@ scolarite_ant = [
       <p><strong><%= option.groupe %></strong> : <%= option.nom %></p>
     <% end %>
 
-    <div style='text-align: center; width:100%'>
-    <form action='/agent/valider_inscription' method='POST'>
-      <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
-      <button class="btn btn-lg btn-primary  <%= 'disabled' if eleve.dossier_eleve.etat == 'validé'%>"
-        id="bouton-validation-inscription" type='submit'
-        <%= 'disabled' if eleve.dossier_eleve.etat == 'validé'%>>Valider l'inscription</button>
-    </form>
+    <div class="d-flex justify-content-center align-items-center" style='text-align: center; width:100%'>
+      <form action='/agent/valider_inscription' method='POST'>
+        <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
+        <button class="btn btn-lg btn-primary mr-2  <%= 'disabled' if eleve.dossier_eleve.etat == 'validé'%>"
+          id="bouton-validation-inscription" type='submit'
+          <%= 'disabled' if eleve.dossier_eleve.etat == 'validé'%>>Valider l'inscription</button>
+      </form>
+      <form action='/agent/eleve_sortant' method='POST'>
+        <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
+        <button class="btn btn-outline-primary ml-2 <%= 'disabled' if eleve.dossier_eleve.etat == 'sortant'%>"
+          id="bouton-eleve-sortant" type='submit'  <%= 'disabled' if eleve.dossier_eleve.etat == 'sortant'%>>
+          Cet élève est sorti·e de l'établissement</button>
+      </form>
   </div>
 </div>

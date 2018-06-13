@@ -220,6 +220,14 @@ post '/agent/valider_inscription' do
   redirect "/agent/liste_des_eleves"
 end
 
+post '/agent/eleve_sortant' do
+  eleve = Eleve.find_by identifiant: params[:identifiant]
+  dossier_eleve = eleve.dossier_eleve
+  dossier_eleve.update(etat: 'sortant')
+
+  redirect "/agent/liste_des_eleves"
+end
+
 post '/agent/contacter_une_famille' do
   eleve = Eleve.find_by(identifiant: params[:identifiant])
   mail = AgentMailer.contacter_une_famille(eleve, params[:message])
