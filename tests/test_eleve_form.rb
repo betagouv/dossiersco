@@ -1059,7 +1059,7 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 2, (names.select {|x| x == "3EME 1"}).count
     # Statuts - 100% de non connectés à Oeben
     pas_connecte = ".etablissement .progress .bg-secondary"
-    assert_equal "100", doc.css(pas_connecte).first.text().strip
-    assert_equal "width: 100%", doc.css(pas_connecte).first.attr("style").text().strip
+    assert_equal "2", doc.css(pas_connecte).first.text().strip
+    assert_equal "width: 100%", doc.css(pas_connecte).first.attr("style")
   end
 end
