@@ -1,7 +1,6 @@
 Evolutions fonctionnelles importantes:
 [ ] exporter les données vers siecle
 [ ] Optimiser le temps de chargement de la liste des élèves ?
-[ ] Conserver les options de tri et filtrage au rechargement liste des élèves
 [ ] Pouvoir émettre des relances en masse (par classe et/ou par statut)
 [ ] Tableau de bord avec les statistiques par classe sur /stats
 
