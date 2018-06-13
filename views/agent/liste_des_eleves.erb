@@ -61,9 +61,12 @@
               <% end %>
             </td>
           <% end %>
-
-            <td><a href="/agent/eleve/<%= dossier_eleve.eleve.identifiant %>"><i class="far fa-envelope"></i></a></td>
-
+            <td>
+              <% if dossier_eleve.resp_legal.first.email.present? ||
+                ( dossier_eleve.resp_legal[1].present? && dossier_eleve.resp_legal[1].email.present?) %>
+                <a href="/agent/eleve/<%= dossier_eleve.eleve.identifiant %>"><i class="far fa-envelope"></i></a>
+              <% end %>
+            </td>
         </tr>
       <% end %>
     </tbody>

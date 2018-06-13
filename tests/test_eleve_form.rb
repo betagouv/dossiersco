@@ -701,6 +701,29 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal "✓", doc.css("tbody > tr:nth-child(1) > td:nth-child(6)").text.strip
   end
 
+  def test_affiche_lenvoi_de_message_uniquement_si_un_des_resp_legal_a_un_mail
+    e = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01')
+    dossier_eleve = DossierEleve.create!(eleve_id: e.id, etablissement_id: Etablissement.first.id)
+    resp_legal = RespLegal.create(email: 'test@test.com', dossier_eleve_id: dossier_eleve.id)
+
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    get "/agent/eleve/XXX"
+
+    assert last_response.body.include? "Ce formulaire envoie un message à la famille de l'élève."
+  end
+
+  def test_affiche_lenveloppe_uniquement_si_un_des_resp_legal_a_un_mail
+    e = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01')
+    dossier_eleve = DossierEleve.create!(eleve_id: e.id, etablissement_id: Etablissement.first.id)
+    resp_legal = RespLegal.create(email: 'test@test.com', dossier_eleve_id: dossier_eleve.id)
+
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    get '/agent/liste_des_eleves'
+
+    doc = Nokogiri::HTML(last_response.body)
+    assert_equal "far fa-envelope", doc.css("tbody > tr:nth-child(1) > td").last.children[1].children[0].attributes['class'].value
+  end
+
   def test_changement_statut_famille_connecte
     post '/identification', identifiant: '2', date_naiss: '1915-12-19'
     dossier_eleve = Eleve.find_by(identifiant: '2').dossier_eleve
