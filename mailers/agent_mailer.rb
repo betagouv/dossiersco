@@ -24,7 +24,17 @@ class AgentMailer < ActionMailer::Base
         contacter_une_famille eleve, ''
     end
 
+    # Utilisée ponctuellement en juin 2018 pour "doubler" une diffusion par cartable
+    # d'un contact mail, restreint au 1er RL car nous donnons l'INE et contacter les 2
+    # parents n'aurait pas les mêmes caractéristiques que la diffusion par cartable du
+    # point de vue sécurité; ne met pas l'établissement en copie pour ne pas les spammer
     def invitations_parents(eleve)
-        contacter_une_famille eleve, ''
+        @eleve = eleve
+        mail(subject: "Réinscription de votre enfant au collège",
+            reply_to: ['contact@dossiersco.beta.gouv.fr', @eleve.dossier_eleve.etablissement.email],
+            to: [eleve.dossier_eleve.resp_legal.first,
+                 'contact@dossiersco.beta.gouv.fr') do |format|
+                format.text
+            end
     end
 end
