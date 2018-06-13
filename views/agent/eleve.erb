@@ -200,11 +200,12 @@ scolarite_ant = [
       <p><strong><%= option.groupe %></strong> : <%= option.nom %></p>
     <% end %>
 
-    <% dossier_valide = eleve.dossier_eleve.etat == 'validé' %>
     <div style='text-align: center; width:100%'>
     <form action='/agent/valider_inscription' method='POST'>
       <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
-      <button class="<%= dossier_valide ? 'btn-danger' : 'btn-primary' %>  btn btn-lg" type='submit'><%= dossier_valide ? "Annuler l'inscription" : "Valider l'inscription" %></button>
+      <button class="btn btn-lg btn-primary  <%= 'disabled' if eleve.dossier_eleve.etat == 'validé'%>"
+        id="bouton-validation-inscription" type='submit'
+        <%= 'disabled' if eleve.dossier_eleve.etat == 'validé'%>>Valider l'inscription</button>
     </form>
   </div>
 </div>
