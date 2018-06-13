@@ -20,6 +20,7 @@ def init
        nom: 'Piaf',
        date_naiss: '1915-12-19',
        niveau_classe_ant: '6EME',
+       classe_ant: '6EME 1',
        nationalite: 'francaise',
        sexe: 'Féminin',
        identifiant: '2'
@@ -28,6 +29,7 @@ def init
        nom: 'Puydebois',
        date_naiss: '1995-11-19',
        niveau_classe_ant: '4EME',
+       classe_ant: '4EME 1',
        nationalite: 'francaise',
        sexe: 'Masculin',
        identifiant: '1'
@@ -44,6 +46,7 @@ def init
       {prenom: 'Pierre',
        nom: 'Blayo',
        niveau_classe_ant: '4EME ULIS',
+       classe_ant: '4EME 1',
        date_naiss: '1970-01-01',
        nationalite: 'FRANCE',
        sexe: 'Masculin',
@@ -66,6 +69,15 @@ def init
        nationalite: 'FRANCE',
        sexe: 'Masculin',
        identifiant: '6'
+      },
+      {prenom: 'Laurence',
+       nom: 'Hugo',
+       niveau_classe_ant: '3EME',
+       classe_ant: '3EME 1',
+       date_naiss: '1970-01-01',
+       nationalite: 'FRANCE',
+       sexe: 'Féminin',
+       identifiant: '7'
       }
   ]
   eleves.each { |eleve| eleve.update(ville_naiss: 'Paris', pays_naiss: 'France') }
@@ -79,6 +91,7 @@ def init
      message_permanence: "mercredi 19 juin de 8h à 19h"
   })
   cree_dossier_eleve eleves[1], oeben, 'pas connecté'
+  cree_dossier_eleve eleves[6], oeben, 'pas connecté'
 
   Agent.create!(password: '$2a$10$6njb4Rn4RHyFFJpP5QEJGutErgZVOr6/cCM17IKoIsiQDZQABBN2a',
                 nom: 'César', prenom: 'Jules', etablissement_id: oeben.id,

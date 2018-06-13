@@ -66,7 +66,8 @@ before '/*' do
   agent = request.path_info.start_with?("/agent")
   api = request.path_info.start_with?("/api")
   init = request.path_info.start_with?("/init")
-  pass if home || identification || piece_jointe || agent || api || init
+  stats = request.path_info.start_with?("/stats")
+  pass if home || identification || piece_jointe || agent || api || init || stats
   pass if eleve_before.present?
   pass if agent_before.present?
   return if home
@@ -326,6 +327,10 @@ post '/envoyer_email_confirmation' do
   dossier_eleve = get_dossier_eleve session[:identifiant]
   mail = AgentMailer.envoyer_mail_confirmation(dossier_eleve.eleve)
   mail.deliver_now
+end
+
+get '/stats' do
+  erb :stats, locals: {etablissements: Etablissement.all}
 end
 
 not_found do
