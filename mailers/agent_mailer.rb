@@ -24,7 +24,7 @@ class AgentMailer < ActionMailer::Base
         contacter_une_famille eleve, ''
     end
 
-    def invitation_parents(eleve)
+    def invitations_parents(eleve)
         contacter_une_famille eleve, ''
     end
 end
