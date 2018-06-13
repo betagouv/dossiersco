@@ -654,6 +654,18 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'disabled', doc.css("#bouton-validation-inscription").first.attributes['disabled'].value
   end
 
+  def test_un_eleve_est_sortant
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+
+    post '/agent/eleve_sortant', identifiant: '4'
+    eleve = Eleve.find_by(identifiant: '4')
+    assert_equal 'sortant', eleve.dossier_eleve.etat
+
+    get "/agent/eleve/#{eleve.identifiant}"
+    doc = Nokogiri::HTML(last_response.body)
+    assert_equal 'disabled', doc.css("#bouton-eleve-sortant").first.attributes['disabled'].value
+  end
+
   # def test_liste_classes
   #   post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
   #   get '/agent/liste_des_eleves'

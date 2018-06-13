@@ -12,7 +12,6 @@ Important mais moins urgent:
 [ ] Notifier la famille des options pédagogiques affectées (Tillion)
 
 Mineurs:
-[ ] Proposer un bouton "Cet élève est sorti·e de l'établissement" => etat "sortant"
 [ ] Permettre aux familles d'adresser un message à l'établissement ?
 [ ] Améliorer le comparatif ancienne / nouvelle adresse
 [ ] Afficher email et téléphone des responsables légaux dans la vue agent (domicile)
