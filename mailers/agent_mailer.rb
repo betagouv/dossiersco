@@ -30,10 +30,10 @@ class AgentMailer < ActionMailer::Base
     # point de vue sécurité; ne met pas l'établissement en copie pour ne pas les spammer
     def invitations_parents(eleve)
         @eleve = eleve
+        destinataires = [eleve.dossier_eleve.resp_legal.first, 'contact@dossiersco.beta.gouv.fr']
         mail(subject: "Réinscription de votre enfant au collège",
             reply_to: ['contact@dossiersco.beta.gouv.fr', @eleve.dossier_eleve.etablissement.email],
-            to: [eleve.dossier_eleve.resp_legal.first,
-                 'contact@dossiersco.beta.gouv.fr') do |format|
+            to: destinataires) do |format|
                 format.text
             end
     end
