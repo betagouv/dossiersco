@@ -5,6 +5,7 @@ Evolutions fonctionnelles importantes:
 [ ] Tableau de bord avec les statistiques par classe sur /stats
 
 Observation de l'usage:
+[ ] Afficher le logo PDF dans la partie pièce jointe, l'image actuelle porte a confusion
 [ ] Emailing (Mailjet? autre?) parents (en complément des actions "recherche de feedback" parents)
 
 Important mais moins urgent:
@@ -12,10 +13,10 @@ Important mais moins urgent:
 [ ] Notifier la famille des options pédagogiques affectées (Tillion)
 
 Mineurs:
+[ ] individualiser le bloc de la demi-pension par collège
 [ ] Permettre aux familles d'adresser un message à l'établissement ?
 [ ] Améliorer le comparatif ancienne / nouvelle adresse
 [ ] Afficher email et téléphone des responsables légaux dans la vue agent (domicile)
-[ ] Ne pas afficher l'icône enveloppe à droite de la liste des élèves si pas de mail
 
 Améliorer les tests ou l'exploitabilité:
 [ ] Séparer les tests en plusieurs fichiers
