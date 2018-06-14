@@ -271,7 +271,7 @@ class EleveFormTest < Test::Unit::TestCase
     doc = Nokogiri::HTML(last_response.body)
     documents_route = FichierUploader::route_lecture '6', 'assurance_scolaire'
     expected_url = documents_route+"/assurance_scannee.pdf"
-    assert_equal "background-image: url('/images/reglement_dp_small.png'); height: 200px; max-width: 350px;",
+    assert_equal "background-image: url('/images/document-pdf.png'); height: 200px; max-width: 350px;",
                  doc.css("#image_assurance_scolaire").attr("style").text
     assert doc.css('#image_assurance_scolaire').attr("class").text.split.include?("lien-piece-jointe")
     assert_equal "modal", doc.css('#image_assurance_scolaire').attr("data-toggle").text

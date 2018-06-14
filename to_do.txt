@@ -4,7 +4,6 @@ Evolutions fonctionnelles importantes:
 [ ] Pouvoir émettre des relances en masse (par classe et/ou par statut)
 
 Observation de l'usage:
-[ ] Afficher le logo PDF dans la partie pièce jointe, l'image actuelle porte a confusion
 [ ] Emailing (Mailjet? autre?) parents (en complément des actions "recherche de feedback" parents)
 
 Important mais moins urgent:
