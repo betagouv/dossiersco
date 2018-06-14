@@ -44,7 +44,7 @@
                     <% if document_stocke_url.present?
                         eleve_identifiant = dossier_eleve.nil? ? '' : dossier_eleve.eleve.identifiant
                         document_route = FichierUploader::route_lecture(eleve_identifiant, piece.code)+"/"+document_stocke_url
-                        image_url = document_stocke_url.ends_with?('.pdf') ? "/images/reglement_dp_small.png" : document_route
+                        image_url = document_stocke_url.ends_with?('.pdf') ? "/images/document-pdf.png" : document_route
                       %>
                       style="background-image: url('<%= image_url %>'); height: 200px; max-width: 350px;"
                       data-toggle="modal"
