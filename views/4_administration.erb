@@ -30,6 +30,7 @@
 
 				<p class="text-danger">En validant cette étape, je m'engage à régler les frais de demi-pension dans les délais impartis.</p>
 				<br />
+				<% if dossier_eleve.etablissement.gere_demi_pension %>
 				<p>Pour déterminer le tarif de la demi-pension pour votre enfant, l'établissement vous demande un justificatif.
 					Sans ce justificatif, le tarif maximal vous sera appliqué.</p>
 				<p>Pour obtenir ce document : </p>
@@ -45,6 +46,7 @@
 						(Le site va s'ouvrir dans un nouvel onglet. Vous pourrez continuer sur DossierSCO sans avoir besoin de vous reconnecter.)<br />
 					</li>
 				</ul>
+				<% end %>
 			</div>
 		</div>
 
