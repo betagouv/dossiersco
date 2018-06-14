@@ -11,7 +11,8 @@ development:
   <<: *default
 
 test:
-  <<: *default
+  adapter: sqlite3
+  database: ":memory:"
 
 staging:
   <<: *default
