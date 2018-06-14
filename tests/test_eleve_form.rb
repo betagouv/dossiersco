@@ -1150,10 +1150,16 @@ class EleveFormTest < Test::Unit::TestCase
     assert_nil doc.css("div#ancienne_adresse").first
   end
 
-  def test_export_siecle
+  def test_export_xml
     etablissement = Etablissement.first
     doc = Nokogiri::XML(export_xml etablissement)
     assert_equal "DOSSIERSCO", doc.xpath("/IMPORT_ELEVES/PARAMETRES/LOGICIEL").text()
+  end
+
+  def test_export_xml_contient_tous_les_eleves_de_l_etablissement
+    etablissement = Etablissement.first
+    doc = Nokogiri::XML(export_xml etablissement)
+    assert_equal etablissement.dossier_eleve.count, doc.xpath("/IMPORT_ELEVES/DONNEES/ELEVES/ELEVE").count
   end
 
 end

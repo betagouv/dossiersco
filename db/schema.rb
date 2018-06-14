@@ -109,7 +109,6 @@ ActiveRecord::Schema.define(version: 2018_06_18_151230) do
     t.datetime "updated_at"
     t.text "message_infirmerie"
     t.string "email"
-    t.boolean "gere_demi_pension", default: false
   end
 
   create_table "montees", force: :cascade do |t|

@@ -24,6 +24,7 @@
             </PERSONNE>
         </PERSONNES>
         <ELEVES>
+        <% etablissement.dossier_eleve.each do |dossier_eleve| %>
             <ELEVE>
                 <ID_PRV_ELE>22222</ID_PRV_ELE>
                 <NOM_DE_FAMILLE>HugoHugo</NOM_DE_FAMILLE>
@@ -57,6 +58,7 @@
                     <OPTIONS_AN_DERNIER></OPTIONS_AN_DERNIER>
                 </ETABLISSEMENT_AN_DERNIER>
             </ELEVE>
+        <% end %>
         </ELEVES>
     </DONNEES>
 </IMPORT_ELEVES>
