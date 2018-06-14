@@ -85,7 +85,7 @@
       <form action="/agent/contacter_une_famille" method="POST" class="text-center">
         <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
         <textarea name='message' class="form-control" rows="6"></textarea>
-        <input id='envoyer-commentaire' value='Envoyer' type='submit' class='btn btn-outline-primary mb-5 mt-1'/>
+        <input id='envoyer-commentaire' value='Envoyer' type='submit' class='btn btn-outline-primary mb-4 mt-1'/>
       </form>
     <% else %>
       <div class='card'>
@@ -93,31 +93,48 @@
           <p>Cette famille ne possède pas d'adresse email</p>
         </div>
       </div>
-
     <% end %>
 
-    <h2 class="separation"><%= eleve.prenom%> <%=eleve.nom%></h2>
-
-    <span>Sexe <%=eleve.sexe%></span>
-    <%= construire identite %>
-
     <% resp_foyer = eleve.dossier_eleve.resp_legal.first %>
-    <h2 class="separation">Habite chez <%=resp_foyer.prenom %> <%=resp_foyer.nom %></h2>
-
+    <h3><%= resp_foyer.prenom%> <%= resp_foyer.nom %> (resp. légal)</h3>
     <div class='mb-4'>
-      <% if resp_foyer.tel_principal.present? || resp_foyer.tel_secondaire.present? %>
-        <span>Téléphones </span>
-      <% end %>
       <% if resp_foyer.tel_principal.present? %>
+        <span>Tél </span>
         <span style='font-size: 1.5em;' class='mr-1 badge badge-secondary'><strong><%=resp_foyer.tel_principal%></strong></span>
       <% end %>
       <% if resp_foyer.tel_secondaire.present? %>
+        <span>Tél </span>
         <span style='font-size: 1.5em;' class='mr-3 badge badge-secondary'><%=resp_foyer.tel_secondaire%></span>
       <% end %>
       <% if resp_foyer.email.present? %>
         <span>Mail </span><span style='font-size: 1.5em;' class='badge badge-secondary'><%=resp_foyer.email%></span>
       <% end %>
     </div>
+
+    <% resp_legal_2 = eleve.dossier_eleve.resp_legal.second %>
+    <% if resp_legal_2.present? %>
+      <h3><%= resp_legal_2.prenom%> <%= resp_legal_2.nom %> (resp. légal)</h3>
+      <div class='mb-5'>
+        <% if resp_legal_2.tel_principal.present? %>
+          <span>Tél </span>
+          <span style='font-size: 1.5em;' class='mr-1 badge badge-secondary'><strong><%=resp_legal_2.tel_principal%></strong></span>
+        <% end %>
+        <% if resp_legal_2.tel_secondaire.present? %>
+          <span>Tél </span>
+          <span style='font-size: 1.5em;' class='mr-3 badge badge-secondary'><%=resp_legal_2.tel_secondaire%></span>
+        <% end %>
+        <% if resp_legal_2.email.present? %>
+          <span>Mail </span><span style='font-size: 1.5em;' class='badge badge-secondary'><%=resp_legal_2.email%></span>
+        <% end %>
+      </div>
+    <% end %>
+
+    <h2 class="separation">Elève <%= eleve.prenom%> <%=eleve.nom%></h2>
+
+    <span>Sexe <%=eleve.sexe%></span>
+    <%= construire identite %>
+
+    <h2 class="separation">Habite chez <%=resp_foyer.prenom %> <%=resp_foyer.nom %></h2>
 
     <%= construire resp_legal_1 %>
 
