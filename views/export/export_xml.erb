@@ -10,6 +10,7 @@
     </PARAMETRES>
     <DONNEES>
         <PERSONNES>
+          <% personnes.each do |personne| %>
             <PERSONNE>
                 <ID_PRV_PER>11111</ID_PRV_PER>
                 <CODE_CIVILITE>1</CODE_CIVILITE>
@@ -22,6 +23,7 @@
                 <TEL_PORTABLE>0610111213</TEL_PORTABLE>
                 <ENFANT_A_CHARGE>2</ENFANT_A_CHARGE>
             </PERSONNE>
+          <% end %>
         </PERSONNES>
         <ELEVES>
         <% etablissement.dossier_eleve.each do |dossier_eleve| %>

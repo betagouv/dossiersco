@@ -1170,4 +1170,14 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal dossier_eleve.resp_legal.count, doc.xpath("/IMPORT_ELEVES/DONNEES/ELEVES/ELEVE/RESPONSABLES_ELEVE/*").count
   end
 
+  def test_export_xml_contient_tous_les_resp_legaux_de_deux_eleves
+    etablissement = Etablissement.create
+    dossier_eleve_1 = cree_dossier_eleve({}, etablissement, 'validé')
+    dossier_eleve_2 = cree_dossier_eleve({}, etablissement, 'validé')
+
+    doc = Nokogiri::XML(export_xml etablissement)
+
+    assert_equal 4, doc.xpath("/IMPORT_ELEVES/DONNEES/PERSONNES/PERSONNE").count
+  end
+
 end
