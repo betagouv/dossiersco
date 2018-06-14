@@ -165,7 +165,7 @@ def cree_dossier_eleve eleve, etablissement, etat = 'en attente de validation'
   dossier_eleve = DossierEleve.create!(
       eleve_id: e.id,
       etablissement_id: etablissement.id,
-      satisfaction: e.identifiant % 5,
+      satisfaction: e.identifiant || 0 % 5,
       commentaire: 'Très bien',
       etat: etat
       )

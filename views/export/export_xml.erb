@@ -39,10 +39,12 @@
                 <CODE_REGIME>3</CODE_REGIME>
                 <DOUBLEMENT>false</DOUBLEMENT>
                 <RESPONSABLES_ELEVE>
+                  <% dossier_eleve.resp_legal.each do |resp_legal| %>
                     <LEGAL1>
                         <ID_PRV_PER>11111</ID_PRV_PER>
                         <CODE_PARENTE>1</CODE_PARENTE>
                     </LEGAL1>
+                  <% end %>
                 </RESPONSABLES_ELEVE>
                 <SCOLARITE_ACTIVE>
                     <CODE_MEF>20111010110</CODE_MEF>

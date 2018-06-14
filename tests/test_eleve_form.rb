@@ -1162,4 +1162,12 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal etablissement.dossier_eleve.count, doc.xpath("/IMPORT_ELEVES/DONNEES/ELEVES/ELEVE").count
   end
 
+  def test_export_xml_contient_tous_les_resp_legaux_d_un_eleve
+    etablissement = Etablissement.create
+    dossier_eleve = cree_dossier_eleve({}, etablissement, 'validé')
+
+    doc = Nokogiri::XML(export_xml etablissement)
+    assert_equal dossier_eleve.resp_legal.count, doc.xpath("/IMPORT_ELEVES/DONNEES/ELEVES/ELEVE/RESPONSABLES_ELEVE/*").count
+  end
+
 end
