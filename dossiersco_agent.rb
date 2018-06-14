@@ -128,39 +128,9 @@ end
 
 get '/agent/options' do
   etablissement = agent.etablissement
-  options = etablissement.option
-  erb :'agent/options', locals: {agent: agent, options: options}, layout: :layout_agent
-end
+  eleves_par_classe = DossierEleve.where(etablissement_id: etablissement.id).collect(&:eleve).group_by(&:niveau_classe_ant)
 
-post '/agent/options' do
-  etablissement = agent.etablissement
-  option = Option.find_by(
-    nom: params[:nom].upcase.capitalize,
-    niveau_debut: params[:niveau_debut],
-    etablissement: etablissement.id)
-
-  if !params[:nom].present?
-    message = "Une option doit comporter un nom"
-    erb :'agent/options', locals: {options: etablissement.option, message: message},
-    layout: :layout_agent
-  elsif !params[:niveau_debut].present?
-    message = "Une option doit comporter un niveau de début"
-    erb :'agent/options', locals: {options: etablissement.option, message: message},
-    layout: :layout_agent
-  elsif option.present? && (option.nom == params[:nom].upcase.capitalize) && (option.niveau_debut == params[:niveau_debut].to_i)
-    message = "#{params[:nom]} existe déjà pour le niveau #{params[:niveau_debut]}ème"
-    erb :'agent/options', locals: {options: etablissement.option, message: message},
-    layout: :layout_agent
-  else
-    option = Option.create!(
-       nom: params[:nom].upcase.capitalize,
-       niveau_debut: params[:niveau_debut],
-       etablissement_id: etablissement.id,
-       obligatoire: params[:obligatoire],
-       groupe: params[:groupe].present? ? params[:groupe].capitalize : 'Option')
-    erb :'agent/options',
-      locals: {options: etablissement.option, agent: agent}, layout: :layout_agent
-  end
+  erb :'agent/options', locals: {agent: agent,etablissement: etablissement, eleves_par_classe: eleves_par_classe}, layout: :layout_agent
 end
 
 get '/agent/piece_attendues' do

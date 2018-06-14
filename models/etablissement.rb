@@ -7,4 +7,8 @@ class Etablissement < ActiveRecord::Base
   def classes
     dossier_eleve.collect(&:eleve).collect(&:classe_ant).reject(&:nil?).uniq
   end
+
+  def niveaux
+    dossier_eleve.collect(&:eleve).collect(&:niveau_classe_ant).reject(&:nil?).uniq
+  end
 end
