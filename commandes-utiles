@@ -107,4 +107,4 @@ où session_secret est la valeur de la variable d’environnement SESSION_SECRET
 
 # Copier les données de prod vers staging
 
-heroku pg:copy dossiersco::DATABASE_URL DATABASE_URL -a dossiesco-staging
+heroku pg:copy dossiersco::DATABASE_URL DATABASE_URL -a dossiersco-staging
