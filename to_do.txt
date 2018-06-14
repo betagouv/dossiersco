@@ -14,7 +14,7 @@ Mineurs:
 [ ] individualiser le bloc de la demi-pension par collège
 [ ] Permettre aux familles d'adresser un message à l'établissement ?
 [/] Améliorer le comparatif ancienne / nouvelle adresse
-[/] Afficher email et téléphone des responsables légaux dans la vue agent (domicile)
+[X] Afficher email et téléphone des responsables légaux dans la vue agent (domicile)
 
 Améliorer les tests ou l'exploitabilité:
 [ ] Séparer les tests en plusieurs fichiers
