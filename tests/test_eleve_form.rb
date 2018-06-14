@@ -9,6 +9,7 @@ require_relative '../helpers/singulier_francais'
 
 require_relative '../dossiersco_web'
 require_relative '../dossiersco_agent'
+require_relative '../helpers/export_siecle'
 
 class EleveFormTest < Test::Unit::TestCase
   include Rack::Test::Methods
@@ -1148,4 +1149,11 @@ class EleveFormTest < Test::Unit::TestCase
     doc = Nokogiri::HTML(last_response.body)
     assert_nil doc.css("div#ancienne_adresse").first
   end
+
+  def test_export_siecle
+    etablissement = Etablissement.first
+    doc = Nokogiri::XML(export_xml etablissement)
+    assert_equal "DOSSIERSCO", doc.xpath("/IMPORT_ELEVES/PARAMETRES/LOGICIEL").text()
+  end
+
 end
