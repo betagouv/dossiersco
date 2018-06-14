@@ -19,4 +19,5 @@ gem 'actionmailer'
 group :test do
   gem 'nokogiri'
   gem 'rack-test'
+  gem 'sqlite3'
 end

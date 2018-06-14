@@ -19,6 +19,8 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def setup
+    ActiveRecord::Schema.verbose = false
+    require_relative "../db/schema.rb"
     init
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.deliveries = []
