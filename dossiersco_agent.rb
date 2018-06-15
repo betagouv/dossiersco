@@ -60,7 +60,7 @@ get '/agent/tableau_de_bord' do
   erb :'agent/tableau_de_bord',
     layout: :layout_agent,
     locals: {agent: agent, total_dossiers: total_dossiers, etats: etats,
-      notes: notes, moyenne: moyenne, dossiers_avec_commentaires: dossiers_avec_commentaires}
+      notes: notes, moyenne: moyenne, dossiers_avec_commentaires: dossiers_avec_commentaires.sort_by(&:date_signature).reverse}
 end
 
 post '/agent/tableau_de_bord' do
