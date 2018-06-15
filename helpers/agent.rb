@@ -26,8 +26,8 @@ module AgentHelpers
     notes = avec_feedback.collect(&:satisfaction)
     notes_renseignees = notes.select {|n| n > 0}
     moyenne = notes_renseignees.count > 0 ? "#{'%.2f' % ((notes_renseignees.sum+0.0)/notes_renseignees.count)}" : ""
-    commentaires = avec_feedback.collect(&:commentaire).reject(&:nil?).reject(&:empty?)
-    return etats, notes, moyenne, commentaires
+    dossiers_avec_commentaires = avec_feedback.reject{ |d| d if d.commentaire.nil? || d.commentaire.empty? }
+    return etats, notes, moyenne, dossiers_avec_commentaires
   end
 end
 
