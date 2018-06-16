@@ -46,12 +46,20 @@ post '/agent' do
 end
 
 get '/agent/liste_des_eleves' do
-  dossier_eleves = agent.etablissement.dossier_eleve.sort_by { |dossier| dossier.eleve.identifiant}
+  lignes_eleves = DossierEleve
+    .joins(:eleve,:resp_legal)
+    .select('*')
+    .select('dossier_eleves.id as dossier_id')
+    .where(resp_legals:{priorite:1}, etablissement: agent.etablissement)
   message_info = session[:message_info]
   session.delete :message_info
   erb :'agent/liste_des_eleves',
       layout: :layout_agent,
-      locals: {agent: agent, dossier_eleves: dossier_eleves, message_info: message_info}
+      locals: {
+          agent: agent,
+          lignes_eleves: lignes_eleves,
+          message_info: message_info,
+          pieces_attendues: agent.etablissement.piece_attendue}
 end
 
 get '/agent/tableau_de_bord' do
