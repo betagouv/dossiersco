@@ -56,9 +56,9 @@ get '/agent/liste_des_eleves' do
     .where(resp_legals:{priorite:1}, etablissement: agent.etablissement)
     .all
   pieces_jointes = PieceJointe
-    .left_outer_joins(:dossier_eleve,:piece_attendue)
+    .joins(:dossier_eleve,:piece_attendue)
+    .select('dossier_eleves.id as dossier_id').select('piece_jointes.*')
     .where(piece_attendues:{etablissement_id: agent.etablissement.id})
-    .select('dossier_eleves.id as dossier_id').select('*')
     .all
     .group_by(&:dossier_eleve_id)
   message_info = session[:message_info]
