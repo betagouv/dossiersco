@@ -687,6 +687,22 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal "Piaf", doc.css("##{eleve.dossier_eleve.id} td:nth-child(3)").text.strip
   end
 
+  def test_etat_piece_jointe_liste_des_eleves
+    dossier_eleve = Eleve.find_by(identifiant: 2).dossier_eleve
+    piece_attendue = PieceAttendue.find_by(code: 'assurance_scolaire',
+      etablissement_id: dossier_eleve.etablissement.id)
+    piece_jointe = PieceJointe.create(clef: 'assurance_scannee.pdf', dossier_eleve_id: dossier_eleve.id,
+      piece_attendue_id: piece_attendue.id)
+
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    post '/agent/change_etat_fichier', id: piece_jointe.id, etat: 'valide'
+
+    get '/agent/liste_des_eleves'
+    doc = Nokogiri::HTML(last_response.body)
+    assert doc.css("##{dossier_eleve.id} td:nth-child(7) a i.fa-file-image").present?
+    assert_equal "color: #00cf00", doc.css("##{dossier_eleve.id} td:nth-child(7) i.fa-check-circle").attr("style").text
+  end
+
   def test_affiche_changement_adresse_liste_eleves
     # Si on a un changement d'adresse
     eleve = Eleve.find_by(identifiant: 2)
