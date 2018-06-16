@@ -52,7 +52,7 @@ get '/agent/liste_des_eleves' do
     .select('dossier_eleves.*')
     .select('eleves.*')
     .select('resp_legals.changement_adresse').select('resp_legals.email')
-    .order('eleves.classe_ant DESC, dossier_eleves.etat')
+    .order('eleves.classe_ant DESC, dossier_eleves.etat, eleves.identifiant')
     .where(resp_legals:{priorite:1}, etablissement: agent.etablissement)
     .all
   pieces_jointes = PieceJointe
