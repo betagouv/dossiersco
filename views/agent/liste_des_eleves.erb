@@ -13,7 +13,7 @@
   </div>
 
   <div>
-    <%= agent.etablissement.nom %> : <span id="total_dossiers" class="badge badge-danger"><%= dossier_eleves.count %></span> dossiers.
+    <%= agent.etablissement.nom %> : <span id="total_dossiers" class="badge badge-danger"><%= lignes_eleves.count('*') %></span> dossiers.
   </div>
 
   <span style="display:block; height: 20px;"></span>
@@ -33,26 +33,26 @@
       <th><i class="far fa-envelope"></i></th>
     </tr></thead>
     <tbody>
-      <% dossier_eleves.each do |dossier_eleve| %>
-        <% cliquable = "class='clickable-row' data-href='/agent/eleve/#{dossier_eleve.eleve.identifiant}'" %>
-        <tr id="<%= dossier_eleve.id %>" style='cursor:pointer'>
-          <td <%= cliquable %> ><%= dossier_eleve.eleve.classe_ant %></td>
-          <td <%= cliquable %> ><%= dossier_eleve.eleve.prenom %></td>
-          <td <%= cliquable %> ><%= dossier_eleve.eleve.nom %></td>
-          <td <%= cliquable %> ><%= dossier_eleve.etat %></td>
+      <% lignes_eleves.each do |ligne_eleve| %>
+        <% cliquable = "class='clickable-row' data-href='/agent/eleve/#{ligne_eleve.identifiant}'" %>
+        <tr id="<%= ligne_eleve.id %>" style='cursor:pointer'>
+          <td <%= cliquable %> ><%= ligne_eleve.classe_ant %></td>
+          <td <%= cliquable %> ><%= ligne_eleve.prenom %></td>
+          <td <%= cliquable %> ><%= ligne_eleve.nom %></td>
+          <td <%= cliquable %> ><%= ligne_eleve.etat %></td>
           <td <%= cliquable %> >
-            <%= dossier_eleve.resp_legal.first.changement_adresse ? "✓" : "" %>
+            <%= ligne_eleve.changement_adresse ? "✓" : "" %>
           </td>
           <td <%= cliquable %> >
-            <%= dossier_eleve.demi_pensionnaire ? "✓" : "" %>
+            <%= ligne_eleve.demi_pensionnaire ? "✓" : "" %>
           </td>
 
-          <% agent.etablissement.piece_attendue.each do |piece| %>
-            <% piece_jointe = PieceJointe.find_by(dossier_eleve_id: dossier_eleve.id, piece_attendue_id: piece.id) %>
+          <% pieces_attendues.each do |piece| %>
+            <% piece_jointe = PieceJointe.find_by(dossier_eleve_id: ligne_eleve.dossier_id, piece_attendue_id: piece.id) %>
             <td class="text-center" data-piece-id="<%= piece_jointe.id if piece_jointe.present? %>">
               <% if piece_jointe.present? %>
                 <a class="lien-piece-jointe" data-toggle="modal" data-target="#modal-pieces-jointes"
-                    data-url="<%= FichierUploader::route_lecture(dossier_eleve.eleve.identifiant, piece.code) + "/" + piece_jointe.clef %>"
+                    data-url="<%= FichierUploader::route_lecture(ligne_eleve.identifiant, piece.code) + "/" + piece_jointe.clef %>"
                     data-ext="<%= piece_jointe.ext %>">
                   <i class="fas fa-file-image"></i>
                 </a>
@@ -62,9 +62,8 @@
             </td>
           <% end %>
             <td>
-              <% if dossier_eleve.resp_legal.first.email.present? ||
-                ( dossier_eleve.resp_legal[1].present? && dossier_eleve.resp_legal[1].email.present?) %>
-                <a href="/agent/eleve/<%= dossier_eleve.eleve.identifiant %>"><i class="far fa-envelope"></i></a>
+              <% if ligne_eleve.email.present? %>
+                <a href="/agent/eleve/<%= ligne_eleve.identifiant %>"><i class="far fa-envelope"></i></a>
               <% end %>
             </td>
         </tr>
