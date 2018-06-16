@@ -48,9 +48,19 @@ end
 get '/agent/liste_des_eleves' do
   lignes_eleves = DossierEleve
     .joins(:eleve,:resp_legal)
-    .select('*')
     .select('dossier_eleves.id as dossier_id')
+    .select('dossier_eleves.*')
+    .select('eleves.*')
+    .select('resp_legals.changement_adresse').select('resp_legals.email')
+    .order('eleves.classe_ant DESC, dossier_eleves.etat')
     .where(resp_legals:{priorite:1}, etablissement: agent.etablissement)
+    .all
+  pieces_jointes = PieceJointe
+    .left_outer_joins(:dossier_eleve,:piece_attendue)
+    .where(piece_attendues:{etablissement_id: agent.etablissement.id})
+    .select('dossier_eleves.id as dossier_id').select('*')
+    .all
+    .group_by(&:dossier_eleve_id)
   message_info = session[:message_info]
   session.delete :message_info
   erb :'agent/liste_des_eleves',
@@ -59,7 +69,8 @@ get '/agent/liste_des_eleves' do
           agent: agent,
           lignes_eleves: lignes_eleves,
           message_info: message_info,
-          pieces_attendues: agent.etablissement.piece_attendue}
+          pieces_attendues: agent.etablissement.piece_attendue,
+          pieces_jointes: pieces_jointes}
 end
 
 get '/agent/tableau_de_bord' do

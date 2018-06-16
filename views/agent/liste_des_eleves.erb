@@ -27,7 +27,7 @@
       <th>Etat</th>
       <th><i class="fas fa-truck"></i></th>
       <th><i class="fas fa-utensils"></i></th>
-      <% agent.etablissement.piece_attendue.each do |piece| %>
+      <% pieces_attendues.each do |piece| %>
         <th><%= piece.nom %></th>
       <% end %>
       <th><i class="far fa-envelope"></i></th>
@@ -48,7 +48,8 @@
           </td>
 
           <% pieces_attendues.each do |piece| %>
-            <% piece_jointe = PieceJointe.find_by(dossier_eleve_id: ligne_eleve.dossier_id, piece_attendue_id: piece.id) %>
+            <% piece_jointe = pieces_jointes[ligne_eleve.dossier_id] &&
+                              pieces_jointes[ligne_eleve.dossier_id].find {|x| x.piece_attendue_id == piece.id} %>
             <td class="text-center" data-piece-id="<%= piece_jointe.id if piece_jointe.present? %>">
               <% if piece_jointe.present? %>
                 <a class="lien-piece-jointe" data-toggle="modal" data-target="#modal-pieces-jointes"
