@@ -1105,4 +1105,14 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal "2", doc.css(pas_connecte).first.text().strip
     assert_equal "width: 100.0%;", doc.css(pas_connecte).first.attr("style")
   end
+
+  def test_meme_adresse
+    r = RespLegal.new adresse: '42 rue', code_postal: '75020', ville: 'Paris'
+    assert       r.meme_adresse(r)
+    assert       r.meme_adresse(RespLegal.new adresse: r.adresse, code_postal: r.code_postal, ville: r.ville)
+    assert_false r.meme_adresse(nil)
+    assert_false r.meme_adresse(RespLegal.new adresse: '30',      code_postal: r.code_postal, ville: r.ville)
+    assert_false r.meme_adresse(RespLegal.new adresse: r.adresse, code_postal: '59001',       ville: r.ville)
+    assert_false r.meme_adresse(RespLegal.new adresse: r.adresse, code_postal: r.code_postal, ville: 'Lyon')
+  end
 end
