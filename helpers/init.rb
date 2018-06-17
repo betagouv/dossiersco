@@ -117,7 +117,7 @@ def init
   cree_dossier_eleve eleves[0], tillion, 'pas connecté'
   cree_dossier_eleve eleves[2], tillion, 'pas connecté'
   cree_dossier_eleve eleves[3], tillion, 'connecté'
-  cree_dossier_eleve eleves[4], tillion, 'en attente de validation'
+  cree_dossier_eleve eleves[4], tillion
   cree_dossier_eleve eleves[5], tillion, 'validé'
 
   e5 = Eleve.find_by(identifiant: eleves[5][:identifiant]).dossier_eleve
@@ -160,7 +160,7 @@ def init
                 identifiant: 'pierre')
 end
 
-def cree_dossier_eleve eleve, etablissement, etat
+def cree_dossier_eleve eleve, etablissement, etat = 'en attente de validation'
   e = Eleve.create!(eleve)
   dossier_eleve = DossierEleve.create!(
       eleve_id: e.id,
@@ -169,18 +169,28 @@ def cree_dossier_eleve eleve, etablissement, etat
       commentaire: 'Très bien',
       etat: etat
       )
-  RespLegal.create!(dossier_eleve_id: dossier_eleve.id,
+  cree_resp_legal dossier_eleve
+  RespLegal.create! dossier_eleve_id: dossier_eleve.id,
+    lien_de_parente: 'Père', prenom: 'Jean', nom: 'Blayo',
+    adresse: '42 rue du départ', code_postal: '75018', ville: 'Paris',
+    tel_principal: '0123456789', email: 'test2@test.com',
+    situation_emploi: 'Employé', profession: 'banque', enfants_a_charge: 2,
+    enfants_a_charge_secondaire: 2, communique_info_parents_eleves: false,
+    priorite: 2
+  cree_contact_urgence dossier_eleve
+end
+
+def cree_contact_urgence dossier_eleve
+  ContactUrgence.create! dossier_eleve_id: dossier_eleve.id,
+    lien_avec_eleve: "Tante", prenom: "Aude", nom: "Daniel", tel_principal: '0103030303'
+end
+
+def cree_resp_legal dossier_eleve
+  RespLegal.create! dossier_eleve_id: dossier_eleve.id,
     lien_de_parente: 'Mère', prenom: 'Gertrude', nom: 'Martin',
-    adresse: '42 rue de la fin', code_postal: '75020', ville: 'Paris',
+    adresse: '42 rue victoire', code_postal: '75020', ville: 'Paris',
     tel_principal: '0123456789', tel_secondaire: '0987654321', email: 'test@test.com',
     situation_emploi: 'Employé', profession: 'concierge', enfants_a_charge: nil,
     enfants_a_charge_secondaire: 2, communique_info_parents_eleves: true,
-    priorite: 1)
-  RespLegal.create!(dossier_eleve_id: dossier_eleve.id,
-    lien_de_parente: 'Père', prenom: 'Jean', nom: 'Blayo',
-    adresse: '42 rue du départ', code_postal: '75018', ville: 'Paris',
-    tel_principal: '0123456789', tel_secondaire: '', email: 'test2@test.com',
-    situation_emploi: 'Employé', profession: 'banque', enfants_a_charge: 2,
-    enfants_a_charge_secondaire: 2, communique_info_parents_eleves: false,
-    priorite: 2)
+    priorite: 1
 end
