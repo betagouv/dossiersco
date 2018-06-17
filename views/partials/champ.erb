@@ -192,4 +192,31 @@ valeur			"Anglais"
 	</div>
 </div>
 
+<%  when "contact" %>
+
+  <% if contact.present? %>
+
+<h2 class="separation mt-4">
+  <%= contact.respond_to?(:lien_de_parente) ? contact.lien_de_parente : 'Contact' %>
+  <%= contact.prenom%> <%= contact.nom %></h2>
+<div style='font-size: 1.5em;' class='mb-4'>
+  <% if contact.tel_principal.present? %>
+    <span class='mr-1'>
+      <i class="fas fa-phone-square"></i> <strong><%= contact.tel_principal %></strong>
+    </span>
+  <% end %>
+  <% if contact.tel_secondaire.present? %>
+    <span class='mr-3' style="white-space: nowrap;">
+      <i class="fas fa-phone-square"></i> <%= contact.tel_secondaire %>
+    </span>
+  <% end %>
+  <% if contact.respond_to?(:email) && contact.email.present? %>
+    <span style='font-size: 0.8em; white-space: nowrap;'>
+      <i class="fas fa-envelope mr-1"></i><%= contact.email %>
+    </span>
+  <% end %>
+</div>
+
+  <% end %>
+
 <% end %>

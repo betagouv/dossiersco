@@ -138,7 +138,7 @@ class EleveFormTest < Test::Unit::TestCase
   def test_dossier_eleve_possede_un_contact_urgence
     dossier_eleve = DossierEleve.first
 
-    ContactUrgence.create(dossier_eleve_id: dossier_eleve.id, tel_principal: "0123456789")
+    ContactUrgence.update dossier_eleve_id: dossier_eleve.id, tel_principal: "0123456789"
 
     assert dossier_eleve.contact_urgence.tel_principal == "0123456789"
   end
@@ -730,14 +730,29 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_affiche_lenvoi_de_message_uniquement_si_un_des_resp_legal_a_un_mail
-    e = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01')
-    dossier_eleve = DossierEleve.create!(eleve_id: e.id, etablissement_id: Etablissement.first.id)
-    resp_legal = RespLegal.create(email: 'test@test.com', dossier_eleve_id: dossier_eleve.id)
+    e = Eleve.create! identifiant: 'XXX'
+    dossier_eleve = DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first
+    RespLegal.create! dossier_eleve_id: dossier_eleve.id, email: 'test@test.com'
 
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
     get "/agent/eleve/XXX"
 
     assert last_response.body.include? "Ce formulaire envoie un message à la famille de l'élève."
+  end
+
+  def test_affiche_contacts
+    e = Eleve.create! identifiant: 'XXX'
+    dossier_eleve = DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first
+    RespLegal.create! dossier_eleve_id: dossier_eleve.id,
+      tel_principal: '0101010101', tel_secondaire: '0606060606', email: 'test@test.com'
+    ContactUrgence.create! dossier_eleve_id: dossier_eleve.id, tel_principal: '0103030303'
+
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    get "/agent/eleve/XXX"
+
+    assert last_response.body.include? "0101010101"
+    assert last_response.body.include? "0606060606"
+    assert last_response.body.include? "0103030303"
   end
 
   def test_affiche_lenveloppe_uniquement_si_un_des_resp_legal_a_un_mail

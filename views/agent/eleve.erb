@@ -1,19 +1,28 @@
 <% identite = [
-        {
-          name: "date_naiss",
-          label: "Né le",
-          type: "date",
-          value: eleve.date_naiss,
-          indication: "",
-          disabled: true
-        }] %>
+    {
+        name: "sexe",
+        label: "Sexe",
+        type: "text",
+        value: eleve.sexe,
+        indication: "",
+        disabled: true
+    },
+    {
+        name: "date_naiss",
+        label: "Né le",
+        type: "date",
+        value: eleve.date_naiss,
+        indication: "",
+        disabled: true
+    }] %>
 
+<% resp_foyer = eleve.dossier_eleve.resp_legal.first %>
 <% resp_legal_1 = [
     {
         name: "lien_de_parente_rl1",
         label: "Lien de parenté",
         type: "text",
-        value: eleve.dossier_eleve.resp_legal.first.lien_de_parente,
+        value: resp_foyer.lien_de_parente,
         indication: "Lien de parenté",
         disabled: true,
         required: 'required'
@@ -21,7 +30,7 @@
     {   name: "adresse_rl1",
         label: "Adresse",
         type: "libre",
-        value: eleve.dossier_eleve.resp_legal.first.adresse,
+        value: resp_foyer.adresse,
         indication: "Numéro et nom de voie",
         disabled: true,
         required: 'required',
@@ -30,7 +39,7 @@
     {   name: "code_postal_rl1",
         label: "Code postal",
         type: "text",
-        value: eleve.dossier_eleve.resp_legal.first.code_postal,
+        value: resp_foyer.code_postal,
         indication: "Code postal",
         disabled: true,
         required: 'required'
@@ -38,7 +47,7 @@
     {   name: "ville_rl1",
         label: "Ville",
         type: "text",
-        value: eleve.dossier_eleve.resp_legal.first.ville,
+        value: resp_foyer.ville,
         indication: "Ville",
         disabled: true,
         required: 'required'
@@ -46,7 +55,7 @@
     {   name: "adresse_rl1",
         label: "Ancienne adresse",
         type: "libre",
-        value: eleve.dossier_eleve.resp_legal.first.adresse_ant,
+        value: resp_foyer.adresse_ant,
         indication: "Numéro et nom de voie",
         disabled: true,
         required: 'required',
@@ -55,7 +64,7 @@
     {   name: "code_postal_rl1",
         label: "Code postal",
         type: "text",
-        value: eleve.dossier_eleve.resp_legal.first.code_postal_ant,
+        value: resp_foyer.code_postal_ant,
         indication: "Code postal",
         disabled: true,
         required: 'required'
@@ -63,7 +72,7 @@
     {   name: "ville_rl1",
         label: "Ville",
         type: "text",
-        value: eleve.dossier_eleve.resp_legal.first.ville_ant,
+        value: resp_foyer.ville_ant,
         indication: "Ville",
         disabled: true,
         required: 'required'
@@ -85,7 +94,7 @@
       <form action="/agent/contacter_une_famille" method="POST" class="text-center">
         <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
         <textarea name='message' class="form-control" rows="6"></textarea>
-        <input id='envoyer-commentaire' value='Envoyer' type='submit' class='btn btn-outline-primary mb-4 mt-1'/>
+        <input id='envoyer-commentaire' value='Envoyer' type='submit' class='btn btn-outline-primary mt-1'/>
       </form>
     <% else %>
       <div class='card'>
@@ -95,43 +104,13 @@
       </div>
     <% end %>
 
-    <% resp_foyer = eleve.dossier_eleve.resp_legal.first %>
-    <h3><%= resp_foyer.prenom%> <%= resp_foyer.nom %> (resp. légal)</h3>
-    <div class='mb-4'>
-      <% if resp_foyer.tel_principal.present? %>
-        <span>Tél </span>
-        <span style='font-size: 1.5em;' class='mr-1 badge badge-secondary'><strong><%=resp_foyer.tel_principal%></strong></span>
-      <% end %>
-      <% if resp_foyer.tel_secondaire.present? %>
-        <span>Tél </span>
-        <span style='font-size: 1.5em;' class='mr-3 badge badge-secondary'><%=resp_foyer.tel_secondaire%></span>
-      <% end %>
-      <% if resp_foyer.email.present? %>
-        <span>Mail </span><span style='font-size: 1.5em;' class='badge badge-secondary'><%=resp_foyer.email%></span>
-      <% end %>
-    </div>
-
     <% resp_legal_2 = eleve.dossier_eleve.resp_legal.second %>
-    <% if resp_legal_2.present? %>
-      <h3><%= resp_legal_2.prenom%> <%= resp_legal_2.nom %> (resp. légal)</h3>
-      <div class='mb-5'>
-        <% if resp_legal_2.tel_principal.present? %>
-          <span>Tél </span>
-          <span style='font-size: 1.5em;' class='mr-1 badge badge-secondary'><strong><%=resp_legal_2.tel_principal%></strong></span>
-        <% end %>
-        <% if resp_legal_2.tel_secondaire.present? %>
-          <span>Tél </span>
-          <span style='font-size: 1.5em;' class='mr-3 badge badge-secondary'><%=resp_legal_2.tel_secondaire%></span>
-        <% end %>
-        <% if resp_legal_2.email.present? %>
-          <span>Mail </span><span style='font-size: 1.5em;' class='badge badge-secondary'><%=resp_legal_2.email%></span>
-        <% end %>
-      </div>
-    <% end %>
 
-    <h2 class="separation">Elève <%= eleve.prenom%> <%=eleve.nom%></h2>
+    <%= construire [{type: 'contact', contact: resp_foyer}] %>
+    <%= construire [{type: 'contact', contact: resp_legal_2}] %>
 
-    <span>Sexe <%=eleve.sexe%></span>
+    <h2 class="separation"><%= eleve.classe_ant %> <%= eleve.prenom%> <%=eleve.nom%></h2>
+
     <%= construire identite %>
 
     <h2 class="separation">Habite chez <%=resp_foyer.prenom %> <%=resp_foyer.nom %></h2>
@@ -143,6 +122,8 @@
     <% eleve.option.each do |option| %>
       <p><strong><%= option.groupe %></strong> : <%= option.nom %></p>
     <% end %>
+
+    <%= construire [{type: 'contact', contact: eleve.dossier_eleve.contact_urgence}] %>
 
     <div class="d-flex justify-content-center align-items-center" style='text-align: center; width:100%'>
       <form action='/agent/valider_inscription' method='POST'>
@@ -157,5 +138,6 @@
           id="bouton-eleve-sortant" type='submit'  <%= 'disabled' if eleve.dossier_eleve.etat == 'sortant'%>>
           Cet élève est sorti·e de l'établissement</button>
       </form>
-  </div>
+    </div>
+
 </div>
