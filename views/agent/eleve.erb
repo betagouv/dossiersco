@@ -127,8 +127,12 @@
     <h2 class="separation">Habite chez <%=resp_legal_1.prenom %> <%=resp_legal_1.nom %></h2>
 
     <%= construire domicile_actuel %>
-    <hr/>
-    <%= construire ancien_domicile %>
+    <% if resp_legal_1.changement_adresse %>
+      <div id="ancienne_adresse">
+        <hr/>
+        <%= construire ancien_domicile %>
+      </div>
+    <% end %>
 
     <h2 class="separation">Options</h2>
 
