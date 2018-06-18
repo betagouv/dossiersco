@@ -54,12 +54,10 @@ get '/agent/liste_des_eleves' do
     .select('resp_legals.changement_adresse').select('resp_legals.email')
     .order('eleves.classe_ant DESC, dossier_eleves.etat, eleves.identifiant')
     .where(resp_legals:{priorite:1}, etablissement: agent.etablissement)
-    .all
   pieces_jointes = PieceJointe
     .joins(:dossier_eleve,:piece_attendue)
     .select('dossier_eleves.id as dossier_id').select('piece_jointes.*')
     .where(piece_attendues:{etablissement_id: agent.etablissement.id})
-    .all
     .group_by(&:dossier_eleve_id)
   message_info = session[:message_info]
   session.delete :message_info
