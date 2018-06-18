@@ -20,7 +20,7 @@ services:
       SESSION_SECRET: notreallysecret
   test:
     build: .
-    command: /bin/bash -lc "sleep 1; rake db:migrate db:seed && while true; do ruby tests/test*.rb; sleep 1; done"
+    command: /bin/bash -lc "rm -rf public/uploads/; rake db:migrate db:seed && while true; do ruby tests/test*.rb; done"
     volumes:
       - ./:/app
     working_dir: /app
