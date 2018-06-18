@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_14_082013) do
+ActiveRecord::Schema.define(version: 2018_06_18_151230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -173,6 +173,14 @@ ActiveRecord::Schema.define(version: 2018_06_14_082013) do
     t.string "message"
     t.datetime "updated_at"
     t.string "traitement", default: "tout"
+  end
+
+  create_table "traces", force: :cascade do |t|
+    t.string "identifiant"
+    t.string "categorie"
+    t.string "page_demandee"
+    t.string "adresse_ip"
+    t.datetime "created_at"
   end
 
   add_foreign_key "dossier_eleves", "eleves", column: "eleve_id"
