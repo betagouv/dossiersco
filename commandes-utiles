@@ -105,6 +105,16 @@ Marshal.load(Base64.decode64(CGI.unescape(cookie.split("\n").join).split('--').f
 OpenSSL::HMAC.hexdigest(OpenSSL::Digest::SHA1.new, session_secret, CGI.unescape(cookie.split('--')[0])) == cookie.split('--')[1]
 où session_secret est la valeur de la variable d’environnement SESSION_SECRET
 
+
 # Copier les données de prod vers staging
 
 heroku pg:copy dossiersco::DATABASE_URL DATABASE_URL -a dossiersco-staging
+
+docker-compose exec postgres bash
+apt-get update
+apt-get install curl
+curl https://cli-assets.heroku.com/install.sh | sh
+heroku login
+export PGUSER=dossiersco
+dropdb dossiersco -U dossiersco
+heroku pg:pull dossiersco::DATABASE_URL dossiersco -a dossiersco-staging
