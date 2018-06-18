@@ -21,6 +21,12 @@ end
 set :database_file, "config/database.yml"
 
 before '/agent/*' do
+  agent_connecte = agent
+  identifiant = agent_connecte.present? ? agent.identifiant : '<anonyme>'
+  Trace.create(identifiant: identifiant,
+    categorie: 'agent',
+    page_demandee: request.path_info,
+    adresse_ip: request.ip)
   redirect '/agent' unless agent.present?
 end
 
