@@ -18,4 +18,4 @@ Mineurs:
 Améliorer les tests ou l'exploitabilité:
 [ ] Séparer les tests en plusieurs fichiers
 [ ] Supprimer l'ancien fichier quand on modifie une pièce jointe
-[ ] Test: vérifier la présence des données dans les champs du formulaire famille (a4cddea)
+[ ] Test: vérifier la présence des données dans les champs du formulaire famille (1017bb5)
