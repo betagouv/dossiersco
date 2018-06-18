@@ -138,7 +138,7 @@ class EleveFormTest < Test::Unit::TestCase
   def test_dossier_eleve_possede_un_contact_urgence
     dossier_eleve = DossierEleve.first
 
-    ContactUrgence.create(dossier_eleve_id: dossier_eleve.id, tel_principal: "0123456789")
+    ContactUrgence.update dossier_eleve_id: dossier_eleve.id, tel_principal: "0123456789"
 
     assert dossier_eleve.contact_urgence.tel_principal == "0123456789"
   end
@@ -208,6 +208,38 @@ class EleveFormTest < Test::Unit::TestCase
     post '/identification', identifiant: '2', date_naiss: '1915-12-19'
     get '/famille'
     doc = Nokogiri::HTML(last_response.body)
+    donnees = reinjecte_donnees_formulaire_famille doc
+
+    # Pas de changement d'adresse
+    donnees['tel_principal_rl1'] = "Changement de numéro"
+    doc = soumet_formulaire '/famille', donnees
+
+    eleve = Eleve.find_by(identifiant: 2)
+    assert !eleve.dossier_eleve.resp_legal.collect(&:changement_adresse).any?
+
+    # Changement d'adresse
+    donnees['adresse_rl1'] = "Nouvelle adresse"
+    doc = soumet_formulaire '/famille', donnees
+
+    eleve = Eleve.find_by(identifiant: 2)
+    assert eleve.dossier_eleve.resp_legal.collect(&:changement_adresse).any?
+  end
+
+  def test_changement_adresse_resp_legal_1_fait_foi
+    post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+    get '/famille'
+    doc = Nokogiri::HTML(last_response.body)
+    donnees = reinjecte_donnees_formulaire_famille doc
+
+    # Changement d'adresse resp_legal_2
+    donnees['adresse_rl2'] = "Nouvelle adresse"
+    doc = soumet_formulaire '/famille', donnees
+
+    eleve = Eleve.find_by(identifiant: 2)
+    assert !eleve.dossier_eleve.resp_legal.collect(&:changement_adresse).any?
+  end
+
+  def reinjecte_donnees_formulaire_famille doc
     champs = [:lien_de_parente, :prenom, :nom, :adresse, :code_postal, :ville,
               :tel_principal, :tel_secondaire, :email]
 
@@ -220,27 +252,7 @@ class EleveFormTest < Test::Unit::TestCase
         donnees[champ_qualifie] = valeur
       end
     end
-
-    # Pas de changement d'adresse
-    donnees['tel_principal_rl1'] = "Changement de numéro"
-    doc = soumet_formulaire '/famille', donnees
-    champs.each do |champ|
-      ['rl1','rl2'].each do |rl|
-        champ_qualifie = "#{champ}_#{rl}"
-        selecteur = "\##{champ_qualifie}"
-        assert_attr donnees[champ_qualifie], selecteur, doc
-      end
-    end
-
-    eleve = Eleve.find_by(identifiant: 2)
-    assert !eleve.dossier_eleve.resp_legal.collect(&:changement_adresse).any?
-
-    # Changement d'adresse
-    donnees['adresse_rl1'] = "Nouvelle adresse"
-    doc = soumet_formulaire '/famille', donnees
-
-    eleve = Eleve.find_by(identifiant: 2)
-    assert eleve.dossier_eleve.resp_legal.collect(&:changement_adresse).any?
+    donnees
   end
 
   def test_affichage_preview_jpg_famille
@@ -730,14 +742,29 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_affiche_lenvoi_de_message_uniquement_si_un_des_resp_legal_a_un_mail
-    e = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01')
-    dossier_eleve = DossierEleve.create!(eleve_id: e.id, etablissement_id: Etablissement.first.id)
-    resp_legal = RespLegal.create(email: 'test@test.com', dossier_eleve_id: dossier_eleve.id)
+    e = Eleve.create! identifiant: 'XXX'
+    dossier_eleve = DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first
+    RespLegal.create! dossier_eleve_id: dossier_eleve.id, email: 'test@test.com'
 
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
     get "/agent/eleve/XXX"
 
     assert last_response.body.include? "Ce formulaire envoie un message à la famille de l'élève."
+  end
+
+  def test_affiche_contacts
+    e = Eleve.create! identifiant: 'XXX'
+    dossier_eleve = DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first
+    RespLegal.create! dossier_eleve_id: dossier_eleve.id,
+      tel_principal: '0101010101', tel_secondaire: '0606060606', email: 'test@test.com'
+    ContactUrgence.create! dossier_eleve_id: dossier_eleve.id, tel_principal: '0103030303'
+
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    get "/agent/eleve/XXX"
+
+    assert last_response.body.include? "0101010101"
+    assert last_response.body.include? "0606060606"
+    assert last_response.body.include? "0103030303"
   end
 
   def test_affiche_lenveloppe_uniquement_si_un_des_resp_legal_a_un_mail
@@ -1089,5 +1116,36 @@ class EleveFormTest < Test::Unit::TestCase
     pas_connecte = ".etablissement .progress .bg-secondary"
     assert_equal "2", doc.css(pas_connecte).first.text().strip
     assert_equal "width: 100.0%;", doc.css(pas_connecte).first.attr("style")
+  end
+
+  def test_meme_adresse
+    r = RespLegal.new adresse: '42 rue', code_postal: '75020', ville: 'Paris'
+    assert       r.meme_adresse(r)
+    assert       r.meme_adresse(RespLegal.new adresse: r.adresse, code_postal: r.code_postal, ville: r.ville)
+    assert_false r.meme_adresse(nil)
+    assert_false r.meme_adresse(RespLegal.new adresse: '30',      code_postal: r.code_postal, ville: r.ville)
+    assert_false r.meme_adresse(RespLegal.new adresse: r.adresse, code_postal: '59001',       ville: r.ville)
+    assert_false r.meme_adresse(RespLegal.new adresse: r.adresse, code_postal: r.code_postal, ville: 'Lyon')
+  end
+
+  def test_page_eleve_agent_affiche_changement_adresse
+    resp_legal_1 = Eleve.find_by(identifiant: '2').dossier_eleve.resp_legal.find {|r| r.priorite == 1}
+    resp_legal_1.update changement_adresse: true, adresse: 'Nouvelle adresse'
+
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+
+    get '/agent/eleve/2'
+
+    doc = Nokogiri::HTML(last_response.body)
+    assert_not_nil doc.css("div#ancienne_adresse").first
+  end
+
+  def test_page_eleve_agent_affiche_adresse_sans_changement
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+
+    get '/agent/eleve/2'
+
+    doc = Nokogiri::HTML(last_response.body)
+    assert_nil doc.css("div#ancienne_adresse").first
   end
 end
