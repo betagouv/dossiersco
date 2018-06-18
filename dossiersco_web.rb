@@ -84,6 +84,10 @@ post '/identification' do
 		session[:message_erreur] = "Veuillez renseigner l'identifiant et la date de naissance de l'élève."
 		redirect '/'
 	end
+  Trace.create(identifiant: params[:identifiant],
+    categorie: 'famille',
+    page_demandee: request.path_info,
+    adresse_ip: request.ip)
 	dossier_eleve = get_dossier_eleve params[:identifiant]
   date_saisie = normalise(params[:date_naiss]) || 'pas-de-date'
 	if dossier_eleve.present? && (dossier_eleve.eleve.date_naiss == date_saisie)
