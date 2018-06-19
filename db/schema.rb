@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_18_151230) do
+ActiveRecord::Schema.define(version: 2018_06_19_100122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,6 +110,7 @@ ActiveRecord::Schema.define(version: 2018_06_18_151230) do
     t.text "message_infirmerie"
     t.string "email"
     t.boolean "gere_demi_pension", default: false
+    t.string "signataire", default: ""
   end
 
   create_table "montees", force: :cascade do |t|
