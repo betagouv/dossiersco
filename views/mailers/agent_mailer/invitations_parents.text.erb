@@ -14,6 +14,8 @@ Veuillez vous munir des pièces suivantes: <% @eleve.dossier_eleve.etablissement
 Pour le bon déroulement de l’inscription en ligne, merci de vous connecter
 et de vérifier les informations vous concernant avant le <%= @eleve.dossier_eleve.etablissement.date_limite %>.
 
+Nous vous conseillons cependant de ne pas attendre les derniers jours!
+
 Vos identifiants sont : <%= @eleve.identifiant %>
 et la date de naissance de votre enfant.
 
@@ -25,4 +27,4 @@ relève d’une démarche d’innovation ; nous sommes très intéressés par vo
 Si vous ne souhaitez pas réaliser cette démarche par Internet, veuillez prendre
 contact avec le collège.
 
-La Principale
+<%= @eleve.dossier_eleve.etablissement.signataire %>
