@@ -28,8 +28,9 @@
         <ELEVES>
         <% etablissement.dossier_eleve.each do |dossier_eleve| %>
             <ELEVE>
-                <ID_PRV_ELE>22222</ID_PRV_ELE>
-                <NOM_DE_FAMILLE>HugoHugo</NOM_DE_FAMILLE>
+              <% mappings.each do |mapping| %>
+                <<%=mapping.cible%>><%=dossier_eleve.eleve[mapping.source]%></<%=mapping.cible%>>
+              <% end %>
                 <PRENOM>VictorVictor</PRENOM>
                 <CODE_PAYS_NAT>100</CODE_PAYS_NAT>
                 <DATE_NAISS>2002-01-01</DATE_NAISS>
@@ -42,10 +43,10 @@
                 <DOUBLEMENT>false</DOUBLEMENT>
                 <RESPONSABLES_ELEVE>
                   <% dossier_eleve.resp_legal.each do |resp_legal| %>
-                    <LEGAL1>
+                    <LEGAL>
                         <ID_PRV_PER>11111</ID_PRV_PER>
                         <CODE_PARENTE>1</CODE_PARENTE>
-                    </LEGAL1>
+                    </LEGAL>
                   <% end %>
                 </RESPONSABLES_ELEVE>
                 <SCOLARITE_ACTIVE>

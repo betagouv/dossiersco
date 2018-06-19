@@ -1152,13 +1152,13 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_export_xml
     etablissement = Etablissement.first
-    doc = Nokogiri::XML(export_xml etablissement)
+    doc = Nokogiri::XML(export_xml(etablissement, []))
     assert_equal "DOSSIERSCO", doc.xpath("/IMPORT_ELEVES/PARAMETRES/LOGICIEL").text()
   end
 
   def test_export_xml_contient_tous_les_eleves_de_l_etablissement
     etablissement = Etablissement.first
-    doc = Nokogiri::XML(export_xml etablissement)
+    doc = Nokogiri::XML(export_xml(etablissement, []))
     assert_equal etablissement.dossier_eleve.count, doc.xpath("/IMPORT_ELEVES/DONNEES/ELEVES/ELEVE").count
   end
 
@@ -1166,7 +1166,7 @@ class EleveFormTest < Test::Unit::TestCase
     etablissement = Etablissement.create
     dossier_eleve = cree_dossier_eleve({}, etablissement, 'validé')
 
-    doc = Nokogiri::XML(export_xml etablissement)
+    doc = Nokogiri::XML(export_xml(etablissement, []))
     assert_equal dossier_eleve.resp_legal.count, doc.xpath("/IMPORT_ELEVES/DONNEES/ELEVES/ELEVE/RESPONSABLES_ELEVE/*").count
   end
 
@@ -1175,9 +1175,36 @@ class EleveFormTest < Test::Unit::TestCase
     dossier_eleve_1 = cree_dossier_eleve({}, etablissement, 'validé')
     dossier_eleve_2 = cree_dossier_eleve({}, etablissement, 'validé')
 
-    doc = Nokogiri::XML(export_xml etablissement)
+    doc = Nokogiri::XML(export_xml(etablissement, []))
 
     assert_equal 4, doc.xpath("/IMPORT_ELEVES/DONNEES/PERSONNES/PERSONNE").count
+    ['1','2'].each do |i|
+      assert_equal 2, doc.xpath("/IMPORT_ELEVES/DONNEES/ELEVES/ELEVE[#{i}]/RESPONSABLES_ELEVE/LEGAL").count
+    end
   end
 
+  def test_export_xml_sait_recopier_des_champs
+    etablissement = Etablissement.create
+    valeurs = {identifiant: 'XXX', nom: 'Martin'}
+
+    dossier_eleve = cree_dossier_eleve(valeurs, etablissement)
+    mappings = [Mapping.new(:identifiant, 'ID_NATIONAL'),
+                Mapping.new(:nom, 'NOM_DE_FAMILLE')]
+
+    doc = Nokogiri::XML(export_xml(etablissement, mappings))
+
+    structure = "/IMPORT_ELEVES/DONNEES/ELEVES/ELEVE[1]/"
+    mappings.each do |mapping|
+      assert_equal valeurs[mapping.source], doc.xpath("#{structure}#{mapping.cible}").text
+    end
+  end
+
+end
+
+class Mapping
+   attr_accessor :source, :cible
+   def initialize source, cible
+     @source = source
+     @cible = cible
+   end
 end

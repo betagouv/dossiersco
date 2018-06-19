@@ -178,6 +178,7 @@ def cree_dossier_eleve eleve, etablissement, etat = 'en attente de validation'
     enfants_a_charge_secondaire: 2, communique_info_parents_eleves: false,
     priorite: 2
   cree_contact_urgence dossier_eleve
+  dossier_eleve
 end
 
 def cree_contact_urgence dossier_eleve
