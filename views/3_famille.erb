@@ -99,10 +99,6 @@
 
     <p>que ces coordonnées soient communiquées aux fédérations de parents d'élèves.</p>
 
-<a href="#" id='ajouter_resp_legal_2' class='<%= "d-none" if resp_legal_2.present? %> btn btn-outline-primary' >
-    Ajouter un second responsable legal
-</a>
-
 <% if resp_legal_2 %>
 <div id='resp_legal_2' class='<%= "d-none" unless resp_legal_2.present? %>' >
   <h2 class="mt-5 separation">Famille (2/3) : Responsable légal 2</h2>
@@ -219,19 +215,8 @@
       $("#code_postal_rl2").val($("#code_postal_rl1").val());
       $("#ville_rl2").val($("#ville_rl1").val());
   })
-  $('#ajouter_resp_legal_2').click(
-    function(e){
-        $(this).html('d-none');
-        $('#resp_legal_2').removeClass('d-none');
-        $('#lien_de_parente_rl2').focus();
-        e.preventDefault(); // Empêche un reload de la page
-        $('html, body').animate({
-            scrollTop: $('#resp_legal_2').offset().top
-        }, 1000);
-    })
   $('#ajouter_contact_urgence').click(function(e) {
         if ($('#contact_urgence').hasClass('d-none')) {
-          console.log('if')
           $(this).html("Ne pas ajouter un contact en cas d'urgence");
           $('#contact_urgence').removeClass('d-none');
           $('#lien_avec_eleve_urg').focus();
