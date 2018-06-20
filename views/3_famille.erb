@@ -102,6 +102,8 @@
 <a href="#" id='ajouter_resp_legal_2' class='<%= "d-none" if resp_legal_2.present? %> btn btn-outline-primary' >
     Ajouter un second responsable legal
 </a>
+
+<% if resp_legal_2 %>
 <div id='resp_legal_2' class='<%= "d-none" unless resp_legal_2.present? %>' >
   <h2 class="mt-5 separation">Famille (2/3) : Responsable légal 2</h2>
 
@@ -169,6 +171,7 @@
 
     <p>que ces coordonnées soient communiquées aux fédérations de parents d'élèves.</p>
 </div>
+<% end %>
 
 <a href="#" id='ajouter_contact_urgence' class='<%= "d-none" if contact_urgence.present? %> btn btn-outline-primary' >
     Ajouter un contact en cas d'urgence

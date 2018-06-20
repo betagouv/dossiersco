@@ -1148,4 +1148,17 @@ class EleveFormTest < Test::Unit::TestCase
     doc = Nokogiri::HTML(last_response.body)
     assert_nil doc.css("div#ancienne_adresse").first
   end
+
+  def test_affiche_pas_resp_legal_2_si_absent_de_siecle
+    e = Eleve.create! identifiant: 'XXX', date_naiss: '1915-12-19'
+    dossier_eleve = DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first
+    RespLegal.create! dossier_eleve_id: dossier_eleve.id, email: 'test@test.com', priorite: 1
+
+    post '/identification', identifiant: 'XXX', date_naiss: '1915-12-19'
+    get '/famille'
+
+    doc = Nokogiri::HTML(last_response.body)
+    assert_nil doc.css("div#resp_legal_2").first
+  end
+
 end
