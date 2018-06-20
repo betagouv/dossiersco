@@ -166,38 +166,37 @@ end
 
 get '/famille' do
 	dossier_eleve = eleve.dossier_eleve
-	resp_legal1 = RespLegal.find_by(dossier_eleve_id: dossier_eleve.id, priorite: 1)
-	resp_legal2 = RespLegal.find_by(dossier_eleve_id: dossier_eleve.id, priorite: 2)
+	resp_legal1 = dossier_eleve.resp_legal_1
+	resp_legal2 = dossier_eleve.resp_legal_2
 	contact_urgence = ContactUrgence.find_by(dossier_eleve_id: dossier_eleve.id)
 
 	identite_resp_legal.each do |i|
-		params["#{i}_rl1"] = resp_legal1[i] if !resp_legal1.nil? && !resp_legal1[i].nil?
-		params["#{i}_rl2"] = resp_legal2[i] if !resp_legal2.nil? && !resp_legal2[i].nil?
-		params["#{i}_urg"] = contact_urgence[i] if !contact_urgence.nil? && !contact_urgence[i].nil?
+		params["#{i}_rl1"] = resp_legal1[i] if resp_legal1
+		params["#{i}_rl2"] = resp_legal2[i] if resp_legal2
+		params["#{i}_urg"] = contact_urgence[i] if contact_urgence
 	end
-
-  resp_legal_2 = dossier_eleve.resp_legal.select {|resp_legal| resp_legal.priorite == 2}.first
-
-  erb :'3_famille', locals: {resp_legal_2: resp_legal_2, contact_urgence: dossier_eleve.contact_urgence,
-    code_profession: code_profession, code_situation: code_situation}
+  erb :'3_famille', locals: {resp_legal_2: resp_legal2,
+    contact_urgence: dossier_eleve.contact_urgence,
+    code_profession: code_profession,
+    code_situation: code_situation}
 end
 
 post '/famille' do
   dossier_eleve = eleve.dossier_eleve
-	resp_legal1 = RespLegal.find_by(dossier_eleve_id: dossier_eleve.id, priorite: 1) || RespLegal.new(priorite: 1, dossier_eleve_id: dossier_eleve.id)
-	resp_legal2 = RespLegal.find_by(dossier_eleve_id: dossier_eleve.id, priorite: 2) || RespLegal.new(priorite: 2, dossier_eleve_id: dossier_eleve.id)
+	resp_legal1 = dossier_eleve.resp_legal_1
+	resp_legal2 = dossier_eleve.resp_legal_2
 	contact_urgence = ContactUrgence.find_by(dossier_eleve_id: dossier_eleve.id) || ContactUrgence.new(dossier_eleve_id: dossier_eleve.id)
 
   resp_legal1.changement_adresse = true if resp_legal1.adresse.to_s.upcase != params['adresse_rl1'].to_s.upcase
 
 	identite_resp_legal.each do |i|
 		resp_legal1[i] = params["#{i}_rl1"] if params.has_key?("#{i}_rl1")
-		resp_legal2[i] = params["#{i}_rl2"] if params.has_key?("#{i}_rl2")
+		resp_legal2[i] = params["#{i}_rl2"] if resp_legal2 && params.has_key?("#{i}_rl2")
 		contact_urgence[i] = params["#{i}_urg"] if params.has_key?("#{i}_urg")
 	end
 
 	resp_legal1.save!
-	resp_legal2.save!
+	resp_legal2.save! if resp_legal2
 	contact_urgence.save!
 	sauve_et_redirect dossier_eleve, 'administration'
 end

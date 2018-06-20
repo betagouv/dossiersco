@@ -16,7 +16,7 @@
         disabled: true
     }] %>
 
-<% resp_legal_1 = eleve.dossier_eleve.resp_legal.first %>
+<% resp_legal_1 = eleve.dossier_eleve.resp_legal_1 %>
 <% domicile_actuel = [
     {
         name: "lien_de_parente_rl1",
@@ -105,7 +105,7 @@
       </div>
     <% end %>
 
-    <% resp_legal_2 = eleve.dossier_eleve.resp_legal.second %>
+    <% resp_legal_2 = eleve.dossier_eleve.resp_legal_2 %>
 
     <%= construire [{type: 'contact', contact: resp_legal_1}] %>
     <%= construire [{type: 'contact', contact: resp_legal_2}] %>

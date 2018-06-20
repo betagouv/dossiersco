@@ -9,6 +9,7 @@ Observation de l'usage:
 Important mais moins urgent:
 [ ] Editer un état récapitulatif avec les options choisies
 [ ] Notifier la famille des options pédagogiques affectées (Tillion)
+[ ] Dédoublonner les resp. légaux (pour les frères et soeurs)
 
 Mineurs:
 [ ] individualiser le bloc de la demi-pension par collège

@@ -169,7 +169,6 @@ def cree_dossier_eleve eleve, etablissement, etat = 'en attente de validation'
       commentaire: 'Très bien',
       etat: etat
       )
-  cree_resp_legal dossier_eleve
   RespLegal.create! dossier_eleve_id: dossier_eleve.id,
     lien_de_parente: 'Père', prenom: 'Jean', nom: 'Blayo',
     adresse: '42 rue du départ', code_postal: '75018', ville: 'Paris',
@@ -177,6 +176,7 @@ def cree_dossier_eleve eleve, etablissement, etat = 'en attente de validation'
     situation_emploi: 'Employé', profession: 'banque', enfants_a_charge: 2,
     enfants_a_charge_secondaire: 2, communique_info_parents_eleves: false,
     priorite: 2
+  cree_resp_legal dossier_eleve
   cree_contact_urgence dossier_eleve
 end
 
