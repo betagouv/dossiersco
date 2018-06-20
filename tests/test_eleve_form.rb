@@ -744,7 +744,7 @@ class EleveFormTest < Test::Unit::TestCase
   def test_affiche_lenvoi_de_message_uniquement_si_un_des_resp_legal_a_un_mail
     e = Eleve.create! identifiant: 'XXX'
     dossier_eleve = DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first
-    RespLegal.create! dossier_eleve_id: dossier_eleve.id, email: 'test@test.com'
+    RespLegal.create! dossier_eleve_id: dossier_eleve.id, email: 'test@test.com', priorite: 1
 
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
     get "/agent/eleve/XXX"
@@ -756,7 +756,7 @@ class EleveFormTest < Test::Unit::TestCase
     e = Eleve.create! identifiant: 'XXX'
     dossier_eleve = DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first
     RespLegal.create! dossier_eleve_id: dossier_eleve.id,
-      tel_principal: '0101010101', tel_secondaire: '0606060606', email: 'test@test.com'
+      tel_principal: '0101010101', tel_secondaire: '0606060606', email: 'test@test.com', priorite: 1
     ContactUrgence.create! dossier_eleve_id: dossier_eleve.id, tel_principal: '0103030303'
 
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
@@ -1129,7 +1129,7 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_page_eleve_agent_affiche_changement_adresse
-    resp_legal_1 = Eleve.find_by(identifiant: '2').dossier_eleve.resp_legal.find {|r| r.priorite == 1}
+    resp_legal_1 = Eleve.find_by(identifiant: '2').dossier_eleve.resp_legal_1
     resp_legal_1.update changement_adresse: true, adresse: 'Nouvelle adresse'
 
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
