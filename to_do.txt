@@ -1,10 +1,6 @@
 Evolutions fonctionnelles importantes:
 [ ] exporter les données vers siecle
-[ ] Optimiser le temps de chargement de la liste des élèves ?
 [ ] Pouvoir émettre des relances en masse (par classe et/ou par statut)
-
-Observation de l'usage:
-[ ] Emailing (Mailjet? autre?) parents (en complément des actions "recherche de feedback" parents)
 
 Important mais moins urgent:
 [ ] Editer un état récapitulatif avec les options choisies
@@ -12,11 +8,9 @@ Important mais moins urgent:
 [ ] Dédoublonner les resp. légaux (pour les frères et soeurs)
 
 Mineurs:
-[ ] individualiser le bloc de la demi-pension par collège
 [ ] Permettre aux familles d'adresser un message à l'établissement ?
-[/] Améliorer le comparatif ancienne / nouvelle adresse
 
 Améliorer les tests ou l'exploitabilité:
 [ ] Séparer les tests en plusieurs fichiers
-[ ] Supprimer l'ancien fichier quand on modifie une pièce jointe
+[ ] Supprimer l'ancien fichier sur s3 quand on modifie une pièce jointe
 [ ] Test: vérifier la présence des données dans les champs du formulaire famille (1017bb5)
