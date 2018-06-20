@@ -1161,4 +1161,19 @@ class EleveFormTest < Test::Unit::TestCase
     assert_nil doc.css("div#resp_legal_2").first
   end
 
+  def test_detection_adresses_identiques
+    rl = RespLegal.create(
+        adresse_ant:"4 IMPASSE MORLET",
+        ville_ant: "PARIS",
+        code_postal_ant:"75011",
+        adresse:"4 impasse Morlet\n",
+        ville:"  Paris\r",
+        code_postal: "75 011")
+    assert rl.adresse_inchangee
+  end
+
+  def test_detection_adresses_identiques_cas_degenere
+    assert RespLegal.new.adresse_inchangee
+  end
+
 end
