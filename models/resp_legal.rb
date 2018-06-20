@@ -9,4 +9,15 @@ class RespLegal < ActiveRecord::Base
     end
     meme_adresse
   end
+
+  def equivalentes(valeur1, valeur2)
+    (valeur1 && valeur1.upcase.gsub(/[[:space:]]/,'')) ==
+    (valeur2 && valeur2.upcase.gsub(/[[:space:]]/,''))
+  end
+
+  def adresse_inchangee
+    equivalentes(adresse, adresse_ant) &&
+    equivalentes(ville, ville_ant) &&
+    equivalentes(code_postal, code_postal_ant)
+  end
 end
