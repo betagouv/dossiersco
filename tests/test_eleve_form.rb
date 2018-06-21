@@ -693,8 +693,8 @@ class EleveFormTest < Test::Unit::TestCase
 
     get '/agent/liste_des_eleves'
     doc = Nokogiri::HTML(last_response.body)
-    assert doc.css("##{dossier_eleve.id} td:nth-child(7) a i.fa-file-image").present?
-    assert_equal "color: #00cf00", doc.css("##{dossier_eleve.id} td:nth-child(7) i.fa-check-circle").attr("style").text
+    assert doc.css("##{dossier_eleve.id} td:nth-child(8) a i.fa-file-image").present?
+    assert_equal "color: #00cf00", doc.css("##{dossier_eleve.id} td:nth-child(8) i.fa-check-circle").attr("style").text
   end
 
   def test_affiche_changement_adresse_liste_eleves
@@ -708,7 +708,7 @@ class EleveFormTest < Test::Unit::TestCase
     get '/agent/liste_des_eleves'
 
     doc = Nokogiri::HTML(last_response.body)
-    assert_equal "✓", doc.css("tbody > tr:nth-child(1) > td:nth-child(5)").text.strip
+    assert_equal "✓", doc.css("tbody > tr:nth-child(1) > td:nth-child(6)").text.strip
   end
 
   def test_affiche_demi_pensionnaire
