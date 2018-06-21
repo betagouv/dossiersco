@@ -82,11 +82,11 @@ heroku pg:index_usage
 
 # Supprimer des dossiers et les données liées
 def supprimer_donnees_eleves(dossiers)
-	dossiers.each do |dossier| dossier.resp_legal.each do |resp| resp.destroy end end
-	dossiers.each do |dossier| dossier.eleve.option = [] end
-	eleves = dossiers.collect(&:eleve)
-	dossiers.each do |dossier| dossier.destroy end
-	eleves.each do |eleve| eleve.destroy end
+    dossiers.each do |dossier| dossier.resp_legal.each do |resp| resp.destroy end end
+    dossiers.each do |dossier| dossier.eleve.option = [] end
+    eleves = dossiers.collect(&:eleve)
+    dossiers.each do |dossier| dossier.destroy end
+    eleves.each do |eleve| eleve.destroy end
 end
 
 # Supprimer tout un établissement
