@@ -293,8 +293,8 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_envoyer_un_mail_quand_la_demande_dinscription_est_valide
-    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
-    post '/envoyer_email_confirmation', identifiant: '6'
+    post '/identification', identifiant: '4', date_naiss: '1970-01-01'
+    post '/validation'
 
     mail = ActionMailer::Base.deliveries.last
     assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
@@ -303,7 +303,7 @@ class EleveFormTest < Test::Unit::TestCase
     assert mail['to'].addresses.collect(&:to_s).include? 'contact@dossiersco.beta.gouv.fr'
     assert_equal "Réinscription de votre enfant au collège", mail['subject'].to_s
     part = mail.html_part || mail.text_part || mail
-    assert part.body.decoded.include? "réinscription de votre enfant Emile Blayo"
+    assert part.body.decoded.include? "réinscription de votre enfant Pierre Blayo"
     assert part.body.decoded.include? "Tillion"
   end
 
@@ -775,7 +775,7 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_changement_statut_famille_en_cours_de_validation
     post '/identification', identifiant: '2', date_naiss: '1915-12-19'
-    get '/confirmation'
+    post '/validation'
     dossier_eleve = Eleve.find_by(identifiant: '2').dossier_eleve
     assert_equal 'en attente de validation', dossier_eleve.etat
 
