@@ -55,6 +55,7 @@ get '/agent/liste_des_eleves' do
   lignes_eleves = DossierEleve
     .joins(:eleve,:resp_legal)
     .select('dossier_eleves.id as dossier_id')
+    .select('dossier_eleves.updated_at as dossier_maj')
     .select('dossier_eleves.*')
     .select('eleves.*')
     .select('resp_legals.email')
