@@ -46,24 +46,17 @@ def import_ligne_adresse etablissement_id, ligne_siecle
 
   champs_resp_legal = [:code_postal, :ville]
 
-['1', '2'].each do |i|
-  donnees_resp_legal = {}
-  champs_resp_legal.each do |champ|
-    donnees_resp_legal[champ] = ligne_siecle[COLONNES["#{champ}_resp_legal#{i}".to_sym]]
-  end
-
-  resp_legal = RespLegal.find_by(priorite: i.to_i, dossier_eleve_id: eleve.dossier_eleve.id)
-  resp_legal.update(
-      ville_ant: donnees_resp_legal[:ville],
-      adresse_ant: (concatener_adresse ligne_siecle, resp_legal.priorite),
-      code_postal_ant: donnees_resp_legal[:code_postal])
-
-    if !resp_legal.changement_adresse
-      resp_legal.update(
-        ville: donnees_resp_legal[:ville],
-        adresse: (concatener_adresse ligne_siecle, resp_legal.priorite),
-        code_postal: donnees_resp_legal[:code_postal])
+  ['1', '2'].each do |i|
+    donnees_resp_legal = {}
+    champs_resp_legal.each do |champ|
+      donnees_resp_legal[champ] = ligne_siecle[COLONNES["#{champ}_resp_legal#{i}".to_sym]]
     end
+
+    resp_legal = RespLegal.find_by(priorite: i.to_i, dossier_eleve_id: eleve.dossier_eleve.id)
+    resp_legal.update(
+        ville_ant: donnees_resp_legal[:ville],
+        adresse_ant: (concatener_adresse ligne_siecle, resp_legal.priorite),
+        code_postal_ant: donnees_resp_legal[:code_postal])
   end
 end
 

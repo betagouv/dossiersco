@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_20_124821) do
+ActiveRecord::Schema.define(version: 2018_06_20_155028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -158,7 +158,6 @@ ActiveRecord::Schema.define(version: 2018_06_20_124821) do
     t.integer "enfants_a_charge_secondaire"
     t.boolean "communique_info_parents_eleves"
     t.integer "priorite"
-    t.boolean "changement_adresse", default: false
     t.datetime "updated_at"
     t.string "adresse_ant"
     t.string "ville_ant"
