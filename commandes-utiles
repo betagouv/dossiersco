@@ -135,7 +135,7 @@ require 'tilt/erb'
 eleve = Eleve.first
 template = "<%= eleve.dossier_eleve.etablissement.nom %>: attention, derniers jours pour réinscrire votre enfant <%= eleve.prenom %> sur https://dossiersco.fr/ avec vos identifiants: <%= eleve.identifiant %> et la date de naissance de l'enfant."
 template = Tilt['erb'].new { template }
-template.render(nil,eleve: eleve)
+text = template.render(nil,eleve: eleve)
 
 # Avec Nexmo
 
@@ -148,7 +148,7 @@ header = {'Content-Type': 'application/json'}
 payload = {
 	'api_key':"#{ENV['NEXMO_KEY']}",
 	'api_secret':"#{ENV['NEXMO_SECRET']}",
-	'from': '33757920180', 'to':"+33662508011", 'text':'DossierSCO vous écrit'}
+	'from': '33757920180', 'to':"+33662508011", 'text':text}
 
 request = Net::HTTP::Post.new(uri.request_uri, header)
 request.body = payload.to_json
@@ -163,7 +163,7 @@ https = Net::HTTP.new(uri.host,uri.port)
 https.use_ssl = true
 
 header = {'Content-Type': 'application/json', 'Authorization': "Bearer #{ENV['MAILJET_SMS']}"}
-payload = {'From': 'DossierSCO', 'To':"+33662508011", 'Text':'DossierSCO vous écrit'}
+payload = {'From': 'DossierSCO', 'To':"+33662508011", 'Text':text}
 request = Net::HTTP::Post.new(uri.request_uri, header)
 request.body = payload.to_json
 

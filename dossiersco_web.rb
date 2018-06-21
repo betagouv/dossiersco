@@ -329,6 +329,16 @@ get '/stats' do
   erb :stats, locals: {etablissements: Etablissement.all}
 end
 
+get '/api/recevoir_sms' do
+  puts params.merge(request.content_type == 'application/json' ? JSON.parse(request.body.read) : {})
+  status 204
+end
+
+post '/api/recevoir_sms' do
+  puts params.merge(request.content_type == 'application/json' ? JSON.parse(request.body.read) : {})
+  status 204
+end
+
 not_found do
   erb :not_found
 end
