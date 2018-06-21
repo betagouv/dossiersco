@@ -121,3 +121,22 @@ curl https://cli-assets.heroku.com/install.sh | sh
 heroku login
 export PGUSER=dossiersco
 heroku pg:pull dossiersco::DATABASE_URL dossiersco -a dossiersco-staging
+
+# Envoyer un SMS
+
+require 'uri'
+require 'net/http'
+require 'net/https'
+require 'json'
+
+uri = URI.parse("https://api.mailjet.com/v4/sms-send")
+
+https = Net::HTTP.new(uri.host,uri.port)
+https.use_ssl = true
+
+header = {'Content-Type': 'application/json', 'Authorization': "Bearer #{ENV['MAILJET_SMS']}"}
+payload = {'From': 'DossierSCO', 'To':"+33662508011", 'Text':'DossierSCO vous écrit'}
+request = Net::HTTP::Post.new(uri.request_uri, header)
+request.body = payload.to_json
+
+response = https.request(request)
