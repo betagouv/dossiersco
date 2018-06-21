@@ -31,6 +31,7 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal "2018-05-14", normalise("14/05/2018")
     assert_equal "2018-01-01", normalise("1/1/2018")
     assert_equal "2018-05-14", normalise("___14!___05_A_2018_")
+    assert_equal "2018-05-14", normalise("14052018_")
     assert_equal nil, normalise("foo")
   end
 
