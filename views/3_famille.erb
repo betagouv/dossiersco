@@ -58,7 +58,7 @@
 
 <div class="col-12">
 
-  <h2 class="separation">Famille (1/3) : Responsable légal 1</h2>
+  <h2 class="separation">Famille : Responsable légal<%= " 1" if resp_legal_2.present?%></h2>
 
   <form action="/famille" method="POST">
 
@@ -101,7 +101,7 @@
 
 <% if resp_legal_2 %>
 <div id='resp_legal_2' class='<%= "d-none" unless resp_legal_2.present? %>' >
-  <h2 class="mt-5 separation">Famille (2/3) : Responsable légal 2</h2>
+  <h2 class="mt-5 separation">Famille : Responsable légal 2</h2>
 
     <%= erb :'partials/champ_texte', :locals => { :desc => "Lien de parenté", :variable => "lien_de_parente_rl2", :valeur => params['lien_de_parente_rl2'], :exemple => "Lien de parenté" } %>
 
@@ -173,7 +173,7 @@
     Ajouter un contact en cas d'urgence
 </a>
 <div id='contact_urgence' class='<%= "d-none" unless contact_urgence.present? %>' >
-  <h2 class="mt-5 separation">Famille (3/3) : Autre personne à contacter en cas d'urgence</h2>
+  <h2 class="mt-5 separation">Famille : Autre personne à contacter en cas d'urgence</h2>
 
     <%= erb :'partials/champ_texte', :locals => { :desc => "Lien avec l'élève", :variable => "lien_avec_eleve_urg", :valeur => params['lien_avec_eleve_urg'], :exemple => "Lien avec l'élève" }%>
 

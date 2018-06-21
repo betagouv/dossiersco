@@ -287,7 +287,8 @@ class EleveFormTest < Test::Unit::TestCase
     post '/identification', identifiant: '6', date_naiss: '1970-01-01'
     follow_redirect!
 
-    assert_match /Famille .*: Responsable légal 1/, last_response.body
+    doc = Nokogiri::HTML(last_response.body)
+    assert_equal "Famille : Responsable légal 1", doc.css("body > main > div.col-12 > h2").text
   end
 
   def test_envoyer_un_mail_quand_la_demande_dinscription_est_valide
