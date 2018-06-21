@@ -15,6 +15,10 @@ class RespLegal < ActiveRecord::Base
     (valeur2 && valeur2.upcase.gsub(/[[:space:]]/,''))
   end
 
+  def changement_adresse
+    !adresse_inchangee
+  end
+
   def adresse_inchangee
     equivalentes(adresse, adresse_ant) &&
     equivalentes(ville, ville_ant) &&

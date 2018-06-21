@@ -215,28 +215,14 @@ class EleveFormTest < Test::Unit::TestCase
     doc = soumet_formulaire '/famille', donnees
 
     eleve = Eleve.find_by(identifiant: 2)
-    assert !eleve.dossier_eleve.resp_legal.collect(&:changement_adresse).any?
+    assert !eleve.dossier_eleve.resp_legal_1.changement_adresse
 
     # Changement d'adresse
     donnees['adresse_rl1'] = "Nouvelle adresse"
     doc = soumet_formulaire '/famille', donnees
 
     eleve = Eleve.find_by(identifiant: 2)
-    assert eleve.dossier_eleve.resp_legal.collect(&:changement_adresse).any?
-  end
-
-  def test_changement_adresse_resp_legal_1_fait_foi
-    post '/identification', identifiant: '2', date_naiss: '1915-12-19'
-    get '/famille'
-    doc = Nokogiri::HTML(last_response.body)
-    donnees = reinjecte_donnees_formulaire_famille doc
-
-    # Changement d'adresse resp_legal_2
-    donnees['adresse_rl2'] = "Nouvelle adresse"
-    doc = soumet_formulaire '/famille', donnees
-
-    eleve = Eleve.find_by(identifiant: 2)
-    assert !eleve.dossier_eleve.resp_legal.collect(&:changement_adresse).any?
+    assert eleve.dossier_eleve.resp_legal_1.changement_adresse
   end
 
   def reinjecte_donnees_formulaire_famille doc
@@ -248,7 +234,8 @@ class EleveFormTest < Test::Unit::TestCase
       ['rl1','rl2'].each do |rl|
         champ_qualifie = "#{champ}_#{rl}"
         selecteur = "\##{champ_qualifie}"
-        valeur = doc.css(selecteur).text || doc.css(selecteur).attr('value').text
+        valeur = doc.css(selecteur).attr('value').text if doc.css(selecteur).attr('value')
+        valeur = doc.css(selecteur).text if !doc.css(selecteur).attr('value')
         donnees[champ_qualifie] = valeur
       end
     end
@@ -516,7 +503,7 @@ class EleveFormTest < Test::Unit::TestCase
 
     dossier_eleve1 = Eleve.find_by(identifiant: "070823218DD").dossier_eleve
     resp_legal1 = dossier_eleve1.resp_legal.select { |r| r.lien_de_parente == 'MERE'}.first
-    resp_legal1.update(changement_adresse: true, ville: 'Vernon', code_postal: '27200', adresse: 'Route de Magny')
+    resp_legal1.update(ville: 'Vernon', code_postal: '27200', adresse: 'Route de Magny')
 
     TacheImport.create(url: 'tests/test_import_adresses.xlsx', statut: 'en_attente',
       etablissement_id: etablissement.id, traitement: 'adresses')
@@ -535,13 +522,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'PARIS', resp_legal1.ville_ant
     assert_equal '75017', resp_legal1.code_postal_ant
     assert_equal "5 rue VILLARET DE JOYEUSE \n" + " ", resp_legal1.adresse_ant
-
-    assert_equal 'PARIS', resp_legal2.ville_ant
-    assert_equal 'PARIS', resp_legal2.ville
-    assert_equal '75017', resp_legal2.code_postal_ant
-    assert_equal '75017', resp_legal2.code_postal
-    assert_equal "10 \n" + " 10 rue VILLARET DE JOYEUSE \n" + " batiment C \n" + " au fond à droite \n" + " ", resp_legal2.adresse
-    assert_equal "10 \n" + " 10 rue VILLARET DE JOYEUSE \n" + " batiment C \n" + " au fond à droite \n" + " ", resp_legal2.adresse_ant
   end
 
   def test_creer_des_options
@@ -718,8 +698,8 @@ class EleveFormTest < Test::Unit::TestCase
   def test_affiche_changement_adresse_liste_eleves
     # Si on a un changement d'adresse
     eleve = Eleve.find_by(identifiant: 2)
-    resp_legal = eleve.dossier_eleve.resp_legal.first
-    resp_legal.changement_adresse = true
+    resp_legal = eleve.dossier_eleve.resp_legal_1
+    resp_legal.adresse = "Nouvelle adresse"
     resp_legal.save
 
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
@@ -1130,7 +1110,7 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_page_eleve_agent_affiche_changement_adresse
     resp_legal_1 = Eleve.find_by(identifiant: '2').dossier_eleve.resp_legal_1
-    resp_legal_1.update changement_adresse: true, adresse: 'Nouvelle adresse'
+    resp_legal_1.update adresse: 'Nouvelle adresse'
 
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
 
