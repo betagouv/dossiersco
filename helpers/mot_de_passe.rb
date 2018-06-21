@@ -1,11 +1,14 @@
 module MotDePasse
 	def normalise date
-    return date if date =~ /\d{4}-\d\d-\d\d/
-    if date =~ /([\d]{1,2})[^\d]+([\d]{1,2})[^\d]+([\d]{4})/
+    return date if date =~ /[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}/
+    if date =~ /([[:digit:]]{2})([[:digit:]]{2})([[:digit:]]{4})/
+      jour = $1
+      mois = $2
+    elsif date =~ /([[:digit:]]{1,2})\D+([[:digit:]]{1,2})\D+([[:digit:]]{4})/
       jour = $1.length == 1 ? "0#{$1}" : $1
       mois = $2.length == 1 ? "0#{$2}" : $2
-      return "#{$3}-#{mois}-#{jour}"
     end
+    "#{$3}-#{mois}-#{jour}" if jour
   end
 
   def message_erreur_identification identifiant, date_naissance
