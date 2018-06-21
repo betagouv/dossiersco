@@ -30,7 +30,7 @@
       Totaux
     </div>
     <div class="col-10">
-      <div class="progress" style="font-size: 1rem; margin-left: 0; width: 55em;">
+      <div class="progress" style="font-size: 1rem; margin-left: 0; width: 100%;">
         <%
         dossiers = DossierEleve.all
         stats = dossiers.group_by(&:etat)
@@ -63,7 +63,7 @@
         <%= etablissement.nom %>
       </div>
       <div class="col-10">
-        <div class="progress" style="font-size: 1rem; margin-left: 0; width: 55em;">
+        <div class="progress" style="font-size: 1rem; margin-left: 0; width: 100%;">
           <%
           dossiers = DossierEleve.where(etablissement: etablissement)
           stats = dossiers.group_by(&:etat)
@@ -95,7 +95,7 @@
             <%= classe %>
           </div>
           <div class="col-10">
-        <div class="progress" style="font-size: 1rem; margin-left: 0; width: 55em;">
+        <div class="progress" style="font-size: 1rem; margin-left: 0; width: 100%;">
           <%
           dossiers = DossierEleve.joins(:eleve).where(
             etablissement: etablissement,
