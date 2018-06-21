@@ -17,7 +17,7 @@
   </div>
 
   <span style="display:block; height: 20px;"></span>
-  <a href="#" class="toggle-vis" data-column="6">Pièces jointes / Date de modification</a>
+  <a href="#" class="toggle-vis" data-column="5">Pièces jointes / Date de modification</a>
   <span style="display:block; height: 20px;"></span>
 
 
@@ -28,9 +28,9 @@
       <th>Prénom</th>
       <th>Nom</th>
       <th>Etat</th>
+      <th>Date de modification</th>
       <th><i class="fas fa-truck"></i></th>
       <th><i class="fas fa-utensils"></i></th>
-      <th>Date de modification</th>
       <% pieces_attendues.each do |piece| %>
         <th><%= piece.nom %></th>
       <% end %>
@@ -44,6 +44,7 @@
           <td <%= cliquable %> ><%= ligne_eleve.prenom %></td>
           <td <%= cliquable %> ><%= ligne_eleve.nom %></td>
           <td <%= cliquable %> ><%= ligne_eleve.etat %></td>
+          <td><%= ligne_eleve.dossier_maj.localtime.strftime("%e/%m/%y %H:%M ") %></td>
           <td <%= cliquable %> >
             <% rl = RespLegal.new(
               adresse: ligne_eleve.adresse,
@@ -57,7 +58,6 @@
           <td <%= cliquable %> >
             <%= ligne_eleve.demi_pensionnaire ? "✓" : "" %>
           </td>
-
           <% pieces_attendues.each do |piece| %>
             <% piece_jointe = pieces_jointes[ligne_eleve.dossier_id] &&
                               pieces_jointes[ligne_eleve.dossier_id].find {|x| x.piece_attendue_id == piece.id} %>
@@ -118,6 +118,9 @@
         "bJQueryUI": true,
         "bStateSave": true,
         "order": [[ 0, "desc" ], [3, "asc"]],
+          "columnDefs": [
+            { "visible": false, "targets": 4 }
+          ],
         "lengthMenu": [ 30, 60, 90, 120 ],
         language: {
           processing:     "Traitement en cours...",
@@ -160,16 +163,20 @@
         }
     }]);
 
+
       // Afficher/masquer une colonne
      $('a.toggle-vis').on( 'click', function (e) {
         e.preventDefault();
 
         // Get the column API object
-        debut = $(this).attr('data-column')
-        fin = table.api().columns()[0].length - 1
+        var debut = $(this).attr('data-column')
+        var fin = table.api().columns()[0].length - 1
+        var colonne_date = table.api().column(4)
+        colonne_date.visible( ! colonne_date.visible() );
+
 
         for (var i = debut; i < fin; i++) {
-          var column = table.api().column( i );
+          var column = table.api().column(i);
           column.visible( ! column.visible() );
         }
     } );
