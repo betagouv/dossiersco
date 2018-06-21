@@ -299,14 +299,16 @@ post '/validation' do
   dossier_eleve.signature = params[:signature]
   dossier_eleve.date_signature = Time.now
   dossier_eleve.save
+  if dossier_eleve.etat != 'validé'
+    mail = AgentMailer.envoyer_mail_confirmation(dossier_eleve.eleve)
+    mail.deliver_now
+    dossier_eleve.update(etat: 'en attente de validation')
+  end
   redirect '/confirmation'
 end
 
 get '/confirmation' do
   dossier_eleve = eleve.dossier_eleve
-  if dossier_eleve.etat != 'validé'
-    dossier_eleve.update(etat: 'en attente de validation')
-  end
 	erb :'7_confirmation', locals: { eleve: eleve, dossier_eleve: dossier_eleve }
 end
 
@@ -321,12 +323,6 @@ post '/commentaire' do
   dossier_eleve.commentaire = params[:commentaire]
   dossier_eleve.save!
   redirect '/confirmation'
-end
-
-post '/envoyer_email_confirmation' do
-  dossier_eleve = get_dossier_eleve session[:identifiant]
-  mail = AgentMailer.envoyer_mail_confirmation(dossier_eleve.eleve)
-  mail.deliver_now
 end
 
 get '/stats' do
