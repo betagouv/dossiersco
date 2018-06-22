@@ -93,8 +93,14 @@
       </div>
 
       <form action="/agent/contacter_une_famille" method="POST" class="text-center">
+          Modèles: <select id="modeles">
+            <% agent.etablissement.modele.each do |modele| %>
+              <option value=<%= modele.id %>><%= modele.nom %></option>
+            <% end %>
+          </select>
+          <button id="inserer">Insérer</button>
         <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
-        <textarea name='message' class="form-control" rows="6"></textarea>
+        <textarea id="message" name='message' class="form-control" rows="6"></textarea>
         <input id='envoyer-commentaire' value='Envoyer' type='submit' class='btn btn-outline-primary mt-1'/>
       </form>
     <% else %>
@@ -189,4 +195,14 @@
 $("#historique .message").on('click',function(e) {
   $(this).find(".card-body").toggle();
 })
+<script type="text/javascript" charset="utf-8">
+  $('#inserer').click(function() {
+    $.ajax({
+        method: "GET",
+        url: "/agent/fusionne_modele/"+$("#modeles").val()+"/eleve/<%= eleve.identifiant %>"
+    }).done(function(data) {
+      $("#message").val($("#message").val()+(data ? "\n"+data : ""));
+    })
+    return false;
+  })
 </script>

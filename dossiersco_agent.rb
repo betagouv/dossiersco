@@ -296,6 +296,13 @@ post '/agent/valider_plusieurs_dossiers' do
   redirect '/agent/liste_des_eleves'
 end
 
+get '/agent/fusionne_modele/:modele_id/eleve/:identifiant' do
+  eleve = Eleve.find_by(identifiant: params[:identifiant])
+  modele = Modele.find(params[:modele_id])
+  template = Tilt['erb'].new { modele.contenu }
+  template.render(nil, eleve: eleve)
+end
+
 # Route de test uniquement
 get '/agent/testmail/:nom' do
   class TestMailer < ActionMailer::Base
