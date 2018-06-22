@@ -1,0 +1,38 @@
+<div class="col-12 col-md-8">
+  <h2 class="separation mt-3">Envoyer un message</h2>
+
+  <div class="row">
+    <div class="col-6">
+      <p>Emails <%= emails.length %>/<%= ids.length %></p>
+      <ul>
+        <% emails.each do |email| %>
+          <li><%= email %></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="col-6">
+      <p>Téléphones <%= telephones.length %>/<%= ids.length %></p>
+      <ul>
+        <% telephones.each do |tel| %>
+          <li><%= tel %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+  <form action="/agent/relance_emails" method="POST">
+    <div class="form-group">
+      <input type="hidden" name="ids" value=<%= ids.join(',') %>  />
+      <label for="template-email">Template de l'email :</label>
+      <textarea class="form-control" id="template-email" rows="3" name="template"></textarea>
+      <input id='envoyer-commentaire' value='Envoyer un email' type='submit' class='btn btn-outline-primary mt-1'/>
+    </div>
+  </form>
+
+  <form action="/agent/relance_sms" method="POST">
+    <div class="form-group">
+      <input type="hidden" name="ids" value=<%= ids %>/>
+      <input id='envoyer-commentaire' value='Envoyer un sms' type='submit' class='btn btn-outline-primary mt-1'/>
+    </div>
+  </form>
+</div>
