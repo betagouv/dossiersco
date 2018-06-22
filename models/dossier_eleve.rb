@@ -39,4 +39,8 @@ class DossierEleve < ActiveRecord::Base
     rl.tel_secondaire || rl.tel_principal
   end
 
+  def date_signature_gmt_plus_2
+    return "" unless self.date_signature
+    self.date_signature.localtime("+02:00").strftime "%d/%m à %H:%M"
+  end
 end

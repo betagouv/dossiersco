@@ -1193,4 +1193,16 @@ class EleveFormTest < Test::Unit::TestCase
     assert RespLegal.new.adresse_inchangee
   end
 
+  def test_un_agent_voit_un_commentaire_parent_dans_vue_eleve
+    e = Eleve.create! identifiant: 'XXX'
+    d= DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first, commentaire: "Commentaire de test"
+    RespLegal.create! dossier_eleve_id: d.id,
+      tel_principal: '0101010101', tel_secondaire: '0606060606', email: 'test@test.com', priorite: 1
+
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    get "/agent/eleve/XXX"
+
+    doc = Nokogiri::HTML(last_response.body)
+    assert_equal "#{d.satisfaction} : Commentaire de test", doc.css("div#commentaire").first.text
+  end
 end

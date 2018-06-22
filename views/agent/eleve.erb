@@ -16,7 +16,7 @@
         disabled: true
     }] %>
 
-<% resp_legal_1 = eleve.dossier_eleve.resp_legal_1 %>
+<% resp_legal_1 = dossier_eleve.resp_legal_1 %>
 <% domicile_actuel = [
     {
         name: "lien_de_parente_rl1",
@@ -105,7 +105,7 @@
       </div>
     <% end %>
 
-    <% resp_legal_2 = eleve.dossier_eleve.resp_legal_2 %>
+    <% resp_legal_2 = dossier_eleve.resp_legal_2 %>
 
     <%= construire [{type: 'contact', contact: resp_legal_1}] %>
     <%= construire [{type: 'contact', contact: resp_legal_2}] %>
@@ -140,19 +140,24 @@
       <p><strong><%= option.groupe %></strong> : <%= option.nom %></p>
     <% end %>
 
-    <%= construire [{type: 'contact', contact: eleve.dossier_eleve.contact_urgence}] %>
+    <%= construire [{type: 'contact', contact: dossier_eleve.contact_urgence}] %>
+
+    <% if dossier_eleve.commentaire %>
+      <h2 class="separation">Commentaire du <%= dossier_eleve.date_signature_gmt_plus_2 %></h2>
+      <div id="commentaire"><strong><%= dossier_eleve.satisfaction %></strong> : <%= dossier_eleve.commentaire %></div>
+    <% end %>
 
     <div class="d-flex justify-content-center align-items-center" style='text-align: center; width:100%'>
       <form action='/agent/valider_inscription' method='POST'>
         <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
-        <button class="btn btn-lg btn-primary mr-2  <%= 'disabled' if eleve.dossier_eleve.etat == 'validé'%>"
+        <button class="btn btn-lg btn-primary mr-2  <%= 'disabled' if dossier_eleve.etat == 'validé'%>"
           id="bouton-validation-inscription" type='submit'
-          <%= 'disabled' if eleve.dossier_eleve.etat == 'validé'%>>Valider l'inscription</button>
+          <%= 'disabled' if dossier_eleve.etat == 'validé'%>>Valider l'inscription</button>
       </form>
       <form action='/agent/eleve_sortant' method='POST'>
         <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
-        <button class="btn btn-outline-primary ml-2 <%= 'disabled' if eleve.dossier_eleve.etat == 'sortant'%>"
-          id="bouton-eleve-sortant" type='submit'  <%= 'disabled' if eleve.dossier_eleve.etat == 'sortant'%>>
+        <button class="btn btn-outline-primary ml-2 <%= 'disabled' if dossier_eleve.etat == 'sortant'%>"
+          id="bouton-eleve-sortant" type='submit'  <%= 'disabled' if dossier_eleve.etat == 'sortant'%>>
           Cet élève est sorti·e de l'établissement</button>
       </form>
     </div>
