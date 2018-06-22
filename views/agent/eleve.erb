@@ -143,11 +143,7 @@
     <%= construire [{type: 'contact', contact: dossier_eleve.contact_urgence}] %>
 
     <% if dossier_eleve.commentaire %>
-      <h2 class="separation">Commentaire
-        <% if dossier_eleve.date_signature %>
-          du <%= dossier_eleve.date_signature.localtime("+02:00").strftime "%d/%m à %H:%M" %>
-        <% end %>
-      </h2>
+      <h2 class="separation">Commentaire du <%= dossier_eleve.date_signature_gmt_plus_2 %></h2>
       <div id="commentaire"><strong><%= dossier_eleve.satisfaction %></strong>&nbsp;: <%= dossier_eleve.commentaire %></div>
     <% end %>
 

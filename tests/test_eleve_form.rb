@@ -1203,7 +1203,6 @@ class EleveFormTest < Test::Unit::TestCase
     get "/agent/eleve/XXX"
 
     doc = Nokogiri::HTML(last_response.body)
-    #assert_equal "Commentaire de test", doc.css("div#commentaire").first
-    assert last_response.body.include? 'Commentaire de test'
+    assert_equal "Commentaire de test", doc.css("div#commentaire").first
   end
 end
