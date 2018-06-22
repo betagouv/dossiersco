@@ -230,6 +230,8 @@ end
 post '/agent/contacter_une_famille' do
   eleve = Eleve.find_by(identifiant: params[:identifiant])
   mail = AgentMailer.contacter_une_famille(eleve, params[:message])
+  part = mail.html_part || mail.text_part || mail
+  Message.create(categorie:"mail", contenu: part.body, etat: "envoyé", dossier_eleve: eleve.dossier_eleve, resultat: "")
   mail.deliver_now
   session[:message_info] = "Votre message a été envoyé."
   redirect "/agent/liste_des_eleves"

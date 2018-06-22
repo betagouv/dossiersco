@@ -837,6 +837,38 @@ class EleveFormTest < Test::Unit::TestCase
     assert part.body.decoded.include? "Emile"
   end
 
+  def test_trace_messages_envoyes
+    assert_equal 0, Message.count
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    post '/agent/contacter_une_famille', identifiant: '6', message: 'Message de test'
+
+    eleve = Eleve.find_by(identifiant: "6")
+    dossier = eleve.dossier_eleve
+
+    assert_equal 1, Message.count
+    message = Message.first
+    assert_equal "mail", message.categorie
+    assert_equal dossier.id, message.dossier_eleve_id
+    assert_equal "envoyé", message.etat
+    assert_equal "", message.resultat
+    assert message.contenu.include? "Tillion"
+  end
+
+  def test_trace_sms_envoyes
+    assert_equal 0, Message.count
+
+    eleve = Eleve.find_by(identifiant: "6")
+    dossier = eleve.dossier_eleve
+    dossier.relance_sms
+
+    assert_equal 1, Message.count
+    message = Message.first
+    assert_equal "sms", message.categorie
+    assert_equal dossier.id, message.dossier_eleve_id
+    assert_equal "erreur", message.etat
+    assert message.contenu.include? "Tillion"
+  end
+
   def test_envoi_un_mail_quand_un_agent_valide_un_dossier
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
     post '/agent/valider_inscription', identifiant: '4'
