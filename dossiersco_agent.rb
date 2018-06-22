@@ -239,6 +239,21 @@ post '/agent/contacter_une_famille' do
   redirect "/agent/liste_des_eleves"
 end
 
+get '/agent/relance' do
+  ids = params["ids"]
+  erb :'agent/courrier', :layout_agent
+end
+
+# tester cette route
+#
+post '/agent/valider_plusieurs_dossiers' do
+  ids = params["ids"]
+  ids.each do |id|
+    DossierEleve.find(id.to_i).update(etat: 'validé')
+  end
+  redirect '/agent/liste_des_eleves'
+end
+
 # Route de test uniquement
 get '/agent/testmail/:nom' do
   class TestMailer < ActionMailer::Base
@@ -255,3 +270,5 @@ get '/agent/testmail/:nom' do
   mail = TestMailer.testmail(nom)
   mail.deliver_now
 end
+
+
