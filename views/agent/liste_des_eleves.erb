@@ -17,13 +17,14 @@
   </div>
 
   <span style="display:block; height: 20px;"></span>
-  <a href="#" class="toggle-vis" data-column="5">Pièces jointes / Date de modification</a>
+  <a href="#" class="toggle-vis" data-column="7">Pièces jointes / Date de modification</a>
   <span style="display:block; height: 20px;"></span>
-
 
   <table class="table table-striped table-bordered table-condensed table-hover"
   id="table_liste_des_eleves">
     <thead><tr>
+      <th></th>
+      <th>ID</th>
       <th>Classe</th>
       <th>Prénom</th>
       <th>Nom</th>
@@ -40,6 +41,8 @@
       <% lignes_eleves.each do |ligne_eleve| %>
         <% cliquable = "class='clickable-row' data-href='/agent/eleve/#{ligne_eleve.identifiant}'" %>
         <tr id="<%= ligne_eleve.id %>" style='cursor:pointer'>
+          <td></td>
+          <td><%= ligne_eleve.dossier_id %></td>
           <td <%= cliquable %> ><%= ligne_eleve.classe_ant %></td>
           <td <%= cliquable %> ><%= ligne_eleve.prenom %></td>
           <td <%= cliquable %> ><%= ligne_eleve.nom %></td>
@@ -88,19 +91,21 @@
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/yadcf/0.9.3/jquery.dataTables.yadcf.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.2.6/js/dataTables.select.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
 <%= erb :'partials/image_box' %>
 <script type="text/javascript" charset="utf-8">
   $('.etat').click(function() {
-      var id = $(this).parent().data('piece-id');
-      if ($(this).hasClass('fa-check-circle')) {
-          var etat = 'valide';
-          $(this).css('color', '#00cf00');
-          $(this).parent().find('.fa-times-circle').css('color', '#383f45');
-      } else {
-          var etat = 'invalide';
-          $(this).css('color', 'red');
-          $(this).parent().find('.fa-check-circle').css('color', '#383f45');
-      }
+    var id = $(this).parent().data('piece-id');
+    if ($(this).hasClass('fa-check-circle')) {
+        var etat = 'valide';
+        $(this).css('color', '#00cf00');
+        $(this).parent().find('.fa-times-circle').css('color', '#383f45');
+    } else {
+        var etat = 'invalide';
+        $(this).css('color', 'red');
+        $(this).parent().find('.fa-check-circle').css('color', '#383f45');
+    }
     $.ajax({
         method: "POST",
         url: "/agent/change_etat_fichier",
@@ -113,72 +118,121 @@
       if (event.metaKey) { window.open(href, '_blank') }
       else { window.location.replace(href) }
     });
-
-        table = $('#table_liste_des_eleves').dataTable({
-        "bJQueryUI": true,
-        "bStateSave": true,
-        "order": [[ 0, "desc" ], [3, "asc"]],
-          "columnDefs": [
-            { "visible": false, "targets": 4 }
-          ],
-        "lengthMenu": [ 30, 60, 90, 120 ],
-        language: {
-          processing:     "Traitement en cours...",
-          search:         "Rechercher&nbsp;:",
-          lengthMenu:    "Afficher _MENU_ &eacute;l&egrave;ves",
-          info:           "Affichage des &eacute;l&egrave;ves _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&egrave;ves",
-          infoEmpty:      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&egrave;ves",
-          infoFiltered:   "(filtr&eacute; de _MAX_ &eacute;l&egrave;ves au total)",
-          infoPostFix:    "",
-          loadingRecords: "Chargement en cours...",
-          zeroRecords:    "Aucun &eacute;l&egrave;ve &agrave; afficher",
-          emptyTable:     "Aucune donnée disponible dans le tableau",
-          paginate: {
-              first:      "Premier",
-              previous:   "Pr&eacute;c&eacute;dent",
-              next:       "Suivant",
-              last:       "Dernier"
+    var events = $('#events');
+    table = $('#table_liste_des_eleves').DataTable({
+    "dom": 'Bfrtip',
+    "bJQueryUI": true,
+    "bStateSave": true,
+    "order": [[ 2, "desc" ], [5, "asc"]],
+      "columnDefs": [
+        { "visible": false, "targets": 6 },
+        { "visible": false, "targets": 1 },
+        {
+          orderable: false,
+          className: 'select-checkbox',
+          targets: 0
+        }
+      ],
+        select: {
+          style:    'multi',
+          selector: 'td:first-child'
         },
-        aria: {
-          sortAscending:  ": activer pour trier la colonne par ordre croissant",
-          sortDescending: ": activer pour trier la colonne par ordre décroissant"
+    "buttons": [
+        {
+          text: 'Envoyer une relance',
+          action: function () {
+            ids = collecter_ids()
+            $.get( "/agent/relance", { ids: ids } );
+          }
+        },
+        {
+          text: 'Valider les dossiers',
+          action: function () {
+            ids = collecter_ids()
+            envoyer_requete("/agent/valider_plusieurs_dossiers", ids)
+          }
         }
-      },
-    }).yadcf([ {
-        column_number: 0,
-        select_type: 'select2',
-        filter_default_label: 'Toutes',
-        select_type_options: {
-            width: '150px',
-            minimumResultsForSearch: -1 // remove search box
-        }
-    },{
-        column_number: 3,
-        select_type: 'select2',
-        filter_default_label: 'Tous',
-        filter_match_mode : 'exact',
-        select_type_options: {
-            width: '150px',
-            minimumResultsForSearch: -1 // remove search box
-        }
-    }]);
-
+    ],
+    "lengthMenu": [ 30, 60, 90, 120 ],
+    language: {
+      processing:     "Traitement en cours...",
+      search:         "Rechercher&nbsp;:",
+      lengthMenu:    "Afficher _MENU_ &eacute;l&egrave;ves",
+      info:           "Affichage des &eacute;l&egrave;ves _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&egrave;ves",
+      infoEmpty:      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&egrave;ves",
+      infoFiltered:   "(filtr&eacute; de _MAX_ &eacute;l&egrave;ves au total)",
+      infoPostFix:    "",
+      loadingRecords: "Chargement en cours...",
+      zeroRecords:    "Aucun &eacute;l&egrave;ve &agrave; afficher",
+      emptyTable:     "Aucune donnée disponible dans le tableau",
+      paginate: {
+          first:      "Premier",
+          previous:   "Pr&eacute;c&eacute;dent",
+          next:       "Suivant",
+          last:       "Dernier"
+    },
+    aria: {
+      sortAscending:  ": activer pour trier la colonne par ordre croissant",
+      sortDescending: ": activer pour trier la colonne par ordre décroissant"
+    }
+  },
+  });
+  yadcf.init(table,[ {
+    column_number: 2,
+    select_type: 'select2',
+    filter_default_label: 'Toutes',
+    select_type_options: {
+        width: '150px',
+        minimumResultsForSearch: -1 // remove search box
+    }
+  },{
+    column_number: 5,
+    select_type: 'select2',
+    filter_default_label: 'Tous',
+    filter_match_mode : 'exact',
+    select_type_options: {
+        width: '150px',
+        minimumResultsForSearch: -1 // remove search box
+    }
+  }]);
 
       // Afficher/masquer une colonne
-     $('a.toggle-vis').on( 'click', function (e) {
-        e.preventDefault();
+  $('a.toggle-vis').on( 'click', function (e) {
+    e.preventDefault();
 
-        // Get the column API object
-        var debut = $(this).attr('data-column')
-        var fin = table.api().columns()[0].length - 1
-        var colonne_date = table.api().column(4)
-        colonne_date.visible( ! colonne_date.visible() );
+    // Get the column API object
+    var debut = $(this).attr('data-column')
+    var fin = table.columns()[0].length - 1
+    var colonne_date = table.column(6)
 
+    colonne_date.visible( ! colonne_date.visible() );
 
-        for (var i = debut; i < fin; i++) {
-          var column = table.api().column(i);
-          column.visible( ! column.visible() );
-        }
-    } );
+    for (var i = debut; i < fin; i++) {
+      var column = table.column(i);
+      column.visible( ! column.visible() );
+    }
   });
+
+  function collecter_ids(){
+    var count = table.rows( { selected: true } ).count();
+    var rows_selected = table.rows({ selected: true })[0]
+    var ids = []
+
+    $.each( rows_selected, function( key, value ) {
+      ids.push(table.rows(value).data()[0][1])
+    });
+    return ids
+  }
+
+  function envoyer_requete(route, parametres){
+    $.ajax({
+        method: "POST",
+        url: route,
+        data: { ids: parametres },
+        success : function() {
+          location.reload();
+        }
+    });
+  }
+});
 </script>
