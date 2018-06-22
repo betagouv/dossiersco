@@ -863,6 +863,9 @@ class EleveFormTest < Test::Unit::TestCase
 
     assert_equal 1, Message.count
     message = Message.first
+    message.envoyer
+
+    message = Message.first
     assert_equal "sms", message.categorie
     assert_equal dossier.id, message.dossier_eleve_id
     assert_equal "erreur", message.etat
