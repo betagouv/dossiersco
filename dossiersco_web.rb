@@ -326,7 +326,8 @@ post '/commentaire' do
 end
 
 get '/stats' do
-  erb :stats, locals: {etablissements: Etablissement.all}
+  etablissements = Etablissement.all.sort_by {|e| e.dossier_eleve.count}.reverse
+  erb :stats, locals: {etablissements: etablissements}
 end
 
 get '/api/recevoir_sms' do
