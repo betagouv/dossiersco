@@ -38,7 +38,7 @@
     <ul>
     <% dossiers_avec_commentaires.each do |dossier| %>
       <li>
-        <a href="/agent/eleve/<%= dossier.eleve.identifiant %>" ><%= dossier.satisfaction %> : </a>
+        <a href="/agent/eleve/<%= dossier.eleve.identifiant %>" ><%= dossier.date_signature.localtime("+02:00").strftime "Le %d/%m à %H:%M" %> : <strong><%= dossier.satisfaction %></strong> : </a>
         <%= dossier.commentaire %>
       </li>
     <% end %>
