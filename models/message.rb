@@ -29,8 +29,8 @@ class Message < ActiveRecord::Base
       response = https.request(request)
 
       resultat = JSON.parse(response.body)
-      etat = resultat["messages"].any? {|m| m["status"] != 0} ? "erreur" : "envoyé"
-      Message.update(resultat: resultat, etat:etat)
+      etat = resultat["messages"].any? {|m| m["status"].to_s != "0"} ? "erreur" : "envoyé"
+      Message.update(resultat: response.body, etat:etat)
 
       sleep(2) unless ENV['rack_env'] == "test"
     else
