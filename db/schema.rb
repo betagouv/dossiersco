@@ -10,10 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_20_155028) do
+ActiveRecord::Schema.define(version: 2018_06_22_071915) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
 
   create_table "abandonnabilites", force: :cascade do |t|
@@ -112,6 +111,15 @@ ActiveRecord::Schema.define(version: 2018_06_20_155028) do
     t.string "email"
     t.boolean "gere_demi_pension", default: false
     t.string "signataire", default: ""
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer "dossier_eleve_id"
+    t.string "categorie"
+    t.string "contenu"
+    t.string "etat"
+    t.string "resultat"
+    t.datetime "created_at"
   end
 
   create_table "montees", force: :cascade do |t|
