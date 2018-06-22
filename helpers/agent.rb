@@ -4,10 +4,17 @@ module AgentHelpers
   def agent
     Agent.find_by(identifiant: session[:identifiant])
   end
+
   def traiter_imports
     tache = TacheImport.find_by(statut: 'en_attente')
     return unless tache
     tache.traiter
+  end
+
+  def traiter_messages
+    message = Message.find_by(statut: 'en_attente')
+    return unless message
+    message.envoyer
   end
 
   def stats etablissement
