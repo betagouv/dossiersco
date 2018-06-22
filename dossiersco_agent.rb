@@ -240,16 +240,43 @@ post '/agent/contacter_une_famille' do
 end
 
 get '/agent/relance' do
-  ids = params["ids"]
-  erb :'agent/courrier', :layout_agent
+  ids = params["ids"].split(',')
+  emails, telephones  = [], []
+
+  ids.each do |id|
+    resp_legal = DossierEleve.find(id).resp_legal.find{ |rl| rl.priorite == 1}
+    emails << resp_legal.email
+    telephones << resp_legal.tel_secondaire || resp_legal.tel_principal
+  end
+  emails.reject(&:empty?)
+
+  erb :'agent/relance', layout: :layout_agent, locals: {ids: ids, emails: emails,
+    telephones: telephones}
 end
 
-# tester cette route
-#
+post '/agent/relance_emails' do
+  template = params[:template]
+  ids = params[:ids].split(',')
+  dossier_eleves = []
+
+  ids.each do |id|
+    dossier_eleves << DossierEleve.find(id)
+  end
+
+  mail = AgentMailer.email_de_relance(agent.etablissement, dossier_eleves, template)
+  mail.deliver_now
+
+  redirect '/agent/liste_des_eleves'
+end
+
+post '/agent/relance_sms' do
+
+end
+
 post '/agent/valider_plusieurs_dossiers' do
   ids = params["ids"]
   ids.each do |id|
-    DossierEleve.find(id.to_i).update(etat: 'validé')
+    DossierEleve.find(id).update(etat: 'validé')
   end
   redirect '/agent/liste_des_eleves'
 end

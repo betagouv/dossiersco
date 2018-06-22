@@ -138,13 +138,15 @@
           selector: 'td:first-child'
         },
     "buttons": [
+      <% if agent.admin %>
         {
           text: 'Envoyer une relance',
           action: function () {
             ids = collecter_ids()
-            $.get( "/agent/relance", { ids: ids } );
+            document.location.href = "/agent/relance?ids=" + ids;
           }
         },
+        <% end %>
         {
           text: 'Valider les dossiers',
           action: function () {

@@ -888,6 +888,24 @@ class EleveFormTest < Test::Unit::TestCase
     assert part.body.decoded.include? "Pierre"
   end
 
+  def test_lenvoie_dun_email_de_relance
+    eleve = Eleve.find_by(identifiant: 2)
+    template = "Réinscription de votre enfant #{eleve.prenom} #{eleve.nom} au collège"
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    post '/agent/relance_emails', ids: eleve.dossier_eleve.id, template: template
+
+    mail = ActionMailer::Base.deliveries.last
+    assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
+    assert mail['to'].addresses.collect(&:to_s).include? 'test@test.com'
+    assert mail['to'].addresses.collect(&:to_s).include? 'etablissement@email.com'
+    assert mail['to'].addresses.collect(&:to_s).include? 'contact@dossiersco.beta.gouv.fr'
+    assert mail['reply_to'].addresses.collect(&:to_s).include? 'etablissement@email.com'
+    assert mail['reply_to'].addresses.collect(&:to_s).include? 'contact@dossiersco.beta.gouv.fr'
+    assert_equal 'Réinscription de votre enfant au collège', mail['subject'].to_s
+    part = mail.html_part || mail.text_part || mail
+    assert part.body.decoded.include? "Réinscription de votre enfant Edith Piaf au collège"
+  end
+
   def assert_file(chemin_du_fichier)
     assert File.file? chemin_du_fichier
     File.delete(chemin_du_fichier)
