@@ -121,8 +121,8 @@ def init
   cree_dossier_eleve eleves[4], tillion
   cree_dossier_eleve eleves[5], tillion, 'validé'
 
-  e5 = Eleve.find_by(identifiant: eleves[5][:identifiant]).dossier_eleve
-  e5.update(commentaire: "Pas mal", satisfaction: 4)
+  d5 = Eleve.find_by(identifiant: eleves[5][:identifiant]).dossier_eleve
+  d5.update(commentaire: "Pas mal", satisfaction: 4, date_signature: Time.now)
 
   eleve = Eleve.find_by(identifiant: '6')
   montee = Montee.create
@@ -167,9 +167,11 @@ def cree_dossier_eleve eleve, etablissement, etat = 'en attente de validation'
       eleve_id: e.id,
       etablissement_id: etablissement.id,
       satisfaction: e.identifiant % 5,
-      commentaire: 'Très bien',
       etat: etat
       )
+  if etat == 'en attente de validation'
+    dossier_eleve.update commentaire: 'Très bien', date_signature: Time.now
+  end
   RespLegal.create! dossier_eleve_id: dossier_eleve.id,
     lien_de_parente: 'Père', prenom: 'Jean', nom: 'Blayo',
     adresse: '42 rue du départ', code_postal: '75018', ville: 'Paris',
