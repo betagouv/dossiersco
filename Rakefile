@@ -12,6 +12,10 @@ task :traiter_imports do
     traiter_imports
 end
 
+task :traiter_messages do
+    traiter_messages
+end
+
 task :stats do
   Etablissement
     .where.not(nom: '')
