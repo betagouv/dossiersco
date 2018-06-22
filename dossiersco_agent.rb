@@ -124,11 +124,12 @@ end
 get '/agent/eleve/:identifiant' do
   eleve = Eleve.find_by(identifiant: params[:identifiant])
   emails_presents = false
-  resp_legaux = eleve.dossier_eleve.resp_legal
+  dossier_eleve = eleve.dossier_eleve
+  resp_legaux = dossier_eleve.resp_legal
   resp_legaux.each { |r| (emails_presents = true) if r.email.present?}
   meme_adresse = resp_legaux.first.meme_adresse resp_legaux.second
   erb :'agent/eleve', layout: :layout_agent,
-    locals: {emails_presents: emails_presents, agent: agent, eleve: eleve, meme_adresse: meme_adresse}
+    locals: {emails_presents: emails_presents, agent: agent, eleve: eleve, dossier_eleve: dossier_eleve, meme_adresse: meme_adresse}
 end
 
 post '/agent/change_etat_fichier' do
