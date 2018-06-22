@@ -14,6 +14,7 @@ def init
   Demandabilite.destroy_all
   Montee.destroy_all
   Etablissement.destroy_all
+  Message.destroy_all
 
   eleves = [
       {prenom: 'Edith',
