@@ -10,6 +10,7 @@ class DossierEleve < ActiveRecord::Base
   has_many :resp_legal
   has_one :contact_urgence
   has_many :piece_jointe
+  has_many :message
 
   def resp_legal_1
     self.resp_legal.find {|r| r.priorite == 1}
@@ -30,34 +31,12 @@ class DossierEleve < ActiveRecord::Base
     template = Tilt['erb'].new { template }
     text = template.render(nil,eleve: eleve)
 
-    rl = resp_legal_1
-    numero = rl.tel_secondaire || rl.tel_principal
-
     Message.create(categorie:"sms", contenu: text, etat: "en attente", dossier_eleve: self)
+  end
 
-    # Avec Nexmo
-    if numero
-      numero_prefixe = numero.gsub(/[[:space:]]/,'').gsub(/^0/,'+33')
-      uri = URI.parse("https://rest.nexmo.com/sms/json")
-
-      https = Net::HTTP.new(uri.host,uri.port)
-      https.use_ssl = true
-
-      header = {'Content-Type': 'application/json'}
-      payload = {
-        'api_key':"#{ENV['NEXMO_KEY']}",
-        'api_secret':"#{ENV['NEXMO_SECRET']}",
-        'from': ENV['NEXMO_SENDER'], 'to': numero_prefixe, 'text':text}
-
-      request = Net::HTTP::Post.new(uri.request_uri, header)
-      request.body = payload.to_json
-
-      response = https.request(request)
-
-      resultat = JSON.parse(response.body)
-      etat = resultat["messages"].any? {|m| m["status"] != 0} ? "erreur" : "envoyé"
-      Message.update(resultat: resultat, etat:etat)
-    end
+  def portable_rl1
+    rl = resp_legal_1
+    rl.tel_secondaire || rl.tel_principal
   end
 
 end
