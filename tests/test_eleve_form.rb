@@ -1155,7 +1155,7 @@ class EleveFormTest < Test::Unit::TestCase
     # Statuts - 100% de non connectés à Oeben
     pas_connecte = ".etablissement .progress .bg-secondary"
     assert_equal "2", doc.css(pas_connecte).first.text().strip
-    assert_equal "width: 100.0%;", doc.css(pas_connecte).first.attr("style")
+    assert_equal "width: 100.0%;", doc.css(pas_connecte)[1].attr("style")
   end
 
   def test_meme_adresse

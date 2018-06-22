@@ -20,11 +20,11 @@ task :stats do
   Etablissement
     .where.not(nom: '')
     .each do |etablissement|
-    etats, notes, moyenne, commentaires = stats etablissement
+    etats, notes, moyenne, dossiers_avec_commentaires = etablissement.stats
     print "#{etablissement.nom} #{etats.join(', ')}\n"
-    print "satisfaction #{notes} (moy):#{moyenne}" if notes.count > 0
+    print "#{notes.count} satisfactions (moy):#{moyenne}" if notes.count > 0
     print "\n"
-    print commentaires.join("\n")
+    print dossiers_avec_commentaires.map {|d| "#{d.date_signature_gmt_plus_2} #{d.satisfaction} #{d.commentaire}"}.join("\n")
     print "\n"
     print "-------------------------------------\n"
   end
