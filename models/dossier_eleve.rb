@@ -33,6 +33,8 @@ class DossierEleve < ActiveRecord::Base
     rl = resp_legal_1
     numero = rl.tel_secondaire || rl.tel_principal
 
+    Message.create(categorie:"sms", contenu: text, etat: "en attente", dossier_eleve: self)
+
     # Avec Nexmo
     if numero
       numero_prefixe = numero.gsub(/[[:space:]]/,'').gsub(/^0/,'+33')
@@ -51,6 +53,10 @@ class DossierEleve < ActiveRecord::Base
       request.body = payload.to_json
 
       response = https.request(request)
+
+      resultat = JSON.parse(response.body)
+      etat = resultat["messages"].any? {|m| m["status"] != 0} ? "erreur" : "envoyé"
+      Message.update(resultat: resultat, etat:etat)
     end
   end
 
