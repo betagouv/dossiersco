@@ -244,14 +244,14 @@ get '/agent/relance' do
   emails, telephones  = [], []
 
   ids.each do |id|
-    resp_legal = DossierEleve.find(id).resp_legal.find{ |rl| rl.priorite == 1}
-    emails << resp_legal.email
-    telephones << resp_legal.tel_secondaire || resp_legal.tel_principal
+    dossier = DossierEleve.find(id)
+    emails << dossier.resp_legal_1.email
+    telephones << dossier.portable_rl1
   end
-  emails.reject(&:empty?)
 
-  erb :'agent/relance', layout: :layout_agent, locals: {ids: ids, emails: emails,
-    telephones: telephones}
+  erb :'agent/relance',
+    layout: :layout_agent,
+    locals: {ids: ids, emails: emails, telephones: telephones}
 end
 
 post '/agent/relance_emails' do
