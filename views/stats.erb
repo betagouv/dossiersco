@@ -54,11 +54,56 @@
   </div>
 </div>
 
+<hr/>
+
 <% etablissements.each do |etablissement| %>
+  <span style="display:block; height: 40px;"></span>
+
+  <div class="container">
+    <div class="row">
+      <% etats, notes, moyenne, dossiers_avec_commentaires = etablissement.stats %>
+      <div class="col nom">
+        <%= etablissement.nom %>
+      </div>
+      <div class="col-10">
+        <div class="progress" style="font-size: 1rem; margin-left: 0; width: 100%;">
+          <%
+          dossiers = DossierEleve.where(etablissement: etablissement)
+          stats = dossiers.group_by(&:etat)
+          colormap = {
+            "pas connecté" => "bg-secondary",
+            "connecté" => "bg-warning",
+            "en attente de validation" => "bg-primary",
+            "validé" => "bg-success"
+            }
+            colormap.each do |etat, couleur|
+              next unless stats[etat]
+              pct = (100.0 * stats[etat].count) / dossiers.count %>
+            <div
+              class="progress-bar <%= couleur %>"
+              style="width: <%= pct %>%;">
+              <%= stats[etat].count %>
+            </div>
+            <% end %>
+        </div>
+        <div>Appréciation des familles&nbsp;: <%= moyenne %> <small><sup>*</sup></small></div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<div class="container">
+<br/>
+<p><small>(*) Appréciations laissées par les familles en fin de parcours, avant instruction du dossier, sur une échelle de 1 (Très insatisfait) à 5 (Très satisfait).</small></p>
+</div>
+
+
+<% etablissements.each do |etablissement| %>
+<hr/>
   <span style="display:block; height: 40px;"></span>
 
   <div class="container etablissement">
     <div class="row">
+      <% etats, notes, moyenne, dossiers_avec_commentaires = etablissement.stats %>
       <div class="col nom">
         <%= etablissement.nom %>
       </div>
