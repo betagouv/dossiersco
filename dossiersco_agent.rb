@@ -82,7 +82,7 @@ end
 
 get '/agent/tableau_de_bord' do
   total_dossiers = agent.etablissement.dossier_eleve.count
-  etats, notes, moyenne, dossiers_avec_commentaires = stats agent.etablissement
+  etats, notes, moyenne, dossiers_avec_commentaires = agent.etablissement.stats
   erb :'agent/tableau_de_bord',
     layout: :layout_agent,
     locals: {agent: agent, total_dossiers: total_dossiers, etats: etats,
