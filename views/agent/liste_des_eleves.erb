@@ -47,7 +47,7 @@
           <td <%= cliquable %> ><%= ligne_eleve.prenom %></td>
           <td <%= cliquable %> ><%= ligne_eleve.nom %></td>
           <td <%= cliquable %> ><%= ligne_eleve.etat %></td>
-          <td><%= ligne_eleve.dossier_maj.to_datetime.localtime.strftime("%e/%m/%y %H:%M ") %></td>
+          <td><%= ligne_eleve.dossier_maj.to_datetime.localtime.strftime("%Y/%m/%d %H:%M ") %></td>
           <td <%= cliquable %> >
             <% rl = RespLegal.new(
               adresse: ligne_eleve.adresse,
