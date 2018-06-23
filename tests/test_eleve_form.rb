@@ -721,7 +721,7 @@ class EleveFormTest < Test::Unit::TestCase
     get '/agent/liste_des_eleves'
 
     doc = Nokogiri::HTML(last_response.body)
-    assert_equal "✓", doc.css("tbody > tr:nth-child(1) > td:nth-child(8)").text.strip
+    assert_equal "✓", doc.css("tbody > tr:nth-child(1) > td:nth-child(9)").text.strip
   end
 
   def test_affiche_lenvoi_de_message_uniquement_si_un_des_resp_legal_a_un_mail
