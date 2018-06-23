@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'sinatra/activerecord'
 require 'bcrypt'
+require 'tilt/erb'
 
 require './config/initializers/mailjet.rb'
 require './config/initializers/actionmailer.rb'
@@ -260,11 +261,14 @@ post '/agent/relance_emails' do
   dossier_eleves = []
 
   ids.each do |id|
-    dossier_eleves << DossierEleve.find(id)
+    dossier = DossierEleve.find(id)
+    template = Tilt['erb'].new { template }
+    contenu = template.render(nil, eleve: dossier.eleve)
+    Message.create(categorie:"mail",
+      contenu: contenu,
+      etat: "en attente",
+      dossier_eleve: dossier)
   end
-
-  mail = AgentMailer.email_de_relance(agent.etablissement, dossier_eleves, template)
-  mail.deliver_now
 
   redirect '/agent/liste_des_eleves'
 end

@@ -3,6 +3,8 @@ class Message < ActiveRecord::Base
 
   def envoyer
     case self.categorie
+    when "mail"
+      AgentMailer.message_differe(dossier_eleve.eleve, contenu).deliver_now
     when "sms"
       envoyer_sms
     end
