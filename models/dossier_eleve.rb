@@ -25,9 +25,10 @@ class DossierEleve < ActiveRecord::Base
     enfants > 1
   end
 
-  def relance_sms
+  DEFAULT_TEMPLATE = "<%= eleve.dossier_eleve.etablissement.nom %>: attention, derniers jours pour réinscrire votre enfant <%= eleve.prenom %> sur https://dossiersco.fr avec vos identifiants: <%= eleve.identifiant %> et la date de naissance de l'enfant."
+
+  def relance_sms template = DEFAULT_TEMPLATE
     # Construction du message
-    template = "<%= eleve.dossier_eleve.etablissement.nom %>: attention, derniers jours pour réinscrire votre enfant <%= eleve.prenom %> sur https://dossiersco.fr avec vos identifiants: <%= eleve.identifiant %> et la date de naissance de l'enfant."
     template = Tilt['erb'].new { template }
     text = template.render(nil,eleve: eleve)
 
@@ -36,7 +37,9 @@ class DossierEleve < ActiveRecord::Base
 
   def portable_rl1
     rl = resp_legal_1
-    rl.tel_secondaire || rl.tel_principal
+    secondaire = rl.tel_secondaire
+    return secondaire unless (secondaire.blank? || secondaire.start_with?("01"))
+    return rl.tel_principal
   end
 
   def date_signature_gmt_plus_2

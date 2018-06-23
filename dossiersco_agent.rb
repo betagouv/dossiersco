@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'sinatra/activerecord'
 require 'bcrypt'
+require 'tilt/erb'
 
 require './config/initializers/mailjet.rb'
 require './config/initializers/actionmailer.rb'
@@ -55,6 +56,7 @@ get '/agent/liste_des_eleves' do
   lignes_eleves = DossierEleve
     .joins(:eleve,:resp_legal)
     .select('dossier_eleves.id as dossier_id')
+    .select('dossier_eleves.updated_at as dossier_maj')
     .select('dossier_eleves.*')
     .select('eleves.*')
     .select('resp_legals.email')
@@ -238,6 +240,56 @@ post '/agent/contacter_une_famille' do
   redirect "/agent/liste_des_eleves"
 end
 
+get '/agent/relance' do
+  ids = params["ids"].split(',')
+  emails, telephones  = [], []
+
+  ids.each do |id|
+    dossier = DossierEleve.find(id)
+    emails << dossier.resp_legal_1.email
+    telephones << dossier.portable_rl1
+  end
+
+  erb :'agent/relance',
+    layout: :layout_agent,
+    locals: {ids: ids, emails: emails, telephones: telephones}
+end
+
+post '/agent/relance_emails' do
+  template = params[:template]
+  ids = params[:ids].split(',')
+  dossier_eleves = []
+
+  ids.each do |id|
+    dossier = DossierEleve.find(id)
+    template = Tilt['erb'].new { template }
+    contenu = template.render(nil, eleve: dossier.eleve)
+    Message.create(categorie:"mail",
+      contenu: contenu,
+      etat: "en attente",
+      dossier_eleve: dossier)
+  end
+
+  redirect '/agent/liste_des_eleves'
+end
+
+post '/agent/relance_sms' do
+  template = params[:template]
+  ids = params[:ids].split(',')
+  ids.each do |id|
+    DossierEleve.find(id).relance_sms template
+  end
+  redirect '/agent/liste_des_eleves'
+end
+
+post '/agent/valider_plusieurs_dossiers' do
+  ids = params["ids"]
+  ids.each do |id|
+    DossierEleve.find(id).update(etat: 'validé')
+  end
+  redirect '/agent/liste_des_eleves'
+end
+
 # Route de test uniquement
 get '/agent/testmail/:nom' do
   class TestMailer < ActionMailer::Base
@@ -254,3 +306,5 @@ get '/agent/testmail/:nom' do
   mail = TestMailer.testmail(nom)
   mail.deliver_now
 end
+
+
