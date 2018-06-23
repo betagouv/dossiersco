@@ -78,7 +78,9 @@
           <% end %>
             <td>
               <% if ligne_eleve.email.present? %>
-                <a href="/agent/eleve/<%= ligne_eleve.identifiant %>"><i class="far fa-envelope"></i></a>
+                <a href="/agent/eleve/<%= ligne_eleve.identifiant %>"><i class="far fa-envelope"><%=
+                  messages[ligne_eleve.dossier_id].present? ? "&nbsp;(#{messages[ligne_eleve.dossier_id].count})" : ""
+                  %></i></a>
               <% end %>
             </td>
         </tr>
@@ -87,7 +89,6 @@
   </table>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/yadcf/0.9.3/jquery.dataTables.yadcf.min.js"></script>
