@@ -890,9 +890,13 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_lenvoie_dun_email_de_relance
     eleve = Eleve.find_by(identifiant: 2)
-    template = "Réinscription de votre enfant #{eleve.prenom} #{eleve.nom} au collège"
+    template = "Réinscription de votre enfant <%= eleve.prenom %> <%= eleve.nom %> au collège"
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
     post '/agent/relance_emails', ids: eleve.dossier_eleve.id, template: template
+
+    assert_equal 1, Message.count
+    message = Message.first
+    message.envoyer
 
     mail = ActionMailer::Base.deliveries.last
     assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
