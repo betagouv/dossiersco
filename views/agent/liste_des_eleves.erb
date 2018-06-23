@@ -120,23 +120,23 @@
     });
     var events = $('#events');
     table = $('#table_liste_des_eleves').DataTable({
-    "dom": 'Bfrtip',
+    "dom": 'Bflrtip',
     "bJQueryUI": true,
     "bStateSave": true,
     "order": [[ 2, "desc" ], [5, "asc"]],
-      "columnDefs": [
-        { "visible": false, "targets": 6 },
-        { "visible": false, "targets": 1 },
-        {
-          orderable: false,
-          className: 'select-checkbox',
-          targets: 0
-        }
-      ],
-        select: {
-          style:    'multi',
-          selector: 'td:first-child'
-        },
+    "columnDefs": [
+      { "visible": false, "targets": 6 },
+      { "visible": false, "targets": 1 },
+      {
+        orderable: false,
+        className: 'select-checkbox',
+        targets: 0
+      }
+    ],
+      select: {
+        style:    'multi',
+        selector: 'td:first-child'
+      },
     "buttons": [
       <% if agent.admin %>
         {
