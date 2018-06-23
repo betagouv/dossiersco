@@ -1247,4 +1247,23 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'validé', dossier_eleve2.etat
     assert_equal 'validé', dossier_eleve1.etat
   end
+
+  def test_portable_rl1
+    dossier = DossierEleve.new
+    dossier.resp_legal = [RespLegal.new(
+      tel_principal: "01 12 34 56 78", tel_secondaire: "06 12 34 56 78", priorite: 1)]
+    assert_equal "06 12 34 56 78", dossier.portable_rl1
+    dossier.resp_legal = [RespLegal.new(
+      tel_principal: "06 12 34 56 78", tel_secondaire: nil, priorite: 1)]
+    assert_equal "06 12 34 56 78", dossier.portable_rl1
+    dossier.resp_legal = [RespLegal.new(
+      tel_principal: "06 12 34 56 78", tel_secondaire: "", priorite: 1)]
+    assert_equal "06 12 34 56 78", dossier.portable_rl1
+    dossier.resp_legal = [RespLegal.new(
+      tel_principal: "06 12 34 56 78", tel_secondaire: "01 12 34 56 78", priorite: 1)]
+    assert_equal "06 12 34 56 78", dossier.portable_rl1
+    dossier.resp_legal = [RespLegal.new(
+      tel_principal: "07 12 34 56 78", tel_secondaire: "06 12 34 56 78", priorite: 1)]
+    assert_equal "06 12 34 56 78", dossier.portable_rl1
+  end
 end

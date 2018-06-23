@@ -37,7 +37,9 @@ class DossierEleve < ActiveRecord::Base
 
   def portable_rl1
     rl = resp_legal_1
-    rl.tel_secondaire || rl.tel_principal
+    secondaire = rl.tel_secondaire
+    return secondaire unless (secondaire.blank? || secondaire.start_with?("01"))
+    return rl.tel_principal
   end
 
   def date_signature_gmt_plus_2
