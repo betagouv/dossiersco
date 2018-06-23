@@ -270,7 +270,12 @@ post '/agent/relance_emails' do
 end
 
 post '/agent/relance_sms' do
-
+  template = params[:template]
+  ids = params[:ids].split(',')
+  ids.each do |id|
+    DossierEleve.find(id).relance_sms template
+  end
+  redirect '/agent/liste_des_eleves'
 end
 
 post '/agent/valider_plusieurs_dossiers' do
