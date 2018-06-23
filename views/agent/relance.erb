@@ -22,7 +22,7 @@
 
   <form action="/agent/relance_emails" method="POST">
     <div class="form-group">
-      <input type="hidden" name="ids" value=<%= ids.join(',') %>  />
+      <input type="hidden" name="ids" value=<%= ids.join(',') %> />
       <label for="template-email">Template de l'email :</label>
       <textarea class="form-control" id="template-email" rows="3" name="template"></textarea>
       <input id='envoyer-commentaire' value='Envoyer un email' type='submit' class='btn btn-outline-primary mt-1'/>
@@ -31,7 +31,7 @@
 
   <form action="/agent/relance_sms" method="POST">
     <div class="form-group">
-      <input type="hidden" name="ids" value=<%= ids %>/>
+      <input type="hidden" name="ids" value=<%= ids.join(',') %> />
       <label for="template-email">Template du texto :</label>
       <textarea class="form-control" id="template-email" rows="3" name="template"><%= DossierEleve::DEFAULT_TEMPLATE %></textarea>
       <input id='envoyer-commentaire' value='Envoyer un sms' type='submit' class='btn btn-outline-primary mt-1'/>
