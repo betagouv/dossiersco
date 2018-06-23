@@ -677,8 +677,9 @@ class EleveFormTest < Test::Unit::TestCase
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
     get '/agent/liste_des_eleves'
     doc = Nokogiri::HTML(last_response.body)
-    assert_equal "Edith", doc.css("##{eleve.dossier_eleve.id} td:nth-child(2)").text.strip
-    assert_equal "Piaf", doc.css("##{eleve.dossier_eleve.id} td:nth-child(3)").text.strip
+
+    assert_equal "Edith", doc.css("##{eleve.dossier_eleve.id} td:nth-child(4)").text.strip
+    assert_equal "Piaf", doc.css("##{eleve.dossier_eleve.id} td:nth-child(5)").text.strip
   end
 
   def test_etat_piece_jointe_liste_des_eleves
@@ -693,8 +694,8 @@ class EleveFormTest < Test::Unit::TestCase
 
     get '/agent/liste_des_eleves'
     doc = Nokogiri::HTML(last_response.body)
-    assert doc.css("##{dossier_eleve.id} td:nth-child(7) a i.fa-file-image").present?
-    assert_equal "color: #00cf00", doc.css("##{dossier_eleve.id} td:nth-child(7) i.fa-check-circle").attr("style").text
+    assert doc.css("##{dossier_eleve.id} td:nth-child(10) a i.fa-file-image").present?
+    assert_equal "color: #00cf00", doc.css("##{dossier_eleve.id} td:nth-child(10) i.fa-check-circle").attr("style").text
   end
 
   def test_affiche_changement_adresse_liste_eleves
@@ -708,7 +709,7 @@ class EleveFormTest < Test::Unit::TestCase
     get '/agent/liste_des_eleves'
 
     doc = Nokogiri::HTML(last_response.body)
-    assert_equal "✓", doc.css("tbody > tr:nth-child(1) > td:nth-child(5)").text.strip
+    assert_equal "✓", doc.css("tbody > tr:nth-child(1) > td:nth-child(8)").text.strip
   end
 
   def test_affiche_demi_pensionnaire
@@ -720,7 +721,7 @@ class EleveFormTest < Test::Unit::TestCase
     get '/agent/liste_des_eleves'
 
     doc = Nokogiri::HTML(last_response.body)
-    assert_equal "✓", doc.css("tbody > tr:nth-child(1) > td:nth-child(6)").text.strip
+    assert_equal "✓", doc.css("tbody > tr:nth-child(1) > td:nth-child(9)").text.strip
   end
 
   def test_affiche_lenvoi_de_message_uniquement_si_un_des_resp_legal_a_un_mail
@@ -770,7 +771,7 @@ class EleveFormTest < Test::Unit::TestCase
     get '/agent/liste_des_eleves'
 
     doc = Nokogiri::HTML(last_response.body)
-    assert_equal "connecté", doc.css("tbody > tr:nth-child(1) > td:nth-child(4)").text.strip
+    assert_equal "connecté", doc.css("tbody > tr:nth-child(1) > td:nth-child(6)").text.strip
   end
 
   def test_changement_statut_famille_en_cours_de_validation
@@ -783,7 +784,7 @@ class EleveFormTest < Test::Unit::TestCase
     get '/agent/liste_des_eleves'
 
     doc = Nokogiri::HTML(last_response.body)
-    assert_equal "en attente de validation", doc.css("tbody > tr:nth-child(1) > td:nth-child(4)").text.strip
+    assert_equal "en attente de validation", doc.css("tbody > tr:nth-child(1) > td:nth-child(6)").text.strip
   end
 
   def test_une_personne_non_identifiée_ne_peut_accéder_à_pièces
@@ -885,6 +886,28 @@ class EleveFormTest < Test::Unit::TestCase
     part = mail.html_part || mail.text_part || mail
     assert part.body.decoded.include? "Votre enfant est bien inscrit."
     assert part.body.decoded.include? "Pierre"
+  end
+
+  def test_lenvoie_dun_email_de_relance
+    eleve = Eleve.find_by(identifiant: 2)
+    template = "Réinscription de votre enfant <%= eleve.prenom %> <%= eleve.nom %> au collège"
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    post '/agent/relance_emails', ids: eleve.dossier_eleve.id, template: template
+
+    assert_equal 1, Message.count
+    message = Message.first
+    message.envoyer
+
+    mail = ActionMailer::Base.deliveries.last
+    assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
+    assert mail['to'].addresses.collect(&:to_s).include? 'test@test.com'
+    assert mail['to'].addresses.collect(&:to_s).include? 'etablissement@email.com'
+    assert mail['to'].addresses.collect(&:to_s).include? 'contact@dossiersco.beta.gouv.fr'
+    assert mail['reply_to'].addresses.collect(&:to_s).include? 'etablissement@email.com'
+    assert mail['reply_to'].addresses.collect(&:to_s).include? 'contact@dossiersco.beta.gouv.fr'
+    assert_equal 'Réinscription de votre enfant au collège', mail['subject'].to_s
+    part = mail.html_part || mail.text_part || mail
+    assert part.body.decoded.include? "Réinscription de votre enfant Edith Piaf au collège"
   end
 
   def assert_file(chemin_du_fichier)
@@ -1204,5 +1227,43 @@ class EleveFormTest < Test::Unit::TestCase
 
     doc = Nokogiri::HTML(last_response.body)
     assert_equal "#{d.satisfaction} : Commentaire de test", doc.css("div#commentaire").first.text
+  end
+
+  def test_la_validation_de_plusieurs_dossiers_eleve
+    eleve1 = Eleve.create!(identifiant: 'test1', date_naiss: '1970-01-01')
+    dossier_eleve1 = DossierEleve.create!(eleve_id: eleve1.id, etablissement_id: Etablissement.first.id,
+      etat: "en attente de validation")
+    eleve2 = Eleve.create!(identifiant: 'test2', date_naiss: '1970-01-01')
+    dossier_eleve2 = DossierEleve.create!(eleve_id: eleve2.id, etablissement_id: Etablissement.first.id,
+      etat: "en attente de validation")
+    ids = [dossier_eleve1.id.to_s, dossier_eleve2.id.to_s]
+
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    post '/agent/valider_plusieurs_dossiers', ids: ids
+
+    dossier_eleve1 = DossierEleve.find(dossier_eleve1.id)
+    dossier_eleve2 = DossierEleve.find(dossier_eleve2.id)
+
+    assert_equal 'validé', dossier_eleve2.etat
+    assert_equal 'validé', dossier_eleve1.etat
+  end
+
+  def test_portable_rl1
+    dossier = DossierEleve.new
+    dossier.resp_legal = [RespLegal.new(
+      tel_principal: "01 12 34 56 78", tel_secondaire: "06 12 34 56 78", priorite: 1)]
+    assert_equal "06 12 34 56 78", dossier.portable_rl1
+    dossier.resp_legal = [RespLegal.new(
+      tel_principal: "06 12 34 56 78", tel_secondaire: nil, priorite: 1)]
+    assert_equal "06 12 34 56 78", dossier.portable_rl1
+    dossier.resp_legal = [RespLegal.new(
+      tel_principal: "06 12 34 56 78", tel_secondaire: "", priorite: 1)]
+    assert_equal "06 12 34 56 78", dossier.portable_rl1
+    dossier.resp_legal = [RespLegal.new(
+      tel_principal: "06 12 34 56 78", tel_secondaire: "01 12 34 56 78", priorite: 1)]
+    assert_equal "06 12 34 56 78", dossier.portable_rl1
+    dossier.resp_legal = [RespLegal.new(
+      tel_principal: "07 12 34 56 78", tel_secondaire: "06 12 34 56 78", priorite: 1)]
+    assert_equal "06 12 34 56 78", dossier.portable_rl1
   end
 end

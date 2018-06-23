@@ -104,7 +104,8 @@ def init
       adresse: "8 Avenue Vincent d'Indy",
       ville: 'Paris',
       code_postal: '75012',
-      message_permanence: "lundi 17 et mardi 18 juin de 10h à 20h"
+      message_permanence: "lundi 17 et mardi 18 juin de 10h à 20h",
+      email: 'etablissement@email.com'
   })
 
   PieceAttendue.create!(nom: "Assurance scolaire", code: "assurance_scolaire",
@@ -158,7 +159,7 @@ def init
 
   Agent.create!(password: '$2a$10$6njb4Rn4RHyFFJpP5QEJGutErgZVOr6/cCM17IKoIsiQDZQABBN2a',
                 nom: 'De Maulmont', prenom: 'Pierre', etablissement_id: tillion.id,
-                identifiant: 'pierre')
+                identifiant: 'pierre', admin: true)
 end
 
 def cree_dossier_eleve eleve, etablissement, etat = 'en attente de validation'

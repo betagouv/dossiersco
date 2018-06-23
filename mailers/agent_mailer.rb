@@ -24,6 +24,16 @@ class AgentMailer < ActionMailer::Base
         contacter_une_famille eleve, ''
     end
 
+    def message_differe(eleve, contenu)
+        etablissement = eleve.dossier_eleve.etablissement
+        resp_legal = eleve.dossier_eleve.resp_legal_1
+        mail(subject: "Réinscription de votre enfant au collège",
+            reply_to:['contact@dossiersco.beta.gouv.fr', etablissement.email],
+            to: ['contact@dossiersco.beta.gouv.fr', resp_legal.email, etablissement.email]) do |format|
+                format.text { render plain: contenu }
+            end
+    end
+
     # Utilisée ponctuellement en juin 2018 pour "doubler" une diffusion par cartable
     # d'un contact mail, restreint au 1er RL car nous donnons l'INE et contacter les 2
     # parents n'aurait pas les mêmes caractéristiques que la diffusion par cartable du
