@@ -32,6 +32,8 @@
   <form action="/agent/relance_sms" method="POST">
     <div class="form-group">
       <input type="hidden" name="ids" value=<%= ids %>/>
+      <label for="template-email">Template de l'email :</label>
+      <textarea class="form-control" id="template-email" rows="3" name="template"><%= DossierEleve::DEFAULT_TEMPLATE %></textarea>
       <input id='envoyer-commentaire' value='Envoyer un sms' type='submit' class='btn btn-outline-primary mt-1'/>
     </div>
   </form>
