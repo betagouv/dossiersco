@@ -13,11 +13,11 @@
 						<p class="erreur"><%= session[:message_erreur] %></p>
 					<% end %>
 
-					<label class="col-form-label" for="formGroupExampleInput">Identifiant</label>
-					<input name="identifiant" type="text" class="form-control" id="formGroupExampleInput" placeholder="Exemple : 2206004705B" autofocus>
+					<label class="col-form-label" for="formGroupExampleInput" id="label_identifiant">Identifiant</label>
+					<input name="identifiant" type="text" class="form-control" id="identifiant" placeholder="Exemple : 2206004705B" autofocus>
 
-					<label class="col-form-label" for="formGroupExampleInput">Date de naissance de l'élève</label>
-					<input name="date_naiss" type="text" class="form-control" id="formGroupExampleInput" placeholder="jj/mm/aaaa">
+					<label class="col-form-label" for="formGroupExampleInput" id="label_date">Date de naissance de l'élève</label>
+					<input name="date_naiss" type="text" class="form-control" id="date_naiss" placeholder="jj/mm/aaaa">
 
 					<button class="btn btn-lg btn-primary btn-block mt-4">Connexion</button>
 
@@ -32,3 +32,16 @@
 		</footer>
 	</div>
 </div>
+<script type="text/javascript" charset="utf-8">
+document.onkeyup = function(e) {
+  var label_identifiant = document.getElementById("label_identifiant");
+  var label_date = document.getElementById("label_date");
+  var identifiant = document.getElementById("identifiant").value;
+  var date_naiss = document.getElementById("date_naiss").value;
+
+  if (identifiant && ! label_identifiant.textContent.includes('Exemple'))
+    label_identifiant.textContent +=' (Exemple : 2206004705B)';
+  if (date_naiss && ! label_date.textContent.includes(' (jj/mm/aaaa)'))
+    label_date.textContent += ' (jj/mm/aaaa)';
+}
+</script>
