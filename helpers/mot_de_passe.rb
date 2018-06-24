@@ -1,4 +1,9 @@
 module MotDePasse
+
+  def normalise_alphanum chaine
+    chaine.gsub(/[^[:alnum:]]/, '')
+  end
+
 	def normalise date
     return date if date =~ /[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}/
     if date =~ /([[:digit:]]{2})([[:digit:]]{2})([[:digit:]]{4})/
