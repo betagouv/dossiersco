@@ -88,13 +88,14 @@ post '/identification' do
     categorie: 'famille',
     page_demandee: request.path_info,
     adresse_ip: request.ip)
-	dossier_eleve = get_dossier_eleve params[:identifiant]
+	identifiant = normalise_alphanum params[:identifiant]
+	dossier_eleve = get_dossier_eleve identifiant
   date_saisie = normalise(params[:date_naiss]) || 'pas-de-date'
 	if dossier_eleve.present? && (dossier_eleve.eleve.date_naiss == date_saisie)
     if dossier_eleve.etat == 'pas connecté'
       dossier_eleve.update(etat: 'connecté')
     end
-		session[:identifiant] = params[:identifiant]
+		session[:identifiant] = identifiant
 		redirect "/#{dossier_eleve.etape}"
 	else
     # Emettre un message générique quelle que soit l'erreur pour éviter
