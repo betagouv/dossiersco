@@ -68,6 +68,11 @@ get '/agent/liste_des_eleves' do
     .select('dossier_eleves.id as dossier_id').select('piece_jointes.*')
     .where(piece_attendues:{etablissement_id: agent.etablissement.id})
     .group_by(&:dossier_eleve_id)
+  messages = Message
+    .joins(:dossier_eleve)
+    .select('dossier_eleves.id as dossier_id').select('messages.dossier_eleve_id')
+    .where(dossier_eleves:{etablissement_id: agent.etablissement.id})
+    .group_by(&:dossier_eleve_id)
   message_info = session[:message_info]
   session.delete :message_info
   erb :'agent/liste_des_eleves',
@@ -76,6 +81,7 @@ get '/agent/liste_des_eleves' do
           agent: agent,
           lignes_eleves: lignes_eleves,
           message_info: message_info,
+          messages: messages,
           pieces_attendues: agent.etablissement.piece_attendue,
           pieces_jointes: pieces_jointes}
 end

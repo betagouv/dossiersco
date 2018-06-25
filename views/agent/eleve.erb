@@ -105,6 +105,28 @@
       </div>
     <% end %>
 
+    <% if eleve.dossier_eleve.message.count > 0 %>
+    <h2 class="separation mt-3">Historique</h2>
+    <div id="historique" class="container">
+    <% eleve.dossier_eleve.message.each do |message| %>
+      <div class="message">
+        <div class='card'>
+            <div class="card-header">
+              <small class="text-muted"><%= message.categorie %> du <%= message.created_at %> (cliquez pour afficher/cacher)</small>
+            </div>
+            <div class='card-body' style="display:none;">
+            <% if message.categorie == "mail" %>
+            <%= message.contenu.gsub(/\n/,"<br/>") %>
+            <% else %>
+            <%= message.contenu %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    </div>
+    <% end %>
+
     <% resp_legal_2 = dossier_eleve.resp_legal_2 %>
 
     <%= construire [{type: 'contact', contact: resp_legal_1}] %>
@@ -163,3 +185,8 @@
     </div>
 
 </div>
+<script type="text/javascript" charset="utf-8">
+$("#historique .message").on('click',function(e) {
+  $(this).find(".card-body").toggle();
+})
+</script>
