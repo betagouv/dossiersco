@@ -93,11 +93,13 @@
       </div>
 
       <form action="/agent/contacter_une_famille" method="POST" class="text-center">
-          Modèles: <select id="modeles">
-            <% agent.etablissement.modele.each do |modele| %>
-              <option value=<%= modele.id %>><%= modele.nom %></option>
-            <% end %>
-          </select>
+          <% if !agent.etablissement.modele.empty? %>
+            Modèles: <select id="modeles">
+              <% agent.etablissement.modele.each do |modele| %>
+                <option value=<%= modele.id %>><%= modele.nom %></option>
+              <% end %>
+            </select>
+          <% end %>
           <button id="inserer">Insérer</button>
         <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
         <textarea id="message" name='message' class="form-control" rows="6"></textarea>
