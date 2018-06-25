@@ -27,7 +27,7 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_normalise_INE
-    assert_equal "070803070aJ", normalise_alphanum(" %! 070803070aJ _+ ")
+    assert_equal "070803070AJ", normalise_alphanum(" %! 070803070aj _+ ")
   end
 
   def test_normalise_date_naissance
@@ -52,7 +52,7 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_entree_succes_eleve_1
-    post '/identification', identifiant: '1%', date_naiss: '1995-11-19'
+    post '/identification', identifiant: '1 ', date_naiss: '1995-11-19'
     follow_redirect!
     assert last_response.body.include? 'Pour réinscrire votre enfant'
   end
@@ -319,7 +319,7 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_affichage_des_options_choisis_sur_la_page_validation
-    eleve = Eleve.create(identifiant: 'xxx', date_naiss: '1970-01-01', niveau_classe_ant: '3')
+    eleve = Eleve.create(identifiant: 'XXX', date_naiss: '1970-01-01', niveau_classe_ant: '3')
     etablissement = Etablissement.create(nom: 'college test')
     dossier_eleve = DossierEleve.create(eleve_id: eleve.id, etablissement_id: etablissement.id)
     eleve.option << Option.create(nom: 'anglais', groupe: 'LV1')
