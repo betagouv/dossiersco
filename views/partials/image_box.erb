@@ -3,15 +3,19 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="titre-modal-pj"></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close fermer" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body" id="affichage-doc">
         <!-- Zone d'affichage du document -->
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-secondary" id="tourner-gauche">Tourner <i class="fas fa-undo"></i></button>
+        <span>
+        <button type="button" class="btn btn-secondary" id="tourner-droite">Tourner <i class="fas fa-redo"></i></button>
+        <button type="button" class="btn btn-secondary fermer" data-dismiss="modal">Fermer</button>
+        </span>
       </div>
     </div>
   </div>
@@ -35,5 +39,22 @@
     $('#modal-pieces-jointes').on('hide.bs.modal', function (e) {
         $('#iframe-piece-jointe').attr('src', ' ');
     })
+    var rotation = 0;
+    $('#tourner-gauche').click(function() { tourne(-90) })
+    $('#tourner-droite').click(function() { tourne(90) })
+    function tourne(angle) {
+      rotation = (rotation + angle) % 360;
+      $('#affichage-doc').css('transform', 'rotate('+rotation+'deg)');
+    }
+
+    $('.fermer').click(reset_rotation)
+    $(document).keyup(function(e) {
+      if(e.keyCode === 27) // touche escape
+        reset_rotation()
+    });
+    function reset_rotation() {
+      rotation = 0;
+      $('#affichage-doc').css('transform', '');
+    }
   })
 </script>
