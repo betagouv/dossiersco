@@ -150,21 +150,7 @@ end
 post '/agent/pieces_jointes_eleve/:identifiant' do
   eleve = Eleve.find_by(identifiant: params[:identifiant])
   dossier_eleve = eleve.dossier_eleve
-  params.each do |code, piece|
-    if params[code].present? and params[code]["tempfile"].present?
-      file = File.open(params[code]["tempfile"])
-      uploader = FichierUploader.new
-      uploader.store!(file)
-      nom_du_fichier = File.basename(file.path)
-      piece_attendue = PieceAttendue.find_by(code: code, etablissement_id: dossier_eleve.etablissement_id)
-      piece_jointe = PieceJointe.find_by(piece_attendue_id: piece_attendue.id, dossier_eleve_id: dossier_eleve.id)
-      if piece_jointe.present?
-        piece_jointe.update(etat: 'soumis', clef: nom_du_fichier)
-      else
-        piece_jointe = PieceJointe.create!(etat: 'validé', clef: nom_du_fichier, piece_attendue_id: piece_attendue.id, dossier_eleve_id: dossier_eleve.id)
-      end
-    end
-  end
+  upload_pieces_jointes dossier_eleve, params
   redirect "/agent/pieces_jointes_eleve/#{eleve.identifiant}"
 end
 
