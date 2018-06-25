@@ -1,7 +1,7 @@
 module MotDePasse
 
   def normalise_alphanum chaine
-    chaine.gsub(/[^[:alnum:]]/, '')
+    chaine.gsub(/[^[:alnum:]]/, '').upcase
   end
 
 	def normalise date
