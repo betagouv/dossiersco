@@ -837,7 +837,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
     assert mail['to'].addresses.collect(&:to_s).include? 'test@test.com'
     assert mail['to'].addresses.collect(&:to_s).include? 'test2@test.com'
-    assert mail['to'].addresses.collect(&:to_s).include? 'etablissement@email.com'
     assert mail['to'].addresses.collect(&:to_s).include? 'contact@dossiersco.beta.gouv.fr'
     assert mail['reply_to'].addresses.collect(&:to_s).include? 'etablissement@email.com'
     assert mail['reply_to'].addresses.collect(&:to_s).include? 'contact@dossiersco.beta.gouv.fr'
