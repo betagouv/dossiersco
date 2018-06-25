@@ -51,13 +51,20 @@
           </div>
           <% end %>
           <% eleves_presents = stats.select {|k,v| k != 'sortant'}.values %>
-          <span class="progress-bar bg-light text-dark ml-1"> <%= eleves_presents.inject(0) {|somme, dossier| somme + dossier.count} %></span>
+          <% total_eleves_presents = eleves_presents.inject(0) {|somme, dossier| somme + dossier.count} %>
+          <span class="progress-bar bg-light text-dark ml-1"> <%= total_eleves_presents %></span>
       </div>
       <% notes_de_tous_les_etablissements = [] %>
-      <% Etablissement.all.each { |e| etats, notes = e.stats; notes_de_tous_les_etablissements += notes } %>
+      <% non_connecte = 0 %>
+      <% Etablissement.all.each do |e| %>
+      <%   etats, notes = e.stats; %>
+      <%   notes_de_tous_les_etablissements += notes %>
+      <%   non_connecte += etats.select {|k,v| k != 'pas connecté'}.values.sum  %>
+      <% end %>
       <% notes_renseignees = notes_de_tous_les_etablissements.select {|n| n > 0} %>
       <% moyenne_totale = "#{'%.2f' % (notes_renseignees.sum.to_f / notes_renseignees.count)}" %>
-      <div>Appréciation des familles&nbsp;: <%= moyenne_totale %> <small><sup>*</sup></small></div>
+      <span>Appréciation des familles&nbsp;: <strong><%= moyenne_totale %></strong> <small><sup>*</sup></small>.</span>
+      <span><strong><%= "#{'%.0f' % ((non_connecte.to_f / total_eleves_presents) * 100)}%" %></strong> des familles se sont connecté.</span>
     </div>
   </div>
 </div>
@@ -94,9 +101,13 @@
             </div>
             <% end %>
           <% eleves_presents = stats.select {|k,v| k != 'sortant'}.values %>
-          <span class="progress-bar bg-light text-dark ml-1"> <%= eleves_presents.inject(0) {|somme, dossier| somme + dossier.count} %></span>
+          <% total_eleves_presents = eleves_presents.inject(0) {|somme, dossier| somme + dossier.count} %>
+          <span class="progress-bar bg-light text-dark ml-1"> <%= total_eleves_presents %></span>
         </div>
-        <div>Appréciation des familles&nbsp;: <%= moyenne %> <small><sup>*</sup></small></div>
+        <% eleves_connectes = stats.select {|k,v| k != 'sortant' && k != 'pas connecté'}.values %>
+        <% total_eleves_connectes = eleves_connectes.inject(0) {|somme, dossier| somme + dossier.count} %>
+        <span>Appréciation des familles&nbsp;: <strong><%= moyenne %></strong> <small><sup>*</sup></small>.</span>
+        <span><strong><%= "#{'%.0f' % ((total_eleves_connectes.to_f / total_eleves_presents) * 100)}%" %></strong> des familles se sont connecté.</span>
       </div>
     </div>
   </div>
