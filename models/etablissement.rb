@@ -15,13 +15,13 @@ class Etablissement < ActiveRecord::Base
 
   def stats
     avec_feedback = []
-    etats = []
+    etats = {}
     DossierEleve
         .where.not(etat: "pas connecté")
         .select { |e| e.etablissement_id == self.id }
         .group_by(&:etat)
         .each_pair do |etat, dossiers_etat|
-            etats.push("#{etat}:#{dossiers_etat.count}")
+            etats[etat] = dossiers_etat.count
             if (etat.include? "valid")
                 avec_feedback.push(*dossiers_etat)
             end
