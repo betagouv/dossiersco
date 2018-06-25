@@ -1289,4 +1289,24 @@ class EleveFormTest < Test::Unit::TestCase
       tel_principal: "07 12 34 56 78", tel_secondaire: "06 12 34 56 78", priorite: 1)]
     assert_equal "06 12 34 56 78", dossier.portable_rl1
   end
+
+  def test_propose_modeles_messages
+    modele = Modele.create(nom: "Cantine")
+    Agent.find_by(identifiant: "pierre").etablissement.modele << modele
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    get '/agent/eleve/4'
+
+    doc = Nokogiri::HTML(last_response.body)
+    assert_equal 'Cantine', doc.css('select#modeles option').text
+    assert_equal modele.id.to_s, doc.css('select#modeles option').attr("value").text
+  end
+
+  def test_rendu_modele
+    modele = Modele.create(nom: "Cantine", contenu: "Salut <%= eleve.prenom %>")
+    Agent.find_by(identifiant: "pierre").etablissement.modele << modele
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    get "/agent/fusionne_modele/#{modele.id}/eleve/4"
+    assert_equal "Salut Pierre", last_response.body
+  end
+
 end

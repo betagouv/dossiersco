@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_22_071915) do
+ActiveRecord::Schema.define(version: 2018_06_22_120000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -121,6 +121,12 @@ ActiveRecord::Schema.define(version: 2018_06_22_071915) do
     t.string "etat"
     t.string "resultat"
     t.datetime "created_at"
+  end
+
+  create_table "modeles", force: :cascade do |t|
+    t.integer "etablissement_id"
+    t.string "nom"
+    t.string "contenu"
   end
 
   create_table "montees", force: :cascade do |t|
