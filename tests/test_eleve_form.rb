@@ -762,6 +762,15 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal "far fa-envelope", doc.css("tbody > tr:nth-child(1) > td").last.children[1].children[0].attributes['class'].value
   end
 
+  def test_affiche_decompte_historique_message_envoyes
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    post '/agent/contacter_une_famille', identifiant: '2', message: 'Message de test'
+    get '/agent/liste_des_eleves'
+
+    doc = Nokogiri::HTML(last_response.body)
+    assert_equal " (1)", doc.css("tbody > tr:nth-child(1) > td:last-child i").text.strip
+  end
+
   def test_changement_statut_famille_connecte
     post '/identification', identifiant: '2', date_naiss: '1915-12-19'
     dossier_eleve = Eleve.find_by(identifiant: '2').dossier_eleve
@@ -1227,6 +1236,17 @@ class EleveFormTest < Test::Unit::TestCase
 
     doc = Nokogiri::HTML(last_response.body)
     assert_equal "#{d.satisfaction} : Commentaire de test", doc.css("div#commentaire").first.text
+  end
+
+  def test_historique_messages_envoyes
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    post '/agent/contacter_une_famille', identifiant: '2', message: 'Message 1'
+    post '/agent/contacter_une_famille', identifiant: '2', message: 'Message 2'
+    get "/agent/eleve/2"
+    doc = Nokogiri::HTML(last_response.body)
+    assert_equal 2, doc.css("#historique div.message").count
+    assert doc.css("#historique div.message:nth-child(1) .card-body").text.strip.include? "Message 1"
+    assert doc.css("#historique div.message:nth-child(2) .card-body").text.strip.include? "Message 2"
   end
 
   def test_la_validation_de_plusieurs_dossiers_eleve
