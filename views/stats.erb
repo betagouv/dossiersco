@@ -59,12 +59,10 @@
       <% Etablissement.all.each do |e| %>
       <%   etats, notes = e.stats; %>
       <%   notes_de_tous_les_etablissements += notes %>
-      <%   non_connecte += etats.select {|k,v| k != 'pas connecté'}.values.sum  %>
       <% end %>
       <% notes_renseignees = notes_de_tous_les_etablissements.select {|n| n > 0} %>
       <% moyenne_totale = "#{'%.2f' % (notes_renseignees.sum.to_f / notes_renseignees.count)}" %>
-      <span>Appréciation des familles&nbsp;: <strong><%= moyenne_totale %></strong> <small><sup>*</sup></small>.</span>
-      <span><strong><%= "#{'%.0f' % ((non_connecte.to_f / total_eleves_presents) * 100)}%" %></strong> des familles se sont connecté.</span>
+      <span>Appréciation des familles&nbsp;: <strong><%= moyenne_totale %></strong> <small><sup>*</sup></small></span>
     </div>
   </div>
 </div>
