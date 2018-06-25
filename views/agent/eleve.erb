@@ -170,6 +170,8 @@
       <p><strong><%= option.groupe %></strong> : <%= option.nom %></p>
     <% end %>
 
+     <a href="/agent/pieces_jointes_eleve/<%= dossier_eleve.eleve.identifiant %>" class="btn btn-primary mb-3 mt-3">Ajouter une pièce jointe</a>
+
     <%= construire [{type: 'contact', contact: dossier_eleve.contact_urgence}] %>
 
     <% if dossier_eleve.commentaire %>
