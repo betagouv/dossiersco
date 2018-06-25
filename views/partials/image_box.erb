@@ -11,9 +11,9 @@
         <!-- Zone d'affichage du document -->
       </div>
       <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-secondary" id="tourner-gauche">Tourner <i class="fas fa-undo"></i></button>
+        <button type="button" class="btn btn-secondary rotation" data-degres="-90">Tourner <i class="fas fa-undo"></i></button>
         <span>
-        <button type="button" class="btn btn-secondary" id="tourner-droite">Tourner <i class="fas fa-redo"></i></button>
+        <button type="button" class="btn btn-secondary rotation" data-degres="90">Tourner <i class="fas fa-redo"></i></button>
         <button type="button" class="btn btn-secondary fermer" data-dismiss="modal">Fermer</button>
         </span>
       </div>
@@ -39,13 +39,43 @@
     $('#modal-pieces-jointes').on('hide.bs.modal', function (e) {
         $('#iframe-piece-jointe').attr('src', ' ');
     })
-    var rotation = 0;
-    $('#tourner-gauche').click(function() { tourne(-90) })
-    $('#tourner-droite').click(function() { tourne(90) })
-    function tourne(angle) {
-      rotation = (rotation + angle) % 360;
-      $('#affichage-doc').css('transform', 'rotate('+rotation+'deg)');
-    }
+
+    var etat = 0
+    $('.rotation').click(function() {
+        degres = $(this).data('degres')
+        var img = $('#affichage-doc img')
+        var scale = img.height() / img.width()
+
+        if (etat === 180) {
+          img.css('height', height)
+          img.css('width', width)
+          img.css('transform-origin', 'center');
+          img.css('transform', 'none');
+          etat = 0
+        }
+        else if ((etat === 0) && (degres === -90)) {
+          var height = img.height()
+          var width = img.width()
+          img.css('transform-origin', 'bottom left');
+          img.css('transform', 'rotate('+degres+'deg)  scale('+scale+') translate(0, '+img.height()+'px)');
+          etat = -90
+        }
+        else if ((etat === 0) && (degres === 90)) {
+          var height = img.height()
+          var width = img.width()
+          img.css('transform-origin', 'bottom left');
+          img.css('transform', 'rotate('+degres+'deg) translate(-'+img.height()+'px, 0) scale('+scale+')');
+          etat = 90
+        }
+        else if ((etat === -90) || (degres === 90)) {
+          img.css('height', height)
+          img.css('width', width)
+          img.css('transform-origin', 'center');
+          img.css('transform', 'none');
+          img.css('transform', 'rotate(180deg)');
+          etat = 180
+        }
+     })
 
     $('.fermer').click(reset_rotation)
     $(document).keyup(function(e) {
