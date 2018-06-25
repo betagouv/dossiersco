@@ -45,35 +45,15 @@
         degres = $(this).data('degres')
         var img = $('#affichage-doc img')
         var scale = img.height() / img.width()
+        etat = (etat + degres) % 360
 
-        if (etat === 180) {
-          img.css('height', height)
-          img.css('width', width)
-          img.css('transform-origin', 'center');
+        if ((etat % 360) === 0) {
           img.css('transform', 'none');
-          etat = 0
         }
-        else if ((etat === 0) && (degres === -90)) {
-          var height = img.height()
-          var width = img.width()
-          img.css('transform-origin', 'bottom left');
-          img.css('transform', 'rotate('+degres+'deg)  scale('+scale+') translate(0, '+img.height()+'px)');
-          etat = -90
-        }
-        else if ((etat === 0) && (degres === 90)) {
-          var height = img.height()
-          var width = img.width()
-          img.css('transform-origin', 'bottom left');
-          img.css('transform', 'rotate('+degres+'deg) translate(-'+img.height()+'px, 0) scale('+scale+')');
-          etat = 90
-        }
-        else if ((etat === -90) || (degres === 90)) {
-          img.css('height', height)
-          img.css('width', width)
-          img.css('transform-origin', 'center');
-          img.css('transform', 'none');
-          img.css('transform', 'rotate(180deg)');
-          etat = 180
+        else {
+          var transform = 'rotate('+etat+'deg)'
+          transform += (etat % 180) === 0 ? '' : ' scale('+scale+') translate(0px,'+scale*img.height()/2+'px)'
+          img.css('transform', transform);
         }
      })
 
