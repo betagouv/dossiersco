@@ -140,6 +140,13 @@ get '/agent/eleve/:identifiant' do
     locals: {emails_presents: emails_presents, agent: agent, eleve: eleve, dossier_eleve: dossier_eleve, meme_adresse: meme_adresse}
 end
 
+post '/agent/pieces_jointes_eleve/:identifiant' do
+  eleve = Eleve.find_by(identifiant: params[:identifiant])
+  dossier_eleve = eleve.dossier_eleve
+  upload_pieces_jointes dossier_eleve, params, 'valide'
+  redirect "/agent/eleve/#{eleve.identifiant}#dossier"
+end
+
 post '/agent/change_etat_fichier' do
   piece = PieceJointe.find(params[:id])
   piece.update(etat: params[:etat])

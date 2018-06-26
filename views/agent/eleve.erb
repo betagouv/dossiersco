@@ -83,120 +83,156 @@
 <% @section = 1 %>
 
 <div class="col-12 col-md-8">
-    <h2 class="separation mt-3">Envoyer un message</h2>
 
-    <% if emails_presents %>
-      <div class='card'>
-        <div class='card-body'>
-          <p>Ce formulaire envoie un message à la famille de l'élève. Précisez par exemple si les pièces justificatives ne sont pas conformes, et ce que la famille doit transmettre.</p>
+  <ul class="nav nav-tabs" id="eleveTabs" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="true">Contact</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="echanges-tab" data-toggle="tab" href="#echanges" role="tab" aria-controls="echanges" aria-selected="false">Echanges</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="dossier-tab" data-toggle="tab" href="#dossier" role="tab" aria-controls="dossier" aria-selected="false">Dossier</a>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="eleveTabsContent">
+
+    <!-- Contact -->
+    <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+      <% resp_legal_2 = dossier_eleve.resp_legal_2 %>
+
+      <%= construire [{type: 'contact', contact: resp_legal_1}] %>
+      <%= construire [{type: 'contact', contact: resp_legal_2}] %>
+
+      <% if resp_legal_2.present? %>
+         <p>Ces responsables légaux <strong>habitent à
+           <% if meme_adresse %>
+               la même adresse
+           <% else %>
+               des adresses différentes
+           <% end %>
+         </strong></p>
+      <% end %>
+
+      <h2 class="separation"><%= eleve.classe_ant %> <%= eleve.prenom%> <%=eleve.nom%></h2>
+
+      <%= construire identite %>
+
+      <h2 class="separation">Habite chez <%=resp_legal_1.prenom %> <%=resp_legal_1.nom %></h2>
+
+      <%= construire domicile_actuel %>
+      <% if resp_legal_1.changement_adresse %>
+        <div id="ancienne_adresse">
+          <hr/>
+          <%= construire ancien_domicile %>
         </div>
-      </div>
+      <% end %>
+      <%= construire [{type: 'contact', contact: dossier_eleve.contact_urgence}] %>
+    </div>
 
-      <form action="/agent/contacter_une_famille" method="POST" class="text-center">
-          <% if !agent.etablissement.modele.empty? %>
-            Modèles: <select id="modeles">
-              <% agent.etablissement.modele.each do |modele| %>
-                <option value=<%= modele.id %>><%= modele.nom %></option>
-              <% end %>
-            </select>
-          <% end %>
-          <button id="inserer">Insérer</button>
-        <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
-        <textarea id="message" name='message' class="form-control" rows="6"></textarea>
-        <input id='envoyer-commentaire' value='Envoyer' type='submit' class='btn btn-outline-primary mt-1'/>
-      </form>
-    <% else %>
-      <div class='card'>
-        <div class='card-body'>
-          <p>Cette famille ne possède pas d'adresse email</p>
-        </div>
-      </div>
-    <% end %>
+    <!-- Echanges -->
+    <div class="tab-pane fade" id="echanges" role="tabpanel" aria-labelledby="echanges-tab">
+      <h2 class="separation mt-3">Envoyer un message</h2>
 
-    <% if eleve.dossier_eleve.message.count > 0 %>
-    <h2 class="separation mt-3">Historique</h2>
-    <div id="historique" class="container">
-    <% eleve.dossier_eleve.message.each do |message| %>
-      <div class="message">
+      <% if emails_presents %>
         <div class='card'>
-            <div class="card-header">
-              <small class="text-muted"><%= message.categorie %> du <%= message.created_at %> (cliquez pour afficher/cacher)</small>
-            </div>
-            <div class='card-body' style="display:none;">
-            <% if message.categorie == "mail" %>
-            <%= message.contenu.gsub(/\n/,"<br/>") %>
-            <% else %>
-            <%= message.contenu %>
-            <% end %>
+          <div class='card-body'>
+            <p>Ce formulaire envoie un message à la famille de l'élève. Précisez par exemple si les pièces justificatives ne sont pas conformes, et ce que la famille doit transmettre.</p>
           </div>
         </div>
+
+        <form action="/agent/contacter_une_famille" method="POST" class="text-center">
+            <% if !agent.etablissement.modele.empty? %>
+              Modèles: <select id="modeles">
+                <% agent.etablissement.modele.each do |modele| %>
+                  <option value=<%= modele.id %>><%= modele.nom %></option>
+                <% end %>
+              </select>
+              <button id="inserer">Insérer</button>
+            <% end %>
+          <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
+          <textarea id="message" name='message' class="form-control" rows="6"></textarea>
+          <input id='envoyer-commentaire' value='Envoyer' type='submit' class='btn btn-outline-primary mt-1'/>
+        </form>
+      <% else %>
+        <div class='card'>
+          <div class='card-body'>
+            <p>Cette famille ne possède pas d'adresse email</p>
+          </div>
+        </div>
+      <% end %>
+      <br/>
+
+      <% if eleve.dossier_eleve.message.count > 0 %>
+      <h2 class="separation mt-3">Historique</h2>
+      <div id="historique" class="container">
+      <% eleve.dossier_eleve.message.each do |message| %>
+        <div class="message">
+          <div class='card'>
+              <div class="card-header">
+                <small class="text-muted"><%= message.categorie %> du <%= message.created_at %> (cliquez pour afficher/cacher)</small>
+              </div>
+              <div class='card-body' style="display:none;">
+              <% if message.categorie == "mail" %>
+              <%= message.contenu.gsub(/\n/,"<br/>") %>
+              <% else %>
+              <%= message.contenu %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
       </div>
-    <% end %>
-    </div>
-    <% end %>
+      <% end %>
 
-    <% resp_legal_2 = dossier_eleve.resp_legal_2 %>
-
-    <%= construire [{type: 'contact', contact: resp_legal_1}] %>
-    <%= construire [{type: 'contact', contact: resp_legal_2}] %>
-
-    <% if resp_legal_2.present? %>
-       <p>Ces responsables légaux <strong>habitent à
-         <% if meme_adresse %>
-             la même adresse
-         <% else %>
-             des adresses différentes
-         <% end %>
-       </strong></p>
-    <% end %>
-
-    <h2 class="separation"><%= eleve.classe_ant %> <%= eleve.prenom%> <%=eleve.nom%></h2>
-
-    <%= construire identite %>
-
-    <h2 class="separation">Habite chez <%=resp_legal_1.prenom %> <%=resp_legal_1.nom %></h2>
-
-    <%= construire domicile_actuel %>
-    <% if resp_legal_1.changement_adresse %>
-      <div id="ancienne_adresse">
-        <hr/>
-        <%= construire ancien_domicile %>
-      </div>
-    <% end %>
-
-    <h2 class="separation">Options</h2>
-
-    <% eleve.option.each do |option| %>
-      <p><strong><%= option.groupe %></strong> : <%= option.nom %></p>
-    <% end %>
-
-    <%= construire [{type: 'contact', contact: dossier_eleve.contact_urgence}] %>
-
-    <% if dossier_eleve.commentaire %>
-      <h2 class="separation">Commentaire du <%= dossier_eleve.date_signature_gmt_plus_2 %></h2>
-      <div id="commentaire"><strong><%= dossier_eleve.satisfaction %></strong> : <%= dossier_eleve.commentaire %></div>
-    <% end %>
-
-    <div class="d-flex justify-content-center align-items-center" style='text-align: center; width:100%'>
-      <form action='/agent/valider_inscription' method='POST'>
-        <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
-        <button class="btn btn-lg btn-primary mr-2  <%= 'disabled' if dossier_eleve.etat == 'validé'%>"
-          id="bouton-validation-inscription" type='submit'
-          <%= 'disabled' if dossier_eleve.etat == 'validé'%>>Valider l'inscription</button>
-      </form>
-      <form action='/agent/eleve_sortant' method='POST'>
-        <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
-        <button class="btn btn-outline-primary ml-2 <%= 'disabled' if dossier_eleve.etat == 'sortant'%>"
-          id="bouton-eleve-sortant" type='submit'  <%= 'disabled' if dossier_eleve.etat == 'sortant'%>>
-          Cet élève est sorti·e de l'établissement</button>
-      </form>
+      <% if dossier_eleve.commentaire %>
+        <h2 class="separation">Commentaire du <%= dossier_eleve.date_signature_gmt_plus_2 %></h2>
+        <div id="commentaire"><strong><%= dossier_eleve.satisfaction %></strong> : <%= dossier_eleve.commentaire %></div>
+      <% end %>
     </div>
 
+    <!-- Dossier -->
+    <div class="tab-pane fade" id="dossier" role="tabpanel" aria-labelledby="dossier-tab">
+      <%= erb :'agent/pieces_jointes_eleve', locals: { dossier_eleve: dossier_eleve, action: "/agent/pieces_jointes_eleve/#{dossier_eleve.eleve.identifiant}#pieces" } %>
+      <h2 class="separation mt-3">Instruction du dossier</h2>
+      <div class="d-flex justify-content-center align-items-center" style='text-align: center; width:100%'>
+        <form action='/agent/valider_inscription' method='POST'>
+          <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
+          <button class="btn btn-lg btn-primary mr-2  <%= 'disabled' if dossier_eleve.etat == 'validé'%>"
+            id="bouton-validation-inscription" type='submit'
+            <%= 'disabled' if dossier_eleve.etat == 'validé'%>>Valider l'inscription</button>
+        </form>
+        <form action='/agent/eleve_sortant' method='POST'>
+          <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
+          <button class="btn btn-outline-primary ml-2 <%= 'disabled' if dossier_eleve.etat == 'sortant'%>"
+            id="bouton-eleve-sortant" type='submit'  <%= 'disabled' if dossier_eleve.etat == 'sortant'%>>
+            Cet élève est sorti·e de l'établissement</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+<%= erb :'partials/image_box' %>
 <script type="text/javascript" charset="utf-8">
+  // Onglets
+  $(document).ready(function() {
+    debugger;
+    if ($(location).attr('hash') == "#dossier") {
+      $("#dossier-tab").tab('show')
+    }
+  })
+  $('#eleveTabs a').on('click', function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  })
+  // Historique
   $("#historique .message").on('click',function(e) {
     $(this).find(".card-body").toggle();
   })
+  // Modèles
   $('#inserer').click(function() {
     $.ajax({
         method: "GET",
