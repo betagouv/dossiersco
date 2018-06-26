@@ -135,17 +135,26 @@
     <div class="tab-pane fade" id="echanges" role="tabpanel" aria-labelledby="echanges-tab">
       <h2 class="separation mt-3">Envoyer un message</h2>
 
-      <% if emails_presents %>
         <div class='card'>
           <div class='card-body'>
-            <p>Ce formulaire envoie un message à la famille de l'élève. Précisez par exemple si les pièces justificatives ne sont pas conformes, et ce que la famille doit transmettre.</p>
+            <% if emails_presents %>
+              <p>Ce formulaire envoie un message à la famille de l'élève. Précisez par exemple si les pièces justificatives ne sont pas conformes, et ce que la famille doit transmettre.</p>
+            <% elsif dossier_eleve.portable_rl1.present? %>
+              <p>Cette famille n'a pas déclaré d'adresse mail. Le formulaire ci-dessous vous permet
+                d'envoyer un texto. <strong>Soyez bref</strong> (moins de 140 caractères si possible).
+                L'émission des textos se fait en différé.</p>
+            <% else %>
+              <p>Cette famille n'a pas déclaré d'adresse mail, ni de téléphone portable pour le
+              responsable légal qui héberge l'enfant.</p>
+            <% end %>
           </div>
         </div>
 
+        <% if emails_presents || dossier_eleve.portable_rl1.present? %>
         <form action="/agent/contacter_une_famille" method="POST" class="text-center">
-            <% if !agent.etablissement.modele.empty? %>
+            <% if !modeles.empty? %>
               Modèles: <select id="modeles">
-                <% agent.etablissement.modele.each do |modele| %>
+                <% modeles.each do |modele| %>
                   <option value=<%= modele.id %>><%= modele.nom %></option>
                 <% end %>
               </select>
@@ -155,13 +164,7 @@
           <textarea id="message" name='message' class="form-control" rows="6"></textarea>
           <input id='envoyer-commentaire' value='Envoyer' type='submit' class='btn btn-outline-primary mt-1'/>
         </form>
-      <% else %>
-        <div class='card'>
-          <div class='card-body'>
-            <p>Cette famille ne possède pas d'adresse email</p>
-          </div>
-        </div>
-      <% end %>
+        <% end %>
       <br/>
 
       <% if eleve.dossier_eleve.message.count > 0 %>
