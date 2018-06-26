@@ -850,6 +850,18 @@ class EleveFormTest < Test::Unit::TestCase
     assert part.body.decoded.include? "Emile"
   end
 
+  def test_envoie_par_sms_les_messages_aux_familles_sans_email
+    eleve = Eleve.find_by(identifiant: "6")
+    eleve.dossier_eleve.resp_legal.each do |rl| rl.update(email: nil) end
+    assert_equal 0, Message.where(categorie:"sms").count
+
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    post '/agent/contacter_une_famille', identifiant: '6', message: 'Message de test'
+
+    assert_equal 0, ActionMailer::Base.deliveries.count
+    assert_equal 1, Message.where(categorie:"sms").count
+  end
+
   def test_trace_messages_envoyes
     assert_equal 0, Message.count
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
