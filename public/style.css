@@ -31,8 +31,11 @@ h2, h4 {
  */
 
 .progress-bar {
-  height: 30px;
-  padding-top: 6px;
+  height: 1.9rem;
+}
+
+.progress {
+  height: 1.9rem !important;
 }
 
 .clearfix:after {
