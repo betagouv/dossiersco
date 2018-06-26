@@ -22,7 +22,7 @@ helpers do
     end
   end
 
-  def upload_pieces_jointes dossier_eleve, params
+  def upload_pieces_jointes dossier_eleve, params, etat='soumis'
     params.each do |code, piece|
       if params[code].present? and params[code]["tempfile"].present?
         file = File.open(params[code]["tempfile"])
@@ -32,9 +32,9 @@ helpers do
         piece_attendue = PieceAttendue.find_by(code: code, etablissement_id: dossier_eleve.etablissement_id)
         piece_jointe = PieceJointe.find_by(piece_attendue_id: piece_attendue.id, dossier_eleve_id: dossier_eleve.id)
         if piece_jointe.present?
-          piece_jointe.update(etat: 'soumis', clef: nom_du_fichier)
+          piece_jointe.update(etat: etat, clef: nom_du_fichier)
         else
-          piece_jointe = PieceJointe.create!(etat: 'validé', clef: nom_du_fichier, piece_attendue_id: piece_attendue.id, dossier_eleve_id: dossier_eleve.id)
+          piece_jointe = PieceJointe.create!(etat: etat, clef: nom_du_fichier, piece_attendue_id: piece_attendue.id, dossier_eleve_id: dossier_eleve.id)
         end
       end
     end
