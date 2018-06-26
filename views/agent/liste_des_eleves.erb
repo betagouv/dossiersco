@@ -11,7 +11,6 @@
       </div>
     </div>
   </div>
-
   <div>
     <%= agent.etablissement.nom %> : <span id="total_dossiers" class="badge badge-danger"><%= lignes_eleves.count('*') %></span> dossiers.
   </div>
@@ -78,10 +77,9 @@
           <% end %>
             <td>
               <% if ligne_eleve.email.present? %>
-                <a href="/agent/eleve/<%= ligne_eleve.identifiant %>"><i class="far fa-envelope"><%=
-                  messages[ligne_eleve.dossier_id].present? ? "&nbsp;(#{messages[ligne_eleve.dossier_id].count})" : ""
-                  %></i></a>
+                <a href="/agent/eleve/<%= ligne_eleve.identifiant %>"><i class="far fa-envelope"></i></a>
               <% end %>
+              <%= messages[ligne_eleve.dossier_id].present? ? "&nbsp;(#{messages[ligne_eleve.dossier_id].count})" : "" %>
             </td>
         </tr>
       <% end %>

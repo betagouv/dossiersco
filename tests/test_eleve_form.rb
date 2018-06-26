@@ -772,7 +772,7 @@ class EleveFormTest < Test::Unit::TestCase
     get '/agent/liste_des_eleves'
 
     doc = Nokogiri::HTML(last_response.body)
-    assert_equal " (1)", doc.css("tbody > tr:nth-child(1) > td:last-child i").text.strip
+    assert_equal " (1)", doc.css("tbody > tr:nth-child(1) > td:last-child").text.strip
   end
 
   def test_changement_statut_famille_connecte
