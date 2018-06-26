@@ -46,4 +46,11 @@ class DossierEleve < ActiveRecord::Base
     return "" unless self.date_signature
     self.date_signature.localtime("+02:00").strftime "%d/%m à %H:%M"
   end
+
+  def valide
+    update(etat: 'validé')
+    mail = AgentMailer.mail_validation_inscription(eleve)
+    mail.deliver_now
+  end
+
 end

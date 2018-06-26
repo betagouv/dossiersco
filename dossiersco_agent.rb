@@ -228,9 +228,7 @@ post '/agent/valider_inscription' do
   eleve = Eleve.find_by identifiant: params[:identifiant]
   dossier_eleve = eleve.dossier_eleve
   emails = dossier_eleve.resp_legal.map{ |resp_legal| resp_legal.email }
-  dossier_eleve.update(etat: 'validé')
-  mail = AgentMailer.mail_validation_inscription(eleve)
-  mail.deliver_now
+  dossier_eleve.valide
 
   redirect "/agent/liste_des_eleves"
 end
@@ -298,7 +296,7 @@ end
 post '/agent/valider_plusieurs_dossiers' do
   ids = params["ids"]
   ids.each do |id|
-    DossierEleve.find(id).update(etat: 'validé')
+    DossierEleve.find(id).valide
   end
   redirect '/agent/liste_des_eleves'
 end
