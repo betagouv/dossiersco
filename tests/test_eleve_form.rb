@@ -730,7 +730,7 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_affiche_lenvoi_de_message_uniquement_si_un_des_resp_legal_a_un_mail
     e = Eleve.create! identifiant: 'XXX'
-    dossier_eleve = DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first
+    dossier_eleve = DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first.id
     RespLegal.create! dossier_eleve_id: dossier_eleve.id, email: 'test@test.com', priorite: 1
 
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
@@ -741,7 +741,7 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_affiche_contacts
     e = Eleve.create! identifiant: 'XXX'
-    dossier_eleve = DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first
+    dossier_eleve = DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first.id
     RespLegal.create! dossier_eleve_id: dossier_eleve.id,
       tel_principal: '0101010101', tel_secondaire: '0606060606', email: 'test@test.com', priorite: 1
     ContactUrgence.create! dossier_eleve_id: dossier_eleve.id, tel_principal: '0103030303'
@@ -1230,7 +1230,7 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_un_agent_voit_un_commentaire_parent_dans_vue_eleve
     e = Eleve.create! identifiant: 'XXX'
-    d= DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first, commentaire: "Commentaire de test"
+    d = DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first.id, commentaire: "Commentaire de test"
     RespLegal.create! dossier_eleve_id: d.id,
       tel_principal: '0101010101', tel_secondaire: '0606060606', email: 'test@test.com', priorite: 1
 
@@ -1317,7 +1317,7 @@ class EleveFormTest < Test::Unit::TestCase
       piece_attendue_id: piece_attendue.id)
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
 
-    get '/agent/pieces_jointes_eleve/6'
+    get '/agent/eleve/6'
 
     doc = Nokogiri::HTML(last_response.body)
     documents_route = FichierUploader::route_lecture '6', 'assurance_scolaire'
@@ -1338,7 +1338,7 @@ class EleveFormTest < Test::Unit::TestCase
       piece_attendue_id: piece_attendue.id)
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
 
-    get '/agent/pieces_jointes_eleve/6'
+    get '/agent/eleve/6'
 
     doc = Nokogiri::HTML(last_response.body)
     documents_route = FichierUploader::route_lecture '6', 'assurance_scolaire'
