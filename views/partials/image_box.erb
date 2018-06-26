@@ -11,9 +11,9 @@
         <!-- Zone d'affichage du document -->
       </div>
       <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-secondary" id="tourner-gauche">Tourner <i class="fas fa-undo"></i></button>
+        <button type="button" class="btn btn-secondary rotation" data-degres="-90">Tourner <i class="fas fa-undo"></i></button>
         <span>
-        <button type="button" class="btn btn-secondary" id="tourner-droite">Tourner <i class="fas fa-redo"></i></button>
+        <button type="button" class="btn btn-secondary rotation" data-degres="90">Tourner <i class="fas fa-redo"></i></button>
         <button type="button" class="btn btn-secondary fermer" data-dismiss="modal">Fermer</button>
         </span>
       </div>
@@ -39,13 +39,23 @@
     $('#modal-pieces-jointes').on('hide.bs.modal', function (e) {
         $('#iframe-piece-jointe').attr('src', ' ');
     })
-    var rotation = 0;
-    $('#tourner-gauche').click(function() { tourne(-90) })
-    $('#tourner-droite').click(function() { tourne(90) })
-    function tourne(angle) {
-      rotation = (rotation + angle) % 360;
-      $('#affichage-doc').css('transform', 'rotate('+rotation+'deg)');
-    }
+
+    var rotation = 0
+    $('.rotation').click(function() {
+        degres = $(this).data('degres')
+        var img = $('#affichage-doc img')
+        var scale = img.height() / img.width()
+        rotation = (rotation + degres) % 360
+
+        if ((rotation % 360) === 0) {
+          reset_rotation();
+        }
+        else {
+          var transform = 'rotate('+rotation+'deg)'
+          transform += (rotation % 180) === 0 ? '' : ' scale('+scale+') translate(0px,'+scale*img.height()/2+'px)'
+          img.css('transform', transform);
+        }
+     })
 
     $('.fermer').click(reset_rotation)
     $(document).keyup(function(e) {
@@ -54,7 +64,7 @@
     });
     function reset_rotation() {
       rotation = 0;
-      $('#affichage-doc').css('transform', '');
+      $('#affichage-doc img').css('transform', 'none');
     }
   })
 </script>
