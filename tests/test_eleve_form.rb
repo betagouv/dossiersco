@@ -1261,8 +1261,12 @@ class EleveFormTest < Test::Unit::TestCase
       etat: "en attente de validation")
     ids = [dossier_eleve1.id.to_s, dossier_eleve2.id.to_s]
 
+    assert_equal 0, ActionMailer::Base.deliveries.count
+
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
     post '/agent/valider_plusieurs_dossiers', ids: ids
+
+    assert_equal 2, ActionMailer::Base.deliveries.count
 
     dossier_eleve1 = DossierEleve.find(dossier_eleve1.id)
     dossier_eleve2 = DossierEleve.find(dossier_eleve2.id)
