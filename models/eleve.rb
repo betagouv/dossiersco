@@ -88,4 +88,13 @@ class Eleve < ActiveRecord::Base
       }
     end
   end
+
+  def options_apres_montee
+    options = []
+    options += self.option
+    options += self.demande.map(&:option)
+    options.reject! {|o| self.abandon.map(&:option).include? o}
+    options.uniq {|o| o.nom}.select {|o| o.nom}.sort {|a,b| a.nom <=> b.nom}
+  end
+
 end

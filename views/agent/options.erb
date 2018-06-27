@@ -1,4 +1,4 @@
-<div class="col-12 col-md-8">
+<div class="col-12">
 
     <h2 class="separation">Nombre d'élèves par option</h2>
 
@@ -23,16 +23,92 @@
       <% end %>
     </ul>
   </div>
-<table id="example" class="display" style="width:100%">
-  <thead>
-    <tr>
-      <th>a</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>b</td>
-    </tr>
-</table>
+  <table id="options" class="table table-striped table-bordered table-condensed table-hover">
+    <thead>
+      <tr>
+        <th>Niveau</th>
+        <th>Classe</th>
+        <th>Prénom</th>
+        <th>Nom</th>
+        <% (1..nb_max_options).each do |i| %>
+          <th></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% eleves.each do |eleve| %>
+      <tr>
+        <td class="col-niveau-eleve"><%= eleve.niveau_classe_ant %></td>
+        <td><%= eleve.classe_ant %></td>
+        <td><%= eleve.prenom %></td>
+        <td><%= eleve.nom %></td>
+        <% options_apres_montee = eleve.options_apres_montee %>
+        <% options_apres_montee.each do |option| %>
+          <td><%= option.nom %></td>
+        <% end %>
+        <% (1..nb_max_options-options_apres_montee.count).each do |i| %>
+          <td></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
 </div>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/yadcf/0.9.3/jquery.dataTables.yadcf.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.2.6/js/dataTables.select.min.js"></script>
 
+<script type="text/javascript" charset="utf-8">
+  $(document).ready( function () {
+
+
+    table = $('#options').DataTable({
+      "bJQueryUI": true,
+      "bStateSave": true,
+      "order": [[ 0, "desc" ], [1, "asc"]],
+      "lengthMenu": [ 30, 60, 90, 120 ],
+      language: {
+        processing:     "Traitement en cours...",
+        search:         "Rechercher&nbsp;:",
+        lengthMenu:    "Afficher _MENU_ &eacute;l&egrave;ves",
+        info:           "Affichage des &eacute;l&egrave;ves _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&egrave;ves",
+        infoEmpty:      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&egrave;ves",
+        infoFiltered:   "(filtr&eacute; de _MAX_ &eacute;l&egrave;ves au total)",
+        infoPostFix:    "",
+        loadingRecords: "Chargement en cours...",
+        zeroRecords:    "Aucun &eacute;l&egrave;ve &agrave; afficher",
+        emptyTable:     "Aucune donnée disponible dans le tableau",
+        paginate: {
+            first:      "Premier",
+            previous:   "Pr&eacute;c&eacute;dent",
+            next:       "Suivant",
+            last:       "Dernier"
+        },
+        aria: {
+          sortAscending:  ": activer pour trier la colonne par ordre croissant",
+          sortDescending: ": activer pour trier la colonne par ordre décroissant"
+        }
+      }
+    });
+
+    yadcf.init(table,[ {
+        column_number: 0,
+        select_type: 'select2',
+        filter_default_label: 'Toutes',
+        select_type_options: {
+            width: '100px',
+            minimumResultsForSearch: -1 // remove search box
+        }
+      },{
+        column_number: 1,
+        select_type: 'select2',
+        filter_default_label: 'Tous',
+        filter_match_mode : 'exact',
+        select_type_options: {
+            width: '70px',
+            minimumResultsForSearch: -1 // remove search box
+        }
+      }]);
+
+  });
+</script>

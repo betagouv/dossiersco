@@ -341,6 +341,10 @@ iframe {
   color: #BB0000;
 }
 
+.col-niveau-eleve {
+  max-width: 100px;
+}
+
 @media screen and (max-width: 767px) {
   .row-offcanvas {
     position: relative;

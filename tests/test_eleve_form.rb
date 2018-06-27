@@ -1389,20 +1389,28 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_affiche_options
-    eleve = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01')
-    dossier_eleve = DossierEleve.create!(eleve_id: eleve.id, etablissement_id: Etablissement.create.id)
-    montee = Montee.create
-    latin = Option.create(nom: 'latin', groupe: 'LCA', modalite: 'facultative')
-    latin_d = Demandabilite.create montee_id: montee.id, option_id: latin.id
+    eleve = Eleve.find_by(nom: 'Piaf')
+    latin = Option.create(nom: 'latin', groupe: 'LCA')
     eleve.option << latin
-    montee.demandabilite << latin_d
-    eleve.update(montee: montee)
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
 
     get '/agent/options'
-    doc = Nokogiri::HTML(last_response.body)
 
-    assert_equal "✓", doc.css("tbody > tr:nth-child(1) > td:nth-child(8)").text.strip
-    assert_equal "✓", doc.css("tbody > tr:nth-child(1) > td:nth-child(9)").text.strip
+    doc = Nokogiri::HTML(last_response.body)
+    assert_equal "latin", doc.css("tbody > tr:nth-child(1) > td:nth-child(5)").text.strip
+  end
+
+  def test_options_demande_et_abandon
+    eleve = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01')
+    eleve.option << Option.create(nom: 'espagnol', groupe: 'lv2')
+    eleve.option << Option.create(nom: 'espagnol', groupe: 'lv2')
+    latin = Option.create(nom: 'latin', groupe: 'LCA', modalite: 'facultative')
+    eleve.option << latin
+    grec = Option.create(nom: 'grec', groupe: 'LCA', modalite: 'facultative')
+
+    grec_d = Demande.create(option_id: grec.id, eleve_id: eleve.id)
+    latin_a = Abandon.create(option_id: latin.id, eleve_id: eleve.id)
+
+    assert_equal ['espagnol', 'grec'], eleve.options_apres_montee.map(&:nom)
   end
 end
