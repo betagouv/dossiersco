@@ -258,11 +258,15 @@ post '/agent/contacter_une_famille' do
   if emails_presents
     mail = AgentMailer.contacter_une_famille(eleve, params[:message])
     part = mail.html_part || mail.text_part || mail
-    Message.create(categorie:"mail", contenu: part.body, etat: "envoyé", dossier_eleve: eleve.dossier_eleve, resultat: "")
+    Message.create(categorie:"mail", contenu: part.body, etat: "envoyé", dossier_eleve: eleve.dossier_eleve)
     mail.deliver_now
     session[:message_info] = "Votre message a été envoyé."
   elsif dossier_eleve.portable_rl1.present?
-    Message.create(categorie:"sms", contenu: params[:message], etat: "en attente", dossier_eleve: eleve.dossier_eleve, resultat: "")
+    Message.create(categorie:"sms",
+        contenu: params[:message],
+        destinataire: params[:destinataire] || "rl1",
+        etat: "en attente",
+        dossier_eleve: eleve.dossier_eleve)
     session[:message_info] = "Votre message est en attente d'expédition."
   end
   redirect "/agent/liste_des_eleves"
