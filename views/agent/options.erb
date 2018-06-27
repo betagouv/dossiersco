@@ -6,21 +6,33 @@
     <div class="message_echec"><%= message %></div>
   <% end %>
 
-  <span style="display:block; height: 40px;"></span>
 
   <div class="container etablissement">
     <ul>
       <% etablissement.niveaux.sort.each do |niveau| %>
         <% options = eleves_par_classe[niveau].collect(&:demande).flatten.collect(&:option).uniq %>
         <% eleve_par_options = eleves_par_classe[niveau].collect(&:demande).flatten.group_by(&:option_id) %>
-          <li class="mt-2">
-          <strong><%= niveau %></strong>
-
-        <% eleve_par_options.each do |option_id, eleves| %>
-          <p><%= Option.find(option_id).nom %> : <%= eleves.count %></p>
-        <% end %>
-        </li>
+          <% if options.count > 0 %>
+            <li class="mt-2">
+            <strong><%= niveau %></strong>
+              <% eleve_par_options.each do |option_id, eleves| %>
+                <span class='ml-3'><%= Option.find(option_id).nom %> : <%= eleves.count %></span>
+              <% end %>
+            </li>
+          <% end %>
       <% end %>
     </ul>
   </div>
+<table id="example" class="display" style="width:100%">
+  <thead>
+    <tr>
+      <th>a</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>b</td>
+    </tr>
+</table>
 </div>
+

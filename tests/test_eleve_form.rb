@@ -1387,4 +1387,22 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal "#modal-pieces-jointes", doc.css('#image_assurance_scolaire').attr("data-target").text
     assert_equal expected_url, doc.css('#image_assurance_scolaire').attr("data-url").text
   end
+
+  def test_affiche_options
+    eleve = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01')
+    dossier_eleve = DossierEleve.create!(eleve_id: eleve.id, etablissement_id: Etablissement.create.id)
+    montee = Montee.create
+    latin = Option.create(nom: 'latin', groupe: 'LCA', modalite: 'facultative')
+    latin_d = Demandabilite.create montee_id: montee.id, option_id: latin.id
+    eleve.option << latin
+    montee.demandabilite << latin_d
+    eleve.update(montee: montee)
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+
+    get '/agent/options'
+    doc = Nokogiri::HTML(last_response.body)
+
+    assert_equal "✓", doc.css("tbody > tr:nth-child(1) > td:nth-child(8)").text.strip
+    assert_equal "✓", doc.css("tbody > tr:nth-child(1) > td:nth-child(9)").text.strip
+  end
 end
