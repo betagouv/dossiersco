@@ -162,15 +162,14 @@ end
 get '/agent/options' do
   etablissement = agent.etablissement
   eleves_par_classe = DossierEleve.where(etablissement_id: etablissement.id).collect(&:eleve).group_by(&:niveau_classe_ant)
-  eleves = DossierEleve.where(etablissement_id: etablissement.id).collect(&:eleve)
-  Option
-    .joins(:eleve)
-    .where(etablissement_id: etablissement.id)
-# select distinct(options.nom) from options, eleves, dossier_eleves, eleves_options where eleves_options.eleve_id = eleves.id AND options.id = eleves_options.option_id AND dossier_eleves.eleve_id = eleves.id AND etablissement_id = 227;
-# select distinct(options.nom) from options, demandabilites, montees where demandabilites.option_id = options.id AND demandabilites.montee_id = montees.id AND montees.etablissement_id = 227;
-  #options = ActiveRecord::Base.connection.execute('select distinct(options.nom) from options, eleves, dossier_eleves, eleves_options where eleves_options.eleve_id = eleves.id AND options.id = eleves_options.option_id AND s.option_id AND dossier_eleves.eleve_id = eleves.id AND etablissement_id = 227;')
+  eleves = Eleve.all.select {|e| e.dossier_eleve.etablissement_id == etablissement.id}
+  nb_max_options = 0
+  eleves.each do |e|
+    nb_max_options = e.options_apres_montee.count if e.options_apres_montee.count > nb_max_options
+  end
 
-  erb :'agent/options', locals: {agent: agent,etablissement: etablissement, eleves_par_classe: eleves_par_classe, options: options}, layout: :layout_agent
+  erb :'agent/options', locals: {agent: agent,etablissement: etablissement, eleves_par_classe: eleves_par_classe,
+    eleves: eleves, nb_max_options: nb_max_options}, layout: :layout_agent
 end
 
 get '/agent/piece_attendues' do
