@@ -162,8 +162,14 @@ end
 get '/agent/options' do
   etablissement = agent.etablissement
   eleves_par_classe = DossierEleve.where(etablissement_id: etablissement.id).collect(&:eleve).group_by(&:niveau_classe_ant)
+  eleves = Eleve.all.select {|e| e.dossier_eleve.etablissement_id == etablissement.id}
+  nb_max_options = 0
+  eleves.each do |e|
+    nb_max_options = e.options_apres_montee.count if e.options_apres_montee.count > nb_max_options
+  end
 
-  erb :'agent/options', locals: {agent: agent,etablissement: etablissement, eleves_par_classe: eleves_par_classe}, layout: :layout_agent
+  erb :'agent/options', locals: {agent: agent,etablissement: etablissement, eleves_par_classe: eleves_par_classe,
+    eleves: eleves, nb_max_options: nb_max_options}, layout: :layout_agent
 end
 
 get '/agent/piece_attendues' do

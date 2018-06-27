@@ -1387,4 +1387,30 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal "#modal-pieces-jointes", doc.css('#image_assurance_scolaire').attr("data-target").text
     assert_equal expected_url, doc.css('#image_assurance_scolaire').attr("data-url").text
   end
+
+  def test_affiche_options
+    eleve = Eleve.find_by(nom: 'Piaf')
+    latin = Option.create(nom: 'latin', groupe: 'LCA')
+    eleve.option << latin
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+
+    get '/agent/options'
+
+    doc = Nokogiri::HTML(last_response.body)
+    assert_equal "latin", doc.css("tbody > tr:nth-child(1) > td:nth-child(5)").text.strip
+  end
+
+  def test_options_demande_et_abandon
+    eleve = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01')
+    eleve.option << Option.create(nom: 'espagnol', groupe: 'lv2')
+    eleve.option << Option.create(nom: 'espagnol', groupe: 'lv2')
+    latin = Option.create(nom: 'latin', groupe: 'LCA', modalite: 'facultative')
+    eleve.option << latin
+    grec = Option.create(nom: 'grec', groupe: 'LCA', modalite: 'facultative')
+
+    grec_d = Demande.create(option_id: grec.id, eleve_id: eleve.id)
+    latin_a = Abandon.create(option_id: latin.id, eleve_id: eleve.id)
+
+    assert_equal ['espagnol', 'grec'], eleve.options_apres_montee.map(&:nom)
+  end
 end

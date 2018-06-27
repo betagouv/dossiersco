@@ -1,20 +1,5 @@
 def init
-  RespLegal.destroy_all
-  ContactUrgence.destroy_all
-  DossierEleve.destroy_all
-  Abandon.destroy_all
-  Demande.destroy_all
-  Option.destroy_all
-  Eleve.destroy_all
-  Agent.destroy_all
-  PieceAttendue.destroy_all
-  PieceJointe.destroy_all
-  TacheImport.destroy_all
-  Abandonnabilite.destroy_all
-  Demandabilite.destroy_all
-  Montee.destroy_all
-  Etablissement.destroy_all
-  Message.destroy_all
+  destroy_all
 
   eleves = [
       {prenom: 'Edith',
@@ -199,4 +184,23 @@ def cree_resp_legal dossier_eleve
     situation_emploi: 'Employé', profession: 'concierge', enfants_a_charge: nil,
     enfants_a_charge_secondaire: 2, communique_info_parents_eleves: true,
     priorite: 1
+end
+
+def destroy_all
+  RespLegal.destroy_all
+  ContactUrgence.destroy_all
+  DossierEleve.destroy_all
+  Abandon.destroy_all
+  Demande.destroy_all
+  Option.destroy_all
+  Eleve.destroy_all
+  Agent.destroy_all
+  PieceAttendue.destroy_all
+  PieceJointe.destroy_all
+  TacheImport.destroy_all
+  Abandonnabilite.destroy_all
+  Demandabilite.destroy_all
+  Montee.destroy_all
+  Etablissement.destroy_all
+  Message.destroy_all
 end
