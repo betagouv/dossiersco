@@ -131,13 +131,20 @@ end
 
 get '/agent/eleve/:identifiant' do
   eleve = Eleve.find_by(identifiant: params[:identifiant])
-  emails_presents = false
   dossier_eleve = eleve.dossier_eleve
+  emails_presents = false
   resp_legaux = dossier_eleve.resp_legal
   resp_legaux.each { |r| (emails_presents = true) if r.email.present?}
   meme_adresse = resp_legaux.first.meme_adresse resp_legaux.second
+  modeles = agent.etablissement.modele
   erb :'agent/eleve', layout: :layout_agent,
-    locals: {emails_presents: emails_presents, agent: agent, eleve: eleve, dossier_eleve: dossier_eleve, meme_adresse: meme_adresse}
+    locals: {
+      emails_presents: emails_presents,
+      agent: agent,
+      modeles: modeles,
+      eleve: eleve,
+      dossier_eleve: dossier_eleve,
+      meme_adresse: meme_adresse}
 end
 
 post '/agent/pieces_jointes_eleve/:identifiant' do
@@ -243,11 +250,25 @@ end
 
 post '/agent/contacter_une_famille' do
   eleve = Eleve.find_by(identifiant: params[:identifiant])
-  mail = AgentMailer.contacter_une_famille(eleve, params[:message])
-  part = mail.html_part || mail.text_part || mail
-  Message.create(categorie:"mail", contenu: part.body, etat: "envoyé", dossier_eleve: eleve.dossier_eleve, resultat: "")
-  mail.deliver_now
-  session[:message_info] = "Votre message a été envoyé."
+  dossier_eleve = eleve.dossier_eleve
+  emails_presents = false
+  resp_legaux = dossier_eleve.resp_legal
+  resp_legaux.each { |r| (emails_presents = true) if r.email.present?}
+  session[:message_info] = "Votre message ne peut être acheminé."
+  if emails_presents
+    mail = AgentMailer.contacter_une_famille(eleve, params[:message])
+    part = mail.html_part || mail.text_part || mail
+    Message.create(categorie:"mail", contenu: part.body, etat: "envoyé", dossier_eleve: eleve.dossier_eleve)
+    mail.deliver_now
+    session[:message_info] = "Votre message a été envoyé."
+  elsif dossier_eleve.portable_rl1.present?
+    Message.create(categorie:"sms",
+        contenu: params[:message],
+        destinataire: params[:destinataire] || "rl1",
+        etat: "en attente",
+        dossier_eleve: eleve.dossier_eleve)
+    session[:message_info] = "Votre message est en attente d'expédition."
+  end
   redirect "/agent/liste_des_eleves"
 end
 

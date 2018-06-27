@@ -10,8 +10,11 @@ class Message < ActiveRecord::Base
     end
   end
 
+  def numero
+    destinataire == "rl2" ? dossier_eleve.portable_rl2 : dossier_eleve.portable_rl1
+  end
+
   def envoyer_sms
-    numero = dossier_eleve.portable_rl1
     if numero
       numero_prefixe = numero.gsub(/[[:space:]]/,'').gsub(/^0/,'+33')
       uri = URI.parse("https://rest.nexmo.com/sms/json")
