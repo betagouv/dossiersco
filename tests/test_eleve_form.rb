@@ -875,7 +875,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal "mail", message.categorie
     assert_equal dossier.id, message.dossier_eleve_id
     assert_equal "envoyé", message.etat
-    assert_equal "", message.resultat
     assert message.contenu.include? "Tillion"
   end
 
@@ -1304,6 +1303,28 @@ class EleveFormTest < Test::Unit::TestCase
     dossier.resp_legal = [RespLegal.new(
       tel_principal: "07 12 34 56 78", tel_secondaire: "06 12 34 56 78", priorite: 1)]
     assert_equal "06 12 34 56 78", dossier.portable_rl1
+  end
+
+  def test_portable_rl2
+    dossier = DossierEleve.new
+    dossier.resp_legal = [RespLegal.new(
+      tel_principal: "01 12 34 56 78", tel_secondaire: "06 12 34 56 78", priorite: 1)]
+    assert_nil dossier.portable_rl2
+    dossier.resp_legal << RespLegal.new(
+      tel_principal: "01 12 34 56 78", tel_secondaire: "06 12 34 56 99", priorite: 2)
+    assert_equal "06 12 34 56 99", dossier.portable_rl2
+  end
+
+  def test_destinataire_sms
+    dossier = DossierEleve.new
+    dossier.resp_legal = [RespLegal.new(
+      tel_principal: "01 12 34 56 78", tel_secondaire: "06 12 34 56 78", priorite: 1),
+      RespLegal.new(
+      tel_principal: "01 12 34 56 78", tel_secondaire: "06 12 34 56 99", priorite: 2)]
+    message = Message.new(dossier_eleve: dossier, categorie: "sms")
+    assert_equal "06 12 34 56 78", message.numero
+    message.destinataire = "rl2"
+    assert_equal "06 12 34 56 99", message.numero
   end
 
   def test_propose_modeles_messages
