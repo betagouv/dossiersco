@@ -35,8 +35,19 @@ class DossierEleve < ActiveRecord::Base
     Message.create(categorie:"sms", contenu: text, etat: "en attente", dossier_eleve: self)
   end
 
+  def portable_present
+    portable_rl1.present? || portable_rl2.present?
+  end
+
   def portable_rl1
-    rl = resp_legal_1
+    portable resp_legal_1
+  end
+
+  def portable_rl2
+    portable resp_legal_2 if resp_legal_2
+  end
+
+  def portable rl
     secondaire = rl.tel_secondaire
     return secondaire unless (secondaire.blank? || secondaire.start_with?("01"))
     return rl.tel_principal

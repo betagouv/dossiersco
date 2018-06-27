@@ -850,6 +850,18 @@ class EleveFormTest < Test::Unit::TestCase
     assert part.body.decoded.include? "Emile"
   end
 
+  def test_envoie_par_sms_les_messages_aux_familles_sans_email
+    eleve = Eleve.find_by(identifiant: "6")
+    eleve.dossier_eleve.resp_legal.each do |rl| rl.update(email: nil) end
+    assert_equal 0, Message.where(categorie:"sms").count
+
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    post '/agent/contacter_une_famille', identifiant: '6', message: 'Message de test'
+
+    assert_equal 0, ActionMailer::Base.deliveries.count
+    assert_equal 1, Message.where(categorie:"sms").count
+  end
+
   def test_trace_messages_envoyes
     assert_equal 0, Message.count
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
@@ -863,7 +875,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal "mail", message.categorie
     assert_equal dossier.id, message.dossier_eleve_id
     assert_equal "envoyé", message.etat
-    assert_equal "", message.resultat
     assert message.contenu.include? "Tillion"
   end
 
@@ -1292,6 +1303,28 @@ class EleveFormTest < Test::Unit::TestCase
     dossier.resp_legal = [RespLegal.new(
       tel_principal: "07 12 34 56 78", tel_secondaire: "06 12 34 56 78", priorite: 1)]
     assert_equal "06 12 34 56 78", dossier.portable_rl1
+  end
+
+  def test_portable_rl2
+    dossier = DossierEleve.new
+    dossier.resp_legal = [RespLegal.new(
+      tel_principal: "01 12 34 56 78", tel_secondaire: "06 12 34 56 78", priorite: 1)]
+    assert_nil dossier.portable_rl2
+    dossier.resp_legal << RespLegal.new(
+      tel_principal: "01 12 34 56 78", tel_secondaire: "06 12 34 56 99", priorite: 2)
+    assert_equal "06 12 34 56 99", dossier.portable_rl2
+  end
+
+  def test_destinataire_sms
+    dossier = DossierEleve.new
+    dossier.resp_legal = [RespLegal.new(
+      tel_principal: "01 12 34 56 78", tel_secondaire: "06 12 34 56 78", priorite: 1),
+      RespLegal.new(
+      tel_principal: "01 12 34 56 78", tel_secondaire: "06 12 34 56 99", priorite: 2)]
+    message = Message.new(dossier_eleve: dossier, categorie: "sms")
+    assert_equal "06 12 34 56 78", message.numero
+    message.destinataire = "rl2"
+    assert_equal "06 12 34 56 99", message.numero
   end
 
   def test_propose_modeles_messages
