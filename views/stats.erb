@@ -105,7 +105,7 @@
         <% eleves_connectes = stats.select {|k,v| k != 'sortant' && k != 'pas connecté'}.values %>
         <% total_eleves_connectes = eleves_connectes.inject(0) {|somme, dossier| somme + dossier.count} %>
         <span>Appréciation des familles&nbsp;: <strong><%= moyenne %></strong> <small><sup>*</sup></small>.</span>
-        <span><strong><%= "#{'%.0f' % ((total_eleves_connectes.to_f / total_eleves_presents) * 100)}%" %></strong> des familles se sont connecté.</span>
+        <span><strong><%= "#{'%.0f' % ((total_eleves_connectes.to_f / total_eleves_presents) * 100)}%" %></strong> des familles se sont connectés.</span>
       </div>
     </div>
   </div>
