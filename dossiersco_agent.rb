@@ -335,6 +335,16 @@ get '/agent/fusionne_modele/:modele_id/eleve/:identifiant' do
   template.render(nil, eleve: eleve)
 end
 
+get '/agent/convocations' do
+  etablissement = agent.etablissement
+  eleves = Eleve.all.select do |e|
+    d = e.dossier_eleve
+    d.etablissement_id == etablissement.id && (d.etat == 'pas connecté' || d.etat == 'connecté')
+  end
+
+  erb :'agent/convocations', locals: {agent: agent,etablissement: etablissement, eleves: eleves}, layout: :layout_agent
+end
+
 # Route de test uniquement
 get '/agent/testmail/:nom' do
   class TestMailer < ActionMailer::Base
@@ -351,5 +361,3 @@ get '/agent/testmail/:nom' do
   mail = TestMailer.testmail(nom)
   mail.deliver_now
 end
-
-

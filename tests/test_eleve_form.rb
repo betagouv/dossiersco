@@ -1413,4 +1413,23 @@ class EleveFormTest < Test::Unit::TestCase
 
     assert_equal ['espagnol', 'grec'], eleve.options_apres_montee.map(&:nom)
   end
+
+  def test_liste_resp_legaux
+    eleve = Eleve.find_by(nom: 'Piaf')
+    eleve.dossier_eleve.update(etat: "pas connecté")
+    eleve_2 = Eleve.find_by(nom: 'Blayo')
+    eleve_2.dossier_eleve.update(etat: "connecté")
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+
+    get '/agent/convocations'
+
+    resp_legal_1 = eleve.dossier_eleve.resp_legal.find {|d| d.priorite == 1}
+    resp_legal_1_eleve_2 = eleve_2.dossier_eleve.resp_legal.find {|d| d.priorite == 1}
+    doc = Nokogiri::HTML(last_response.body)
+    assert_equal resp_legal_1.prenom, doc.css("tbody > tr:nth-child(1) > td:nth-child(4)").text.strip
+    assert_equal resp_legal_1.nom, doc.css("tbody > tr:nth-child(1) > td:nth-child(5)").text.strip
+    assert_equal resp_legal_1.tel_principal, doc.css("tbody > tr:nth-child(1) > td:nth-child(6)").text.strip
+    assert_equal resp_legal_1.tel_secondaire, doc.css("tbody > tr:nth-child(1) > td:nth-child(7)").text.strip
+    assert_equal resp_legal_1_eleve_2.prenom, doc.css("tbody > tr:nth-child(2) > td:nth-child(4)").text.strip
+  end
 end
