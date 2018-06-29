@@ -44,7 +44,7 @@
         <td><%= eleve.nom %></td>
         <% options_apres_montee = eleve.options_apres_montee %>
         <% options_apres_montee.each do |option| %>
-          <td><%= option.nom %></td>
+          <td><%= option %></td>
         <% end %>
         <% (1..nb_max_options-options_apres_montee.count).each do |i| %>
           <td></td>
@@ -72,7 +72,6 @@
       "bJQueryUI": true,
       "bStateSave": true,
       "order": [[ 1, "asc" ], [0, "desc"], [3, "asc"]],
-      "lengthMenu": [ 30, 60, 90, 120 ],
       "pageLength": 30,
       language: {
         processing:     "Traitement en cours...",
