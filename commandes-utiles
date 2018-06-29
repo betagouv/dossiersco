@@ -168,3 +168,7 @@ request = Net::HTTP::Post.new(uri.request_uri, header)
 request.body = payload.to_json
 
 response = https.request(request)
+
+# Envoyer les messages en attente
+
+Message.where(etat:"en attente", categorie:"sms").each(&:envoyer)
