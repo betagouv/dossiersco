@@ -94,7 +94,8 @@ class Eleve < ActiveRecord::Base
     options += self.option.map(&:nom).select {|o| o}
     options += self.demande.map(&:option).map(&:nom)
     (0...options.length).each do |i|
-      options[i] += " (A)" if self.abandon.map(&:option).map(&:nom).include? options[i]
+      options[i] += " (-)" if self.abandon.map(&:option).map(&:nom).include? options[i]
+      options[i] += " (+)" if self.demande.map(&:option).map(&:nom).include? options[i]
     end
     options.uniq.sort
   end
