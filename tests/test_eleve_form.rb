@@ -1411,6 +1411,6 @@ class EleveFormTest < Test::Unit::TestCase
     grec_d = Demande.create(option_id: grec.id, eleve_id: eleve.id)
     latin_a = Abandon.create(option_id: latin.id, eleve_id: eleve.id)
 
-    assert_equal ['espagnol', 'grec'], eleve.options_apres_montee.map(&:nom)
+    assert_equal ['espagnol', 'grec (+)', 'latin (-)'], eleve.options_apres_montee
   end
 end
