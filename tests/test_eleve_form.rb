@@ -1389,14 +1389,17 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_affiche_options
-    eleve = Eleve.find_by(nom: 'Piaf')
+    eleve1 = Eleve.find_by(nom: 'Piaf')
+    eleve2 = Eleve.find_by(identifiant: 3)
+    eleve2.dossier_eleve.update(etat: 'sortant')
     latin = Option.create(nom: 'latin', groupe: 'LCA')
-    eleve.option << latin
+    eleve1.option << latin
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
 
     get '/agent/options'
 
     doc = Nokogiri::HTML(last_response.body)
+    assert ! last_response.body.include?(eleve2.prenom)
     assert_equal "latin", doc.css("tbody > tr:nth-child(1) > td:nth-child(5)").text.strip
   end
 
