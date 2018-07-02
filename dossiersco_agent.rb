@@ -162,7 +162,7 @@ end
 get '/agent/options' do
   etablissement = agent.etablissement
   eleves_par_classe = DossierEleve.where(etablissement_id: etablissement.id).collect(&:eleve).group_by(&:niveau_classe_ant)
-  eleves = Eleve.all.select {|e| e.dossier_eleve.etablissement_id == etablissement.id}
+  eleves = Eleve.all.select {|e| e.dossier_eleve.etablissement_id == etablissement.id && e.dossier_eleve.etat != 'sortant'}
   nb_max_options = 0
   eleves.each do |e|
     nb_max_options = e.options_apres_montee.count if e.options_apres_montee.count > nb_max_options
