@@ -76,7 +76,7 @@ before '/*' do
 end
 
 get '/' do
-	erb :'#_identification'
+	erb :'identification'
 end
 
 post '/identification' do
@@ -111,12 +111,12 @@ get '/deconnexion' do
 end
 
 get '/accueil' do
-	erb :'0_accueil', locals: { dossier_eleve: eleve.dossier_eleve }
+	erb :'accueil', locals: { dossier_eleve: eleve.dossier_eleve }
 end
 
 get '/eleve' do
   options_du_niveau = eleve.montee.present? ? eleve.montee.demandabilite.collect(&:option) : []
-  erb :'1_eleve', locals: { eleve: eleve, options_du_niveau: options_du_niveau }
+  erb :'eleve', locals: { eleve: eleve, options_du_niveau: options_du_niveau }
 end
 
 post '/eleve' do
@@ -176,7 +176,7 @@ get '/famille' do
 		params["#{i}_rl2"] = resp_legal2[i] if resp_legal2
 		params["#{i}_urg"] = contact_urgence[i] if contact_urgence
 	end
-  erb :'3_famille', locals: {resp_legal_2: resp_legal2,
+  erb :'famille', locals: {resp_legal_2: resp_legal2,
     contact_urgence: dossier_eleve.contact_urgence,
     code_profession: code_profession,
     code_situation: code_situation}
@@ -201,7 +201,7 @@ post '/famille' do
 end
 
 get '/administration' do
-	erb :'4_administration', locals: {dossier_eleve: eleve.dossier_eleve}
+	erb :'administration', locals: {dossier_eleve: eleve.dossier_eleve}
 end
 
 post '/administration' do
@@ -247,7 +247,7 @@ get '/piece/:dossier_eleve/:code_piece/:s3_key' do
 end
 
 get '/pieces_a_joindre' do
-	erb :'5_pieces_a_joindre', locals: {dossier_eleve: eleve.dossier_eleve}
+	erb :'pieces_a_joindre', locals: {dossier_eleve: eleve.dossier_eleve}
 end
 
 post '/pieces_a_joindre' do
@@ -261,7 +261,7 @@ post '/pieces_a_joindre' do
     end
   end
   if pieces_obligatoires
-    erb :'5_pieces_a_joindre', locals: {dossier_eleve: dossier_eleve, message: 'Veuillez télécharger les pièces obligatoires'}
+    erb :'pieces_a_joindre', locals: {dossier_eleve: dossier_eleve, message: 'Veuillez télécharger les pièces obligatoires'}
   else
     redirect '/validation'
   end
@@ -278,7 +278,7 @@ post '/pieces_a_joindre' do
 end
 
 get '/validation' do
-	erb :'6_validation', locals: { eleve: eleve, dossier_eleve: eleve.dossier_eleve }
+	erb :'validation', locals: { eleve: eleve, dossier_eleve: eleve.dossier_eleve }
 end
 
 post '/validation' do
@@ -296,7 +296,7 @@ end
 
 get '/confirmation' do
   dossier_eleve = eleve.dossier_eleve
-	erb :'7_confirmation', locals: { eleve: eleve, dossier_eleve: dossier_eleve }
+	erb :'confirmation', locals: { eleve: eleve, dossier_eleve: dossier_eleve }
 end
 
 post '/satisfaction' do
