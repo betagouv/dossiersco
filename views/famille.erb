@@ -281,6 +281,52 @@ fin_form_resp_legal_2 = [
     checked: resp_legal_2.communique_info_parents_eleves
   }]
 
+form_contact_urgence = [
+  {
+    name: "lien_avec_eleve_urg",
+    label: "Lien avec l'élève",
+    type: "text",
+    value: contact_urgence.lien_avec_eleve,
+    indication: "Lien avec l'élève",
+    disabled: false
+  },
+  {
+    name: "prenom_urg",
+    label: "Prénom",
+    type: "text",
+    value: contact_urgence.prenom,
+    indication: "Prénom",
+    disabled: false
+  },
+  {
+    name: "nom_urg",
+    label: "Nom",
+    type: "text",
+    value: contact_urgence.nom,
+    indication: "Nom",
+    disabled: false
+  },
+  {
+    type: 'espace',
+    hauteur: '30'
+  },
+  {
+    name: "tel_principal_urg",
+    label: "Téléphone principal",
+    type: "tel",
+    value: contact_urgence.tel_principal,
+    indication: "Numéro de téléphone",
+    required: 'required'
+  },
+  {
+    name: "tel_secondaire_urg",
+    label: "Téléphone secondaire",
+    type: "tel",
+    value: contact_urgence.tel_secondaire,
+    indication: "Numéro de téléphone",
+    required: 'required'
+  },
+]
 %>
 
 <% @section = 2 %>
@@ -324,17 +370,7 @@ fin_form_resp_legal_2 = [
 <div id='contact_urgence' class='<%= "d-none" unless contact_urgence.present? %>' >
   <h2 class="mt-5 separation">Famille : Autre personne à contacter en cas d'urgence</h2>
 
-    <%= erb :'partials/champ_texte', :locals => { :desc => "Lien avec l'élève", :variable => "lien_avec_eleve_urg", :valeur => params['lien_avec_eleve_urg'], :exemple => "Lien avec l'élève" }%>
-
-    <%= erb :'partials/champ_texte', :locals => { :desc => "Prénom", :variable => "prenom_urg", :valeur => params['prenom_urg'], :exemple => "Prénom" }%>
-
-    <%= erb :'partials/champ_texte', :locals => { :desc => "Nom", :variable => "nom_urg", :valeur => params['nom_urg'], :exemple => "Nom" }%>
-
-    <span style="display:block; height: 30px;"></span>
-
-    <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone principal", :variable => "tel_principal_urg", :valeur => params['tel_principal_urg'], :exemple => "Numéro de téléphone" }%>
-
-    <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone secondaire", :variable => "tel_secondaire_urg", :valeur => params['tel_secondaire_urg'], :exemple => "Numéro de téléphone" }%>
+    <%= construire form_contact_urgence %>
 </div>
     <%= erb :'partials/nouveau_precedent_suivant', :locals => { :precedent => "eleve"} %>
   </form>
