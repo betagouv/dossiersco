@@ -1,56 +1,336 @@
-<% resp_legal_1 = [
-    {
-        name: "lien_de_parente_rl1",
-        label: "Lien de parenté",
-        type: "text",
-        value: params['lien_de_parente_rl1'],
-        indication: "Lien de parenté",
-        disabled: false,
-        required: 'required'
-    },
-    {
-        name: "prenom_rl1",
-        label: "Prénom",
-        type: "text",
-        value: params['prenom_rl1'],
-        indication: "Prénom",
-        disabled: false,
-        required: 'required'
-    },
-    {
-        name: "nom_rl1",
-        label: "Nom",
-        type: "text",
-        value: params['nom_rl1'],
-        indication: "Nom",
-        disabled: false,
-        required: 'required'
-    },
-    {   name: "adresse_rl1",
-        label: "Adresse",
-        type: "libre",
-        value: params['adresse_rl1'],
-        indication: "Numéro et nom de voie",
-        disabled: false,
-        required: 'required',
-        lines: 3
-    },
-    {   name: "code_postal_rl1",
-        label: "Code postal",
-        type: "text",
-        value: params['code_postal_rl1'],
-        indication: "Code postal",
-        disabled: false,
-        required: 'required'
-    },
-    {   name: "ville_rl1",
-        label: "Ville",
-        type: "text",
-        value: params['ville_rl1'],
-        indication: "Ville",
-        disabled: false,
-        required: 'required'
-    }]
+<% form_resp_legal_1 = [
+  {
+    name: "lien_de_parente_rl1",
+    label: "Lien de parenté",
+    type: "text",
+    value: resp_legal_1.lien_de_parente,
+    indication: "Lien de parenté",
+    disabled: false,
+    required: 'required'
+  },
+  {
+    name: "prenom_rl1",
+    label: "Prénom",
+    type: "text",
+    value: resp_legal_1.prenom,
+    indication: "Prénom",
+    disabled: false,
+    required: 'required'
+  },
+  {
+    name: "nom_rl1",
+    label: "Nom",
+    type: "text",
+    value: resp_legal_1.nom,
+    indication: "Nom",
+    disabled: false,
+    required: 'required'
+  },
+  {
+    name: "adresse_rl1",
+    label: "Adresse",
+    type: "libre",
+    value: resp_legal_1.adresse,
+    indication: "Numéro et nom de voie",
+    disabled: false,
+    required: 'required',
+    lines: 3
+  },
+  {
+    name: "code_postal_rl1",
+    label: "Code postal",
+    type: "text",
+    value: resp_legal_1.code_postal,
+    indication: "Code postal",
+    disabled: false,
+    required: 'required'
+  },
+  {
+    name: "ville_rl1",
+    label: "Ville",
+    type: "text",
+    value: resp_legal_1.ville,
+    indication: "Ville",
+    disabled: false,
+    required: 'required'
+  },
+  {
+    type: 'espace',
+    hauteur: '30'
+  },
+  {
+    name: "tel_principal_rl1",
+    label: "Téléphone principal",
+    type: "tel",
+    value: resp_legal_1.tel_principal,
+    indication: "Numéro de téléphone",
+    required: 'required'
+  },
+  {
+    name: "tel_secondaire_rl1",
+    label: "Téléphone secondaire",
+    type: "tel",
+    value: resp_legal_1.tel_secondaire,
+    indication: "Numéro de téléphone",
+    required: 'required'
+  },
+  {
+    name: "email_rl1",
+    label: "Email principal",
+    type: "tel",
+    value: resp_legal_1.email,
+    indication: "Adresse email",
+    required: 'required'
+  },
+  {
+    type: 'espace',
+    hauteur: '30'
+  },
+  {
+    name: "situation_emploi_rl1",
+    label: "Situation emploi",
+    type: "dropdown",
+    options: code_situation.map{ |k, v| v },
+    selected: resp_legal_1.situation_emploi,
+    required: 'required'
+  },
+  {
+    name: "profession_rl1",
+    label: "Profession",
+    type: "dropdown",
+    options: code_profession.map{ |k, v| v },
+    selected: resp_legal_1.profession,
+    required: 'required'
+  },
+  {
+    type: 'espace',
+    hauteur: '30'
+  },
+  {
+    name: "enfants_a_charge_secondaire_rl1",
+    label: "Nombre d'enfants à charge en collège ou lycée",
+    type: "text_custom",
+    value: resp_legal_1.enfants_a_charge_secondaire,
+    longueur_label: 7,
+    longueur_input: 2,
+    indication: '',
+    required: 'required'
+  },
+  {
+    name: "enfants_a_charge_rl1",
+    label: "Nombre total d'enfants à charge",
+    type: "text_custom",
+    value: resp_legal_1.enfants_a_charge,
+    longueur_label: 7,
+    longueur_input: 2,
+    indication: '',
+    required: 'required'
+  },
+  {
+    type: 'espace',
+    hauteur: '30'
+  },
+  {
+    label: "que ces coordonnées soient communiquées aux fédérations de parents d'élèves.",
+    name: 'communique_info_parents_eleves_rl1',
+    type: 'radio_inverse',
+    options: {"J'accepte": true, "Je n'accepte pas": false},
+    checked: resp_legal_1.communique_info_parents_eleves
+  }]
+
+if resp_legal_2
+form_resp_legal_2 = [
+  {
+    name: "lien_de_parente_rl2",
+    label: "Lien de parenté",
+    type: "text",
+    value: resp_legal_2.lien_de_parente,
+    indication: "Lien de parenté",
+    disabled: false,
+    required: 'required'
+  },
+  {
+    name: "prenom_rl2",
+    label: "Prénom",
+    type: "text",
+    value: resp_legal_2.prenom,
+    indication: "Prénom",
+    disabled: false,
+    required: 'required'
+  },
+  {
+    name: "nom_rl2",
+    label: "Nom",
+    type: "text",
+    value: resp_legal_2.nom,
+    indication: "Nom",
+    disabled: false,
+    required: 'required'
+  }
+]
+
+fin_form_resp_legal_2 = [
+  {
+    name: "adresse_rl2",
+    label: "Adresse",
+    type: "libre",
+    value: resp_legal_2.adresse,
+    indication: "Numéro et nom de voie",
+    disabled: false,
+    required: 'required',
+    lines: 3
+  },
+  {
+    name: "code_postal_rl2",
+    label: "Code postal",
+    type: "text",
+    value: resp_legal_2.code_postal,
+    indication: "Code postal",
+    disabled: false,
+    required: 'required'
+  },
+  {
+    name: "ville_rl2",
+    label: "Ville",
+    type: "text",
+    value: resp_legal_2.ville,
+    indication: "Ville",
+    disabled: false,
+    required: 'required'
+  },
+  {
+    type: 'espace',
+    hauteur: '30'
+  },
+  {
+    name: "tel_principal_rl2",
+    label: "Téléphone principal",
+    type: "tel",
+    value: resp_legal_2.tel_principal,
+    indication: "Numéro de téléphone",
+    required: 'required'
+  },
+  {
+    name: "tel_secondaire_rl2",
+    label: "Téléphone secondaire",
+    type: "tel",
+    value: resp_legal_2.tel_secondaire,
+    indication: "Numéro de téléphone",
+    required: 'required'
+  },
+  {
+    name: "email_rl2",
+    label: "Email principal",
+    type: "tel",
+    value: resp_legal_2.email,
+    indication: "Adresse email",
+    required: 'required'
+  },
+  {
+    type: 'espace',
+    hauteur: '30'
+  },
+  {
+    name: "situation_emploi_rl2",
+    label: "Situation emploi",
+    type: "dropdown",
+    options: code_situation.map{ |k, v| v },
+    selected: resp_legal_2.situation_emploi,
+    required: 'required'
+  },
+  {
+    name: "profession_rl2",
+    label: "Profession",
+    type: "dropdown",
+    options: code_profession.map{ |k, v| v },
+    selected: resp_legal_2.profession,
+    required: 'required'
+  },
+  {
+    type: 'espace',
+    hauteur: '30'
+  },
+  {
+    name: "enfants_a_charge_secondaire_rl2",
+    label: "Nombre d'enfants à charge en collège ou lycée",
+    type: "text_custom",
+    value: resp_legal_2.enfants_a_charge_secondaire,
+    longueur_label: 7,
+    longueur_input: 2,
+    indication: '',
+    required: 'required'
+  },
+  {
+    name: "enfants_a_charge_rl2",
+    label: "Nombre total d'enfants à charge",
+    type: "text_custom",
+    value: resp_legal_2.enfants_a_charge,
+    longueur_label: 7,
+    longueur_input: 2,
+    indication: '',
+    required: 'required'
+  },
+  {
+    type: 'espace',
+    hauteur: '30'
+  },
+  {
+    label: "que ces coordonnées soient communiquées aux fédérations de parents d'élèves.",
+    name: 'communique_info_parents_eleves_rl2',
+    type: 'radio_inverse',
+    options: {"J'accepte": true, "Je n'accepte pas": false},
+    checked: resp_legal_2.communique_info_parents_eleves
+  }]
+end
+
+if contact_urgence
+form_contact_urgence = [
+  {
+    name: "lien_avec_eleve_urg",
+    label: "Lien avec l'élève",
+    type: "text",
+    value: contact_urgence.lien_avec_eleve,
+    indication: "Lien avec l'élève",
+    disabled: false
+  },
+  {
+    name: "prenom_urg",
+    label: "Prénom",
+    type: "text",
+    value: contact_urgence.prenom,
+    indication: "Prénom",
+    disabled: false
+  },
+  {
+    name: "nom_urg",
+    label: "Nom",
+    type: "text",
+    value: contact_urgence.nom,
+    indication: "Nom",
+    disabled: false
+  },
+  {
+    type: 'espace',
+    hauteur: '30'
+  },
+  {
+    name: "tel_principal_urg",
+    label: "Téléphone principal",
+    type: "tel",
+    value: contact_urgence.tel_principal,
+    indication: "Numéro de téléphone",
+    required: 'required'
+  },
+  {
+    name: "tel_secondaire_urg",
+    label: "Téléphone secondaire",
+    type: "tel",
+    value: contact_urgence.tel_secondaire,
+    indication: "Numéro de téléphone",
+    required: 'required'
+  },
+]
+end
 %>
 
 <% @section = 2 %>
@@ -62,52 +342,13 @@
 
   <form action="/famille" method="POST">
 
-    <%= construire resp_legal_1 %>
-
-    <span style="display:block; height: 30px;"></span>
-
-    <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone principal", :variable => "tel_principal_rl1", :valeur => params['tel_principal_rl1'], :exemple => "Numéro de téléphone", required: 'required' }%>
-
-    <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone secondaire", :variable => "tel_secondaire_rl1", :valeur => params['tel_secondaire_rl1'], :exemple => "Numéro de téléphone" }%>
-
-    <%= erb :'partials/champ_email', :locals => { :desc => "Email principal", :variable => "email_rl1", :valeur => params['email_rl1'], :exemple => "Adresse email", :required => false }%>
-
-    <span style="display:block; height: 30px;"></span>
-
-    <%= erb :'partials/champ_dropdown', :locals => { :desc => "Situation emploi", :variable => "situation_emploi_rl1", :options => code_situation.map{ |k, v| v }, :selected => params['situation_emploi_rl1'], :required => "required" } %>
-
-    <%= erb :'partials/champ_dropdown', :locals => { :desc => "Profession", :variable => "profession_rl1", :options => code_profession.map{ |k, v| v }, :selected => params['profession_rl1'], :required => "required" } %>
-
-    <span style="display:block; height: 30px;"></span>
-
-    <%= erb :'partials/champ_texte_custom', :locals => { :desc => "Nombre d'enfants à charge en collège ou lycée", :variable => "enfants_a_charge_secondaire_rl1", :valeur => params['enfants_a_charge_secondaire_rl1'], :exemple => "", longueur_label: 7, longueur_input: 2, required: 'required'}%>
-
-    <%= erb :'partials/champ_texte_custom', :locals => { :desc => "Nombre total d'enfants à charge", :variable => "enfants_a_charge_rl1", :valeur => params['enfants_a_charge_rl1'], :exemple => "", longueur_label: 7, longueur_input: 2, required: 'required' }%>
-
-    <span style="display:block; height: 30px;"></span>
-
-    <div class="form-check form-check-inline">
-      <label class="form-check-label" >
-        <input class="form-check-input" id="communique_info_parents_eleves_rl1_true" type="radio" name="communique_info_parents_eleves_rl1" value="true" <% if params['communique_info_parents_eleves_rl1'] %> checked <% end %>> J'accepte
-      </label>
-    </div>
-    <div class="form-check form-check-inline">
-      <label class="form-check-label">
-        <input class="form-check-input" type="radio" name="communique_info_parents_eleves_rl1" value="false" <% unless params['communique_info_parents_eleves_rl1'] %> checked <% end %>> Je n'accepte pas
-      </label>
-    </div>
-
-    <p>que ces coordonnées soient communiquées aux fédérations de parents d'élèves.</p>
+    <%= construire form_resp_legal_1 %>
 
 <% if resp_legal_2 %>
 <div id='resp_legal_2' class='<%= "d-none" unless resp_legal_2.present? %>' >
   <h2 class="mt-5 separation">Famille : Responsable légal 2</h2>
 
-    <%= erb :'partials/champ_texte', :locals => { :desc => "Lien de parenté", :variable => "lien_de_parente_rl2", :valeur => params['lien_de_parente_rl2'], :exemple => "Lien de parenté" } %>
-
-    <%= erb :'partials/champ_texte', :locals => { :desc => "Prénom", :variable => "prenom_rl2", :valeur => params['prenom_rl2'], :exemple => "Prénom" }%>
-
-    <%= erb :'partials/champ_texte', :locals => { :desc => "Nom", :variable => "nom_rl2", :valeur => params['nom_rl2'], :exemple => "Nom" }%>
+    <%= construire form_resp_legal_2 %>
 
     <div class="row">
       <div class="col-sm-4"></div>
@@ -122,50 +363,8 @@
 
     <span style="display:block; height: 5px;"></span>
 
-    <%= construire [{
-          name: "adresse_rl2",
-          label: "Adresse",
-          type: "libre",
-          value: params['adresse_rl2'],
-          indication: "Numéro et nom de voie",
-          disabled: false,
-          required: 'required',
-          lines: 3
-        }]
-    %>
+    <%= construire fin_form_resp_legal_2 %>
 
-    <%= erb :'partials/champ_texte', :locals => { :desc => "Code postal", :variable => "code_postal_rl2", :valeur => params['code_postal_rl2'], :exemple => "Code postal" }%>
-
-    <%= erb :'partials/champ_texte', :locals => { :desc => "Ville", :variable => "ville_rl2", :valeur => params['ville_rl2'], :exemple => "Ville" }%>
-
-    <span style="display:block; height: 30px;"></span>
-
-    <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone principal", :variable => "tel_principal_rl2", :valeur => params['tel_principal_rl2'], :exemple => "Numéro de téléphone" }%>
-
-    <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone secondaire", :variable => "tel_secondaire_rl2", :valeur => params['tel_secondaire_rl2'], :exemple => "Numéro de téléphone" }%>
-
-    <%= erb :'partials/champ_email', :locals => { :desc => "Email principal", :variable => "email_rl2", :valeur => params['email_rl2'], :exemple => "Adresse email" }%>
-
-    <span style="display:block; height: 30px;"></span>
-
-    <%= erb :'partials/champ_dropdown', :locals => { :desc => "Situation emploi", :variable => "situation_emploi_rl2", :options => code_situation.map{ |k, v| v }, :selected => params['situation_emploi_rl2'], :required => "#{'required' if params['prenom_rl2'].present? || params['nom_rl2'].present? }"} %>
-
-    <%= erb :'partials/champ_dropdown', :locals => { :desc => "Profession", :variable => "profession_rl2", :options => code_profession.map{ |k, v| v }, :selected => params['profession_rl2'], :required => "#{'required' if params['prenom_rl2'].present? || params['nom_rl2'].present? }" } %>
-
-    <span style="display:block; height: 30px;"></span>
-
-    <div class="form-check form-check-inline">
-      <label class="form-check-label">
-        <input class="form-check-input" id="communique_info_parents_eleves_rl2_true" type="radio" name="communique_info_parents_eleves_rl2" value="true" <% if params['communique_info_parents_eleves_rl2'] %> checked <% end %>> J'accepte
-      </label>
-    </div>
-    <div class="form-check form-check-inline">
-      <label class="form-check-label">
-        <input class="form-check-input" type="radio" name="communique_info_parents_eleves_rl2" value="false" <% unless params['communique_info_parents_eleves_rl2'] %> checked <% end %>> Je n'accepte pas
-      </label>
-    </div>
-
-    <p>que ces coordonnées soient communiquées aux fédérations de parents d'élèves.</p>
 </div>
 <% end %>
 
@@ -175,17 +374,9 @@
 <div id='contact_urgence' class='<%= "d-none" unless contact_urgence.present? %>' >
   <h2 class="mt-5 separation">Famille : Autre personne à contacter en cas d'urgence</h2>
 
-    <%= erb :'partials/champ_texte', :locals => { :desc => "Lien avec l'élève", :variable => "lien_avec_eleve_urg", :valeur => params['lien_avec_eleve_urg'], :exemple => "Lien avec l'élève" }%>
-
-    <%= erb :'partials/champ_texte', :locals => { :desc => "Prénom", :variable => "prenom_urg", :valeur => params['prenom_urg'], :exemple => "Prénom" }%>
-
-    <%= erb :'partials/champ_texte', :locals => { :desc => "Nom", :variable => "nom_urg", :valeur => params['nom_urg'], :exemple => "Nom" }%>
-
-    <span style="display:block; height: 30px;"></span>
-
-    <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone principal", :variable => "tel_principal_urg", :valeur => params['tel_principal_urg'], :exemple => "Numéro de téléphone" }%>
-
-    <%= erb :'partials/champ_tel', :locals => { :desc => "Téléphone secondaire", :variable => "tel_secondaire_urg", :valeur => params['tel_secondaire_urg'], :exemple => "Numéro de téléphone" }%>
+  <% if contact_urgence %>
+    <%= construire form_contact_urgence %>
+  <% end %>
 </div>
     <%= erb :'partials/nouveau_precedent_suivant', :locals => { :precedent => "eleve"} %>
   </form>
