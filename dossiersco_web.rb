@@ -172,11 +172,11 @@ get '/famille' do
 	contact_urgence = ContactUrgence.find_by(dossier_eleve_id: dossier_eleve.id)
 
 	identite_resp_legal.each do |i|
-		params["#{i}_rl1"] = resp_legal1[i] if resp_legal1
 		params["#{i}_rl2"] = resp_legal2[i] if resp_legal2
 		params["#{i}_urg"] = contact_urgence[i] if contact_urgence
 	end
-  erb :'famille', locals: {resp_legal_2: resp_legal2,
+
+  erb :'famille', locals: {resp_legal_1: resp_legal1, resp_legal_2: resp_legal2,
     contact_urgence: dossier_eleve.contact_urgence,
     code_profession: code_profession,
     code_situation: code_situation}
