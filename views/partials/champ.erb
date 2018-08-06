@@ -1,52 +1,32 @@
 <%	case type
-	when "text", "date"
-=begin
-
-VARIABLES
-
-name			pour	for, id, name
-label			pour	label
-type			pour	type
-value			pour	value
-indication		pour	placeholder
-disabled		pour	disabled
-
-=end
-%>
-
-<div class="form-group row">
-	<label for="<%= name %>" class="col-sm-4 col-form-label"><%= label %></label>
-	<div class="col-sm-5">
-		<input
-			id="<%= name %>"
-			name="<%= name %>"
-			type="<%= type %>"
-			class="form-control"
-			value="<%= value %>"
-			placeholder="<%= indication %>"
-			<% if disabled %>
-				disabled
-			<% end %>
-			<%= required if defined? required %>
-		>
+	when "text", "date" %>
+	<div class="form-group row">
+		<label for="<%= name %>" class="col-sm-4 col-form-label"><%= label %></label>
+		<div class="col-sm-5">
+			<input
+				id="<%= name %>"
+				name="<%= name %>"
+				type="<%= type %>"
+				class="form-control"
+				value="<%= value %>"
+				placeholder="<%= indication %>"
+				<% if disabled %>
+					disabled
+				<% end %>
+				<%= required if defined? required %>
+			>
+		</div>
 	</div>
-</div>
 
-<%	when "libre"
-=begin
+<% when 'text_custom' %>
+	<div class="form-group row">
+		<label for="<%= name %>" class="col-sm-<%= longueur_label %>"" col-form-label"><%= label %></label>
+		<div class="col-sm-<%= longueur_input%>">
+			<input type="text" class="form-control" id="<%= name %>" value="<%= value %>" placeholder="<%= indication %>" name="<%= name %>" <%= required if defined? required %>>
+		</div>
+	</div>
 
-VARIABLES
-
-name			pour	for, id, name
-label			pour	label
-type			pour	type
-value			pour	value
-indication		pour	placeholder
-disabled		pour	disabled
-
-=end
-%>
-
+<%	when "libre" %>
 <div class="form-group row">
 	<label for="<%= name %>" class="col-sm-4 col-form-label"><%= label %></label>
 	<div class="col-sm-5">
@@ -66,157 +46,122 @@ disabled		pour	disabled
 </div>
 
 <%	when "espace" %>
+	<span style="display:block; height: <%= hauteur %>px;"></span>
 
-<span style="display:block; height: <%= hauteur %>px;"></span>
+<%	when "dropdown" %>
+	<div class="form-group row">
+		<label for="<%= name %>" class="col-sm-4 col-form-label"><%= label %></label>
+		<div class="col-sm-5">
+			<select id="<%= name %>" class="form-control" name="<%= name %>" <%= required if defined? required %>>
+				<% options.each do |option| %>
+					<option <% if option == selected %> selected <% end %>><%= option %></option>
+				<% end %>
+			</select>
+		</div>
+	</div>
 
-<%	when "dropdown"
-=begin
-
-VARIABLES
-
-name
-label
-options		["CM1", "CM2", "6ème"]
-selected	"CM2"
-
-=end
-%>
-
-<div class="form-group row">
-	<label for="<%= name %>" class="col-sm-4 col-form-label"><%= label %></label>
-	<div class="col-sm-5">
-		<select
-			id="<%= name %>"
-			name="<%= name %>"
-			class="form-control"
-		>
-			<% options.each do |option| %>
-				<option
-					value="<%= option %>"
-					<% if option == selected %>
-						selected
-					<% end %>
-				> <%= option %>
-				</option>
+<%	when "radio" %>
+	<div class="form-group row">
+		<label class="col-sm-4 col-form-label"><%= label %></label>
+		<div class="col-sm-6">
+			<% options.each do |option|%>
+				<label class="col-sm-4 form-check-label">
+					<input
+						name="<%= name %>"
+						value="<%= option %>"
+						type="radio"
+						class="form-check-input"
+						<% if option == checked %>
+							checked
+						<% end %>
+					> <%= option %>
+				</label>
 			<% end %>
-			<%= required if defined? required %>
-		</select>
+		</div>
 	</div>
-</div>
 
-<%	when "radio"
-=begin
-
-VARIABLES
-
-name
-label 			"LV1"
-options			['Anglais", 'Allemand']
-checked			anglais: pour cocher Anglais par défaut
-
-=end
-%>
-
-<div class="form-group row">
-	<label class="col-sm-4 col-form-label"><%= label %></label>
-	<div class="col-sm-6">
-		<% options.each do |option|%>
-			<label class="col-sm-4 form-check-label">
-				<input
-					name="<%= name %>"
-					value="<%= option %>"
-					type="radio"
-					class="form-check-input"
-					<% if option == checked %>
-						checked
-					<% end %>
-				> <%= option %>
+<% when "radio_inverse" %>
+	<% options.each do |nom_option, valeur_option| %>
+		<div class="form-check form-check-inline">
+			<label class="form-check-label" >
+				<input class="form-check-input" id="communique_info_parents_eleves_rl1_true" type="radio" name="communique_info_parents_eleves_rl1"
+				  value="<%= valeur_option %>" <% if checked == valeur_option %> checked <% end %>> <%= nom_option %>
 			</label>
-		<% end %>
+		</div>
+	<% end %>
+
+
+	<p><%= label %></p>
+
+<%	when "check" %>
+	<div class="form-group row">
+		<label class="col-sm-4 col-form-label" for='<%= name %>'><%= label %></label>
+		<div class="ml-3 col-sm-6">
+			<input type='hidden' name='<%= name %>_present' value='true'>
+			<input class='form-check-input' type='checkbox' name='<%= name %>' value='true' id='<%= name %>'
+			<% if condition %>
+			checked
+			<% end %>>
+			<label for='<%= name %>'><%= desc %></label>
+		</div>
 	</div>
-</div>
 
-<%	when "check"
-=begin
-
-VARIABLES
-
-name
-name 			"Grec"
-name 			"Grec"
-desc			"Grec"
-condition		true/false
-
-=end
-%>
-
-<div class="form-group row">
-	<label class="col-sm-4 col-form-label" for='<%= name %>'><%= label %></label>
-	<div class="ml-3 col-sm-6">
-		<input type='hidden' name='<%= name %>_present' value='true'>
-		<input class='form-check-input' type='checkbox' name='<%= name %>' value='true' id='<%= name %>'
-		<% if condition %>
-		checked
-		<% end %>>
-    <label for='<%= name %>'><%= desc %></label>
+<%	when "info" %>
+	<div class="form-group row">
+		<label class="col-sm-4 col-form-label"><%= label %></label>
+		<div class="col-sm-6">
+			<%= valeur %>
+		</div>
 	</div>
-</div>
-
-<%	when "info"
-=begin
-
-VARIABLES
-
-name
-label 			"LV1"
-valeur			"Anglais"
-
-=end
-%>
-
-<div class="form-group row">
-	<label class="col-sm-4 col-form-label"><%= label %></label>
-	<div class="col-sm-6">
-		<%= valeur %>
-	</div>
-</div>
 
 <%	when "hidden" %>
-
-<div class="form-group row">
-	<label class="col-sm-4 col-form-label"><%= label %></label>
-	<div class="col-sm-6">
-		<input type='hidden' name='<%= name %>_present' value='true'>
-		<input type='hidden' name='<%= name %>' value='true' id='<%= name %>' >
-    <p><%= name %></p>
+	<div class="form-group row">
+		<label class="col-sm-4 col-form-label"><%= label %></label>
+		<div class="col-sm-6">
+			<input type='hidden' name='<%= name %>_present' value='true'>
+			<input type='hidden' name='<%= name %>' value='true' id='<%= name %>' >
+			<p><%= name %></p>
+		</div>
 	</div>
-</div>
+
+<% when 'tel' %>
+	<div class="form-group row">
+		<label for="<%= name %>" class="col-sm-4 col-form-label"><%= label %></label>
+		<div class="col-sm-5">
+			<input type="tel" class="form-control" id="<%= name %>" value="<%= value %>" placeholder="<%= indication %>" name="<%= name %>" <%= required if defined? required %>>
+		</div>
+	</div>
+
+<% when 'email' %>
+	<div class="form-group row">
+		<label for="<%= name %>" class="col-sm-4 col-form-label"><%= label %></label>
+		<div class="col-sm-5">
+			<input type="email" class="form-control" id="<%= name %>" value="<%= value %>" placeholder="<%= indication %>" name="<%= name %>" <%= required if defined? required %>>
+		</div>
+	</div>
 
 <%  when "contact" %>
-
   <% if contact.present? %>
-
-<h2 class="separation mt-4">
-  <%= contact.respond_to?(:lien_de_parente) ? contact.lien_de_parente : 'Contact' %>
-  <%= contact.prenom%> <%= contact.nom %></h2>
-<div style='font-size: 1.5em;' class='mb-4'>
-  <% if contact.tel_principal.present? %>
-    <span class='mr-1'>
-      <i class="fas fa-phone-square"></i> <strong><%= contact.tel_principal %></strong>
-    </span>
-  <% end %>
-  <% if contact.tel_secondaire.present? %>
-    <span class='mr-3' style="white-space: nowrap;">
-      <i class="fas fa-phone-square"></i> <%= contact.tel_secondaire %>
-    </span>
-  <% end %>
-  <% if contact.respond_to?(:email) && contact.email.present? %>
-    <span style='font-size: 0.8em; white-space: nowrap;'>
-      <i class="fas fa-envelope mr-1"></i><%= contact.email %>
-    </span>
-  <% end %>
-</div>
-
-  <% end %>
+		<h2 class="separation mt-4">
+			<%= contact.respond_to?(:lien_de_parente) ? contact.lien_de_parente : 'Contact' %>
+			<%= contact.prenom %> <%= contact.nom %></h2>
+		<div style='font-size: 1.5em;' class='mb-4'>
+			<% if contact.tel_principal.present? %>
+				<span class='mr-1'>
+					<i class="fas fa-phone-square"></i> <strong><%= contact.tel_principal %></strong>
+				</span>
+			<% end %>
+			<% if contact.tel_secondaire.present? %>
+				<span class='mr-3' style="white-space: nowrap;">
+					<i class="fas fa-phone-square"></i> <%= contact.tel_secondaire %>
+				</span>
+			<% end %>
+			<% if contact.respond_to?(:email) && contact.email.present? %>
+				<span style='font-size: 0.8em; white-space: nowrap;'>
+					<i class="fas fa-envelope mr-1"></i><%= contact.email %>
+				</span>
+			<% end %>
+		</div>
+	<% end %>
 
 <% end %>
