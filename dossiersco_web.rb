@@ -172,7 +172,6 @@ get '/famille' do
 	contact_urgence = ContactUrgence.find_by(dossier_eleve_id: dossier_eleve.id)
 
 	identite_resp_legal.each do |i|
-		params["#{i}_rl2"] = resp_legal2[i] if resp_legal2
 		params["#{i}_urg"] = contact_urgence[i] if contact_urgence
 	end
 

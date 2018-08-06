@@ -84,7 +84,7 @@
 	<% options.each do |nom_option, valeur_option| %>
 		<div class="form-check form-check-inline">
 			<label class="form-check-label" >
-				<input class="form-check-input" id="communique_info_parents_eleves_rl1_true" type="radio" name="communique_info_parents_eleves_rl1"
+				<input class="form-check-input" id="<%= name %>" type="radio" name="<%= name %>"
 				  value="<%= valeur_option %>" <% if checked == valeur_option %> checked <% end %>> <%= nom_option %>
 			</label>
 		</div>
