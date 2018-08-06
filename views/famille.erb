@@ -138,6 +138,7 @@
     checked: resp_legal_1.communique_info_parents_eleves
   }]
 
+if resp_legal_2
 form_resp_legal_2 = [
   {
     name: "lien_de_parente_rl2",
@@ -280,7 +281,9 @@ fin_form_resp_legal_2 = [
     options: {"J'accepte": true, "Je n'accepte pas": false},
     checked: resp_legal_2.communique_info_parents_eleves
   }]
+end
 
+if contact_urgence
 form_contact_urgence = [
   {
     name: "lien_avec_eleve_urg",
@@ -327,6 +330,7 @@ form_contact_urgence = [
     required: 'required'
   },
 ]
+end
 %>
 
 <% @section = 2 %>
@@ -370,7 +374,9 @@ form_contact_urgence = [
 <div id='contact_urgence' class='<%= "d-none" unless contact_urgence.present? %>' >
   <h2 class="mt-5 separation">Famille : Autre personne à contacter en cas d'urgence</h2>
 
+  <% if contact_urgence %>
     <%= construire form_contact_urgence %>
+  <% end %>
 </div>
     <%= erb :'partials/nouveau_precedent_suivant', :locals => { :precedent => "eleve"} %>
   </form>
