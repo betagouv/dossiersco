@@ -15,6 +15,7 @@ gem 'prawn'
 gem 'sentry-raven'
 gem 'mailjet'
 gem 'actionmailer'
+gem 'awesome_print'
 
 group :test do
   gem 'nokogiri'
