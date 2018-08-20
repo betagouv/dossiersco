@@ -170,7 +170,7 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'Retraité cadre, profession interm édiaire', doc.css('#profession_rl1 option[@selected="selected"]').children.text
     assert_attr '2', '#enfants_a_charge_secondaire_rl1', doc
     assert_attr '3', '#enfants_a_charge_rl1', doc
-    assert_equal 'checked', doc.css('#communique_info_parents_eleves_rl1_true').attr('checked').text
+    assert_equal 'checked', doc.css('#communique_info_parents_eleves_rl1').attr('checked').text
   end
 
   def test_persistence_du_resp_legal_2
@@ -193,7 +193,7 @@ class EleveFormTest < Test::Unit::TestCase
     assert_attr 'test@gmail.com', '#email_rl2', doc
     assert_equal 'Pré retraité, retraité ou retiré', doc.css('#situation_emploi_rl2 option[@selected="selected"]').children.text
     assert_equal 'Retraité cadre, profession interm édiaire', doc.css('#profession_rl2 option[@selected="selected"]').children.text
-    assert_equal 'checked', doc.css('#communique_info_parents_eleves_rl2_true').attr('checked').text
+    assert_equal 'checked', doc.css('#communique_info_parents_eleves_rl2').attr('checked').text
   end
 
   def test_persistence_du_contact_urg
