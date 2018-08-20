@@ -251,26 +251,6 @@ fin_form_resp_legal_2 = [
     hauteur: '30'
   },
   {
-    name: "enfants_a_charge_secondaire_rl2",
-    label: "Nombre d'enfants à charge en collège ou lycée",
-    type: "text_custom",
-    value: resp_legal_2.enfants_a_charge_secondaire,
-    longueur_label: 7,
-    longueur_input: 2,
-    indication: '',
-    required: 'required'
-  },
-  {
-    name: "enfants_a_charge_rl2",
-    label: "Nombre total d'enfants à charge",
-    type: "text_custom",
-    value: resp_legal_2.enfants_a_charge,
-    longueur_label: 7,
-    longueur_input: 2,
-    indication: '',
-    required: 'required'
-  },
-  {
     type: 'espace',
     hauteur: '30'
   },
@@ -319,7 +299,6 @@ form_contact_urgence = [
     type: "tel",
     value: contact_urgence.tel_principal,
     indication: "Numéro de téléphone",
-    required: 'required'
   },
   {
     name: "tel_secondaire_urg",
@@ -327,7 +306,6 @@ form_contact_urgence = [
     type: "tel",
     value: contact_urgence.tel_secondaire,
     indication: "Numéro de téléphone",
-    required: 'required'
   },
 ]
 end
@@ -368,10 +346,10 @@ end
 </div>
 <% end %>
 
-<a href="#" id='ajouter_contact_urgence' class='<%= "d-none" if contact_urgence.present? %> btn btn-outline-primary' >
+<a href="#" id='ajouter_contact_urgence' class='<%= "d-none" if contact_urgence.present? && !contact_urgence.nom.empty? %> btn btn-outline-primary' >
     Ajouter un contact en cas d'urgence
 </a>
-<div id='contact_urgence' class='<%= "d-none" unless contact_urgence.present? %>' >
+<div id='contact_urgence' class='<%= "d-none" unless contact_urgence.present? && !contact_urgence.nom.empty? %>' >
   <h2 class="mt-5 separation">Famille : Autre personne à contacter en cas d'urgence</h2>
 
   <% if contact_urgence %>
