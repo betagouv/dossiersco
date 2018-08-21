@@ -78,7 +78,11 @@ heroku psql
 heroku pg:index_usage
 (nécessite heroku plugins:install heroku-pg-extras)
 
-# IRB
+# Colorer le terminal irb
+
+require 'awesome_print'
+ap RespLegal.first
+
 
 # Supprimer des dossiers et les données liées
 def supprimer_donnees_eleves(dossiers)
