@@ -2,10 +2,10 @@
   {
     name: "lien_de_parente_rl1",
     label: "Lien de parenté",
-    type: "text",
-    value: resp_legal_1.lien_de_parente,
-    indication: "Lien de parenté",
-    disabled: false,
+    type: "dropdown",
+    selected: resp_legal_1.lien_de_parente,
+    disabledw: false,
+    options: lien_de_parentes,
     required: 'required'
   },
   {
@@ -72,7 +72,6 @@
     type: "tel",
     value: resp_legal_1.tel_secondaire,
     indication: "Numéro de téléphone",
-    required: 'required'
   },
   {
     name: "email_rl1",
@@ -80,7 +79,6 @@
     type: "tel",
     value: resp_legal_1.email,
     indication: "Adresse email",
-    required: 'required'
   },
   {
     type: 'espace',
@@ -143,10 +141,10 @@ form_resp_legal_2 = [
   {
     name: "lien_de_parente_rl2",
     label: "Lien de parenté",
-    type: "text",
-    value: resp_legal_2.lien_de_parente,
-    indication: "Lien de parenté",
+    type: "dropdown",
+    selected: resp_legal_2.lien_de_parente,
     disabled: false,
+    options: lien_de_parentes,
     required: 'required'
   },
   {
@@ -216,7 +214,6 @@ fin_form_resp_legal_2 = [
     type: "tel",
     value: resp_legal_2.tel_secondaire,
     indication: "Numéro de téléphone",
-    required: 'required'
   },
   {
     name: "email_rl2",
@@ -224,7 +221,6 @@ fin_form_resp_legal_2 = [
     type: "tel",
     value: resp_legal_2.email,
     indication: "Adresse email",
-    required: 'required'
   },
   {
     type: 'espace',
