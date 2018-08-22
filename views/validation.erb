@@ -15,11 +15,8 @@
 		<div class="card-body">
 			<% eleve.demande.each do |demande| %>
 				<div class="row mb-2">
-					<div class="col-3">
-						<strong><%= demande.option.groupe.present? ? demande.option.groupe : 'demande' %></strong>
-					</div>
-					<div class="col-4">
-						Je demande l'inscription à l'option <strong><%= demande.option.nom %></strong>
+					<div class="col-7">
+						Demande d'inscription à l'option <strong><%= demande.option.nom %></strong>
 					</div>
 					<div class="col-3">
 						<a id='modifier-<%=demande.option.nom%>' href="/eleve">
@@ -30,11 +27,8 @@
 			<% end %>
 			<% eleve.abandon.each do |abandon| %>
 				<div class="row mb-2">
-					<div class="col-3">
-						<strong><%= abandon.option.groupe.present? ? abandon.option.groupe : 'abandon' %></strong>
-					</div>
-					<div class="col-4">
-						Je souhaite me désister de l'option <strong><%= abandon.option.nom %></strong>
+					<div class="col-7">
+						Souhait d'abandonner l'option <strong><%= abandon.option.nom %></strong>
 					</div>
 					<div class="col-3">
 						<a id='modifier-<%=abandon.option.nom%>' href="/eleve">
@@ -45,11 +39,9 @@
 			<% end %>
 
 			<div class="row mb-2">
-				<div class="col-3">
-					<strong>Restaurant scolaire</strong>
-				</div>
-				<div class="col-4">
-					<%= dossier_eleve.demi_pensionnaire ? 'Demi-pensionnaire' : 'Externe' %>
+				<div class="col-7">
+					Restaurant scolaire&nbsp;:
+					<strong><%= dossier_eleve.demi_pensionnaire ? 'demi-pensionnaire' : 'externe' %></strong>
 				</div>
 				<div class="col-3">
 					<a id='demi-pensionnaire' href="/administration">
@@ -59,11 +51,9 @@
 			</div>
 
 			<div class="row mb-2">
-				<div class="col-3">
-					<strong>Sortie</strong>
-				</div>
-				<div class="col-4">
-					<%= dossier_eleve.autorise_sortie ? 'Autorisé' : 'Non autorisé' %>
+				<div class="col-7">
+					Sortie
+					<strong><%= dossier_eleve.autorise_sortie ? 'autorisée' : 'non autorisée' %></strong>
 				</div>
 				<div class="col-3">
 					<a href="/administration">
