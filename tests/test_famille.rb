@@ -149,7 +149,7 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_persistence_du_resp_legal_1
     doc = soumet_formulaire '/famille',
-                            lien_de_parente_rl1: "Tutrice", prenom_rl1: "Philippe", nom_rl1: "Blayo",
+                            lien_de_parente_rl1: "TUTEUR", prenom_rl1: "Philippe", nom_rl1: "Blayo",
                             adresse_rl1: "20 bd Segur", code_postal_rl1: "75007", ville_rl1: "Paris",
                             tel_principal_rl1: "0612345678", tel_secondaire_rl1: "0112345678",
                             email_rl1: "test@gmail.com", situation_emploi_rl1: "Pré retraité, retraité ou retiré",
@@ -157,7 +157,7 @@ class EleveFormTest < Test::Unit::TestCase
                             enfants_a_charge_secondaire_rl1: 2, enfants_a_charge_rl1: 3,
                             communique_info_parents_eleves_rl1: 'true'
 
-    assert_attr 'Tutrice', '#lien_de_parente_rl1', doc
+    assert_equal 'TUTEUR', doc.css('#lien_de_parente_rl1 option[@selected="selected"]').children.text
     assert_attr 'Philippe', '#prenom_rl1', doc
     assert_attr 'Blayo', '#nom_rl1', doc
     assert_attr '20 bd Segur', '#adresse_rl1', doc
@@ -175,14 +175,14 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_persistence_du_resp_legal_2
     doc = soumet_formulaire  '/famille',
-                             lien_de_parente_rl2: "Tutrice", prenom_rl2: "Philippe" , nom_rl2: "Blayo",
+                             lien_de_parente_rl2: "MERE", prenom_rl2: "Philippe" , nom_rl2: "Blayo",
                              adresse_rl2: "20 bd Segur",code_postal_rl2: "75007", ville_rl2: "Paris",
                              tel_principal_rl2: "0612345678", tel_secondaire_rl2: "0112345678",
                              email_rl2: "test@gmail.com", situation_emploi_rl2: "Pré retraité, retraité ou retiré",
                              profession_rl2: "Retraité cadre, profession interm édiaire",
                              communique_info_parents_eleves_rl2: 'true'
 
-    assert_attr 'Tutrice', '#lien_de_parente_rl2', doc
+    assert_equal 'MERE', doc.css('#lien_de_parente_rl2 option[@selected="selected"]').children.text
     assert_attr 'Philippe', '#prenom_rl2', doc
     assert_attr 'Blayo', '#nom_rl2', doc
     assert_attr '20 bd Segur', '#adresse_rl2', doc
