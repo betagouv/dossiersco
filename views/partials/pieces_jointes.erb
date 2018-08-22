@@ -1,6 +1,6 @@
   <div class="card-deck row">
     <% dossier_eleve.etablissement.piece_attendue.each do |piece| %>
-      <form class="col-6 forms" action="<%= action %>" method="POST" enctype="multipart/form-data">
+      <form class="col-12 col-md-6 forms" action="<%= action %>" method="POST" enctype="multipart/form-data">
         <% piece_jointe = PieceJointe.find_by(
           piece_attendue_id: piece.id,
           dossier_eleve_id: dossier_eleve.id) %>
