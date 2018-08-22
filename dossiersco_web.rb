@@ -170,11 +170,13 @@ get '/famille' do
 	resp_legal1 = dossier_eleve.resp_legal_1
 	resp_legal2 = dossier_eleve.resp_legal_2
 	contact_urgence = ContactUrgence.find_by(dossier_eleve_id: dossier_eleve.id)
+  lien_de_parentes = ['MERE', 'PERE', 'AUTRE FAM.', 'AUTRE LIEN', 'TUTEUR', 'ASE']
 
   erb :'famille', locals: {resp_legal_1: resp_legal1, resp_legal_2: resp_legal2,
     contact_urgence: dossier_eleve.contact_urgence,
     code_profession: code_profession,
-    code_situation: code_situation}
+    code_situation: code_situation,
+    lien_de_parentes: lien_de_parentes}
 end
 
 post '/famille' do
