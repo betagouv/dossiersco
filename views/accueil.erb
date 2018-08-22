@@ -19,9 +19,9 @@
 	<p>Veuillez vous munir des pièces administratives suivantes :</p>
 	<ul>
 		<% dossier_eleve.etablissement.piece_attendue.each do |piece| %>
-			<li><%= piece.nom %></li>
+			<li><strong><%= piece.nom %></strong></li>
 			<% if piece.explication.present? %>
-				<p>Pourquoi : <%= piece.explication %></p>
+				<p><%= piece.explication %></p>
 			<% end %>
 		<% end %>
 	</ul>
