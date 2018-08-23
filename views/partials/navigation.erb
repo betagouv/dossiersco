@@ -1,26 +1,52 @@
+<% liste_menu = [
+	{
+		numero_etape: 1,
+		url: '/eleve',
+		titre: 'Elève',
+		etapes: ['accueil', 'famille', 'administration', 'pieces_a_joindre', 'validation', 'confirmation']
+	},
+	{
+		numero_etape: 2,
+		url: '/famille',
+		titre: 'Famille',
+		etapes: ['famille', 'administration', 'pieces_a_joindre', 'validation', 'confirmation']
+	},
+	{
+		numero_etape: 3,
+		url: '/administration',
+		titre: 'Administration',
+		etapes: ['administration', 'pieces_a_joindre', 'validation', 'confirmation']
+	},
+	{
+		numero_etape: 4,
+		url: '/pieces_a_joindre',
+		titre: 'Pièces à joindre',
+		etapes: ['spieces_a_joindre', 'validation', 'confirmation']
+	},
+	{
+		numero_etape: 5,
+		url: '/validation',
+		titre: 'Validation',
+		etapes: ['validation', 'confirmation']
+	}
+]%>
+
 <div class="container mt-5 mb-4">
 	<div class="wrapper">
 		<div class="arrow-steps clearfix">
-			<a class="step <%= 'current' if @section >= 1 %>" href='/eleve'>
-				<span class="d-none d-sm-block">Elève</span>
-				<span class="d-sm-none">1</span>
-			</a>
-			<a class="step <%= 'current' if @section >= 2 %>" href='/famille'>
-				<span class="d-none d-sm-block">Famille</span>
-				<span class="d-sm-none">2</span>
-			</a>
-			<a class="step <%= 'current' if @section >= 3 %>" href='/administration'>
-				<span class="d-none d-sm-block">Administration</span>
-				<span class="d-sm-none">3</span>
-			</a>
-			<a class="step <%= 'current' if @section >= 4 %>" href='/pieces_a_joindre'>
-				<span class="d-none d-sm-block">Pièces à joindre</span>
-				<span class="d-sm-none">4</span>
-			</a>
-			<a class="step <%= 'current' if @section >= 5 %>" href='/validation'>
-				<span class="d-none d-sm-block">Validation</span>
-				<span class="d-sm-none">5</span>
-			</a>
+		<% liste_menu.each do |menu| %>
+			<% if menu[:etapes].include? dossier_eleve.etape %>
+				<% classes = 'step step-enabled' %>
+				<% lien = menu[:url] %>
+			<% else %>
+				<% classes = 'step step-disabled' %>
+				<% lien = '#' %>
+			<% end %>
+				<a class="<%= classes %> <%= 'current' if @section >= menu[:numero_etape] %>" href='<%= lien %>'>
+					<span class="d-none d-sm-block"><%= menu[:titre] %></span>
+					<span class="d-sm-none"><%= menu[:numero_etape] %></span>
+				</a>
+			<% end %>
 		</div>
 	</div>
 </div>

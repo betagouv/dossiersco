@@ -1,7 +1,7 @@
 <% @section = 4 %>
 <% nb_documents_demandes = dossier_eleve.etablissement.piece_attendue.size %>
 
-<%= erb :'partials/navigation' %>
+<%= erb :'partials/navigation', locals: { dossier_eleve: dossier_eleve } %>
 
 <div class="col-12">
 
