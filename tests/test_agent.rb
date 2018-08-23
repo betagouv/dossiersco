@@ -285,7 +285,7 @@ class EleveFormTest < Test::Unit::TestCase
 
     post '/agent/piece_attendues', nom: 'Photo d’identité', explication: 'Pour coller sur le carnet'
 
-    post '/identification', identifiant: '5', date_naiss: '1970-01-01'
+    post '/identification', identifiant: '5', annee: '1970', mois: '01', jour: '01'
     get '/pieces_a_joindre'
     assert_match /Photo d’identité/, last_response.body
   end
@@ -432,7 +432,7 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_changement_statut_famille_connecte
-    post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+    post '/identification', identifiant: '2', annee: '1915', mois: '12', jour: '19'
     dossier_eleve = Eleve.find_by(identifiant: '2').dossier_eleve
     assert_equal 'connecté', dossier_eleve.etat
 
@@ -444,7 +444,7 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_changement_statut_famille_en_cours_de_validation
-    post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+    post '/identification', identifiant: '2', annee: '1915', mois: '12', jour: '19'
     post '/validation'
     dossier_eleve = Eleve.find_by(identifiant: '2').dossier_eleve
     assert_equal 'en attente de validation', dossier_eleve.etat
