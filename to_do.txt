@@ -7,7 +7,7 @@ Améliorer les tests ou l'exploitabilité:
 [ ] Test: vérifier la présence des données dans les champs du formulaire famille (1017bb5)
 
 moins urgent:
-[ ] Empecher de sauter des étapes en cliquant sur le menu superieur
+[X] Empecher de sauter des étapes en cliquant sur le menu superieur
 [ ] Séparer les champs jours, mois, année sur la page d'accueil
 [ ] Changer la couleur de base de Bootstrap sur les boutons quand on clic dessus
 
