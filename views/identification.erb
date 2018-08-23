@@ -13,12 +13,15 @@
 						<p class="erreur"><%= session[:message_erreur] %></p>
 					<% end %>
 
-					<label class="col-form-label" for="formGroupExampleInput" id="label_identifiant">Identifiant (Exemple : 2206004705B)</label>
+					<label class="col-form-label" for="identifiant" id="label_identifiant">Identifiant (Exemple : 2206004705B)</label>
 					<input name="identifiant" type="text" class="form-control" id="identifiant" placeholder="Exemple : 2206004705B" autofocus>
 
-					<label class="col-form-label" for="formGroupExampleInput" id="label_date">Date de naissance de l'élève</label>
-					<input name="date_naiss" type="date" class="form-control" id="date_naiss" placeholder="jj/mm/aaaa" min="1970-01-01" max="2010-01-01" required>
-
+					<label class="col-form-label" for="jour" id="label_date">Date de naissance de l'élève</label>
+					<div class='date_form'>
+						<input name="jour" type="number" class="form-control form-date" id="date_jour" maxlength="2" placeholder="JJ" style="width:24%;" max="31" required>
+						<input name="mois" type="number" class="form-control form-date" id="date_mois" maxlength="2" placeholder="MM" style="width:24%;" max="12" required>
+						<input name="annee" type="number" class="form-control form-date" id="date_annee" maxlength="4" placeholder="AAAA" style="width: 49%;" min="1970" max='2018' required>
+					</div>
 					<button class="btn btn-lg btn-primary btn-block mt-4">Connexion</button>
 
 				</form>
@@ -32,3 +35,23 @@
 		</footer>
 	</div>
 </div>
+
+<script>
+	var container = document.getElementsByClassName("date_form")[0];
+	container.onkeyup = function(e) {
+			var target = e.srcElement;
+			var maxLength = parseInt(target.attributes["maxlength"].value, 10);
+			var myLength = target.value.length;
+			if (myLength >= maxLength) {
+					var next = target;
+					while (next = next.nextElementSibling) {
+							if (next == null)
+									break;
+							if (next.tagName.toLowerCase() == "input") {
+									next.focus();
+									break;
+							}
+					}
+			}
+	}
+</script>
