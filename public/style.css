@@ -18,6 +18,10 @@ h2, h4 {
   color: #606468;
 }
 
+a {
+  color: 003189 !important;
+}
+
 .col-12 a {
   text-decoration: none;
 }
@@ -148,6 +152,9 @@ h2, h4 {
 .btn {
   cursor: pointer;
 }
+.btn:focus {
+  box-shadow: none;
+}
 
 .btn-primary {
   background-color: #003189;
@@ -171,6 +178,19 @@ h2, h4 {
   color: white;
   background-color: #003089d5;
   border-color: #003089d5;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show>.btn-primary.dropdown-toggle {
+  background-color: #003089d5;
+  border-color: #003089d5;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active:focus,
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.show>.btn-primary.dropdown-toggle:focus {
+  box-shadow: none;
 }
 
 .disabled, .disabled:hover {
@@ -260,6 +280,11 @@ h2, h4 {
 
 .form-check-label {
   margin: .5rem 0rem 0rem;
+}
+
+.form-control:focus {
+  border: none;
+  box-shadow: 0 0 0 0.2rem rgba(0, 49, 137,.45)
 }
 
 .message_de_succes {
