@@ -4,18 +4,6 @@ module MotDePasse
     chaine.gsub(/[^[:alnum:]]/, '').upcase
   end
 
-	def normalise date
-    return date if date =~ /[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}/
-    if date =~ /([[:digit:]]{2})([[:digit:]]{2})([[:digit:]]{4})/
-      jour = $1
-      mois = $2
-    elsif date =~ /([[:digit:]]{1,2})\D+([[:digit:]]{1,2})\D+([[:digit:]]{4})/
-      jour = $1.length == 1 ? "0#{$1}" : $1
-      mois = $2.length == 1 ? "0#{$2}" : $2
-    end
-    "#{$3}-#{mois}-#{jour}" if jour
-  end
-
   def message_erreur_identification identifiant, date_naissance
     mois_de_l_année = {
       '01' => 'janvier', '02' => 'février', '03' => 'mars', '04' => 'avril',

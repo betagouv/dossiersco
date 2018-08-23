@@ -30,15 +30,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal "070803070AJ", normalise_alphanum(" %! 070803070aj _+ ")
   end
 
-  def test_normalise_date_naissance
-    assert_equal "2018-05-14", normalise("14 05 2018")
-    assert_equal "2018-05-14", normalise("14/05/2018")
-    assert_equal "2018-01-01", normalise("1/1/2018")
-    assert_equal "2018-05-14", normalise("___14!___05_A_2018_")
-    assert_equal "2018-05-14", normalise("14052018_")
-    assert_equal nil, normalise("foo")
-  end
-
   def test_message_erreur_identification
     assert_equal 'Veuillez fournir identifiant et date de naissance', message_erreur_identification(nil, '14-05-2018')
     assert_equal 'Veuillez fournir identifiant et date de naissance', message_erreur_identification('', '14-05-2018')
@@ -53,18 +44,6 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_entree_succes_eleve_1
     post '/identification', identifiant: '1 ', date_naiss: '1995-11-19'
-    follow_redirect!
-    assert last_response.body.include? 'Pour réinscrire votre enfant'
-  end
-
-  def test_entree_succes_firefox_52_0_1_eleve_1
-    post '/identification', identifiant: '1', date_naiss: '19/11/1995'
-    follow_redirect!
-    assert last_response.body.include? 'Pour réinscrire votre enfant'
-  end
-
-  def test_entree_succes_date_avec_espaces_eleve_1
-    post '/identification', identifiant: '1', date_naiss: '19 11 1995'
     follow_redirect!
     assert last_response.body.include? 'Pour réinscrire votre enfant'
   end

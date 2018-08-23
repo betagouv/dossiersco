@@ -90,8 +90,7 @@ post '/identification' do
     adresse_ip: request.ip)
 	identifiant = normalise_alphanum params[:identifiant]
 	dossier_eleve = get_dossier_eleve identifiant
-  date_saisie = normalise(params[:date_naiss]) || 'pas-de-date'
-	if dossier_eleve.present? && (dossier_eleve.eleve.date_naiss == date_saisie)
+	if dossier_eleve.present? && (dossier_eleve.eleve.date_naiss == params[:date_naiss])
     if dossier_eleve.etat == 'pas connecté'
       dossier_eleve.update(etat: 'connecté')
     end
