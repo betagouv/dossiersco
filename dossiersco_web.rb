@@ -176,7 +176,8 @@ get '/famille' do
     contact_urgence: dossier_eleve.contact_urgence,
     code_profession: code_profession,
     code_situation: code_situation,
-    lien_de_parentes: lien_de_parentes}
+    lien_de_parentes: lien_de_parentes,
+    dossier_eleve: dossier_eleve}
 end
 
 post '/famille' do
@@ -260,7 +261,7 @@ post '/pieces_a_joindre' do
   if pieces_obligatoires
     erb :'pieces_a_joindre', locals: {dossier_eleve: dossier_eleve, message: 'Veuillez télécharger les pièces obligatoires'}
   else
-    redirect '/validation'
+    sauve_et_redirect dossier_eleve, 'validation'
   end
 end
 
@@ -288,7 +289,7 @@ post '/validation' do
     mail.deliver_now
     dossier_eleve.update(etat: 'en attente de validation')
   end
-  redirect '/confirmation'
+  sauve_et_redirect dossier_eleve, 'confirmation'
 end
 
 get '/confirmation' do

@@ -6,6 +6,13 @@ Améliorer les tests ou l'exploitabilité:
 [ ] Supprimer l'ancien fichier sur s3 quand on modifie une pièce jointe
 [ ] Test: vérifier la présence des données dans les champs du formulaire famille (1017bb5)
 
+moins urgent:
+[X] Empecher de sauter des étapes en cliquant sur le menu superieur
+[ ] Séparer les champs jours, mois, année sur la page d'accueil
+[ ] Changer la couleur de base de Bootstrap sur les boutons quand on clic dessus
+
 Done:
 [X] Editer un état récapitulatif avec les options choisies
 [X] Pouvoir émettre des relances en masse (par classe et/ou par statut)
+[X] Rendre la signature a la fin du formaulaire obligatoire
+
