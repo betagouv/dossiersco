@@ -1,6 +1,6 @@
 <div class="form-check">
 	<label class="form-check-label">
-		<input class='form-check-input' type='checkbox' name='<%= name %>' value='true' id='<%= name %>'
+		<input class='form-check-input' type='checkbox' name='<%= name %>' value='true' id='<%= name %>' <%= required if defined? required %>
        <% if condition %>
        checked
        <% end %>> <%= desc %>
