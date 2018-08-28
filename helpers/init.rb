@@ -152,7 +152,7 @@ def cree_dossier_eleve eleve, etablissement, etat = 'en attente de validation'
   dossier_eleve = DossierEleve.create!(
       eleve_id: e.id,
       etablissement_id: etablissement.id,
-      satisfaction: e.identifiant % 5,
+      satisfaction: e.identifiant || 0 % 5,
       etat: etat
       )
   if etat == 'en attente de validation'
@@ -168,6 +168,8 @@ def cree_dossier_eleve eleve, etablissement, etat = 'en attente de validation'
     priorite: 2
   cree_resp_legal dossier_eleve
   cree_contact_urgence dossier_eleve
+
+  dossier_eleve
 end
 
 def cree_contact_urgence dossier_eleve
