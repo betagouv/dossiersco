@@ -162,8 +162,8 @@ def cree_dossier_eleve eleve, etablissement, etat = 'en attente de validation'
     lien_de_parente: 'Père', prenom: 'Jean', nom: 'Blayo',
     adresse: '42 rue du départ', code_postal: '75018', ville: 'Paris',
     adresse_ant: '42 rue du départ', code_postal_ant: '75018', ville_ant: 'Paris',
-    tel_principal: '0123456789', email: 'test2@test.com',
-    situation_emploi: 'Employé', profession: 'banque', enfants_a_charge: 2,
+    tel_principal: '0123456789', tel_secondaire: '0602020202', email: 'test2@test.com',
+    situation_emploi: 'Employé', profession: 'artisan', enfants_a_charge: 2,
     enfants_a_charge_secondaire: 2, communique_info_parents_eleves: false,
     priorite: 2
   cree_resp_legal dossier_eleve

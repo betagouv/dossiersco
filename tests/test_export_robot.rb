@@ -58,15 +58,38 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_export_xml_sait_recopier_des_champs
     etablissement = Etablissement.create
-    valeurs = {identifiant: 'XXX', nom: 'Martin'}
+    valeurs = {identifiant: 'XXX', nom: 'Martin', prenom: 'Jean', date_naiss: '1970-01-01'}
     dossier_eleve = cree_dossier_eleve(valeurs, etablissement)
+    dossier_eleve.update(demi_pensionnaire: true)
     mappings = [Mapping.new(:identifiant, 'ID_NATIONAL'),
-                Mapping.new(:nom, 'NOM_DE_FAMILLE')]
+                Mapping.new(:nom, 'NOM_DE_FAMILLE'),
+                Mapping.new(:prenom, 'PRENOM'),
+                Mapping.new(:date_naiss, 'DATE_NAISS')]
     doc = Nokogiri::XML(export_xml(etablissement, mappings, 'export_xml_robot'))
     structure = "/IMPORT_ELEVES/DONNEES/ELEVES/ELEVE[1]/"
     mappings.each do |mapping|
       assert_equal valeurs[mapping.source], doc.xpath("#{structure}#{mapping.cible}").text
     end
+    assert_equal '2', doc.xpath("#{structure}CODE_REGIME").text
+  end
+
+  def test_li_les_champs_dun_resp_legal
+    etablissement = Etablissement.create
+    valeurs = {identifiant: 'XXX', nom: 'Martin', prenom: 'Jean', date_naiss: '1970-01-01'}
+    dossier_eleve = cree_dossier_eleve(valeurs, etablissement)
+    mappings = []
+    doc = Nokogiri::XML(export_xml(etablissement, mappings, 'export_xml_robot'))
+    structure = "/IMPORT_ELEVES/DONNEES/ELEVES/ELEVE[1]/RESPONSABLES_ELEVE/LEGAL[1]/"
+    assert_equal 'Blayo', doc.xpath("#{structure}NOM_DE_FAMILLE").text
+    assert_equal 'Jean', doc.xpath("#{structure}PRENOM").text
+    assert_equal '42 rue du départ', doc.xpath("#{structure}ADRESSE/LIGNE1_ADRESSE").text
+    assert_equal '75018', doc.xpath("#{structure}ADRESSE/CODE_POSTAL").text
+    assert_equal 'Paris', doc.xpath("#{structure}ADRESSE/LL_POSTAL").text
+    assert_equal 'false', doc.xpath("#{structure}COMMUNICATION_ADRESSE").text
+    assert_equal '0123456789', doc.xpath("#{structure}TEL_PERSONNEL").text
+    assert_equal '0602020202', doc.xpath("#{structure}TEL_PORTABLE").text
+    assert_equal '2', doc.xpath("#{structure}ENFANT_A_CHARGE").text
+    assert_equal '21', doc.xpath("#{structure}CODE_PROFESSION").text
   end
 end
 
