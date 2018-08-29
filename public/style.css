@@ -273,6 +273,10 @@ h2, h4 {
   display: inline;
 }
 
+.form-signin {
+  text-align: center;
+}
+
 .message_de_succes {
   width: 100%;
   background-color: lightgreen;
