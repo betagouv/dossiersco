@@ -269,6 +269,10 @@ h2, h4 {
   margin: .5rem 0rem 0rem;
 }
 
+.form-date {
+  display: inline;
+}
+
 .message_de_succes {
   width: 100%;
   background-color: lightgreen;

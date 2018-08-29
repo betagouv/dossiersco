@@ -80,7 +80,7 @@ get '/' do
 end
 
 post '/identification' do
-	if params[:identifiant].empty? || params[:date_naiss].empty?
+	if params[:identifiant].empty? || params[:annee].empty? || params[:mois].empty? || params[:jour].empty?
 		session[:message_erreur] = "Veuillez renseigner l'identifiant et la date de naissance de l'élève."
 		redirect '/'
 	end
@@ -90,7 +90,8 @@ post '/identification' do
     adresse_ip: request.ip)
 	identifiant = normalise_alphanum params[:identifiant]
 	dossier_eleve = get_dossier_eleve identifiant
-  date_saisie = normalise(params[:date_naiss]) || 'pas-de-date'
+
+  date_saisie = "#{params[:annee]}-#{params[:mois]}-#{params[:jour]}"
 	if dossier_eleve.present? && (dossier_eleve.eleve.date_naiss == date_saisie)
     if dossier_eleve.etat == 'pas connecté'
       dossier_eleve.update(etat: 'connecté')

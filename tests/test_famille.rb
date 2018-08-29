@@ -30,15 +30,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal "070803070AJ", normalise_alphanum(" %! 070803070aj _+ ")
   end
 
-  def test_normalise_date_naissance
-    assert_equal "2018-05-14", normalise("14 05 2018")
-    assert_equal "2018-05-14", normalise("14/05/2018")
-    assert_equal "2018-01-01", normalise("1/1/2018")
-    assert_equal "2018-05-14", normalise("___14!___05_A_2018_")
-    assert_equal "2018-05-14", normalise("14052018_")
-    assert_equal nil, normalise("foo")
-  end
-
   def test_message_erreur_identification
     assert_equal 'Veuillez fournir identifiant et date de naissance', message_erreur_identification(nil, '14-05-2018')
     assert_equal 'Veuillez fournir identifiant et date de naissance', message_erreur_identification('', '14-05-2018')
@@ -52,37 +43,25 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_entree_succes_eleve_1
-    post '/identification', identifiant: '1 ', date_naiss: '1995-11-19'
-    follow_redirect!
-    assert last_response.body.include? 'Pour réinscrire votre enfant'
-  end
-
-  def test_entree_succes_firefox_52_0_1_eleve_1
-    post '/identification', identifiant: '1', date_naiss: '19/11/1995'
-    follow_redirect!
-    assert last_response.body.include? 'Pour réinscrire votre enfant'
-  end
-
-  def test_entree_succes_date_avec_espaces_eleve_1
-    post '/identification', identifiant: '1', date_naiss: '19 11 1995'
+    post '/identification', identifiant: '1 ', annee: '1995', mois: '11', jour: '19'
     follow_redirect!
     assert last_response.body.include? 'Pour réinscrire votre enfant'
   end
 
   def test_entree_mauvaise_date
-    post '/identification', identifiant: '3', date_naiss: '1995-11-19'
+    post '/identification', identifiant: '3', annee: '1995', mois: '11', jour: '19'
     follow_redirect!
     assert last_response.body.include? "Nous n'avons pas reconnu ces identifiants, merci de les vérifier."
   end
 
   def test_entree_mauvais_identifiant_et_date
-    post '/identification', identifiant: 'toto', date_naiss: 'foo'
+    post '/identification', identifiant: 'toto', annee: '1998', mois: '11', jour: '19'
     follow_redirect!
     assert last_response.body.include? "Nous n'avons pas reconnu ces identifiants, merci de les vérifier."
   end
 
   def test_nom_college_accueil
-    post '/identification', identifiant: '1', date_naiss: '1995-11-19'
+    post '/identification', identifiant: '1', annee: '1995', mois: '11', jour: '19'
     follow_redirect!
     doc = Nokogiri::HTML(last_response.body)
     assert_equal 'College Jean-Francois Oeben', doc.xpath("//div//h1/text()").to_s
@@ -91,7 +70,7 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_modification_lieu_naiss_eleve
-    post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+    post '/identification', identifiant: '2', annee: '1915', mois: '12', jour: '19'
     post '/eleve', ville_naiss: 'Beziers', prenom: 'Edith'
     get '/eleve'
     assert last_response.body.include? 'Edith'
@@ -99,42 +78,42 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_modifie_une_information_de_eleve_preserve_les_autres_informations
-    post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+    post '/identification', identifiant: '2', annee: '1915', mois: '12', jour: '19'
     post '/eleve', prenom: 'Edith'
     get '/eleve'
     assert last_response.body.include? 'Piaf'
   end
 
   def test_affiche_2ème_et_3ème_prénoms_en_4ème_pour_brevet_des_collèges
-    post '/identification', identifiant: '4', date_naiss: '1970-01-01'
+    post '/identification', identifiant: '4', annee: '1970', mois: '01', jour: '01'
     get '/eleve'
     assert last_response.body.include? 'Deuxième prénom'
     assert last_response.body.include? 'Troisième prénom'
   end
 
   def test_n_affiche_pas_2ème_et_3ème_prénoms_en_5ème
-    post '/identification', identifiant: '5', date_naiss: '1970-01-01'
+    post '/identification', identifiant: '5', annee: '1970', mois: '01', jour: '01'
     get '/eleve'
     assert_no_match /Deuxième prénom/, last_response.body
     assert_no_match /Troisième prénom/, last_response.body
   end
 
   def test_n_affiche_pas_2ème_et_3ème_prénoms_en_6ème
-    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    post '/identification', identifiant: '6', annee: '1970', mois: '01', jour: '01'
     get '/eleve'
     assert_no_match /Deuxième prénom/, last_response.body
     assert_no_match /Troisième prénom/, last_response.body
   end
 
   def test_affiche_2ème_et_3ème_prénoms_en_CM2
-    post '/identification', identifiant: '1', date_naiss: '1995-11-19'
+    post '/identification', identifiant: '1', annee: '1995', mois: '11', jour: '19'
     get '/eleve'
     assert last_response.body.include? 'Deuxième prénom'
     assert last_response.body.include? 'Troisième prénom'
   end
 
   def test_accueil_et_inscription
-    post '/identification', identifiant: '1', date_naiss: '1995-11-19'
+    post '/identification', identifiant: '1', annee: '1995', mois: '11', jour: '19'
     follow_redirect!
     assert last_response.body.include? 'inscription'
   end
@@ -209,7 +188,7 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_changement_adresse
-    post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+    post '/identification', identifiant: '2', annee: '1915', mois: '12', jour: '19'
     get '/famille'
     doc = Nokogiri::HTML(last_response.body)
     donnees = reinjecte_donnees_formulaire_famille doc
@@ -252,7 +231,7 @@ class EleveFormTest < Test::Unit::TestCase
       etablissement_id: eleve.dossier_eleve.etablissement.id)
     piece_jointe = PieceJointe.create(clef: 'assurance_photo.jpg', dossier_eleve_id: eleve.dossier_eleve.id,
       piece_attendue_id: piece_attendue.id)
-    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    post '/identification', identifiant: '6', annee: '1970', mois: '01', jour: '01'
     get '/pieces_a_joindre'
     doc = Nokogiri::HTML(last_response.body)
     documents_route = FichierUploader::route_lecture '6', 'assurance_scolaire'
@@ -271,7 +250,7 @@ class EleveFormTest < Test::Unit::TestCase
       etablissement_id: eleve.dossier_eleve.etablissement.id)
     piece_jointe = PieceJointe.create(clef: 'assurance_scannee.pdf', dossier_eleve_id: eleve.dossier_eleve.id,
       piece_attendue_id: piece_attendue.id)
-    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    post '/identification', identifiant: '6', annee: '1970', mois: '01', jour: '01'
     get '/pieces_a_joindre'
     doc = Nokogiri::HTML(last_response.body)
     documents_route = FichierUploader::route_lecture '6', 'assurance_scolaire'
@@ -285,10 +264,10 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_ramène_parent_à_dernière_étape_incomplète
-    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    post '/identification', identifiant: '6', annee: '1970', mois: '01', jour: '01'
     post '/eleve', Espagnol: true, Latin: true
 
-    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    post '/identification', identifiant: '6', annee: '1970', mois: '01', jour: '01'
     follow_redirect!
 
     doc = Nokogiri::HTML(last_response.body)
@@ -296,7 +275,7 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_envoyer_un_mail_quand_la_demande_dinscription_est_valide
-    post '/identification', identifiant: '4', date_naiss: '1970-01-01'
+    post '/identification', identifiant: '4', annee: '1970', mois: '01', jour: '01'
     post '/validation'
 
     mail = ActionMailer::Base.deliveries.last
@@ -311,7 +290,7 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def soumet_formulaire(*arguments_du_post)
-    post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+    post '/identification', identifiant: '2', annee: '1915', mois: '12', jour: '19'
     post *arguments_du_post
     get arguments_du_post[0]
     Nokogiri::HTML(last_response.body)
@@ -327,7 +306,7 @@ class EleveFormTest < Test::Unit::TestCase
     option_abandonnee = Option.create(nom: 'latin', groupe: 'LCA')
     abandon = Abandon.create(option_id: option_abandonnee.id, eleve_id: eleve.id)
 
-    post '/identification', identifiant: 'xxx', date_naiss: '1970-01-01'
+    post '/identification', identifiant: 'xxx', annee: '1970', mois: '01', jour: '01'
     get '/validation'
 
     assert last_response.body.include? 'anglais'
@@ -342,7 +321,7 @@ class EleveFormTest < Test::Unit::TestCase
     demandabilite = Demandabilite.create(option: option, montee: eleve.montee)
     demande = Demande.create(option_id: option.id, eleve_id: eleve.id)
 
-    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    post '/identification', identifiant: '6', annee: '1970', mois: '01', jour: '01'
 
     get '/validation'
     assert last_response.body.include? "Demande d'inscription à l'option <strong>grec</strong>"
@@ -352,7 +331,7 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_une_famille_remplit_letape_administration
-    post '/identification', identifiant: '2', date_naiss: '1915-12-19'
+    post '/identification', identifiant: '2', annee: '1915', mois: '12', jour: '19'
     get '/administration'
     post '/administration', demi_pensionnaire: true, autorise_sortie: true,
       renseignements_medicaux: true, autorise_photo_de_classe: false
@@ -371,7 +350,7 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_famille_peut_accéder_à_une_pièce_de_son_dossier
-    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    post '/identification', identifiant: '6', annee: '1970', mois: '01', jour: '01'
 
     piece_a_joindre = Tempfile.new('fichier_temporaire')
 
@@ -395,7 +374,7 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_affichage_d_options_ogligatoires_a_choisir
-    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    post '/identification', identifiant: '6', annee: '1970', mois: '01', jour: '01'
     eleve = Eleve.find_by(identifiant: '6')
     montee = Montee.create
 
@@ -431,7 +410,7 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_affichage_d_options_facultatives_a_choisir
-    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    post '/identification', identifiant: '6', annee: '1970', mois: '01', jour: '01'
     eleve = Eleve.find_by(identifiant: '6')
     montee = Montee.create
 
@@ -460,7 +439,7 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_une_option_facultative_pas_encore_demandee
-    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    post '/identification', identifiant: '6', annee: '1970', mois: '01', jour: '01'
     eleve = Eleve.find_by(identifiant: '6')
     montee = Montee.create
 
@@ -484,7 +463,7 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_une_option_facultative_demandee
-    post '/identification', identifiant: '6', date_naiss: '1970-01-01'
+    post '/identification', identifiant: '6', annee: '1970', mois: '01', jour: '01'
     eleve = Eleve.find_by(identifiant: '6')
     montee = Montee.create
 
@@ -519,7 +498,7 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_affichage_obligatoire_sans_choix
-    post '/identification', identifiant: '5', date_naiss: '1970-01-01'
+    post '/identification', identifiant: '5', annee: '1970', mois: '01', jour: '01'
     eleve = Eleve.find_by(identifiant: '5')
 
     get '/eleve'
@@ -533,7 +512,7 @@ class EleveFormTest < Test::Unit::TestCase
     montee = Montee.create
     e = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01', montee: montee)
     dossier_eleve = DossierEleve.create!(eleve_id: e.id, etablissement_id: Etablissement.first.id)
-    post '/identification', identifiant: 'XXX', date_naiss: '1970-01-01'
+    post '/identification', identifiant: 'XXX', annee: '1970', mois: '01', jour: '01'
 
     get '/eleve'
 
@@ -567,7 +546,7 @@ class EleveFormTest < Test::Unit::TestCase
     montee.abandonnabilite << latin_d
     eleve.update(montee: montee)
 
-    post '/identification', identifiant: 'XXX', date_naiss: '1970-01-01'
+    post '/identification', identifiant: 'XXX', annee: '1970', mois: '01', jour: '01'
     get '/eleve'
 
     resultat = eleve.genere_abandons_possibles
@@ -600,7 +579,7 @@ class EleveFormTest < Test::Unit::TestCase
     get '/unepagequinexistepas'
     assert last_response.redirect?
 
-    post '/identification', identifiant: '5', date_naiss: '1970-01-01'
+    post '/identification', identifiant: '5', annee: '1970', mois: '01', jour: '01'
     get '/unepagequinexistepas'
     assert last_response.body.include? "une page qui n'existe pas"
   end
@@ -617,7 +596,7 @@ class EleveFormTest < Test::Unit::TestCase
     dossier_eleve = DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first
     RespLegal.create! dossier_eleve_id: dossier_eleve.id, email: 'test@test.com', priorite: 1
 
-    post '/identification', identifiant: 'XXX', date_naiss: '1915-12-19'
+    post '/identification', identifiant: 'XXX', annee: '1915', mois: '12', jour: '19'
     get '/famille'
 
     doc = Nokogiri::HTML(last_response.body)
