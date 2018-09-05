@@ -38,11 +38,14 @@
 
 <script>
 	var container = document.getElementsByClassName("date_form")[0];
+  var index_avancement = {'jour': 0, 'mois': 1, 'annee': 2};
+  var avancement_saisie = 0;
 	container.onkeyup = function(e) {
 			var target = e.srcElement;
 			var maxLength = parseInt(target.attributes["maxlength"].value, 10);
 			var myLength = target.value.length;
-			if (myLength >= maxLength) {
+      if (myLength >= maxLength && index_avancement[target.name] == avancement_saisie) {
+          avancement_saisie++;
 					var next = target;
 					while (next = next.nextElementSibling) {
 							if (next == null)
