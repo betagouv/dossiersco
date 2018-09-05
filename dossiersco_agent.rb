@@ -52,6 +52,13 @@ post '/agent' do
   end
 end
 
+get '/agent/accueil' do
+  @dossiers_eleves = DossierEleve.all
+  etats, notes, @moyenne, dossiers_avec_commentaires = agent.etablissement.stats
+  erb :'agent/accueil',
+      layout: :layout_agent
+end
+
 get '/agent/liste_des_eleves' do
   lignes_eleves = DossierEleve
     .joins(:eleve,:resp_legal)

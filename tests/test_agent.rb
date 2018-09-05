@@ -44,6 +44,15 @@ class EleveFormTest < Test::Unit::TestCase
     assert last_response.body.include? 'Ces informations ne correspondent pas à un agent enregistré'
   end
 
+  def test_accueil
+    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
+    get '/agent/accueil'
+
+    doc = Nokogiri::HTML(last_response.body)
+    assert_match "Bienvenue !", doc.css('#header').text
+    assert_match "7", doc.css('#eleves').text
+  end
+
   def test_nombre_dossiers_total
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
     follow_redirect!

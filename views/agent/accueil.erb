@@ -1,0 +1,34 @@
+<div class="container">
+
+    <div class="row" id="header">
+      <div class="col-12">
+        <h1>Bienvenue !</h1>
+        <p>Cet espace vous permet de suivre d'ensemble des<br/>inscriptions et des pièces justificatives de vos élèves</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-3">
+        <div class="row">
+          <div class="col-12">
+            <p id="eleves"><%= @dossiers_eleves.count %></p>
+            <p>Dossiers d'élèves</p>
+            <a href="/agent/liste_des_eleves">Liste des élèves</a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div><span><%= @moyenne %></span><span> / 5</span></div>
+            <p>Satisfaction des parents</p>
+            <a href="/agent/liste_des_eleves">Voir tous les commentaires</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-3">
+      </div>
+      <div class="col-3">
+      </div>
+      <div class="col-3">
+      </div>
+    </div>
+</div>
