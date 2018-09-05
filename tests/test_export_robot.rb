@@ -34,7 +34,9 @@ class EleveFormTest < Test::Unit::TestCase
   end
 
   def test_export_xml_contient_tous_les_eleves_de_l_etablissement
-    etablissement = Etablissement.first
+    etablissement = Etablissement.create
+    dossier_eleve_1 = cree_dossier_eleve({}, etablissement, 'validé')
+    dossier_eleve_2 = cree_dossier_eleve({}, etablissement, 'validé')
     doc = Nokogiri::XML(export_xml(etablissement, [], 'export_xml_robot'))
     assert_equal etablissement.dossier_eleve.count, doc.xpath("/IMPORT_ELEVES/DONNEES/ELEVES/ELEVE").count
   end
@@ -59,7 +61,7 @@ class EleveFormTest < Test::Unit::TestCase
   def test_export_xml_sait_recopier_des_champs
     etablissement = Etablissement.create
     valeurs = {identifiant: 'XXX', nom: 'Martin', prenom: 'Jean', date_naiss: '1970-01-01'}
-    dossier_eleve = cree_dossier_eleve(valeurs, etablissement)
+    dossier_eleve = cree_dossier_eleve(valeurs, etablissement, 'validé')
     dossier_eleve.update(demi_pensionnaire: true)
     mappings = [Mapping.new(:identifiant, 'ID_NATIONAL'),
                 Mapping.new(:nom, 'NOM_DE_FAMILLE'),
@@ -76,7 +78,7 @@ class EleveFormTest < Test::Unit::TestCase
   def test_li_les_champs_dun_resp_legal
     etablissement = Etablissement.create
     valeurs = {identifiant: 'XXX', nom: 'Martin', prenom: 'Jean', date_naiss: '1970-01-01'}
-    dossier_eleve = cree_dossier_eleve(valeurs, etablissement)
+    dossier_eleve = cree_dossier_eleve(valeurs, etablissement, 'validé')
     mappings = []
     doc = Nokogiri::XML(export_xml(etablissement, mappings, 'export_xml_robot'))
     structure = "/IMPORT_ELEVES/DONNEES/ELEVES/ELEVE[1]/RESPONSABLES_ELEVE/LEGAL[1]/"
