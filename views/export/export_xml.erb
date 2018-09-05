@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<IMPORT_ELEVES xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"
+ xs:noNamespaceSchemaLocation="../schema_Import_2.0.xsd" VERSION="">
+    <PARAMETRES>
+        <UAJ>0750680G</UAJ>
+        <ANNEE_SCOLAIRE>2017</ANNEE_SCOLAIRE>
+        <DATE_IMPORT>23/01/2018</DATE_IMPORT>
+        <NUM_ENVOI>1</NUM_ENVOI>
+        <LOGICIEL>DOSSIERSCO</LOGICIEL>
+    </PARAMETRES>
+    <DONNEES>
+        <PERSONNES>
+          <% personnes.each do |personne| %>
+            <PERSONNE>
+                <ID_PRV_PER>11111</ID_PRV_PER>
+                <CODE_CIVILITE>1</CODE_CIVILITE>
+                <NOM_DE_FAMILLE>HugoHugo</NOM_DE_FAMILLE>
+                <PRENOM>JeanJean</PRENOM>
+                <COMMUNICATION_ADRESSE>true</COMMUNICATION_ADRESSE>
+                <CODE_PROFESSION>10</CODE_PROFESSION>
+                <TEL_PERSONNEL>0555101112</TEL_PERSONNEL>
+                <TEL_PROFESSIONNEL>0555131415</TEL_PROFESSIONNEL>
+                <TEL_PORTABLE>0610111213</TEL_PORTABLE>
+                <ENFANT_A_CHARGE>2</ENFANT_A_CHARGE>
+            </PERSONNE>
+          <% end %>
+        </PERSONNES>
+        <ELEVES>
+        <% etablissement.dossier_eleve.each do |dossier_eleve| %>
+            <ELEVE>
+              <% mappings.each do |mapping| %>
+                <<%=mapping.cible%>><%=dossier_eleve.eleve[mapping.source]%></<%=mapping.cible%>>
+              <% end %>
+                <PRENOM>VictorVictor</PRENOM>
+                <CODE_PAYS_NAT>100</CODE_PAYS_NAT>
+                <DATE_NAISS>2002-01-01</DATE_NAISS>
+                <CODE_SEXE>1</CODE_SEXE>
+                <CODE_PAYS>100</CODE_PAYS>
+                <CODE_COMMUNE_INSEE_NAISS>75012</CODE_COMMUNE_INSEE_NAISS>
+                <EMAIL>victorhugo@test.fr</EMAIL>
+                <ADHESION_TRANSPORT>false</ADHESION_TRANSPORT>
+                <CODE_REGIME>3</CODE_REGIME>
+                <DOUBLEMENT>false</DOUBLEMENT>
+                <RESPONSABLES_ELEVE>
+                  <% dossier_eleve.resp_legal.each do |resp_legal| %>
+                    <LEGAL>
+                        <ID_PRV_PER>11111</ID_PRV_PER>
+                        <CODE_PARENTE>1</CODE_PARENTE>
+                    </LEGAL>
+                  <% end %>
+                </RESPONSABLES_ELEVE>
+                <SCOLARITE_ACTIVE>
+                    <CODE_MEF>20111010110</CODE_MEF>
+                    <CODE_DIVISION>AAAABBBB</CODE_DIVISION>
+                    <CODE_STATUT>ST</CODE_STATUT>
+                    <DATE_DEB_SCO>2017-09-04</DATE_DEB_SCO>
+                    <OPTIONS></OPTIONS>
+                </SCOLARITE_ACTIVE>
+                <ETABLISSEMENT_AN_DERNIER>
+                    <CODE_RNE>0750680G</CODE_RNE>
+                    <CODE_PROVENANCE>1</CODE_PROVENANCE>
+                    <OPTIONS_AN_DERNIER></OPTIONS_AN_DERNIER>
+                </ETABLISSEMENT_AN_DERNIER>
+            </ELEVE>
+        <% end %>
+        </ELEVES>
+    </DONNEES>
+</IMPORT_ELEVES>

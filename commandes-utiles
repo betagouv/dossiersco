@@ -176,3 +176,14 @@ response = https.request(request)
 # Envoyer les messages en attente
 
 Message.where(etat:"en attente", categorie:"sms").each(&:envoyer)
+
+# Générer le xml pour un robot
+
+require_relative 'dossiersco_web'
+require_relative 'dossiersco_agent'
+require_relative 'helpers/export_siecle'
+
+etablissement = Etablissement.find(227)
+p etablissement.dossier_eleve.where(etat: "validé").count
+File.open('malraux.xml', 'w') { |file| file.write(export_xml_tous_les_champs(etablissement, 'export_xml_robot'))}
+
