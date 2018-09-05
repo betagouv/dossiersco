@@ -133,7 +133,7 @@
     name: 'communique_info_parents_eleves_rl1',
     type: 'radio_inverse',
     options: {"J'accepte": true, "Je n'accepte pas": false},
-    checked: resp_legal_1.communique_info_parents_eleves
+    checked: resp_legal_1.communique_info_parents_eleves || false
   }]
 
 if resp_legal_2
@@ -255,7 +255,7 @@ fin_form_resp_legal_2 = [
     name: 'communique_info_parents_eleves_rl2',
     type: 'radio_inverse',
     options: {"J'accepte": true, "Je n'accepte pas": false},
-    checked: resp_legal_2.communique_info_parents_eleves
+    checked: resp_legal_2.communique_info_parents_eleves || false
   }]
 end
 
