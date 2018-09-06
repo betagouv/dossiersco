@@ -93,6 +93,21 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal '2', doc.xpath("#{structure}ENFANT_A_CHARGE").text
     assert_equal '21', doc.xpath("#{structure}CODE_PROFESSION").text
   end
+
+  def test_li_les_champs_dun_contact
+    etablissement = Etablissement.create
+    valeurs = {identifiant: 'XXX', nom: 'Martin', prenom: 'Jean', date_naiss: '1970-01-01'}
+    dossier_eleve = cree_dossier_eleve(valeurs, etablissement, 'validé')
+    dossier_eleve.contact_urgence.update(nom: 'Durant', prenom: 'Philippe', tel_principal: '0123456789', tel_secondaire: '0602020202')
+    mappings = []
+    doc = Nokogiri::XML(export_xml(etablissement, mappings, 'export_xml_robot'))
+    structure = "/IMPORT_ELEVES/DONNEES/ELEVES/ELEVE[1]/CONTACT/"
+    assert_equal 'Durant', doc.xpath("#{structure}NOM_DE_FAMILLE").text
+    assert_equal 'Philippe', doc.xpath("#{structure}PRENOM").text
+    assert_equal '0123456789', doc.xpath("#{structure}TEL_PERSONNEL").text
+    assert_equal '0602020202', doc.xpath("#{structure}TEL_PORTABLE").text
+  end
+
 end
 
 class Mapping

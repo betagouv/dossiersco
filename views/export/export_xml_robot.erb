@@ -35,6 +35,16 @@
                     </LEGAL>
                   <% end %>
                 </RESPONSABLES_ELEVE>
+              <% contact = dossier_eleve.contact_urgence %>
+              <% if contact.present? && ( contact.tel_principal.present? || contact.tel_secondaire.present? ) %>
+                <CONTACT>
+                  <CODE_PARENTE><%= contact.lien_avec_eleve %></CODE_PARENTE>
+                  <NOM_DE_FAMILLE><%= contact.nom %></NOM_DE_FAMILLE>
+                  <PRENOM><%= contact.prenom %></PRENOM>
+                  <TEL_PERSONNEL><%= contact.tel_principal %></TEL_PERSONNEL>
+                  <TEL_PORTABLE><%= contact.tel_secondaire %></TEL_PERSONNEL>
+                </CONTACT>
+              <% end %>
             </ELEVE>
         <% end %>
         </ELEVES>
