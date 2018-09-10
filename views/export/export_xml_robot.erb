@@ -19,7 +19,6 @@
                 <RESPONSABLES_ELEVE>
                   <% dossier_eleve.resp_legal.each do |resp_legal| %>
                     <LEGAL>
-                        <CODE_CIVILITE>1</CODE_CIVILITE>
                         <NOM_DE_FAMILLE><%= resp_legal.nom %></NOM_DE_FAMILLE>
                         <PRENOM><%= resp_legal.prenom %></PRENOM>
                         <COMMUNICATION_ADRESSE><%= resp_legal.communique_info_parents_eleves %></COMMUNICATION_ADRESSE>
