@@ -177,6 +177,18 @@ response = https.request(request)
 
 Message.where(etat:"en attente", categorie:"sms").each(&:envoyer)
 
+# Valider le xml
+
+Nous avons utilisé une version d'évaluation de Oxygen XML Editor, obtenue
+avec un email généré avec www.guerrillamail.com
+
+Oxygen XML Editor > File > Open
+Oxygen XML Editor > Document > Validate > Validate with
+
+Il est indispensable que le zip soit générer sous Mac ou sous Linux avec :
+
+zip -r 0620047PPRIVE2018190910165900.zip 0620047PPRIVE2018190910165900.xml
+
 # Générer le xml pour un robot
 
 require_relative 'dossiersco_web'
