@@ -116,7 +116,8 @@ où session_secret est la valeur de la variable d’environnement SESSION_SECRET
 # Copier les données de prod vers staging
 
 heroku pg:copy dossiersco::DATABASE_URL DATABASE_URL -a dossiersco-staging
-
+heroku pg:psql -a dossiersco-staging
+delete from traces;
 docker-compose exec postgres bash
 dropdb dossiersco -U dossiersco
 apt-get update
