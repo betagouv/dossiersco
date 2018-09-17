@@ -26,7 +26,7 @@ class RespLegal < ActiveRecord::Base
   end
 
   def self.codes_profession
-    { '0': '', '10': 'agriculteur exploitant', '21': 'artisan', '22': 'commerçant et assimilé',
+    { '99': '', '10': 'agriculteur exploitant', '21': 'artisan', '22': 'commerçant et assimilé',
     '23': "chef d'entreprise de 10 salariés et+", '31': 'profession libérale', '33': 'cadre de la fonction publique',
     '34': 'professeur, profession scientifique', '35': "profession de l'information, des arts et des spectacles",
     '37': "cadre administratif, commercial d'entreprise", '38': "ingénieur, cadre technique d'entreprise",
@@ -35,9 +35,16 @@ class RespLegal < ActiveRecord::Base
     '46': "Profession intermédiaire administrative et commerciale des entreprises", '47': "Technicien",
     '48': "Contremaître, agent de maîtrise", '52': "Employé civil et agent de service de la fonction publique",
     '53': 'Policier, militaire', '54': "Employé administratif d'entreprise", '55': "Employé de commerce",
-    '56': "Personnel service direct aux particuliers", '61': "Ouvrier qualifié", '66': "Ouvrier non qualifié",
+    '56': "Personnel service direct aux particuliers",
+    '62': "Ouvrier qualifié - industrie",
+    '63': "Ouvrier qualifié - artisanal",
+    '65': "Ouvrier qualifié - magasinage",
+    '67': "Ouvrier non qualifié de type industriel",
+    '68': "Ouvrier non qualifié de type artisanal",
     '69': "Ouvrier agricole", '71': "Retraité agriculteur exploitant",
     '72': "Retraité artisan, commerçant, chef d'entreprise", '73': "Retraité cadre, profession interm édiaire",
-    '76': "Retraité employé, ouvrier", '82': "Personne sans activité professionnelle" }
+    '76': "Retraité employé, ouvrier",
+    '85': "Personne sans activité professionnelle < 60 ans",
+    '86': "Personne sans activité professionnelle > 60 ans" }
   end
 end
