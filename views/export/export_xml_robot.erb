@@ -10,7 +10,8 @@
     </PARAMETRES>
     <DONNEES>
         <ELEVES>
-        <% etablissement.dossier_eleve.where(etat: "validé").each do |dossier_eleve| %>
+        <% dossiers_eleves = etablissement.dossier_eleve.where(etat: "validé").or(etablissement.dossier_eleve.where(etat: "en attente de validation")) %>
+        <% dossiers_eleves.each do |dossier_eleve| %>
             <ELEVE>
               <% mappings.each do |mapping| %>
                 <<%=mapping.cible%>><%=dossier_eleve.eleve[mapping.source]%></<%=mapping.cible%>>
@@ -31,6 +32,7 @@
                             <CODE_POSTAL><%= resp_legal.code_postal %></CODE_POSTAL>
                             <LL_POSTAL><%= resp_legal.ville %></LL_POSTAL>
                         </ADRESSE>
+                        <% if resp_legal.email.present? %><EMAIL><%= resp_legal.email %></EMAIL><% end %>
                     </LEGAL>
                   <% end %>
                 </RESPONSABLES_ELEVE>

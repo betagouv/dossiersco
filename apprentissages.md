@@ -26,3 +26,13 @@ https://docs.docker.com/install/linux/docker-ce/ubuntu/#set-up-the-repository)
 ## Chercher dans la doc
 http://devdocs.io/ruby/
 
+# Automate de réinjection dans siècle
+
+Début mer 12 sep 17h10, fin samedi 15
+
+# Import privé de SIECLE
+
+Dans la balise CODE_PARENTE, il faut mettre deux caractères. Des erreurs apparaîssent alors enfin :
+- La division indiquée n'est pas rattachée au MEF de l'élève. La scolarité active de l'élève a été rejetée. ACDIV_B_01
+- La date de début de scolarité "01/09/2016" n'est pas incluse dans la période scolaire (du 03/09/2018 au 01/09/2019). La scolarité active, les motif et date de sortie n'ont pas été pris en compte. SCOAC_E_02
+- Le code mef "%" pour l'année précédente n'est pas référencé dans la base de données par l'établissement de connexion. Le mef pour l'année précédente a donc été forcé à null. MEFAD_C_02
