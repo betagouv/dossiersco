@@ -259,13 +259,12 @@ fin_form_resp_legal_2 = [
   }]
 end
 
-if contact_urgence
 form_contact_urgence = [
   {
     name: "lien_avec_eleve_urg",
     label: "Lien avec l'élève",
     type: "text",
-    value: contact_urgence.lien_avec_eleve,
+    value: contact_urgence.present? ? contact_urgence.lien_avec_eleve : nil,
     indication: "Lien avec l'élève",
     disabled: false
   },
@@ -273,7 +272,7 @@ form_contact_urgence = [
     name: "prenom_urg",
     label: "Prénom",
     type: "text",
-    value: contact_urgence.prenom,
+    value: contact_urgence.present? ? contact_urgence.prenom : nil,
     indication: "Prénom",
     disabled: false
   },
@@ -281,7 +280,7 @@ form_contact_urgence = [
     name: "nom_urg",
     label: "Nom",
     type: "text",
-    value: contact_urgence.nom,
+    value: contact_urgence.present? ? contact_urgence.nom : nil,
     indication: "Nom",
     disabled: false
   },
@@ -293,18 +292,17 @@ form_contact_urgence = [
     name: "tel_principal_urg",
     label: "Téléphone principal",
     type: "tel",
-    value: contact_urgence.tel_principal,
+    value: contact_urgence.present? ? contact_urgence.tel_principal : nil,
     indication: "Numéro de téléphone",
   },
   {
     name: "tel_secondaire_urg",
     label: "Téléphone secondaire",
     type: "tel",
-    value: contact_urgence.tel_secondaire,
+    value: contact_urgence.present? ? contact_urgence.tel_secondaire : nil,
     indication: "Numéro de téléphone",
   },
 ]
-end
 %>
 
 <% @section = 2 %>
@@ -348,9 +346,7 @@ end
 <div id='contact_urgence' class='<%= "d-none" unless contact_urgence.present? && !contact_urgence.nom.empty? %>' >
   <h2 class="mt-5 separation">Famille : Autre personne à contacter en cas d'urgence</h2>
 
-  <% if contact_urgence %>
-    <%= construire form_contact_urgence %>
-  <% end %>
+  <%= construire form_contact_urgence %>
 </div>
     <%= erb :'partials/nouveau_precedent_suivant', :locals => { :precedent => "eleve"} %>
   </form>
