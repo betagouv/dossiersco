@@ -46,6 +46,16 @@
                   <TEL_PORTABLE><%= contact.tel_secondaire %></TEL_PORTABLE>
                 </CONTACT>
               <% end %>
+              <SCOLARITE_ACTIVE>
+                <OPTIONS>
+                <% options = dossier_eleve.eleve.option %>
+                <% options.each do |option| %>
+                  <OPTION>
+                    <CODE_MATIERE><%= option.nom %></CODE_MATIERE>
+                  </OPTION>
+                <% end %>
+                </OPTIONS>
+              </SCOLARITE_ACTIVE>
             </ELEVE>
         <% end %>
         </ELEVES>

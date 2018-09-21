@@ -60,8 +60,8 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_export_xml_sait_recopier_des_champs
     etablissement = Etablissement.create
-    valeurs = {identifiant: 'XXX', nom: 'Martin', prenom: 'Jean', date_naiss: '1970-01-01'}
-    dossier_eleve = cree_dossier_eleve(valeurs, etablissement, 'validé')
+    identite_eleve = {identifiant: 'XXX', nom: 'Martin', prenom: 'Jean', date_naiss: '1970-01-01'}
+    dossier_eleve = cree_dossier_eleve(identite_eleve, etablissement, 'validé')
     dossier_eleve.update(demi_pensionnaire: true)
     mappings = [Mapping.new(:identifiant, 'ID_NATIONAL'),
                 Mapping.new(:nom, 'NOM_DE_FAMILLE'),
@@ -70,15 +70,15 @@ class EleveFormTest < Test::Unit::TestCase
     doc = Nokogiri::XML(export_xml(etablissement, mappings, 'export_xml_robot'))
     structure = "/IMPORT_ELEVES/DONNEES/ELEVES/ELEVE[1]/"
     mappings.each do |mapping|
-      assert_equal valeurs[mapping.source], doc.xpath("#{structure}#{mapping.cible}").text
+      assert_equal identite_eleve[mapping.source], doc.xpath("#{structure}#{mapping.cible}").text
     end
     assert_equal '2', doc.xpath("#{structure}CODE_REGIME").text
   end
 
   def test_li_les_champs_dun_resp_legal
     etablissement = Etablissement.create
-    valeurs = {identifiant: 'XXX', nom: 'Martin', prenom: 'Jean', date_naiss: '1970-01-01'}
-    dossier_eleve = cree_dossier_eleve(valeurs, etablissement, 'validé')
+    identite_eleve = {identifiant: 'XXX', nom: 'Martin', prenom: 'Jean', date_naiss: '1970-01-01'}
+    dossier_eleve = cree_dossier_eleve(identite_eleve, etablissement, 'validé')
     mappings = []
     doc = Nokogiri::XML(export_xml(etablissement, mappings, 'export_xml_robot'))
     structure = "/IMPORT_ELEVES/DONNEES/ELEVES/ELEVE[1]/RESPONSABLES_ELEVE/LEGAL[1]/"
@@ -96,16 +96,33 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_li_les_champs_dun_contact
     etablissement = Etablissement.create
-    valeurs = {identifiant: 'XXX', nom: 'Martin', prenom: 'Jean', date_naiss: '1970-01-01'}
-    dossier_eleve = cree_dossier_eleve(valeurs, etablissement, 'validé')
+    identite_eleve = {identifiant: 'XXX', nom: 'Martin', prenom: 'Jean', date_naiss: '1970-01-01'}
+    dossier_eleve = cree_dossier_eleve(identite_eleve, etablissement, 'validé')
     dossier_eleve.contact_urgence.update(nom: 'Durant', prenom: 'Philippe', tel_principal: '0123456789', tel_secondaire: '0602020202')
     mappings = []
+
     doc = Nokogiri::XML(export_xml(etablissement, mappings, 'export_xml_robot'))
+
     structure = "/IMPORT_ELEVES/DONNEES/ELEVES/ELEVE[1]/CONTACT/"
     assert_equal 'Durant', doc.xpath("#{structure}NOM_DE_FAMILLE").text
     assert_equal 'Philippe', doc.xpath("#{structure}PRENOM").text
     assert_equal '0123456789', doc.xpath("#{structure}TEL_PERSONNEL").text
     assert_equal '0602020202', doc.xpath("#{structure}TEL_PORTABLE").text
+  end
+
+  def test_ajoute_les_options_dun_eleve
+    etablissement = Etablissement.create
+    identite_eleve = {identifiant: 'XXX', nom: 'Martin', prenom: 'Jean', date_naiss: '1970-01-01'}
+    dossier_eleve = cree_dossier_eleve(identite_eleve, etablissement, 'validé')
+    dossier_eleve.eleve.option << Option.create(nom: "Anglais")
+    dossier_eleve.eleve.option << Option.create(nom: "Espagnol")
+    mappings = []
+
+    doc = Nokogiri::XML(export_xml(etablissement, mappings, 'export_xml_robot'))
+    
+    structure = "/IMPORT_ELEVES/DONNEES/ELEVES/ELEVE[1]/SCOLARITE_ACTIVE/OPTIONS/"
+    assert_equal 'Anglais', doc.xpath("#{structure}OPTION[1]/CODE_MATIERE").text
+    assert_equal 'Espagnol', doc.xpath("#{structure}OPTION[2]/CODE_MATIERE").text
   end
 
 end
