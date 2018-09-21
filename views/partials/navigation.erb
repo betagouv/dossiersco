@@ -35,7 +35,7 @@
 	<div class="wrapper">
 		<div class="arrow-steps clearfix">
 		<% liste_menu.each do |menu| %>
-			<% if menu[:etapes].include? dossier_eleve.etape %>
+			<% if menu[:etapes].include? dossier_eleve.etape_la_plus_avancee %>
 				<% classes = 'step step-enabled' %>
 				<% lien = menu[:url] %>
 			<% else %>

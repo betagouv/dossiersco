@@ -83,7 +83,7 @@ post '/identification' do
       dossier_eleve.update(etat: 'connecté')
     end
 		session[:identifiant] = identifiant
-		redirect "/#{dossier_eleve.etape}"
+		redirect "/#{dossier_eleve.derniere_etape}"
 	else
     # Emettre un message générique quelle que soit l'erreur pour éviter
     # de "fuiter" de l'information sur l'existence ou non des identifiants
@@ -98,10 +98,12 @@ get '/deconnexion' do
 end
 
 get '/accueil' do
+  eleve.dossier_eleve.update derniere_etape: 'accueil'
 	erb :'accueil', locals: { dossier_eleve: eleve.dossier_eleve }
 end
 
 get '/eleve' do
+  eleve.dossier_eleve.update derniere_etape: 'eleve'
   options_du_niveau = eleve.montee.present? ? eleve.montee.demandabilite.collect(&:option) : []
   erb :'eleve', locals: { eleve: eleve, options_du_niveau: options_du_niveau }
 end
@@ -154,6 +156,7 @@ end
 
 get '/famille' do
 	dossier_eleve = eleve.dossier_eleve
+  dossier_eleve.update derniere_etape: 'famille'
 	resp_legal1 = dossier_eleve.resp_legal_1
 	resp_legal2 = dossier_eleve.resp_legal_2
 	contact_urgence = dossier_eleve.contact_urgence
@@ -187,6 +190,7 @@ post '/famille' do
 end
 
 get '/administration' do
+  eleve.dossier_eleve.update derniere_etape: 'administration'
 	erb :'administration', locals: {dossier_eleve: eleve.dossier_eleve}
 end
 
@@ -233,6 +237,7 @@ get '/piece/:dossier_eleve/:code_piece/:s3_key' do
 end
 
 get '/pieces_a_joindre' do
+  eleve.dossier_eleve.update derniere_etape: 'pieces_a_joindre'
 	erb :'pieces_a_joindre', locals: {dossier_eleve: eleve.dossier_eleve}
 end
 
@@ -282,11 +287,13 @@ end
 
 get '/confirmation' do
   dossier_eleve = eleve.dossier_eleve
+  dossier_eleve.update derniere_etape: 'confirmation'
 	erb :'confirmation', locals: { eleve: eleve, dossier_eleve: dossier_eleve }
 end
 
 post '/satisfaction' do
   dossier_eleve = eleve.dossier_eleve
+  dossier_eleve.update derniere_etape: 'satisfaction'
   dossier_eleve.satisfaction = params[:note]
   dossier_eleve.save!
 end
@@ -321,9 +328,9 @@ error do
   erb :error
 end
 
-def sauve_et_redirect dossier_eleve, etape
-  dossier_eleve.etape = etape
+def sauve_et_redirect dossier_eleve, etape_la_plus_avancee
+  dossier_eleve.etape_la_plus_avancee = etape_la_plus_avancee
   dossier_eleve.save!
-  redirect "/#{etape}"
+  redirect "/#{etape_la_plus_avancee}"
 end
 

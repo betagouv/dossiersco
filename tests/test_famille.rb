@@ -44,7 +44,7 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_entree_succes_eleve_1
     post '/identification', identifiant: '1 ', annee: '1995', mois: '11', jour: '19'
-    follow_redirect!
+    get '/accueil'
     assert last_response.body.include? 'Pour réinscrire votre enfant'
   end
 
@@ -62,7 +62,7 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_nom_college_accueil
     post '/identification', identifiant: '1', annee: '1995', mois: '11', jour: '19'
-    follow_redirect!
+    get '/accueil'
     doc = Nokogiri::HTML(last_response.body)
     assert_equal 'College Jean-Francois Oeben', doc.xpath("//div//h1/text()").to_s
     assert_equal 'College Jean-Francois Oeben.', doc.xpath("//strong[@id='etablissement']/text()").to_s.strip
@@ -266,6 +266,7 @@ class EleveFormTest < Test::Unit::TestCase
   def test_ramène_parent_à_dernière_étape_incomplète
     post '/identification', identifiant: '6', annee: '1970', mois: '01', jour: '01'
     post '/eleve', Espagnol: true, Latin: true
+    get '/famille'
 
     post '/identification', identifiant: '6', annee: '1970', mois: '01', jour: '01'
     follow_redirect!
@@ -615,4 +616,15 @@ class EleveFormTest < Test::Unit::TestCase
     doc = Nokogiri::HTML(last_response.body)
     assert_not_nil doc.css("input#tel_principal_urg").first
   end
+
+  def test_ramene_a_la_dernire_etape_visitee_plutot_que_l_etape_la_plus_avancee
+    post '/identification', identifiant: '4', annee: '1970', mois: '01', jour: '01'
+    post '/famille'
+    get '/eleve'
+    post '/deconnexion'
+    post '/identification', identifiant: '4', annee: '1970', mois: '01', jour: '01'
+    follow_redirect!
+    assert last_response.body.include? "Identité de l'élève"
+  end
+
 end

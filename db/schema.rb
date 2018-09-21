@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_27_080822) do
+ActiveRecord::Schema.define(version: 2018_09_21_125234) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -69,10 +69,11 @@ ActiveRecord::Schema.define(version: 2018_06_27_080822) do
     t.boolean "renseignements_medicaux", default: false
     t.boolean "autorise_photo_de_classe", default: true
     t.boolean "check_paiement_cantine", default: false
-    t.string "etape", default: "accueil"
+    t.string "etape_la_plus_avancee", default: "accueil"
     t.text "commentaire"
     t.boolean "signature", default: false
     t.datetime "date_signature"
+    t.string "derniere_etape"
     t.index ["eleve_id"], name: "index_dossier_eleves_on_eleve_id"
   end
 
