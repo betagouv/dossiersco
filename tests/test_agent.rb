@@ -12,7 +12,6 @@ require_relative '../dossiersco_agent'
 
 class EleveFormTest < Test::Unit::TestCase
   include Rack::Test::Methods
-  include MotDePasse
 
   def app
     Sinatra::Application
