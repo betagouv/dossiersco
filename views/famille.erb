@@ -85,14 +85,6 @@
     hauteur: '30'
   },
   {
-    name: "situation_emploi_rl1",
-    label: "Situation emploi",
-    type: "dropdown",
-    options: code_situation.map{ |k, v| v },
-    selected: resp_legal_1.situation_emploi,
-    required: 'required'
-  },
-  {
     name: "profession_rl1",
     label: "Profession",
     type: "dropdown",
@@ -103,16 +95,6 @@
   {
     type: 'espace',
     hauteur: '30'
-  },
-  {
-    name: "enfants_a_charge_secondaire_rl1",
-    label: "Nombre d'enfants à charge en collège ou lycée",
-    type: "text_custom",
-    value: resp_legal_1.enfants_a_charge_secondaire,
-    longueur_label: 7,
-    longueur_input: 2,
-    indication: '',
-    required: 'required'
   },
   {
     name: "enfants_a_charge_rl1",
@@ -225,14 +207,6 @@ fin_form_resp_legal_2 = [
   {
     type: 'espace',
     hauteur: '30'
-  },
-  {
-    name: "situation_emploi_rl2",
-    label: "Situation emploi",
-    type: "dropdown",
-    options: code_situation.map{ |k, v| v },
-    selected: resp_legal_2.situation_emploi,
-    required: 'required'
   },
   {
     name: "profession_rl2",
