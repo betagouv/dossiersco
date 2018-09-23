@@ -163,8 +163,8 @@ def cree_dossier_eleve eleve, etablissement, etat = 'en attente de validation'
     adresse: '42 rue du départ', code_postal: '75018', ville: 'Paris',
     adresse_ant: '42 rue du départ', code_postal_ant: '75018', ville_ant: 'Paris',
     tel_principal: '0123456789', tel_secondaire: '0602020202', email: 'test2@test.com',
-    situation_emploi: 'Employé', profession: 'artisan', enfants_a_charge: 2,
-    enfants_a_charge_secondaire: 2, communique_info_parents_eleves: false,
+    profession: 'artisan', enfants_a_charge: 2,
+    communique_info_parents_eleves: false,
     priorite: 2
   cree_resp_legal dossier_eleve
   cree_contact_urgence dossier_eleve
@@ -183,8 +183,8 @@ def cree_resp_legal dossier_eleve
     adresse: '42 rue victoire', code_postal: '75020', ville: 'Paris',
     adresse_ant: '42 rue victoire', code_postal_ant: '75020', ville_ant: 'Paris',
     tel_principal: '0123456789', tel_secondaire: '0987654321', email: 'test@test.com',
-    situation_emploi: 'Employé', profession: 'concierge', enfants_a_charge: nil,
-    enfants_a_charge_secondaire: 2, communique_info_parents_eleves: true,
+    profession: 'concierge', enfants_a_charge: nil,
+    communique_info_parents_eleves: true,
     priorite: 1
 end
 

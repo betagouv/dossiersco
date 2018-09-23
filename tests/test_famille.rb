@@ -131,9 +131,9 @@ class EleveFormTest < Test::Unit::TestCase
                             lien_de_parente_rl1: "TUTEUR", prenom_rl1: "Philippe", nom_rl1: "Blayo",
                             adresse_rl1: "20 bd Segur", code_postal_rl1: "75007", ville_rl1: "Paris",
                             tel_principal_rl1: "0612345678", tel_secondaire_rl1: "0112345678",
-                            email_rl1: "test@gmail.com", situation_emploi_rl1: "Pré retraité, retraité ou retiré",
+                            email_rl1: "test@gmail.com",
                             profession_rl1: "Retraité cadre, profession interm édiaire",
-                            enfants_a_charge_secondaire_rl1: 2, enfants_a_charge_rl1: 3,
+                            enfants_a_charge_rl1: 3,
                             communique_info_parents_eleves_rl1: 'true'
 
     assert_equal 'TUTEUR', doc.css('#lien_de_parente_rl1 option[@selected="selected"]').children.text
@@ -145,9 +145,7 @@ class EleveFormTest < Test::Unit::TestCase
     assert_attr '0612345678', '#tel_principal_rl1', doc
     assert_attr '0112345678', '#tel_secondaire_rl1', doc
     assert_attr 'test@gmail.com', '#email_rl1', doc
-    assert_equal 'Pré retraité, retraité ou retiré', doc.css('#situation_emploi_rl1 option[@selected="selected"]').children.text
     assert_equal 'Retraité cadre, profession interm édiaire', doc.css('#profession_rl1 option[@selected="selected"]').children.text
-    assert_attr '2', '#enfants_a_charge_secondaire_rl1', doc
     assert_attr '3', '#enfants_a_charge_rl1', doc
     assert_equal 'checked', doc.css('#communique_info_parents_eleves_rl1').attr('checked').text
   end
@@ -157,7 +155,7 @@ class EleveFormTest < Test::Unit::TestCase
                              lien_de_parente_rl2: "MERE", prenom_rl2: "Philippe" , nom_rl2: "Blayo",
                              adresse_rl2: "20 bd Segur",code_postal_rl2: "75007", ville_rl2: "Paris",
                              tel_principal_rl2: "0612345678", tel_secondaire_rl2: "0112345678",
-                             email_rl2: "test@gmail.com", situation_emploi_rl2: "Pré retraité, retraité ou retiré",
+                             email_rl2: "test@gmail.com",
                              profession_rl2: "Retraité cadre, profession interm édiaire",
                              communique_info_parents_eleves_rl2: 'true'
 
@@ -170,7 +168,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert_attr '0612345678', '#tel_principal_rl2', doc
     assert_attr '0112345678', '#tel_secondaire_rl2', doc
     assert_attr 'test@gmail.com', '#email_rl2', doc
-    assert_equal 'Pré retraité, retraité ou retiré', doc.css('#situation_emploi_rl2 option[@selected="selected"]').children.text
     assert_equal 'Retraité cadre, profession interm édiaire', doc.css('#profession_rl2 option[@selected="selected"]').children.text
     assert_equal 'checked', doc.css('#communique_info_parents_eleves_rl2').attr('checked').text
   end
