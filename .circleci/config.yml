@@ -23,4 +23,4 @@ jobs:
 
       - run:
           name: Run unit tests
-          command: rake db:migrate db:seed && ruby tests/test_famille.rb && ruby tests/test_agent.rb
+          command: rake db:migrate db:seed && ruby tests/test_export_xml.rb && ruby tests/test_export_robot.rb && ruby tests/test_famille.rb && ruby tests/test_agent.rb
