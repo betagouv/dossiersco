@@ -26,8 +26,8 @@ require_relative 'helpers/init'
 require_relative 'helpers/mot_de_passe'
 
 identite_resp_legal = ["lien_de_parente", "prenom", "nom", "adresse", "code_postal", "ville", "tel_principal",
-											 "tel_secondaire", "email", "situation_emploi", "profession", "enfants_a_charge",
-                       "enfants_a_charge_secondaire", "communique_info_parents_eleves", "lien_avec_eleve"]
+											 "tel_secondaire", "email", "profession", "enfants_a_charge",
+                       "communique_info_parents_eleves", "lien_avec_eleve"]
 
 code_situation = {'0': '', '1': 'occupe un emploi', '2': 'Au chômage', '3': 'Pré retraité, retraité ou retiré',
   '4': 'Personne sans activité professionnelle'}
@@ -83,7 +83,14 @@ post '/identification' do
       dossier_eleve.update(etat: 'connecté')
     end
 		session[:identifiant] = identifiant
-		redirect "/#{dossier_eleve.derniere_etape}"
+    if dossier_eleve.derniere_etape.present?
+      redirect "/#{dossier_eleve.derniere_etape}"
+    elsif dossier_eleve.etape_la_plus_avancee.present?
+      redirect "/#{dossier_eleve.etape_la_plus_avancee}"
+    else
+      redirect "accueil"
+    end
+
 	else
     # Emettre un message générique quelle que soit l'erreur pour éviter
     # de "fuiter" de l'information sur l'existence ou non des identifiants
