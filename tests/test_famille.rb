@@ -42,11 +42,20 @@ class EleveFormTest < Test::Unit::TestCase
     assert last_response.body.include? 'Inscription'
   end
 
-  def test_entree_succes_eleve_1
-    post '/identification', identifiant: '1 ', annee: '1995', mois: '11', jour: '19'
-    get '/accueil'
+  def test_entree_succes_eleve_vierge
+    e = Eleve.create! identifiant: 'XXX', date_naiss: '1915-12-19', nom: 'Piaf', prenom: 'Edit'
+    DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first.id
+    post '/identification', identifiant: 'XXX ', annee: '1915', mois: '12', jour: '19'
+    follow_redirect!
     assert last_response.body.include? 'Pour réinscrire votre enfant'
   end
+
+  def test_entree_succes_eleve_1
+    post '/identification', identifiant: '1 ', annee: '1995', mois: '11', jour: '19'
+    follow_redirect!
+    assert last_response.body.include? 'Pour réinscrire votre enfant'
+  end
+
 
   def test_entree_mauvaise_date
     post '/identification', identifiant: '3', annee: '1995', mois: '11', jour: '19'
@@ -62,7 +71,7 @@ class EleveFormTest < Test::Unit::TestCase
 
   def test_nom_college_accueil
     post '/identification', identifiant: '1', annee: '1995', mois: '11', jour: '19'
-    get '/accueil'
+    follow_redirect!
     doc = Nokogiri::HTML(last_response.body)
     assert_equal 'College Jean-Francois Oeben', doc.xpath("//div//h1/text()").to_s
     assert_equal 'College Jean-Francois Oeben.', doc.xpath("//strong[@id='etablissement']/text()").to_s.strip
