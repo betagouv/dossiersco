@@ -83,7 +83,14 @@ post '/identification' do
       dossier_eleve.update(etat: 'connecté')
     end
 		session[:identifiant] = identifiant
-		redirect "/#{dossier_eleve.derniere_etape}"
+    if dossier_eleve.derniere_etape.present?
+      redirect "/#{dossier_eleve.derniere_etape}"
+    elsif dossier_eleve.etape_la_plus_avancee.present?
+      redirect "/#{dossier_eleve.etape_la_plus_avancee}"
+    else
+      redirect "accueil"
+    end
+
 	else
     # Emettre un message générique quelle que soit l'erreur pour éviter
     # de "fuiter" de l'information sur l'existence ou non des identifiants
