@@ -141,7 +141,7 @@ h2, h4 {
  * Navbar
  */
 
-.navbar-light .navbar-nav .active>.nav-link {
+.navbar-light > a {
     color: #003189;
 }
 
