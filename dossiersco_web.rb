@@ -300,7 +300,6 @@ end
 
 post '/satisfaction' do
   dossier_eleve = eleve.dossier_eleve
-  dossier_eleve.update derniere_etape: 'satisfaction'
   dossier_eleve.satisfaction = params[:note]
   dossier_eleve.save!
 end
