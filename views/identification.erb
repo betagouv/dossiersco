@@ -43,8 +43,9 @@
 	container.onkeyup = function(e) {
 			var target = e.srcElement;
 			var maxLength = parseInt(target.attributes["maxlength"].value, 10);
-			var myLength = target.value.length;
-      if (myLength >= maxLength && index_avancement[target.name] == avancement_saisie) {
+			var longueurDejaTapee = target.value.length;
+      if (longueurDejaTapee >= maxLength
+          && index_avancement[target.name] == avancement_saisie) { // Retour en arrière
           avancement_saisie++;
 					var next = target;
 					while (next = next.nextElementSibling) {
