@@ -345,6 +345,31 @@ get '/agent/convocations' do
   erb :'agent/convocations', locals: {agent: agent,etablissement: etablissement, eleves: eleves}, layout: :layout_agent
 end
 
+get '/agent/creer_etablissement' do
+  redirect '/agent' unless agent.admin
+
+  erb :'agent/creer_etablissement'
+end
+
+post '/agent/creer_etablissement' do
+  Etablissement.create!(params)
+
+  redirect "/agent/creer_agent"
+end
+
+get '/agent/creer_agent' do
+  redirect '/agent' unless agent.admin
+
+  erb :'agent/creer_agent'
+end
+
+post '/agent/creer_agent' do
+  a = Agent.create!(params)
+  a.password = BCrypt::Password.create(params[:password])
+  a.save!
+  redirect "/agent/liste_des_eleves"
+end
+
 # Route de test uniquement
 get '/agent/testmail/:nom' do
   class TestMailer < ActionMailer::Base
