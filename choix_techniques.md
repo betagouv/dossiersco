@@ -17,22 +17,25 @@ davantage de code dépendant de Redis ne soit écrit.
 ## Les temps de réponse sont dégradés par le passage à PostgreSQL
 
 Une augmentation des temps de réponse de près de 50 % est constatée :
-- redis : accueil servi en ~ 770 ms
-- postgres : accueil servi en ~ 1100 ms
+
+* redis : accueil servi en ~ 770 ms
+* postgres : accueil servi en ~ 1100 ms
 
 Ces temps de réponse sont dus à l'emploi du server shotgun pour relancer
 à chaque requête le serveur.
 
 En passant au serveur builtin de sinatra (rackup) on descent vers 30 ms.
 Changements à faire :
-- "bundle exec rackup -p9393 --host 0.0.0.0" dans docker-compose.yml
-- require 'rack' dans dossiersco_web.rb
+
+* "bundle exec rackup -p9393 --host 0.0.0.0" dans docker-compose.yml
+* require 'rack' dans dossiersco_web.rb
 
 ## Postgres préféré à mysql
 
 La configuration de postgres dans docker-compose.yml est plus légère que
 celle de mysql. Les plans financiers sur les services d'hébergement en
 europe sont raisonnables pour postgres :
-- scalingo : gratuit jusqu'à 500 Go, 14 Euros pour 1 Go / 60 connexions simultanées
-- heroku : gratuit jusqu'à 10000 lignes, 9$ pour 10 Millions de lignes /
+
+* scalingo : gratuit jusqu'à 500 Go, 14 Euros pour 1 Go / 60 connexions simultanées
+* heroku : gratuit jusqu'à 10000 lignes, 9$ pour 10 Millions de lignes /
  20 connexions simultanées, 50$ pour 64 Go / 120 connexions
