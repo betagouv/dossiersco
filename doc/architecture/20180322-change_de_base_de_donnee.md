@@ -1,6 +1,11 @@
-# Passage de Redis à une base SQL
+# Changer de base de donnée
 
-## Le problème de la dualité chaines/symboles
+Status: acceptée
+
+## Contexte
+
+_
+### Le problème de la dualité chaines/symboles
 
 Jeudi 15 Mars un problème de duplication de champs des objets stockés
 (deux "lv2" avec des valeurs différentes "Allemand" et "Espagnol")
@@ -14,7 +19,7 @@ fenêtre un jour ou l'autre.
 Après un carrottage, le choix est fait de passer à une base SQL avant que
 davantage de code dépendant de Redis ne soit écrit.
 
-## Les temps de réponse sont dégradés par le passage à PostgreSQL
+### Les temps de réponse sont dégradés par le passage à PostgreSQL
 
 Une augmentation des temps de réponse de près de 50 % est constatée :
 
@@ -30,7 +35,8 @@ Changements à faire :
 * "bundle exec rackup -p9393 --host 0.0.0.0" dans docker-compose.yml
 * require 'rack' dans dossiersco_web.rb
 
-## Postgres préféré à mysql
+
+## Decision
 
 La configuration de postgres dans docker-compose.yml est plus légère que
 celle de mysql. Les plans financiers sur les services d'hébergement en
@@ -39,3 +45,5 @@ europe sont raisonnables pour postgres :
 * scalingo : gratuit jusqu'à 500 Go, 14 Euros pour 1 Go / 60 connexions simultanées
 * heroku : gratuit jusqu'à 10000 lignes, 9$ pour 10 Millions de lignes /
  20 connexions simultanées, 50$ pour 64 Go / 120 connexions
+
+
