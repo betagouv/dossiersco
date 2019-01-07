@@ -1,0 +1,61 @@
+<div class="site-wrapper">
+  <div class="site-wrapper-inner">
+    <div class="padding">
+      <h1 class="text-center">Inscription au collège</h1>
+      <p class="lead text-center">Quelques clics pour inscrire votre enfant.</p>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <form class="form-signin col-md-4 mx-auto" action="/identification" method="post">
+
+          <% if session[:message_erreur] %>
+            <p class="erreur"><%= session[:message_erreur] %></p>
+          <% end %>
+
+          <label class="col-form-label" for="identifiant" id="label_identifiant">Identifiant (Exemple : 2206004705B)</label>
+          <input name="identifiant" type="text" class="form-control" id="identifiant" placeholder="Exemple : 2206004705B" autofocus>
+
+          <label class="col-form-label" for="jour" id="label_date">Date de naissance de l'élève</label>
+          <div class='date_form'>
+            <input name="jour" type="number" class="form-control form-date" id="date_jour" maxlength="2" placeholder="JJ" style="width:24%;" max="31" required>
+            <input name="mois" type="number" class="form-control form-date" id="date_mois" maxlength="2" placeholder="MM" style="width:24%;" max="12" required>
+            <input name="annee" type="number" class="form-control form-date" id="date_annee" maxlength="4" placeholder="AAAA" style="width: 46%;" min="1970" max='2018' required>
+          </div>
+          <button class="btn btn-lg btn-primary btn-block mt-4">Connexion</button>
+
+        </form>
+      </div>
+    </div>
+
+    <footer class="mastfoot">
+      <div class="inner">
+        <p class="text-center"><a href="/agent">Vous êtes agent en EPLE ?</a></p>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<script>
+  var container = document.getElementsByClassName("date_form")[0];
+  var index_avancement = {'jour': 0, 'mois': 1, 'annee': 2};
+  var avancement_saisie = 0;
+  container.onkeyup = function(e) {
+    var target = e.srcElement;
+    var maxLength = parseInt(target.attributes["maxlength"].value, 10);
+    var longueurDejaTapee = target.value.length;
+    if (longueurDejaTapee >= maxLength
+      && index_avancement[target.name] == avancement_saisie) { // Retour en arrière
+      avancement_saisie++;
+      var next = target;
+      while (next = next.nextElementSibling) {
+        if (next == null)
+          break;
+        if (next.tagName.toLowerCase() == "input") {
+          next.focus();
+          break;
+        }
+      }
+    }
+  }
+</script>

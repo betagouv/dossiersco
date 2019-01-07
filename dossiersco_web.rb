@@ -61,10 +61,6 @@ before '/*' do
   redirect '/'
 end
 
-get '/' do
-	erb :'identification'
-end
-
 post '/identification' do
 	if params[:identifiant].empty? || params[:annee].empty? || params[:mois].empty? || params[:jour].empty?
 		session[:message_erreur] = "Veuillez renseigner l'identifiant et la date de naissance de l'élève."
