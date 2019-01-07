@@ -1,8 +1,5 @@
 module MotDePasse
 
-  def normalise_alphanum chaine
-    chaine.gsub(/[^[:alnum:]]/, '').upcase
-  end
 
   def message_erreur_identification identifiant, date_naissance
     mois_de_l_année = {

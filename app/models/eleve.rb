@@ -3,7 +3,7 @@ class Eleve < ActiveRecord::Base
   has_and_belongs_to_many :option
   has_many :demande
   has_many :abandon
-  belongs_to :montee
+  belongs_to :montee, required: false
 
   def genere_demandes_possibles
     return unless self.montee.present?

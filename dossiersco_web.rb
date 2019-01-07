@@ -61,49 +61,12 @@ before '/*' do
   redirect '/'
 end
 
-post '/identification' do
-	if params[:identifiant].empty? || params[:annee].empty? || params[:mois].empty? || params[:jour].empty?
-		session[:message_erreur] = "Veuillez renseigner l'identifiant et la date de naissance de l'élève."
-		redirect '/'
-	end
-  Trace.create(identifiant: params[:identifiant],
-    categorie: 'famille',
-    page_demandee: request.path_info,
-    adresse_ip: request.ip)
-	identifiant = normalise_alphanum params[:identifiant]
-	dossier_eleve = get_dossier_eleve identifiant
-
-  date_saisie = "#{params[:annee]}-#{params[:mois]}-#{params[:jour]}"
-	if dossier_eleve.present? && (dossier_eleve.eleve.date_naiss == date_saisie)
-    if dossier_eleve.etat == 'pas connecté'
-      dossier_eleve.update(etat: 'connecté')
-    end
-		session[:identifiant] = identifiant
-    if dossier_eleve.derniere_etape.present?
-      redirect "/#{dossier_eleve.derniere_etape}"
-    elsif dossier_eleve.etape_la_plus_avancee.present?
-      redirect "/#{dossier_eleve.etape_la_plus_avancee}"
-    else
-      redirect "accueil"
-    end
-
-	else
-    # Emettre un message générique quelle que soit l'erreur pour éviter
-    # de "fuiter" de l'information sur l'existence ou non des identifiants
-    session[:message_erreur] = "Nous n'avons pas reconnu ces identifiants, merci de les vérifier."
-		redirect '/'
-	end
-end
 
 get '/deconnexion' do
   session.clear
   redirect '/'
 end
 
-get '/accueil' do
-  eleve.dossier_eleve.update derniere_etape: 'accueil'
-	erb :'accueil', locals: { dossier_eleve: eleve.dossier_eleve }
-end
 
 get '/eleve' do
   eleve.dossier_eleve.update derniere_etape: 'eleve'
