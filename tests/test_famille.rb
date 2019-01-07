@@ -37,14 +37,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'Veuillez fournir identifiant et date de naissance', message_erreur_identification('XXX', '')
   end
 
-  def test_entree_succes_eleve_vierge
-    e = Eleve.create! identifiant: 'XXX', date_naiss: '1915-12-19', nom: 'Piaf', prenom: 'Edit'
-    DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first.id
-    post '/identification', identifiant: 'XXX ', annee: '1915', mois: '12', jour: '19'
-    follow_redirect!
-    assert last_response.body.include? 'Pour réinscrire votre enfant'
-  end
-
   def test_entree_succes_eleve_1
     post '/identification', identifiant: '1 ', annee: '1995', mois: '11', jour: '19'
     follow_redirect!
