@@ -29,8 +29,6 @@ identite_resp_legal = ["lien_de_parente", "prenom", "nom", "adresse", "code_post
 											 "tel_secondaire", "email", "profession", "enfants_a_charge",
                        "communique_info_parents_eleves", "lien_avec_eleve"]
 
-code_situation = {'0': '', '1': 'occupe un emploi', '2': 'Au chômage', '3': 'Pré retraité, retraité ou retiré',
-  '4': 'Personne sans activité professionnelle'}
 
 configure :test, :development, :staging do
   get '/init' do
@@ -67,12 +65,6 @@ get '/deconnexion' do
   redirect '/'
 end
 
-
-get '/eleve' do
-  eleve.dossier_eleve.update derniere_etape: 'eleve'
-  options_du_niveau = eleve.montee.present? ? eleve.montee.demandabilite.collect(&:option) : []
-  erb :'eleve', locals: { eleve: eleve, options_du_niveau: options_du_niveau }
-end
 
 post '/eleve' do
   eleve_a_modifier = eleve
@@ -118,23 +110,6 @@ post '/eleve' do
   eleve_a_modifier.save!
 
   sauve_et_redirect eleve.dossier_eleve, 'famille'
-end
-
-get '/famille' do
-	dossier_eleve = eleve.dossier_eleve
-  dossier_eleve.update derniere_etape: 'famille'
-	resp_legal1 = dossier_eleve.resp_legal_1
-	resp_legal2 = dossier_eleve.resp_legal_2
-	contact_urgence = dossier_eleve.contact_urgence
-	contact_urgence = nil if contact_urgence.present? && ! dossier_eleve.contact_urgence.nom.present?
-  lien_de_parentes = ['MERE', 'PERE', 'AUTRE FAM.', 'AUTRE LIEN', 'TUTEUR', 'ASE']
-
-  erb :'famille', locals: {resp_legal_1: resp_legal1, resp_legal_2: resp_legal2,
-    contact_urgence: contact_urgence,
-    code_profession: RespLegal.codes_profession,
-    code_situation: code_situation,
-    lien_de_parentes: lien_de_parentes,
-    dossier_eleve: dossier_eleve}
 end
 
 post '/famille' do
