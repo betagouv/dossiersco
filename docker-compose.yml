@@ -20,7 +20,7 @@ services:
       SESSION_SECRET: notreallysecret
   test:
     build: .
-    command: /bin/bash -lc "rm -rf public/uploads/ ; rake db:migrate db:seed && ruby tests/test_famille.rb; ruby tests/test_agent.rb ; ruby tests/test_export_xml.rb ; ruby tests/test_export_robot.rb "
+    command: /bin/bash -lc "bundle exec rails test"
     volumes:
       - ./:/app
     working_dir: /app
