@@ -2,7 +2,7 @@ FROM ruby AS base
 WORKDIR /app
 COPY Gemfile .
 COPY Gemfile.lock .
-RUN apt-get install libsqlite3-dev && bundle install
+RUN bundle install --binstubs
 
 FROM base AS service
 WORKDIR /app

@@ -1,17 +1,7 @@
-require 'sinatra'
-require 'sinatra/activerecord/rake'
-require 'sinatra/activerecord'
+require_relative 'config/application'
 
-require_relative 'helpers/models'
-require_relative 'helpers/agent'
-include AgentHelpers
-
-set :database_file, "config/database.yml"
+Rails.application.load_tasks
 
 task :traiter_imports do
-    traiter_imports
+  traiter_imports
 end
-
-# task :traiter_messages do
-#     traiter_messages
-# end
