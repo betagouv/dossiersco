@@ -13,3 +13,417 @@
  *= require_tree .
  *= require_self
  */
+
+
+
+html,
+body {
+    overflow-x: hidden;
+    background-color: #f8f8fa;
+    color: #383f45;
+    padding-bottom: 30px;
+}
+
+footer {
+    padding: 30px 0;
+}
+
+img {
+    margin: 0rem .1rem .2rem .2rem;
+}
+
+h2, h4 {
+    color: #606468;
+}
+
+.col-12 a {
+    text-decoration: none;
+}
+
+.upload {
+    margin-bottom: 0;
+}
+
+/*
+ * Progress bars
+ */
+
+.progress-bar {
+    height: 1.9rem;
+}
+
+.progress {
+    height: 1.9rem !important;
+}
+
+.clearfix:after {
+    clear: both;
+    content: "";
+    display: block;
+
+    height: 0;
+}
+.arrow-steps .step {
+    font-size: 14px;
+    text-align: center;
+    color: #666;
+    margin: 3px;
+    padding: 10px 10px 10px 30px;
+    min-width: 18%;
+    float: left;
+    position: relative;
+    background-color: #d9e3f7;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    transition: background-color 0.2s ease;
+}
+
+.arrow-steps .step:after,
+.arrow-steps .step:before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    right: -17px;
+    width: 0;
+    height: 0;
+    border-top: 19px solid transparent;
+    border-bottom: 17px solid transparent;
+    border-left: 17px solid #d9e3f7;
+    z-index: 2;
+    transition: border-color 0.2s ease;
+}
+
+.arrow-steps .step:before {
+    right: auto;
+    left: 0;
+    border-left: 17px solid #f8f8fa;
+    z-index: 0;
+}
+
+.arrow-steps .step:first-child:before {
+    border: none;
+}
+
+.arrow-steps .step:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.arrow-steps .step span {
+    position: relative;
+    color: #383f45;
+}
+
+.arrow-steps .step span:before {
+    opacity: 0;
+    content: "✔";
+    position: absolute;
+    top: -2px;
+    left: -20px;
+}
+
+.arrow-steps .step.done span:before {
+    opacity: 1;
+    -webkit-transition: opacity 0.3s ease 0.5s;
+    -moz-transition: opacity 0.3s ease 0.5s;
+    -ms-transition: opacity 0.3s ease 0.5s;
+    transition: opacity 0.3s ease 0.5s;
+}
+
+.arrow-steps .step.current{
+    background-color: #003189;
+}
+.current span {
+    color: #fff !important;
+}
+
+.arrow-steps .step.current:after {
+    border-left: 17px solid #003189;
+}
+
+.step:hover {
+    text-decoration: none
+}
+
+.step-enabled {
+    cursor: pointer;
+}
+
+.step-disabled {
+    cursor: default;
+}
+
+/*
+ * Navbar
+ */
+
+.navbar-light > a {
+    color: #003189;
+}
+
+.navbar {
+    height: 50px;
+}
+
+/*
+ * Buttons
+ */
+.btn {
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #003189;
+    border-color: #003189;
+}
+
+.btn-outline-primary,
+.btn-outline-primary:focus {
+    box-shadow: none;
+    color: #003189;
+    border-color: #003189;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #003089d5;
+    border-color: #003089d5;
+}
+
+.btn-outline-primary:hover {
+    color: white;
+    background-color: #003089d5;
+    border-color: #003089d5;
+}
+
+.disabled, .disabled:hover {
+    background-color: #a5a5a5 !important;
+    border-color: #a5a5a5 !important;
+}
+
+.card {
+    margin-bottom: 20px;
+    padding-bottom: 0;
+}
+
+.card-body {
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.card-relat {
+    top: 5.3em;
+    bottom: 1em;
+}
+
+.document img {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.mastfoot {
+    padding-bottom: 0;
+}
+
+/*Badges*/
+
+.badge {
+    font-weight: normal;
+}
+
+.badge-section {
+    font-size : 1em;
+    padding: .4rem .5rem .3rem .6rem;
+}
+
+.badge-section.badge-sans-icone {
+    padding-bottom: .4rem;
+}
+
+.badge-section.badge-secondary {
+    padding-bottom: .4rem;
+}
+
+.badge-sous-section {
+    font-size: .85em;
+    padding: .25rem .4rem .15rem .4rem;
+}
+
+.badge-sous-section.badge-secondary {
+    padding-bottom: .4rem;
+}
+
+.badge-success {
+    background-color: #60d156;
+}
+
+.badge-primary {
+    background-color: #003189;
+}
+
+.badge-secondary {
+    background-color: #979b9f;
+}
+
+.badge-success:hover {
+    background-color: #55bf4c;
+}
+
+.badge-secondary:hover {
+    background-color: grey;
+}
+
+.form-control.scol {
+    margin: .4rem 0rem .4rem;
+}
+
+.form-control[readonly] {
+    padding-left: .5rem;
+}
+
+.form-check-label {
+    margin: .5rem 0rem 0rem;
+}
+
+.form-date {
+    display: inline;
+}
+
+.form-signin {
+    text-align: center;
+}
+
+.message_de_succes {
+    width: 100%;
+    background-color: lightgreen;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.message_echec {
+    width: 100%;
+    background-color: #BB0000;
+    color: #FFFFFF;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.separation {
+    border-bottom: 1px solid #b3b5b7;
+    padding: 0 0 10px 0;
+    margin-bottom: 20px;
+}
+
+.smiley-satisfaction {
+    cursor: pointer;
+}
+
+.image-piece-a-joindre {
+    margin-top: 15px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.valide {
+    border: 2px solid #00bf00;
+}
+.invalide {
+    border: 2px solid #BB0000;
+}
+.soumis {
+    border: 2px dashed #00bf00;
+}
+
+/*modal*/
+.modal-dialog {
+    height: 90vh;
+    width: 90vw;
+    max-width: none;
+}
+.modal-content {
+    height: 100%;
+    margin: auto;
+}
+.modal-body {
+    height: 80%;
+}
+.modal-body iframe {
+    height: 100%;
+    width: 100%;
+}
+iframe {
+    border: none;
+}
+
+.lead {
+    padding: 20px 0;
+}
+
+.logo {
+    max-width: 10%;
+    height: 100%;
+    margin-right: 20px;
+}
+
+.erreur {
+    color: #BB0000;
+}
+
+.col-niveau-eleve {
+    max-width: 100px;
+}
+
+@media screen and (max-width: 767px) {
+    .row-offcanvas {
+        position: relative;
+        transition: all .25s ease-out;
+    }
+
+    .row-offcanvas-right {
+        right: 0;
+    }
+
+    .row-offcanvas-left {
+        left: 0;
+    }
+
+    .row-offcanvas-right .sidebar-offcanvas {
+        right: -100%; /* 12 columns */
+    }
+
+    .row-offcanvas-right.active .sidebar-offcanvas {
+        right: -50%; /* 6 columns */
+    }
+
+    .row-offcanvas-left .sidebar-offcanvas {
+        left: -100%; /* 12 columns */
+    }
+
+    .row-offcanvas-left.active .sidebar-offcanvas {
+        left: -50%; /* 6 columns */
+    }
+
+    .row-offcanvas-right.active {
+        right: 50%; /* 6 columns */
+    }
+
+    .row-offcanvas-left.active {
+        left: 50%; /* 6 columns */
+    }
+
+    .sidebar-offcanvas {
+        position: absolute;
+        top: 0;
+        width: 50%; /* 6 columns */
+    }
+
+    .logo {
+        max-width: 25%;
+        height: 100%;
+    }
+}
