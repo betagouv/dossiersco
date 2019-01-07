@@ -42,9 +42,40 @@ class AccueilController < ApplicationController
     @dossier_eleve = eleve.dossier_eleve
   end
 
-  private
   def normalise_alphanum chaine
     chaine.gsub(/[^[:alnum:]]/, '').upcase
+  end
+
+  def get_eleve
+    eleve.dossier_eleve.update derniere_etape: 'eleve'
+    @options_du_niveau = eleve.montee.present? ? eleve.montee.demandabilite.collect(&:option) : []
+    @eleve = eleve
+    render 'accueil/eleve'
+  end
+
+  def post_eleve
+  end
+
+  def get_famille
+    dossier_eleve = eleve.dossier_eleve
+    dossier_eleve.update derniere_etape: 'famille'
+    resp_legal1 = dossier_eleve.resp_legal_1
+    resp_legal2 = dossier_eleve.resp_legal_2
+    contact_urgence = dossier_eleve.contact_urgence
+    contact_urgence = nil if contact_urgence.present? && ! dossier_eleve.contact_urgence.nom.present?
+    lien_de_parentes = ['MERE', 'PERE', 'AUTRE FAM.', 'AUTRE LIEN', 'TUTEUR', 'ASE']
+
+    @resp_legal_1 = resp_legal1
+    @resp_legal_2 = resp_legal2
+    @contact_urgence = contact_urgence
+    @code_profession = RespLegal.codes_profession
+    @code_situation = code_situation
+    @lien_de_parentes = lien_de_parentes
+    @dossier_eleve = eleve.dossier_eleve
+    render 'accueil/famille'
+  end
+
+  def post_famille
   end
 
   def get_dossier_eleve identifiant
@@ -53,6 +84,10 @@ class AccueilController < ApplicationController
 
   def eleve
     Eleve.find_by(identifiant: session[:identifiant])
+  end
+
+  def code_situation
+    {'0': '', '1': 'occupe un emploi', '2': 'Au chômage', '3': 'Pré retraité, retraité ou retiré', '4': 'Personne sans activité professionnelle'}
   end
 
 end

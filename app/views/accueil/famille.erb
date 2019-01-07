@@ -3,16 +3,16 @@
     name: "lien_de_parente_rl1",
     label: "Lien de parenté",
     type: "dropdown",
-    selected: resp_legal_1.lien_de_parente,
+    selected: @resp_legal_1.lien_de_parente,
     disabledw: false,
-    options: lien_de_parentes,
+    options: @lien_de_parentes,
     required: 'required'
   },
   {
     name: "prenom_rl1",
     label: "Prénom",
     type: "text",
-    value: resp_legal_1.prenom,
+    value: @resp_legal_1.prenom,
     indication: "Prénom",
     disabled: false,
     required: 'required'
@@ -21,7 +21,7 @@
     name: "nom_rl1",
     label: "Nom",
     type: "text",
-    value: resp_legal_1.nom,
+    value: @resp_legal_1.nom,
     indication: "Nom",
     disabled: false,
     required: 'required'
@@ -30,7 +30,7 @@
     name: "adresse_rl1",
     label: "Adresse",
     type: "libre",
-    value: resp_legal_1.adresse,
+    value: @resp_legal_1.adresse,
     indication: "Numéro et nom de voie",
     disabled: false,
     required: 'required',
@@ -40,7 +40,7 @@
     name: "code_postal_rl1",
     label: "Code postal",
     type: "text",
-    value: resp_legal_1.code_postal,
+    value: @resp_legal_1.code_postal,
     indication: "Code postal",
     disabled: false,
     required: 'required'
@@ -49,7 +49,7 @@
     name: "ville_rl1",
     label: "Ville",
     type: "text",
-    value: resp_legal_1.ville,
+    value: @resp_legal_1.ville,
     indication: "Ville",
     disabled: false,
     required: 'required'
@@ -62,7 +62,7 @@
     name: "tel_principal_rl1",
     label: "Téléphone principal",
     type: "tel",
-    value: resp_legal_1.tel_principal,
+    value: @resp_legal_1.tel_principal,
     indication: "Numéro de téléphone",
     required: 'required'
   },
@@ -70,14 +70,14 @@
     name: "tel_secondaire_rl1",
     label: "Téléphone secondaire",
     type: "tel",
-    value: resp_legal_1.tel_secondaire,
+    value: @resp_legal_1.tel_secondaire,
     indication: "Numéro de téléphone",
   },
   {
     name: "email_rl1",
     label: "Email principal",
     type: "tel",
-    value: resp_legal_1.email,
+    value: @resp_legal_1.email,
     indication: "Adresse email",
   },
   {
@@ -88,8 +88,8 @@
     name: "profession_rl1",
     label: "Profession",
     type: "dropdown",
-    options: code_profession.map{ |k, v| v },
-    selected: resp_legal_1.profession,
+    options: @code_profession.map{ |k, v| v },
+    selected: @resp_legal_1.profession,
     required: 'required'
   },
   {
@@ -100,7 +100,7 @@
     name: "enfants_a_charge_rl1",
     label: "Nombre total d'enfants à charge",
     type: "text_custom",
-    value: resp_legal_1.enfants_a_charge,
+    value: @resp_legal_1.enfants_a_charge,
     longueur_label: 7,
     longueur_input: 2,
     indication: '',
@@ -115,25 +115,25 @@
     name: 'communique_info_parents_eleves_rl1',
     type: 'radio_inverse',
     options: {"J'accepte": true, "Je n'accepte pas": false},
-    checked: resp_legal_1.communique_info_parents_eleves || false
+    checked: @resp_legal_1.communique_info_parents_eleves || false
   }]
 
-if resp_legal_2
+if @resp_legal_2
 form_resp_legal_2 = [
   {
     name: "lien_de_parente_rl2",
     label: "Lien de parenté",
     type: "dropdown",
-    selected: resp_legal_2.lien_de_parente,
+    selected: @resp_legal_2.lien_de_parente,
     disabled: false,
-    options: lien_de_parentes,
+    options: @lien_de_parentes,
     required: 'required'
   },
   {
     name: "prenom_rl2",
     label: "Prénom",
     type: "text",
-    value: resp_legal_2.prenom,
+    value: @resp_legal_2.prenom,
     indication: "Prénom",
     disabled: false,
     required: 'required'
@@ -142,7 +142,7 @@ form_resp_legal_2 = [
     name: "nom_rl2",
     label: "Nom",
     type: "text",
-    value: resp_legal_2.nom,
+    value: @resp_legal_2.nom,
     indication: "Nom",
     disabled: false,
     required: 'required'
@@ -154,7 +154,7 @@ fin_form_resp_legal_2 = [
     name: "adresse_rl2",
     label: "Adresse",
     type: "libre",
-    value: resp_legal_2.adresse,
+    value: @resp_legal_2.adresse,
     indication: "Numéro et nom de voie",
     disabled: false,
     required: 'required',
@@ -164,7 +164,7 @@ fin_form_resp_legal_2 = [
     name: "code_postal_rl2",
     label: "Code postal",
     type: "text",
-    value: resp_legal_2.code_postal,
+    value: @resp_legal_2.code_postal,
     indication: "Code postal",
     disabled: false,
     required: 'required'
@@ -173,7 +173,7 @@ fin_form_resp_legal_2 = [
     name: "ville_rl2",
     label: "Ville",
     type: "text",
-    value: resp_legal_2.ville,
+    value: @resp_legal_2.ville,
     indication: "Ville",
     disabled: false,
     required: 'required'
@@ -186,7 +186,7 @@ fin_form_resp_legal_2 = [
     name: "tel_principal_rl2",
     label: "Téléphone principal",
     type: "tel",
-    value: resp_legal_2.tel_principal,
+    value: @resp_legal_2.tel_principal,
     indication: "Numéro de téléphone",
     required: 'required'
   },
@@ -194,14 +194,14 @@ fin_form_resp_legal_2 = [
     name: "tel_secondaire_rl2",
     label: "Téléphone secondaire",
     type: "tel",
-    value: resp_legal_2.tel_secondaire,
+    value: @resp_legal_2.tel_secondaire,
     indication: "Numéro de téléphone",
   },
   {
     name: "email_rl2",
     label: "Email principal",
     type: "tel",
-    value: resp_legal_2.email,
+    value: @resp_legal_2.email,
     indication: "Adresse email",
   },
   {
@@ -212,8 +212,8 @@ fin_form_resp_legal_2 = [
     name: "profession_rl2",
     label: "Profession",
     type: "dropdown",
-    options: code_profession.map{ |k, v| v },
-    selected: resp_legal_2.profession,
+    options: @code_profession.map{ |k, v| v },
+    selected: @resp_legal_2.profession,
     required: 'required'
   },
   {
@@ -229,7 +229,7 @@ fin_form_resp_legal_2 = [
     name: 'communique_info_parents_eleves_rl2',
     type: 'radio_inverse',
     options: {"J'accepte": true, "Je n'accepte pas": false},
-    checked: resp_legal_2.communique_info_parents_eleves || false
+    checked: @resp_legal_2.communique_info_parents_eleves || false
   }]
 end
 
@@ -238,7 +238,7 @@ form_contact_urgence = [
     name: "lien_avec_eleve_urg",
     label: "Lien avec l'élève",
     type: "text",
-    value: contact_urgence.present? ? contact_urgence.lien_avec_eleve : nil,
+    value: @contact_urgence.present? ? @contact_urgence.lien_avec_eleve : nil,
     indication: "Lien avec l'élève",
     disabled: false
   },
@@ -246,7 +246,7 @@ form_contact_urgence = [
     name: "prenom_urg",
     label: "Prénom",
     type: "text",
-    value: contact_urgence.present? ? contact_urgence.prenom : nil,
+    value: @contact_urgence.present? ? @contact_urgence.prenom : nil,
     indication: "Prénom",
     disabled: false
   },
@@ -254,7 +254,7 @@ form_contact_urgence = [
     name: "nom_urg",
     label: "Nom",
     type: "text",
-    value: contact_urgence.present? ? contact_urgence.nom : nil,
+    value: @contact_urgence.present? ? @contact_urgence.nom : nil,
     indication: "Nom",
     disabled: false
   },
@@ -266,32 +266,32 @@ form_contact_urgence = [
     name: "tel_principal_urg",
     label: "Téléphone principal",
     type: "tel",
-    value: contact_urgence.present? ? contact_urgence.tel_principal : nil,
+    value: @contact_urgence.present? ? @contact_urgence.tel_principal : nil,
     indication: "Numéro de téléphone",
   },
   {
     name: "tel_secondaire_urg",
     label: "Téléphone secondaire",
     type: "tel",
-    value: contact_urgence.present? ? contact_urgence.tel_secondaire : nil,
+    value: @contact_urgence.present? ? @contact_urgence.tel_secondaire : nil,
     indication: "Numéro de téléphone",
   },
 ]
 %>
 
 <% @section = 2 %>
-<%= erb :'partials/navigation', locals: { dossier_eleve: dossier_eleve } %>
+<%= render partial: 'partials/navigation', locals: { dossier_eleve: @dossier_eleve } %>
 
 <div class="col-12">
 
-  <h2 class="separation">Famille : Responsable légal<%= " 1" if resp_legal_2.present?%></h2>
+  <h2 class="separation">Famille : Responsable légal<%= " 1" if @resp_legal_2.present?%></h2>
 
   <form action="/famille" method="POST">
 
     <%= construire form_resp_legal_1 %>
 
-<% if resp_legal_2 %>
-<div id='resp_legal_2' class='<%= "d-none" unless resp_legal_2.present? %>' >
+<% if @resp_legal_2 %>
+<div id='resp_legal_2' class='<%= "d-none" unless @resp_legal_2.present? %>' >
   <h2 class="mt-5 separation">Famille : Responsable légal 2</h2>
 
     <%= construire form_resp_legal_2 %>
@@ -314,15 +314,15 @@ form_contact_urgence = [
 </div>
 <% end %>
 
-<a href="#" id='ajouter_contact_urgence' class='<%= "d-none" if contact_urgence.present? && !contact_urgence.nom.empty? %> btn btn-outline-primary' >
+<a href="#" id='ajouter_contact_urgence' class='<%= "d-none" if @contact_urgence.present? && !@contact_urgence.nom.empty? %> btn btn-outline-primary' >
     Ajouter un contact en cas d'urgence
 </a>
-<div id='contact_urgence' class='<%= "d-none" unless contact_urgence.present? && !contact_urgence.nom.empty? %>' >
+<div id='contact_urgence' class='<%= "d-none" unless @contact_urgence.present? && !@contact_urgence.nom.empty? %>' >
   <h2 class="mt-5 separation">Famille : Autre personne à contacter en cas d'urgence</h2>
 
   <%= construire form_contact_urgence %>
 </div>
-    <%= erb :'partials/nouveau_precedent_suivant', :locals => { :precedent => "eleve"} %>
+    <%= render partial: 'partials/nouveau_precedent_suivant', :locals => { :precedent => "eleve"} %>
   </form>
 </div>
 

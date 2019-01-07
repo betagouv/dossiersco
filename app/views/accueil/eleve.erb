@@ -4,7 +4,7 @@
           name: "prenom",
           label: "Prénom",
           type: "text",
-          value: eleve.prenom,
+          value: @eleve.prenom,
           indication: "Prénom",
           disabled: false,
           required: 'required'
@@ -15,7 +15,7 @@
           name: "prenom_2",
           label: "Deuxième prénom (optionnel)",
           type: "text",
-          value: eleve.prenom_2,
+          value: @eleve.prenom_2,
           indication: "Deuxième prénom (optionnel)",
           disabled: false
         },
@@ -23,7 +23,7 @@
           name: "prenom_3",
           label: "Troisième prénom (optionnel)",
           type: "text",
-          value: eleve.prenom_3,
+          value: @eleve.prenom_3,
           indication: "Troisième prénom (optionnel)",
           disabled: false
         }]
@@ -33,7 +33,7 @@
           name: "nom",
           label: "Nom",
           type: "text",
-          value: eleve.nom,
+          value: @eleve.nom,
           indication: "Nom",
           disabled: false,
           required: 'required'
@@ -43,7 +43,7 @@
           label: "Sexe",
           type: "radio",
           options: ["Féminin", "Masculin"],
-          checked: eleve.sexe
+          checked: @eleve.sexe
         },
         {
           type: "espace",
@@ -53,7 +53,7 @@
           name: "ville_naiss",
           label: "Ville de naissance",
           type: "text",
-          value: eleve.ville_naiss,
+          value: @eleve.ville_naiss,
           indication: "Ville de naissance",
           disabled: false,
           required: 'required'
@@ -62,7 +62,7 @@
           name: "pays_naiss",
           label: "Pays de naissance",
           type: "text",
-          value: eleve.pays_naiss,
+          value: @eleve.pays_naiss,
           indication: "Pays de naissance",
           disabled: false,
           required: 'required'
@@ -75,7 +75,7 @@
           name: "nationalite",
           label: "Pays de nationalité",
           type: "text",
-          value: eleve.nationalite,
+          value: @eleve.nationalite,
           indication: "Pays de nationalité",
           disabled: false,
           required: 'required'
@@ -95,7 +95,7 @@
 %>
 
 <% @section = 1 %>
-<%= erb :'partials/navigation', locals: { dossier_eleve: eleve.dossier_eleve } %>
+<%= render partial: 'partials/navigation', locals: { dossier_eleve: @eleve.dossier_eleve } %>
 
 <div class="col-sm-12">
 
@@ -107,7 +107,7 @@
 
     <%= construire premier_prenom %>
 
-    <% if eleve.niveau_classe_ant !~ /5EME/ and eleve.niveau_classe_ant !~ /6EME/ %>
+    <% if @eleve.niveau_classe_ant !~ /5EME/ and @eleve.niveau_classe_ant !~ /6EME/ %>
       <%= construire autres_prenoms %>
     <% end %>
 
@@ -117,10 +117,10 @@
 
 <!--     Options
  -->
-    <% if eleve.option.size > 0 %>
+    <% if @eleve.option.size > 0 %>
       <h3 class="separation">Options choisies précédemment</h3>
 
-      <% eleve.option.sort_by(&:groupe).each do |opt| %>
+      <% @eleve.option.sort_by(&:groupe).each do |opt| %>
         <% info = [{
           type: "info",
           label: opt.groupe,
@@ -132,7 +132,7 @@
       <span style="display:block; height: 20px;"></span>
     <% end %>
 
-      <% if eleve.montee.present? and eleve.montee.demandabilite.size > 0 || eleve.montee.abandonnabilite.size > 0 %>
+      <% if @eleve.montee.present? and @eleve.montee.demandabilite.size > 0 || @eleve.montee.abandonnabilite.size > 0 %>
         <h3 class="separation">Vos options pour l'année prochaine</h3>
           <div class='card'>
             <div class='card-body'>
@@ -140,11 +140,11 @@
             </div>
           </div>
 
-        <%= construire eleve.genere_demandes_possibles if eleve.montee.present? %>
-        <%= construire eleve.genere_abandons_possibles if eleve.montee.present? %>
+        <%= construire @eleve.genere_demandes_possibles if @eleve.montee.present? %>
+        <%= construire @eleve.genere_abandons_possibles if @eleve.montee.present? %>
       <% end %>
 
-    <%= erb :'partials/nouveau_precedent_suivant', :locals => { :precedent => "accueil"} %>
+    <%= render partial: 'partials/nouveau_precedent_suivant', :locals => { :precedent => "accueil"} %>
   </form>
 </div>
 <script>
