@@ -18,6 +18,8 @@ services:
       RUBYOPT: -KU
       RACK_ENV: development
       SESSION_SECRET: notreallysecret
+    depends_on:
+      - postgres
   test:
     build: .
     command: /bin/bash -lc "bundle exec rails test"
@@ -32,6 +34,8 @@ services:
       RUBYOPT: -KU
       RACK_ENV: test
       SESSION_SECRET: notreallysecret
+    depends_on:
+      - postgres_test
   postgres:
     image: postgres
     restart: always
