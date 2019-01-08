@@ -135,6 +135,10 @@ class AccueilController < ApplicationController
     sauve_et_redirect dossier_eleve, 'administration'
   end
 
+  def validation
+      render 'validation', locals: { eleve: eleve, dossier_eleve: eleve.dossier_eleve }
+  end
+
   def get_dossier_eleve identifiant
     DossierEleve.joins(:eleve).find_by(eleves: {identifiant: identifiant})
   end

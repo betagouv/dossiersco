@@ -143,10 +143,6 @@ post '/pieces_a_joindre' do
   redirect '/validation'
 end
 
-get '/validation' do
-	erb :'validation', locals: { eleve: eleve, dossier_eleve: eleve.dossier_eleve }
-end
-
 post '/validation' do
   dossier_eleve = eleve.dossier_eleve
   dossier_eleve.signature = params[:signature]
