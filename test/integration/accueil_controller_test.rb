@@ -417,4 +417,17 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     assert_equal "grec", doc.css("body > main > div.col-sm-12 > form > div:nth-child(15) > div").text.strip
   end
 
+  def test_afficher_option_a_choisir_que_quand_choix_possible
+    montee = Montee.create
+    e = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01', montee: montee)
+    dossier_eleve = DossierEleve.create!(eleve_id: e.id, etablissement_id: Etablissement.first.id)
+    post '/identification', params: { identifiant: 'XXX', annee: '1970', mois: '01', jour: '01' }
+
+    get '/eleve'
+
+    assert ! response.parsed_body.include?("Options choisies précédemment")
+    assert ! response.parsed_body.include?("Vos options pour l'année prochaine")
+  end
+
+
 end
