@@ -158,6 +158,11 @@ class AccueilController < ApplicationController
     sauve_et_redirect dossier_eleve, 'pieces_a_joindre'
   end
 
+  def deconnexion
+    reset_session
+    redirect_to '/'
+  end
+
   def eleve
     Eleve.find_by(identifiant: session[:identifiant])
   end

@@ -15,4 +15,6 @@ Rails.application.routes.draw do
 
   get '/administration', to: 'accueil#administration'
   post '/administration', to: 'accueil#post_administration'
+
+  post '/deconnexion', to: 'accueil#deconnexion'
 end

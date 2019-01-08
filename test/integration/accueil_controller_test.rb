@@ -492,4 +492,13 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     assert_not_nil doc.css("input#tel_principal_urg").first
   end
 
+  def test_ramene_a_la_dernire_etape_visitee_plutot_que_l_etape_la_plus_avancee
+    post '/identification', params: { identifiant: '4', annee: '1970', mois: '01', jour: '01' }
+    post '/famille'
+    get '/eleve'
+    post '/deconnexion'
+    post '/identification', params: { identifiant: '4', annee: '1970', mois: '01', jour: '01' }
+    follow_redirect!
+    assert response.parsed_body.include? "Identité de l'élève"
+  end
 end
