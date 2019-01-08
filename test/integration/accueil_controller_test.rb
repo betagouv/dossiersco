@@ -44,7 +44,7 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
   def test_entree_mauvais_identifiant_et_date
     post '/identification', params: {identifiant: 'toto', annee: '1998', mois: '11', jour: '19'}
     follow_redirect!
-    assert response.parsed_body.include? "Nous n'avons pas reconnu ces identifiants, merci de les vérifier."
+    assert response.parsed_body.include? html_escape("Nous n'avons pas reconnu ces identifiants, merci de les vérifier.")
   end
 
   def test_nom_college_accueil
