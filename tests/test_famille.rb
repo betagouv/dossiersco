@@ -78,19 +78,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert part.body.decoded.include? "Tillion"
   end
 
-  def test_une_famille_remplit_letape_administration
-    post '/identification', identifiant: '2', annee: '1915', mois: '12', jour: '19'
-    get '/administration'
-    post '/administration', demi_pensionnaire: true, autorise_sortie: true,
-      renseignements_medicaux: true, autorise_photo_de_classe: false
-    get '/administration'
-
-    assert response.parsed_body.gsub(/\s/,'').include? "id='demi_pensionnaire' checked".gsub(/\s/,'')
-    assert response.parsed_body.gsub(/\s/,'').include? "id='autorise_sortie' checked".gsub(/\s/,'')
-    assert response.parsed_body.gsub(/\s/,'').include? "id='renseignements_medicaux' checked".gsub(/\s/,'')
-    assert response.parsed_body.gsub(/\s/,'').include? "id='autorise_photo_de_classe' checked".gsub(/\s/,'')
-  end
-
   def test_une_personne_non_identifiée_ne_peut_accéder_à_pièces
     get "/piece/6/assurance_scolaire/nimportequoi"
 

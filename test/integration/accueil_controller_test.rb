@@ -268,4 +268,17 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     assert response.parsed_body.include? 'grec (sous réserve)'
   end
 
+  def test_une_famille_remplit_letape_administration
+    post '/identification', params: { identifiant: '2', annee: '1915', mois: '12', jour: '19' }
+    get '/administration'
+    post '/administration', params: { demi_pensionnaire: true, autorise_sortie: true,
+      renseignements_medicaux: true, autorise_photo_de_classe: false }
+    get '/administration'
+
+    assert response.parsed_body.gsub(/\s/,'').include? "id='demi_pensionnaire' checked".gsub(/\s/,'')
+    assert response.parsed_body.gsub(/\s/,'').include? "id='autorise_sortie' checked".gsub(/\s/,'')
+    assert response.parsed_body.gsub(/\s/,'').include? "id='renseignements_medicaux' checked".gsub(/\s/,'')
+    assert response.parsed_body.gsub(/\s/,'').include? "id='autorise_photo_de_classe' checked".gsub(/\s/,'')
+  end
+
 end

@@ -64,20 +64,7 @@ end
 
 
 
-get '/administration' do
-  eleve.dossier_eleve.update derniere_etape: 'administration'
-	erb :'administration', locals: {dossier_eleve: eleve.dossier_eleve}
-end
 
-post '/administration' do
-	dossier_eleve = eleve.dossier_eleve
-	dossier_eleve.demi_pensionnaire = params['demi_pensionnaire']
-	dossier_eleve.autorise_sortie = params['autorise_sortie']
-	dossier_eleve.renseignements_medicaux = params['renseignements_medicaux']
-  dossier_eleve.check_paiement_cantine = params['check_paiement_cantine']
-	dossier_eleve.save!
-	sauve_et_redirect dossier_eleve, 'pieces_a_joindre'
-end
 
 get '/piece/:dossier_eleve/:code_piece/:s3_key' do
   dossier_eleve = get_dossier_eleve params[:dossier_eleve]

@@ -143,6 +143,21 @@ class AccueilController < ApplicationController
     DossierEleve.joins(:eleve).find_by(eleves: {identifiant: identifiant})
   end
 
+  def administration
+    eleve.dossier_eleve.update derniere_etape: 'administration'
+    render 'administration', locals: {dossier_eleve: eleve.dossier_eleve}
+  end
+
+  def post_administration
+    dossier_eleve = eleve.dossier_eleve
+    dossier_eleve.demi_pensionnaire = params['demi_pensionnaire']
+    dossier_eleve.autorise_sortie = params['autorise_sortie']
+    dossier_eleve.renseignements_medicaux = params['renseignements_medicaux']
+    dossier_eleve.check_paiement_cantine = params['check_paiement_cantine']
+    dossier_eleve.save!
+    sauve_et_redirect dossier_eleve, 'pieces_a_joindre'
+  end
+
   def eleve
     Eleve.find_by(identifiant: session[:identifiant])
   end
