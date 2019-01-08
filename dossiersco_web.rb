@@ -134,18 +134,6 @@ post '/validation' do
   sauve_et_redirect dossier_eleve, 'confirmation'
 end
 
-get '/confirmation' do
-  dossier_eleve = eleve.dossier_eleve
-  dossier_eleve.update derniere_etape: 'confirmation'
-	erb :'confirmation', locals: { eleve: eleve, dossier_eleve: dossier_eleve }
-end
-
-post '/satisfaction' do
-  dossier_eleve = eleve.dossier_eleve
-  dossier_eleve.satisfaction = params[:note]
-  dossier_eleve.save!
-end
-
 post '/commentaire' do
   dossier_eleve = eleve.dossier_eleve
   dossier_eleve.commentaire = params[:commentaire]

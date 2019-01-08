@@ -1,6 +1,6 @@
 <% @section = 6 %>
 
-<%= erb :'partials/navigation', locals: { dossier_eleve: dossier_eleve } %>
+<%= render partial:'partials/navigation', locals: { dossier_eleve: dossier_eleve } %>
 
 <div class="col-12">
 
@@ -10,7 +10,9 @@
 
   <ul>
     <% dossier_eleve.resp_legal.each do |resp_legal| %>
-      <%= "<li>#{resp_legal.email}</li>" if resp_legal.email.present? %>
+      <% if resp_legal.email.present? %>
+        <li><%= resp_legal.email %></li>
+      <% end %>
     <% end %>
   </ul>
 
@@ -43,12 +45,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
-      $('.smiley-satisfaction').click(function() {
+      $('.smiley-satisfaction').click(function(event) {
+          event.preventDefault()
           var note = $(this).data('note');
           $.ajax({
               method: "POST",
               url: "/satisfaction",
-              data: { note: note},
+              data: { note: note, authenticity_token: "<%= form_authenticity_token %>"},
               success : function() {
                   $('#message_validation').show('slow')
               }
