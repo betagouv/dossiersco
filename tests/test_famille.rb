@@ -63,18 +63,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal expected_url, doc.css('#image_assurance_scolaire').attr("data-url").text
   end
 
-  def test_ramène_parent_à_dernière_étape_incomplète
-    post '/identification', identifiant: '6', annee: '1970', mois: '01', jour: '01'
-    post '/eleve', Espagnol: true, Latin: true
-    get '/famille'
-
-    post '/identification', identifiant: '6', annee: '1970', mois: '01', jour: '01'
-    follow_redirect!
-
-    doc = Nokogiri::HTML(last_response.body)
-    assert_equal "Famille : Responsable légal 1", doc.css("body > main > div.col-12 > h2").text
-  end
-
   def test_envoyer_un_mail_quand_la_demande_dinscription_est_valide
     post '/identification', identifiant: '4', annee: '1970', mois: '01', jour: '01'
     post '/validation'

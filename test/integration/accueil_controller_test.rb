@@ -222,5 +222,15 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     donnees
   end
 
+  def test_ramène_parent_à_dernière_étape_incomplète
+    post '/identification', params: {identifiant: '6', annee: '1970', mois: '01', jour: '01'}
+    post '/eleve', params: {Espagnol: true, Latin: true}
+    get '/famille'
 
+    post '/identification', params: {identifiant: '6', annee: '1970', mois: '01', jour: '01'}
+    follow_redirect!
+
+    doc = Nokogiri::HTML(response.parsed_body)
+    assert_equal "Famille : Responsable légal 1", doc.css("body > main > div.col-12 > h2").text
+  end
 end
