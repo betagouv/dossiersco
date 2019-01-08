@@ -78,24 +78,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert part.body.decoded.include? "Tillion"
   end
 
-  def test_affichage_des_options_choisis_sur_la_page_validation
-    eleve = Eleve.create(identifiant: 'XXX', date_naiss: '1970-01-01', niveau_classe_ant: '3')
-    etablissement = Etablissement.create(nom: 'college test')
-    dossier_eleve = DossierEleve.create(eleve_id: eleve.id, etablissement_id: etablissement.id)
-    eleve.option << Option.create(nom: 'anglais', groupe: 'LV1')
-    option_choisie = Option.create(nom: 'grec', groupe: 'LCA')
-    demande = Demande.create(option_id: option_choisie.id, eleve_id: eleve.id)
-    option_abandonnee = Option.create(nom: 'latin', groupe: 'LCA')
-    abandon = Abandon.create(option_id: option_abandonnee.id, eleve_id: eleve.id)
-
-    post '/identification', identifiant: 'xxx', annee: '1970', mois: '01', jour: '01'
-    get '/validation'
-
-    assert response.parsed_body.include? 'anglais'
-    assert response.parsed_body.include? "Demande d'inscription à l'option <strong>grec</strong>"
-    assert response.parsed_body.include? "Souhait d'abandonner l'option <strong>latin</strong>"
-  end
-
   def test_affichage_info_sur_options
     eleve = Eleve.find_by(identifiant: 6)
     eleve.update(montee: Montee.create)

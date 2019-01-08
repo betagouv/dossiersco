@@ -10,4 +10,6 @@ Rails.application.routes.draw do
 
   get '/famille', to: 'accueil#get_famille'
   post '/famille', to: 'accueil#post_famille'
+
+  get '/validation', to: 'accueil#validation'
 end
