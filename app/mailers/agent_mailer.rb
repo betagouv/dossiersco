@@ -1,4 +1,4 @@
-class AgentMailer < ActionMailer::Base
+class AgentMailer < ApplicationMailer
     default from: "contact@dossiersco.beta.gouv.fr"
 
     def emails

@@ -511,4 +511,19 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert response.parsed_body.include? "Vous recevrez prochainement un courriel de confirmation"
   end
+
+  def test_envoyer_un_mail_quand_la_demande_dinscription_est_valide
+    post '/identification', params: { identifiant: '4', annee: '1970', mois: '01', jour: '01' }
+    post '/validation'
+
+    mail = ActionMailer::Base.deliveries.last
+    assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
+    assert mail['to'].addresses.collect(&:to_s).include? 'test@test.com'
+    assert mail['to'].addresses.collect(&:to_s).include? 'test2@test.com'
+    assert mail['to'].addresses.collect(&:to_s).include? 'contact@dossiersco.beta.gouv.fr'
+    assert_equal "Réinscription de votre enfant au collège", mail['subject'].to_s
+    part = mail.html_part || mail.text_part || mail
+    assert part.body.decoded.include? "réinscription de votre enfant Pierre Blayo"
+    assert part.body.decoded.include? "Tillion"
+  end
 end

@@ -121,18 +121,6 @@ post '/pieces_a_joindre' do
   redirect '/validation'
 end
 
-post '/validation' do
-  dossier_eleve = eleve.dossier_eleve
-  dossier_eleve.signature = params[:signature]
-  dossier_eleve.date_signature = Time.now
-  dossier_eleve.save
-  if dossier_eleve.etat != 'validé'
-    mail = AgentMailer.envoyer_mail_confirmation(dossier_eleve.eleve)
-    mail.deliver_now
-    dossier_eleve.update(etat: 'en attente de validation')
-  end
-  sauve_et_redirect dossier_eleve, 'confirmation'
-end
 
 post '/commentaire' do
   dossier_eleve = eleve.dossier_eleve

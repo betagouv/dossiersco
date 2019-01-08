@@ -63,21 +63,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal expected_url, doc.css('#image_assurance_scolaire').attr("data-url").text
   end
 
-  def test_envoyer_un_mail_quand_la_demande_dinscription_est_valide
-    post '/identification', identifiant: '4', annee: '1970', mois: '01', jour: '01'
-    post '/validation'
-
-    mail = ActionMailer::Base.deliveries.last
-    assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
-    assert mail['to'].addresses.collect(&:to_s).include? 'test@test.com'
-    assert mail['to'].addresses.collect(&:to_s).include? 'test2@test.com'
-    assert mail['to'].addresses.collect(&:to_s).include? 'contact@dossiersco.beta.gouv.fr'
-    assert_equal "Réinscription de votre enfant au collège", mail['subject'].to_s
-    part = mail.html_part || mail.text_part || mail
-    assert part.body.decoded.include? "réinscription de votre enfant Pierre Blayo"
-    assert part.body.decoded.include? "Tillion"
-  end
-
   def test_une_personne_non_identifiée_ne_peut_accéder_à_pièces
     get "/piece/6/assurance_scolaire/nimportequoi"
 

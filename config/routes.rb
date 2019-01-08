@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   post '/famille', to: 'accueil#post_famille'
 
   get '/validation', to: 'accueil#validation'
+  post '/validation', to: 'accueil#post_validation'
 
   get '/administration', to: 'accueil#administration'
   post '/administration', to: 'accueil#post_administration'
