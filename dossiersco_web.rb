@@ -25,9 +25,6 @@ require_relative 'helpers/formulaire'
 require_relative 'helpers/init'
 require_relative 'helpers/mot_de_passe'
 
-identite_resp_legal = ["lien_de_parente", "prenom", "nom", "adresse", "code_postal", "ville", "tel_principal",
-											 "tel_secondaire", "email", "profession", "enfants_a_charge",
-                       "communique_info_parents_eleves", "lien_avec_eleve"]
 
 
 configure :test, :development, :staging do
@@ -66,23 +63,6 @@ get '/deconnexion' do
 end
 
 
-post '/famille' do
-  dossier_eleve = eleve.dossier_eleve
-	resp_legal1 = dossier_eleve.resp_legal_1
-	resp_legal2 = dossier_eleve.resp_legal_2
-	contact_urgence = ContactUrgence.find_by(dossier_eleve_id: dossier_eleve.id) || ContactUrgence.new(dossier_eleve_id: dossier_eleve.id)
-
-	identite_resp_legal.each do |i|
-		resp_legal1[i] = params["#{i}_rl1"] if params.has_key?("#{i}_rl1")
-		resp_legal2[i] = params["#{i}_rl2"] if resp_legal2 && params.has_key?("#{i}_rl2")
-		contact_urgence[i] = params["#{i}_urg"] if params.has_key?("#{i}_urg")
-	end
-
-	resp_legal1.save!
-	resp_legal2.save! if resp_legal2
-	contact_urgence.save!
-	sauve_et_redirect dossier_eleve, 'administration'
-end
 
 get '/administration' do
   eleve.dossier_eleve.update derniere_etape: 'administration'

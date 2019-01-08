@@ -74,35 +74,35 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
   def test_affiche_2ème_et_3ème_prénoms_en_4ème_pour_brevet_des_collèges
     post '/identification', params: {identifiant: '4', annee: '1970', mois: '01', jour: '01'}
     get '/eleve'
-    assert response.body.include? 'Deuxième prénom'
-    assert response.body.include? 'Troisième prénom'
+    assert response.parsed_body.include? 'Deuxième prénom'
+    assert response.parsed_body.include? 'Troisième prénom'
   end
 
   def test_n_affiche_pas_2ème_et_3ème_prénoms_en_5ème
     post '/identification', params: {identifiant: '5', annee: '1970', mois: '01', jour: '01'}
     get '/eleve'
-    assert_no_match /Deuxième prénom/, response.body
-    assert_no_match /Troisième prénom/, response.body
+    assert_no_match /Deuxième prénom/, response.parsed_body
+    assert_no_match /Troisième prénom/, response.parsed_body
   end
 
   def test_n_affiche_pas_2ème_et_3ème_prénoms_en_6ème
     post '/identification', params: {identifiant: '6', annee: '1970', mois: '01', jour: '01'}
     get '/eleve'
-    assert_no_match /Deuxième prénom/, response.body
-    assert_no_match /Troisième prénom/, response.body
+    assert_no_match /Deuxième prénom/, response.parsed_body
+    assert_no_match /Troisième prénom/, response.parsed_body
   end
 
   def test_affiche_2ème_et_3ème_prénoms_en_CM2
     post '/identification', params: {identifiant: '1', annee: '1995', mois: '11', jour: '19'}
     get '/eleve'
-    assert response.body.include? 'Deuxième prénom'
-    assert response.body.include? 'Troisième prénom'
+    assert response.parsed_body.include? 'Deuxième prénom'
+    assert response.parsed_body.include? 'Troisième prénom'
   end
 
   def test_accueil_et_inscription
     post '/identification', params: {identifiant: '1', annee: '1995', mois: '11', jour: '19'}
     follow_redirect!
-    assert response.body.include? 'inscription'
+    assert response.parsed_body.include? 'inscription'
   end
 
   def test_dossier_eleve_possede_un_contact_urgence
@@ -159,7 +159,7 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
   def test_changement_adresse
     post '/identification', params: { identifiant: '2', annee: '1915', mois: '12', jour: '19'}
     get '/famille'
-    doc = Nokogiri::HTML(response.body)
+    doc = Nokogiri::HTML(response.parsed_body)
     donnees = reinjecte_donnees_formulaire_famille doc
 
     # Pas de changement d'adresse

@@ -287,14 +287,15 @@ form_contact_urgence = [
   <h2 class="separation">Famille : Responsable légal<%= " 1" if @resp_legal_2.present?%></h2>
 
   <form action="/famille" method="POST">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 
-    <%= construire form_resp_legal_1 %>
+    <%= raw(construire form_resp_legal_1) %>
 
 <% if @resp_legal_2 %>
 <div id='resp_legal_2' class='<%= "d-none" unless @resp_legal_2.present? %>' >
   <h2 class="mt-5 separation">Famille : Responsable légal 2</h2>
 
-    <%= construire form_resp_legal_2 %>
+    <%= raw(construire form_resp_legal_2) %>
 
     <div class="row">
       <div class="col-sm-4"></div>
@@ -309,7 +310,7 @@ form_contact_urgence = [
 
     <span style="display:block; height: 5px;"></span>
 
-    <%= construire fin_form_resp_legal_2 %>
+    <%= raw(construire fin_form_resp_legal_2) %>
 
 </div>
 <% end %>
@@ -320,7 +321,7 @@ form_contact_urgence = [
 <div id='contact_urgence' class='<%= "d-none" unless @contact_urgence.present? && !@contact_urgence.nom.empty? %>' >
   <h2 class="mt-5 separation">Famille : Autre personne à contacter en cas d'urgence</h2>
 
-  <%= construire form_contact_urgence %>
+  <%= raw(construire form_contact_urgence) %>
 </div>
     <%= render partial: 'partials/nouveau_precedent_suivant', :locals => { :precedent => "eleve"} %>
   </form>
