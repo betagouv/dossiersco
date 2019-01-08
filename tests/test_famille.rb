@@ -101,17 +101,6 @@ class EleveFormTest < Test::Unit::TestCase
     File.delete(chemin_du_fichier)
   end
 
-  def test_affichage_obligatoire_sans_choix
-    post '/identification', identifiant: '5', annee: '1970', mois: '01', jour: '01'
-    eleve = Eleve.find_by(identifiant: '5')
-
-    get '/eleve'
-
-    doc = Nokogiri::HTML(response.parsed_body)
-    assert_equal "latin", doc.css("body > main > div.col-sm-12 > form > div:nth-child(13) > div").text.strip
-    assert_equal "grec", doc.css("body > main > div.col-sm-12 > form > div:nth-child(14) > div").text.strip
-  end
-
   def test_afficher_option_a_choisir_que_quand_choix_possible
     montee = Montee.create
     e = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01', montee: montee)
