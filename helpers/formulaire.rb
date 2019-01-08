@@ -1,7 +1,7 @@
 helpers do
 	def construire champs
     	champs.map do |champ|
-          erb :'partials/champ', locals: champ
+          render partials: 'partials/_champ', locals: champ
         end
         .join
   end
