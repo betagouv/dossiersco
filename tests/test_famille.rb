@@ -101,35 +101,6 @@ class EleveFormTest < Test::Unit::TestCase
     File.delete(chemin_du_fichier)
   end
 
-  def test_affichage_d_options_facultatives_a_choisir
-    post '/identification', identifiant: '6', annee: '1970', mois: '01', jour: '01'
-    eleve = Eleve.find_by(identifiant: '6')
-    montee = Montee.create
-
-    latin = Option.create(nom: 'latin', groupe: 'LCA', modalite: 'facultative')
-    grec = Option.create(nom: 'grec', groupe: 'LCA', modalite: 'facultative')
-    latin_d = Demandabilite.create montee_id: montee.id, option_id: latin.id
-    grec_d = Demandabilite.create montee_id: montee.id, option_id: grec.id
-    montee.demandabilite << latin_d
-    montee.demandabilite << grec_d
-    eleve.montee = montee
-    eleve.save
-
-    resultat = eleve.genere_demandes_possibles
-
-    assert_equal 'LCA', resultat[0][:label]
-    assert_equal 'LCA', resultat[1][:label]
-    assert_equal 'check', resultat[0][:type]
-    assert_equal 'check', resultat[1][:type]
-    assert resultat[0][:name].include? 'latin'
-    assert resultat[1][:name].include? 'grec'
-
-    post '/eleve', grec_present: 'true', grec: 'true'
-    eleve = Eleve.find_by(identifiant: '6')
-    assert_equal 1, eleve.demande.count
-    assert_equal 'grec', eleve.demande.first.option.nom
-  end
-
   def test_une_option_facultative_pas_encore_demandee
     post '/identification', identifiant: '6', annee: '1970', mois: '01', jour: '01'
     eleve = Eleve.find_by(identifiant: '6')
