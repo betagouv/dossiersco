@@ -101,44 +101,6 @@ class EleveFormTest < Test::Unit::TestCase
     File.delete(chemin_du_fichier)
   end
 
-  def test_affiche_option_abandonnable
-    eleve = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01')
-    dossier_eleve = DossierEleve.create!(eleve_id: eleve.id, etablissement_id: Etablissement.first.id)
-    montee = Montee.create
-    latin = Option.create(nom: 'latin', groupe: 'LCA', modalite: 'facultative')
-    latin_d = Abandonnabilite.create montee_id: montee.id, option_id: latin.id
-    eleve.option << latin
-    montee.abandonnabilite << latin_d
-    eleve.update(montee: montee)
-
-    post '/identification', identifiant: 'XXX', annee: '1970', mois: '01', jour: '01'
-    get '/eleve'
-
-    resultat = eleve.genere_abandons_possibles
-
-    assert_equal "Poursuivre l'option", resultat[0][:label]
-    assert_equal 'latin', resultat[0][:name]
-    assert_equal 'check', resultat[0][:type]
-
-    # Si la checkbox n'est pas cochée le navigateur ne transmet pas la valeur
-    post '/eleve', latin_present: true
-    eleve = Eleve.find_by(identifiant: 'XXX')
-    assert_equal 1, eleve.abandon.count
-    assert_equal 'latin', eleve.abandon.first.option.nom
-
-    resultat = eleve.genere_abandons_possibles
-    assert_equal "Poursuivre l'option", resultat[0][:label]
-    assert_equal false, resultat[0][:condition]
-
-    post '/eleve', latin_present: true, latin: true
-    eleve = Eleve.find_by(identifiant: 'XXX')
-    assert_equal 0, eleve.abandon.count
-
-    resultat = eleve.genere_abandons_possibles
-    assert_equal "Poursuivre l'option", resultat[0][:label]
-    assert_equal true, resultat[0][:condition]
-  end
-
   def test_affiche_404
     # Sans identification, on est redirigé vers l'identification
     get '/unepagequinexistepas'
