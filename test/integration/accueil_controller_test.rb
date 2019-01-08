@@ -467,5 +467,17 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     assert_equal true, resultat[0][:condition]
   end
 
+  def test_affiche_pas_resp_legal_2_si_absent_de_siecle
+    e = Eleve.create! identifiant: 'XXX', date_naiss: '1915-12-19'
+    dossier_eleve = DossierEleve.create! eleve: e, etablissement: Etablissement.first
+    RespLegal.create! dossier_eleve_id: dossier_eleve.id, email: 'test@test.com', priorite: 1
+
+    post '/identification', params: { identifiant: 'XXX', annee: '1915', mois: '12', jour: '19' }
+    get '/famille'
+
+    doc = Nokogiri::HTML(response.parsed_body)
+    assert_nil doc.css("div#resp_legal_2").first
+  end
+
 
 end

@@ -118,18 +118,6 @@ class EleveFormTest < Test::Unit::TestCase
     Sinatra::Application::set :environment, 'development'
   end
 
-  def test_affiche_pas_resp_legal_2_si_absent_de_siecle
-    e = Eleve.create! identifiant: 'XXX', date_naiss: '1915-12-19'
-    dossier_eleve = DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first
-    RespLegal.create! dossier_eleve_id: dossier_eleve.id, email: 'test@test.com', priorite: 1
-
-    post '/identification', identifiant: 'XXX', annee: '1915', mois: '12', jour: '19'
-    get '/famille'
-
-    doc = Nokogiri::HTML(last_response.body)
-    assert_nil doc.css("div#resp_legal_2").first
-  end
-
   # le masquage du formulaire de contact se fait en javascript
   def test_html_du_contact_present_dans_page_quand_pas_encore_de_contact
     e = Eleve.create! identifiant: 'XXX', date_naiss: '1915-12-19'
