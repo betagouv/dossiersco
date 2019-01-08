@@ -8,7 +8,7 @@
     <div class="container">
       <div class="row">
         <form class="form-signin col-md-4 mx-auto" action="/identification" method="post">
-
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
           <% if session[:message_erreur] %>
             <p class="erreur"><%= session[:message_erreur] %></p>
           <% end %>
