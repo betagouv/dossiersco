@@ -163,6 +163,18 @@ class AccueilController < ApplicationController
     redirect_to '/'
   end
 
+  def confirmation
+    dossier_eleve = eleve.dossier_eleve
+    dossier_eleve.update derniere_etape: 'confirmation'
+    render 'confirmation', locals: { eleve: eleve, dossier_eleve: dossier_eleve }
+  end
+
+  def satisfaction
+    dossier_eleve = eleve.dossier_eleve
+    dossier_eleve.satisfaction = params[:note]
+    dossier_eleve.save!
+  end
+
   def eleve
     Eleve.find_by(identifiant: session[:identifiant])
   end

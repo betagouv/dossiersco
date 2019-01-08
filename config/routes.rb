@@ -17,4 +17,8 @@ Rails.application.routes.draw do
   post '/administration', to: 'accueil#post_administration'
 
   post '/deconnexion', to: 'accueil#deconnexion'
+
+  get '/confirmation', to: 'accueil#confirmation'
+
+  post '/satisfaction', to: 'accueil#satisfaction'
 end
