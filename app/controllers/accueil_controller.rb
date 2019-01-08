@@ -54,6 +54,49 @@ class AccueilController < ApplicationController
   end
 
   def post_eleve
+    eleve_a_modifier = eleve
+    identite_eleve = ['prenom', 'prenom_2', 'prenom_3', 'nom', 'sexe', 'ville_naiss', 'pays_naiss', 'nationalite', 'classe_ant', 'ets_ant']
+    identite_eleve.each do |info|
+     eleve_a_modifier[info] = params[info] if params.has_key?(info)
+    end
+
+    # Pour chaque option de l'élève, vérifier si elle doit être abandonnée
+    options = eleve.montee.present? ? eleve.montee.abandonnabilite.collect(&:option) : []
+    options.each do |option|
+      if params["#{option.nom}_present"]
+        abandon = Abandon.find_or_initialize_by(eleve: eleve, option: option)
+        eleve_a_modifier.abandon.delete abandon if params[option.nom] == 'true'
+        eleve_a_modifier.abandon << abandon if params[option.nom].nil?
+      end
+    end
+
+    # Pour chacune des options vérifier si elle est choisie directement
+    options = eleve.montee.present? ? eleve.montee.demandabilite.collect(&:option) : []
+    options.each do |option|
+      if params["#{option.nom}_present"]
+        demande = Demande.find_or_initialize_by(eleve: eleve, option: option)
+        eleve_a_modifier.demande.delete demande if params[option.nom].nil?
+        eleve_a_modifier.demande << demande if params[option.nom] == 'true'
+      end
+    end
+
+    # Ensuite on va itérer sur les groupes
+    options.collect(&:groupe).uniq.each do |groupe|
+      if params[groupe].present?
+        # On découvre l'option retenue
+        option_choisie = options.find {|option| option.nom == params[groupe]}
+        demande = Demande.find_or_initialize_by(eleve: eleve, option: option_choisie)
+        # On supprime les autres (choix mutuellement exclusif)
+        eleve_a_modifier.demande.each do |demande_presente|
+          eleve_a_modifier.demande.delete demande_presente if demande_presente.option.groupe == groupe
+        end
+        # On garde celle retenue
+        eleve_a_modifier.demande << demande
+      end
+    end
+    eleve_a_modifier.save!
+
+    sauve_et_redirect eleve.dossier_eleve, 'famille'
   end
 
   def get_famille
@@ -90,4 +133,9 @@ class AccueilController < ApplicationController
     {'0': '', '1': 'occupe un emploi', '2': 'Au chômage', '3': 'Pré retraité, retraité ou retiré', '4': 'Personne sans activité professionnelle'}
   end
 
+  def sauve_et_redirect dossier_eleve, etape_la_plus_avancee
+    dossier_eleve.etape_la_plus_avancee = etape_la_plus_avancee
+    dossier_eleve.save!
+    redirect_to "/#{etape_la_plus_avancee}"
+  end
 end
