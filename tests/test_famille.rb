@@ -101,41 +101,6 @@ class EleveFormTest < Test::Unit::TestCase
     File.delete(chemin_du_fichier)
   end
 
-  def test_une_option_facultative_demandee
-    post '/identification', identifiant: '6', annee: '1970', mois: '01', jour: '01'
-    eleve = Eleve.find_by(identifiant: '6')
-    montee = Montee.create
-
-    grec = Option.create(nom: 'grec', groupe: 'LCA', modalite: 'facultative')
-    grec_d = Demandabilite.create montee_id: montee.id, option_id: grec.id
-    montee.demandabilite << grec_d
-    eleve.montee = montee
-    eleve.demande << Demande.create(eleve: eleve, option: grec)
-    eleve.save
-
-    resultat = eleve.genere_demandes_possibles
-
-    assert_equal 'LCA', resultat[0][:label]
-    assert_equal 'check', resultat[0][:type]
-    assert_equal true, resultat[0][:condition]
-    assert resultat[0][:name].include?('grec')
-
-    post '/eleve', grec_present: 'true', grec: 'true'
-    eleve = Eleve.find_by(identifiant: '6')
-    assert_equal 1, eleve.demande.count
-    assert_equal 'grec', eleve.demande.first.option.nom
-
-    resultat = eleve.genere_demandes_possibles
-    assert_equal true, resultat[0][:condition]
-
-    post '/eleve', grec_present: 'true'
-    eleve = Eleve.find_by(identifiant: '6')
-    assert_equal 0, eleve.demande.count
-
-    resultat = eleve.genere_demandes_possibles
-    assert_equal false, resultat[0][:condition]
-  end
-
   def test_affichage_obligatoire_sans_choix
     post '/identification', identifiant: '5', annee: '1970', mois: '01', jour: '01'
     eleve = Eleve.find_by(identifiant: '5')
