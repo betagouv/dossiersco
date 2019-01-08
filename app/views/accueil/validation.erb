@@ -65,7 +65,7 @@
 	</div>
 
 	<form action='/validation' method='POST'>
-
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 		<%= render partial:'partials/champ_check', locals: { desc: "En tant que responsable légal de #{dossier_eleve.eleve.prenom}, je certifie sur l'honneur l'exactitude des informations communiquées et m'engage à tenir le collège informé de tout changement de situation ou de coordonnées.",
 		name: 'signature', condition: dossier_eleve.signature, required: 'required' }%>
 
