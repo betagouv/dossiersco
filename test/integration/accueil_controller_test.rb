@@ -281,4 +281,39 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     assert response.parsed_body.gsub(/\s/,'').include? "id='autorise_photo_de_classe' checked".gsub(/\s/,'')
   end
 
+  def test_affichage_d_options_ogligatoires_a_choisir
+    post '/identification', params: { identifiant: '6', annee: '1970', mois: '01', jour: '01' }
+    eleve = Eleve.find_by(identifiant: '6')
+    montee = Montee.create
+
+    anglais = Option.create(nom: 'anglais', groupe: 'LV1', modalite: 'obligatoire')
+    allemand = Option.create(nom: 'allemand', groupe: 'LV1', modalite: 'obligatoire')
+    anglais_d = Demandabilite.create montee_id: montee.id, option_id: anglais.id
+    allemand_d = Demandabilite.create montee_id: montee.id, option_id: allemand.id
+    montee.demandabilite << anglais_d
+    montee.demandabilite << allemand_d
+    eleve.montee = montee
+    eleve.save
+
+    resultat = eleve.genere_demandes_possibles[0]
+
+    assert_equal 'LV1', resultat[:name]
+    assert_equal 'radio', resultat[:type]
+    assert resultat[:options].include? 'anglais'
+    assert resultat[:options].include? 'allemand'
+
+    assert_equal 0, eleve.demande.count
+
+    post '/eleve', params: { LV1: 'allemand' }
+    eleve = Eleve.find_by(identifiant: '6')
+    assert_equal 1, eleve.demande.count
+    assert_equal 'allemand', eleve.demande.first.option.nom
+
+    post '/eleve', params: { LV1: 'anglais' }
+    eleve = Eleve.find_by(identifiant: '6')
+    assert_equal 1, eleve.demande.count
+    assert_equal 'anglais', eleve.demande.first.option.nom
+
+    assert_equal 'anglais', eleve.genere_demandes_possibles[0][:checked]
+  end
 end
