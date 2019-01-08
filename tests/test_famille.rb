@@ -78,22 +78,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert part.body.decoded.include? "Tillion"
   end
 
-  def test_affichage_info_sur_options
-    eleve = Eleve.find_by(identifiant: 6)
-    eleve.update(montee: Montee.create)
-    option = Option.create(nom: 'grec', groupe: 'LCA', modalite:'facultative', info: '(sous réserve)')
-    demandabilite = Demandabilite.create(option: option, montee: eleve.montee)
-    demande = Demande.create(option_id: option.id, eleve_id: eleve.id)
-
-    post '/identification', identifiant: '6', annee: '1970', mois: '01', jour: '01'
-
-    get '/validation'
-    assert response.parsed_body.include? "Demande d'inscription à l'option <strong>grec</strong>"
-
-    get '/eleve'
-    assert response.parsed_body.include? 'grec (sous réserve)'
-  end
-
   def test_une_famille_remplit_letape_administration
     post '/identification', identifiant: '2', annee: '1915', mois: '12', jour: '19'
     get '/administration'
