@@ -57,15 +57,6 @@ before '/*' do
 end
 
 
-get '/deconnexion' do
-  session.clear
-  redirect '/'
-end
-
-
-
-
-
 get '/piece/:dossier_eleve/:code_piece/:s3_key' do
   dossier_eleve = get_dossier_eleve params[:dossier_eleve]
 
