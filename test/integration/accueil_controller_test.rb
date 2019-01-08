@@ -405,4 +405,16 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     resultat = eleve.genere_demandes_possibles
     assert_equal false, resultat[0][:condition]
   end
+
+  def test_affichage_obligatoire_sans_choix
+    post '/identification', params: { identifiant: '5', annee: '1970', mois: '01', jour: '01' }
+    eleve = Eleve.find_by(identifiant: '5')
+
+    get '/eleve'
+
+    doc = Nokogiri::HTML(response.parsed_body)
+    assert_equal "latin", doc.css("body > main > div.col-sm-12 > form > div:nth-child(14) > div").text.strip
+    assert_equal "grec", doc.css("body > main > div.col-sm-12 > form > div:nth-child(15) > div").text.strip
+  end
+
 end
