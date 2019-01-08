@@ -47,4 +47,10 @@ class RespLegal < ActiveRecord::Base
     '85': "Personne sans activité professionnelle < 60 ans",
     '86': "Personne sans activité professionnelle > 60 ans" }
   end
+
+  def self.identites
+    ["lien_de_parente", "prenom", "nom", "adresse", "code_postal", "ville", "tel_principal",
+                           "tel_secondaire", "email", "profession", "enfants_a_charge",
+                           "communique_info_parents_eleves", "lien_avec_eleve"]
+  end
 end
