@@ -188,6 +188,17 @@ class AccueilController < ApplicationController
     dossier_eleve.save!
   end
 
+  def pieces_a_joindre
+    eleve.dossier_eleve.update derniere_etape: 'pieces_a_joindre'
+    render 'pieces_a_joindre', locals: {dossier_eleve: eleve.dossier_eleve}
+  end
+
+  def enregistre_piece_jointe
+    dossier_eleve = eleve.dossier_eleve
+    upload_pieces_jointes dossier_eleve, params
+    redirect_to '/pieces_a_joindre'
+  end
+
   def eleve
     Eleve.find_by(identifiant: session[:identifiant])
   end
@@ -201,4 +212,79 @@ class AccueilController < ApplicationController
     dossier_eleve.save!
     redirect_to "/#{etape_la_plus_avancee}"
   end
+
+  def piece
+    dossier_eleve = get_dossier_eleve params[:dossier_eleve]
+
+    # Vérifier les droits d'accès
+    famille_autorisé = params[:dossier_eleve] == session[:identifiant]
+
+    agent = Agent.find_by(identifiant: session[:identifiant])
+    agent_autorisé = agent.present? and (dossier_eleve.etablissement == agent.etablissement)
+
+    usager_autorisé = famille_autorisé || agent_autorisé
+
+    objet_demandé = params[:s3_key]
+    objet_présent = PieceJointe.find_by(dossier_eleve_id: dossier_eleve.id, clef: params[:s3_key])
+    clef_objet_présent = objet_présent.clef if objet_présent.present?
+    objet_conforme = objet_demandé == clef_objet_présent
+
+    if usager_autorisé and objet_conforme
+      extension = objet_présent.ext
+      fichier = get_fichier_s3(objet_demandé)
+      if extension == 'pdf'
+        content_type 'application/pdf'
+      elsif extension == 'jpg' or extension == 'jpeg'
+        content_type 'image/jpeg'
+      elsif extension == 'png'
+        content_type 'image/png'
+      end
+      send_data fichier.url(Time.now.to_i + 30)
+    else
+      redirect '/'
+    end
+  end
+
+  def get_fichier_s3 nom_fichier
+    if ENV['S3_KEY'].present?
+      connection = Fog::Storage.new({
+        provider: 'AWS',
+        aws_access_key_id: ENV['S3_KEY'],
+        aws_secret_access_key: ENV['S3_SECRET'],
+        region: ENV['S3_REGION'],
+        path_style: true # indispensable pour éviter l'erreur "hostname does not match the server certificate"
+      })
+      bucket = connection.directories.get('dossierscoweb')
+      bucket.files.get("uploads/#{nom_fichier}")
+    else
+      # On crée un objet qui émule le comportement de l'objet Fog::Storage::AWS::File
+      # à savoir une méthode URL avec un paramètre de délai de validité et qui renvoie
+      # une URL (en remote) ou un chemin de fichier (en local)
+      fichier = Object.new
+      fichier.define_singleton_method(:url) do |x|
+        "public/uploads/#{nom_fichier}"
+      end
+      fichier
+    end
+  end
+
+  def upload_pieces_jointes dossier_eleve, params, etat='soumis'
+    p "PARAMS: #{params.inspect}"
+    params.each do |code, piece|
+      if params[code].present? and params[code]["tempfile"].present?
+        file = File.open(params[code]["tempfile"])
+        uploader = FichierUploader.new
+        uploader.store!(file)
+        nom_du_fichier = File.basename(file.path)
+        piece_attendue = PieceAttendue.find_by(code: code, etablissement_id: dossier_eleve.etablissement_id)
+        piece_jointe = PieceJointe.find_by(piece_attendue_id: piece_attendue.id, dossier_eleve_id: dossier_eleve.id)
+        if piece_jointe.present?
+          piece_jointe.update(etat: etat, clef: nom_du_fichier)
+        else
+          piece_jointe = PieceJointe.create!(etat: etat, clef: nom_du_fichier, piece_attendue_id: piece_attendue.id, dossier_eleve_id: dossier_eleve.id)
+        end
+      end
+    end
+  end
+
 end

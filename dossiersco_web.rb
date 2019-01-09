@@ -57,42 +57,6 @@ before '/*' do
 end
 
 
-get '/piece/:dossier_eleve/:code_piece/:s3_key' do
-  dossier_eleve = get_dossier_eleve params[:dossier_eleve]
-
-  # Vérifier les droits d'accès
-  famille_autorisé = params[:dossier_eleve] == session[:identifiant]
-
-  agent = Agent.find_by(identifiant: session[:identifiant])
-  agent_autorisé = agent.present? and (dossier_eleve.etablissement == agent.etablissement)
-
-  usager_autorisé = famille_autorisé || agent_autorisé
-
-  objet_demandé = params[:s3_key]
-  objet_présent = PieceJointe.find_by(dossier_eleve_id: dossier_eleve.id, clef: params[:s3_key])
-  clef_objet_présent = objet_présent.clef if objet_présent.present?
-  objet_conforme = objet_demandé == clef_objet_présent
-
-  if usager_autorisé and objet_conforme
-    extension = objet_présent.ext
-    fichier = get_fichier_s3(objet_demandé)
-    if extension == 'pdf'
-      content_type 'application/pdf'
-    elsif extension == 'jpg' or extension == 'jpeg'
-      content_type 'image/jpeg'
-    elsif extension == 'png'
-      content_type 'image/png'
-    end
-    open fichier.url(Time.now.to_i + 30)
-  else
-    redirect '/'
-  end
-end
-
-get '/pieces_a_joindre' do
-  eleve.dossier_eleve.update derniere_etape: 'pieces_a_joindre'
-	erb :'pieces_a_joindre', locals: {dossier_eleve: eleve.dossier_eleve}
-end
 
 post '/pieces_a_joindre' do
   dossier_eleve = eleve.dossier_eleve
@@ -111,11 +75,6 @@ post '/pieces_a_joindre' do
   end
 end
 
-post '/enregistre_piece_jointe' do
-  dossier_eleve = eleve.dossier_eleve
-  upload_pieces_jointes dossier_eleve, params
-  redirect '/pieces_a_joindre'
-end
 
 post '/pieces_a_joindre' do
   redirect '/validation'

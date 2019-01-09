@@ -22,4 +22,9 @@ Rails.application.routes.draw do
   get '/confirmation', to: 'accueil#confirmation'
 
   post '/satisfaction', to: 'accueil#satisfaction'
+
+  get '/pieces_a_joindre', to: 'accueil#pieces_a_joindre'
+  post '/enregistre_piece_jointe', to: 'accueil#enregistre_piece_jointe'
+
+  get '/piece/:dossier_eleve/:code_piece/:s3_key', to: 'accueil#piece'
 end
