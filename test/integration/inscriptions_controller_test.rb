@@ -235,5 +235,59 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal nb_eleves_au_depart+1, Eleve.all.size
   end
 
+  def test_options_demande_et_abandon
+    eleve = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01')
+    eleve.option << Option.create(nom: 'espagnol', groupe: 'lv2')
+    eleve.option << Option.create(nom: 'espagnol', groupe: 'lv2')
+    latin = Option.create(nom: 'latin', groupe: 'LCA', modalite: 'facultative')
+    eleve.option << latin
+    grec = Option.create(nom: 'grec', groupe: 'LCA', modalite: 'facultative')
+
+    grec_d = Demande.create(option_id: grec.id, eleve_id: eleve.id)
+    latin_a = Abandon.create(option_id: latin.id, eleve_id: eleve.id)
+
+    assert_equal ['espagnol', 'grec (+)', 'latin (-)'], eleve.options_apres_montee
+  end
+
+  def test_destinataire_sms
+    dossier = DossierEleve.new
+    dossier.resp_legal = [RespLegal.new(
+      tel_principal: "01 12 34 56 78", tel_secondaire: "06 12 34 56 78", priorite: 1),
+      RespLegal.new(
+      tel_principal: "01 12 34 56 78", tel_secondaire: "06 12 34 56 99", priorite: 2)]
+    message = Message.new(dossier_eleve: dossier, categorie: "sms")
+    assert_equal "06 12 34 56 78", message.numero
+    message.destinataire = "rl2"
+    assert_equal "06 12 34 56 99", message.numero
+  end
+
+  def test_portable_rl1
+    dossier = DossierEleve.new
+    dossier.resp_legal = [RespLegal.new(
+      tel_principal: "01 12 34 56 78", tel_secondaire: "06 12 34 56 78", priorite: 1)]
+    assert_equal "06 12 34 56 78", dossier.portable_rl1
+    dossier.resp_legal = [RespLegal.new(
+      tel_principal: "06 12 34 56 78", tel_secondaire: nil, priorite: 1)]
+    assert_equal "06 12 34 56 78", dossier.portable_rl1
+    dossier.resp_legal = [RespLegal.new(
+      tel_principal: "06 12 34 56 78", tel_secondaire: "", priorite: 1)]
+    assert_equal "06 12 34 56 78", dossier.portable_rl1
+    dossier.resp_legal = [RespLegal.new(
+      tel_principal: "06 12 34 56 78", tel_secondaire: "01 12 34 56 78", priorite: 1)]
+    assert_equal "06 12 34 56 78", dossier.portable_rl1
+    dossier.resp_legal = [RespLegal.new(
+      tel_principal: "07 12 34 56 78", tel_secondaire: "06 12 34 56 78", priorite: 1)]
+    assert_equal "06 12 34 56 78", dossier.portable_rl1
+  end
+
+  def test_portable_rl2
+    dossier = DossierEleve.new
+    dossier.resp_legal = [RespLegal.new(
+      tel_principal: "01 12 34 56 78", tel_secondaire: "06 12 34 56 78", priorite: 1)]
+    assert_nil dossier.portable_rl2
+    dossier.resp_legal << RespLegal.new(
+      tel_principal: "01 12 34 56 78", tel_secondaire: "06 12 34 56 99", priorite: 2)
+    assert_equal "06 12 34 56 99", dossier.portable_rl2
+  end
 end
 

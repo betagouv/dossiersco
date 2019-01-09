@@ -90,15 +90,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal 'disabled', doc.css("#bouton-eleve-sortant").first.attributes['disabled'].value
   end
 
-  # def test_liste_classes
-  #   post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-  #   get '/agent/liste_des_eleves'
-
-  #   doc = Nokogiri::HTML(last_response.body)
-  #   assert doc.css("select[name='classes'] option").collect(&:text).include? "6EME"
-  #   assert doc.css("select[name='classes'] option").collect(&:text).include? "4EME ULIS"
-  # end
-
   def test_liste_des_eleves
     eleve = Eleve.find_by(identifiant: 2)
 
@@ -284,24 +275,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert message.contenu.include? "Tillion"
   end
 
-  def test_trace_sms_envoyes
-    assert_equal 0, Message.count
-
-    eleve = Eleve.find_by(identifiant: "6")
-    dossier = eleve.dossier_eleve
-    dossier.relance_sms
-
-    assert_equal 1, Message.count
-    message = Message.first
-    message.envoyer
-
-    message = Message.first
-    assert_equal "sms", message.categorie
-    assert_equal dossier.id, message.dossier_eleve_id
-    assert_equal "erreur", message.etat
-    assert message.contenu.include? "Tillion"
-  end
-
   def test_envoi_un_mail_quand_un_agent_valide_un_dossier
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
     post '/agent/valider_inscription', identifiant: '4'
@@ -357,16 +330,6 @@ class EleveFormTest < Test::Unit::TestCase
     assert_equal "width: 100.0%;", doc.css(pas_connecte)[1].attr("style")
   end
 
-  def test_meme_adresse
-    r = RespLegal.new adresse: '42 rue', code_postal: '75020', ville: 'Paris'
-    assert       r.meme_adresse(r)
-    assert       r.meme_adresse(RespLegal.new adresse: r.adresse, code_postal: r.code_postal, ville: r.ville)
-    assert_false r.meme_adresse(nil)
-    assert_false r.meme_adresse(RespLegal.new adresse: '30',      code_postal: r.code_postal, ville: r.ville)
-    assert_false r.meme_adresse(RespLegal.new adresse: r.adresse, code_postal: '59001',       ville: r.ville)
-    assert_false r.meme_adresse(RespLegal.new adresse: r.adresse, code_postal: r.code_postal, ville: 'Lyon')
-  end
-
   def test_page_eleve_agent_affiche_changement_adresse
     resp_legal_1 = Eleve.find_by(identifiant: '2').dossier_eleve.resp_legal_1
     resp_legal_1.update adresse: 'Nouvelle adresse'
@@ -386,21 +349,6 @@ class EleveFormTest < Test::Unit::TestCase
 
     doc = Nokogiri::HTML(last_response.body)
     assert_nil doc.css("div#ancienne_adresse").first
-  end
-
-  def test_detection_adresses_identiques
-    rl = RespLegal.create(
-        adresse_ant:"4 IMPASSE MORLET",
-        ville_ant: "PARIS",
-        code_postal_ant:"75011",
-        adresse:"4 impasse Morlet\n",
-        ville:"  Paris\r",
-        code_postal: "75 011")
-    assert rl.adresse_inchangee
-  end
-
-  def test_detection_adresses_identiques_cas_degenere
-    assert RespLegal.new.adresse_inchangee
   end
 
   def test_un_agent_voit_un_commentaire_parent_dans_vue_eleve
@@ -448,47 +396,6 @@ class EleveFormTest < Test::Unit::TestCase
 
     assert_equal 'validé', dossier_eleve2.etat
     assert_equal 'validé', dossier_eleve1.etat
-  end
-
-  def test_portable_rl1
-    dossier = DossierEleve.new
-    dossier.resp_legal = [RespLegal.new(
-      tel_principal: "01 12 34 56 78", tel_secondaire: "06 12 34 56 78", priorite: 1)]
-    assert_equal "06 12 34 56 78", dossier.portable_rl1
-    dossier.resp_legal = [RespLegal.new(
-      tel_principal: "06 12 34 56 78", tel_secondaire: nil, priorite: 1)]
-    assert_equal "06 12 34 56 78", dossier.portable_rl1
-    dossier.resp_legal = [RespLegal.new(
-      tel_principal: "06 12 34 56 78", tel_secondaire: "", priorite: 1)]
-    assert_equal "06 12 34 56 78", dossier.portable_rl1
-    dossier.resp_legal = [RespLegal.new(
-      tel_principal: "06 12 34 56 78", tel_secondaire: "01 12 34 56 78", priorite: 1)]
-    assert_equal "06 12 34 56 78", dossier.portable_rl1
-    dossier.resp_legal = [RespLegal.new(
-      tel_principal: "07 12 34 56 78", tel_secondaire: "06 12 34 56 78", priorite: 1)]
-    assert_equal "06 12 34 56 78", dossier.portable_rl1
-  end
-
-  def test_portable_rl2
-    dossier = DossierEleve.new
-    dossier.resp_legal = [RespLegal.new(
-      tel_principal: "01 12 34 56 78", tel_secondaire: "06 12 34 56 78", priorite: 1)]
-    assert_nil dossier.portable_rl2
-    dossier.resp_legal << RespLegal.new(
-      tel_principal: "01 12 34 56 78", tel_secondaire: "06 12 34 56 99", priorite: 2)
-    assert_equal "06 12 34 56 99", dossier.portable_rl2
-  end
-
-  def test_destinataire_sms
-    dossier = DossierEleve.new
-    dossier.resp_legal = [RespLegal.new(
-      tel_principal: "01 12 34 56 78", tel_secondaire: "06 12 34 56 78", priorite: 1),
-      RespLegal.new(
-      tel_principal: "01 12 34 56 78", tel_secondaire: "06 12 34 56 99", priorite: 2)]
-    message = Message.new(dossier_eleve: dossier, categorie: "sms")
-    assert_equal "06 12 34 56 78", message.numero
-    message.destinataire = "rl2"
-    assert_equal "06 12 34 56 99", message.numero
   end
 
   def test_propose_modeles_messages
@@ -565,20 +472,6 @@ class EleveFormTest < Test::Unit::TestCase
     doc = Nokogiri::HTML(last_response.body)
     assert ! last_response.body.include?(eleve2.prenom)
     assert_equal "latin", doc.css("tbody > tr:nth-child(1) > td:nth-child(5)").text.strip
-  end
-
-  def test_options_demande_et_abandon
-    eleve = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01')
-    eleve.option << Option.create(nom: 'espagnol', groupe: 'lv2')
-    eleve.option << Option.create(nom: 'espagnol', groupe: 'lv2')
-    latin = Option.create(nom: 'latin', groupe: 'LCA', modalite: 'facultative')
-    eleve.option << latin
-    grec = Option.create(nom: 'grec', groupe: 'LCA', modalite: 'facultative')
-
-    grec_d = Demande.create(option_id: grec.id, eleve_id: eleve.id)
-    latin_a = Abandon.create(option_id: latin.id, eleve_id: eleve.id)
-
-    assert_equal ['espagnol', 'grec (+)', 'latin (-)'], eleve.options_apres_montee
   end
 
   def test_liste_resp_legaux
