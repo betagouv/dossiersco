@@ -38,4 +38,6 @@ Rails.application.routes.draw do
   post '/agent', to: 'inscriptions#post_agent'
 
   get '/agent/liste_des_eleves', to: 'inscriptions#liste_des_eleves'
+
+  post '/agent/import_siecle', to: 'inscriptions#import_siecle'
 end

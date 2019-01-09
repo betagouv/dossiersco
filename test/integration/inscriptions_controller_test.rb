@@ -30,5 +30,19 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     affichage_total_dossiers = doc.css(selector).text
     assert_equal '5', affichage_total_dossiers
   end
+
+  def test_importe_eleve_fichier_siecle
+    post '/agent', params: {identifiant: 'pierre', mot_de_passe: 'demaulmont'}
+    import_siecle_xls = fixture_file_upload('files/test_import_siecle.xls','application/vnd.ms-excel')
+    post '/agent/import_siecle', params: {nom_eleve: "", prenom_eleve: "", name: 'import_siecle',
+         filename: import_siecle_xls}
+
+    doc = Nokogiri::HTML(response.body)
+    assert_match "L'import de cette base sera réalisé prochainement.", doc.css('.statut-import').text
+
+    tache_import = TacheImport.find_by(statut: 'en_attente')
+    assert tache_import != nil
+    # assert_equal('tests/test_import_siecle.xls', tache_import.url)
+  end
 end
 

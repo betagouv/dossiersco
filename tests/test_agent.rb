@@ -27,24 +27,6 @@ class EleveFormTest < Test::Unit::TestCase
 
 
 
-
-  def test_singularize_dossier_eleve
-    assert_equal 'dossier_eleves', 'dossier_eleves'.singularize
-  end
-
-  def test_importe_eleve_fichier_siecle
-    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-    post '/agent/import_siecle', nom_eleve: "", prenom_eleve: "", name: 'import_siecle',
-         filename: Rack::Test::UploadedFile.new("tests/test_import_siecle.xls")
-
-    doc = Nokogiri::HTML(last_response.body)
-    assert_match "L'import de cette base sera réalisé prochainement.", doc.css('.statut-import').text
-
-    tache_import = TacheImport.find_by(statut: 'en_attente')
-    assert tache_import != nil
-    # assert_equal('tests/test_import_siecle.xls', tache_import.url)
-  end
-
   def test_affiche_statut_import
     agent = Agent.find_by(identifiant: 'pierre')
     tache_import = TacheImport.create(

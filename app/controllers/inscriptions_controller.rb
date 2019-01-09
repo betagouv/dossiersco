@@ -1,3 +1,5 @@
+require 'traitement'
+
 class InscriptionsController < ApplicationController
   before_action :identification, except: [:post_agent, :agent]
   layout 'layout_agent'
@@ -49,6 +51,26 @@ class InscriptionsController < ApplicationController
         messages: messages,
         pieces_attendues: get_agent.etablissement.piece_attendue,
         pieces_jointes: pieces_jointes}
+  end
+
+  def import_siecle
+    tempfile = params[:filename].tempfile
+    tempfile = tempfile.path if tempfile.respond_to? :path
+    file = File.open(tempfile)
+    uploader = FichierUploader.new
+    uploader.store!(file)
+    fichier_s3 = get_fichier_s3 File.basename(tempfile)
+    tache = TacheImport.create(
+        url: fichier_s3.url(Time.now.to_i + 1200),
+        etablissement_id: get_agent.etablissement.id,
+        statut: 'en_attente',
+        nom_a_importer: params[:nom_eleve],
+        prenom_a_importer: params[:prenom_eleve],
+        traitement: params[:traitement])
+    render :import_siecle,
+        locals: { message: "",
+                  tache: tache
+        }
   end
 
   private

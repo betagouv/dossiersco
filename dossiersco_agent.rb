@@ -47,25 +47,6 @@ get '/agent/import_siecle' do
   erb :'agent/import_siecle', layout: :layout_agent, locals: {agent: agent, tache: tache, message: ""}
 end
 
-post '/agent/import_siecle' do
-  tempfile = params[:filename][:tempfile]
-  tempfile = tempfile.path if tempfile.respond_to? :path
-  file = File.open(tempfile)
-  uploader = FichierUploader.new
-  uploader.store!(file)
-  fichier_s3 = get_fichier_s3 File.basename(tempfile)
-  tache = TacheImport.create(
-    url: fichier_s3.url(Time.now.to_i + 1200),
-    etablissement_id: agent.etablissement.id,
-    statut: 'en_attente',
-    nom_a_importer: params[:nom_eleve],
-    prenom_a_importer: params[:prenom_eleve],
-    traitement: params[:traitement])
-  erb :'agent/import_siecle',
-      locals: { message: "",
-          tache: tache
-      }, layout: :layout_agent
-end
 
 get '/api/traiter_imports' do
   traiter_imports
