@@ -35,11 +35,11 @@ class Message < ActiveRecord::Base
 
       resultat = JSON.parse(response.body)
       etat = resultat["messages"].any? {|m| m["status"].to_s != "0"} ? "erreur" : "envoyé"
-      Message.update(resultat: response.body, etat:etat)
+      update(resultat: response.body, etat:etat)
 
       sleep(2) unless ENV['rack_env'] == "test"
     else
-      Message.update(resultat: "Pas de numéro", etat:"abandon")
+      update(resultat: "Pas de numéro", etat:"abandon")
     end
   end
 end
