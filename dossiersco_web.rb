@@ -60,12 +60,6 @@ end
 
 
 
-post '/commentaire' do
-  dossier_eleve = eleve.dossier_eleve
-  dossier_eleve.commentaire = params[:commentaire]
-  dossier_eleve.save!
-  redirect '/confirmation'
-end
 
 get '/stats' do
   etablissements = Etablissement.all.sort_by {|e| e.dossier_eleve.count}.reverse

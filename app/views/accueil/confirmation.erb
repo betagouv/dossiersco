@@ -59,12 +59,13 @@
           $('#commentaire').removeClass('d-none');
           $('#commentaire-textarea').focus();
       })
-      $('#envoyer-commentaire').click(function() {
+      $('#envoyer-commentaire').click(function(event) {
+        event.preventDefault()
         var commentaire = $('#commentaire-textarea').val();
         $.ajax({
             method: "POST",
             url: "/commentaire",
-            data: { commentaire: commentaire},
+            data: { commentaire: commentaire, authenticity_token: "<%= form_authenticity_token %>"},
             success : function() {
               $('#satisfaction').hide('slow')
               $('#question-satisfaction').hide('slow')

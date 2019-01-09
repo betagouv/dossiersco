@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   get '/confirmation', to: 'accueil#confirmation'
 
   post '/satisfaction', to: 'accueil#satisfaction'
+  post '/commentaire', to: 'accueil#commentaire'
 
   get '/pieces_a_joindre', to: 'accueil#pieces_a_joindre'
   post '/enregistre_piece_jointe', to: 'accueil#enregistre_piece_jointe'
