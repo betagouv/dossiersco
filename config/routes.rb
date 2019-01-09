@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
   get '/pieces_a_joindre', to: 'accueil#pieces_a_joindre'
   post '/enregistre_piece_jointe', to: 'accueil#enregistre_piece_jointe'
+  post '/pieces_a_joindre', to: 'accueil#post_pieces_a_joindre'
 
   get '/piece/:dossier_eleve/:code_piece/:s3_key', to: 'accueil#piece'
 

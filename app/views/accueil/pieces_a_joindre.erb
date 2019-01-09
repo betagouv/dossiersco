@@ -24,6 +24,7 @@
   </div>
   <%= render partial: 'partials/pieces_jointes', locals: { dossier_eleve: dossier_eleve, action: "/enregistre_piece_jointe" } %>
   <form action="/pieces_a_joindre" method='POST'>
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
     <%= render partial: 'partials/nouveau_precedent_suivant', :locals => { :precedent => "administration"} %>
   </form>
 </div>
