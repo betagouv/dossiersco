@@ -558,4 +558,23 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     assert_equal 200, response.status
   end
 
+  def test_affichage_preview_pdf_famille
+    eleve = Eleve.find_by(identifiant: 6)
+    piece_attendue = PieceAttendue.find_by(code: 'assurance_scolaire',
+      etablissement_id: eleve.dossier_eleve.etablissement.id)
+    piece_jointe = PieceJointe.create(clef: 'assurance_scannee.pdf', dossier_eleve_id: eleve.dossier_eleve.id,
+      piece_attendue_id: piece_attendue.id)
+    post '/identification', params: { identifiant: '6', annee: '1970', mois: '01', jour: '01' }
+    get '/pieces_a_joindre'
+    doc = Nokogiri::HTML(response.body)
+    documents_route = FichierUploader::route_lecture '6', 'assurance_scolaire'
+    expected_url = documents_route+"/assurance_scannee.pdf"
+    assert_equal "background-image: url('/images/document-pdf.png'); height: 200px; max-width: 350px;",
+                 doc.css("#image_assurance_scolaire").attr("style").text
+    assert doc.css('#image_assurance_scolaire').attr("class").text.split.include?("lien-piece-jointe")
+    assert_equal "modal", doc.css('#image_assurance_scolaire').attr("data-toggle").text
+    assert_equal "#modal-pieces-jointes", doc.css('#image_assurance_scolaire').attr("data-target").text
+    assert_equal expected_url, doc.css('#image_assurance_scolaire').attr("data-url").text
+  end
+
 end
