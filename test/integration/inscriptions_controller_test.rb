@@ -59,6 +59,11 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_empty doc.css("button[type=submit]")
   end
 
+  def test_traiter_zero_imports
+    get '/api/traiter_imports'
+    assert_equal 200, response.status
+  end
+
 
 end
 
