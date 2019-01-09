@@ -27,4 +27,6 @@ Rails.application.routes.draw do
   post '/enregistre_piece_jointe', to: 'accueil#enregistre_piece_jointe'
 
   get '/piece/:dossier_eleve/:code_piece/:s3_key', to: 'accueil#piece'
+
+  get '/deconnexion', to: 'accueil#deconnexion'
 end

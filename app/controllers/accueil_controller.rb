@@ -271,8 +271,8 @@ class AccueilController < ApplicationController
   def upload_pieces_jointes dossier_eleve, params, etat='soumis'
     p "PARAMS: #{params.inspect}"
     params.each do |code, piece|
-      if params[code].present? and params[code]["tempfile"].present?
-        file = File.open(params[code]["tempfile"])
+      if params[code].present? && code != "authenticity_token"
+        file = File.open(params[code].tempfile)
         uploader = FichierUploader.new
         uploader.store!(file)
         nom_du_fichier = File.basename(file.path)
