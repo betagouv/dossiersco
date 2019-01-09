@@ -21,70 +21,12 @@ end
 
 set :database_file, "config/database.yml"
 
-before '/agent/*' do
-  agent_connecte = agent
-  identifiant = agent_connecte.present? ? agent.identifiant : '<anonyme>'
-  Trace.create(identifiant: identifiant,
-    categorie: 'agent',
-    page_demandee: request.path_info,
-    adresse_ip: request.ip)
-  redirect '/agent' unless agent.present?
-end
-
-get '/agent' do
-  erb :'agent/identification'
-end
 
 get '/agent/deconnexion' do
   session.clear
   redirect '/agent'
 end
 
-post '/agent' do
-  agent = Agent.find_by(identifiant: params[:identifiant])
-  mdp_saisi = params[:mot_de_passe]
-  if agent && (BCrypt::Password.new(agent.password) == mdp_saisi)
-    session[:identifiant] = agent.identifiant
-    redirect '/agent/liste_des_eleves'
-  else
-    session[:erreur_login] = "Ces informations ne correspondent pas à un agent enregistré"
-    redirect '/agent'
-  end
-end
-
-get '/agent/liste_des_eleves' do
-  lignes_eleves = DossierEleve
-    .joins(:eleve,:resp_legal)
-    .select('dossier_eleves.id as dossier_id')
-    .select('dossier_eleves.updated_at as dossier_maj')
-    .select('dossier_eleves.*')
-    .select('eleves.*')
-    .select('resp_legals.email')
-    .select('adresse,code_postal,ville,adresse_ant,code_postal_ant,ville_ant')
-    .order('eleves.classe_ant DESC, dossier_eleves.etat, eleves.identifiant')
-    .where(resp_legals:{priorite:1}, etablissement: agent.etablissement)
-  pieces_jointes = PieceJointe
-    .joins(:dossier_eleve,:piece_attendue)
-    .select('dossier_eleves.id as dossier_id').select('piece_jointes.*')
-    .where(piece_attendues:{etablissement_id: agent.etablissement.id})
-    .group_by(&:dossier_eleve_id)
-  messages = Message
-    .joins(:dossier_eleve)
-    .select('dossier_eleves.id as dossier_id').select('messages.dossier_eleve_id')
-    .where(dossier_eleves:{etablissement_id: agent.etablissement.id})
-    .group_by(&:dossier_eleve_id)
-  message_info = session[:message_info]
-  session.delete :message_info
-  erb :'agent/liste_des_eleves',
-      layout: :layout_agent,
-      locals: {
-          agent: agent,
-          lignes_eleves: lignes_eleves,
-          message_info: message_info,
-          messages: messages,
-          pieces_attendues: agent.etablissement.piece_attendue,
-          pieces_jointes: pieces_jointes}
-end
 
 get '/agent/tableau_de_bord' do
   total_dossiers = agent.etablissement.dossier_eleve.count

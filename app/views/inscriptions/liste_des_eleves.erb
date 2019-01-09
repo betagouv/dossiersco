@@ -92,7 +92,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/yadcf/0.9.3/jquery.dataTables.yadcf.min.js"></script>
 <script src="https://cdn.datatables.net/select/1.2.6/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
-<%= erb :'partials/image_box' %>
+<%= render partial: 'partials/image_box' %>
 <script type="text/javascript" charset="utf-8">
   $('.etat').click(function() {
     var id = $(this).parent().data('piece-id');

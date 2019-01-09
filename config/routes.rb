@@ -33,4 +33,9 @@ Rails.application.routes.draw do
   get '/deconnexion', to: 'accueil#deconnexion'
 
   get '/stats', to: 'accueil#stats'
+
+  get '/agent', to: 'inscriptions#agent'
+  post '/agent', to: 'inscriptions#post_agent'
+
+  get '/agent/liste_des_eleves', to: 'inscriptions#liste_des_eleves'
 end
