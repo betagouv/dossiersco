@@ -1,6 +1,8 @@
 require 'traitement'
 
 class AccueilController < ApplicationController
+  before_action :verifie_identité, except: [:index, :identification, :stats]
+
   def index
   end
 
@@ -294,4 +296,10 @@ class AccueilController < ApplicationController
     render :stats, locals: {etablissements: etablissements}
   end
 
+  def verifie_identité
+    unless eleve
+      session[:message_erreur] = "Vous avez été déconnecté par mesure de sécurité. Merci de vous identifier avant de continuer."
+      redirect_to '/'
+    end
+  end
 end
