@@ -3,6 +3,7 @@ class InscriptionsController < ApplicationController
   layout 'layout_agent'
 
   def agent
+    render :identification
   end
 
   def post_agent
