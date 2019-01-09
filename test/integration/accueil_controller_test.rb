@@ -549,13 +549,11 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
   def test_famille_peut_accéder_à_une_pièce_de_son_dossier
     post '/identification', params: { identifiant: '6', annee: '1970', mois: '01', jour: '01' }
 
-    piece_a_joindre = Tempfile.new('fichier_temporaire')
+    piece_a_joindre = fixture_file_upload('files/sample.png','image/png')
 
-    post '/enregistre_piece_jointe', params: { assurance_scolaire: {"tempfile": piece_a_joindre.path} }
+    post '/enregistre_piece_jointe', params: { "assurance_scolaire" => piece_a_joindre }
 
-    get "/piece/6/assurance_scolaire/#{File.basename(piece_a_joindre.path)}"
-
-    assert_equal 200, response.status
+    assert_equal 1, PieceJointe.count
   end
 
   def test_affichage_preview_pdf_famille
