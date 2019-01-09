@@ -40,7 +40,7 @@
           <% @explication = "Sélectionnez un fichier au format xls" %>
           <% @variable = "filename" %>
           <% @action = "Parcourir" %>
-          <%= erb :'partials/carte_upload' %>
+          <%= render partial: 'partials/carte_upload' %>
       </div>
 
       <p>Pour limiter l'import à un seul élève, il suffit d'ajouter :</p>
