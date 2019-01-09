@@ -41,4 +41,6 @@ Rails.application.routes.draw do
 
   get '/agent/import_siecle', to: 'inscriptions#new_import_siecle'
   post '/agent/import_siecle', to: 'inscriptions#import_siecle'
+
+  get '/api/traiter_imports', to: 'inscriptions#declenche_traiter_imports'
 end

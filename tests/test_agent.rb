@@ -25,13 +25,6 @@ class EleveFormTest < Test::Unit::TestCase
     ActionMailer::Base.deliveries = []
   end
 
-
-
-  def test_traiter_zero_imports
-    get '/api/traiter_imports'
-    assert_equal 200, last_response.status
-  end
-
   def test_traiter_import_eleve_fichier_siecle
     nombre_eleves_debut = Eleve.all.count
     etablissement = Etablissement.find_by(nom: 'Collège Germaine Tillion')

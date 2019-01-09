@@ -1,7 +1,7 @@
 require 'traitement'
 
 class InscriptionsController < ApplicationController
-  before_action :identification, except: [:post_agent, :agent]
+  before_action :identification, except: [:post_agent, :agent, :declenche_traiter_imports]
   layout 'layout_agent'
 
   def agent
@@ -76,6 +76,11 @@ class InscriptionsController < ApplicationController
   def new_import_siecle
     tache = get_agent.etablissement.tache_import.last
     render :import_siecle, locals: {agent: get_agent, tache: tache, message: ""}
+  end
+
+  def declenche_traiter_imports
+    traiter_imports
+    head :ok
   end
 
   private

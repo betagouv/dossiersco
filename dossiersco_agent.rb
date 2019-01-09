@@ -42,11 +42,6 @@ post '/agent/tableau_de_bord' do
   redirect '/agent/tableau_de_bord'
 end
 
-
-get '/api/traiter_imports' do
-  traiter_imports
-end
-
 get '/agent/eleve/:identifiant' do
   eleve = Eleve.find_by(identifiant: params[:identifiant])
   dossier_eleve = eleve.dossier_eleve
