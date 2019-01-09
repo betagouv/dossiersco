@@ -27,14 +27,6 @@ class EleveFormTest < Test::Unit::TestCase
 
 
 
-  def test_nombre_dossiers_total
-    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-    follow_redirect!
-    doc = Nokogiri::HTML(last_response.body)
-    selector = '#total_dossiers'
-    affichage_total_dossiers = doc.css(selector).text
-    assert_equal '5', affichage_total_dossiers
-  end
 
   def test_singularize_dossier_eleve
     assert_equal 'dossier_eleves', 'dossier_eleves'.singularize
