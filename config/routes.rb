@@ -39,5 +39,6 @@ Rails.application.routes.draw do
 
   get '/agent/liste_des_eleves', to: 'inscriptions#liste_des_eleves'
 
+  get '/agent/import_siecle', to: 'inscriptions#new_import_siecle'
   post '/agent/import_siecle', to: 'inscriptions#import_siecle'
 end

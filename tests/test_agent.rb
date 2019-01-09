@@ -27,20 +27,6 @@ class EleveFormTest < Test::Unit::TestCase
 
 
 
-  def test_affiche_statut_import
-    agent = Agent.find_by(identifiant: 'pierre')
-    tache_import = TacheImport.create(
-        url: 'tests/test_import_siecle.xls',
-        statut: 'en_cours',
-        etablissement_id: agent.etablissement.id)
-    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-
-    get '/agent/import_siecle'
-    doc = Nokogiri::HTML(last_response.body)
-    assert_match "L'import de cette base est en cours.", doc.css('.statut-import').text
-    assert_empty doc.css("button[type=submit]")
-  end
-
   def test_traiter_zero_imports
     get '/api/traiter_imports'
     assert_equal 200, last_response.status

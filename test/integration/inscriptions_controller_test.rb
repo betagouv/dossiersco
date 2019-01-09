@@ -44,5 +44,21 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert tache_import != nil
     # assert_equal('tests/test_import_siecle.xls', tache_import.url)
   end
+
+  def test_affiche_statut_import
+    agent = Agent.find_by(identifiant: 'pierre')
+    tache_import = TacheImport.create(
+        url: 'tests/test_import_siecle.xls',
+        statut: 'en_cours',
+        etablissement_id: agent.etablissement.id)
+    post '/agent', params: {identifiant: 'pierre', mot_de_passe: 'demaulmont'}
+
+    get '/agent/import_siecle'
+    doc = Nokogiri::HTML(response.body)
+    assert_match "L'import de cette base est en cours.", doc.css('.statut-import').text
+    assert_empty doc.css("button[type=submit]")
+  end
+
+
 end
 
