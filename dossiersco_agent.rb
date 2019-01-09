@@ -42,11 +42,6 @@ post '/agent/tableau_de_bord' do
   redirect '/agent/tableau_de_bord'
 end
 
-get '/agent/import_siecle' do
-  tache = agent.etablissement.tache_import.last
-  erb :'agent/import_siecle', layout: :layout_agent, locals: {agent: agent, tache: tache, message: ""}
-end
-
 
 get '/api/traiter_imports' do
   traiter_imports

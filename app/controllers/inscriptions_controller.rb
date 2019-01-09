@@ -73,6 +73,11 @@ class InscriptionsController < ApplicationController
         }
   end
 
+  def new_import_siecle
+    tache = get_agent.etablissement.tache_import.last
+    render :import_siecle, locals: {agent: get_agent, tache: tache, message: ""}
+  end
+
   private
   def get_agent
     @agent ||= Agent.find_by(identifiant: session[:identifiant])
