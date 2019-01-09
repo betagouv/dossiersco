@@ -241,7 +241,7 @@ class AccueilController < ApplicationController
       end
       send_data fichier.url(Time.now.to_i + 30)
     else
-      redirect '/'
+      redirect_to '/'
     end
   end
 
@@ -269,7 +269,6 @@ class AccueilController < ApplicationController
   end
 
   def upload_pieces_jointes dossier_eleve, params, etat='soumis'
-    p "PARAMS: #{params.inspect}"
     params.each do |code, piece|
       if params[code].present? && code != "authenticity_token" && code != "controller" && code != "action"
         file = File.open(params[code].tempfile)
