@@ -56,16 +56,6 @@ before '/*' do
   redirect '/'
 end
 
-
-
-
-
-
-get '/stats' do
-  etablissements = Etablissement.all.sort_by {|e| e.dossier_eleve.count}.reverse
-  erb :stats, locals: {etablissements: etablissements}
-end
-
 get '/api/recevoir_sms' do
   puts params.merge(request.content_type == 'application/json' ? JSON.parse(request.body.read) : {})
   status 204
@@ -74,19 +64,5 @@ end
 post '/api/recevoir_sms' do
   puts params.merge(request.content_type == 'application/json' ? JSON.parse(request.body.read) : {})
   status 204
-end
-
-not_found do
-  erb :not_found
-end
-
-error do
-  erb :error
-end
-
-def sauve_et_redirect dossier_eleve, etape_la_plus_avancee
-  dossier_eleve.etape_la_plus_avancee = etape_la_plus_avancee
-  dossier_eleve.save!
-  redirect "/#{etape_la_plus_avancee}"
 end
 

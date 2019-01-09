@@ -310,4 +310,9 @@ class AccueilController < ApplicationController
     head :ok
   end
 
+  def stats
+    etablissements = Etablissement.all.sort_by {|e| e.dossier_eleve.count}.reverse
+    render :stats, locals: {etablissements: etablissements}
+  end
+
 end

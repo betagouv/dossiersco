@@ -31,4 +31,6 @@ Rails.application.routes.draw do
   get '/piece/:dossier_eleve/:code_piece/:s3_key', to: 'accueil#piece'
 
   get '/deconnexion', to: 'accueil#deconnexion'
+
+  get '/stats', to: 'accueil#stats'
 end
