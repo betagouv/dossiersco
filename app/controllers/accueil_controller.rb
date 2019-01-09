@@ -303,6 +303,11 @@ class AccueilController < ApplicationController
     end
   end
 
-
+  def commentaire
+    dossier_eleve = eleve.dossier_eleve
+    dossier_eleve.commentaire = params[:commentaire]
+    dossier_eleve.save!
+    head :ok
+  end
 
 end
