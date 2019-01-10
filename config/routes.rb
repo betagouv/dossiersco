@@ -43,4 +43,6 @@ Rails.application.routes.draw do
   post '/agent/import_siecle', to: 'inscriptions#import_siecle'
 
   get '/api/traiter_imports', to: 'inscriptions#declenche_traiter_imports'
+
+  post '/agent/change_etat_fichier', to: 'inscriptions#change_etat_fichier'
 end

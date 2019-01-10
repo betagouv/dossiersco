@@ -25,19 +25,6 @@ class EleveFormTest < Test::Unit::TestCase
     ActionMailer::Base.deliveries = []
   end
 
-  def test_un_visiteur_anonyme_ne_peut_pas_valider_une_piece_jointe
-    dossier_eleve = DossierEleve.last
-    piece_attendue = PieceAttendue.find_by(code: 'assurance_scolaire',
-      etablissement_id: dossier_eleve.etablissement.id)
-    piece_jointe = PieceJointe.create(clef: 'assurance_scannee.pdf', dossier_eleve_id: dossier_eleve.id,
-      piece_attendue_id: piece_attendue.id)
-    etat_préservé = piece_jointe.etat
-
-    post '/agent/change_etat_fichier', id: piece_jointe.id, etat: 'validé'
-
-    nouvel_etat_piece = PieceJointe.find(piece_jointe.id).etat
-    assert_equal etat_préservé, nouvel_etat_piece
-  end
 
   def test_un_agent_visualise_un_eleve
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
