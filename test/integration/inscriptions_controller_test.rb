@@ -355,5 +355,13 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     doc = Nokogiri::HTML(response.body)
     assert_equal 'disabled', doc.css("#bouton-eleve-sortant").first.attributes['disabled'].value
   end
+
+  def test_liste_des_eleves
+    post '/agent', params: {identifiant: 'pierre', mot_de_passe: 'demaulmont'}
+    get '/agent/liste_des_eleves'
+
+    assert response.body.include? "Edith"
+    assert response.body.include? "Piaf"
+  end
 end
 
