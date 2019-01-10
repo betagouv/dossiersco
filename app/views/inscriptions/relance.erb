@@ -21,6 +21,7 @@
   </div>
 
   <form action="/agent/relance_emails" method="POST">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
     <div class="form-group">
       <input type="hidden" name="ids" value=<%= ids.join(',') %> />
       <label for="template-email">Template de l'email :</label>

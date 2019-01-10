@@ -1,4 +1,5 @@
 <form action="/agent/creer_agent"  method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
   <h2>Créer un agent</h2>
   <br>
   <label for="identifiant">Identifiant</label>
