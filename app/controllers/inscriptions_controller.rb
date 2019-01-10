@@ -138,6 +138,14 @@ class InscriptionsController < ApplicationController
     end
   end
 
+  def post_pdf
+    eleve = Eleve.find_by identifiant: params[:identifiant]
+    pdf = genere_pdf eleve
+    agent = Agent.find_by(identifiant: session[:identifiant])
+    send_data pdf.render, type: 'application/pdf', disposition: 'inline'
+
+  end
+
   private
   def get_agent
     @agent ||= Agent.find_by(identifiant: session[:identifiant])

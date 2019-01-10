@@ -324,5 +324,12 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert response.body.include? "Photo d’identité"
   end
 
+  def test_un_agent_genere_un_pdf
+    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+
+    post '/agent/pdf', params: { identifiant: 3 }
+
+    assert_equal 'application/pdf', response.headers['Content-Type']
+  end
 end
 

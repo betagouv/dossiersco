@@ -103,13 +103,6 @@ get '/agent/pdf' do
   erb :'agent/courrier', :layout_agent
 end
 
-post '/agent/pdf' do
-  content_type 'application/pdf'
-  eleve = Eleve.find_by identifiant: params[:identifiant]
-  pdf = genere_pdf eleve
-  agent = Agent.find_by(identifiant: session[:identifiant])
-  pdf.render
-end
 
 post '/agent/valider_inscription' do
   eleve = Eleve.find_by identifiant: params[:identifiant]
