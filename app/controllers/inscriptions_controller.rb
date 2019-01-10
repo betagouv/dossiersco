@@ -107,6 +107,37 @@ class InscriptionsController < ApplicationController
       meme_adresse: meme_adresse}
   end
 
+  def pieces_attendues
+    etablissement = get_agent.etablissement
+    piece_attendues = etablissement.piece_attendue
+    render :piece_attendues, locals: {agent: get_agent, piece_attendues: piece_attendues}
+  end
+
+  def post_pieces_attendues
+    etablissement = get_agent.etablissement
+    code_piece = params[:nom].gsub(/[^a-zA-Z0-9]/, '_').upcase.downcase
+    piece_attendue = PieceAttendue.find_by(
+        code: code_piece,
+        etablissement: etablissement.id)
+
+    if !params[:nom].present?
+      message = "Une pièce doit comporter un nom"
+      render :piece_attendues, locals: {piece_attendues: etablissement.piece_attendue, message: message}
+    elsif piece_attendue.present? && (piece_attendue.nom == code_piece)
+      message = "#{params[:nom]} existe déjà"
+      render :piece_attendues, locals: {piece_attendues: etablissement.piece_attendue, message: message}
+    else
+      piece_attendue = PieceAttendue.create!(
+          nom: params[:nom],
+          explication: params[:explication],
+          obligatoire: params[:obligatoire],
+          etablissement_id: etablissement.id,
+          code: code_piece)
+      render :piece_attendues,
+          locals: {piece_attendues: etablissement.piece_attendue, agent: get_agent}
+    end
+  end
+
   private
   def get_agent
     @agent ||= Agent.find_by(identifiant: session[:identifiant])

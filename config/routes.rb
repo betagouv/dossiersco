@@ -47,4 +47,7 @@ Rails.application.routes.draw do
   post '/agent/change_etat_fichier', to: 'inscriptions#change_etat_fichier'
 
   get '/agent/eleve/:identifiant', to: 'inscriptions#eleve'
+
+  get '/agent/piece_attendues', to: 'inscriptions#pieces_attendues'
+  post '/agent/piece_attendues', to: 'inscriptions#post_pieces_attendues'
 end
