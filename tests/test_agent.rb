@@ -25,17 +25,6 @@ class EleveFormTest < Test::Unit::TestCase
     ActionMailer::Base.deliveries = []
   end
 
-
-  def test_un_agent_ajoute_une_nouvelle_piece_attendue
-    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-
-    post '/agent/piece_attendues', nom: 'Photo d’identité', explication: 'Pour coller sur le carnet'
-
-    post '/identification', identifiant: '5', annee: '1970', mois: '01', jour: '01'
-    get '/pieces_a_joindre'
-    assert_match /Photo d’identité/, last_response.body
-  end
-
   def test_un_agent_genere_un_pdf
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
 

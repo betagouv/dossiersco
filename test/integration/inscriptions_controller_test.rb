@@ -314,5 +314,15 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert response.body.include? 'Piaf'
   end
 
+  def test_un_agent_ajoute_une_nouvelle_piece_attendue
+    post '/agent', params: {identifiant: 'pierre', mot_de_passe: 'demaulmont'}
+    post '/agent/piece_attendues', params: {nom: 'Photo d’identité', explication: 'Pour coller sur le carnet'}
+
+    post '/identification', params: {identifiant: '5', annee: '1970', mois: '01', jour: '01'}
+    get '/pieces_a_joindre'
+
+    assert response.body.include? "Photo d’identité"
+  end
+
 end
 
