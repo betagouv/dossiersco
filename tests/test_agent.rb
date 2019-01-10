@@ -25,13 +25,6 @@ class EleveFormTest < Test::Unit::TestCase
     ActionMailer::Base.deliveries = []
   end
 
-  def test_un_agent_genere_un_pdf
-    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-
-    post '/agent/pdf', identifiant: 3
-
-    assert_equal 'application/pdf', last_response.original_headers['Content-Type']
-  end
 
   def test_valide_une_inscription
     post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'

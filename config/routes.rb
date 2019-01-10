@@ -50,4 +50,6 @@ Rails.application.routes.draw do
 
   get '/agent/piece_attendues', to: 'inscriptions#pieces_attendues'
   post '/agent/piece_attendues', to: 'inscriptions#post_pieces_attendues'
+
+  post '/agent/pdf', to: 'inscriptions#post_pdf'
 end
