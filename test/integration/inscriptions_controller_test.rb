@@ -1,5 +1,6 @@
 require 'test_helper'
 require 'fixtures'
+require 'import_siecle'
 init
 
 class InscriptionsControllerTest < ActionDispatch::IntegrationTest
