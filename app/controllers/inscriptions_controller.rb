@@ -204,6 +204,44 @@ class InscriptionsController < ApplicationController
     redirect_to '/agent/liste_des_eleves'
   end
 
+  def fusionne_modele
+    eleve = Eleve.find_by(identifiant: params[:identifiant])
+    modele = Modele.find(params[:modele_id])
+    template = Tilt['erb'].new { modele.contenu }
+    template.render(nil, eleve: eleve)
+  end
+
+  def valider_plusieurs_dossiers
+    ids = params["ids"]
+    ids.each do |id|
+      DossierEleve.find(id).valide
+    end
+    redirect_to '/agent/liste_des_eleves'
+  end
+
+  def options
+    etablissement = get_agent.etablissement
+    eleves_par_classe = DossierEleve.where(etablissement_id: etablissement.id).collect(&:eleve).group_by(&:niveau_classe_ant)
+    eleves = Eleve.all.select {|e| e.dossier_eleve.etablissement_id == etablissement.id && e.dossier_eleve.etat != 'sortant'}
+    nb_max_options = 0
+    eleves.each do |e|
+      nb_max_options = e.options_apres_montee.count if e.options_apres_montee.count > nb_max_options
+    end
+
+    render :options, locals: {agent: get_agent,etablissement: etablissement, eleves_par_classe: eleves_par_classe,
+                                   eleves: eleves, nb_max_options: nb_max_options}
+  end
+
+  def convocations
+    etablissement = get_agent.etablissement
+    eleves = Eleve.all.select do |e|
+      d = e.dossier_eleve
+      d.etablissement_id == etablissement.id && (d.etat == 'pas connecté' || d.etat == 'connecté')
+    end
+
+    render :convocations, locals: {agent: get_agent,etablissement: etablissement, eleves: eleves}
+  end
+
   private
   def get_agent
     @agent ||= Agent.find_by(identifiant: session[:identifiant])

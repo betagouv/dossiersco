@@ -60,4 +60,12 @@ Rails.application.routes.draw do
   post '/agent/contacter_une_famille', to: 'inscriptions#contacter_une_famille'
 
   post '/agent/relance_emails', to: 'inscriptions#relance_emails'
+
+  get '/agent/fusionne_modele/:modele_id/eleve/:identifiant', to: 'inscriptions#fusionne_modele'
+
+  post '/agent/valider_plusieurs_dossiers', to: 'inscriptions#valider_plusieurs_dossiers'
+
+  get '/agent/options', to: 'inscriptions#options'
+
+  get '/agent/convocations', to: 'inscriptions#convocations'
 end

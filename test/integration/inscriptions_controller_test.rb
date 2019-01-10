@@ -556,6 +556,186 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert part.body.decoded.include? "Réinscription de votre enfant Edith Piaf au collège"
   end
 
+  def test_stats
+    get '/stats'
+    doc = Nokogiri::HTML(response.body)
+    # Etablissements
+    assert_equal Etablissement.count, doc.css(".etablissement").count
+    names = doc.css(".etablissement > .row > .nom").collect(&:text).collect(&:strip)
+    assert names.include? "Collège Germaine Tillion"
+    # Classes - on a 4 classes sur Tillion et 2 sur Oeben dont 2 du même nom entre
+    # les deux établissements
+    names = doc.css(".etablissement .classe > .row > .nom").collect(&:text).collect(&:strip)
+    assert_equal 6, doc.css(".etablissement .classe").count
+    assert_equal 2, (names.select {|x| x == "3EME 1"}).count
+    # Statuts - 100% de non connectés à Oeben
+    pas_connecte = ".etablissement .progress .bg-secondary"
+    assert_equal "2", doc.css(pas_connecte).first.text().strip
+    assert_equal "width: 100.0%;", doc.css(pas_connecte)[1].attr("style")
+  end
 
+  def test_page_eleve_agent_affiche_changement_adresse
+    resp_legal_1 = Eleve.find_by(identifiant: '2').dossier_eleve.resp_legal_1
+    resp_legal_1.update adresse: 'Nouvelle adresse'
+
+    post '/agent', params: {identifiant: 'pierre', mot_de_passe: 'demaulmont'}
+
+    get '/agent/eleve/2'
+
+    doc = Nokogiri::HTML(response.body)
+    assert_not_nil doc.css("div#ancienne_adresse").first
+  end
+
+  def test_page_eleve_agent_affiche_adresse_sans_changement
+    post '/agent', params: {identifiant: 'pierre', mot_de_passe: 'demaulmont'}
+
+    get '/agent/eleve/2'
+
+    doc = Nokogiri::HTML(response.body)
+    assert_nil doc.css("div#ancienne_adresse").first
+  end
+
+  def test_un_agent_voit_un_commentaire_parent_dans_vue_eleve
+    e = Eleve.create! identifiant: 'XXX'
+    d = DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first.id, commentaire: "Commentaire de test"
+    RespLegal.create! dossier_eleve_id: d.id,
+                      tel_principal: '0101010101', tel_secondaire: '0606060606', email: 'test@test.com', priorite: 1
+
+    post '/agent', params: {identifiant: 'pierre', mot_de_passe: 'demaulmont'}
+    get "/agent/eleve/XXX"
+
+    doc = Nokogiri::HTML(response.body)
+    assert_equal "#{d.satisfaction} : Commentaire de test", doc.css("div#commentaire").first.text
+  end
+
+  def test_historique_messages_envoyes
+    post '/agent', params: {identifiant: 'pierre', mot_de_passe: 'demaulmont'}
+    post '/agent/contacter_une_famille', params: {identifiant: '2', message: 'Message 1'}
+    post '/agent/contacter_une_famille', params: {identifiant: '2', message: 'Message 2'}
+    get "/agent/eleve/2"
+    doc = Nokogiri::HTML(response.body)
+    assert_equal 2, doc.css("#historique div.message").count
+    assert doc.css("#historique div.message:nth-child(1) .card-body").text.strip.include? "Message 1"
+    assert doc.css("#historique div.message:nth-child(2) .card-body").text.strip.include? "Message 2"
+  end
+
+  def test_la_validation_de_plusieurs_dossiers_eleve
+    eleve1 = Eleve.create!(identifiant: 'test1', date_naiss: '1970-01-01')
+    dossier_eleve1 = DossierEleve.create!(eleve_id: eleve1.id, etablissement_id: Etablissement.first.id,
+                                          etat: "en attente de validation")
+    eleve2 = Eleve.create!(identifiant: 'test2', date_naiss: '1970-01-01')
+    dossier_eleve2 = DossierEleve.create!(eleve_id: eleve2.id, etablissement_id: Etablissement.first.id,
+                                          etat: "en attente de validation")
+    ids = [dossier_eleve1.id.to_s, dossier_eleve2.id.to_s]
+
+    assert_equal 0, ActionMailer::Base.deliveries.count
+
+    post '/agent', params: {identifiant: 'pierre', mot_de_passe: 'demaulmont'}
+    post '/agent/valider_plusieurs_dossiers', params: {ids: ids}
+
+    assert_equal 2, ActionMailer::Base.deliveries.count
+
+    dossier_eleve1 = DossierEleve.find(dossier_eleve1.id)
+    dossier_eleve2 = DossierEleve.find(dossier_eleve2.id)
+
+    assert_equal 'validé', dossier_eleve2.etat
+    assert_equal 'validé', dossier_eleve1.etat
+  end
+
+  def test_propose_modeles_messages
+    modele = Modele.create(nom: "Cantine")
+    Agent.find_by(identifiant: "pierre").etablissement.modele << modele
+    post '/agent', params: {identifiant: 'pierre', mot_de_passe: 'demaulmont'}
+    get '/agent/eleve/4'
+
+    doc = Nokogiri::HTML(response.body)
+    assert_equal 'Cantine', doc.css('select#modeles option').text
+    assert_equal modele.id.to_s, doc.css('select#modeles option').attr("value").text
+  end
+
+  def test_rendu_modele
+    skip("manipulation des templates / render dans le controller à revoir")
+    modele = Modele.create(nom: "Cantine", contenu: "Salut <%= eleve.prenom %>")
+    Agent.find_by(identifiant: "pierre").etablissement.modele << modele
+    post '/agent', params: {identifiant: 'pierre', mot_de_passe: 'demaulmont'}
+    get "/agent/fusionne_modele/#{modele.id}/eleve/4"
+    assert_equal "Salut Pierre", response.body
+  end
+
+  def test_affichage_preview_jpg_cote_agent
+    eleve = Eleve.find_by(identifiant: 6)
+    piece_attendue = PieceAttendue.find_by(code: 'assurance_scolaire',
+                                           etablissement_id: eleve.dossier_eleve.etablissement.id)
+    piece_jointe = PieceJointe.create(clef: 'assurance_photo.jpg', dossier_eleve_id: eleve.dossier_eleve.id,
+                                      piece_attendue_id: piece_attendue.id)
+    post '/agent', params: {identifiant: 'pierre', mot_de_passe: 'demaulmont'}
+
+    get '/agent/eleve/6'
+
+    doc = Nokogiri::HTML(response.body)
+    documents_route = FichierUploader::route_lecture '6', 'assurance_scolaire'
+    expected_url = documents_route+"/assurance_photo.jpg"
+    assert_equal "background-image: url('#{expected_url}'); height: 200px; max-width: 350px;",
+                 doc.css("#image_assurance_scolaire").attr("style").text
+    assert doc.css('#image_assurance_scolaire').attr("class").text.split.include?("lien-piece-jointe")
+    assert_equal "modal", doc.css('#image_assurance_scolaire').attr("data-toggle").text
+    assert_equal "#modal-pieces-jointes", doc.css('#image_assurance_scolaire').attr("data-target").text
+    assert_equal expected_url, doc.css('#image_assurance_scolaire').attr("data-url").text
+  end
+
+
+  def test_affichage_preview_pdf_cote_agent
+    eleve = Eleve.find_by(identifiant: 6)
+    piece_attendue = PieceAttendue.find_by(code: 'assurance_scolaire',
+                                           etablissement_id: eleve.dossier_eleve.etablissement.id)
+    piece_jointe = PieceJointe.create(clef: 'assurance_scannee.pdf', dossier_eleve_id: eleve.dossier_eleve.id,
+                                      piece_attendue_id: piece_attendue.id)
+    post '/agent', params: {identifiant: 'pierre', mot_de_passe: 'demaulmont'}
+
+    get '/agent/eleve/6'
+
+    doc = Nokogiri::HTML(response.body)
+    documents_route = FichierUploader::route_lecture '6', 'assurance_scolaire'
+    expected_url = documents_route+"/assurance_scannee.pdf"
+    assert_equal "background-image: url('/images/document-pdf.png'); height: 200px; max-width: 350px;",
+                 doc.css("#image_assurance_scolaire").attr("style").text
+    assert doc.css('#image_assurance_scolaire').attr("class").text.split.include?("lien-piece-jointe")
+    assert_equal "modal", doc.css('#image_assurance_scolaire').attr("data-toggle").text
+    assert_equal "#modal-pieces-jointes", doc.css('#image_assurance_scolaire').attr("data-target").text
+    assert_equal expected_url, doc.css('#image_assurance_scolaire').attr("data-url").text
+  end
+
+  def test_affiche_options
+    eleve1 = Eleve.find_by(nom: 'Piaf')
+    eleve2 = Eleve.find_by(identifiant: 3)
+    eleve2.dossier_eleve.update(etat: 'sortant')
+    latin = Option.create(nom: 'latin', groupe: 'LCA')
+    eleve1.option << latin
+    post '/agent', params: {identifiant: 'pierre', mot_de_passe: 'demaulmont'}
+
+    get '/agent/options'
+
+    assert ! response.body.include?(eleve2.prenom)
+    assert response.body.include? "latin"
+  end
+
+  def test_liste_resp_legaux
+    eleve = Eleve.find_by(nom: 'Piaf')
+    eleve.dossier_eleve.update(etat: "pas connecté")
+    eleve_2 = Eleve.find_by(nom: 'Blayo')
+    eleve_2.dossier_eleve.update(etat: "connecté")
+    post '/agent', params: {identifiant: 'pierre', mot_de_passe: 'demaulmont'}
+
+    get '/agent/convocations'
+
+    resp_legal_1 = eleve.dossier_eleve.resp_legal.find {|d| d.priorite == 1}
+    resp_legal_1_eleve_2 = eleve_2.dossier_eleve.resp_legal.find {|d| d.priorite == 1}
+    doc = Nokogiri::HTML(response.body)
+    assert_equal resp_legal_1.prenom, doc.css("tbody > tr:nth-child(1) > td:nth-child(4)").text.strip
+    assert_equal resp_legal_1.nom, doc.css("tbody > tr:nth-child(1) > td:nth-child(5)").text.strip
+    assert_equal resp_legal_1.tel_principal, doc.css("tbody > tr:nth-child(1) > td:nth-child(6)").text.strip
+    assert_equal resp_legal_1.tel_secondaire, doc.css("tbody > tr:nth-child(1) > td:nth-child(7)").text.strip
+    assert_equal resp_legal_1_eleve_2.prenom, doc.css("tbody > tr:nth-child(2) > td:nth-child(4)").text.strip
+  end
 end
 
