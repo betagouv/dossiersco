@@ -67,19 +67,6 @@ post '/agent/pieces_jointes_eleve/:identifiant' do
   redirect "/agent/eleve/#{eleve.identifiant}#dossier"
 end
 
-get '/agent/options' do
-  etablissement = agent.etablissement
-  eleves_par_classe = DossierEleve.where(etablissement_id: etablissement.id).collect(&:eleve).group_by(&:niveau_classe_ant)
-  eleves = Eleve.all.select {|e| e.dossier_eleve.etablissement_id == etablissement.id && e.dossier_eleve.etat != 'sortant'}
-  nb_max_options = 0
-  eleves.each do |e|
-    nb_max_options = e.options_apres_montee.count if e.options_apres_montee.count > nb_max_options
-  end
-
-  erb :'agent/options', locals: {agent: agent,etablissement: etablissement, eleves_par_classe: eleves_par_classe,
-    eleves: eleves, nb_max_options: nb_max_options}, layout: :layout_agent
-end
-
 get '/agent/export' do
   erb :'agent/export',
   locals: {agent: agent}, layout: :layout_agent
@@ -125,31 +112,6 @@ post '/agent/relance_sms' do
     DossierEleve.find(id).relance_sms template
   end
   redirect '/agent/liste_des_eleves'
-end
-
-post '/agent/valider_plusieurs_dossiers' do
-  ids = params["ids"]
-  ids.each do |id|
-    DossierEleve.find(id).valide
-  end
-  redirect '/agent/liste_des_eleves'
-end
-
-get '/agent/fusionne_modele/:modele_id/eleve/:identifiant' do
-  eleve = Eleve.find_by(identifiant: params[:identifiant])
-  modele = Modele.find(params[:modele_id])
-  template = Tilt['erb'].new { modele.contenu }
-  template.render(nil, eleve: eleve)
-end
-
-get '/agent/convocations' do
-  etablissement = agent.etablissement
-  eleves = Eleve.all.select do |e|
-    d = e.dossier_eleve
-    d.etablissement_id == etablissement.id && (d.etat == 'pas connecté' || d.etat == 'connecté')
-  end
-
-  erb :'agent/convocations', locals: {agent: agent,etablissement: etablissement, eleves: eleves}, layout: :layout_agent
 end
 
 get '/agent/creer_etablissement' do
