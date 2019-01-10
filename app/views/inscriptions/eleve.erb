@@ -102,8 +102,8 @@
     <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
       <% resp_legal_2 = dossier_eleve.resp_legal_2 %>
 
-      <%= construire [{type: 'contact', contact: resp_legal_1}] %>
-      <%= construire [{type: 'contact', contact: resp_legal_2}] %>
+      <%= raw(construire [{type: 'contact', contact: resp_legal_1}]) %>
+      <%= raw(construire [{type: 'contact', contact: resp_legal_2}]) %>
 
       <% if resp_legal_2.present? %>
          <p>Ces responsables légaux <strong>habitent à
@@ -117,18 +117,18 @@
 
       <h2 class="separation"><%= eleve.classe_ant %> <%= eleve.prenom%> <%=eleve.nom%></h2>
 
-      <%= construire identite %>
+      <%= raw(construire identite) %>
 
       <h2 class="separation">Habite chez <%=resp_legal_1.prenom %> <%=resp_legal_1.nom %></h2>
 
-      <%= construire domicile_actuel %>
+      <%= raw(construire domicile_actuel) %>
       <% if resp_legal_1.changement_adresse %>
         <div id="ancienne_adresse">
           <hr/>
-          <%= construire ancien_domicile %>
+          <%= raw(construire ancien_domicile) %>
         </div>
       <% end %>
-      <%= construire [{type: 'contact', contact: dossier_eleve.contact_urgence}] %>
+      <%= raw(construire [{type: 'contact', contact: dossier_eleve.contact_urgence}]) %>
     </div>
 
     <!-- Echanges -->
