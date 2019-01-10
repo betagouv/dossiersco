@@ -7,7 +7,7 @@
 ### Vie de l'équipe
 
 - 4 jours non stop de [mobProgramming](https://mobprogramming.org/), et c'était particulièrement bien.
-- agenda public :
+- [agenda public](https://calendar.google.com/calendar/embed?src=contact%40dossiersco.beta.gouv.fr&ctz=Europe%2FParis)
 - ouverture et fermeture quotidienne
 
 Points d'améliorations :
