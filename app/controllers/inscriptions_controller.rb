@@ -242,6 +242,97 @@ class InscriptionsController < ApplicationController
     render :convocations, locals: {agent: get_agent,etablissement: etablissement, eleves: eleves}
   end
 
+  def deconnexion
+    reset_session
+    redirect_to '/agent'
+  end
+
+  def tableau_de_bord
+    total_dossiers = get_agent.etablissement.dossier_eleve.count
+    etats, notes, moyenne, dossiers_avec_commentaires = get_agent.etablissement.stats
+    render :tableau_de_bord,
+        locals: {agent: get_agent, total_dossiers: total_dossiers, etats: etats,
+                 notes: notes, moyenne: moyenne, dossiers_avec_commentaires: dossiers_avec_commentaires.sort_by(&:date_signature).reverse}
+  end
+
+  def post_tableau_de_bord
+    get_agent.update(etablissement_id: params[:etablissement])
+    redirect_to '/agent/tableau_de_bord'
+  end
+
+  def pieces_jointes_eleve
+    eleve = Eleve.find_by(identifiant: params[:identifiant])
+    dossier_eleve = eleve.dossier_eleve
+    upload_pieces_jointes dossier_eleve, params, 'valide'
+    redirect_to "/agent/eleve/#{eleve.identifiant}#dossier"
+  end
+
+  def export
+    render :export, locals: {agent: get_agent}
+  end
+
+  def supprime_option
+    Option.find(params[:option_id]).delete
+    head ok
+  end
+
+  def supprime_piece_attendue
+    pieces_existantes = PieceJointe.where(piece_attendue_id: params[:piece_attendue_id])
+    if pieces_existantes.size >= 1
+      message = 'Cette piece ne peut être supprimé'
+      raise
+    else
+      PieceAttendue.find(params[:piece_attendue_id]).delete
+    end
+    head :ok
+  end
+
+  def relance
+    ids = params["ids"].split(',')
+    emails, telephones  = [], []
+
+    ids.each do |id|
+      dossier = DossierEleve.find(id)
+      emails << dossier.resp_legal_1.email
+      telephones << dossier.portable_rl1
+    end
+
+    render :relance,
+        locals: {ids: ids, emails: emails, telephones: telephones}
+  end
+
+  def relance_sms
+    template = params[:template]
+    ids = params[:ids].split(',')
+    ids.each do |id|
+      DossierEleve.find(id).relance_sms template
+    end
+    redirect_to '/agent/liste_des_eleves'
+  end
+
+  def creer_etablissement
+    redirect_to '/agent' unless get_agent.admin
+    render :creer_etablissement
+  end
+
+  def post_creer_etablissement
+    Etablissement.create!(params)
+
+    redirect_to :creer_agent
+  end
+
+  def creer_agent
+    redirect_to '/agent' unless get_agent.admin
+    render :creer_agent
+  end
+
+  def post_creer_agent
+    a = Agent.create!(params)
+    a.password = BCrypt::Password.create(params[:password])
+    a.save!
+    redirect_to "/agent/liste_des_eleves"
+  end
+
   private
   def get_agent
     @agent ||= Agent.find_by(identifiant: session[:identifiant])

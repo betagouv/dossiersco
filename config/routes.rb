@@ -68,4 +68,30 @@ Rails.application.routes.draw do
   get '/agent/options', to: 'inscriptions#options'
 
   get '/agent/convocations', to: 'inscriptions#convocations'
+
+  get '/agent/deconnexion', to: 'inscriptions#deconnexion'
+
+  get '/agent/tableau_de_bord', to: 'inscrpitions#tableau_de_bord'
+  post '/agent/tableau_de_bord', to: 'inscriptions#post_tableau_de_bord'
+
+  post '/agent/pieces_jointes_eleve/:identifiant', to: 'inscriptions#post_pieces_jointes_eleve'
+
+  get '/agent/export', to: 'inscriptions#export'
+
+  post '/agent/supprime_option', to: 'inscriptions#supprime_option'
+
+  post '/agent/supprime_piece_attendue', to: 'inscriptions#supprime_piece_attendue'
+
+  get '/agent/pdf', to: 'inscriptions#pdf'
+
+  get '/agent/relance', to: 'inscriptions#relance'
+      
+  post '/agent/relance_sms', to: 'inscriptions#relance_sms'
+
+  get '/agent/creer_etablissement', to: 'inscriptions#creer_etablissement'
+  post '/agent/creer_etablissement', to: 'inscriptions#post_creer_etablissement'
+
+  get '/agent/creer_agent', to: 'inscriptions#creer_agent'
+  post '/agent/creer_agent', to: 'inscriptions#post_creer_agent'
+
 end

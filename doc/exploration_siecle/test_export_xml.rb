@@ -5,7 +5,7 @@ require 'test/unit'
 require 'rack/test'
 require 'tempfile'
 
-require_relative '../helpers/singulier_francais'
+require_relative '../helpers/rs/singulier_francais'
 require_relative '../helpers/export_siecle'
 
 require_relative '../dossiersco_web'
