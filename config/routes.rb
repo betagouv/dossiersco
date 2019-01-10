@@ -52,4 +52,6 @@ Rails.application.routes.draw do
   post '/agent/piece_attendues', to: 'inscriptions#post_pieces_attendues'
 
   post '/agent/pdf', to: 'inscriptions#post_pdf'
+
+  post '/agent/valider_inscription', to: 'inscriptions#valider_inscription'
 end

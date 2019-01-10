@@ -143,7 +143,15 @@ class InscriptionsController < ApplicationController
     pdf = genere_pdf eleve
     agent = Agent.find_by(identifiant: session[:identifiant])
     send_data pdf.render, type: 'application/pdf', disposition: 'inline'
+  end
 
+  def valider_inscription
+    eleve = Eleve.find_by identifiant: params[:identifiant]
+    dossier_eleve = eleve.dossier_eleve
+    emails = dossier_eleve.resp_legal.map{ |resp_legal| resp_legal.email }
+    dossier_eleve.valide
+
+    redirect_to "/agent/liste_des_eleves"
   end
 
   private

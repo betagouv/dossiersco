@@ -104,15 +104,6 @@ get '/agent/pdf' do
 end
 
 
-post '/agent/valider_inscription' do
-  eleve = Eleve.find_by identifiant: params[:identifiant]
-  dossier_eleve = eleve.dossier_eleve
-  emails = dossier_eleve.resp_legal.map{ |resp_legal| resp_legal.email }
-  dossier_eleve.valide
-
-  redirect "/agent/liste_des_eleves"
-end
-
 post '/agent/eleve_sortant' do
   eleve = Eleve.find_by identifiant: params[:identifiant]
   dossier_eleve = eleve.dossier_eleve
