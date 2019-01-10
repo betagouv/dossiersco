@@ -331,5 +331,17 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal 'application/pdf', response.headers['Content-Type']
   end
+
+  def test_valide_une_inscription
+    post '/agent', params: {identifiant: 'pierre', mot_de_passe: 'demaulmont'}
+
+    post '/agent/valider_inscription', params: {identifiant: '4'}
+    eleve = Eleve.find_by(identifiant: '4')
+    assert_equal 'validé', eleve.dossier_eleve.etat
+
+    get "/agent/eleve/#{eleve.identifiant}"
+    doc = Nokogiri::HTML(response.body)
+    assert_equal 'disabled', doc.css("#bouton-validation-inscription").first.attributes['disabled'].value
+  end
 end
 
