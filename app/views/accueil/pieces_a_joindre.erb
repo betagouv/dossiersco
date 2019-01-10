@@ -1,0 +1,45 @@
+<% @section = 4 %>
+<% nb_documents_demandes = dossier_eleve.etablissement.piece_attendue.size %>
+
+<%= render partial: 'partials/navigation', locals: { dossier_eleve: dossier_eleve } %>
+
+<div class="col-12">
+
+  <h2 class="separation">Pièces à joindre</h2>
+
+  <% if defined? message  %>
+    <div class="message_echec"><%= message %></div>
+  <% end %>
+  <div class='card'>
+    <div class='card-body'>
+      <p>Les pièces précédées d'un * sont obligatoires.</p>
+    </div>
+  </div>
+  <div class='card'>
+    <div class='card-body'>
+      <p>Avec un <b>scanner</b>, vous pouvez nous transmettre des documents au format <b>PDF</b> ou <b>image</b>.</p>
+      <p>Vous pouvez aussi utiliser un appareil <b>mobile</b> connecté à Internet (smartphone, tablette) pour prendre la <b>photo</b> d'un document. Attention&nbsp;: le document doit être pris <b>en entier</b>, <b>à plat</b>, et avec un <b>éclairage</b> suffisant pour que nous puissions le relire.</p>
+      <p>Dans ce cas, connectez-vous sur dossiersco.fr, vous serez automatiquement redirigé sur cette page. Pensez à rafraîchir cette page pour visualiser les documents avant de continuer</p>
+    </div>
+  </div>
+  <%= render partial: 'partials/pieces_jointes', locals: { dossier_eleve: dossier_eleve, action: "/enregistre_piece_jointe" } %>
+  <form action="/pieces_a_joindre" method='POST'>
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <%= render partial: 'partials/nouveau_precedent_suivant', :locals => { :precedent => "administration"} %>
+  </form>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<%= render partial: 'partials/image_box' %>
+<script type="text/javascript" src="/js/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js"> </script>
+<script>
+  $(document).ready(function() {
+    $('input[type=file]')[0].focus();
+
+    $('.forms').change(function() {
+      var data = $(this).serialize()
+      $(this).find( ".soumettre" ).click()
+      $("button[type='submit']").attr("disabled", "disabled").addClass('disabled')
+    })
+  });
+</script>

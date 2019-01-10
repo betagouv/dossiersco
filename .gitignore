@@ -8,3 +8,9 @@ notes
 uploads
 secrets.*
 resources/secrets
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
+
+log/
+tmp/

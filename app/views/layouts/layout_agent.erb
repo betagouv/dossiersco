@@ -1,0 +1,57 @@
+<!doctype html>
+
+<html lang="fr">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/yadcf/0.9.3/jquery.dataTables.yadcf.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.6/css/select.dataTables.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <title>DossierSCO : l’inscription au collège</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-light navbar-expand-md" style="background-color: transparent;">
+    <a href='/agent/liste_des_eleves'>
+      <img style="height: auto" src='/images/republique_francaise.svg' class='logo'>
+      <span class="navbar-brand">DossierSCO</span>
+    </a>
+    <% if session[:identifiant].present? %>
+      <a class="ml-auto p-2 col-2 text-right" href="/agent/deconnexion">Se deconnecter</a>
+    <% end %>
+  </nav>
+
+<%= render partial: 'partials/navigation_agent' %>
+
+<main role="main" class="container">
+
+  <div class="row row-offcanvas row-offcanvas-right justify-content-center">
+
+  <% if (defined? message_info) && (!message_info.nil?) %>
+    <div class="message_de_succes"><%= message_info %></div>
+  <% end %>
+
+    <%= yield %>
+
+  </div><!--/row-->
+
+</main><!--/.container-->
+
+</body>
+</html>
