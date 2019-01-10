@@ -89,6 +89,24 @@ class InscriptionsController < ApplicationController
     head :ok
   end
 
+  def eleve
+    eleve = Eleve.find_by(identifiant: params[:identifiant])
+    dossier_eleve = eleve.dossier_eleve
+    emails_presents = false
+    resp_legaux = dossier_eleve.resp_legal
+    resp_legaux.each { |r| (emails_presents = true) if r.email.present?}
+    meme_adresse = resp_legaux.first.meme_adresse resp_legaux.second
+    modeles = get_agent.etablissement.modele
+    render :eleve,
+      locals: {
+      emails_presents: emails_presents,
+      agent: get_agent,
+      modeles: modeles,
+      eleve: eleve,
+      dossier_eleve: dossier_eleve,
+      meme_adresse: meme_adresse}
+  end
+
   private
   def get_agent
     @agent ||= Agent.find_by(identifiant: session[:identifiant])

@@ -45,4 +45,6 @@ Rails.application.routes.draw do
   get '/api/traiter_imports', to: 'inscriptions#declenche_traiter_imports'
 
   post '/agent/change_etat_fichier', to: 'inscriptions#change_etat_fichier'
+
+  get '/agent/eleve/:identifiant', to: 'inscriptions#eleve'
 end

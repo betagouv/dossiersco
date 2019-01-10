@@ -304,5 +304,15 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     nouvel_etat_piece = PieceJointe.find(piece_jointe.id).etat
     assert_nil etat_préservé, nouvel_etat_piece
   end
+
+  def test_un_agent_visualise_un_eleve
+    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+
+    get '/agent/eleve/2'
+
+    assert response.body.include? 'Edith'
+    assert response.body.include? 'Piaf'
+  end
+
 end
 
