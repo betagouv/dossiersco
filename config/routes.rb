@@ -56,4 +56,6 @@ Rails.application.routes.draw do
   post '/agent/valider_inscription', to: 'inscriptions#valider_inscription'
 
   post '/agent/eleve_sortant', to: 'inscriptions#eleve_sortant'
+
+  post '/agent/contacter_une_famille', to: 'inscriptions#contacter_une_famille'
 end
