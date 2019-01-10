@@ -118,24 +118,6 @@ get '/agent/relance' do
     locals: {ids: ids, emails: emails, telephones: telephones}
 end
 
-post '/agent/relance_emails' do
-  template = params[:template]
-  ids = params[:ids].split(',')
-  dossier_eleves = []
-
-  ids.each do |id|
-    dossier = DossierEleve.find(id)
-    template = Tilt['erb'].new { template }
-    contenu = template.render(nil, eleve: dossier.eleve)
-    Message.create(categorie:"mail",
-      contenu: contenu,
-      etat: "en attente",
-      dossier_eleve: dossier)
-  end
-
-  redirect '/agent/liste_des_eleves'
-end
-
 post '/agent/relance_sms' do
   template = params[:template]
   ids = params[:ids].split(',')
@@ -193,21 +175,4 @@ post '/agent/creer_agent' do
   a.password = BCrypt::Password.create(params[:password])
   a.save!
   redirect "/agent/liste_des_eleves"
-end
-
-# Route de test uniquement
-get '/agent/testmail/:nom' do
-  class TestMailer < ActionMailer::Base
-    default from: "contact@dossiersco.beta.gouv.fr"
-    default to: "contact@dossiersco.beta.gouv.fr"
-    def testmail(nom)
-      @nom = nom
-      mail(subject: "Test") do |format|
-        format.text
-      end
-    end
-  end
-  nom = params[:nom] || 'testeur'
-  mail = TestMailer.testmail(nom)
-  mail.deliver_now
 end

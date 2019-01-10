@@ -58,4 +58,6 @@ Rails.application.routes.draw do
   post '/agent/eleve_sortant', to: 'inscriptions#eleve_sortant'
 
   post '/agent/contacter_une_famille', to: 'inscriptions#contacter_une_famille'
+
+  post '/agent/relance_emails', to: 'inscriptions#relance_emails'
 end

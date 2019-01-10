@@ -186,6 +186,24 @@ class InscriptionsController < ApplicationController
     redirect_to "/agent/liste_des_eleves"
   end
 
+  def relance_emails
+    template = params[:template]
+    ids = params[:ids].split(',')
+    dossier_eleves = []
+
+    ids.each do |id|
+      dossier = DossierEleve.find(id)
+      template = Tilt['erb'].new { template }
+      contenu = template.render(nil, eleve: dossier.eleve)
+      Message.create(categorie:"mail",
+                     contenu: contenu,
+                     etat: "en attente",
+                     dossier_eleve: dossier)
+    end
+
+    redirect_to '/agent/liste_des_eleves'
+  end
+
   private
   def get_agent
     @agent ||= Agent.find_by(identifiant: session[:identifiant])
