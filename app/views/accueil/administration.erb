@@ -1,0 +1,158 @@
+<% @section = 3 %>
+
+<%= render partial: 'partials/navigation', locals: { dossier_eleve: dossier_eleve } %>
+
+<div class="col-12">
+
+  <h2 class="col separation">Restauration scolaire</h2>
+
+  <form action="/administration" method="POST">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <div id="accordeon-admin-cantine">
+
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <label class="col-sm-7 form-check-label">
+            <input type="radio" name="demi_pensionnaire" value="true" class="form-check-input trigger" onclick="afficher_dp(event)" id='demi_pensionnaire'
+            <% if dossier_eleve.demi_pensionnaire %>
+                                                                                                         checked
+                                                                                                       <% end %>> Demi-pensionnaire
+          </label>
+          <label class="col-sm-4 form-check-label">
+            <input type="radio" name="demi_pensionnaire" value="false" class="form-check-input trigger" onclick="masquer_dp(event)" id='externe'
+            <% if ! dossier_eleve.demi_pensionnaire %>
+                                                                                                          checked
+                                                                                                        <% end %>> Externe
+          </label>
+        </div>
+      </div>
+
+      <div id="dp" style="display: none;">
+
+        <p class="text-danger">En validant cette étape, je m'engage à régler les frais de demi-pension dans les délais impartis.</p>
+        <br />
+        <% if dossier_eleve.etablissement.gere_demi_pension %>
+          <p>Pour déterminer le tarif de la demi-pension pour votre enfant, l'établissement vous demande un justificatif.
+          Sans ce justificatif, le tarif maximal vous sera appliqué.</p>
+          <p>Pour obtenir ce document : </p>
+          <ul>
+            <li>
+              <span <%= dossier_eleve.allocataire ?  'class="font-weight-bold"' : '' %>>Si vous êtes allocataire de la Caisse d'Allocation Famliliales</span>, le document vous a été adressé par la CAF.
+              Il suffit de le scanner ou prendre en photo à l'étape suivante.
+            </li>
+            <li>
+              <span <%= dossier_eleve.allocataire ? '' : 'class="font-weight-bold"' %> >Si vous n'êtes pas allocataire</span>, merci de vous rendre sur le
+              <a href="https://calculette-colleges-restauration.paris.fr/calculetteQF/" target="_blanck">site de la Ville de Paris</a>,
+              pour renseigner votre situation et obtenir le justificatif à transmettre à l'étape suivante.
+              (Le site va s'ouvrir dans un nouvel onglet. Vous pourrez continuer sur DossierSCO sans avoir besoin de vous reconnecter.)<br />
+            </li>
+          </ul>
+        <% end %>
+      </div>
+    </div>
+
+    <h2 class="separation mt-4">Autorisation de sortie</h2>
+
+    <div class="form-check form-check-inline">
+      <label class="form-check-label">
+        <input class="form-check-input" type="radio" name="autorise_sortie" value="true"
+                                                                            id='autorise_sortie'
+                                                                            <% if dossier_eleve.autorise_sortie %>
+                                                                              checked
+                                                                            <% end %>> J'autorise
+      </label>
+    </div>
+    <div class="form-check form-check-inline">
+      <label class="form-check-label">
+        <input class="form-check-input" type="radio" name="autorise_sortie" value="false"
+        <% if !dossier_eleve.autorise_sortie %>
+                                                                              checked
+                                                                            <% end %>> Je n'autorise pas
+      </label>
+    </div>
+
+    <p>mon enfant à quitter le collège après le dernier cours de l'après-midi (ou après le repas s'il n'a pas cours l'après-midi), en cas d'absence de professeur et sous mon entière responsabilité.</p>
+
+    <h2 class="separation mt-4">Renseignements médicaux</h2>
+
+    <div class="row">
+      <div class="col">
+        <div class="form-check">
+          <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" value='true' name="renseignements_medicaux"  id='renseignements_medicaux'
+            <% if dossier_eleve.renseignements_medicaux %>
+                                                                           checked
+                                                                         <% end %>> Je souhaite envoyer par écrit au secrétariat une information médicale (PAI, PPS, PAP).
+          </label>
+        </div>
+        <% if dossier_eleve.etablissement.message_infirmerie.present? %>
+          <div id="message-infirmerie" class="d-none">
+            <%= dossier_eleve.etablissement.message_infirmerie %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <h2 class="separation mt-4">Droit à l'image</h2>
+
+    <div class="form-check form-check-inline">
+      <label class="form-check-label">
+        <input class="form-check-input" type="radio" name="droit_image_photo" value="true" id='autorise_photo_de_classe'
+        <% if dossier_eleve.autorise_photo_de_classe %>
+                                                                                checked
+                                                                              <% end %>> J'accepte
+      </label>
+    </div>
+    <div class="form-check form-check-inline">
+      <label class="form-check-label">
+        <input class="form-check-input" type="radio" name="droit_image_photo" value="false"
+        <% if !dossier_eleve.autorise_photo_de_classe %>
+                                                                                checked
+                                                                              <% end %>> Je n'accepte pas
+      </label>
+    </div>
+
+    <p>que mon enfant soit photographié à l'occasion des photos de classe.</p>
+
+    <%= render partial: 'partials/nouveau_precedent_suivant', :locals => { :precedent => "famille"} %>
+  </form>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+if (<%= dossier_eleve.demi_pensionnaire %>) {
+  document.querySelector('#dp').style.display = 'block'
+}
+
+function afficher_dp(e){
+  document.querySelector('#dp').style.display = 'block'
+}
+
+function masquer_dp(e){
+  document.querySelector('#dp').style.display = 'none'
+}
+
+function afficher_reduction_tarif(e){
+  document.querySelector('#reduction_tarif').style.display = chk_reduction_tarif.checked ? 'block' : 'none'
+}
+if (<%= dossier_eleve.renseignements_medicaux %>) {
+  $('#message-infirmerie').removeClass('d-none')
+}
+
+$('#renseignements_medicaux').click(function(event) {
+  if (event.target.checked) {
+    $('#message-infirmerie').removeClass('d-none')
+  }
+  else {
+    $('#message-infirmerie').addClass('d-none')
+  }
+})
+</script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+<script>
+document.getElementById("demi_pensionnaire").focus();
+</script>

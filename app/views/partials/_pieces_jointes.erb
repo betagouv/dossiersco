@@ -1,0 +1,51 @@
+  <div class="card-deck row">
+    <% dossier_eleve.etablissement.piece_attendue.each do |piece| %>
+      <form class="col-12 col-md-6 forms" action="<%= action %>" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <% piece_jointe = PieceJointe.find_by(
+          piece_attendue_id: piece.id,
+          dossier_eleve_id: dossier_eleve.id) %>
+          <% document_stocke_url = piece_jointe.present? ? piece_jointe.clef : '' %>
+        <div class="card <%= piece_jointe.etat if piece_jointe.present? %>">
+          <h5 class="card-header"><%= '*' if piece.obligatoire %> <%= piece.nom %></h5>
+          <p></p>
+          <div class="card-body">
+            <p class="card-text"><%= piece.explication %></p>
+            <div class="card-relat document">
+
+                <input data-btnClass="btn btn-primary" data-text="Parcourir" class='filestyle' type="file" name="<%= piece.code %>" id="<%= @variable %>"
+                      multiple >
+              <span id="fichier_<%= piece.code %>"></span>
+              <br />
+              <div class="image-piece-a-joindre lien-piece-jointe" id="image_<%= piece.code %>"
+                    <% if document_stocke_url.present?
+                        eleve_identifiant = dossier_eleve.nil? ? '' : dossier_eleve.eleve.identifiant
+                        document_route = FichierUploader::route_lecture(eleve_identifiant, piece.code)+"/"+document_stocke_url
+                        image_url = document_stocke_url.ends_with?('.pdf') ? "/images/document-pdf.png" : document_route
+                      %>
+                      style="background-image: url('<%= image_url %>'); height: 200px; max-width: 350px;"
+                      data-toggle="modal"
+                      data-target="#modal-pieces-jointes"
+                      data-url="<%= document_route %>"
+                      data-ext="<%= piece_jointe.ext %>"
+                    <% end %>>
+              </div>
+            </div>
+            <p><%=
+              case piece_jointe.etat
+              when 'soumis'
+                "Votre document est transmis à l'établissement."
+              when 'invalide'
+                "Votre document ne peut pas être pris en compte par l'établissement pour cette inscription. Merci de prendre connaissance du message de l'établissement et nous fournir une nouvelle version de ce document."
+              when 'valide'
+                "Votre document a été examiné et approuvé par l'établissement."
+              else
+              end if piece_jointe.present?
+              %></p>
+          </div>
+          <button class="soumettre d-none" type="submit">Soumettre</button>
+        </div>
+
+      </form>
+    <% end %>
+  </div>

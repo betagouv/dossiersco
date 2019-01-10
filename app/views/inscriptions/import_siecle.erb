@@ -1,0 +1,68 @@
+<div class="col-12 col-10">
+
+  <span style="display:block; height: 50px;"></span>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-2">
+      </div>
+      <div class="col">
+        <h1 class="separation">Import depuis siecle</h1>
+      </div>
+    </div>
+  </div>
+
+  <% if tache.present? %>
+    <div class="statut-import">
+      <p>Vous avez soumis un fichier de données SIECLE.</p>
+      <% case tache.statut
+        when 'en_attente' %>
+        <p>L'import de cette base sera réalisé prochainement.</p>
+      <% when 'en_cours' %>
+        <p>L'import de cette base est en cours.</p>
+      <% when 'terminée' %>
+        <p>Cette base a bien été importée.</p>
+        <div class="message_de_succes"><a href="/agent/liste_des_eleves"><%= tache.message %></a></div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% unless tache.present? && tache.statut != 'terminée' %>
+    <form action="/agent/import_siecle" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+        <label for="traitement">Traitement:</label>
+        <input type="radio" name="traitement" value="tout">Tout</input>
+        <input type="radio" name="traitement" value="adresses">Adresses</input>
+
+
+      <div class="card-deck">
+          <% @document = "Import depuis siecle" %>
+          <% @explication = "Sélectionnez un fichier au format xls" %>
+          <% @variable = "filename" %>
+          <% @action = "Parcourir" %>
+          <%= render partial: 'partials/carte_upload' %>
+      </div>
+
+      <p>Pour limiter l'import à un seul élève, il suffit d'ajouter :</p>
+      <div>
+        <label for="nom_eleve">Nom de l'élève</label>
+        <input type="text" name="nom_eleve">
+      </div>
+      <div>
+        <label for="nom_eleve">Prénom de l'élève</label>
+        <input type="text" name="prenom_eleve">
+      </div>
+
+      <div class="col">
+        <button type="submit" class="btn btn-primary float-right">Importer <img src="../images/suivant.png" alt="suivant" title="suivant"></button>
+      </div>
+
+    </form>
+  <% end %>
+
+  <span style="display:block; height: 20px;"></span>
+
+</div>
+
+<script type="text/javascript" src="/js/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js"> </script>

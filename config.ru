@@ -1,13 +1,5 @@
-# Configurer Sentry en premier, pour capturer les exceptions
-require 'raven'
+# This file is used by Rack-based servers to start the application.
 
-Raven.configure do |config|
-  config.dsn = ENV['SENTRY_DSN']
-end
+require_relative 'config/environment'
 
-use Raven::Rack
-
-require './dossiersco_web'
-require './dossiersco_agent'
-
-run Sinatra::Application
+run Rails.application

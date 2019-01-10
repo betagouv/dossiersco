@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>DossierSCO : l’inscription au collège</title>
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-light navbar-expand-md" style="background-color: transparent;">
+      <img src='/images/republique_francaise.svg' class='logo'>
+      <span class="navbar-brand">DossierSCO</span>
+      <% if session[:identifiant].present? %>
+        <a class="ml-auto p-2" href="/deconnexion">Se d&eacute;connecter</a>
+      <% end %>
+    </nav>
+
+    <main role="main" class="container  mt-4">
+
+      <%= yield %>
+
+    </main>
+
+    <!-- Piwik -->
+    <script type="text/javascript">
+      var _paq = _paq || [];
+      _paq.push(["setDomains", ["*.www.dossiersco.fr","*.dossiersco.beta.gouv.fr","*.dossiersco.fr"]]);
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function() {
+        var u="//stats.data.gouv.fr/";
+        _paq.push(['setTrackerUrl', u+'piwik.php']);
+        _paq.push(['setSiteId', '54']);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+      })();
+    </script>
+    <noscript><p><img src="//stats.data.gouv.fr/piwik.php?idsite=54" style="border:0;" alt="" /></p></noscript>
+    <!-- End Piwik Code -->
+  </body>
+</html>
