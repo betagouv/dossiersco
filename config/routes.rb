@@ -71,7 +71,7 @@ Rails.application.routes.draw do
 
   get '/agent/deconnexion', to: 'inscriptions#deconnexion'
 
-  get '/agent/tableau_de_bord', to: 'inscrpitions#tableau_de_bord'
+  get '/agent/tableau_de_bord', to: 'inscriptions#tableau_de_bord'
   post '/agent/tableau_de_bord', to: 'inscriptions#post_tableau_de_bord'
 
   post '/agent/pieces_jointes_eleve/:identifiant', to: 'inscriptions#post_pieces_jointes_eleve'

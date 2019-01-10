@@ -151,6 +151,7 @@
 
         <% if emails_presents || dossier_eleve.portable_present %>
         <form action="/agent/contacter_une_famille" method="POST" class="text-center">
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
             <% if !modeles.empty? %>
               Modèles: <select id="modeles">
                 <% modeles.each do |modele| %>

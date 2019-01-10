@@ -28,6 +28,7 @@
   </tbody>
 </table>
     <form action='/agent/piece_attendues' method='POST'>
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
       <label for='nom'>Nom</label>
       <input name='nom' type='text' placeholder='Ex : Livret de famille' />
       <label for='explication' style='margin-left:10px'>Pourquoi ?</label>
@@ -44,7 +45,7 @@
     $.ajax({
       method: "POST",
       url: "/agent/supprime_piece_attendue",
-      data: { piece_attendue_id: piece_attendue_id },
+      data: { piece_attendue_id: piece_attendue_id, authenticity_token: "<%= form_authenticity_token %>" },
       success : function() {
         console.log($this.parent().parent());
           $this.parent().parent().remove()
