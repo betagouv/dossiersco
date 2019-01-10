@@ -403,6 +403,73 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert response.body.include? "✓"
   end
 
+  def test_affiche_lenvoi_de_message_uniquement_si_un_des_resp_legal_a_un_mail
+    e = Eleve.create! identifiant: 'XXX'
+    dossier_eleve = DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first.id
+    RespLegal.create! dossier_eleve_id: dossier_eleve.id, email: 'test@test.com', priorite: 1
+
+    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    get "/agent/eleve/XXX"
+
+    assert response.body.include? "Ce formulaire envoie un message à la famille de l'élève."
+  end
+
+  def test_affiche_contacts
+    e = Eleve.create! identifiant: 'XXX'
+    dossier_eleve = DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first.id
+    RespLegal.create! dossier_eleve_id: dossier_eleve.id,
+                      tel_principal: '0101010101', tel_secondaire: '0606060606', email: 'test@test.com', priorite: 1
+    ContactUrgence.create! dossier_eleve_id: dossier_eleve.id, tel_principal: '0103030303'
+
+    post '/agent', params: {identifiant: 'pierre', mot_de_passe: 'demaulmont'}
+    get "/agent/eleve/XXX"
+
+    assert response.body.include? "0101010101"
+    assert response.body.include? "0606060606"
+    assert response.body.include? "0103030303"
+  end
+
+  def test_affiche_lenveloppe_uniquement_si_un_des_resp_legal_a_un_mail
+    e = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01')
+    dossier_eleve = DossierEleve.create!(eleve_id: e.id, etablissement_id: Etablissement.first.id)
+    resp_legal = RespLegal.create(email: 'test@test.com', dossier_eleve_id: dossier_eleve.id)
+
+    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    get '/agent/liste_des_eleves'
+
+    assert response.body.include? "far fa-envelope"
+  end
+
+  def test_affiche_decompte_historique_message_envoyes
+    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    post '/agent/contacter_une_famille', params: {identifiant: '2', message: 'Message de test'}
+    get '/agent/liste_des_eleves'
+
+    assert response.body.include? "(1)"
+  end
+
+  def test_changement_statut_famille_connecte
+    post '/identification', params: {identifiant: '2', annee: '1915', mois: '12', jour: '19'}
+    dossier_eleve = Eleve.find_by(identifiant: '2').dossier_eleve
+    assert_equal 'connecté', dossier_eleve.etat
+
+    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    get '/agent/liste_des_eleves'
+
+    assert response.body.include? "connecté"
+  end
+
+  def test_changement_statut_famille_en_cours_de_validation
+    post '/identification', params: {identifiant: '2', annee: '1915', mois: '12', jour: '19'}
+    post '/validation'
+    dossier_eleve = Eleve.find_by(identifiant: '2').dossier_eleve
+    assert_equal 'en attente de validation', dossier_eleve.etat
+
+    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    get '/agent/liste_des_eleves'
+
+    assert response.body.include? "en attente de validation"
+  end
 
 end
 

@@ -162,6 +162,30 @@ class InscriptionsController < ApplicationController
     redirect_to "/agent/liste_des_eleves"
   end
 
+  def contacter_une_famille
+    eleve = Eleve.find_by(identifiant: params[:identifiant])
+    dossier_eleve = eleve.dossier_eleve
+    emails_presents = false
+    resp_legaux = dossier_eleve.resp_legal
+    resp_legaux.each { |r| (emails_presents = true) if r.email.present?}
+    session[:message_info] = "Votre message ne peut être acheminé."
+    if emails_presents
+      mail = AgentMailer.contacter_une_famille(eleve, params[:message])
+      part = mail.html_part || mail.text_part || mail
+      Message.create(categorie:"mail", contenu: part.body, etat: "envoyé", dossier_eleve: eleve.dossier_eleve)
+      mail.deliver_now
+      session[:message_info] = "Votre message a été envoyé."
+    elsif dossier_eleve.portable_rl1.present?
+      Message.create(categorie:"sms",
+                     contenu: params[:message],
+                     destinataire: params[:destinataire] || "rl1",
+                     etat: "en attente",
+                     dossier_eleve: eleve.dossier_eleve)
+      session[:message_info] = "Votre message est en attente d'expédition."
+    end
+    redirect_to "/agent/liste_des_eleves"
+  end
+
   private
   def get_agent
     @agent ||= Agent.find_by(identifiant: session[:identifiant])
