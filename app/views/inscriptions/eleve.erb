@@ -207,12 +207,14 @@
       <h2 class="separation mt-3">Instruction du dossier</h2>
       <div class="d-flex justify-content-center align-items-center" style='text-align: center; width:100%'>
         <form action='/agent/valider_inscription' method='POST'>
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
           <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
           <button class="btn btn-lg btn-primary mr-2  <%= 'disabled' if dossier_eleve.etat == 'validé'%>"
             id="bouton-validation-inscription" type='submit'
             <%= 'disabled' if dossier_eleve.etat == 'validé'%>>Valider l'inscription</button>
         </form>
         <form action='/agent/eleve_sortant' method='POST'>
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
           <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
           <button class="btn btn-outline-primary ml-2 <%= 'disabled' if dossier_eleve.etat == 'sortant'%>"
             id="bouton-eleve-sortant" type='submit'  <%= 'disabled' if dossier_eleve.etat == 'sortant'%>>
