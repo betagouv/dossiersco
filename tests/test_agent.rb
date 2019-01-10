@@ -25,49 +25,6 @@ class EleveFormTest < Test::Unit::TestCase
     ActionMailer::Base.deliveries = []
   end
 
-
-  def test_etat_piece_jointe_liste_des_eleves
-    dossier_eleve = Eleve.find_by(identifiant: 2).dossier_eleve
-    piece_attendue = PieceAttendue.find_by(code: 'assurance_scolaire',
-      etablissement_id: dossier_eleve.etablissement.id)
-    piece_jointe = PieceJointe.create(clef: 'assurance_scannee.pdf', dossier_eleve_id: dossier_eleve.id,
-      piece_attendue_id: piece_attendue.id)
-
-    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-    post '/agent/change_etat_fichier', id: piece_jointe.id, etat: 'valide'
-
-    get '/agent/liste_des_eleves'
-    doc = Nokogiri::HTML(last_response.body)
-    assert doc.css("##{dossier_eleve.id} td:nth-child(10) a i.fa-file-image").present?
-    assert_equal "color: #00cf00", doc.css("##{dossier_eleve.id} td:nth-child(10) i.fa-check-circle").attr("style").text
-  end
-
-  def test_affiche_changement_adresse_liste_eleves
-    # Si on a un changement d'adresse
-    eleve = Eleve.find_by(identifiant: 2)
-    resp_legal = eleve.dossier_eleve.resp_legal_1
-    resp_legal.adresse = "Nouvelle adresse"
-    resp_legal.save
-
-    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-    get '/agent/liste_des_eleves'
-
-    doc = Nokogiri::HTML(last_response.body)
-    assert_equal "✓", doc.css("tbody > tr:nth-child(1) > td:nth-child(8)").text.strip
-  end
-
-  def test_affiche_demi_pensionnaire
-    eleve = Eleve.find_by(identifiant: 2)
-    dossier_eleve = eleve.dossier_eleve
-    dossier_eleve.update(demi_pensionnaire: true)
-
-    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-    get '/agent/liste_des_eleves'
-
-    doc = Nokogiri::HTML(last_response.body)
-    assert_equal "✓", doc.css("tbody > tr:nth-child(1) > td:nth-child(9)").text.strip
-  end
-
   def test_affiche_lenvoi_de_message_uniquement_si_un_des_resp_legal_a_un_mail
     e = Eleve.create! identifiant: 'XXX'
     dossier_eleve = DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first.id

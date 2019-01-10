@@ -104,7 +104,6 @@ get '/agent/pdf' do
 end
 
 
-
 post '/agent/contacter_une_famille' do
   eleve = Eleve.find_by(identifiant: params[:identifiant])
   dossier_eleve = eleve.dossier_eleve
