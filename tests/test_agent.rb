@@ -25,16 +25,6 @@ class EleveFormTest < Test::Unit::TestCase
     ActionMailer::Base.deliveries = []
   end
 
-  def test_liste_des_eleves
-    eleve = Eleve.find_by(identifiant: 2)
-
-    post '/agent', identifiant: 'pierre', mot_de_passe: 'demaulmont'
-    get '/agent/liste_des_eleves'
-    doc = Nokogiri::HTML(last_response.body)
-
-    assert_equal "Edith", doc.css("##{eleve.dossier_eleve.id} td:nth-child(4)").text.strip
-    assert_equal "Piaf", doc.css("##{eleve.dossier_eleve.id} td:nth-child(5)").text.strip
-  end
 
   def test_etat_piece_jointe_liste_des_eleves
     dossier_eleve = Eleve.find_by(identifiant: 2).dossier_eleve
