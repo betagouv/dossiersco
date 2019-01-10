@@ -154,6 +154,14 @@ class InscriptionsController < ApplicationController
     redirect_to "/agent/liste_des_eleves"
   end
 
+  def eleve_sortant
+    eleve = Eleve.find_by identifiant: params[:identifiant]
+    dossier_eleve = eleve.dossier_eleve
+    dossier_eleve.update(etat: 'sortant')
+
+    redirect_to "/agent/liste_des_eleves"
+  end
+
   private
   def get_agent
     @agent ||= Agent.find_by(identifiant: session[:identifiant])

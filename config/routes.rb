@@ -54,4 +54,6 @@ Rails.application.routes.draw do
   post '/agent/pdf', to: 'inscriptions#post_pdf'
 
   post '/agent/valider_inscription', to: 'inscriptions#valider_inscription'
+
+  post '/agent/eleve_sortant', to: 'inscriptions#eleve_sortant'
 end
