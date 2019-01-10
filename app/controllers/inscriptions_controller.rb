@@ -83,6 +83,12 @@ class InscriptionsController < ApplicationController
     head :ok
   end
 
+  def change_etat_fichier
+    piece = PieceJointe.find(params[:id])
+    piece.update(etat: params[:etat])
+    head :ok
+  end
+
   private
   def get_agent
     @agent ||= Agent.find_by(identifiant: session[:identifiant])
