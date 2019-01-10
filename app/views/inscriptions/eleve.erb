@@ -202,7 +202,7 @@
 
     <!-- Dossier -->
     <div class="tab-pane fade" id="dossier" role="tabpanel" aria-labelledby="dossier-tab">
-      <%= erb :'agent/pieces_jointes_eleve', locals: { dossier_eleve: dossier_eleve, action: "/agent/pieces_jointes_eleve/#{dossier_eleve.eleve.identifiant}#pieces" } %>
+      <%= render partial: 'partials/pieces_jointes_eleve', locals: { dossier_eleve: dossier_eleve, action: "/agent/pieces_jointes_eleve/#{dossier_eleve.eleve.identifiant}#pieces" } %>
       <h2 class="separation mt-3">Instruction du dossier</h2>
       <div class="d-flex justify-content-center align-items-center" style='text-align: center; width:100%'>
         <form action='/agent/valider_inscription' method='POST'>
@@ -223,7 +223,7 @@
 </div>
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-<%= erb :'partials/image_box' %>
+<%= render partial: 'partials/image_box' %>
 <script type="text/javascript" charset="utf-8">
   // Onglets
   $(document).ready(function() {
