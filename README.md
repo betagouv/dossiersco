@@ -9,3 +9,6 @@ Dans le répertoire dossiersco, lancer :
     docker-compose up
 
 L'accès à l'application se fait ensuite par <http://0.0.0.0:9393/>.
+
+On attrape toutes les erreurs sur Sentry : https://sentry.io/betagouv-pe/rails/
+Identifiants disponibles sur le Keybase de l'équipe
