@@ -9,6 +9,7 @@
       <div class="container">
 
         <form class="form-signin col-md-4 mx-auto" action="/agent" method="post">
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 
           <% if session[:erreur_login] %>
             <p class="erreur"><%= session[:erreur_login] %></p>
