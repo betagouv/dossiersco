@@ -79,7 +79,7 @@
               <% if ligne_eleve.email.present? %>
                 <a href="/agent/eleve/<%= ligne_eleve.identifiant %>"><i class="far fa-envelope"></i></a>
               <% end %>
-              <%= messages[ligne_eleve.dossier_id].present? ? "&nbsp;(#{messages[ligne_eleve.dossier_id].count})" : "" %>
+              <%= messages[ligne_eleve.dossier_id].present? ? raw("&nbsp;(#{messages[ligne_eleve.dossier_id].count})") : "" %>
             </td>
         </tr>
       <% end %>
