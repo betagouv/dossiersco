@@ -58,12 +58,12 @@ class AccueilController < ApplicationController
 
   def post_eleve
     eleve_a_modifier = eleve
+
     identite_eleve = ['prenom', 'prenom_2', 'prenom_3', 'nom', 'sexe', 'ville_naiss', 'pays_naiss', 'nationalite', 'classe_ant', 'ets_ant']
     identite_eleve.each do |info|
-     eleve_a_modifier[info] = params[info] if params.has_key?(info)
+      eleve_a_modifier[info] = params[info] if params.has_key?(info)
     end
 
-    # Pour chaque option de l'élève, vérifier si elle doit être abandonnée
     options = eleve.montee.present? ? eleve.montee.abandonnabilite.collect(&:option) : []
     options.each do |option|
       if params["#{option.nom}_present"]
@@ -73,9 +73,10 @@ class AccueilController < ApplicationController
       end
     end
 
-    # Pour chacune des options vérifier si elle est choisie directement
-    options = eleve.montee.present? ? eleve.montee.demandabilite.collect(&:option) : []
-    options.each do |option|
+    eleve_a_modifier.demande = []
+    options_demandees = eleve.montee.present? ? eleve.montee.demandabilite.collect(&:option) : []
+
+    options_demandees.each do |option|
       if params["#{option.nom}_present"]
         demande = Demande.find_or_initialize_by(eleve: eleve, option: option)
         eleve_a_modifier.demande.delete demande if params[option.nom].nil?
@@ -83,23 +84,18 @@ class AccueilController < ApplicationController
       end
     end
 
-    # Ensuite on va itérer sur les groupes
-    options.collect(&:groupe).uniq.each do |groupe|
+    options_demandees.collect(&:groupe).uniq.each do |groupe|
       if params[groupe].present?
-        # On découvre l'option retenue
-        option_choisie = options.find {|option| option.nom == params[groupe]}
-        demande = Demande.find_or_initialize_by(eleve: eleve, option: option_choisie)
-        # On supprime les autres (choix mutuellement exclusif)
-        eleve_a_modifier.demande.each do |demande_presente|
-          eleve_a_modifier.demande.delete demande_presente if demande_presente.option.groupe == groupe
-        end
-        # On garde celle retenue
+        option_choisie = options_demandees.find {|option| option.nom == params[groupe]}
+        demande = Demande.find_or_initialize_by(eleve: eleve_a_modifier, option: option_choisie)
         eleve_a_modifier.demande << demande
       end
     end
+
     eleve_a_modifier.save!
 
-    sauve_et_redirect eleve.dossier_eleve, 'famille'
+    eleve_a_modifier.dossier_eleve.update!(etape_la_plus_avancee: 'famille')
+    redirect_to "/#{'famille'}"
   end
 
   def get_famille
@@ -140,7 +136,7 @@ class AccueilController < ApplicationController
   end
 
   def validation
-      render 'validation', locals: { eleve: eleve, dossier_eleve: eleve.dossier_eleve }
+    render 'validation', locals: { eleve: eleve, dossier_eleve: eleve.dossier_eleve }
   end
 
   def post_validation
@@ -204,7 +200,7 @@ class AccueilController < ApplicationController
   end
 
   def eleve
-    Eleve.find_by(identifiant: session[:identifiant])
+    @eleve ||= Eleve.find_by(identifiant: session[:identifiant])
   end
 
   def code_situation
