@@ -4,5 +4,4 @@ module ApplicationHelper
       render partial: 'partials/champ', locals: champ
     end.join
   end
-
 end
