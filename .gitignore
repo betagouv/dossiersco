@@ -1,6 +1,6 @@
 .DS_Store
 dump.rdb
-.*
+.env
 !.locales
 !.gitignore
 !.circleci
