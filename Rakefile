@@ -1,7 +1,9 @@
 require_relative 'config/application'
+require_relative 'lib/traitement'
 
 Rails.application.load_tasks
 
-task :traiter_imports do
+desc "Lance le traitement des imports"
+task :traiter_imports => :environment do
   traiter_imports
 end
