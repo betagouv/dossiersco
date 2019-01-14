@@ -11,6 +11,7 @@ class AgentMailer < ApplicationMailer
         @eleve = eleve
         mail(subject: "Réinscription de votre enfant au collège",
             reply_to: ['contact@dossiersco.beta.gouv.fr', @eleve.dossier_eleve.etablissement.email],
+            delivery_method_options: { api_key: ENV['MAILER_API_KEY'], secret_key: ENV['MAILER_SECRET_KEY'] },
             to: emails) do |format|
                 format.text
             end
@@ -29,6 +30,7 @@ class AgentMailer < ApplicationMailer
         resp_legal = eleve.dossier_eleve.resp_legal_1
         mail(subject: "Réinscription de votre enfant au collège",
             reply_to:['contact@dossiersco.beta.gouv.fr', etablissement.email],
+            delivery_method_options: { api_key: ENV['MAILER_API_KEY'], secret_key: ENV['MAILER_SECRET_KEY'] },
             to: ['contact@dossiersco.beta.gouv.fr', resp_legal.email, etablissement.email]) do |format|
                 format.text { render plain: contenu }
             end
@@ -43,6 +45,7 @@ class AgentMailer < ApplicationMailer
         destinataires = [eleve.dossier_eleve.resp_legal.first.email, 'contact@dossiersco.beta.gouv.fr']
         mail(subject: "Réinscription de votre enfant au collège",
             reply_to: ['contact@dossiersco.beta.gouv.fr', @eleve.dossier_eleve.etablissement.email],
+            delivery_method_options: { api_key: ENV['MAILER_API_KEY'], secret_key: ENV['MAILER_SECRET_KEY'] },
             to: destinataires) do |format|
                 format.text
             end
