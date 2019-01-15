@@ -96,4 +96,5 @@ Rails.application.routes.draw do
   get '/agent/creer_agent', to: 'inscriptions#creer_agent'
   post '/agent/creer_agent', to: 'inscriptions#post_creer_agent'
 
+  get '/redirection_erreur', to: 'pages#redirection_erreur'
 end
