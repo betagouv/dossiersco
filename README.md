@@ -15,6 +15,8 @@ L'accès à l'application se fait ensuite par <http://0.0.0.0:9393/>.
 - Tous les identifiants et mots de passe sont stockés dans Keybase
 - Les mails transactionnels sont envoyés via [Mailjet](https://mailjet.com)
 - On attrape toutes les erreurs sur [Sentry](https://sentry.io/betagouv-pe/rails/)
+- Sur les environnements de développement et staging les emails sortants sont envoyés
+    avec Letter Opener Web. On peut les consulter à l'url '/letter_opener'
 
 ## Vie de l'équipe
 
