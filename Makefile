@@ -12,5 +12,11 @@ run: ## Start the app server
 clean: ## Clean temporary files and installed dependencies
 	docker-compose stop && docker-compose rm app test
 
+rails c: ## Run rails console
+	docker-compose run --rm app bundle exec rails c
+
+rails routes: ## Run rails routes
+	docker-compose run --rm app bundle exec rails routes
+
 .PHONY: build run test clean
 
