@@ -37,7 +37,7 @@
     <% end %>
   </nav>
 
-<%= render partial: 'partials/navigation_agent' %>
+<%= render partial: 'partials/navigation_agent' unless current_page?(agent_path) %>
 
 <main role="main" class="container">
 
