@@ -20,6 +20,10 @@ group :development, :test do
   gem 'simplecov'
 end
 
+group :development,:staging do
+  gem 'letter_opener_web'
+end
+
 group :development do
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
@@ -33,10 +37,6 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
-end
-
-group :staging do
-  gem 'letter_opener'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
