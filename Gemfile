@@ -35,6 +35,10 @@ group :test do
   gem 'chromedriver-helper'
 end
 
+group :staging do
+  gem 'letter_opener'
+end
+
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'carrierwave'
