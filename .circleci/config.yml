@@ -1,12 +1,9 @@
 version: 2
 jobs:
   build:
-    parallelism: 3
     docker:
       - image: circleci/ruby:2.6
         environment:
-          BUNDLE_JOBS: 3
-          BUNDLE_RETRY: 3
           BUNDLE_PATH: vendor/bundle
           PGHOST: 127.0.0.1
           PGUSER: circleci-dossiersco
@@ -24,15 +21,15 @@ jobs:
 
       - restore_cache:
           keys:
-            - rails-demo-bundle-v2-{{ checksum "Gemfile.lock" }}
-            - rails-demo-bundle-v2-
+            - rails-dossiersco-bundle-v2-{{ checksum "Gemfile.lock" }}
+            - rails-dossiersco-bundle-v2-
 
       - run:
           name: Bundle Install
           command: bundle check || bundle install
 
       - save_cache:
-          key: rails-demo-bundle-v2-{{ checksum "Gemfile.lock" }}
+          key: rails-dossiersco-bundle-v2-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
 
@@ -43,6 +40,10 @@ jobs:
       - run:
           name: Database setup
           command: bundle exec rails db:schema:load --trace
+
+      - run:
+          name: exec stats
+          command: bundle exec rails stats
 
       - run:
           name: Run test

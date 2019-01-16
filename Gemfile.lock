@@ -280,6 +280,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   carrierwave
   chromedriver-helper
+  concurrent-ruby
   dotenv
   fog-aws
   jbuilder (~> 2.5)
