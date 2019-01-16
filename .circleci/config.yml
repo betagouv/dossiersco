@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
           name: Install Dependencies
-          command: bundle
+          command: bundle install --path ~/vendor/bundle
 
   test:
     docker:
