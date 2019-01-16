@@ -1,48 +1,60 @@
 version: 2
 jobs:
   build:
+    parallelism: 3
     docker:
-      - image: circleci/ruby
-    working_directory: ~/dossiersco
+      - image: circleci/ruby:2.6
+        environment:
+          BUNDLE_JOBS: 3
+          BUNDLE_RETRY: 3
+          BUNDLE_PATH: vendor/bundle
+          PGHOST: 127.0.0.1
+          PGUSER: circleci-dossiersco
+          RAILS_ENV: test
+      - image: circleci/postgres:9.5-alpine
+        environment:
+          POSTGRES_USER: circleci-dossiersco
+          POSTGRES_DB: dossiersco
+          POSTGRES_PASSWORD: ""
     steps:
       - checkout
       - run:
-          name: Install Dependencies
-          command: bundle install --path ~/vendor/bundle
+          name: Which bundler?
+          command: bundle -v
 
-  test:
-    docker:
-      - image: circleci/ruby
-        environment:
-          POSTGRES_HOST: localhost
-          POSTGRES_DB: dossiersco
-          POSTGRES_USER: dossiersco
-          POSTGRES_PASSWORD: dossiersco
-      - image: circleci/postgres
-        environment:
-          POSTGRES_DB: dossiersco
-          POSTGRES_USER: dossiersco
-          POSTGRES_PASSWORD: dossiersco
-    working_directory: ~/dossiersco
-    steps:
-      - checkout
+      - restore_cache:
+          keys:
+            - rails-demo-bundle-v2-{{ checksum "Gemfile.lock" }}
+            - rails-demo-bundle-v2-
+
       - run:
-          name: Run unit tests
-          command: bundle exec rails db:setup && bundle exec rails test
+          name: Bundle Install
+          command: bundle check || bundle install
+
+      - save_cache:
+          key: rails-demo-bundle-v2-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      - run:
+          name: Database setup
+          command: bin/rails db:schema:load --trace
+
+      - run:
+          name: Run test
+          command: bin/rails test
 
   deploy-demo:
-    docker:
-      - image: circleci/ruby
-    working_directory: ~/dossiersco
     steps:
       - run:
           name: Deploy
           command: git push git@scalingo.com:dossiersco-demo development:master
 
   deploy-production:
-    docker:
-      - image: circleci/ruby
-    working_directory: ~/dossiersco
     steps:
       - run:
           name: Deploy
@@ -53,20 +65,15 @@ workflows:
   build-deploy:
     jobs:
       - build
-      - test:
-          requires:
-            - build
       - deploy-demo:
           requires:
             - build
-            - test
           filters:
             branches:
               only: development
       - deploy-production:
           requires:
             - build
-            - test
           filters:
             branches:
               only: production
