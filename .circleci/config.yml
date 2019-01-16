@@ -34,7 +34,7 @@ jobs:
       - image: circleci/ruby
     working_directory: ~/dossiersco
     steps:
-      -run:
+      - run:
           name: Deploy
           command: git push git@scalingo.com:dossiersco-demo demo:master
 
@@ -43,7 +43,7 @@ jobs:
       - image: circleci/ruby
     working_directory: ~/dossiersco
     steps:
-      -run:
+      - run:
           name: Deploy
           command: git push git@scalingo.com:dossiersco-production production:master
 
@@ -52,7 +52,9 @@ workflows:
   build-deploy:
     jobs:
       - build
-      - test
+      - test:
+          requires:
+            - build
       - deploy-demo:
           requires:
             - build
