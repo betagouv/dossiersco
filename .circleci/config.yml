@@ -3,6 +3,16 @@ jobs:
   build:
     docker:
       - image: circleci/ruby
+    working_directory: ~/dossiersco
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: bundle
+
+  test:
+    docker:
+      - image: circleci/ruby
         environment:
           POSTGRES_HOST: localhost
           POSTGRES_DB: dossiersco
@@ -15,12 +25,46 @@ jobs:
           POSTGRES_PASSWORD: dossiersco
     working_directory: ~/dossiersco
     steps:
-      - checkout
-
-      - run:
-          name: Install Dependencies
-          command: bundle
-
       - run:
           name: Run unit tests
           command: rake db:setup && rails test
+
+  deploy-demo:
+    docker:
+      - image: circleci/ruby
+    working_directory: ~/dossiersco
+    steps:
+      -run:
+          name: Deploy
+          command: git push git@scalingo.com:dossiersco-demo demo:master
+
+  deploy-production:
+    docker:
+      - image: circleci/ruby
+    working_directory: ~/dossiersco
+    steps:
+      -run:
+          name: Deploy
+          command: git push git@scalingo.com:dossiersco-production production:master
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - test
+      - deploy-demo:
+          requires:
+            - build
+            - test
+          filters:
+            branches:
+              only: demo
+      - deploy-production:
+          requires:
+            - build
+            - test
+          filters:
+            branches:
+              only: production
+
