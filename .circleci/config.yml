@@ -27,7 +27,7 @@ jobs:
     steps:
       - run:
           name: Run unit tests
-          command: rake db:setup && rails test
+          command: rails db:setup && rails test
 
   deploy-demo:
     docker:
