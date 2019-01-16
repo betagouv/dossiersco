@@ -25,6 +25,7 @@ jobs:
           POSTGRES_PASSWORD: dossiersco
     working_directory: ~/dossiersco
     steps:
+      - checkout
       - run:
           name: Run unit tests
           command: bundle exec rails db:setup && bundle exec rails test
