@@ -36,7 +36,7 @@ jobs:
     steps:
       - run:
           name: Deploy
-          command: git push git@scalingo.com:dossiersco-demo demo:master
+          command: git push git@scalingo.com:dossiersco-demo development:master
 
   deploy-production:
     docker:
@@ -61,7 +61,7 @@ workflows:
             - test
           filters:
             branches:
-              only: demo
+              only: development
       - deploy-production:
           requires:
             - build
