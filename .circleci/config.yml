@@ -27,7 +27,7 @@ jobs:
     steps:
       - run:
           name: Run unit tests
-          command: rails db:setup && rails test
+          command: bundle exec rails db:setup && bundle exec rails test
 
   deploy-demo:
     docker:
