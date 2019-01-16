@@ -87,7 +87,6 @@ Rails.application.routes.draw do
   get '/agent/pdf', to: 'inscriptions#pdf'
 
   get '/agent/relance', to: 'inscriptions#relance'
-      
   post '/agent/relance_sms', to: 'inscriptions#relance_sms'
 
   get '/agent/creer_etablissement', to: 'inscriptions#creer_etablissement'

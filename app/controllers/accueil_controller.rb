@@ -1,7 +1,7 @@
 require 'traitement'
 
 class AccueilController < ApplicationController
-  before_action :verifie_identité, except: [:index, :identification, :stats]
+  before_action :retrouve_élève_connecté, except: [:index, :identification, :stats]
 
   def index
   end
@@ -41,8 +41,8 @@ class AccueilController < ApplicationController
   end
 
   def accueil
-    eleve.dossier_eleve.update derniere_etape: 'accueil'
-    @dossier_eleve = eleve.dossier_eleve
+    @eleve.dossier_eleve.update derniere_etape: 'accueil'
+    @dossier_eleve = @eleve.dossier_eleve
   end
 
   def normalise_alphanum chaine
@@ -50,56 +50,53 @@ class AccueilController < ApplicationController
   end
 
   def get_eleve
-    eleve.dossier_eleve.update derniere_etape: 'eleve'
-    @options_du_niveau = eleve.montee.present? ? eleve.montee.demandabilite.collect(&:option) : []
-    @eleve = eleve
+    @eleve.dossier_eleve.update derniere_etape: 'eleve'
+    @options_du_niveau = @eleve.montee.present? ? @eleve.montee.demandabilite.collect(&:option) : []
     render 'accueil/eleve'
   end
 
   def post_eleve
-    eleve_a_modifier = eleve
-
     identite_eleve = ['prenom', 'prenom_2', 'prenom_3', 'nom', 'sexe', 'ville_naiss', 'pays_naiss', 'nationalite', 'classe_ant', 'ets_ant']
     identite_eleve.each do |info|
-      eleve_a_modifier[info] = params[info] if params.has_key?(info)
+      @eleve[info] = params[info] if params.has_key?(info)
     end
 
-    options = eleve.montee.present? ? eleve.montee.abandonnabilite.collect(&:option) : []
+    options = @eleve.montee.present? ? @eleve.montee.abandonnabilite.collect(&:option) : []
     options.each do |option|
       if params["#{option.nom}_present"]
-        abandon = Abandon.find_or_initialize_by(eleve: eleve, option: option)
-        eleve_a_modifier.abandon.delete abandon if params[option.nom] == 'true'
-        eleve_a_modifier.abandon << abandon if params[option.nom].nil?
+        abandon = Abandon.find_or_initialize_by(eleve: @eleve, option: option)
+        @eleve.abandon.delete abandon if params[option.nom] == 'true'
+        @eleve.abandon << abandon if params[option.nom].nil?
       end
     end
 
-    eleve_a_modifier.demande = []
-    options_demandees = eleve.montee.present? ? eleve.montee.demandabilite.collect(&:option) : []
+    @eleve.demande = []
+    options_demandees = @eleve.montee.present? ? @eleve.montee.demandabilite.collect(&:option) : []
 
     options_demandees.each do |option|
       if params["#{option.nom}_present"]
-        demande = Demande.find_or_initialize_by(eleve: eleve, option: option)
-        eleve_a_modifier.demande.delete demande if params[option.nom].nil?
-        eleve_a_modifier.demande << demande if params[option.nom] == 'true'
+        demande = Demande.find_or_initialize_by(eleve: @eleve, option: option)
+        @eleve.demande.delete demande if params[option.nom].nil?
+        @eleve.demande << demande if params[option.nom] == 'true'
       end
     end
 
     options_demandees.collect(&:groupe).uniq.each do |groupe|
       if params[groupe].present?
         option_choisie = options_demandees.find {|option| option.nom == params[groupe]}
-        demande = Demande.find_or_initialize_by(eleve: eleve_a_modifier, option: option_choisie)
-        eleve_a_modifier.demande << demande
+        demande = Demande.find_or_initialize_by(eleve: @eleve, option: option_choisie)
+        @eleve.demande << demande
       end
     end
 
-    eleve_a_modifier.save!
+    @eleve.save!
 
-    eleve_a_modifier.dossier_eleve.update!(etape_la_plus_avancee: 'famille')
+    @eleve.dossier_eleve.update!(etape_la_plus_avancee: 'famille')
     redirect_to "/#{'famille'}"
   end
 
   def get_famille
-    dossier_eleve = eleve.dossier_eleve
+    dossier_eleve = @eleve.dossier_eleve
     dossier_eleve.update derniere_etape: 'famille'
     resp_legal1 = dossier_eleve.resp_legal_1
     resp_legal2 = dossier_eleve.resp_legal_2
@@ -113,12 +110,12 @@ class AccueilController < ApplicationController
     @code_profession = RespLegal.codes_profession
     @code_situation = code_situation
     @lien_de_parentes = lien_de_parentes
-    @dossier_eleve = eleve.dossier_eleve
+    @dossier_eleve = @eleve.dossier_eleve
     render 'accueil/famille'
   end
 
   def post_famille
-    dossier_eleve = eleve.dossier_eleve
+    dossier_eleve = @eleve.dossier_eleve
     resp_legal1 = dossier_eleve.resp_legal_1
     resp_legal2 = dossier_eleve.resp_legal_2
     contact_urgence = ContactUrgence.find_by(dossier_eleve_id: dossier_eleve.id) || ContactUrgence.new(dossier_eleve_id: dossier_eleve.id)
@@ -136,11 +133,11 @@ class AccueilController < ApplicationController
   end
 
   def validation
-    render 'validation', locals: { eleve: eleve, dossier_eleve: eleve.dossier_eleve }
+    render 'validation', locals: { eleve: @eleve, dossier_eleve: @eleve.dossier_eleve }
   end
 
   def post_validation
-    dossier_eleve = eleve.dossier_eleve
+    dossier_eleve = @eleve.dossier_eleve
     dossier_eleve.signature = params[:signature]
     dossier_eleve.date_signature = Time.now
     dossier_eleve.save
@@ -157,12 +154,12 @@ class AccueilController < ApplicationController
   end
 
   def administration
-    eleve.dossier_eleve.update derniere_etape: 'administration'
-    render 'administration', locals: {dossier_eleve: eleve.dossier_eleve}
+    @eleve.dossier_eleve.update derniere_etape: 'administration'
+    render 'administration', locals: {dossier_eleve: @eleve.dossier_eleve}
   end
 
   def post_administration
-    dossier_eleve = eleve.dossier_eleve
+    dossier_eleve = @eleve.dossier_eleve
     dossier_eleve.demi_pensionnaire = params['demi_pensionnaire']
     dossier_eleve.autorise_sortie = params['autorise_sortie']
     dossier_eleve.renseignements_medicaux = params['renseignements_medicaux']
@@ -177,30 +174,26 @@ class AccueilController < ApplicationController
   end
 
   def confirmation
-    dossier_eleve = eleve.dossier_eleve
+    dossier_eleve = @eleve.dossier_eleve
     dossier_eleve.update derniere_etape: 'confirmation'
-    render 'confirmation', locals: { eleve: eleve, dossier_eleve: dossier_eleve }
+    render 'confirmation', locals: { eleve: @eleve, dossier_eleve: dossier_eleve }
   end
 
   def satisfaction
-    dossier_eleve = eleve.dossier_eleve
+    dossier_eleve = @eleve.dossier_eleve
     dossier_eleve.satisfaction = params[:note]
     dossier_eleve.save!
   end
 
   def pieces_a_joindre
-    eleve.dossier_eleve.update derniere_etape: 'pieces_a_joindre'
-    render 'pieces_a_joindre', locals: {dossier_eleve: eleve.dossier_eleve}
+    @eleve.dossier_eleve.update derniere_etape: 'pieces_a_joindre'
+    render 'pieces_a_joindre', locals: {dossier_eleve: @eleve.dossier_eleve}
   end
 
   def enregistre_piece_jointe
-    dossier_eleve = eleve.dossier_eleve
+    dossier_eleve = @eleve.dossier_eleve
     upload_pieces_jointes dossier_eleve, params
     redirect_to '/pieces_a_joindre'
-  end
-
-  def eleve
-    @eleve ||= Eleve.find_by(identifiant: session[:identifiant])
   end
 
   def code_situation
@@ -264,7 +257,7 @@ class AccueilController < ApplicationController
   end
 
   def post_pieces_a_joindre
-    dossier_eleve = eleve.dossier_eleve
+    dossier_eleve = @eleve.dossier_eleve
     pieces_attendues = dossier_eleve.etablissement.piece_attendue
     pieces_obligatoires = false
     pieces_attendues.each do |piece|
@@ -281,7 +274,7 @@ class AccueilController < ApplicationController
   end
 
   def commentaire
-    dossier_eleve = eleve.dossier_eleve
+    dossier_eleve = @eleve.dossier_eleve
     dossier_eleve.commentaire = params[:commentaire]
     dossier_eleve.save!
     head :ok
@@ -292,8 +285,9 @@ class AccueilController < ApplicationController
     render :stats, locals: {etablissements: etablissements}
   end
 
-  def verifie_identité
-    unless eleve
+  def retrouve_élève_connecté
+    @eleve ||= Eleve.find_by(identifiant: session[:identifiant])
+    unless @eleve
       session[:message_erreur] = "Vous avez été déconnecté par mesure de sécurité. Merci de vous identifier avant de continuer."
       redirect_to '/'
     end
