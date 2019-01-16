@@ -20,6 +20,6 @@ L'accès à l'application se fait ensuite par <http://0.0.0.0:9393/>.
 
 ## Vie de l'équipe
 
-- Vous pouvez nous retrouver chaque lundi et jeudi au 110 bis rue de Grenelle à Paris
+- Vous pouvez nous retrouver chaque lundi et jeudi au [110bis Lab](http://www.education.gouv.fr/110bislab/pid37871/bienvenue-au-110-bis-le-lab-d-innovation-de-l-education-nationale.html) rue de Grenelle à Paris
 - Retrouvez notre [agenda public](https://calendar.google.com/calendar/embed?src=contact%40dossiersco.beta.gouv.fr&ctz=Europe%2FParis)
 - [Journal de l'équipe](https://github.com/betagouv/dossiersco/blob/master/doc/journal.md)
