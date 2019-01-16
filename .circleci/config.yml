@@ -42,11 +42,11 @@ jobs:
 
       - run:
           name: Database setup
-          command: bin/rails db:schema:load --trace
+          command: bundle exec rails db:schema:load --trace
 
       - run:
           name: Run test
-          command: bin/rails test
+          command: bundle exec rails test
 
   deploy-demo:
     docker:
