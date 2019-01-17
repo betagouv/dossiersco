@@ -1,0 +1,9 @@
+
+fr:
+  activerecord:
+    errors:
+      models:
+        resp_legal:
+          attributes:
+            code_postal_ant:
+              blank: "ne peut être vide"

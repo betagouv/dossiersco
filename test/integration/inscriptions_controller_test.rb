@@ -57,7 +57,6 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     get '/agent/import_siecle'
     doc = Nokogiri::HTML(response.body)
     assert_match "L'import de cette base est en cours.", doc.css('.statut-import').text
-    assert_empty doc.css("button[type=submit]")
   end
 
   def test_traiter_zero_imports

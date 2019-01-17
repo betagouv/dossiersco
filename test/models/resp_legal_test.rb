@@ -15,7 +15,7 @@ class RespLegalTest < ActiveSupport::TestCase
     responsable_legal.code_postal = "75012"
     responsable_legal.code_postal_ant = nil
     assert responsable_legal.invalid?
-    assert_equal ["can't be blank"], responsable_legal.errors[:code_postal_ant]
+    assert_equal ["ne peut être vide"], responsable_legal.errors[:code_postal_ant]
   end
 
   def test_detection_adresses_identiques_cas_degenere

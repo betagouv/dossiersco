@@ -8,6 +8,7 @@ jobs:
           PGHOST: 127.0.0.1
           PGUSER: circleci-dossiersco
           RAILS_ENV: test
+          RACK_ENV: test
       - image: circleci/postgres:9.5-alpine
         environment:
           POSTGRES_USER: circleci-dossiersco
@@ -26,7 +27,8 @@ jobs:
 
       - run:
           name: Bundle Install
-          command: bundle check || bundle install
+          command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
+      - run: sudo apt install -y postgresql-client || true
 
       - save_cache:
           key: rails-dossiersco-bundle-v2-{{ checksum "Gemfile.lock" }}
@@ -39,7 +41,10 @@ jobs:
 
       - run:
           name: Database setup
-          command: bundle exec rails db:setup --trace
+          command: |
+            bundle exec rake db:create
+            bundle exec rake db:schema:load
+            bundle exec rake db:migrate
 
       - run:
           name: Run test
