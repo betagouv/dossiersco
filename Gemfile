@@ -19,6 +19,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'simplecov'
   gem 'concurrent-ruby'
+  gem 'fabrication'
 end
 
 group :development,:staging do

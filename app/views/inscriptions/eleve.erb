@@ -122,7 +122,7 @@
       <h2 class="separation">Habite chez <%=resp_legal_1.prenom %> <%=resp_legal_1.nom %></h2>
 
       <%= raw(construire domicile_actuel) %>
-      <% if resp_legal_1.changement_adresse %>
+      <% unless resp_legal_1.adresse_inchangee %>
         <div id="ancienne_adresse">
           <hr/>
           <%= raw(construire ancien_domicile) %>

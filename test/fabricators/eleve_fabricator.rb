@@ -1,0 +1,2 @@
+Fabricator(:eleve) do
+end

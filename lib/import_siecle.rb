@@ -104,6 +104,10 @@ def import_ligne etablissement_id, ligne_siecle, nom_a_importer=nil, prenom_a_im
     donnees_resp_legal[:dossier_eleve_id] = dossier_eleve.id
     donnees_resp_legal[:priorite] = i.to_i
 
+    donnees_resp_legal[:adresse_ant] = donnees_resp_legal[:adresse]
+    donnees_resp_legal[:ville_ant] = donnees_resp_legal[:ville]
+    donnees_resp_legal[:code_postal_ant] = donnees_resp_legal[:code_postal]
+
     resp_legal = RespLegal.find_or_initialize_by(dossier_eleve_id: dossier_eleve.id, priorite: i.to_i)
     resp_legal.update_attributes!(donnees_resp_legal)
 
