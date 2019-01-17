@@ -14,3 +14,10 @@
 # ActiveSupport::Inflector.inflections(:en) do |inflect|
 #   inflect.acronym 'RESTful'
 # end
+
+
+ActiveSupport::Inflector.inflections do |inflect|
+  inflect.irregular 'dossier affelnet', 'dossiers affelnet'
+  inflect.irregular 'dossier_affelnet', 'dossiers_affelnet'
+  inflect.irregular 'DossierAffelnet', 'DossiersAffelnet'
+end

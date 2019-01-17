@@ -96,4 +96,6 @@ Rails.application.routes.draw do
   post '/agent/creer_agent', to: 'inscriptions#post_creer_agent'
 
   get '/redirection_erreur', to: 'pages#redirection_erreur'
+
+  resources :dossiers_affelnet, only: [:create]
 end

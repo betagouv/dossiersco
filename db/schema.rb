@@ -10,10 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_17_095448) do
+ActiveRecord::Schema.define(version: 2019_01_17_145615) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
 
   create_table "abandonnabilites", force: :cascade do |t|
@@ -75,6 +74,12 @@ ActiveRecord::Schema.define(version: 2019_01_17_095448) do
     t.datetime "date_signature"
     t.string "derniere_etape"
     t.index ["eleve_id"], name: "index_dossier_eleves_on_eleve_id"
+  end
+
+  create_table "dossiers_affelnet", force: :cascade do |t|
+    t.string "fichier"
+    t.bigint "etablissement_id"
+    t.index ["etablissement_id"], name: "index_dossiers_affelnet_on_etablissement_id"
   end
 
   create_table "eleves", force: :cascade do |t|
@@ -199,4 +204,5 @@ ActiveRecord::Schema.define(version: 2019_01_17_095448) do
   end
 
   add_foreign_key "dossier_eleves", "eleves", column: "eleve_id"
+  add_foreign_key "dossiers_affelnet", "etablissements"
 end
