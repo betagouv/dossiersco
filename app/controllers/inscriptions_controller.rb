@@ -65,8 +65,7 @@ class InscriptionsController < ApplicationController
         etablissement_id: get_agent.etablissement.id,
         statut: 'en_attente',
         nom_a_importer: params[:nom_eleve],
-        prenom_a_importer: params[:prenom_eleve],
-        traitement: params[:traitement])
+        prenom_a_importer: params[:prenom_eleve])
     render :import_siecle,
         locals: { message: "",
                   tache: tache

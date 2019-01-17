@@ -144,38 +144,6 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 2, eleve.option.count
   end
 
-  def test_importe_uniquement_les_adresses
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
-    etablissement = Etablissement.find_by(nom: 'Collège Germaine Tillion')
-    TacheImport.create(url: 'test/fixtures/files/test_import_adresses.xlsx', statut: 'en_attente',
-      etablissement_id: etablissement.id, traitement: 'tout')
-    get '/api/traiter_imports'
-    assert_equal 200, response.status
-
-    dossier_eleve1 = Eleve.find_by(identifiant: "070823218DD").dossier_eleve
-    resp_legal1 = dossier_eleve1.resp_legal.select { |r| r.lien_de_parente == 'MERE'}.first
-    resp_legal1.update(ville: 'Vernon', code_postal: '27200', adresse: 'Route de Magny')
-
-    TacheImport.create(url: 'test/fixtures/files/test_import_adresses.xlsx', statut: 'en_attente',
-      etablissement_id: etablissement.id, traitement: 'adresses')
-    get '/api/traiter_imports'
-    assert_equal 200, response.status
-
-    dossier_eleve1 = Eleve.find_by(identifiant: "070823218DD").dossier_eleve
-    resp_legal1 = dossier_eleve1.resp_legal.select { |r| r.lien_de_parente == 'MERE'}.first
-
-    dossier_eleve2 = Eleve.find_by(identifiant: "072342399CH").dossier_eleve
-    resp_legal2 = dossier_eleve2.resp_legal.select { |r| r.lien_de_parente == 'MERE'}.first
-
-    assert_equal 'Vernon', resp_legal1.ville
-    assert_equal '27200', resp_legal1.code_postal
-    assert_equal 'Route de Magny', resp_legal1.adresse
-    assert_equal 'PARIS', resp_legal1.ville_ant
-    assert_equal '75017', resp_legal1.code_postal_ant
-    assert_equal "5 rue VILLARET DE JOYEUSE \n" + " ", resp_legal1.adresse_ant
-  end
-
-
   def test_creer_des_options
     Option.destroy_all
     etablissement_id = Etablissement.find_by(nom: 'College Jean-Francois Oeben').id
@@ -207,7 +175,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   def test_compte_taux_de_portables_dans_siecle
     post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
     import_siecle_xls = fixture_file_upload('files/test_import_siecle.xls','application/vnd.ms-excel')
-    post '/agent/import_siecle', params: { name: 'import_siecle', traitement: 'tout', filename: import_siecle_xls }
+    post '/agent/import_siecle', params: { name: 'import_siecle', filename: import_siecle_xls }
     get '/api/traiter_imports'
     get '/agent/import_siecle'
     doc = Nokogiri::HTML(response.body)
@@ -221,8 +189,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
     post '/agent/import_siecle', params: { nom_eleve: 'NOM_TEST', prenom_eleve: 'Prenom_test',
-         name: 'import_siecle', traitement: 'tout',
-         filename: import_siecle_xls }
+         name: 'import_siecle', filename: import_siecle_xls }
 
     agent = Agent.find_by(identifiant: 'pierre')
     tache_import = TacheImport.find_by(statut: 'en_attente',
