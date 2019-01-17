@@ -315,9 +315,18 @@ class InscriptionsController < ApplicationController
   end
 
   def post_creer_etablissement
-    Etablissement.create!(params)
-
-    redirect_to :creer_agent
+    Etablissement.create!(
+      nom: params[:nom],
+      email: params[:email],
+      adresse: params[:adresse],
+      ville: params[:ville],
+      code_postal: params[:code_postal],
+      message_permanence: params[:message_permanence],
+      message_infirmerie: params[:message_infirmerie],
+      gere_demi_pension: params[:gere_demi_pension],
+      signataire: params[:signataire],
+    )
+    redirect_to '/agent/creer_agent'
   end
 
   def creer_agent
@@ -326,7 +335,13 @@ class InscriptionsController < ApplicationController
   end
 
   def post_creer_agent
-    a = Agent.create!(params)
+    a = Agent.create!(
+      identifiant: params[:identifiant],
+      prenom: params[:prenom],
+      nom: params[:nom],
+      password: params[:password],
+      etablissement_id: params[:etablissement_id]
+    )
     a.password = BCrypt::Password.create(params[:password])
     a.save!
     redirect_to "/agent/liste_des_eleves"
