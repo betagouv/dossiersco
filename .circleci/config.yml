@@ -52,16 +52,18 @@ jobs:
 
   deploy-demo:
     docker:
-      - image: circleci/ruby:2.6
+      - image: buildpack-deps:trusty
     steps:
+      - checkout
       - run:
           name: Deploy
           command: git push git@scalingo.com:dossiersco-demo development:master
 
   deploy-production:
     docker:
-      - image: circleci/ruby:2.6
+      - image: buildpack-deps:trusty
     steps:
+      - checkout
       - run:
           name: Deploy
           command: git push git@scalingo.com:dossiersco-production production:master
