@@ -1,5 +1,48 @@
 # Journal
 
+## Semaine du 14 au 18 janvier
+
+*On fait équipe avec des outils communs et les 6e pointent le bout de leur nez*
+
+### Vie de l'équipe
+
+- Nous faisons vraiment équipe :
+  - nous utilisons tous les mêmes outils (github pour le code et le public, keybase pour le privée et les brouillons/recherche):
+  - nous travaillons tous sur le backlog
+  - nous mettons au point ensemble la stratégie
+- Le lab 110Bis prends bien soin de nous (espace reservé malgré un évènement, ...)
+- Ajout d'un deuxième projet dans github pour faire le suivi de l'acquisition/activation des établissements [Participation Établissement](https://github.com/betagouv/dossiersco/projects/2).
+
+
+## Points d'améliorations
+
+- prévoir 60 minutes à la fin de la dernière session pour remplir le journal hebdo
+- améliorer le suivi des prospects
+
+
+### Incréments code
+
+- [Affiche correctement les changements d'adresse](https://github.com/betagouv/dossiersco/issues/206)
+- [L'import de SIECLE dans DossierSCO semble cassé](https://github.com/betagouv/dossiersco/issues/205)
+- [Revoir le style des pages 404 et 500](https://github.com/betagouv/dossiersco/issues/193)
+- [Déployer une instance par collège](https://github.com/betagouv/dossiersco/issues/181)
+- [Utiliser LetterOpener sur staging](https://github.com/betagouv/dossiersco/issues/196)
+- [Accès à l'outil tier d'envoi d'email](https://github.com/betagouv/dossiersco/issues/187)
+- [Reprendre la configuration de l'outil tier d'envoie de mail](https://github.com/betagouv/dossiersco/issues/190)
+- [mauvaise sauvegarde des options](https://github.com/betagouv/dossiersco/issues/192)
+
+
+### Incréments service 
+
+- amorcer une documentation nos évènements futur : kickoff, conseil des sages, openlab, et bizdev.
+- discuter budget/dépenses et remonter d'informations aux sponsors.
+- reçu deux fichiers affelnet et déterrer un troisième.
+- contact avec la DSI de Paris à propos d'affelnet.
+- ajouter tickets au backlog
+
+
+---
+
 ## Semaine du 7 au 11 janvier
 
 *La saison 2 démarre sur les rails (migration de sinatra vers rails)*
