@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_23_163703) do
+ActiveRecord::Schema.define(version: 2019_01_17_095448) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -188,7 +188,6 @@ ActiveRecord::Schema.define(version: 2018_09_23_163703) do
     t.string "prenom_a_importer"
     t.string "message"
     t.datetime "updated_at"
-    t.string "traitement", default: "tout"
   end
 
   create_table "traces", force: :cascade do |t|

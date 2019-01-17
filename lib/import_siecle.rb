@@ -9,17 +9,6 @@ COLONNES = {sexe: 0, nationalite: 1, prenom: 6, prenom_2: 7, prenom_3: 8, nom: 4
             tel_secondaire_resp_legal2: 123, lien_de_parente_resp_legal2: 122, adresse_resp_legal2: 127,
             ville_resp_legal2: 131, code_postal_resp_legal2: 132, email_resp_legal2: 125}
 
-def import_adresses fichier, etablissement_id
-  xls_document = Roo::Spreadsheet.open fichier
-  lignes_siecle = (xls_document.first_row + 1..xls_document.last_row)
-
-  lignes_siecle.each do |row|
-    ligne_siecle = xls_document.row(row)
-
-    resultat = import_ligne_adresse etablissement_id, ligne_siecle
-  end
-end
-
 def import_xls fichier, etablissement_id, nom_a_importer=nil, prenom_a_importer=nil
   xls_document = Roo::Spreadsheet.open fichier
   lignes_siecle = (xls_document.first_row + 1..xls_document.last_row)
