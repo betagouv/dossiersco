@@ -3,58 +3,68 @@
   <span style="display:block; height: 50px;"></span>
 
   <div class="container">
-    <div class="row">
-      <div class="col-2">
-      </div>
-      <div class="col">
-        <h1 class="separation">Import depuis siecle</h1>
-      </div>
-    </div>
+    <div class="card">
+      <h2 class="card-header">Import depuis siecle</h2>
+        <div class="card-body p-3">
+
+          <% if tache.present? %>
+            <div class="statut-import">
+              <p>Vous avez soumis un fichier de données SIECLE.</p>
+              <% case tache.statut
+                 when 'en_attente' %>
+                <p>L'import de cette base sera réalisé prochainement.</p>
+              <% when 'en_cours' %>
+                <p>L'import de cette base est en cours.</p>
+              <% when 'terminée' %>
+                <p>Cette base a bien été importée.</p>
+                <div class="message_de_succes"><a href="/agent/liste_des_eleves"><%= tache.message %></a></div>
+              <% end %>
+            </div>
+          <% end %>
+
+          <% unless tache.present? && tache.statut != 'terminée' %>
+            <form action="/agent/import_siecle" method="POST" enctype="multipart/form-data">
+              <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+              <p class="card-text">Sélectionnez un fichier au format xls</p>
+
+              <div class="card-relat document">
+
+                <input data-btnClass="btn btn-primary" data-text="Parcourir" class='filestyle' type="file" name="filename" id="filename"
+                       multiple>
+                <span id="fichier_filename"></span>
+                <br />
+                <div class="image-piece-a-joindre lien-piece-jointe" id="image_filename"
+                     <% if @document_stocke_url.present?
+                          eleve_identifiant = @dossier_eleve.nil? ? '' : @dossier_eleve.eleve.identifiant
+                          document_route = FichierUploader::route_lecture(eleve_identifiant, filename)+"/"+@document_stocke_url
+                          image_url = @document_stocke_url.ends_with?('.pdf') ? "/images/reglement_dp_small.png" : document_route
+                     %>
+                     style="background-image: url('<%= image_url %>'); height: 200px; max-width: 350px;"
+                     data-toggle="modal"
+                     data-target="#modal-pieces-jointes"
+                     data-url="<%= document_route %>"
+                     <% end %>>
+                </div>
+              </div>
+              <p>Pour limiter l'import à un seul élève, il suffit d'ajouter :</p>
+              <div>
+                <label for="nom_eleve">Nom de l'élève</label>
+                <input type="text" name="nom_eleve">
+              </div>
+              <div>
+                <label for="nom_eleve">Prénom de l'élève</label>
+                <input type="text" name="prenom_eleve">
+              </div>
+
+              <div class="col">
+                <button type="submit" class="btn btn-primary float-right">Importer <img src="../images/suivant.png" alt="suivant" title="suivant"></button>
+              </div>
+            </div>
+            </form>
+          <% end %>
+          </div>
   </div>
-
-  <% if tache.present? %>
-    <div class="statut-import">
-      <p>Vous avez soumis un fichier de données SIECLE.</p>
-      <% case tache.statut
-        when 'en_attente' %>
-        <p>L'import de cette base sera réalisé prochainement.</p>
-      <% when 'en_cours' %>
-        <p>L'import de cette base est en cours.</p>
-      <% when 'terminée' %>
-        <p>Cette base a bien été importée.</p>
-        <div class="message_de_succes"><a href="/agent/liste_des_eleves"><%= tache.message %></a></div>
-      <% end %>
-    </div>
-  <% end %>
-
-  <% unless tache.present? && tache.statut != 'terminée' %>
-    <form action="/agent/import_siecle" method="POST" enctype="multipart/form-data">
-      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-
-      <div class="card-deck">
-          <% @document = "Import depuis siecle" %>
-          <% @explication = "Sélectionnez un fichier au format xls" %>
-          <% @variable = "filename" %>
-          <% @action = "Parcourir" %>
-          <%= render partial: 'partials/carte_upload' %>
-      </div>
-
-      <p>Pour limiter l'import à un seul élève, il suffit d'ajouter :</p>
-      <div>
-        <label for="nom_eleve">Nom de l'élève</label>
-        <input type="text" name="nom_eleve">
-      </div>
-      <div>
-        <label for="nom_eleve">Prénom de l'élève</label>
-        <input type="text" name="prenom_eleve">
-      </div>
-
-      <div class="col">
-        <button type="submit" class="btn btn-primary float-right">Importer <img src="../images/suivant.png" alt="suivant" title="suivant"></button>
-      </div>
-
-    </form>
-  <% end %>
 
   <span style="display:block; height: 20px;"></span>
 
