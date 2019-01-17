@@ -14,7 +14,7 @@
   <label for="password">Mot de passe</label>
   <input type="text" name="password"  id="password">
   <br>
-  <label for="etablissement_id">Code postal</label>
+  <label for="etablissement_id">Etablissement</label>
   <select name="etablissement_id"  id="etablissement_id">
     <% Etablissement.all.each do |etablissement|  %>
       <option value="<%= etablissement.id %>"><%= etablissement.nom %></option>
