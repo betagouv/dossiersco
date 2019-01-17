@@ -1,6 +1,6 @@
 # Remplacer les fixtures
 
-Status: proposition
+Status: en cours
 
 ## Contexte
 
@@ -10,7 +10,7 @@ La construction des données telle quelle existe aujourd'hui, n'utilise même pa
 
 ## Decision
 
-- Mettre en place [FactoryBot](https://github.com/thoughtbot/factory_bot) ou [Fabrication](https://www.fabricationgem.org/) (?).
+- Mettre en place [Fabrication](https://www.fabricationgem.org/).
 
 - Déplacer la procédure d'initialisation de quelques données fictives dans une tache `Rake` permettant de peupler n'importe quelle base de donnée.
 
