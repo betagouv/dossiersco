@@ -167,14 +167,14 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     doc = soumet_formulaire '/famille', params: donnees
 
     eleve = Eleve.find_by(identifiant: 2)
-    assert !eleve.dossier_eleve.resp_legal_1.changement_adresse
+    assert eleve.dossier_eleve.resp_legal_1.adresse_inchangee
 
     # Changement d'adresse
     donnees['adresse_rl1'] = "Nouvelle adresse"
     doc = soumet_formulaire '/famille', params: donnees
 
     eleve = Eleve.find_by(identifiant: 2)
-    assert eleve.dossier_eleve.resp_legal_1.changement_adresse
+    assert ! eleve.dossier_eleve.resp_legal_1.adresse_inchangee
   end
 
 

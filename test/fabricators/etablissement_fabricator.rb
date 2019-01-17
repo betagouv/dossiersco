@@ -1,0 +1,2 @@
+Fabricator(:etablissement) do
+end

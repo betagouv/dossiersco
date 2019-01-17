@@ -80,6 +80,7 @@ GEM
     erubi (1.8.0)
     excon (0.62.0)
     execjs (2.7.0)
+    fabrication (2.20.1)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
     ffi (1.10.0)
@@ -282,6 +283,7 @@ DEPENDENCIES
   chromedriver-helper
   concurrent-ruby
   dotenv
+  fabrication
   fog-aws
   jbuilder (~> 2.5)
   letter_opener_web

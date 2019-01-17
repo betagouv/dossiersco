@@ -1,6 +1,10 @@
 class RespLegal < ActiveRecord::Base
   belongs_to :dossier_eleve
 
+  validates :adresse_ant, presence: true, if: :adresse?
+  validates :ville_ant, presence: true, if: :ville?
+  validates :code_postal_ant, presence: true, if: :code_postal?
+
   def meme_adresse autre_resp_legal
     return false if autre_resp_legal.nil?
     meme_adresse = true
@@ -15,11 +19,8 @@ class RespLegal < ActiveRecord::Base
     (valeur2 && valeur2.upcase.gsub(/[[:space:]]/,''))
   end
 
-  def changement_adresse
-    !adresse_inchangee
-  end
-
   def adresse_inchangee
+    return true if adresse_ant.nil? && ville_ant.nil? && code_postal_ant.nil?
     equivalentes(adresse, adresse_ant) &&
     equivalentes(ville, ville_ant) &&
     equivalentes(code_postal, code_postal_ant)

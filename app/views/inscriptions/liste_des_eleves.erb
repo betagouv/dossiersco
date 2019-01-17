@@ -55,7 +55,7 @@
               adresse_ant: ligne_eleve.adresse_ant,
               ville_ant: ligne_eleve.ville_ant,
               code_postal_ant: ligne_eleve.code_postal_ant) %>
-            <%= rl.changement_adresse ? "✓" : "" %>
+            <%= rl.adresse_inchangee ? "" : "✓" %>
         </td>
           <td <%= cliquable %> >
             <%= ligne_eleve.demi_pensionnaire ? "✓" : "" %>

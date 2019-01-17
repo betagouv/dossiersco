@@ -2,6 +2,11 @@ require 'test_helper'
 
 class EleveTest < ActiveSupport::TestCase
 
+  def test_a_un_fabricant_valid
+    assert Fabricate.build(:eleve).valid?
+
+  end
+
   def test_affiche_option_obligatoire_nouvelle_pour_cette_montee
     montee = Montee.create
     eleve = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01', montee: montee)
