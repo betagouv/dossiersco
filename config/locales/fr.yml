@@ -7,3 +7,19 @@ fr:
           attributes:
             code_postal_ant:
               blank: "ne peut être vide"
+  identification:
+    titre: Inscription au collège
+    baseline: Quelques clics pour inscrire votre enfant
+    labels:
+      identifiant: "Identifiant (Exemple : 2206004705B)"
+      date_de_naissance: "Date de naissance de l'élève"
+    placeholders:
+      identifiant: "Exemple : 2206004705B"
+      jour: JJ
+      mois: MM
+      annee: AAAA
+    connexion: Connexion
+    agent_ple?: "Vous êtes agent en EPLE ?"
+    erreurs:
+      identifiants_non_renseignes: "Veuillez renseigner l'identifiant et la date de naissance de l'élève."
+      identifiants_inconnus: "Nous n'avons pas reconnu ces identifiants, merci de les vérifier."
