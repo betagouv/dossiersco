@@ -14,7 +14,7 @@
 - Ajout d'un deuxième projet dans github pour faire le suivi de l'acquisition/activation des établissements [Participation Établissement](https://github.com/betagouv/dossiersco/projects/2).
 
 
-## Points d'améliorations
+## Points d'améliorations
 
 - prévoir 60 minutes à la fin de la dernière session pour remplir le journal hebdo
 - améliorer le suivi des prospects
