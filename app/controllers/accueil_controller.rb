@@ -8,8 +8,9 @@ class AccueilController < ApplicationController
 
   def identification
     if params[:identifiant].empty? || params[:annee].empty? || params[:mois].empty? || params[:jour].empty?
-      session[:message_erreur] = "Veuillez renseigner l'identifiant et la date de naissance de l'élève."
+      session[:message_erreur] = t('identification.erreurs.identifiants_non_renseignes')
       redirect_to '/'
+      return
     end
     Trace.create(identifiant: params[:identifiant],
                  categorie: 'famille',
@@ -35,7 +36,7 @@ class AccueilController < ApplicationController
     else
       # Emettre un message générique quelle que soit l'erreur pour éviter
       # de "fuiter" de l'information sur l'existence ou non des identifiants
-      session[:message_erreur] = "Nous n'avons pas reconnu ces identifiants, merci de les vérifier."
+      session[:message_erreur] = t('identification.erreurs.identifiants_inconnus')
       redirect_to '/'
     end
   end
