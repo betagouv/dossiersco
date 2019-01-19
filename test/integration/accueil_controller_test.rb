@@ -499,7 +499,7 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     post '/deconnexion'
     post '/identification', params: { identifiant: '4', annee: '1970', mois: '01', jour: '01' }
     follow_redirect!
-    assert response.parsed_body.include? "Identité de l'élève"
+    assert response.parsed_body.include? html_escape("Identité de l'élève")
   end
 
   def test_ramene_a_l_etape_confirmation_pour_la_satisfaction
