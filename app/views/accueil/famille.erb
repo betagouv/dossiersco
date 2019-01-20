@@ -1,7 +1,7 @@
 <% form_resp_legal_1 = [
   {
     name: "lien_de_parente_rl1",
-    label: "Lien de parenté",
+    label: t('famille.etape_famille.labels.lien_de_parente'),
     type: "dropdown",
     selected: @resp_legal_1.lien_de_parente,
     disabledw: false,
@@ -10,7 +10,7 @@
   },
   {
     name: "prenom_rl1",
-    label: "Prénom",
+    label: t('famille.labels.prenom'),
     type: "text",
     value: @resp_legal_1.prenom,
     indication: "Prénom",
@@ -19,7 +19,7 @@
   },
   {
     name: "nom_rl1",
-    label: "Nom",
+    label: t('famille.labels.nom'),
     type: "text",
     value: @resp_legal_1.nom,
     indication: "Nom",
@@ -28,7 +28,7 @@
   },
   {
     name: "adresse_rl1",
-    label: "Adresse",
+    label: t('famille.etape_famille.labels.adresse'),
     type: "libre",
     value: @resp_legal_1.adresse,
     indication: "Numéro et nom de voie",
@@ -38,7 +38,7 @@
   },
   {
     name: "code_postal_rl1",
-    label: "Code postal",
+    label: t('famille.etape_famille.labels.code_postal'),
     type: "text",
     value: @resp_legal_1.code_postal,
     indication: "Code postal",
@@ -47,7 +47,7 @@
   },
   {
     name: "ville_rl1",
-    label: "Ville",
+    label: t('famille.etape_famille.labels.ville'),
     type: "text",
     value: @resp_legal_1.ville,
     indication: "Ville",
@@ -60,7 +60,7 @@
   },
   {
     name: "tel_principal_rl1",
-    label: "Téléphone principal",
+    label: t('famille.etape_famille.labels.telephone_principal'),
     type: "tel",
     value: @resp_legal_1.tel_principal,
     indication: "Numéro de téléphone",
@@ -68,14 +68,14 @@
   },
   {
     name: "tel_secondaire_rl1",
-    label: "Téléphone secondaire",
+    label: t('famille.etape_famille.labels.telephone_secondaire'),
     type: "tel",
     value: @resp_legal_1.tel_secondaire,
     indication: "Numéro de téléphone",
   },
   {
     name: "email_rl1",
-    label: "Email principal",
+    label: t('famille.etape_famille.labels.email_principal'),
     type: "tel",
     value: @resp_legal_1.email,
     indication: "Adresse email",
@@ -86,7 +86,7 @@
   },
   {
     name: "profession_rl1",
-    label: "Profession",
+    label: t('famille.etape_famille.labels.profession'),
     type: "dropdown",
     options: @code_profession.map{ |k, v| v },
     selected: @resp_legal_1.profession,
@@ -98,7 +98,7 @@
   },
   {
     name: "enfants_a_charge_rl1",
-    label: "Nombre total d'enfants à charge",
+    label: t('famille.etape_famille.labels.nb_total_enfants_a_charge'),
     type: "text_custom",
     value: @resp_legal_1.enfants_a_charge,
     longueur_label: 7,
@@ -111,10 +111,10 @@
     hauteur: '30'
   },
   {
-    label: "que ces coordonnées soient communiquées aux fédérations de parents d'élèves.",
+    label: t('famille.etape_famille.labels.coordonnees_communiquees'),
     name: 'communique_info_parents_eleves_rl1',
     type: 'radio_inverse',
-    options: {"J'accepte": true, "Je n'accepte pas": false},
+    options: {t('famille.etape_famille.options.accepte') => true, t('famille.etape_famille.options.accepte_pas') => false},
     checked: @resp_legal_1.communique_info_parents_eleves || false
   }]
 
@@ -122,7 +122,7 @@ if @resp_legal_2
 form_resp_legal_2 = [
   {
     name: "lien_de_parente_rl2",
-    label: "Lien de parenté",
+    label: t('famille.etape_famille.labels.lien_de_parente'),
     type: "dropdown",
     selected: @resp_legal_2.lien_de_parente,
     disabled: false,
@@ -131,7 +131,7 @@ form_resp_legal_2 = [
   },
   {
     name: "prenom_rl2",
-    label: "Prénom",
+    label: t('famille.labels.prenom'),
     type: "text",
     value: @resp_legal_2.prenom,
     indication: "Prénom",
@@ -140,7 +140,7 @@ form_resp_legal_2 = [
   },
   {
     name: "nom_rl2",
-    label: "Nom",
+    label: t('famille.labels.nom'),
     type: "text",
     value: @resp_legal_2.nom,
     indication: "Nom",
@@ -152,7 +152,7 @@ form_resp_legal_2 = [
 fin_form_resp_legal_2 = [
   {
     name: "adresse_rl2",
-    label: "Adresse",
+    label: t('famille.etape_famille.labels.adresse'),
     type: "libre",
     value: @resp_legal_2.adresse,
     indication: "Numéro et nom de voie",
@@ -162,7 +162,7 @@ fin_form_resp_legal_2 = [
   },
   {
     name: "code_postal_rl2",
-    label: "Code postal",
+    label: t('famille.etape_famille.labels.code_postal'),
     type: "text",
     value: @resp_legal_2.code_postal,
     indication: "Code postal",
@@ -171,7 +171,7 @@ fin_form_resp_legal_2 = [
   },
   {
     name: "ville_rl2",
-    label: "Ville",
+    label: t('famille.etape_famille.labels.ville'),
     type: "text",
     value: @resp_legal_2.ville,
     indication: "Ville",
@@ -184,7 +184,7 @@ fin_form_resp_legal_2 = [
   },
   {
     name: "tel_principal_rl2",
-    label: "Téléphone principal",
+    label: t('famille.etape_famille.labels.telephone_principal'),
     type: "tel",
     value: @resp_legal_2.tel_principal,
     indication: "Numéro de téléphone",
@@ -192,14 +192,14 @@ fin_form_resp_legal_2 = [
   },
   {
     name: "tel_secondaire_rl2",
-    label: "Téléphone secondaire",
+    label: t('famille.etape_famille.labels.telephone_secondaire'),
     type: "tel",
     value: @resp_legal_2.tel_secondaire,
     indication: "Numéro de téléphone",
   },
   {
     name: "email_rl2",
-    label: "Email principal",
+    label: t('famille.etape_famille.labels.email_principal'),
     type: "tel",
     value: @resp_legal_2.email,
     indication: "Adresse email",
@@ -210,7 +210,7 @@ fin_form_resp_legal_2 = [
   },
   {
     name: "profession_rl2",
-    label: "Profession",
+    label: t('famille.etape_famille.labels.profession'),
     type: "dropdown",
     options: @code_profession.map{ |k, v| v },
     selected: @resp_legal_2.profession,
@@ -225,10 +225,10 @@ fin_form_resp_legal_2 = [
     hauteur: '30'
   },
   {
-    label: "que ces coordonnées soient communiquées aux fédérations de parents d'élèves.",
+    label: t('famille.etape_famille.labels.coordonnees_communiquees'),
     name: 'communique_info_parents_eleves_rl2',
     type: 'radio_inverse',
-    options: {"J'accepte": true, "Je n'accepte pas": false},
+    options: {t('famille.etape_famille.options.accepte') => true, t('famille.etape_famille.options.accepte_pas') => false},
     checked: @resp_legal_2.communique_info_parents_eleves || false
   }]
 end
@@ -236,7 +236,7 @@ end
 form_contact_urgence = [
   {
     name: "lien_avec_eleve_urg",
-    label: "Lien avec l'élève",
+    label: t('famille.etape_famille.labels.lien_avec_eleve'),
     type: "text",
     value: @contact_urgence.present? ? @contact_urgence.lien_avec_eleve : nil,
     indication: "Lien avec l'élève",
@@ -244,7 +244,7 @@ form_contact_urgence = [
   },
   {
     name: "prenom_urg",
-    label: "Prénom",
+    label: t('famille.labels.prenom'),
     type: "text",
     value: @contact_urgence.present? ? @contact_urgence.prenom : nil,
     indication: "Prénom",
@@ -252,7 +252,7 @@ form_contact_urgence = [
   },
   {
     name: "nom_urg",
-    label: "Nom",
+    label: t('famille.labels.nom'),
     type: "text",
     value: @contact_urgence.present? ? @contact_urgence.nom : nil,
     indication: "Nom",
@@ -264,14 +264,14 @@ form_contact_urgence = [
   },
   {
     name: "tel_principal_urg",
-    label: "Téléphone principal",
+    label: t('famille.etape_famille.labels.telephone_principal'),
     type: "tel",
     value: @contact_urgence.present? ? @contact_urgence.tel_principal : nil,
     indication: "Numéro de téléphone",
   },
   {
     name: "tel_secondaire_urg",
-    label: "Téléphone secondaire",
+    label: t('famille.etape_famille.labels.telephone_secondaire'),
     type: "tel",
     value: @contact_urgence.present? ? @contact_urgence.tel_secondaire : nil,
     indication: "Numéro de téléphone",
@@ -284,7 +284,7 @@ form_contact_urgence = [
 
 <div class="col-12">
 
-  <h2 class="separation">Famille : Responsable légal<%= " 1" if @resp_legal_2.present?%></h2>
+  <h2 class="separation"><%= t('famille.etape_famille.titre_responsable_legal') %><%= " 1" if @resp_legal_2.present?%></h2>
 
   <form action="/famille" method="POST">
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
@@ -293,7 +293,7 @@ form_contact_urgence = [
 
 <% if @resp_legal_2 %>
 <div id='resp_legal_2' class='<%= "d-none" unless @resp_legal_2.present? %>' >
-  <h2 class="mt-5 separation">Famille : Responsable légal 2</h2>
+  <h2 class="mt-5 separation"><%= t('famille.etape_famille.titre_responsable_legal') %> 2</h2>
 
     <%= raw(construire form_resp_legal_2) %>
 
@@ -316,10 +316,10 @@ form_contact_urgence = [
 <% end %>
 
 <a href="#" id='ajouter_contact_urgence' class='<%= "d-none" if @contact_urgence.present? && !@contact_urgence.nom.empty? %> btn btn-outline-primary' >
-    Ajouter un contact en cas d'urgence
+    <%= t('famille.etape_famille.ajouter_contact_urgence') %>
 </a>
 <div id='contact_urgence' class='<%= "d-none" unless @contact_urgence.present? && !@contact_urgence.nom.empty? %>' >
-  <h2 class="mt-5 separation">Famille : Autre personne à contacter en cas d'urgence</h2>
+  <h2 class="mt-5 separation"><%= t('famille.etape_famille.titre_contact_urgence') %></h2>
 
   <%= raw(construire form_contact_urgence) %>
 </div>
