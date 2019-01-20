@@ -30,14 +30,15 @@ fr:
       administration: Administration
       pieces_a_joindre: Pièces à joindre
       validation: Validation
+    labels:
+      prenom: "Prénom"
+      nom: Nom
     etape_eleve:
       hint_corriger_les_informations: "Veuillez corriger les informations incorrectes ou manquantes :"
       titre: Identité de l'élève
       labels:
-        prenom: "Prénom"
         prenom_2: "Deuxième prénom (optionnel)"
         prenom_3: "Troisième prénom (optionnel)"
-        nom: Nom
         sexe: Sexe
         ville_de_naissance: Ville de naissance
         pays_de_naissance: Pays de naissance
@@ -47,3 +48,22 @@ fr:
         sexe:
           masculin: Masculin
           feminin: Féminin
+    etape_famille:
+      titre_responsable_legal: "Famille : Responsable légal"
+      titre_contact_urgence: "Famille : Autre personne à contacter en cas d'urgence"
+      labels:
+        lien_de_parente: "Lien de parenté"
+        adresse: Adresse
+        code_postal: Code postal
+        ville: Ville
+        telephone_principal: Téléphone principal
+        telephone_secondaire: Téléphone secondaire
+        email_principal: Email principal
+        profession: Profession
+        nb_total_enfants_a_charge: "Nombre total d'enfants à charge"
+        coordonnees_communiquees: "que ces coordonnées soient communiquées aux fédérations de parents d'élèves."
+        lien_avec_eleve: "Lien avec l'élève"
+      options:
+        accepte: "J'accepte"
+        accepte_pas: "Je n'accepte pas"
+      ajouter_contact_urgence: "Ajouter un contact en cas d'urgence"
