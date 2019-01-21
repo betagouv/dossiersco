@@ -131,9 +131,9 @@ ActiveRecord::Schema.define(version: 2019_01_21_160828) do
 
   create_table "mef_options_pedagogiques", force: :cascade do |t|
     t.bigint "mef_id"
-    t.bigint "options_pedagogiques_id"
+    t.bigint "option_pedagogique_id"
     t.index ["mef_id"], name: "index_mef_options_pedagogiques_on_mef_id"
-    t.index ["options_pedagogiques_id"], name: "index_mef_options_pedagogiques_on_options_pedagogiques_id"
+    t.index ["option_pedagogique_id"], name: "index_mef_options_pedagogiques_on_option_pedagogique_id"
   end
 
   create_table "messages", force: :cascade do |t|
