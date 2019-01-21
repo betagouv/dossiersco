@@ -11,9 +11,11 @@ class OptionsPedagogiquesController < ApplicationController
 
   def new
     @option_pedagogique = OptionPedagogique.new
+    @mef = Mef.all
   end
 
   def edit
+    @mef = Mef.all
   end
 
   def create
@@ -45,6 +47,6 @@ class OptionsPedagogiquesController < ApplicationController
   end
 
   def option_pedagogique_params
-    params.require(:option_pedagogique).permit(:nom, :obligatoire, :groupe)
+    params.require(:option_pedagogique).permit(:nom, :obligatoire, :groupe, {mef_ids: []})
   end
 end
