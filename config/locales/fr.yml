@@ -23,6 +23,10 @@ fr:
     erreurs:
       identifiants_non_renseignes: "Veuillez renseigner l'identifiant et la date de naissance de l'élève."
       identifiants_inconnus: "Nous n'avons pas reconnu ces identifiants, merci de les vérifier."
+  accueil:
+    famille:
+      lien_de_parente: "Lien de parenté"
+
   famille:
     menu:
       eleve: Elève
@@ -52,7 +56,6 @@ fr:
       titre_responsable_legal: "Famille : Responsable légal"
       titre_contact_urgence: "Famille : Autre personne à contacter en cas d'urgence"
       labels:
-        lien_de_parente: "Lien de parenté"
         adresse: Adresse
         code_postal: Code postal
         ville: Ville
