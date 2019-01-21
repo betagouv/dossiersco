@@ -1,0 +1,2 @@
+class OptionPedagogique < ApplicationRecord
+end

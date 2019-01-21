@@ -20,4 +20,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'dossier affelnet', 'dossiers affelnet'
   inflect.irregular 'dossier_affelnet', 'dossiers_affelnet'
   inflect.irregular 'DossierAffelnet', 'DossiersAffelnet'
+  inflect.irregular 'OptionPedagogique', 'OptionsPedagogiques'
+  inflect.irregular 'option_pedagogique', 'options_pedagogiques'
+  inflect.irregular 'option pedagogique', 'options pedagogiques'
 end
