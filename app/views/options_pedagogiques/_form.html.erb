@@ -1,0 +1,21 @@
+<%= form_with(model: option_pedagogique, local: true) do |form| %>
+  <% if option_pedagogique.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(option_pedagogique.errors.count, "error") %> prohibited this option_pedagogique from being saved:</h2>
+      <ul>
+      <% option_pedagogique.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= form.label :nom %>
+  <%= form.text_field :nom %>
+  <%= form.label :groupe %>
+  <%= form.text_field :groupe %>
+  <%= form.label :obligatoire %>
+  <%= form.check_box :obligatoire %>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Options Pedagogiques</h1>
+
+<table>
+  <thead>
+    <tr>
+      <td>Nom</td>
+      <td>Groupe</td>
+      <td>Obligatoire</td>
+      <td colspan="2"></td>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @options_pedagogiques.each do |option_pedagogique| %>
+      <tr>
+        <td><%= option_pedagogique.nom %></td>
+        <td><%= option_pedagogique.groupe %></td>
+        <td><%= option_pedagogique.obligatoire %></td>
+        <td><%= link_to 'Edit', edit_option_pedagogique_path(option_pedagogique) %></td>
+        <td><%= link_to 'Destroy', option_pedagogique, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Option Pedagogique', new_option_pedagogique_path %>
