@@ -97,5 +97,5 @@ Rails.application.routes.draw do
 
   get '/redirection_erreur', to: 'pages#redirection_erreur'
 
-  resources :dossiers_affelnet, only: [:create]
+  resource :dossier_affelnet, only: [:create]
 end
