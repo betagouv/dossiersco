@@ -22,10 +22,6 @@ group :development, :test do
   gem 'fabrication'
 end
 
-group :development,:staging do
-  gem 'letter_opener_web'
-end
-
 group :development do
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
@@ -52,3 +48,5 @@ gem 'prawn'
 gem 'sentry-raven'
 gem 'rack-ssl-enforcer'
 gem 'mailjet'
+gem 'letter_opener_web'
+
