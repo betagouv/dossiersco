@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Mef</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Libelle</th>
+      <th>Code</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @mef.each do |mef| %>
+      <tr>
+        <td><%= mef.libelle %></td>
+        <td><%= mef.code %></td>
+        <td><%= link_to 'Edit', edit_mef_path(mef) %></td>
+        <td><%= link_to 'Destroy', mef, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Mef', new_mef_path %>

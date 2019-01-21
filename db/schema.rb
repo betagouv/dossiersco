@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_21_143230) do
+ActiveRecord::Schema.define(version: 2019_01_21_160828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,6 +118,22 @@ ActiveRecord::Schema.define(version: 2019_01_21_143230) do
     t.string "email"
     t.boolean "gere_demi_pension", default: false
     t.string "signataire", default: ""
+  end
+
+  create_table "mef", force: :cascade do |t|
+    t.string "libelle"
+    t.string "code"
+    t.bigint "etablissement_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["etablissement_id"], name: "index_mef_on_etablissement_id"
+  end
+
+  create_table "mef_options_pedagogiques", force: :cascade do |t|
+    t.bigint "mef_id"
+    t.bigint "options_pedagogiques_id"
+    t.index ["mef_id"], name: "index_mef_options_pedagogiques_on_mef_id"
+    t.index ["options_pedagogiques_id"], name: "index_mef_options_pedagogiques_on_options_pedagogiques_id"
   end
 
   create_table "messages", force: :cascade do |t|

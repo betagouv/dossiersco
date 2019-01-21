@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Libelle:</strong>
+  <%= @mef.libelle %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @mef.code %>
+</p>
+
+<p>
+  <strong>References:</strong>
+  <%= @mef.references %>
+</p>
+
+<%= link_to 'Edit', edit_mef_path(@mef) %> |
+<%= link_to 'Back', mef_index_path %>
