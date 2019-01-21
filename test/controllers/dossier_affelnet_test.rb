@@ -4,8 +4,7 @@ class DossierAffelnetControllerTest < ActionDispatch::IntegrationTest
 
   def test_upload_un_fichier_puis_affiche_un_compte_rendu_du_contenu
     admin = Fabricate(:admin)
-    post agent_url, params: {identifiant: admin.identifiant, mot_de_passe: admin.password}
-    follow_redirect!
+    identification_agent(admin)
 
     import_affelnet_xls = fixture_file_upload('files/test_import_affelnet_4_lignes.xlsm','application/vnd.ms-excel')
 

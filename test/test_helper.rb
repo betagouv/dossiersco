@@ -3,11 +3,15 @@ require_relative '../config/environment'
 require 'rails/test_help'
 
 class ActiveSupport::TestCase
-  # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
-  fixtures :all
 
   def html_escape text
     ERB::Util::html_escape(text)
   end
-  # Add more helper methods to be used by all tests here...
+
+  def identification_agent(agent)
+    post agent_url, params: {identifiant: agent.identifiant, mot_de_passe: agent.password}
+    follow_redirect!
+  end
+
+
 end

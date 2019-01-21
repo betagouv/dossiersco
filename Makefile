@@ -7,7 +7,10 @@ build: ## Install or update dependencies
 	docker-compose build
 
 run: ## Start the app server
-	docker-compose up -d app postgres && docker-compose logs -f
+	docker-compose up app postgres
+
+stop: ## Start the app server
+	docker-compose stop
 
 clean: ## Clean temporary files and installed dependencies
 	docker-compose stop && docker-compose rm app test
@@ -18,4 +21,4 @@ console: ## Run rails console
 routes: ## Run rails routes
 	docker-compose run --rm app bundle exec rails routes
 
-.PHONY: build run test clean
+.PHONY: build run test clean stop

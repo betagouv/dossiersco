@@ -1,10 +1,9 @@
 Rails.application.routes.draw do
   root to: 'accueil#index'
 
+  resources :mef
   resources :options_pedagogiques, except: [:show]
-
   resource :dossier_affelnet, only: [:create]
-
   resource :configuration, only: [:show]
 
   post '/identification', to: 'accueil#identification'
