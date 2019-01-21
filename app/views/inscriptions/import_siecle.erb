@@ -68,9 +68,9 @@
     <div class="card">
       <h2 class="card-header">Import depuis affelnet</h2>
       <div class="card-body p-3">
-        <%= form_for DossierAffelnet.new, { multipart: true } do |f| %>
+        <%= form_tag dossier_affelnet_path, { multipart: true } do |f| %>
           <div class="card-relat document mb-3">
-            <%= f.file_field :fichier, class: "filestyle",  data: { btnClass: "btn btn-primary", text: "Parcourir"} %>
+            <%= file_field_tag :fichier, class: "filestyle",  data: { btnClass: "btn btn-primary", text: "Parcourir"} %>
           </div>
           <div class="col">
             <button type="submit" class="btn btn-primary float-right">Importer <img src="../images/suivant.png" alt="suivant" title="suivant"></button>

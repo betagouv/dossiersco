@@ -1,7 +1,7 @@
 require 'traitement'
 
 class InscriptionsController < ApplicationController
-  before_action :identification, except: [:post_agent, :agent, :declenche_traiter_imports]
+  before_action :identification_agent, except: [:post_agent, :agent, :declenche_traiter_imports]
   layout 'layout_agent'
 
   def agent
@@ -347,18 +347,4 @@ class InscriptionsController < ApplicationController
     redirect_to "/agent/liste_des_eleves"
   end
 
-  private
-  def get_agent
-    @agent ||= Agent.find_by(identifiant: session[:identifiant])
-  end
-
-  def identification
-    agent_connecte = get_agent
-    identifiant = agent_connecte.present? ? agent_connecte.identifiant : '<anonyme>'
-    Trace.create(identifiant: identifiant,
-                 categorie: 'agent',
-                 page_demandee: request.path_info,
-                 adresse_ip: request.ip)
-    redirect_to '/agent' unless agent_connecte.present?
-  end
 end
