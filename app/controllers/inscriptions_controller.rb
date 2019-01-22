@@ -10,13 +10,13 @@ class InscriptionsController < ApplicationController
 
   def post_agent
     mon_agent = Agent.find_by(identifiant: params[:identifiant])
-    mdp_saisi = params[:mot_de_passe]
-    if mon_agent && (BCrypt::Password.new(mon_agent.password) == mdp_saisi)
+
+    if mon_agent && mon_agent.authenticate(params[:mot_de_passe])
       session[:identifiant] = mon_agent.identifiant
-      redirect_to '/agent/liste_des_eleves'
+      redirect_to agent_liste_des_eleves_path
     else
       session[:erreur_login] = "Ces informations ne correspondent pas à un agent enregistré"
-      redirect_to '/agent'
+      redirect_to agent_path
     end
   end
 
@@ -308,43 +308,4 @@ class InscriptionsController < ApplicationController
     end
     redirect_to '/agent/liste_des_eleves'
   end
-
-  def creer_etablissement
-    redirect_to '/agent' unless get_agent.admin
-    render :creer_etablissement
-  end
-
-  def post_creer_etablissement
-    Etablissement.create!(
-      nom: params[:nom],
-      email: params[:email],
-      adresse: params[:adresse],
-      ville: params[:ville],
-      code_postal: params[:code_postal],
-      message_permanence: params[:message_permanence],
-      message_infirmerie: params[:message_infirmerie],
-      gere_demi_pension: params[:gere_demi_pension],
-      signataire: params[:signataire],
-    )
-    redirect_to '/agent/creer_agent'
-  end
-
-  def creer_agent
-    redirect_to '/agent' unless get_agent.admin
-    render :creer_agent
-  end
-
-  def post_creer_agent
-    a = Agent.create!(
-      identifiant: params[:identifiant],
-      prenom: params[:prenom],
-      nom: params[:nom],
-      password: params[:password],
-      etablissement_id: params[:etablissement_id]
-    )
-    a.password = BCrypt::Password.create(params[:password])
-    a.save!
-    redirect_to "/agent/liste_des_eleves"
-  end
-
 end

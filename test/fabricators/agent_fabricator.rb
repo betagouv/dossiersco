@@ -1,7 +1,7 @@
 Fabricator(:agent) do
   etablissement
   admin false
-  password BCrypt::Password.create("truc")
+  password 'demaulmont'
 end
 
 Fabricator(:admin, from: :agent) do
