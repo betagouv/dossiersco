@@ -32,11 +32,14 @@ fr:
       identifiants_non_renseignes: "Veuillez renseigner l'identifiant et la date de naissance de l'élève."
       identifiants_inconnus: "Nous n'avons pas reconnu ces identifiants, merci de les vérifier."
   accueil:
-    general: &general
+    infos_nom: &infos_nom
       prenom: Prénom
       nom: Nom
+    acceptation: &acceptation
+      j_accepte: "J'accepte"
+      j_accepte_pas: "Je n'accepte pas"
     eleve:
-      <<: *general
+      <<: *infos_nom
       conseil_corriger_les_informations: "Veuillez corriger les informations incorrectes ou manquantes :"
       titre: Identité de l'élève
       prenom: "Prénom"
@@ -51,7 +54,7 @@ fr:
       pays_de_nationalite: Pays de nationalité
       lv2: "Langue Vivante 2"
     famille:
-      <<: *general
+      <<: *infos_nom
       titre_responsable_legal: "Famille : Responsable légal"
       titre_contact_urgence: "Famille : Autre personne à contacter en cas d'urgence"
       adresse: Adresse
@@ -64,7 +67,26 @@ fr:
       nb_total_enfants_a_charge: "Nombre total d'enfants à charge"
       coordonnees_communiquees: "que ces coordonnées soient communiquées aux fédérations de parents d'élèves."
       lien_avec_eleve: "Lien avec l'élève"
-      accepte: "J'accepte"
-      accepte_pas: "Je n'accepte pas"
+      <<: *acceptation
       ajouter_contact_urgence: "Ajouter un contact en cas d'urgence"
       lien_de_parente: "Lien de parenté"
+    administration:
+      restauration_scolaire: Restauration scolaire
+      demi_pensionnaire: Demi-pensionnaire
+      externe: Externe
+      engagement_demi_pension: "En validant cette étape, je m'engage à régler les frais de demi-pension dans les délais impartis."
+      demande_justif_pour_demi_pension: "Pour déterminer le tarif de la demi-pension pour votre enfant, l'établissement vous demande un justificatif. Sans ce justificatif, le tarif maximal vous sera appliqué."
+      pour_obtenir_ce_document: "Pour obtenir ce document :"
+      si_allocataire_caf: "Si vous êtes allocataire de la Caisse d'Allocation Famliliales"
+      instruction_pour_allocataire_caf: "le document vous a été adressé par la CAF. Il suffit de le scanner ou prendre en photo à l'étape suivante."
+      si_pas_allocataire_caf: "Si vous n'êtes pas allocataire"
+      instruction_pour_non_allocataire_caf_html: "merci de vous rendre sur le <a href='https://calculette-colleges-restauration.paris.fr/calculetteQF/' target='_blanck'>site de la Ville de Paris</a>, pour renseigner votre situation et obtenir le justificatif à transmettre à l'étape suivante. (Le site va s'ouvrir dans un nouvel onglet. Vous pourrez continuer sur DossierSCO sans avoir besoin de vous reconnecter.)"
+      autorisation_de_sortie: Autorisation de sortie
+      j_autorise: "J'autorise"
+      je_n_autorise_pas: "Je n'autorise pas"
+      mon_enfant_a_quitter_le_college: "mon enfant à quitter le collège après le dernier cours de l'après-midi (ou après le repas s'il n'a pas cours l'après-midi), en cas d'absence de professeur et sous mon entière responsabilité."
+      renseignements_medicaux: "Renseignements médicaux"
+      envoyer_une_info_medicale: "Je souhaite envoyer par écrit au secrétariat une information médicale (PAI, PPS, PAP)."
+      droit_a_l_image: "Droit à l'image"
+      <<: *acceptation
+      enfant_photographie: "que mon enfant soit photographié à l'occasion des photos de classe."

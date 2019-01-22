@@ -4,7 +4,7 @@
 
 <div class="col-12">
 
-  <h2 class="col separation">Restauration scolaire</h2>
+<h2 class="col separation"><%= t('.restauration_scolaire') %></h2>
 
   <form action="/administration" method="POST">
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
@@ -14,75 +14,59 @@
         <div class="col-sm-6">
           <label class="col-sm-7 form-check-label">
             <input type="radio" name="demi_pensionnaire" value="true" class="form-check-input trigger" onclick="afficher_dp(event)" id='demi_pensionnaire'
-            <% if dossier_eleve.demi_pensionnaire %>
-                                                                                                         checked
-                                                                                                       <% end %>> Demi-pensionnaire
+            <% if dossier_eleve.demi_pensionnaire %> checked <% end %>><%= t('.demi_pensionnaire') %>
           </label>
           <label class="col-sm-4 form-check-label">
             <input type="radio" name="demi_pensionnaire" value="false" class="form-check-input trigger" onclick="masquer_dp(event)" id='externe'
-            <% if ! dossier_eleve.demi_pensionnaire %>
-                                                                                                          checked
-                                                                                                        <% end %>> Externe
+            <% if ! dossier_eleve.demi_pensionnaire %> checked <% end %>><%= t('.externe') %>
           </label>
         </div>
       </div>
 
       <div id="dp" style="display: none;">
 
-        <p class="text-danger">En validant cette étape, je m'engage à régler les frais de demi-pension dans les délais impartis.</p>
+        <p class="text-danger"><%= t('.engagement_demi_pension') %></p>
         <br />
         <% if dossier_eleve.etablissement.gere_demi_pension %>
-          <p>Pour déterminer le tarif de la demi-pension pour votre enfant, l'établissement vous demande un justificatif.
-          Sans ce justificatif, le tarif maximal vous sera appliqué.</p>
-          <p>Pour obtenir ce document : </p>
+          <p><%= t('.demande_justif_pour_demi_pension') %></p>
+        <p><%= t('.pour_obtenir_ce_document') %></p>
           <ul>
             <li>
-              <span <%= dossier_eleve.allocataire ?  'class="font-weight-bold"' : '' %>>Si vous êtes allocataire de la Caisse d'Allocation Famliliales</span>, le document vous a été adressé par la CAF.
-              Il suffit de le scanner ou prendre en photo à l'étape suivante.
+              <span <%= dossier_eleve.allocataire ?  "class=font-weight-bold" : '' %>><%= t('.si_allocataire_caf') %></span>, <%= t('.instruction_pour_allocataire_caf') %>
             </li>
             <li>
-              <span <%= dossier_eleve.allocataire ? '' : 'class="font-weight-bold"' %> >Si vous n'êtes pas allocataire</span>, merci de vous rendre sur le
-              <a href="https://calculette-colleges-restauration.paris.fr/calculetteQF/" target="_blanck">site de la Ville de Paris</a>,
-              pour renseigner votre situation et obtenir le justificatif à transmettre à l'étape suivante.
-              (Le site va s'ouvrir dans un nouvel onglet. Vous pourrez continuer sur DossierSCO sans avoir besoin de vous reconnecter.)<br />
+              <span <%= dossier_eleve.allocataire ? '' : "class=font-weight-bold" %> ><%= t('.si_pas_allocataire_caf') %></span>, <%= t('.instruction_pour_non_allocataire_caf_html') %><br />
             </li>
           </ul>
         <% end %>
       </div>
     </div>
 
-    <h2 class="separation mt-4">Autorisation de sortie</h2>
+    <h2 class="separation mt-4"><%= t('.autorisation_de_sortie') %></h2>
 
     <div class="form-check form-check-inline">
       <label class="form-check-label">
-        <input class="form-check-input" type="radio" name="autorise_sortie" value="true"
-                                                                            id='autorise_sortie'
-                                                                            <% if dossier_eleve.autorise_sortie %>
-                                                                              checked
-                                                                            <% end %>> J'autorise
+        <input class="form-check-input" type="radio" name="autorise_sortie" value="true" id='autorise_sortie'
+        <% if dossier_eleve.autorise_sortie %> checked <% end %>><%= t('.j_autorise') %>
       </label>
     </div>
     <div class="form-check form-check-inline">
       <label class="form-check-label">
         <input class="form-check-input" type="radio" name="autorise_sortie" value="false"
-        <% if !dossier_eleve.autorise_sortie %>
-                                                                              checked
-                                                                            <% end %>> Je n'autorise pas
+        <% if !dossier_eleve.autorise_sortie %> checked <% end %>><%= t('.je_n_autorise_pas') %>
       </label>
     </div>
 
-    <p>mon enfant à quitter le collège après le dernier cours de l'après-midi (ou après le repas s'il n'a pas cours l'après-midi), en cas d'absence de professeur et sous mon entière responsabilité.</p>
+    <p><%= t('.mon_enfant_a_quitter_le_college') %></p>
 
-    <h2 class="separation mt-4">Renseignements médicaux</h2>
+    <h2 class="separation mt-4"><%= t('.renseignements_medicaux') %></h2>
 
     <div class="row">
       <div class="col">
         <div class="form-check">
           <label class="form-check-label">
             <input class="form-check-input" type="checkbox" value='true' name="renseignements_medicaux"  id='renseignements_medicaux'
-            <% if dossier_eleve.renseignements_medicaux %>
-                                                                           checked
-                                                                         <% end %>> Je souhaite envoyer par écrit au secrétariat une information médicale (PAI, PPS, PAP).
+            <% if dossier_eleve.renseignements_medicaux %> checked <% end %>> <%= t('.envoyer_une_info_medicale') %>
           </label>
         </div>
         <% if dossier_eleve.etablissement.message_infirmerie.present? %>
@@ -93,26 +77,20 @@
       </div>
     </div>
 
-    <h2 class="separation mt-4">Droit à l'image</h2>
+    <h2 class="separation mt-4"><%= t('.droit_a_l_image') %></h2>
 
     <div class="form-check form-check-inline">
       <label class="form-check-label">
         <input class="form-check-input" type="radio" name="droit_image_photo" value="true" id='autorise_photo_de_classe'
-        <% if dossier_eleve.autorise_photo_de_classe %>
-                                                                                checked
-                                                                              <% end %>> J'accepte
-      </label>
+        <% if dossier_eleve.autorise_photo_de_classe %> checked <% end %>> <%= t('.j_accepte') %> </label>
     </div>
     <div class="form-check form-check-inline">
       <label class="form-check-label">
         <input class="form-check-input" type="radio" name="droit_image_photo" value="false"
-        <% if !dossier_eleve.autorise_photo_de_classe %>
-                                                                                checked
-                                                                              <% end %>> Je n'accepte pas
-      </label>
+        <% if !dossier_eleve.autorise_photo_de_classe %> checked <% end %>> <%= t('.j_accepte_pas') %> </label>
     </div>
 
-    <p>que mon enfant soit photographié à l'occasion des photos de classe.</p>
+    <p><%= t('.enfant_photographie') %></p>
 
     <%= render partial: 'partials/nouveau_precedent_suivant', :locals => { :precedent => "famille"} %>
   </form>
