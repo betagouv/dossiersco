@@ -32,28 +32,27 @@ fr:
       identifiants_non_renseignes: "Veuillez renseigner l'identifiant et la date de naissance de l'élève."
       identifiants_inconnus: "Nous n'avons pas reconnu ces identifiants, merci de les vérifier."
   accueil:
+    eleve:
+      conseil_corriger_les_informations: "Veuillez corriger les informations incorrectes ou manquantes :"
+      titre: Identité de l'élève
+      prenom: "Prénom"
+      prenom_2: "Deuxième prénom (optionnel)"
+      prenom_3: "Troisième prénom (optionnel)"
+      nom: Nom
+      sexe: Sexe
+      masculin: Masculin
+      feminin: Féminin
+      ville_de_naissance: Ville de naissance
+      pays_de_naissance: Pays de naissance
+      pays_de_nationalite: Pays de nationalité
+      lv2: "Langue Vivante 2"
     famille:
       lien_de_parente: "Lien de parenté"
 
   famille:
     labels:
-      prenom: "Prénom"
+      prenom: Prénom
       nom: Nom
-    etape_eleve:
-      hint_corriger_les_informations: "Veuillez corriger les informations incorrectes ou manquantes :"
-      titre: Identité de l'élève
-      labels:
-        prenom_2: "Deuxième prénom (optionnel)"
-        prenom_3: "Troisième prénom (optionnel)"
-        sexe: Sexe
-        ville_de_naissance: Ville de naissance
-        pays_de_naissance: Pays de naissance
-        pays_de_nationalite: Pays de nationalité
-        lv2: "Langue Vivante 2"
-      options:
-        sexe:
-          masculin: Masculin
-          feminin: Féminin
     etape_famille:
       titre_responsable_legal: "Famille : Responsable légal"
       titre_contact_urgence: "Famille : Autre personne à contacter en cas d'urgence"
