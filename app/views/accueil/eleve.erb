@@ -2,7 +2,7 @@
     premier_prenom = [
         {
           name: "prenom",
-          label: t('famille.labels.prenom'),
+          label: t('.prenom'),
           type: "text",
           value: @eleve.prenom,
           indication: "Prénom",
@@ -13,7 +13,7 @@
     autres_prenoms = [
         {
           name: "prenom_2",
-          label: t('famille.etape_eleve.labels.prenom_2'),
+          label: t('.prenom_2'),
           type: "text",
           value: @eleve.prenom_2,
           indication: "Deuxième prénom (optionnel)",
@@ -21,7 +21,7 @@
         },
         {
           name: "prenom_3",
-          label: t('famille.etape_eleve.labels.prenom_3'),
+          label: t('.prenom_3'),
           type: "text",
           value: @eleve.prenom_3,
           indication: "Troisième prénom (optionnel)",
@@ -31,7 +31,7 @@
     reste_identite = [
         {
           name: "nom",
-          label: t('famille.labels.nom'),
+          label: t('.nom'),
           type: "text",
           value: @eleve.nom,
           indication: "Nom",
@@ -40,9 +40,9 @@
         },
         {
           name: "sexe",
-          label: t('famille.etape_eleve.labels.sexe'),
+          label: t('.sexe'),
           type: "radio",
-          options: [t('famille.etape_eleve.options.sexe.feminin'), t('famille.etape_eleve.options.sexe.masculin')],
+          options: [t('.feminin'), t('.masculin')],
           checked: @eleve.sexe
         },
         {
@@ -51,7 +51,7 @@
         },
         {
           name: "ville_naiss",
-          label: t('famille.etape_eleve.labels.ville_de_naissance'),
+          label: t('.ville_de_naissance'),
           type: "text",
           value: @eleve.ville_naiss,
           indication: "Ville de naissance",
@@ -60,7 +60,7 @@
         },
         {
           name: "pays_naiss",
-          label: t('famille.etape_eleve.labels.pays_de_naissance'),
+          label: t('.pays_de_naissance'),
           type: "text",
           value: @eleve.pays_naiss,
           indication: "Pays de naissance",
@@ -73,7 +73,7 @@
         },
         {
           name: "nationalite",
-          label: t('famille.etape_eleve.labels.pays_de_nationalite'),
+          label: t('.pays_de_nationalite'),
           type: "text",
           value: @eleve.nationalite,
           indication: "Pays de nationalité",
@@ -88,7 +88,7 @@
     enseignement_facultatif = [
     {
         name: "latin",
-        label: t('famille.etape_eleve.labels.lv2'),
+        label: t('.lv2'),
         type: "checkbox",
     }
     ]
@@ -99,12 +99,12 @@
 
 <div class="col-sm-12">
 
-  <p><em><%= t('famille.etape_eleve.hint_corriger_les_informations') %></em></p>
+  <p><em><%= t('.conseil_corriger_les_informations') %></em></p>
 
   <form action="/eleve"  method="post">
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 
-    <h2 class="separation"><%= t('famille.etape_eleve.titre') %></h2>
+    <h2 class="separation"><%= t('.titre') %></h2>
 
     <%= raw(construire premier_prenom) %>
 
