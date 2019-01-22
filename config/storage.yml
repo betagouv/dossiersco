@@ -11,8 +11,8 @@ amazon:
    service: S3
    access_key_id: <%= ENV['S3_KEY'] %>
    secret_access_key: <%= ENV['S3_SECRET'] %>
-   region: ENV['S3_REGION']
-   bucket: ENV['S3_BUCKET_NAME']
+   region: <%= ENV['S3_REGION'] %>
+   bucket: <%= ENV['S3_BUCKET_NAME'] %>
 
 # Remember not to checkin your GCS keyfile to a repository
 # google:
