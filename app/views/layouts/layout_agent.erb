@@ -32,7 +32,9 @@
       <img style="height: auto" src='/images/republique_francaise.svg' class='logo'>
       <span class="navbar-brand">DossierSCO</span>
     </a>
-    <%= link_to 'Configuration', configuration_path %>
+    <% if !@agent.nil? && @agent.admin? %>
+      <%= link_to 'Configuration', configuration_path %>
+    <% end %>
     <% if session[:identifiant].present? %>
       <a class="ml-auto p-2 col-1 text-right" href="/agent/deconnexion">Se deconnecter</a>
     <% end %>
