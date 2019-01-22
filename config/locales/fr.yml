@@ -32,7 +32,11 @@ fr:
       identifiants_non_renseignes: "Veuillez renseigner l'identifiant et la date de naissance de l'élève."
       identifiants_inconnus: "Nous n'avons pas reconnu ces identifiants, merci de les vérifier."
   accueil:
+    general: &general
+      prenom: Prénom
+      nom: Nom
     eleve:
+      <<: *general
       conseil_corriger_les_informations: "Veuillez corriger les informations incorrectes ou manquantes :"
       titre: Identité de l'élève
       prenom: "Prénom"
@@ -47,27 +51,20 @@ fr:
       pays_de_nationalite: Pays de nationalité
       lv2: "Langue Vivante 2"
     famille:
-      lien_de_parente: "Lien de parenté"
-
-  famille:
-    labels:
-      prenom: Prénom
-      nom: Nom
-    etape_famille:
+      <<: *general
       titre_responsable_legal: "Famille : Responsable légal"
       titre_contact_urgence: "Famille : Autre personne à contacter en cas d'urgence"
-      labels:
-        adresse: Adresse
-        code_postal: Code postal
-        ville: Ville
-        telephone_principal: Téléphone principal
-        telephone_secondaire: Téléphone secondaire
-        email_principal: Email principal
-        profession: Profession
-        nb_total_enfants_a_charge: "Nombre total d'enfants à charge"
-        coordonnees_communiquees: "que ces coordonnées soient communiquées aux fédérations de parents d'élèves."
-        lien_avec_eleve: "Lien avec l'élève"
-      options:
-        accepte: "J'accepte"
-        accepte_pas: "Je n'accepte pas"
+      adresse: Adresse
+      code_postal: Code postal
+      ville: Ville
+      telephone_principal: Téléphone principal
+      telephone_secondaire: Téléphone secondaire
+      email_principal: Email principal
+      profession: Profession
+      nb_total_enfants_a_charge: "Nombre total d'enfants à charge"
+      coordonnees_communiquees: "que ces coordonnées soient communiquées aux fédérations de parents d'élèves."
+      lien_avec_eleve: "Lien avec l'élève"
+      accepte: "J'accepte"
+      accepte_pas: "Je n'accepte pas"
       ajouter_contact_urgence: "Ajouter un contact en cas d'urgence"
+      lien_de_parente: "Lien de parenté"
