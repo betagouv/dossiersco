@@ -2,9 +2,11 @@ Rails.application.routes.draw do
   root to: 'accueil#index'
 
   resources :mef
-  resources :options_pedagogiques, except: [:show]
-  resource :dossier_affelnet, only: [:create]
-  resource :configuration, only: [:show]
+  resources :options_pedagogiques,  except: [:show]
+  resource  :dossier_affelnet,      only: [:create]
+  resource  :configuration,         only: [:show]
+  resources :etablisssements,       only: [:new, :create]
+  resources :agents,                only: [:new, :create]
 
   post '/identification', to: 'accueil#identification'
   get '/accueil', to: 'accueil#accueil'
@@ -90,12 +92,6 @@ Rails.application.routes.draw do
 
   get '/agent/relance', to: 'inscriptions#relance'
   post '/agent/relance_sms', to: 'inscriptions#relance_sms'
-
-  get '/agent/creer_etablissement', to: 'inscriptions#creer_etablissement'
-  post '/agent/creer_etablissement', to: 'inscriptions#post_creer_etablissement'
-
-  get '/agent/creer_agent', to: 'inscriptions#creer_agent'
-  post '/agent/creer_agent', to: 'inscriptions#post_creer_agent'
 
   get '/redirection_erreur', to: 'pages#redirection_erreur'
 

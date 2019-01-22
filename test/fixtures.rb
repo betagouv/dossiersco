@@ -142,8 +142,7 @@ def init
   montee_4eme.demandabilite << grec_obligatoire_d
   montee_4eme.abandonnabilite << latin_d
 
-  Agent.create!(password: '$2a$10$6njb4Rn4RHyFFJpP5QEJGutErgZVOr6/cCM17IKoIsiQDZQABBN2a',
-                nom: 'De Maulmont', prenom: 'Pierre', etablissement_id: tillion.id,
+  Agent.create!(password: 'demaulmont', nom: 'De Maulmont', prenom: 'Pierre', etablissement_id: tillion.id,
                 identifiant: 'pierre', admin: true)
 end
 

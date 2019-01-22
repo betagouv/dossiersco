@@ -13,4 +13,11 @@ class ApplicationController < ActionController::Base
     redirect_to '/agent' unless agent_connecte.present?
   end
 
+  def if_agent_is_admin
+    if @agent != nil && !@agent.admin?
+      redirect_to agent_tableau_de_bord_path
+    elsif @agent.nil?
+      redirect_to root_path
+    end
+  end
 end
