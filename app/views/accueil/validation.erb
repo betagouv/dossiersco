@@ -5,18 +5,17 @@
 
 <div class="col-12">
 
-	<h2 class="separation">Validation</h2>
+  <h2 class="separation"><%= t('.titre') %></h2>
 
-		<p>Le dossier d'inscription de votre enfant <strong><%= "#{eleve.prenom} #{eleve.nom}"%></strong> pour son entrée en <%= eleve.niveau_classe_ant[0].to_i - 1 %>ème au <strong><%= dossier_eleve.etablissement.nom %></strong>  est complet.</p>
-		<p>Veuillez vérifier les informations ci-dessous, puis validez l'inscription.</p>
+  <p><%= t('.dossier_complet_html', eleve: "#{eleve.prenom} #{eleve.nom}", niveau: eleve.niveau_classe_ant[0].to_i - 1, etablissement: dossier_eleve.etablissement.nom) %></p>
+  <p><%= t('.verifier_informations') %></p>
 
 
 	<div class="card">
 		<div class="card-body">
 			<% eleve.demande.each do |demande| %>
 				<div class="row mb-2">
-					<div class="col-7">
-						Demande d'inscription à l'option <strong><%= demande.option.nom %></strong>
+          <div class="col-7"><%= t('.demande_option') %> <strong><%= demande.option.nom %></strong>
 					</div>
 					<div class="col-3">
 						<a id='modifier-<%=demande.option.nom%>' href="/eleve">
@@ -27,12 +26,11 @@
 			<% end %>
 			<% eleve.abandon.each do |abandon| %>
 				<div class="row mb-2">
-					<div class="col-7">
-						Souhait d'abandonner l'option <strong><%= abandon.option.nom %></strong>
+          <div class="col-7"><%= t('.abandon_option') %> <strong><%= abandon.option.nom %></strong>
 					</div>
 					<div class="col-3">
 						<a id='modifier-<%=abandon.option.nom%>' href="/eleve">
-							<div class="btn btn-outline-secondary btn-sm">Modifier</div>
+              <div class="btn btn-outline-secondary btn-sm"><%= t('.modifier') %></div>
 						</a>
 					</div>
 				</div>
@@ -40,20 +38,20 @@
 
 			<div class="row mb-2">
 				<div class="col-7">
-					Restaurant scolaire&nbsp;:
+          <%= t('.restauration_scolaire') %>&nbsp;:
 					<strong><%= dossier_eleve.demi_pensionnaire ? 'demi-pensionnaire' : 'externe' %></strong>
 				</div>
 				<div class="col-3">
 					<a id='demi-pensionnaire' href="/administration">
-						<div class="btn btn-outline-secondary btn-sm">Modifier</div>
+            <div class="btn btn-outline-secondary btn-sm"><%= t('.modifier') %></div>
 					</a>
 				</div>
 			</div>
 
 			<div class="row mb-2">
 				<div class="col-7">
-					Sortie
-					<strong><%= dossier_eleve.autorise_sortie ? 'autorisée' : 'non autorisée' %></strong>
+          <%= t('.sortie') %>
+					<strong><%= dossier_eleve.autorise_sortie ? t('.autorisee') : t('.non_autorisee') %></strong>
 				</div>
 				<div class="col-3">
 					<a href="/administration">
@@ -66,12 +64,12 @@
 
 	<form action='/validation' method='POST'>
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-		<%= render partial:'partials/champ_check', locals: { desc: "En tant que responsable légal de #{dossier_eleve.eleve.prenom}, je certifie sur l'honneur l'exactitude des informations communiquées et m'engage à tenir le collège informé de tout changement de situation ou de coordonnées.",
+    <%= render partial:'partials/champ_check', locals: { desc: t('.certifie_sur_l_honneur', prenom_eleve: dossier_eleve.eleve.prenom),
 		name: 'signature', condition: dossier_eleve.signature, required: 'required' }%>
 
 		<div class="row mt-5">
 			<div class="mx-auto">
-				<button type='submit' class="btn btn-primary">Valider l'inscription</button>
+        <button type='submit' class="btn btn-primary"><%= t('.valider_inscription') %></button>
 			</div>
 		</div>
 	</form>
