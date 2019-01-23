@@ -74,10 +74,12 @@ fr:
       <<: *acceptation
       ajouter_contact_urgence: "Ajouter un contact en cas d'urgence"
       lien_de_parente: "Lien de parenté"
-    administration:
+    restauration: &restauration
       restauration_scolaire: Restauration scolaire
       demi_pensionnaire: Demi-pensionnaire
       externe: Externe
+    administration:
+      <<: *restauration
       engagement_demi_pension: "En validant cette étape, je m'engage à régler les frais de demi-pension dans les délais impartis."
       demande_justif_pour_demi_pension: "Pour déterminer le tarif de la demi-pension pour votre enfant, l'établissement vous demande un justificatif. Sans ce justificatif, le tarif maximal vous sera appliqué."
       pour_obtenir_ce_document: "Pour obtenir ce document :"
@@ -100,3 +102,16 @@ fr:
       instructions_html: "<p>Avec un <b>scanner</b>, vous pouvez nous transmettre des documents au format <b>PDF</b> ou <b>image</b>.</p>
       <p>Vous pouvez aussi utiliser un appareil <b>mobile</b> connecté à Internet (smartphone, tablette) pour prendre la <b>photo</b> d'un document. Attention&nbsp;: le document doit être pris <b>en entier</b>, <b>à plat</b>, et avec un <b>éclairage</b> suffisant pour que nous puissions le relire.</p>
       <p>Dans ce cas, connectez-vous sur dossiersco.fr, vous serez automatiquement redirigé sur cette page. Pensez à rafraîchir cette page pour visualiser les documents avant de continuer</p>"
+    validation:
+      titre: Validation
+      dossier_complet_html: "<p>Le dossier d'inscription de votre enfant <strong>%{eleve}</strong> pour son entrée en %{niveau}ème au <strong>%{etablissement}</strong>  est complet.</p>"
+      verifier_informations: "Veuillez vérifier les informations ci-dessous, puis validez l'inscription."
+      demande_option: "Demande d'inscription à l'option"
+      abandon_option: "Souhait d'abandonner l'option"
+      modifier: "Modifier"
+      <<: *restauration
+      sortie: Sortie
+      autorisee: autorisée
+      non_autorisee: non autorisée
+      certifie_sur_l_honneur: "En tant que responsable légal de %{prenom_eleve}, je certifie sur l'honneur l'exactitude des informations communiquées et m'engage à tenir le collège informé de tout changement de situation ou de coordonnées."
+      valider_inscription: "Valider l'inscription"
