@@ -248,8 +248,8 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     get '/validation'
 
     assert response.parsed_body.include? 'anglais'
-    assert response.parsed_body.include? "Demande d'inscription à l'option <strong>grec</strong>"
-    assert response.parsed_body.include? "Souhait d'abandonner l'option <strong>latin</strong>"
+    assert response.parsed_body.include? "<strong>grec</strong>"
+    assert response.parsed_body.include? "<strong>latin</strong>"
   end
 
   def test_affichage_info_sur_options
@@ -262,7 +262,7 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     post '/identification', params: {identifiant: '6', annee: '1970', mois: '01', jour: '01'}
 
     get '/validation'
-    assert response.parsed_body.include? "Demande d'inscription à l'option <strong>grec</strong>"
+    assert response.body.include? "<strong>grec</strong>"
 
     get '/eleve'
     assert response.parsed_body.include? 'grec (sous réserve)'
