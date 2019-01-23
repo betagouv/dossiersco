@@ -188,6 +188,7 @@ class AccueilController < ApplicationController
 
   def pieces_a_joindre
     @eleve.dossier_eleve.update derniere_etape: 'pieces_a_joindre'
+    @pieces_jointes = @eleve.dossier_eleve.pieces_jointes
     render 'pieces_a_joindre', locals: {dossier_eleve: @eleve.dossier_eleve}
   end
 
