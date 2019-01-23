@@ -5,22 +5,18 @@
 
 <div class="col-12">
 
-  <h2 class="separation">Pièces à joindre</h2>
+  <h2 class="separation"><%= t('.pieces_a_joindre') %></h2>
 
   <% if defined? message  %>
     <div class="message_echec"><%= message %></div>
   <% end %>
   <div class='card'>
     <div class='card-body'>
-      <p>Les pièces précédées d'un * sont obligatoires.</p>
+      <p><%= t('.pieces_obligatoires') %></p>
     </div>
   </div>
   <div class='card'>
-    <div class='card-body'>
-      <p>Avec un <b>scanner</b>, vous pouvez nous transmettre des documents au format <b>PDF</b> ou <b>image</b>.</p>
-      <p>Vous pouvez aussi utiliser un appareil <b>mobile</b> connecté à Internet (smartphone, tablette) pour prendre la <b>photo</b> d'un document. Attention&nbsp;: le document doit être pris <b>en entier</b>, <b>à plat</b>, et avec un <b>éclairage</b> suffisant pour que nous puissions le relire.</p>
-      <p>Dans ce cas, connectez-vous sur dossiersco.fr, vous serez automatiquement redirigé sur cette page. Pensez à rafraîchir cette page pour visualiser les documents avant de continuer</p>
-    </div>
+    <div class='card-body'><%= t('.instructions_html') %></div>
   </div>
   <%= render partial: 'partials/pieces_jointes', locals: { dossier_eleve: dossier_eleve, action: "/enregistre_piece_jointe" } %>
   <form action="/pieces_a_joindre" method='POST'>

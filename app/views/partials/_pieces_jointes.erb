@@ -34,11 +34,11 @@
             <p><%=
               case piece_jointe.etat
               when 'soumis'
-                "Votre document est transmis à l'établissement."
+                t('.document_transmis')
               when 'invalide'
-                "Votre document ne peut pas être pris en compte par l'établissement pour cette inscription. Merci de prendre connaissance du message de l'établissement et nous fournir une nouvelle version de ce document."
+                t('.document_invalide')
               when 'valide'
-                "Votre document a été examiné et approuvé par l'établissement."
+                t('.document_approuve')
               else
               end if piece_jointe.present?
               %></p>

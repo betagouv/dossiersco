@@ -14,6 +14,10 @@ fr:
       administration: Administration
       pieces_a_joindre: Pièces à joindre
       validation: Validation
+    pieces_jointes:
+      document_transmis: "Votre document est transmis à l'établissement."
+      document_invalide: "Votre document ne peut pas être pris en compte par l'établissement pour cette inscription. Merci de prendre connaissance du message de l'établissement et nous fournir une nouvelle version de ce document."
+      document_approuve: "Votre document a été examiné et approuvé par l'établissement."
 
   identification:
     titre: Inscription au collège
@@ -90,3 +94,9 @@ fr:
       droit_a_l_image: "Droit à l'image"
       <<: *acceptation
       enfant_photographie: "que mon enfant soit photographié à l'occasion des photos de classe."
+    pieces_a_joindre:
+      pieces_a_joindre: Pièces à joindre
+      pieces_obligatoires: "Les pièces précédées d'un * sont obligatoires."
+      instructions_html: "<p>Avec un <b>scanner</b>, vous pouvez nous transmettre des documents au format <b>PDF</b> ou <b>image</b>.</p>
+      <p>Vous pouvez aussi utiliser un appareil <b>mobile</b> connecté à Internet (smartphone, tablette) pour prendre la <b>photo</b> d'un document. Attention&nbsp;: le document doit être pris <b>en entier</b>, <b>à plat</b>, et avec un <b>éclairage</b> suffisant pour que nous puissions le relire.</p>
+      <p>Dans ce cas, connectez-vous sur dossiersco.fr, vous serez automatiquement redirigé sur cette page. Pensez à rafraîchir cette page pour visualiser les documents avant de continuer</p>"
