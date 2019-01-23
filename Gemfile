@@ -21,6 +21,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'awesome_print'
   gem 'dotenv'
 end
@@ -34,8 +35,6 @@ end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'carrierwave'
-gem 'fog-aws'
 gem 'roo'
 gem 'roo-xls'
 gem 'prawn'
@@ -44,4 +43,5 @@ gem 'rack-ssl-enforcer'
 gem 'mailjet'
 gem 'letter_opener_web'
 gem "aws-sdk-s3"
+gem "mini_magick"
 
