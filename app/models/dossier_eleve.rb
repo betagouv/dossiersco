@@ -12,6 +12,12 @@ class DossierEleve < ActiveRecord::Base
   has_many :piece_jointe
   has_many :message
 
+  def pieces_jointes
+    etablissement.piece_attendue.map do |piece_attendue|
+      PieceJointe.find_or_initialize_by(piece_attendue: piece_attendue, dossier_eleve: self)
+    end
+  end
+
   def resp_legal_1
     self.resp_legal.find {|r| r.priorite == 1}
   end
