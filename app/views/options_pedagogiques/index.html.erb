@@ -18,8 +18,8 @@
         <td><%= option_pedagogique.nom %></td>
         <td><%= option_pedagogique.groupe %></td>
         <td><%= option_pedagogique.obligatoire %></td>
-        <td><%= link_to 'Edit', edit_option_pedagogique_path(option_pedagogique) %></td>
-        <td><%= link_to 'Destroy', option_pedagogique, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Editer', edit_option_pedagogique_path(option_pedagogique) %></td>
+        <td><%= link_to 'Supprimer', option_pedagogique, method: :delete, data: { confirm: 'Etes vous sure ?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -27,4 +27,4 @@
 
 <br>
 
-<%= link_to 'New Option Pedagogique', new_option_pedagogique_path %>
+<%= link_to 'Nouvelle Option Pedagogique', new_option_pedagogique_path %>

@@ -1,6 +1,6 @@
 <div class="col-md-6 col-12 offset-md-3">
 
-  <h2>Créer un établissement</h2>
+  <h1 class="mb-3">Créer un établissement</h1>
 
   <%= form_for(@etablissement, url: etablisssements_path) do |f| %>
 
@@ -24,9 +24,7 @@
       <%= f.label :message_infirmerie %>
       <%= f.text_area :message_infirmerie, class: 'form-control'%>
     </div>
-    <div class="form-check">
-    </div>
-    <div class="form-check">
+    <div class="form-check mb-3">
       <%= f.check_box :gere_demi_pension, class: 'form-check-input'%>
       <%= f.label :gere_demi_pension, class: 'form-check-label' %>
     </div>
@@ -35,7 +33,7 @@
       <%= f.text_field :signataire, class: 'form-control'%>
     </div>
     <div class="form-group">
-      <%= f.submit 'valider', class: 'btn btn-primary' %>
+      <%= f.submit 'valider', class: 'btn btn-primary my-3' %>
     </div>
   <% end %>
 </div>
