@@ -91,6 +91,7 @@ class InscriptionsController < ApplicationController
   def eleve
     eleve = Eleve.find_by(identifiant: params[:identifiant])
     dossier_eleve = eleve.dossier_eleve
+    @pieces_jointes = dossier_eleve.pieces_jointes
     emails_presents = false
     resp_legaux = dossier_eleve.resp_legal
     resp_legaux.each { |r| (emails_presents = true) if r.email.present?}

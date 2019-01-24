@@ -14,10 +14,12 @@ fr:
       administration: Administration
       pieces_a_joindre: Pièces à joindre
       validation: Validation
-    pieces_jointes:
+    pieces_jointes: &pieces_jointes
       document_soumis: "Votre document est transmis à l'établissement."
       document_invalide: "Votre document ne peut pas être pris en compte par l'établissement pour cette inscription. Un courriel vient de vous être envoyé. Merci de prendre connaissance de ce message et nous fournir une nouvelle version de ce document."
       document_valide: "Votre document a été examiné et approuvé par l'établissement."
+    pieces_jointes_eleve:
+      <<: *pieces_jointes
 
   identification:
     titre: Inscription au collège

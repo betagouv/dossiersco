@@ -2,12 +2,13 @@ Rails.application.routes.draw do
   root to: 'accueil#index'
 
   resources :mef
-  resources :options_pedagogiques,  except: [:show]
-  resource  :dossier_affelnet,      only: [:create]
-  resource  :configuration,         only: [:show]
-  resources :etablisssements,       only: [:new, :create]
-  resources :agents,                only: [:new, :create]
-  resources :pieces_jointes,        only: [:create, :update]
+  resources :options_pedagogiques, except: [:show]
+  resource  :dossier_affelnet,     only: [:create]
+  resource  :configuration,        only: [:show]
+  resources :etablisssements,      only: [:new, :create]
+  resources :agents,               only: [:new, :create]
+  resources :pieces_jointes,       only: [:create, :update]
+  resources :agent_pieces_jointes, only: [:create, :update]
 
   post '/identification', to: 'accueil#identification'
   get '/accueil', to: 'accueil#accueil'
