@@ -15,9 +15,21 @@
 
 ### Incréments code
 
+- [Mettre en place l'internationalisation de l'interface utilisateur des familles](https://github.com/betagouv/dossiersco/issues/213)
+- [Supprimer les anciens comptes agents](https://github.com/betagouv/dossiersco/issues/259)
+- [Ajouter le formulaire de création des agents dans le menu configuration](https://github.com/betagouv/dossiersco/issues/222)
+- [Restreindre la configuration aux admin](https://github.com/betagouv/dossiersco/issues/224)
+- [Faire pointer l'url demo.dossiersco.beta.gouv.fr sur dossiersco-demo.scalingo.io](https://github.com/betagouv/dossiersco/issues/252)
+- [Paramétrer les options pédagogiques par mef](https://github.com/betagouv/dossiersco/issues/215)
+- [Ne pas envoyer d'email par défaut](https://github.com/betagouv/dossiersco/issues/209)
+- [Trouver un collège ayant une 6e non francophone](https://github.com/betagouv/dossiersco/issues/200)
+- [Migrer sur Scalingo](https://github.com/betagouv/dossiersco/issues/191)
+
 
 ### Incréments humain
 
+- appel avec l'établissement Jean Texcier (76)
+- appel avec l'établissement Boris Vian (14)
 - appel avec l'établissement La Gariguette (34)
 - appel avec l'établissement Malraux (45)
 - appel avec l'établissement Germinal (62)
