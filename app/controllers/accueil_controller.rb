@@ -286,12 +286,4 @@ class AccueilController < ApplicationController
     etablissements = Etablissement.all.sort_by {|e| e.dossier_eleve.count}.reverse
     render :stats, locals: {etablissements: etablissements}
   end
-
-  def retrouve_élève_connecté
-    @eleve ||= Eleve.find_by(identifiant: session[:identifiant])
-    unless @eleve
-      session[:message_erreur] = "Vous avez été déconnecté par mesure de sécurité. Merci de vous identifier avant de continuer."
-      redirect_to '/'
-    end
-  end
 end

@@ -24,4 +24,6 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'option_pedagogique', 'options_pedagogiques'
   inflect.irregular 'option pedagogique', 'options pedagogiques'
   inflect.irregular 'mef', 'mef'
+  inflect.irregular 'piece_jointe', 'pieces_jointes'
+  inflect.irregular 'piece jointe', 'pieces jointes'
 end

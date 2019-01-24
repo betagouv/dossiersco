@@ -1,4 +1,13 @@
 class ApplicationController < ActionController::Base
+
+  def retrouve_élève_connecté
+    @eleve ||= Eleve.find_by(identifiant: session[:identifiant])
+    unless @eleve
+      session[:message_erreur] = "Vous avez été déconnecté par mesure de sécurité. Merci de vous identifier avant de continuer."
+      redirect_to '/'
+    end
+  end
+
   def get_agent
     @agent ||= Agent.find_by(identifiant: session[:identifiant])
   end
