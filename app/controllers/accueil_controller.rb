@@ -192,12 +192,6 @@ class AccueilController < ApplicationController
     render 'pieces_a_joindre', locals: {dossier_eleve: @eleve.dossier_eleve}
   end
 
-  def enregistre_piece_jointe
-    dossier_eleve = @eleve.dossier_eleve
-    upload_pieces_jointes dossier_eleve, params
-    redirect_to '/pieces_a_joindre'
-  end
-
   def code_situation
     {'0': '', '1': 'occupe un emploi', '2': 'Au chômage', '3': 'Pré retraité, retraité ou retiré', '4': 'Personne sans activité professionnelle'}
   end
@@ -237,24 +231,6 @@ class AccueilController < ApplicationController
       send_data fichier.url(Time.now.to_i + 30)
     else
       redirect_to '/'
-    end
-  end
-
-  def upload_pieces_jointes dossier_eleve, params, etat='soumis'
-    params.each do |code, piece|
-      if params[code].present? && code != "authenticity_token" && code != "controller" && code != "action"
-        file = File.open(params[code].tempfile)
-        uploader = FichierUploader.new
-        uploader.store!(file)
-        nom_du_fichier = File.basename(file.path)
-        piece_attendue = PieceAttendue.find_by(code: code, etablissement_id: dossier_eleve.etablissement_id)
-        piece_jointe = PieceJointe.find_by(piece_attendue_id: piece_attendue.id, dossier_eleve_id: dossier_eleve.id)
-        if piece_jointe.present?
-          piece_jointe.update(etat: etat, clef: nom_du_fichier)
-        else
-          piece_jointe = PieceJointe.create!(etat: etat, clef: nom_du_fichier, piece_attendue_id: piece_attendue.id, dossier_eleve_id: dossier_eleve.id)
-        end
-      end
     end
   end
 
