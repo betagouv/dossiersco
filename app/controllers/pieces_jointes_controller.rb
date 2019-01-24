@@ -2,8 +2,8 @@ class PiecesJointesController < ApplicationController
   before_action :retrouve_élève_connecté
 
   def create
-    result = PieceJointe.create(piece_jointe_params.merge(dossier_eleve: @eleve.dossier_eleve))
-    puts result.errors.inspect
+    PieceJointe.create!(piece_jointe_params.merge(dossier_eleve: @eleve.dossier_eleve, etat: 'soumis'))
+    redirect_to '/pieces_a_joindre'
   end
 
   def update

@@ -5,26 +5,22 @@
           <h5 class="card-header"><%= '*' if piece.obligatoire %> <%= piece.nom %></h5>
           <div class="card-body">
             <p class="card-text"><%= piece.explication %></p>
+            <p class="card-text etat-piece-jointe"><%= t(".document_#{piece.etat}") if piece.etat.present?  %></p>
             <div class="card-relat document">
+              <% if piece.fichier.attached? %>
+                <% if piece.fichier.content_type.start_with?("image/") %>
+                  <%= image_tag(url_for(piece.fichier), alt:"preview piece jointe") %>
+                <% else %>
+                  <%= link_to piece.fichier.filename, url_for(piece.fichier) %>
+                <% end %>
+              <% end %>
               <%= form.hidden_field :piece_attendue_id %>
-              <%= url_for(piece.fichier) if piece.fichier.attached? %>
               <%= form.file_field :fichier, data: { btnClass: "btn btn-primary", text: "Parcourir"}, class: "filestyle" %>
               <span id="fichier_<%= piece.code %>"></span>
               <br />
               <div class="image-piece-a-joindre lien-piece-jointe" id="image_<%= piece.code %>">
               </div>
             </div>
-            <p><%=
-              case piece.etat
-              when 'soumis'
-                t('.document_transmis')
-              when 'invalide'
-                t('.document_invalide')
-              when 'valide'
-                t('.document_approuve')
-              else
-              end if piece.present?
-              %></p>
           </div>
           <button class="soumettre d-none" type="submit">Soumettre</button>
         </div>
