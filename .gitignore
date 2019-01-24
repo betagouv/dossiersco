@@ -14,3 +14,4 @@ resources/secrets
 
 log/
 tmp/
+storage/

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resource  :configuration,         only: [:show]
   resources :etablisssements,       only: [:new, :create]
   resources :agents,                only: [:new, :create]
+  resources :pieces_jointes,        only: [:create, :update]
 
   post '/identification', to: 'accueil#identification'
   get '/accueil', to: 'accueil#accueil'
