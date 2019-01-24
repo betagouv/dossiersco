@@ -1,5 +1,33 @@
 # Journal
 
+## Semaine du 21 au 25 janvier
+
+*Les utilisateurs et utilisatrices arrivent*
+
+### Vie de l'équipe
+
+- soulagement de commencer à avoir les établissements au téléphone
+- nous avons su évoquer les inquietudes des uns et des autres et agir en conséquence pour avancer
+- nous vérifions que le rythme court nous permet de résoudre rapidement nos difficultés
+- difficile de trouver le bon moment pour travailler à 4 derrière l'écran
+- nous partageons maintenant le même backlog (code et intraprenariat) pour prioriser nos actions quotidiennement
+
+
+### Incréments code
+
+
+### Incréments humain
+
+- appel avec l'établissement La Gariguette (34)
+- appel avec l'établissement Malraux (45)
+- appel avec l'établissement Germinal (62)
+- reconfiguration du conseil des sages
+- intérêt manifesté de la mairie de Paris
+- Pierre fait 4 pitch dans la semaine : Open 110Bis lab, ministre de l'Éducation Nationale Colombienne, standup BetaGouv et Alpha.
+
+---
+
+
 ## Semaine du 14 au 18 janvier
 
 *On fait équipe avec des outils communs et les 6e pointent le bout de leur nez*
@@ -14,7 +42,7 @@
 - Ajout d'un deuxième projet dans github pour faire le suivi de l'acquisition/activation des établissements [Participation Établissement](https://github.com/betagouv/dossiersco/projects/2).
 
 
-## Points d'améliorations
+### Points d'améliorations
 
 - prévoir 60 minutes à la fin de la dernière session pour remplir le journal hebdo
 - améliorer le suivi des prospects
@@ -32,7 +60,7 @@
 - [mauvaise sauvegarde des options](https://github.com/betagouv/dossiersco/issues/192)
 
 
-### Incréments service 
+### Incréments service
 
 - amorcer une documentation nos évènements futur : kickoff, conseil des sages, openlab, et bizdev.
 - discuter budget/dépenses et remonter d'informations aux sponsors.
