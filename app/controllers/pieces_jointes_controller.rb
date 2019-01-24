@@ -7,6 +7,9 @@ class PiecesJointesController < ApplicationController
   end
 
   def update
+    piece_jointe = PieceJointe.find(params[:id])
+    piece_jointe.update!(piece_jointe_params.merge(dossier_eleve: @eleve.dossier_eleve, etat: 'soumis'))
+    redirect_to '/pieces_a_joindre'
   end
 
   private
