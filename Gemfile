@@ -46,6 +46,7 @@ gem 'sentry-raven'
 gem 'rack-ssl-enforcer'
 gem 'mailjet'
 gem 'letter_opener_web'
+gem 'aws-sdk-s3'
 
 # a supprimer : bascule vers active_storage ou upload avec traitement direct
 gem 'carrierwave'
