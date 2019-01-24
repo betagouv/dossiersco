@@ -3,24 +3,31 @@
     <div id="error_explanation">
       <h2><%= pluralize(option_pedagogique.errors.count, "error") %> prohibited this option_pedagogique from being saved:</h2>
       <ul>
-      <% option_pedagogique.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% option_pedagogique.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
-  <%= form.label :nom %>
-  <%= form.text_field :nom %>
 
-  <%= form.label :groupe %>
-  <%= form.text_field :groupe %>
-
-  <%= form.label :obligatoire %>
-  <%= form.check_box :obligatoire %>
-
-  <%= form.collection_check_boxes(:mef_ids, Mef.all, :id, :libelle) %>
-
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.label :nom %>
+    <%= form.text_field :nom, class: 'form-control' %>
   </div>
+
+  <div class="form-group">
+    <%= form.label :groupe %>
+    <%= form.text_field :groupe, class: 'form-control' %>
+  </div>
+
+  <div class="form-check">
+    <%= form.check_box :obligatoire, class: 'form-check-input' %>
+    <%= form.label :obligatoire, class: 'form-check-label' %>
+  </div>
+
+  <div class="form-check">
+    <%= form.collection_check_boxes(:mef_ids, Mef.all, :id, :libelle) %>
+  </div>
+
+    <%= form.submit 'valider', class: 'btn btn-primary my-3'  %>
 <% end %>
