@@ -33,7 +33,7 @@ class InscriptionsController < ApplicationController
       .where(resp_legals:{priorite:1}, etablissement: get_agent.etablissement)
     pieces_jointes = PieceJointe
       .joins(:dossier_eleve,:piece_attendue)
-      .select('dossier_eleves.id as dossier_id').select('piece_jointes.*')
+      .select('dossier_eleves.id as dossier_id').select('pieces_jointes.*')
       .where(piece_attendues:{etablissement_id: get_agent.etablissement.id})
       .group_by(&:dossier_eleve_id)
     messages = Message
