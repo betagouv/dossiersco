@@ -1,4 +1,4 @@
-<%= form_with model: mef, local: true do |form| %>
+<%= form_for [:configuration, mef] do |form| %>
   <% if mef.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(mef.errors.count, "error") %> prohibited this mef from being saved:</h2>

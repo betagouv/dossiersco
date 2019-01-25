@@ -16,8 +16,8 @@
       <tr>
         <td><%= mef.libelle %></td>
         <td><%= mef.code %></td>
-        <td><%= link_to 'Editer', edit_mef_path(mef) %></td>
-        <td><%= link_to 'Supprimer', mef, method: :delete, data: { confirm: 'Etes vous sure ?' } %></td>
+        <td><%= link_to 'Editer', edit_configuration_mef_path(mef) %></td>
+        <td><%= link_to 'Supprimer', [:configuration, mef], method: :delete, data: { confirm: 'Etes vous sûr ?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -25,4 +25,4 @@
 
 <br>
 
-<%= link_to 'Nouveau Mef', new_mef_path %>
+<%= link_to 'Nouveau Mef', new_configuration_mef_path %>
