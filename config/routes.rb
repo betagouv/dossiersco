@@ -1,14 +1,14 @@
 Rails.application.routes.draw do
   root to: 'accueil#index'
 
-  resources :mef
-  resources :options_pedagogiques, except: [:show]
   resource  :dossier_affelnet, only: [:create] do
     post :traiter
   end
 
   resource  :configuration,        only: [:show]
+  resources :options_pedagogiques, except: [:show]
   namespace :configuration do
+    resources :mef
     resources :etablissements,      only: [:new, :create]
     resources :agents,               only: [:new, :create, :index, :edit, :update]
   end

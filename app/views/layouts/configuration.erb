@@ -44,7 +44,7 @@
     <nav>
       <ul>
         <li><%= link_to 'Options pédagogiques', options_pedagogiques_path %></li>
-        <li><%= link_to 'MEF', mef_index_path %></li>
+        <li><%= link_to 'MEF', configuration_mef_index_path %></li>
         <li><%= link_to 'Agents', configuration_agents_path %></li>
         <% if super_admin?(session[:identifiant]) %>
           <li><%= link_to 'Créer un établissement', new_configuration_etablissement_path %></li>
