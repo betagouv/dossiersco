@@ -1,41 +1,45 @@
-<div class="col-md-6 col-12 offset-md-3">
+<%= form_for([:configuration, @agent]) do |f| %>
 
-  <h1 class="mb-3">Créer un agent</h1>
-
-  <%= form_for([:configuration, @agent]) do |f| %>
-
-    <div class="form-group">
-      <%= f.label :identifiant %>
-      <%= f.text_field :identifiant, class: 'form-control'%>
+  <% if @agent.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+      <% @agent.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
     </div>
-    <div class="form-group">
-      <%= f.label :prenom %>
-      <%= f.text_field :prenom, class: 'form-control'%>
-    </div>
-    <div class="form-group">
-      <%= f.label :nom %>
-      <%= f.text_field :nom, class: 'form-control'%>
-    </div>
-    <div class="form-group">
-      <%= f.label :password %>
-      <%= f.text_field :password, class: 'form-control'%>
-    </div>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :identifiant %>
+    <%= f.text_field :identifiant, class: 'form-control'%>
+  </div>
+  <div class="form-group">
+    <%= f.label :prenom %>
+    <%= f.text_field :prenom, class: 'form-control'%>
+  </div>
+  <div class="form-group">
+    <%= f.label :nom %>
+    <%= f.text_field :nom, class: 'form-control'%>
+  </div>
+  <div class="form-group">
+    <%= f.label :password %>
+    <%= f.text_field :password, class: 'form-control'%>
+  </div>
 
-    <% if super_admin?(session[:identifiant]) %>
-      <div class="form-group">
-        <%= f.label :etablissement_id %>
-        <%= f.select :etablissement_id,
-          options_for_select( Etablissement.all.map{ |e| [e.nom, e.id]}, selected_key = f.object.etablissement_id),
-          {}, { class: 'form-control' }%>
-      </div>
-    <% end %>
+  <% if super_admin?(session[:identifiant]) %>
+    <div class="form-group">
+      <%= f.label :etablissement_id %>
+      <%= f.select :etablissement_id,
+        options_for_select( Etablissement.all.map{ |e| [e.nom, e.id]}, selected_key = f.object.etablissement_id),
+        {}, { class: 'form-control' }%>
+    </div>
+  <% end %>
 
-      <div class="form-check">
-        <%= f.check_box :admin, class: 'form-check-input'%>
-        <%= f.label :admin, class: 'form-check-label' %>
-      </div>
-      <div class="form-group">
-        <%= f.submit 'valider', class: 'btn btn-primary my-3' %>
-      </div>
-    <% end %>
-</div>
+  <div class="form-check">
+    <%= f.check_box :admin, class: 'form-check-input'%>
+    <%= f.label :admin, class: 'form-check-label' %>
+  </div>
+  <div class="form-group">
+    <%= f.submit 'valider', class: 'btn btn-primary my-3' %>
+  </div>
+<% end %>
