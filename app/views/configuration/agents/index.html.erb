@@ -18,7 +18,7 @@
         <td><%= agent.identifiant %></td>
         <td><%= agent.nom %></td>
         <td><%= agent.prenom %></td>
-        <td><%= link_to 'Modifier', new_agent_path %></td>
+        <td><%= link_to 'Modifier', edit_configuration_agent_path(agent) %></td>
         <td><%= link_to 'Supprimer', agent, method: :delete, data: { confirm: 'Voulez-vous vraiment supprimer cet agent ?' } %></td>
       </tr>
     <% end %>
@@ -26,5 +26,4 @@
 </table>
 
 <br>
-
-<%= link_to 'Créer un nouvel agent', new_agent_path %>
+<%= link_to "Créer un nouvel agent", new_configuration_agent_path %>
