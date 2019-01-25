@@ -8,7 +8,7 @@ class AgentsControllerTest < ActionDispatch::IntegrationTest
     etablissement = Fabricate(:etablissement)
     identification_agent(admin)
 
-    post agents_path, params: {agent: {identifiant: 'identifiant quelconque', password: 'password quelconque',
+    post configuration_agents_path, params: {agent: {identifiant: 'identifiant quelconque', password: 'password quelconque',
                                        etablissement_id: etablissement.id}}
 
     assert_equal 1, Agent.where(identifiant: 'identifiant quelconque', etablissement_id: etablissement.id).count
@@ -22,10 +22,23 @@ class AgentsControllerTest < ActionDispatch::IntegrationTest
     end
     identification_agent(admin)
 
-    get agents_path
+    get configuration_agents_path
 
     assert_response :success
     assert_equal [], agents - assigns(:agents)
   end
+
+  test "Un admin modifie un agent de son établissement" do
+    admin = Fabricate(:admin)
+    agent = Fabricate(:agent, etablissement: admin.etablissement, prenom: 'Jean')
+
+    identification_agent(admin)
+    put configuration_agent_path(agent), params: { agent: { prenom: 'Ibrahima' } }
+
+    assert_redirected_to configuration_agents_path
+    assert_equal Agent.find(agent.id).prenom, 'Ibrahima'
+
+  end
+
 
 end

@@ -2,7 +2,7 @@
 
   <h1 class="mb-3">Créer un agent</h1>
 
-  <%= form_for(@agent) do |f| %>
+  <%= form_for([:configuration, @agent]) do |f| %>
 
     <div class="form-group">
       <%= f.label :identifiant %>
