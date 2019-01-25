@@ -1,3 +1,5 @@
 <p>
 Nous avons trouvé <strong><%= @nombre_de_lignes %> lignes</strong> à traiter dans le fichier <strong><%= @nom_fichier %></strong>.
 </p>
+
+<%= link_to t('.traiter_le_dossier'), traiter_dossier_affelnet_url, method: :post %>
