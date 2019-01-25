@@ -9,6 +9,7 @@ class DossiersAffelnetController < ApplicationController
     @nom_fichier = params[:fichier].original_filename
     xls_document = Roo::Spreadsheet.open tempfile
     xls_document.sheet(0).each do |hash|
+      next if hash[0] == "Nom"
       DossierAffelnet.create!(
         etablissement: @agent.etablissement,
         nom: hash[0],
