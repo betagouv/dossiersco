@@ -21,6 +21,10 @@ fr:
     pieces_jointes_eleve:
       <<: *pieces_jointes
 
+  dossiers_affelnet:
+    traitement_import:
+      traiter_le_dossier: "Traiter le dossier"
+
   identification:
     titre: Inscription au collège
     baseline: Quelques clics pour inscrire votre enfant

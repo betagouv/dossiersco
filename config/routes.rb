@@ -3,7 +3,10 @@ Rails.application.routes.draw do
 
   resources :mef
   resources :options_pedagogiques, except: [:show]
-  resource  :dossier_affelnet,     only: [:create]
+  resource  :dossier_affelnet, only: [:create] do
+    post :traiter
+  end
+
   resource  :configuration,        only: [:show]
   resources :etablisssements,      only: [:new, :create]
   namespace :configuration do

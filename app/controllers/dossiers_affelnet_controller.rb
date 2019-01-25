@@ -23,7 +23,14 @@ class DossiersAffelnetController < ApplicationController
         decision_de_passage: hash[8]
       )
     end
-    @nombre_de_lignes = DossierAffelnet.count
+    @nombre_de_lignes = DossierAffelnet.where(etablissement: @agent.etablissement).count
     render :traitement_import
   end
+
+  def traiter
+    @nom_fichier = "perdu en route"
+    @nombre_de_lignes = DossierAffelnet.where(etablissement: @agent.etablissement).count
+    render :traitement_import
+  end
+
 end
