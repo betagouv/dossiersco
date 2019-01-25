@@ -1,6 +1,7 @@
 Fabricator(:agent) do
   etablissement
   admin false
+  identifiant { sequence(:identifiant) { |i| "identifiant#{i}" } }
   password 'demaulmont'
 end
 

@@ -18,6 +18,10 @@ class AgentsController < ApplicationController
     end
   end
 
+  def index
+    @agents = Agent.where(etablissement: get_agent.etablissement)
+  end
+
   private
   def agent_params
     params.require(:agent).permit(:identifiant, :prenom, :nom, :password, :etablissement_id, :admin)

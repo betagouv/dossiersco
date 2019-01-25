@@ -13,4 +13,19 @@ class AgentsControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal 1, Agent.where(identifiant: 'identifiant quelconque', etablissement_id: etablissement.id).count
   end
+
+  test "Un admin liste les agents de son établiseement" do
+    agents = []
+    agents << admin = Fabricate(:admin)
+    3.times do
+      agents << Fabricate(:agent, etablissement: admin.etablissement)
+    end
+    identification_agent(admin)
+
+    get agents_path
+
+    assert_response :success
+    assert_equal [], agents - assigns(:agents)
+  end
+
 end
