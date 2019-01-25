@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resource  :dossier_affelnet,     only: [:create]
   resource  :configuration,        only: [:show]
   resources :etablisssements,      only: [:new, :create]
-  resources :agents,               only: [:new, :create]
+  resources :agents,               only: [:new, :create, :index]
   resources :pieces_jointes,       only: [:create, :update]
   resources :agent_pieces_jointes, only: [:create, :update]
 
