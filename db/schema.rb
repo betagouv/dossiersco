@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_24_112554) do
+ActiveRecord::Schema.define(version: 2019_01_25_144910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,8 +99,16 @@ ActiveRecord::Schema.define(version: 2019_01_24_112554) do
   end
 
   create_table "dossiers_affelnet", force: :cascade do |t|
-    t.string "fichier"
     t.bigint "etablissement_id"
+    t.string "nom"
+    t.string "prenom"
+    t.date "date_naissance"
+    t.string "etablissement_origine"
+    t.string "etablissement_accueil"
+    t.integer "rang"
+    t.string "dérogation"
+    t.string "formation_accueil"
+    t.string "decision_de_passage"
     t.index ["etablissement_id"], name: "index_dossiers_affelnet_on_etablissement_id"
   end
 
