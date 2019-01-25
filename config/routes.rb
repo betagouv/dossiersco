@@ -8,8 +8,8 @@ Rails.application.routes.draw do
   end
 
   resource  :configuration,        only: [:show]
-  resources :etablisssements,      only: [:new, :create]
   namespace :configuration do
+    resources :etablissements,      only: [:new, :create]
     resources :agents,               only: [:new, :create, :index, :edit, :update]
   end
   resources :pieces_jointes,       only: [:create, :update]
