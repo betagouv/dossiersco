@@ -2,7 +2,7 @@
 
   <h1 class="mb-3">Créer un établissement</h1>
 
-  <%= form_for(@etablissement, url: etablisssements_path) do |f| %>
+  <%= form_for([:configuration, @etablissement]) do |f| %>
 
     <div class="form-group">
       <%= f.label :nom %>

@@ -47,7 +47,7 @@
         <li><%= link_to 'MEF', mef_index_path %></li>
         <li><%= link_to 'Agents', configuration_agents_path %></li>
         <% if super_admin?(session[:identifiant]) %>
-          <li><%= link_to 'Créer un établissement', new_etablisssement_path %></li>
+          <li><%= link_to 'Créer un établissement', new_configuration_etablissement_path %></li>
         <% end %>
       </ul>
     </nav>
