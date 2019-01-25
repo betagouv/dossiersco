@@ -1,6 +1,7 @@
 class DossiersAffelnetController < ApplicationController
+  layout 'agent'
+
   before_action :identification_agent
-  layout 'layout_agent'
 
   def create
     tempfile = params[:fichier].tempfile

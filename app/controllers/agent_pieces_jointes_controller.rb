@@ -1,6 +1,7 @@
 class AgentPiecesJointesController < ApplicationController
+  layout 'agent'
+
   before_action :identification_agent, :retrouve_eleve
-  layout 'layout_agent'
 
   def create
     PieceJointe.create!(piece_jointe_params.merge(dossier_eleve: @eleve.dossier_eleve, etat: 'soumis'))

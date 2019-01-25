@@ -1,7 +1,7 @@
 class MefController < ApplicationController
-  before_action :identification_agent
+  layout 'configuration'
 
-  layout 'layout_configuration'
+  before_action :identification_agent
   before_action :set_mef, only: [:show, :edit, :update, :destroy]
 
   def index

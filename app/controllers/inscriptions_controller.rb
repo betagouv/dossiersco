@@ -2,7 +2,7 @@ require 'traitement'
 
 class InscriptionsController < ApplicationController
   before_action :identification_agent, except: [:post_agent, :agent, :declenche_traiter_imports]
-  layout 'layout_agent'
+  layout 'agent'
 
   def agent
     render :identification

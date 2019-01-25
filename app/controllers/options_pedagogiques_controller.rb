@@ -1,8 +1,7 @@
 class OptionsPedagogiquesController < ApplicationController
+  layout 'configuration'
+
   before_action :identification_agent
-
-  layout 'layout_configuration'
-
   before_action :set_option_pedagogique, only: [:edit, :update, :destroy]
 
   def index
