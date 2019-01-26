@@ -7,7 +7,7 @@
 ### Vie de l'équipe
 
 - soulagement de commencer à avoir les établissements au téléphone
-- nous avons su évoquer les inquietudes des uns et des autres et agir en conséquence pour avancer
+- nous avons su évoquer les inquiétudes des uns et des autres et agir en conséquence pour avancer
 - nous vérifions que le rythme court nous permet de résoudre rapidement nos difficultés
 - difficile de trouver le bon moment pour travailler à 4 derrière l'écran
 - nous partageons maintenant le même backlog (code et intraprenariat) pour prioriser nos actions quotidiennement
