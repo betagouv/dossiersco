@@ -1,7 +1,7 @@
 require 'roo'
 require 'roo-xls'
 COLONNES = {sexe: 0, nationalite: 1, prenom: 6, prenom_2: 7, prenom_3: 8, nom: 4, date_naiss: 9, identifiant: 11,
-            ville_naiss_etrangere: 20, commune_naiss: 21, pays_naiss: 22, niveau_classe_ant: 33, classe_ant: 34,
+            ville_naiss_etrangere: 20, commune_naiss: 21, pays_naiss: 22, code_mef: 32, niveau_classe_ant: 33, classe_ant: 34,
             nom_resp_legal1: 99, prenom_resp_legal1: 101, date_sortie: 13,
             tel_principal_resp_legal1: 102, tel_secondaire_resp_legal1: 104, lien_de_parente_resp_legal1: 103,
             adresse_resp_legal1: 108, ville_resp_legal1: 112, code_postal_resp_legal1: 113, email_resp_legal1: 106,
@@ -10,12 +10,20 @@ COLONNES = {sexe: 0, nationalite: 1, prenom: 6, prenom_2: 7, prenom_3: 8, nom: 4
             ville_resp_legal2: 131, code_postal_resp_legal2: 132, email_resp_legal2: 125}
 
 def import_xls fichier, etablissement_id, nom_a_importer=nil, prenom_a_importer=nil
+
+  import_mef(fichier, etablissement_id)
+  compte_rendu = import_dossiers_eleve(fichier, etablissement_id, nom_a_importer, prenom_a_importer)
+  compte_rendu
+end
+
+def import_dossiers_eleve(fichier, etablissement_id, nom_a_importer, prenom_a_importer)
   xls_document = Roo::Spreadsheet.open fichier
   lignes_siecle = (xls_document.first_row + 1..xls_document.last_row)
 
   portables = 0
   emails = 0
   nb_eleves_importes = 0
+
   lignes_siecle.each do |row|
     ligne_siecle = xls_document.row(row)
 
@@ -25,8 +33,23 @@ def import_xls fichier, etablissement_id, nom_a_importer=nil, prenom_a_importer=
     emails += 1 if resultat[:email]
     nb_eleves_importes += 1 if resultat[:eleve_importe]
   end
+
   {portable: (portables * 100) / nb_eleves_importes, email: (emails * 100) / nb_eleves_importes,
    eleves: nb_eleves_importes}
+end
+
+def import_mef(fichier, etablissement_id)
+  xls_document = Roo::Spreadsheet.open fichier
+  lignes_siecle = (xls_document.first_row + 1..xls_document.last_row)
+
+  lignes_siecle.each do |row|
+    ligne_siecle = xls_document.row(row)
+
+    next unless ligne_siecle[COLONNES[:code_mef]].present?
+    next unless ligne_siecle[COLONNES[:niveau_classe_ant]].present?
+
+    Mef.find_or_create_by!(etablissement_id: etablissement_id, code: ligne_siecle[COLONNES[:code_mef]], libelle: ligne_siecle[COLONNES[:niveau_classe_ant]])
+  end
 end
 
 def import_ligne_adresse etablissement_id, ligne_siecle
@@ -86,10 +109,15 @@ def import_ligne etablissement_id, ligne_siecle, nom_a_importer=nil, prenom_a_im
 
   import_options etablissement_id, ligne_siecle, eleve
 
+  mef_origine = Mef.find_by(code: ligne_siecle[COLONNES[:code_mef]], libelle: ligne_siecle[COLONNES[:niveau_classe_ant]])
+  mef_destination = Mef.niveau_supérieur(mef_origine) if mef_origine.present?
+
   dossier_eleve = DossierEleve.find_or_initialize_by(eleve_id: eleve.id)
   dossier_eleve.update_attributes!(
       eleve_id: eleve.id,
-      etablissement_id: etablissement_id
+      etablissement_id: etablissement_id,
+      mef_origine: mef_origine,
+      mef_destination: mef_destination
   )
 
   champs_resp_legal = [:nom, :prenom, :tel_principal, :tel_secondaire, :lien_de_parente,
