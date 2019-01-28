@@ -7,10 +7,15 @@ require 'tilt/erb'
 class DossierEleve < ActiveRecord::Base
   belongs_to :eleve
   belongs_to :etablissement
+  belongs_to :mef_origine, class_name: 'Mef', required: false
+  belongs_to :mef_destination, class_name: 'Mef', required: false
+
   has_many :resp_legal
-  has_one :contact_urgence
   has_many :piece_jointe
   has_many :message
+
+  has_one :contact_urgence
+
 
   def pieces_jointes
     etablissement.piece_attendue.map do |piece_attendue|

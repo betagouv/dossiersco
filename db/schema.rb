@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_25_144910) do
+ActiveRecord::Schema.define(version: 2019_01_28_111339) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,7 +95,11 @@ ActiveRecord::Schema.define(version: 2019_01_25_144910) do
     t.boolean "signature", default: false
     t.datetime "date_signature"
     t.string "derniere_etape"
+    t.bigint "mef_origine_id"
+    t.bigint "mef_destination_id"
     t.index ["eleve_id"], name: "index_dossier_eleves_on_eleve_id"
+    t.index ["mef_destination_id"], name: "index_dossier_eleves_on_mef_destination_id"
+    t.index ["mef_origine_id"], name: "index_dossier_eleves_on_mef_origine_id"
   end
 
   create_table "dossiers_affelnet", force: :cascade do |t|
@@ -259,5 +263,7 @@ ActiveRecord::Schema.define(version: 2019_01_25_144910) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "dossier_eleves", "eleves", column: "eleve_id"
+  add_foreign_key "dossier_eleves", "mef", column: "mef_destination_id"
+  add_foreign_key "dossier_eleves", "mef", column: "mef_origine_id"
   add_foreign_key "dossiers_affelnet", "etablissements"
 end

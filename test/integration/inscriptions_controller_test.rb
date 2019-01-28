@@ -199,7 +199,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     get '/api/traiter_imports'
 
-    assert_equal nb_eleves_au_depart+1, Eleve.all.size
+    assert_equal nb_eleves_au_depart + 1, Eleve.all.size
   end
 
   def test_options_demande_et_abandon
