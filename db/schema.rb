@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_28_111339) do
+ActiveRecord::Schema.define(version: 2019_01_28_165248) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -204,6 +204,8 @@ ActiveRecord::Schema.define(version: 2019_01_28_111339) do
     t.boolean "obligatoire", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "etablissement_id"
+    t.index ["etablissement_id"], name: "index_options_pedagogiques_on_etablissement_id"
   end
 
   create_table "piece_attendues", force: :cascade do |t|
@@ -266,4 +268,5 @@ ActiveRecord::Schema.define(version: 2019_01_28_111339) do
   add_foreign_key "dossier_eleves", "mef", column: "mef_destination_id"
   add_foreign_key "dossier_eleves", "mef", column: "mef_origine_id"
   add_foreign_key "dossiers_affelnet", "etablissements"
+  add_foreign_key "options_pedagogiques", "etablissements"
 end

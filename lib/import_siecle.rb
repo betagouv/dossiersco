@@ -12,6 +12,7 @@ COLONNES = {sexe: 0, nationalite: 1, prenom: 6, prenom_2: 7, prenom_3: 8, nom: 4
 def import_xls fichier, etablissement_id, nom_a_importer=nil, prenom_a_importer=nil
 
   import_mef(fichier, etablissement_id)
+  import_options_pedagogiques(fichier, etablissement_id)
   compte_rendu = import_dossiers_eleve(fichier, etablissement_id, nom_a_importer, prenom_a_importer)
   compte_rendu
 end
@@ -49,6 +50,24 @@ def import_mef(fichier, etablissement_id)
     next unless ligne_siecle[COLONNES[:niveau_classe_ant]].present?
 
     Mef.find_or_create_by!(etablissement_id: etablissement_id, code: ligne_siecle[COLONNES[:code_mef]], libelle: ligne_siecle[COLONNES[:niveau_classe_ant]])
+  end
+end
+
+def import_options_pedagogiques(fichier, etablissement_id)
+  xls_document = Roo::Spreadsheet.open fichier
+  lignes_siecle = (xls_document.first_row + 1..xls_document.last_row)
+
+  lignes_siecle.each do |row|
+    ligne_siecle = xls_document.row(row)
+    [38,42,46,50,54,58,62,66,70,74].each do |colonne|
+      next unless ligne_siecle[colonne].present?
+      option = OptionPedagogique.find_or_create_by(etablissement_id: etablissement_id, nom: ligne_siecle[colonne])
+      option.update(obligatoire: true) if ligne_siecle[colonne + 1] == 'O'
+      if ligne_siecle[COLONNES[:code_mef]].present?
+        mef = Mef.find_by(code: ligne_siecle[COLONNES[:code_mef]], etablissement_id: etablissement_id)
+        option.mef << mef
+      end
+    end
   end
 end
 
