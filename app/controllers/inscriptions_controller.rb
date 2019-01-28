@@ -30,26 +30,26 @@ class InscriptionsController < ApplicationController
       .select('resp_legals.email')
       .select('adresse,code_postal,ville,adresse_ant,code_postal_ant,ville_ant')
       .order('eleves.classe_ant DESC, dossier_eleves.etat, eleves.identifiant')
-      .where(resp_legals:{priorite:1}, etablissement: get_agent.etablissement)
+      .where(resp_legals:{priorite:1}, etablissement: agent_connecté.etablissement)
     pieces_jointes = PieceJointe
       .joins(:dossier_eleve,:piece_attendue)
       .select('dossier_eleves.id as dossier_id').select('pieces_jointes.*')
-      .where(piece_attendues:{etablissement_id: get_agent.etablissement.id})
+      .where(piece_attendues:{etablissement_id: agent_connecté.etablissement.id})
       .group_by(&:dossier_eleve_id)
     messages = Message
       .joins(:dossier_eleve)
       .select('dossier_eleves.id as dossier_id').select('messages.dossier_eleve_id')
-      .where(dossier_eleves:{etablissement_id: get_agent.etablissement.id})
+      .where(dossier_eleves:{etablissement_id: agent_connecté.etablissement.id})
       .group_by(&:dossier_eleve_id)
     message_info = session[:message_info]
     session.delete :message_info
     render :liste_des_eleves,
       locals: {
-        agent: get_agent,
+        agent: agent_connecté,
         lignes_eleves: lignes_eleves,
         message_info: message_info,
         messages: messages,
-        pieces_attendues: get_agent.etablissement.piece_attendue,
+        pieces_attendues: agent_connecté.etablissement.piece_attendue,
         pieces_jointes: pieces_jointes}
   end
 
@@ -62,7 +62,7 @@ class InscriptionsController < ApplicationController
     fichier_s3 = get_fichier_s3 File.basename(tempfile)
     tache = TacheImport.create(
         url: fichier_s3.url(Time.now.to_i + 1200),
-        etablissement_id: get_agent.etablissement.id,
+        etablissement_id: agent_connecté.etablissement.id,
         statut: 'en_attente',
         nom_a_importer: params[:nom_eleve],
         prenom_a_importer: params[:prenom_eleve])
@@ -73,8 +73,8 @@ class InscriptionsController < ApplicationController
   end
 
   def new_import_siecle
-    tache = get_agent.etablissement.tache_import.last
-    render :import_siecle, locals: {agent: get_agent, tache: tache, message: ""}
+    tache = agent_connecté.etablissement.tache_import.last
+    render :import_siecle, locals: {agent: agent_connecté, tache: tache, message: ""}
   end
 
   def declenche_traiter_imports
@@ -96,11 +96,11 @@ class InscriptionsController < ApplicationController
     resp_legaux = dossier_eleve.resp_legal
     resp_legaux.each { |r| (emails_presents = true) if r.email.present?}
     meme_adresse = resp_legaux.first.meme_adresse resp_legaux.second
-    modeles = get_agent.etablissement.modele
+    modeles = agent_connecté.etablissement.modele
     render :eleve,
       locals: {
       emails_presents: emails_presents,
-      agent: get_agent,
+      agent: agent_connecté,
       modeles: modeles,
       eleve: eleve,
       dossier_eleve: dossier_eleve,
@@ -108,13 +108,13 @@ class InscriptionsController < ApplicationController
   end
 
   def pieces_attendues
-    etablissement = get_agent.etablissement
+    etablissement = agent_connecté.etablissement
     piece_attendues = etablissement.piece_attendue
-    render :piece_attendues, locals: {agent: get_agent, piece_attendues: piece_attendues}
+    render :piece_attendues, locals: {agent: agent_connecté, piece_attendues: piece_attendues}
   end
 
   def post_pieces_attendues
-    etablissement = get_agent.etablissement
+    etablissement = agent_connecté.etablissement
     code_piece = params[:nom].gsub(/[^a-zA-Z0-9]/, '_').upcase.downcase
     piece_attendue = PieceAttendue.find_by(
         code: code_piece,
@@ -134,7 +134,7 @@ class InscriptionsController < ApplicationController
           etablissement_id: etablissement.id,
           code: code_piece)
       render :piece_attendues,
-          locals: {piece_attendues: etablissement.piece_attendue, agent: get_agent}
+          locals: {piece_attendues: etablissement.piece_attendue, agent: agent_connecté}
     end
   end
 
@@ -220,7 +220,7 @@ class InscriptionsController < ApplicationController
   end
 
   def options
-    etablissement = get_agent.etablissement
+    etablissement = agent_connecté.etablissement
     eleves_par_classe = DossierEleve.where(etablissement_id: etablissement.id).collect(&:eleve).group_by(&:niveau_classe_ant)
     eleves = Eleve.all.select {|e| e.dossier_eleve.etablissement_id == etablissement.id && e.dossier_eleve.etat != 'sortant'}
     nb_max_options = 0
@@ -228,18 +228,18 @@ class InscriptionsController < ApplicationController
       nb_max_options = e.options_apres_montee.count if e.options_apres_montee.count > nb_max_options
     end
 
-    render :options, locals: {agent: get_agent,etablissement: etablissement, eleves_par_classe: eleves_par_classe,
+    render :options, locals: {agent: agent_connecté,etablissement: etablissement, eleves_par_classe: eleves_par_classe,
                                    eleves: eleves, nb_max_options: nb_max_options}
   end
 
   def convocations
-    etablissement = get_agent.etablissement
+    etablissement = agent_connecté.etablissement
     eleves = Eleve.all.select do |e|
       d = e.dossier_eleve
       d.etablissement_id == etablissement.id && (d.etat == 'pas connecté' || d.etat == 'connecté')
     end
 
-    render :convocations, locals: {agent: get_agent,etablissement: etablissement, eleves: eleves}
+    render :convocations, locals: {agent: agent_connecté,etablissement: etablissement, eleves: eleves}
   end
 
   def deconnexion
@@ -248,15 +248,15 @@ class InscriptionsController < ApplicationController
   end
 
   def tableau_de_bord
-    total_dossiers = get_agent.etablissement.dossier_eleve.count
-    etats, notes, moyenne, dossiers_avec_commentaires = get_agent.etablissement.stats
+    total_dossiers = agent_connecté.etablissement.dossier_eleve.count
+    etats, notes, moyenne, dossiers_avec_commentaires = agent_connecté.etablissement.stats
     render :tableau_de_bord,
-        locals: {agent: get_agent, total_dossiers: total_dossiers, etats: etats,
+        locals: {agent: agent_connecté, total_dossiers: total_dossiers, etats: etats,
                  notes: notes, moyenne: moyenne, dossiers_avec_commentaires: dossiers_avec_commentaires.sort_by(&:date_signature).reverse}
   end
 
   def post_tableau_de_bord
-    get_agent.update(etablissement_id: params[:etablissement])
+    agent_connecté.update(etablissement_id: params[:etablissement])
     redirect_to '/agent/tableau_de_bord'
   end
 
@@ -268,7 +268,7 @@ class InscriptionsController < ApplicationController
   end
 
   def export
-    render :export, locals: {agent: get_agent}
+    render :export, locals: {agent: agent_connecté}
   end
 
   def supprime_option

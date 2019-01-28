@@ -11,6 +11,7 @@ module Configuration
 
     def create
       @agent = Agent.new(agent_params)
+      @agent.etablissement ||= agent_connecté.etablissement
 
       if @agent.save
         redirect_to configuration_agents_path
@@ -20,7 +21,7 @@ module Configuration
     end
 
     def index
-      @agents = Agent.where(etablissement: get_agent.etablissement)
+      @agents = Agent.where(etablissement: agent_connecté.etablissement)
     end
 
     def edit

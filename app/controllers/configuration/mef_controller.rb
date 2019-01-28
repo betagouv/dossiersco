@@ -19,7 +19,7 @@ module Configuration
 
     def create
       @mef = Mef.new(mef_params)
-      @mef.etablissement = @agent.etablissement
+      @mef.etablissement = agent_connecté.etablissement
 
       if @mef.save
         redirect_to configuration_mef_index_url, notice: 'Mef was successfully created.'

@@ -1,7 +1,7 @@
 <div class="container mt-5 mb-4">
   <div class="wrapper">
     <div class="arrow-steps clearfix">
-      <% if @agent && @agent.admin %>
+      <% if @agent_connecté && @agent_connecté.admin? %>
         <a class="step" href='/agent/import_siecle'>
           <span>Import</span>
         </a>
