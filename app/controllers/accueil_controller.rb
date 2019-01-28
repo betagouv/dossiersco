@@ -245,7 +245,7 @@ class AccueilController < ApplicationController
       end
     end
     if pieces_obligatoires
-      erb :'pieces_a_joindre', locals: {dossier_eleve: dossier_eleve, message: 'Veuillez télécharger les pièces obligatoires'}
+      render :pieces_a_joindre, locals: {dossier_eleve: dossier_eleve, message: 'Veuillez télécharger les pièces obligatoires'}
     else
       sauve_et_redirect dossier_eleve, 'validation'
     end
