@@ -4,14 +4,14 @@ class DossiersAffelnetController < ApplicationController
   before_action :identification_agent
 
   def create
-    DossierAffelnet.where(etablissement: @agent.etablissement).destroy_all
+    DossierAffelnet.where(etablissement: agent_connecté.etablissement).destroy_all
     tempfile = params[:fichier].tempfile
     @nom_fichier = params[:fichier].original_filename
     xls_document = Roo::Spreadsheet.open tempfile
     xls_document.sheet(0).each do |hash|
       next if hash[0] == "Nom"
       DossierAffelnet.create!(
-        etablissement: @agent.etablissement,
+        etablissement: agent_connecté.etablissement,
         nom: hash[0],
         prenom: hash[1],
         date_naissance: hash[2],
@@ -23,13 +23,13 @@ class DossiersAffelnetController < ApplicationController
         decision_de_passage: hash[8]
       )
     end
-    @nombre_de_lignes = DossierAffelnet.where(etablissement: @agent.etablissement).count
+    @nombre_de_lignes = DossierAffelnet.where(etablissement: agent_connecté.etablissement).count
     render :traitement_import
   end
 
   def traiter
     @nom_fichier = "perdu en route"
-    @nombre_de_lignes = DossierAffelnet.where(etablissement: @agent.etablissement).count
+    @nombre_de_lignes = DossierAffelnet.where(etablissement: agent_connecté.etablissement).count
     render :traitement_import
   end
 

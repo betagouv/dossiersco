@@ -33,7 +33,7 @@
         <img style="height: auto" src='/images/republique_francaise.svg' class='logo'>
         <span class="navbar-brand">DossierSCO</span>
       </a>
-      <% if !@agent.nil? && @agent.admin? %>
+      <% if !@agent_connecté.nil? && @agent_connecté.admin? %>
         <%= link_to 'Configuration', configuration_path %>
       <% end %>
       <% if session[:identifiant].present? %>

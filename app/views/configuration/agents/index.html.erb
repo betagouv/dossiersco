@@ -8,6 +8,7 @@
       <th>Identifiant</th>
       <th>Prenom</th>
       <th>Nom</th>
+      <th>Admin</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,6 +19,7 @@
         <td><%= agent.identifiant %></td>
         <td><%= agent.nom %></td>
         <td><%= agent.prenom %></td>
+        <td><%= "*" if agent.admin? %></td>
         <td><%= link_to 'Modifier', edit_configuration_agent_path(agent) %></td>
         <td><%= link_to 'Supprimer', agent, method: :delete, data: { confirm: 'Voulez-vous vraiment supprimer cet agent ?' } %></td>
       </tr>
