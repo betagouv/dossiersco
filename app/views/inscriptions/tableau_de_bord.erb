@@ -12,19 +12,6 @@
     </div>
   </div>
 
-  <% if super_admin?(@agent_connecté.identifiant) %>
-    <form action="/agent/tableau_de_bord" method="POST">
-      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-      <select name="etablissement">
-        <% Etablissement.all.each do |etablissement| %>
-          <option <%= etablissement.id == @agent_connecté.etablissement_id ? 'selected' : '' %> value=<%= etablissement.id %>><%= etablissement.nom %></option>
-        <% end %>
-      </select>
-      <button type="submit">Changer</button>
-    </form>
-    <br />
-  <% end %>
-
   <div>
     <%= @agent_connecté.etablissement.nom %> : <span id="total_dossiers" class="badge badge-danger"><%= total_dossiers %></span> dossiers.
   </div>

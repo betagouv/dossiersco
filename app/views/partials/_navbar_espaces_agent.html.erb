@@ -1,0 +1,55 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="navbar-logo">
+    <%= link_to agent_tableau_de_bord_path do %>
+      <img src='/images/republique_francaise.svg' class='logo'>
+      <span class="navbar-brand" >DossierSCO</span>
+    <% end %>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+
+  <div class="navbar-title">
+    <%= espace_courant unless @agent_connecté.nil?  %>
+  </div>
+
+  <div class="collapse navbar-collapse navbar-links" id="navbarSupportedContent">
+    <ul class="navbar-nav">
+      <% unless @agent_connecté.nil? %>
+        <% if @agent_connecté.admin? %>
+          <li class="nav-item">
+            <%= link_to autre_espace, lien_autre_espace, {class: 'nav-link'}%>
+          </li>
+          <li class="nav-item"><span class="nav-link">|</span></li>
+        <% end %>
+        <% if super_admin?(@agent_connecté.identifiant) %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+              <%= @agent_connecté.etablissement.nom %>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <% Etablissement.all.each do |etablissement| %>
+                <%= link_to etablissement.nom, changer_etablissement_configuration_agent_path(@agent_connecté, etablissement: etablissement), {method: :post, class: 'dropdown-item'} %>
+              <% end %>
+            </div>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <span class="nav-link"><%= @agent_connecté.etablissement.nom %></span>
+          </li>
+        <% end %>
+        <li class="nav-item"><span class="nav-link">|</span></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            <%= @agent_connecté.identifiant %>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <%= link_to "Se déconnecter", agent_deconnexion_path, {class: "dropdown-item"} %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</nav>

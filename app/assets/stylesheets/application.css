@@ -170,6 +170,33 @@ h2, h4 {
 
 .navbar {
     height: 50px;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.navbar-links {
+    flex: 1 0 55% !important;
+    justify-content: flex-end;
+}
+
+.dropdown-menu {
+    right: 0 !important;
+    left: auto;
+}
+
+.navbar-title {
+    flex: 1 0 20%;
+    font-size: 1.4rem;
+    text-align: center;
+}
+
+.logo {
+    width: 7rem;
+    margin-right: 20px;
+}
+
+.navbar-logo {
+    flex: 1 0 25%;
 }
 
 /*
@@ -367,12 +394,6 @@ iframe {
 
 .lead {
     padding: 20px 0;
-}
-
-.logo {
-    max-width: 10%;
-    height: 100%;
-    margin-right: 20px;
 }
 
 .erreur {

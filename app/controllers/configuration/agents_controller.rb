@@ -38,6 +38,11 @@ module Configuration
       redirect_to configuration_agents_path, notice: "L'agent a bien été supprimé"
     end
 
+    def changer_etablissement
+      @agent_connecté.update(etablissement_id: params[:etablissement])
+      redirect_back(fallback_location: agent_tableau_de_bord_path)
+    end
+
     private
     def agent_params
       params.require(:agent).permit(:identifiant, :prenom, :nom, :password, :etablissement_id, :admin)
