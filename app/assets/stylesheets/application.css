@@ -175,7 +175,6 @@ h2, h4 {
 }
 
 .navbar-links {
-    flex: 1 0 55% !important;
     justify-content: flex-end;
 }
 
