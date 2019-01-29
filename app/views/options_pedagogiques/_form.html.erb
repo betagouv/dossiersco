@@ -2,9 +2,9 @@
   <% if option_pedagogique.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(option_pedagogique.errors.count, "error") %> prohibited this option_pedagogique from being saved:</h2>
-      <ul>
+      <ul class="list-unstyled">
         <% option_pedagogique.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+          <li class="bg-danger"><%= message %></li>
         <% end %>
       </ul>
     </div>

@@ -1,0 +1,31 @@
+<% if notice.present? %>
+  <p class="bg-success" id="notice"><%= notice %></p>
+<% end %>
+
+<h1>Etablissements</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Ville</th>
+      <th>Code postal</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @etablissements.each do |etablissement| %>
+      <tr>
+          <td><%= link_to etablissement.nom, configuration_etablissement_path(etablissement)%></td>
+          <td><%= etablissement.ville %></td>
+          <td><%= etablissement.code_postal %></td>
+        <td><%= link_to 'Modifier', edit_configuration_etablissement_path(etablissement) %></td>
+        <td><%= link_to 'Supprimer', [:configuration, etablissement], method: :delete, data: { confirm: 'Voulez-vous vraiment supprimer cet établissement ?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<%= link_to "Créer un nouvel établissement", new_configuration_etablissement_path %>
