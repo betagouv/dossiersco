@@ -1,16 +1,5 @@
-<div class="col-12 col-10">
-
-  <span style="display:block; height: 50px;"></span>
-
-  <div class="container">
-    <div class="row">
-      <div class="col-2">
-      </div>
-      <div class="col">
-        <h1 class="separation">Eleves en cours de traitement</h1>
-      </div>
-    </div>
-  </div>
+<div class="col-12">
+  <h1 class="separation">Eleves en cours de traitement</h1>
   <div>
     <%= agent.etablissement.nom %> : <span id="total_dossiers" class="badge badge-danger"><%= lignes_eleves.count('*') %></span> dossiers.
   </div>
