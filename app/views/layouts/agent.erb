@@ -31,12 +31,40 @@
   <body>
 
     <%= render partial: 'partials/navbar_espaces_agent', locals: {espace_courant: 'Suivi des dossiers',
+                                                                  lien_espace_courant: agent_tableau_de_bord_path,
                                                                   autre_espace: 'Configuration',
                                                                   lien_autre_espace: configuration_path} %>
 
-    <%= render partial: 'partials/navigation_agent' unless current_page?(agent_path) %>
+    <nav class="menu-agents container navbar navbar-expand-lg navbar-light bg-white">
+      <ul class="navbar-nav">
+        <li class="nav-item <%= 'active' if request.fullpath.include? '/tableau_de_bord' %>">
+          <%= link_to 'Tableau de bord', agent_tableau_de_bord_path, {class: 'nav-link'} %>
+        </li>
+        <% if @agent_connecté && @agent_connecté.admin? %>
+          <li class="nav-item <%= 'active' if request.fullpath.include? '/import' %>">
+            <%= link_to 'Import', agent_import_siecle_path, {class: 'nav-link'} %>
+          </li>
+          <li class="nav-item <%= 'active' if request.fullpath.include? '/piece_attendues' %>">
+            <%= link_to 'Pièces attendues', agent_piece_attendues_path, {class: 'nav-link'} %>
+          </li>
+          <% end %>
+        <li class="nav-item <%= 'active' if request.fullpath.include? '/liste_des_eleves' %>">
+          <%= link_to 'Liste des élèves', agent_liste_des_eleves_path, {class: 'nav-link'} %>
+        </li>
+        <li class="nav-item <%= 'active' if request.fullpath.include? '/options' %>">
+          <%= link_to 'Options', agent_options_path, {class: 'nav-link'} %>
+        </li>
+        <li class="nav-item <%= 'active' if request.fullpath.include? '/convocations' %>">
+          <%= link_to 'Convocations', agent_convocations_path, {class: 'nav-link'} %>
+        </li>
+        <li class="nav-item <%= 'active' if request.fullpath.include? '/export' %>">
+          <%= link_to 'Export', agent_export_path, {class: 'nav-link'} %>
+        </li>
+      </ul>
+    </nav>
 
-    <main role="main" class="container">
+
+    <main role="main" class="container my-5">
 
     <div class="row row-offcanvas row-offcanvas-right justify-content-center">
 

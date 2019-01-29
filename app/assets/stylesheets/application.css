@@ -161,44 +161,6 @@ h2, h4 {
 }
 
 /*
- * Navbar
- */
-
-.navbar-light > a {
-    color: #003189;
-}
-
-.navbar {
-    height: 50px;
-    align-items: baseline;
-    justify-content: space-between;
-}
-
-.navbar-links {
-    justify-content: flex-end;
-}
-
-.dropdown-menu {
-    right: 0 !important;
-    left: auto;
-}
-
-.navbar-title {
-    flex: 1 0 20%;
-    font-size: 1.4rem;
-    text-align: center;
-}
-
-.logo {
-    width: 7rem;
-    margin-right: 20px;
-}
-
-.navbar-logo {
-    flex: 1 0 25%;
-}
-
-/*
  * Buttons
  */
 .btn {
