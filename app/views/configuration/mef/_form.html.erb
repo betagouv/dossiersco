@@ -3,9 +3,9 @@
     <div id="error_explanation">
       <h2><%= pluralize(mef.errors.count, "error") %> prohibited this mef from being saved:</h2>
 
-      <ul>
+      <ul class="list-unstyled">
       <% mef.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+        <li class="bg-danger"><%= message %></li>
       <% end %>
       </ul>
     </div>

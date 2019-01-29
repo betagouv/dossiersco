@@ -9,8 +9,8 @@ Rails.application.routes.draw do
   resources :options_pedagogiques, except: [:show]
   namespace :configuration do
     resources :mef
-    resources :etablissements,      only: [:new, :create]
-    resources :agents,               only: [:new, :create, :index, :edit, :update]
+    resources :etablissements
+    resources :agents
   end
   resources :pieces_jointes,       only: [:create, :update]
   resources :agent_pieces_jointes, only: [:create, :update]
