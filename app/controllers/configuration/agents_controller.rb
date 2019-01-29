@@ -11,6 +11,7 @@ module Configuration
     end
 
     def create
+      @agent = Agent.new(agent_params)
       @agent.etablissement ||= agent_connecté.etablissement
 
       if @agent.save
