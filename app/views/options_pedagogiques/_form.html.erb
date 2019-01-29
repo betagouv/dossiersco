@@ -4,7 +4,7 @@
       <h2><%= pluralize(option_pedagogique.errors.count, "error") %> prohibited this option_pedagogique from being saved:</h2>
       <ul class="list-unstyled">
         <% option_pedagogique.errors.full_messages.each do |message| %>
-          <li class="bg-danger"><%= message %></li>
+          <li class="alert alert-danger"><%= message %></li>
         <% end %>
       </ul>
     </div>

@@ -3,7 +3,7 @@
     <div id="error_explanation">
       <ul class="list-unstyled">
         <% @etablissement.errors.full_messages.each do |message| %>
-          <li class="bg-danger"><%= message %></li>
+          <li class="alert alert-danger"><%= message %></li>
         <% end %>
       </ul>
     </div>
