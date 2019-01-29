@@ -1,0 +1,54 @@
+<%= form_for([:configuration, @etablissement]) do |f| %>
+  <% if @etablissement.errors.any? %>
+    <div id="error_explanation">
+      <ul class="list-unstyled">
+        <% @etablissement.errors.full_messages.each do |message| %>
+          <li class="bg-danger"><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :nom %>
+    <%= f.text_field :nom, class: 'form-control'%>
+  </div>
+  <div class="form-group">
+    <%= f.label :email %>
+    <%= f.text_field :email, class: 'form-control'%>
+  </div>
+  <div class="form-group">
+    <%= f.label :adresse %>
+    <%= f.text_field :adresse, class: 'form-control'%>
+  </div>
+  <div class="form-group">
+    <%= f.label :code_postal %>
+    <%= f.text_field :code_postal, class: 'form-control'%>
+  </div>
+  <div class="form-group">
+    <%= f.label :ville %>
+    <%= f.text_field :ville, class: 'form-control'%>
+  </div>
+  <div class="form-group">
+    <%= f.label :message_permanence %>
+    <%= f.text_area :message_permanence, class: 'form-control'%>
+  </div>
+  <div class="form-group">
+    <%= f.label :message_infirmerie %>
+    <%= f.text_area :message_infirmerie, class: 'form-control'%>
+  </div>
+  <div class="form-check mb-3">
+    <%= f.check_box :gere_demi_pension, class: 'form-check-input'%>
+    <%= f.label :gere_demi_pension, class: 'form-check-label' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :signataire %>
+    <%= f.text_field :signataire, class: 'form-control'%>
+  </div>
+  <div class="form-group">
+    <%= f.label :date_limite %>
+    <%= f.text_field :date_limite, class: 'form-control'%>
+  </div>
+  <div class="form-group">
+    <%= f.submit 'valider', class: 'btn btn-primary my-3' %>
+  </div>
+<% end %>

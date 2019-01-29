@@ -1,8 +1,10 @@
-<p id="notice"><%= notice %></p>
+<% if notice.present? %>
+  <p class="bg-success" id="notice"><%= notice %></p>
+<% end %>
 
 <h1>Options Pedagogiques</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <td>Nom</td>
