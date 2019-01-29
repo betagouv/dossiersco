@@ -10,7 +10,11 @@ Rails.application.routes.draw do
   namespace :configuration do
     resources :mef
     resources :etablissements
-    resources :agents
+    resources :agents do
+      member do
+        post 'changer_etablissement'
+      end
+    end
   end
   resources :pieces_jointes,       only: [:create, :update]
   resources :agent_pieces_jointes, only: [:create, :update]
@@ -84,7 +88,6 @@ Rails.application.routes.draw do
   get '/agent/deconnexion', to: 'inscriptions#deconnexion'
 
   get '/agent/tableau_de_bord', to: 'inscriptions#tableau_de_bord'
-  post '/agent/tableau_de_bord', to: 'inscriptions#post_tableau_de_bord'
 
   post '/agent/pieces_jointes_eleve/:identifiant', to: 'inscriptions#post_pieces_jointes_eleve'
 

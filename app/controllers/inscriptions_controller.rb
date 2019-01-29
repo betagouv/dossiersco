@@ -255,11 +255,6 @@ class InscriptionsController < ApplicationController
                  notes: notes, moyenne: moyenne, dossiers_avec_commentaires: dossiers_avec_commentaires.sort_by(&:date_signature).reverse}
   end
 
-  def post_tableau_de_bord
-    agent_connecté.update(etablissement_id: params[:etablissement])
-    redirect_to '/agent/tableau_de_bord'
-  end
-
   def pieces_jointes_eleve
     eleve = Eleve.find_by(identifiant: params[:identifiant])
     dossier_eleve = eleve.dossier_eleve
