@@ -1,8 +1,10 @@
-<p id="notice"><%= notice %></p>
+<% if notice.present? %>
+  <p class="bg-success" id="notice"><%= notice %></p>
+<% end %>
 
 <h1>Agents</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Identifiant</th>
@@ -19,9 +21,9 @@
         <td><%= agent.identifiant %></td>
         <td><%= agent.nom %></td>
         <td><%= agent.prenom %></td>
-        <td><%= "*" if agent.admin? %></td>
+        <td><%= "<span class='fas fa-check'></span>".html_safe if agent.admin? %></td>
         <td><%= link_to 'Modifier', edit_configuration_agent_path(agent) %></td>
-        <td><%= link_to 'Supprimer', agent, method: :delete, data: { confirm: 'Voulez-vous vraiment supprimer cet agent ?' } %></td>
+        <td><%= link_to 'Supprimer', [:configuration, agent], method: :delete, data: { confirm: 'Voulez-vous vraiment supprimer cet agent ?' } %></td>
       </tr>
     <% end %>
   </tbody>

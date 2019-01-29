@@ -130,3 +130,8 @@ fr:
         titre: "Créer un agent"
       edit:
         titre: "Modifier un agent"
+    etablissements:
+      new:
+        titre: "Créer un établissement"
+      edit:
+        titre: "Modifier un établissement"
