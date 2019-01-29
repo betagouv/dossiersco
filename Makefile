@@ -4,7 +4,7 @@ test: ## Run the tests
 	docker-compose run --rm test
 
 build: ## Install or update dependencies
-	docker-compose build && docker-compose run --rm app bundle install
+	docker-compose build && docker-compose run --rm app rails db:migrate && docker-compose run --rm app bundle install
 
 run: ## Start the app server
 	docker-compose up app postgres
