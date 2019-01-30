@@ -283,21 +283,6 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert response.body.include? "Piaf"
   end
 
-  def test_etat_piece_jointe_liste_des_eleves
-    dossier_eleve = Eleve.find_by(identifiant: 2).dossier_eleve
-    piece_attendue = PieceAttendue.find_by(code: 'assurance_scolaire',
-                                           etablissement_id: dossier_eleve.etablissement.id)
-    piece_jointe = PieceJointe.create(clef: 'assurance_scannee.pdf', dossier_eleve_id: dossier_eleve.id,
-                                      piece_attendue_id: piece_attendue.id)
-
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont'}
-    post '/agent/change_etat_fichier', params: { id: piece_jointe.id, etat: 'valide'}
-
-    get '/agent/liste_des_eleves'
-    assert response.body.include? "fa-file-image"
-    assert response.body.include? "fa-check-circle"
-  end
-
   def test_affiche_changement_adresse_liste_eleves
     # Si on a un changement d'adresse
     eleve = Eleve.find_by(identifiant: 2)
