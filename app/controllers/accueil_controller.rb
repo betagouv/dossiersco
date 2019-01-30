@@ -63,31 +63,10 @@ class AccueilController < ApplicationController
       @eleve[info] = params[info] if params.has_key?(info)
     end
 
-    options = @eleve.montee.present? ? @eleve.montee.abandonnabilite.collect(&:option) : []
-    options.each do |option|
-      if params["#{option.nom}_present"]
-        abandon = Abandon.find_or_initialize_by(eleve: @eleve, option: option)
-        @eleve.abandon.delete abandon if params[option.nom] == 'true'
-        @eleve.abandon << abandon if params[option.nom].nil?
-      end
-    end
-
-    @eleve.demande = []
-    options_demandees = @eleve.montee.present? ? @eleve.montee.demandabilite.collect(&:option) : []
-
-    options_demandees.each do |option|
-      if params["#{option.nom}_present"]
-        demande = Demande.find_or_initialize_by(eleve: @eleve, option: option)
-        @eleve.demande.delete demande if params[option.nom].nil?
-        @eleve.demande << demande if params[option.nom] == 'true'
-      end
-    end
-
-    options_demandees.collect(&:groupe).uniq.each do |groupe|
-      if params[groupe].present?
-        option_choisie = options_demandees.find {|option| option.nom == params[groupe]}
-        demande = Demande.find_or_initialize_by(eleve: @eleve, option: option_choisie)
-        @eleve.demande << demande
+    @eleve.dossier_eleve.options_pedagogiques = []
+    OptionPedagogique.all.each do |option|
+      if params[option.nom].present?
+        @eleve.dossier_eleve.options_pedagogiques << option
       end
     end
 
