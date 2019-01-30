@@ -5,6 +5,8 @@ class Etablissement < ActiveRecord::Base
   has_many :piece_attendue
   has_many :modele
 
+  validates :code_postal, length: { is: 5 }, numericality: { only_integer: true }, allow_nil: true
+
   def classes
     dossier_eleve.collect(&:eleve).collect(&:classe_ant).reject(&:nil?).uniq
   end
@@ -31,5 +33,9 @@ class Etablissement < ActiveRecord::Base
     moyenne = notes_renseignees.count > 0 ? "#{'%.2f' % ((notes_renseignees.sum+0.0)/notes_renseignees.count)}" : ""
     dossiers_avec_commentaires = avec_feedback.reject{ |d| d if d.commentaire.nil? || d.commentaire.empty? }
     return etats, notes, moyenne, dossiers_avec_commentaires
+  end
+
+  def departement
+    code_postal.present? ? code_postal[0..1] : ''
   end
 end
