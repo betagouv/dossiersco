@@ -26,4 +26,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'mef', 'mef'
   inflect.irregular 'piece_jointe', 'pieces_jointes'
   inflect.irregular 'piece jointe', 'pieces jointes'
+  inflect.irregular 'dossier eleve', 'dossier eleves'
+  inflect.irregular 'DossierEleve', 'DossierEleves'
+  inflect.irregular 'dossier_eleve', 'dossier_eleves'
 end
