@@ -120,8 +120,12 @@
       <h3 class="separation"><%= t('.options_pedagogiques') %></h3>
 
       <% @options_pedagogiques.each do |option| %>
-          <%= label_tag do %>
-            <%= check_box_tag option.nom %>
+        <%= label_tag do %>
+          <% if @options_pedagogiques_selectionnees.include?(option) %>
+            <%= check_box_tag option.nom, "", :checked %>
+          <% else %>
+            <%= check_box_tag option.nom, "" %>
+          <% end %>
             <%= option.nom %>
           <% end %>
       <% end %>
