@@ -55,8 +55,8 @@
             <td class="text-center" data-piece-id="<%= piece_jointe.id if piece_jointe.present? %>">
               <% if piece_jointe.present? %>
                 <a class="lien-piece-jointe" data-toggle="modal" data-target="#modal-pieces-jointes"
-                    data-url=""
-                    data-ext="">
+                                                                 data-url="<%= url_for(piece_jointe.fichier) %>"
+                                                                 data-ext="<%= piece_jointe.fichier.filename %>">
                   <i class="fas fa-file-image"></i>
                 </a>
                 <i class="fas fa-check-circle etat" style="<%= 'color: #00cf00' if piece_jointe.etat == 'valide' %>"></i>
