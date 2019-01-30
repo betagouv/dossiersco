@@ -122,9 +122,9 @@
       <% @options_pedagogiques.each do |option| %>
         <%= label_tag do %>
           <% if @options_pedagogiques_selectionnees.include?(option) %>
-            <%= check_box_tag option.nom, "", :checked %>
+            <%= check_box_tag option.nom, option.id, :checked %>
           <% else %>
-            <%= check_box_tag option.nom, "" %>
+            <%= check_box_tag option.nom, option.id %>
           <% end %>
             <%= option.nom %>
           <% end %>
