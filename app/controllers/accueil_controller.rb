@@ -52,8 +52,7 @@ class AccueilController < ApplicationController
 
   def get_eleve
     @eleve.dossier_eleve.update derniere_etape: 'eleve'
-    @options_pedagogiques = OptionPedagogique.joins(:mef).where(mef: {id: @eleve.dossier_eleve.mef_destination.id})
-    @options_du_niveau = @eleve.montee.present? ? @eleve.montee.demandabilite.collect(&:option) : []
+    @options_pedagogiques = OptionPedagogique.filtre_par(@eleve.dossier_eleve.mef_destination)
     render 'accueil/eleve'
   end
 

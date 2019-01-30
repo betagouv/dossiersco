@@ -131,7 +131,7 @@ def import_ligne etablissement_id, ligne_siecle, nom_a_importer=nil, prenom_a_im
   import_options etablissement_id, ligne_siecle, eleve
 
   mef_origine = Mef.find_by(code: ligne_siecle[COLONNES[:code_mef]], libelle: ligne_siecle[COLONNES[:niveau_classe_ant]])
-  mef_destination = Mef.niveau_supérieur(mef_origine) if mef_origine.present?
+  mef_destination = Mef.niveau_superieur(mef_origine) if mef_origine.present?
 
   dossier_eleve = DossierEleve.find_or_initialize_by(eleve_id: eleve.id)
   dossier_eleve.update_attributes!(
