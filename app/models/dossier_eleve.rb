@@ -16,6 +16,8 @@ class DossierEleve < ActiveRecord::Base
 
   has_one :contact_urgence
 
+  has_and_belongs_to_many :options_pedagogiques
+
 
   def pieces_jointes
     etablissement.piece_attendue.map do |piece_attendue|

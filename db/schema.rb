@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_28_165248) do
+ActiveRecord::Schema.define(version: 2019_01_30_095530) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,6 +100,13 @@ ActiveRecord::Schema.define(version: 2019_01_28_165248) do
     t.index ["eleve_id"], name: "index_dossier_eleves_on_eleve_id"
     t.index ["mef_destination_id"], name: "index_dossier_eleves_on_mef_destination_id"
     t.index ["mef_origine_id"], name: "index_dossier_eleves_on_mef_origine_id"
+  end
+
+  create_table "dossier_eleves_options_pedagogiques", force: :cascade do |t|
+    t.bigint "dossier_eleve_id"
+    t.bigint "option_pedagogique_id"
+    t.index ["dossier_eleve_id"], name: "dossier"
+    t.index ["option_pedagogique_id"], name: "option"
   end
 
   create_table "dossiers_affelnet", force: :cascade do |t|
@@ -267,6 +274,8 @@ ActiveRecord::Schema.define(version: 2019_01_28_165248) do
   add_foreign_key "dossier_eleves", "eleves", column: "eleve_id"
   add_foreign_key "dossier_eleves", "mef", column: "mef_destination_id"
   add_foreign_key "dossier_eleves", "mef", column: "mef_origine_id"
+  add_foreign_key "dossier_eleves_options_pedagogiques", "dossier_eleves", column: "dossier_eleve_id"
+  add_foreign_key "dossier_eleves_options_pedagogiques", "options_pedagogiques"
   add_foreign_key "dossiers_affelnet", "etablissements"
   add_foreign_key "options_pedagogiques", "etablissements"
 end
