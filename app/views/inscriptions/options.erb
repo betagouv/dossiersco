@@ -30,8 +30,8 @@
         <th>Classe</th>
         <th>Prénom</th>
         <th>Nom</th>
-        <% (1..nb_max_options).each do |i| %>
-          <th></th>
+        <% OptionPedagogique.all.each do |option| %>
+          <th><%= option.nom %></th>
         <% end %>
       </tr>
     </thead>
@@ -42,13 +42,11 @@
         <td><%= eleve.classe_ant %></td>
         <td><%= eleve.prenom %></td>
         <td><%= eleve.nom %></td>
-        <% options_apres_montee = eleve.options_apres_montee %>
-        <% options_apres_montee.each do |option| %>
-          <td><%= option %></td>
+
+        <% OptionPedagogique.all.each do |option| %>
+          <td><%= eleve.dossier_eleve.options_pedagogiques.include?(option) ? "x" : "" %></td>
         <% end %>
-        <% (1..nb_max_options-options_apres_montee.count).each do |i| %>
-          <td></td>
-        <% end %>
+
       </tr>
     <% end %>
   </table>
