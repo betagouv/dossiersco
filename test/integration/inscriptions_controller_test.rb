@@ -581,20 +581,6 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Salut Pierre", response.body
   end
 
-  def test_affiche_options
-    eleve1 = Eleve.find_by(nom: 'Piaf')
-    eleve2 = Eleve.find_by(identifiant: 3)
-    eleve2.dossier_eleve.update(etat: 'sortant')
-    latin = Option.create(nom: 'latin', groupe: 'LCA')
-    eleve1.option << latin
-    post '/agent', params: {identifiant: 'pierre', mot_de_passe: 'demaulmont'}
-
-    get '/agent/options'
-
-    assert ! response.body.include?(eleve2.prenom)
-    assert response.body.include? "latin"
-  end
-
   def test_liste_resp_legaux
     eleve = Eleve.find_by(nom: 'Piaf')
     eleve.dossier_eleve.update(etat: "pas connecté")
