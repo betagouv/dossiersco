@@ -252,22 +252,6 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     assert response.parsed_body.include? "<strong>latin</strong>"
   end
 
-  def test_affichage_info_sur_options
-    eleve = Eleve.find_by(identifiant: 6)
-    eleve.update(montee: Montee.create)
-    option = Option.create(nom: 'grec', groupe: 'LCA', modalite:'facultative', info: '(sous réserve)')
-    demandabilite = Demandabilite.create(option: option, montee: eleve.montee)
-    demande = Demande.create(option_id: option.id, eleve_id: eleve.id)
-
-    post '/identification', params: {identifiant: '6', annee: '1970', mois: '01', jour: '01'}
-
-    get '/validation'
-    assert response.body.include? "<strong>grec</strong>"
-
-    get '/eleve'
-    assert response.parsed_body.include? 'grec (sous réserve)'
-  end
-
   def test_une_famille_remplit_letape_administration
     post '/identification', params: { identifiant: '2', annee: '1915', mois: '12', jour: '19' }
     get '/administration'
@@ -406,17 +390,6 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     assert_equal false, resultat[0][:condition]
   end
 
-  def test_affichage_obligatoire_sans_choix
-    post '/identification', params: { identifiant: '5', annee: '1970', mois: '01', jour: '01' }
-    eleve = Eleve.find_by(identifiant: '5')
-
-    get '/eleve'
-
-    doc = Nokogiri::HTML(response.parsed_body)
-    assert_equal "latin", doc.css("body > main > div.col-sm-12 > form > div:nth-child(14) > div").text.strip
-    assert_equal "grec", doc.css("body > main > div.col-sm-12 > form > div:nth-child(15) > div").text.strip
-  end
-
   def test_afficher_option_a_choisir_que_quand_choix_possible
     montee = Montee.create
     e = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01', montee: montee)
@@ -427,44 +400,6 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
 
     assert ! response.parsed_body.include?("Options choisies précédemment")
     assert ! response.parsed_body.include?("Vos options pour l'année prochaine")
-  end
-
-  def test_affiche_option_abandonnable
-    eleve = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01')
-    dossier_eleve = DossierEleve.create!(eleve_id: eleve.id, etablissement_id: Etablissement.first.id)
-    montee = Montee.create
-    latin = Option.create(nom: 'latin', groupe: 'LCA', modalite: 'facultative')
-    latin_d = Abandonnabilite.create montee_id: montee.id, option_id: latin.id
-    eleve.option << latin
-    montee.abandonnabilite << latin_d
-    eleve.update(montee: montee)
-
-    post '/identification', params: { identifiant: 'XXX', annee: '1970', mois: '01', jour: '01' }
-    get '/eleve'
-
-    resultat = eleve.genere_abandons_possibles
-
-    assert_equal "Poursuivre l'option", resultat[0][:label]
-    assert_equal 'latin', resultat[0][:name]
-    assert_equal 'check', resultat[0][:type]
-
-    # Si la checkbox n'est pas cochée le navigateur ne transmet pas la valeur
-    post '/eleve', params: { latin_present: true }
-    eleve = Eleve.find_by(identifiant: 'XXX')
-    assert_equal 1, eleve.abandon.count
-    assert_equal 'latin', eleve.abandon.first.option.nom
-
-    resultat = eleve.genere_abandons_possibles
-    assert_equal "Poursuivre l'option", resultat[0][:label]
-    assert_equal false, resultat[0][:condition]
-
-    post '/eleve', params: { latin_present: true, latin: true }
-    eleve = Eleve.find_by(identifiant: 'XXX')
-    assert_equal 0, eleve.abandon.count
-
-    resultat = eleve.genere_abandons_possibles
-    assert_equal "Poursuivre l'option", resultat[0][:label]
-    assert_equal true, resultat[0][:condition]
   end
 
   def test_affiche_pas_resp_legal_2_si_absent_de_siecle
