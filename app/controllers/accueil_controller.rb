@@ -53,6 +53,7 @@ class AccueilController < ApplicationController
   def get_eleve
     @eleve.dossier_eleve.update derniere_etape: 'eleve'
     @options_pedagogiques = OptionPedagogique.filtre_par(@eleve.dossier_eleve.mef_destination)
+    @options_pedagogiques_selectionnees = @eleve.dossier_eleve.options_pedagogiques
     render 'accueil/eleve'
   end
 

@@ -96,53 +96,6 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(tache_import.url, 'test/fixtures/files/test_import_siecle.xls')
   end
 
-  def test_import_des_options
-    Option.destroy_all
-    etablissement = Etablissement.find_by(nom: 'College Jean-Francois Oeben')
-    lignes_siecle = [
-      {11 => '1', 9 => "18/05/1991", 37 => "AGL1", 38 => "ANGLAIS LV1", 39 => "O", 33 => '4', 34 => '4EME 1'},
-      {11 => '2', 9 => "18/05/1991", 37 => "ESP2", 38 => "ESPAGNOL LV2", 39 => "F", 33 => '4', 34 => '6EME 1'},
-      {11 => '3', 9 => "18/05/1991", 37 => "AGL1", 38 => "ANGLAIS LV1", 39 => "O", 33 => '4', 34 => '3EME 1'},
-      {11 => '4', 9 => "18/05/1991", 41 => "DANSE", 42 => "DANSE", 43 => "F", 33 => '4', 34 => '4EME 1'}
-    ]
-
-    lignes_siecle.each { |ligne| import_ligne etablissement.id, ligne }
-
-    options = Option.all
-
-    assert_equal 3, options.count
-    noms = options.collect(&:nom)
-    assert noms.include? 'Anglais'
-    assert noms.include? 'Espagnol'
-    assert noms.include? 'Danse'
-
-    eleve1 = Eleve.find_by(identifiant: "1")
-    nom_option_eleve1 = eleve1.option.collect(&:nom)
-    assert nom_option_eleve1.include? 'Anglais'
-
-    eleve4 = Eleve.find_by(identifiant: "4")
-    groupes = eleve4.option.collect(&:groupe)
-    assert groupes.include? 'Autres enseignements'
-    noms = eleve4.option.collect(&:nom)
-    assert noms.include? 'Danse'
-  end
-
-  def test_import_dun_fichier_avec_plusieurd_lignes_par_eleve
-    nombre_eleves_debut = Eleve.all.count
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
-    etablissement = Etablissement.find_by(nom: 'Collège Germaine Tillion')
-    tache_import = TacheImport.create(url: 'test/fixtures/files/test_import_multi_lignes.xlsx', statut: 'en_attente',
-      etablissement_id: etablissement.id)
-    get '/api/traiter_imports'
-    assert_equal 200, response.status
-
-    nombre_eleves_importes = Eleve.all.count - nombre_eleves_debut
-    assert_equal 31, nombre_eleves_importes
-
-    eleve = Eleve.find_by(identifiant: '070823218DD')
-    assert_equal 2, eleve.option.count
-  end
-
   def test_creer_des_options
     Option.destroy_all
     etablissement_id = Etablissement.find_by(nom: 'College Jean-Francois Oeben').id
