@@ -65,7 +65,9 @@ def import_options_pedagogiques(fichier, etablissement_id)
       option.update(obligatoire: true) if ligne_siecle[colonne + 1] == 'O'
       if ligne_siecle[COLONNES[:code_mef]].present?
         mef = Mef.find_by(code: ligne_siecle[COLONNES[:code_mef]], etablissement_id: etablissement_id)
-        option.mef << mef
+        unless option.mef.include? mef
+          option.mef << mef
+        end
       end
     end
   end

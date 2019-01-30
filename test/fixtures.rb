@@ -202,6 +202,8 @@ def destroy_all
   Abandonnabilite.destroy_all
   Demandabilite.destroy_all
   Montee.destroy_all
+  OptionPedagogique.destroy_all
+  Mef.destroy_all
   Etablissement.destroy_all
   Message.destroy_all
 end
