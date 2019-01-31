@@ -1,5 +1,40 @@
 # Journal
 
+
+## Semaine du 25 au 31 janvier
+
+*On maintient la porte entre-fermée aux personnes utilisatrices, et on a hâte de l'ouvrir*
+
+### Vie de l'équipe
+
+- Comment faire la rétrospective a distance ?
+- On pourrait essayer de faire un autre format, attention à prévoir le temps de le faire.
+- Manque de confiance dans la robustesse de l'application : ralentissement dans la distribution des accès
+- Impression d'être dans le rush
+- On a re-écrit du code pour s'adapter à rails, et du coup enlevé des tests qui ne fonctionnaient plus, au lieu de les réécrire.
+- Crainte de voir les utilisateurs de l'an dernier découvrir des régressions parce qu'on a pas encore stabilisé suite à la migration
+- On livre sans forcement tester dans le contexte de production (démo compris)
+- On ajoute des définitions de fini (sous forme de note en haut de la colonne done)
+- On a amorcé des discussions sur la bien-traitance des personnes utilisant dossiersco
+- Sentry ne se branche pas sur Slack, à cause du Slack : on pourrait ouvrir un mattermost pour faire les branchements dessus et pourquoi pas faire le support et la formation dessus.
+- On a (enfin) commencé à tourner régulièrement au clavier, juste le dernier du coup, pas grand chose à en apprendre (pour le moment)
+- Les désaccords surgissent, et on arrive très bien s'en servir pour progresser
+- Est-ce que ça ne serais pas intéressant d'utiliser le wiki github pour le journal et d'autres éléments ?
+- Quand on est à Arago, on va aller manger à la cantine (même avec nos plats de dehors)
+
+
+### Code
+
+-
+
+### Intraprenariat
+
+- Stéphane passe l'après midi avec le collège la Garriguette de Vergeze (34)
+- Nous élargissons les contacts avec des partenaires potentiels
+
+
+---
+
 ## Semaine du 21 au 25 janvier
 
 *Les utilisateurs et utilisatrices arrivent*
