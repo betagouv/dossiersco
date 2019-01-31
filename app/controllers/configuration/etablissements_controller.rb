@@ -44,7 +44,7 @@ module Configuration
 
     def etablissement_params
       params.require(:etablissement).permit(:nom, :email, :adresse, :ville, :code_postal, :message_permanence,
-                                            :message_infirmerie, :gere_demi_pension, :signataire)
+                                            :message_infirmerie, :gere_demi_pension, :signataire, :date_limite)
     end
 
     def cherche_etablissement
