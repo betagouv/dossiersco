@@ -62,7 +62,7 @@ jobs:
           command: echo $SCALINGO_HOST_KEY >> ~/.ssh/known_hosts
       - run:
           name: Deploy
-          command: git push git@scalingo.com:dossiersco-demo development:master
+          command: git push -f git@scalingo.com:dossiersco-demo development:master
 
   deploy-production:
     docker:
@@ -77,7 +77,7 @@ jobs:
  
       - run:
           name: Deploy
-          command: git push git@scalingo.com:dossiersco production:master
+          command: git push -f git@scalingo.com:dossiersco production:master
 
 workflows:
   version: 2
