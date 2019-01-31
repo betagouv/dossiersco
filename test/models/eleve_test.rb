@@ -2,12 +2,11 @@ require 'test_helper'
 
 class EleveTest < ActiveSupport::TestCase
 
-  def test_a_un_fabricant_valid
+  test "a un fabricant valid" do
     assert Fabricate.build(:eleve).valid?
-
   end
 
-  def test_affiche_option_obligatoire_nouvelle_pour_cette_montee
+  test "affiche option obligatoire nouvelle pour cette montee" do
     montee = Montee.create
     eleve = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01', montee: montee)
     dossier_eleve = DossierEleve.create!(eleve_id: eleve.id, etablissement_id: Etablissement.first.id)
@@ -21,6 +20,21 @@ class EleveTest < ActiveSupport::TestCase
     assert_equal "LCA", resultat[0][:label]
     assert_equal 'grec', resultat[0][:name]
     assert_equal 'hidden', resultat[0][:type]
+  end
+
+  test "a une année de naissance" do
+    eleve = Fabricate.build(:eleve, date_naiss: "2004-04-27")
+    assert_equal "2004", eleve.annee_de_naissance
+  end
+
+  test "a un mois de naissance" do
+    eleve = Fabricate.build(:eleve, date_naiss: "2004-04-27")
+    assert_equal "04", eleve.mois_de_naissance
+  end
+
+  test "a un jour de naissance" do
+    eleve = Fabricate.build(:eleve, date_naiss: "2004-04-27")
+    assert_equal "27", eleve.jour_de_naissance
   end
 
 end

@@ -10,7 +10,6 @@ class AccueilController < ApplicationController
     if params[:identifiant].empty? || params[:annee].empty? || params[:mois].empty? || params[:jour].empty?
       session[:message_erreur] = t('identification.erreurs.identifiants_non_renseignes')
       redirect_to '/'
-      return
     end
     Trace.create(identifiant: params[:identifiant],
                  categorie: 'famille',

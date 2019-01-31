@@ -3,6 +3,9 @@
 test: ## Run the tests
 	docker-compose run --rm test
 
+test-system: ## Run the tests
+	docker-compose run --rm test rails test:system
+
 build: ## Install or update dependencies
 	docker-compose build && docker-compose run --rm app rails db:migrate && docker-compose run --rm app bundle install
 

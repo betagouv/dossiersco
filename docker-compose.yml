@@ -11,6 +11,7 @@ services:
     command: /bin/bash -lc "bundle exec rails s -p 9393 -b 0.0.0.0"
     working_dir: /app
     environment:
+      PATH: $PATH:./bin
       POSTGRES_HOST: postgres
       POSTGRES_DB: dossiersco
       POSTGRES_USER: dossiersco
@@ -28,6 +29,7 @@ services:
       - ./:/app
     working_dir: /app
     environment:
+      PATH: $PATH:./bin
       POSTGRES_HOST: postgres_test
       POSTGRES_DB: dossiersco
       POSTGRES_USER: dossiersco

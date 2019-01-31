@@ -48,7 +48,9 @@ jobs:
 
       - run:
           name: Run test
-          command: bundle exec rake test
+          command: |
+            bundle exec rake test
+            bundle exec rake test:system
 
   deploy-demo:
     docker:
