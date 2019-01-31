@@ -3,7 +3,9 @@ class TacheImportsController < ApplicationController
   layout 'agent'
 
   def create
-    tache = TacheImport.create!(tache_import_params.merge({etablissement: agent_connecté.etablissement, statut: 'en_attente'}))
+    tempfile = tache_import_params[:fichier].tempfile
+
+    import_xls tempfile, agent_connecté.etablissement.id
     redirect_to '/agent/import_siecle'
   end
 
