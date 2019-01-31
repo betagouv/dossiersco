@@ -96,53 +96,6 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(tache_import.url, 'test/fixtures/files/test_import_siecle.xls')
   end
 
-  def test_import_des_options
-    Option.destroy_all
-    etablissement = Etablissement.find_by(nom: 'College Jean-Francois Oeben')
-    lignes_siecle = [
-      {11 => '1', 9 => "18/05/1991", 37 => "AGL1", 38 => "ANGLAIS LV1", 39 => "O", 33 => '4', 34 => '4EME 1'},
-      {11 => '2', 9 => "18/05/1991", 37 => "ESP2", 38 => "ESPAGNOL LV2", 39 => "F", 33 => '4', 34 => '6EME 1'},
-      {11 => '3', 9 => "18/05/1991", 37 => "AGL1", 38 => "ANGLAIS LV1", 39 => "O", 33 => '4', 34 => '3EME 1'},
-      {11 => '4', 9 => "18/05/1991", 41 => "DANSE", 42 => "DANSE", 43 => "F", 33 => '4', 34 => '4EME 1'}
-    ]
-
-    lignes_siecle.each { |ligne| import_ligne etablissement.id, ligne }
-
-    options = Option.all
-
-    assert_equal 3, options.count
-    noms = options.collect(&:nom)
-    assert noms.include? 'Anglais'
-    assert noms.include? 'Espagnol'
-    assert noms.include? 'Danse'
-
-    eleve1 = Eleve.find_by(identifiant: "1")
-    nom_option_eleve1 = eleve1.option.collect(&:nom)
-    assert nom_option_eleve1.include? 'Anglais'
-
-    eleve4 = Eleve.find_by(identifiant: "4")
-    groupes = eleve4.option.collect(&:groupe)
-    assert groupes.include? 'Autres enseignements'
-    noms = eleve4.option.collect(&:nom)
-    assert noms.include? 'Danse'
-  end
-
-  def test_import_dun_fichier_avec_plusieurd_lignes_par_eleve
-    nombre_eleves_debut = Eleve.all.count
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
-    etablissement = Etablissement.find_by(nom: 'Collège Germaine Tillion')
-    tache_import = TacheImport.create(url: 'test/fixtures/files/test_import_multi_lignes.xlsx', statut: 'en_attente',
-      etablissement_id: etablissement.id)
-    get '/api/traiter_imports'
-    assert_equal 200, response.status
-
-    nombre_eleves_importes = Eleve.all.count - nombre_eleves_debut
-    assert_equal 31, nombre_eleves_importes
-
-    eleve = Eleve.find_by(identifiant: '070823218DD')
-    assert_equal 2, eleve.option.count
-  end
-
   def test_creer_des_options
     Option.destroy_all
     etablissement_id = Etablissement.find_by(nom: 'College Jean-Francois Oeben').id
@@ -328,21 +281,6 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     assert response.body.include? "Edith"
     assert response.body.include? "Piaf"
-  end
-
-  def test_etat_piece_jointe_liste_des_eleves
-    dossier_eleve = Eleve.find_by(identifiant: 2).dossier_eleve
-    piece_attendue = PieceAttendue.find_by(code: 'assurance_scolaire',
-                                           etablissement_id: dossier_eleve.etablissement.id)
-    piece_jointe = PieceJointe.create(clef: 'assurance_scannee.pdf', dossier_eleve_id: dossier_eleve.id,
-                                      piece_attendue_id: piece_attendue.id)
-
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont'}
-    post '/agent/change_etat_fichier', params: { id: piece_jointe.id, etat: 'valide'}
-
-    get '/agent/liste_des_eleves'
-    assert response.body.include? "fa-file-image"
-    assert response.body.include? "fa-check-circle"
   end
 
   def test_affiche_changement_adresse_liste_eleves
@@ -626,20 +564,6 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     post '/agent', params: {identifiant: 'pierre', mot_de_passe: 'demaulmont'}
     get "/agent/fusionne_modele/#{modele.id}/eleve/4"
     assert_equal "Salut Pierre", response.body
-  end
-
-  def test_affiche_options
-    eleve1 = Eleve.find_by(nom: 'Piaf')
-    eleve2 = Eleve.find_by(identifiant: 3)
-    eleve2.dossier_eleve.update(etat: 'sortant')
-    latin = Option.create(nom: 'latin', groupe: 'LCA')
-    eleve1.option << latin
-    post '/agent', params: {identifiant: 'pierre', mot_de_passe: 'demaulmont'}
-
-    get '/agent/options'
-
-    assert ! response.body.include?(eleve2.prenom)
-    assert response.body.include? "latin"
   end
 
   def test_liste_resp_legaux

@@ -274,7 +274,7 @@ ActiveRecord::Schema.define(version: 2019_01_30_095530) do
   add_foreign_key "dossier_eleves", "eleves", column: "eleve_id"
   add_foreign_key "dossier_eleves", "mef", column: "mef_destination_id"
   add_foreign_key "dossier_eleves", "mef", column: "mef_origine_id"
-  add_foreign_key "dossier_eleves_options_pedagogiques", "dossier_eleves", column: "dossier_eleve_id"
+  add_foreign_key "dossier_eleves_options_pedagogiques", "dossier_eleves"
   add_foreign_key "dossier_eleves_options_pedagogiques", "options_pedagogiques"
   add_foreign_key "dossiers_affelnet", "etablissements"
   add_foreign_key "options_pedagogiques", "etablissements"
