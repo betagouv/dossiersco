@@ -53,28 +53,10 @@ class InscriptionsController < ApplicationController
         pieces_jointes: pieces_jointes}
   end
 
-  def import_siecle
-    tempfile = params[:filename].tempfile
-    tempfile = tempfile.path if tempfile.respond_to? :path
-    file = File.open(tempfile)
-    uploader = FichierUploader.new
-    uploader.store!(file)
-    fichier_s3 = get_fichier_s3 File.basename(tempfile)
-    tache = TacheImport.create(
-        url: fichier_s3.url(Time.now.to_i + 1200),
-        etablissement_id: agent_connecté.etablissement.id,
-        statut: 'en_attente',
-        nom_a_importer: params[:nom_eleve],
-        prenom_a_importer: params[:prenom_eleve])
-    render :import_siecle,
-        locals: { message: "",
-                  tache: tache
-        }
-  end
-
   def new_import_siecle
-    tache = agent_connecté.etablissement.tache_import.last
-    render :import_siecle, locals: {agent: agent_connecté, tache: tache, message: ""}
+    @tache = agent_connecté.etablissement.tache_import.last
+    @tache ||= TacheImport.new(etablissement: agent_connecté.etablissement)
+    render :import_siecle
   end
 
   def declenche_traiter_imports
