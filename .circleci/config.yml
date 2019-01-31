@@ -51,9 +51,6 @@ jobs:
           command: |
             bundle exec rake test
             bundle exec rake test:system
-      - run:
-          name: Rubocop
-          commant: bundle exec rubocop --require rubocop/formatter/checkstyle_formatter --format RuboCop::Formatter::CheckstyleFormatter --out $CIRCLE_TEST_REPORTS/junit.xml
 
   deploy-demo:
     docker:
