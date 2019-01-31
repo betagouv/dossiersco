@@ -110,13 +110,15 @@ def import_ligne etablissement_id, ligne_siecle, nom_a_importer=nil, prenom_a_im
   mef_origine = Mef.find_by(code: ligne_siecle[COLONNES[:code_mef]], libelle: ligne_siecle[COLONNES[:niveau_classe_ant]])
   mef_destination = Mef.niveau_superieur(mef_origine) if mef_origine.present?
 
-  dossier_eleve = DossierEleve.find_or_initialize_by(eleve_id: eleve.id)
-  dossier_eleve.update_attributes!(
-      eleve_id: eleve.id,
-      etablissement_id: etablissement_id,
-      mef_origine: mef_origine,
-      mef_destination: mef_destination
-  )
+  dossier_eleve = DossierEleve.find_or_initialize_by(eleve_id: eleve.id, etablissement_id: etablissement_id)
+  puts dossier_eleve.inspect
+  puts mef_origine.inspect
+  dossier_eleve.mef_origine = mef_origine
+  dossier_eleve.mef_destination = mef_destination
+
+  unless dossier_eleve.save
+    raise dossier_eleve.errors.full_messages.join(', ')
+  end
 
   [38,42,46,50,54,58,62,66,70,74].each do |colonne|
     next unless ligne_siecle[colonne].present?
