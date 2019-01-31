@@ -25,12 +25,37 @@
 
 ### Code
 
--
+- [Supprimer Etablissement : échec sur lycée ARAGO bis](https://github.com/betagouv/dossiersco/issues/277)
+- [Upload de document via smartphone](https://github.com/betagouv/dossiersco/issues/225)
+- [impossible de prendre une photo avec son tel pour ajouter une pièce jointe](https://github.com/betagouv/dossiersco/issues/272)
+- [Sign in du super admin ne fonctionne plus](https://github.com/betagouv/dossiersco/issues/278)
+- [Afficher qui est l'agent connecté](https://github.com/betagouv/dossiersco/issues/274)
+- [Afficher l'établissement en cours dans les interfaces agents](https://github.com/betagouv/dossiersco/issues/273)
+- [Un agent peut visualiser les pièces jointes à un dossier](https://github.com/betagouv/dossiersco/issues/227)
+- [créer et mettre à jour les MEF automatiquement à partir du fichier siecle](https://github.com/betagouv/dossiersco/issues/221)
+- [Lister, voir, créer, modifier et supprimer des etablissements](https://github.com/betagouv/dossiersco/issues/263)
+- [afficher les options pédagogiques coté famille](https://github.com/betagouv/dossiersco/issues/219)
+- [Préview des document PDF](https://github.com/betagouv/dossiersco/issues/226)
+- [upload des pièces jointes avec le framework](https://github.com/betagouv/dossiersco/issues/234)
+- [créer la notion de super admin et limiter le switch établissement](https://github.com/betagouv/dossiersco/issues/260)
+- [Ajouter une contrainte sur la création de compte agent](https://github.com/betagouv/dossiersco/issues/264)
+- [Faire pointer l'url dossiersco.beta.gouv.fr sur dossiersco.scalingo.io](https://github.com/betagouv/dossiersco/issues/251)
+- [Lister, voir, supprimer, modifier des agents](https://github.com/betagouv/dossiersco/issues/261)
+- [ajouter le formulaire de création d'établissement dans le menu configuration](https://github.com/betagouv/dossiersco/issues/223)
+- [Migrer les données de production](https://github.com/betagouv/dossiersco/issues/211)
+- [Lister les contacts du ministère et leur place dans l'organigramme](https://github.com/betagouv/dossiersco/issues/266)
+- [Le champ Date limite dans interface agent / établissement ne mémorise pas les infos saisies](https://github.com/betagouv/dossiersco/issues/275)
 
 ### Intraprenariat
 
 - Stéphane passe l'après midi avec le collège la Garriguette de Vergeze (34)
 - Nous élargissons les contacts avec des partenaires potentiels
+- Appeler Sonia DELAUNAY (60)
+- Appeler Du Pevele
+- Appeler Evariste Galois
+- Appeler Le Bocage
+- [Contacter le premier grand expert du comité](https://github.com/betagouv/dossiersco/issues/253)
+- [Contacter Mairie de Paris](https://github.com/betagouv/dossiersco/issues/254)
 
 
 ---
