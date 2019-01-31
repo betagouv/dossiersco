@@ -32,20 +32,6 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal '5', affichage_total_dossiers
   end
 
-  def test_importe_eleve_fichier_siecle
-    post '/agent', params: {identifiant: 'pierre', mot_de_passe: 'demaulmont'}
-    import_siecle_xls = fixture_file_upload('files/test_import_siecle.xls','application/vnd.ms-excel')
-    post '/agent/import_siecle', params: {nom_eleve: "", prenom_eleve: "", name: 'import_siecle',
-         filename: import_siecle_xls}
-
-    doc = Nokogiri::HTML(response.body)
-    assert_match "L'import de cette base sera réalisé prochainement.", doc.css('.statut-import').text
-
-    tache_import = TacheImport.find_by(statut: 'en_attente')
-    assert tache_import != nil
-    # assert_equal('tests/test_import_siecle.xls', tache_import.url)
-  end
-
   def test_affiche_statut_import
     agent = Agent.find_by(identifiant: 'pierre')
     tache_import = TacheImport.create(
@@ -62,38 +48,6 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   def test_traiter_zero_imports
     get '/api/traiter_imports'
     assert_equal 200, response.status
-  end
-
-  def test_traiter_import_eleve_fichier_siecle
-    nombre_eleves_debut = Eleve.all.count
-    etablissement = Etablissement.find_by(nom: 'Collège Germaine Tillion')
-    tache_import = TacheImport.create(url: 'test/fixtures/files/test_import_siecle.xls', statut: 'en_attente',
-      etablissement_id: etablissement.id)
-    get '/api/traiter_imports'
-    assert_equal 200, response.status
-
-    eleve = Eleve.find_by(nom: 'NOM_TEST')
-    eleve2 = Eleve.find_by(nom: 'NOM2_TEST')
-    nombre_eleves_importes = Eleve.all.count - nombre_eleves_debut
-
-    assert_equal 2, nombre_eleves_importes
-    assert_equal 'Masculin', eleve.sexe
-    assert_equal 'Prenom_test', eleve.prenom
-    assert_equal 'Prenom_test_2', eleve.prenom_2
-    assert_equal 'Prenom_test_3', eleve.prenom_3
-    assert_equal '080788316HE', eleve.identifiant
-    assert_equal 'FRANCE', eleve.pays_naiss
-    assert_equal 'PARIS 12E  ARRONDISSEMENT', eleve.ville_naiss
-    assert_equal '4A', eleve.classe_ant
-    assert_equal 'Collège Germaine Tillion', eleve.dossier_eleve.etablissement.nom
-    assert_equal 'Prenom2_test', eleve2.prenom
-    assert_equal '080788306HE', eleve2.identifiant
-    assert_equal 'CONGO', eleve2.pays_naiss
-    assert_equal 'Brazaville', eleve2.ville_naiss
-    assert_equal '4EME HORAIRES AMENAGES MUSIQUE', eleve2.niveau_classe_ant
-
-    tache_import = TacheImport.find_by(statut: 'terminée')
-    assert_equal(tache_import.url, 'test/fixtures/files/test_import_siecle.xls')
   end
 
   def test_creer_des_options
@@ -122,37 +76,6 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
       option = Option.where(nom: colonne[:nom_attendu], groupe: colonne[:groupe_attendu])
       assert_equal 1, option.count
     end
-  end
-
-  def test_compte_taux_de_portables_dans_siecle
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
-    import_siecle_xls = fixture_file_upload('files/test_import_siecle.xls','application/vnd.ms-excel')
-    post '/agent/import_siecle', params: { name: 'import_siecle', filename: import_siecle_xls }
-    get '/api/traiter_imports'
-    get '/agent/import_siecle'
-    doc = Nokogiri::HTML(response.body)
-    assert_match "100% de téléphones portables", doc.css('.message_de_succes').text
-    assert_match "50% d'emails", doc.css('.message_de_succes').text
-  end
-
-  def test_un_agent_importe_un_eleve
-    nb_eleves_au_depart = Eleve.all.size
-    import_siecle_xls = fixture_file_upload('files/test_import_siecle.xls','application/vnd.ms-excel')
-
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
-    post '/agent/import_siecle', params: { nom_eleve: 'NOM_TEST', prenom_eleve: 'Prenom_test',
-         name: 'import_siecle', filename: import_siecle_xls }
-
-    agent = Agent.find_by(identifiant: 'pierre')
-    tache_import = TacheImport.find_by(statut: 'en_attente',
-          etablissement_id: agent.etablissement.id)
-
-    assert_equal('NOM_TEST', tache_import.nom_a_importer)
-    assert_equal('Prenom_test', tache_import.prenom_a_importer)
-
-    get '/api/traiter_imports'
-
-    assert_equal nb_eleves_au_depart + 1, Eleve.all.size
   end
 
   def test_options_demande_et_abandon
