@@ -1,6 +1,4 @@
 require 'test_helper'
-require 'fixtures'
-init
 
 class EtablissementsControllerTest < ActionDispatch::IntegrationTest
   test "Un admin crée un etablissement" do

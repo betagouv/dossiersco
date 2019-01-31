@@ -66,6 +66,7 @@ fr:
       pays_de_naissance: Pays de naissance
       pays_de_nationalite: Pays de nationalité
       lv2: "Langue Vivante 2"
+      options_pedagogiques: Options pédagogiques
     famille:
       <<: *infos_nom
       titre_responsable_legal: "Famille : Responsable légal"

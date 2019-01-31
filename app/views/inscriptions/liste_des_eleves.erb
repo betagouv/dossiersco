@@ -54,13 +54,21 @@
                               pieces_jointes[ligne_eleve.dossier_id].find {|x| x.piece_attendue_id == piece.id} %>
             <td class="text-center" data-piece-id="<%= piece_jointe.id if piece_jointe.present? %>">
               <% if piece_jointe.present? %>
+                <% if piece_jointe.fichier.content_type.start_with?("image/") %>
                 <a class="lien-piece-jointe" data-toggle="modal" data-target="#modal-pieces-jointes"
-                    data-url=""
-                    data-ext="">
+                                                                 data-url="<%= url_for(piece_jointe.fichier) %>"
+                                                                 data-ext="<%= piece_jointe.fichier.filename %>">
                   <i class="fas fa-file-image"></i>
                 </a>
+                <% else %>
+                  <a class="lien-piece-jointe" href="<%= url_for(piece_jointe.fichier) %>">
+                  <i class="fas fa-file-image"></i>
+                </a>
+
+                <% end %>
                 <i class="fas fa-check-circle etat" style="<%= 'color: #00cf00' if piece_jointe.etat == 'valide' %>"></i>
                 <i class="fas fa-times-circle etat" style="<%= 'color: red' if piece_jointe.etat == 'invalide' %>"></i>
+
               <% end %>
             </td>
           <% end %>
