@@ -215,15 +215,8 @@ class AccueilController < ApplicationController
 
   def post_pieces_a_joindre
     dossier_eleve = @eleve.dossier_eleve
-    pieces_attendues = dossier_eleve.etablissement.piece_attendue
-    pieces_obligatoires = false
-    pieces_attendues.each do |piece|
-      piece_jointe = piece.piece_jointe
-      if !piece_jointe.present? && piece.obligatoire
-        pieces_obligatoires = true
-      end
-    end
-    if pieces_obligatoires
+    if dossier_eleve.pieces_manquantes?
+      @pieces_jointes = dossier_eleve.pieces_jointes
       render :pieces_a_joindre, locals: {dossier_eleve: dossier_eleve, message: 'Veuillez télécharger les pièces obligatoires'}
     else
       sauve_et_redirect dossier_eleve, 'validation'
