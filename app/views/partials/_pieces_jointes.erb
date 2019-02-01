@@ -15,7 +15,11 @@
                 <% end %>
               <% end %>
               <%= form.hidden_field :piece_attendue_id %>
-              <%= form.file_field :fichier, data: { btnClass: "btn btn-primary", text: "Parcourir"}, class: "filestyle" %>
+              <div class="custom-file">
+                <%= form.file_field :fichier, class: "custom-file-input", id: "customFile" %>
+                <input type="file" class="custom-file-input" id="customFileLangHTML">
+                <label class="custom-file-label" for="customFile" data-browse="Parcourir" >Choisir un fichier</label>
+              </div>
               <span id="fichier_<%= piece.code %>"></span>
               <br />
               <div class="image-piece-a-joindre lien-piece-jointe" id="image_<%= piece.code %>">
