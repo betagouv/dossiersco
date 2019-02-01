@@ -71,6 +71,18 @@ class DossierEleve < ActiveRecord::Base
     self.date_signature.localtime("+02:00").strftime "%d/%m à %H:%M"
   end
 
+  def pieces_manquantes
+    result = []
+    PieceAttendue.where(etablissement: etablissement, obligatoire: true).each do |piece_attendue|
+      result << piece_attendue unless piece_jointe.where(piece_attendue: piece_attendue).any?
+    end
+    result
+  end
+
+  def pieces_manquantes?
+    pieces_manquantes.any?
+  end
+
   def valide
     update(etat: 'validé')
     mail = AgentMailer.mail_validation_inscription(eleve)
