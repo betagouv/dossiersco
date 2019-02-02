@@ -1,7 +1,8 @@
 require 'test_helper'
 
-class BlogTest < ActionDispatch::IntegrationTest
-  test 'shows blog posts' do
+class InscriptionTest < ActionDispatch::IntegrationTest
+
+  test 'Inscription simple' do
     eleve = Fabricate(:eleve, niveau_classe_ant: "5EME")
     dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve)
 
