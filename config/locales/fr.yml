@@ -5,6 +5,7 @@ fr:
       messages:
         taken: "%{value} n'est pas disponible"
         required: "doit exister"
+        blank: "ne peut être vide"
       models:
         resp_legal:
           attributes:
