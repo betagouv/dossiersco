@@ -1,4 +1,4 @@
-FROM ruby:2.6.1 AS base
+FROM ruby:2.6.0 AS base
 WORKDIR /app
 COPY Gemfile .
 COPY Gemfile.lock .
