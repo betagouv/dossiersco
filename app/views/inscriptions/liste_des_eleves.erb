@@ -56,12 +56,11 @@
               <% if piece_jointe.present? %>
                 <% if piece_jointe.fichier.content_type.start_with?("image/") %>
                 <a class="lien-piece-jointe" data-toggle="modal" data-target="#modal-pieces-jointes"
-                                                                 data-url="<%= url_for(piece_jointe.fichier) %>"
-                                                                 data-ext="<%= piece_jointe.fichier.filename %>">
+                                                                 data-url="<%= piece_jointe.fichier.url %>">
                   <i class="fas fa-file-image"></i>
                 </a>
                 <% else %>
-                  <a class="lien-piece-jointe" href="<%= url_for(piece_jointe.fichier) %>">
+                  <a class="lien-piece-jointe" href="<%= piece_jointe.fichier.url %>">
                   <i class="fas fa-file-image"></i>
                 </a>
 
