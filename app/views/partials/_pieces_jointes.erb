@@ -1,34 +1,33 @@
-  <div class="card-deck row">
-    <% @pieces_jointes.each do |piece| %>
-      <%= form_for piece, multipart: true, html: { class: "col-12 col-md-6 forms" } do |form| %>
-        <div class="card <%= piece.etat if piece.present? %>">
-          <h5 class="card-header"><%= '*' if piece.obligatoire %> <%= piece.nom %></h5>
-          <div class="card-body">
-            <p class="card-text"><%= piece.explication %></p>
-            <p class="card-text etat-piece-jointe"><%= t(".document_#{piece.etat}") if piece.etat.present?  %></p>
-            <div class="card-relat document">
-              <% if piece.fichier.attached? %>
-                <% if piece.fichier.content_type.start_with?("image/") %>
-                  <%= image_tag(url_for(piece.fichier), alt:"preview piece jointe") %>
-                <% else %>
-                  <%= link_to piece.fichier.filename, url_for(piece.fichier) %>
-                <% end %>
+<div class="card-deck row">
+  <% @pieces_jointes.each do |piece| %>
+    <%= form_for piece, multipart: true, html: { class: "col-12 col-md-6 forms" } do |form| %>
+      <div class="card mb-4 <%= piece.etat if piece.present? %>">
+        <h5 class="card-header"><%= '*' if piece.obligatoire %> <%= piece.nom %></h5>
+        <div class="card-body">
+          <p class="card-text"><%= piece.explication %></p>
+          <p class="card-text etat-piece-jointe"><%= t(".document_#{piece.etat}") if piece.etat.present?  %></p>
+          <div class="card-relat document">
+            <% if piece.fichier.url.present? %>
+              <% if piece.fichier.content_type.start_with?("image/") %>
+                <%= image_tag(piece.fichier.url, alt:"preview piece jointe") %>
+              <% else %>
+                <%= link_to t('.voir_piece_jointe'), piece.fichier.url %>
               <% end %>
-              <%= form.hidden_field :piece_attendue_id %>
-              <div class="custom-file">
-                <%= form.file_field :fichier, class: "custom-file-input", id: "customFile" %>
-                <input type="file" class="custom-file-input" id="customFileLangHTML">
-                <label class="custom-file-label" for="customFile" data-browse="Parcourir" >Choisir un fichier</label>
-              </div>
-              <span id="fichier_<%= piece.code %>"></span>
-              <br />
-              <div class="image-piece-a-joindre lien-piece-jointe" id="image_<%= piece.code %>">
-              </div>
+            <% end %>
+            <%= form.hidden_field :piece_attendue_id %>
+            <div class="custom-file">
+              <%= form.file_field :fichier, class: "custom-file-input", id: "customFile" %>
+              <input type="file" class="custom-file-input" id="customFileLangHTML">
+              <label class="custom-file-label" for="customFile" data-browse="Parcourir" >Choisir un fichier</label>
+            </div>
+            <span id="fichier_<%= piece.code %>"></span>
+            <br />
+            <div class="image-piece-a-joindre lien-piece-jointe" id="image_<%= piece.code %>">
             </div>
           </div>
-          <button class="soumettre d-none" type="submit">Soumettre</button>
         </div>
-
-      <% end %>
+        <button class="soumettre d-none" type="submit">Soumettre</button>
+      </div>
     <% end %>
-  </div>
+  <% end %>
+</div>

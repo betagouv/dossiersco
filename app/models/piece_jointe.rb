@@ -4,9 +4,13 @@ class PieceJointe < ActiveRecord::Base
 
   delegate :obligatoire, :code, :nom, :explication, to: :piece_attendue
 
-  has_one_attached :fichier
+  mount_uploader :fichier, FichierUploader
 
   def ext
     self.clef.match(/(\w+$)/im)[1].downcase
+  end
+
+  def nom_etablissement
+    dossier_eleve.etablissement.nom
   end
 end

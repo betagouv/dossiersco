@@ -9,11 +9,11 @@
           <p class="card-text"><%= piece.explication %></p>
           <p class="card-text etat-piece-jointe"><%= t(".document_#{piece.etat}") if piece.etat.present?  %></p>
           <div class="card-relat document">
-            <% if piece.fichier.attached? %>
+            <% if piece.fichier.url.present? %>
               <% if piece.fichier.content_type.start_with?("image/") %>
-                <%= image_tag(url_for(piece.fichier), alt:"preview piece jointe") %>
+                <%= image_tag(piece.fichier.url, alt:"preview piece jointe") %>
               <% else %>
-                <%= link_to piece.fichier.filename, url_for(piece.fichier) %>
+                <%= link_to t('.voir_piece_jointe'), piece.fichier.url %>
               <% end %>
             <% end %>
             <%= form.hidden_field :piece_attendue_id %>
