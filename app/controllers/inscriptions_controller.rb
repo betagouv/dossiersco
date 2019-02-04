@@ -5,6 +5,7 @@ class InscriptionsController < ApplicationController
   layout 'agent'
 
   def agent
+    @cacher_navbar = true
     render :identification
   end
 
