@@ -138,3 +138,6 @@ fr:
         titre: "Créer un établissement"
       edit:
         titre: "Modifier un établissement"
+  inscriptions:
+    import_siecle:
+      message_de_succes: "L'import est en cours, un email va vous être envoyé quand il sera terminé"

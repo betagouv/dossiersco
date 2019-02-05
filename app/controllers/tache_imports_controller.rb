@@ -5,8 +5,8 @@ class TacheImportsController < ApplicationController
   def create
     tache_import = TacheImport.create!(tache_import_params.merge(etablissement: agent_connecté.etablissement))
     TraiterImportsJob.perform_later tache_import.id
-
-    redirect_to '/agent/import_siecle'
+    flash[:notice] = t('inscriptions.import_siecle.message_de_succes')
+    redirect_to agent_import_siecle_path
   end
 
   private
