@@ -134,7 +134,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     dossier_eleve = DossierEleve.last
     piece_attendue = PieceAttendue.find_by(code: 'assurance_scolaire',
                                            etablissement_id: dossier_eleve.etablissement.id)
-    piece_jointe = PieceJointe.create(clef: 'assurance_scannee.pdf', dossier_eleve_id: dossier_eleve.id,
+    piece_jointe = PieceJointe.create(dossier_eleve_id: dossier_eleve.id,
                                       piece_attendue_id: piece_attendue.id)
     etat_préservé = piece_jointe.etat
 
