@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_04_145302) do
+ActiveRecord::Schema.define(version: 2019_02_05_150315) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -224,7 +224,6 @@ ActiveRecord::Schema.define(version: 2019_02_04_145302) do
   end
 
   create_table "pieces_jointes", force: :cascade do |t|
-    t.string "clef"
     t.integer "dossier_eleve_id"
     t.integer "piece_attendue_id"
     t.string "etat"
