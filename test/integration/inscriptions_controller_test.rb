@@ -32,17 +32,14 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal '5', affichage_total_dossiers
   end
 
-  def test_affiche_statut_import
-    agent = Agent.find_by(identifiant: 'pierre')
-    tache_import = TacheImport.create(
-        url: 'tests/test_import_siecle.xls',
-        statut: 'en_cours',
-        etablissement_id: agent.etablissement.id)
+  def test_affiche_message_que_limport_est_en_cours
     post '/agent', params: {identifiant: 'pierre', mot_de_passe: 'demaulmont'}
+    post '/tache_imports', params: {tache_import: {fichier: 'tests/test_import_siecle.xls'}}
+    follow_redirect!
 
-    get '/agent/import_siecle'
     doc = Nokogiri::HTML(response.body)
-    assert_match "L'import de cette base est en cours.", doc.css('.statut-import').text
+
+    assert_match I18n.t('inscriptions.import_siecle.message_de_succes'), doc.css('.alert-success').text
   end
 
   def test_traiter_zero_imports
