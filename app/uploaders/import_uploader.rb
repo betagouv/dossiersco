@@ -1,4 +1,4 @@
-class FichierUploader < CarrierWave::Uploader::Base
+class ImportUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
@@ -9,7 +9,7 @@ class FichierUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "uploads/#{model.nom_etablissement}/#{model.class.to_s.underscore}/#{model.dossier_eleve.eleve.nom}/"
+    "uploads/imports/"
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:

@@ -3,9 +3,9 @@ class TacheImportsController < ApplicationController
   layout 'agent'
 
   def create
-    tempfile = tache_import_params[:fichier].tempfile
+    tache_import = TacheImport.create!(tache_import_params.merge(etablissement: agent_connecté.etablissement))
+    TraiterImportsJob.perform_later tache_import.id
 
-    import_xls tempfile, agent_connecté.etablissement.id
     redirect_to '/agent/import_siecle'
   end
 

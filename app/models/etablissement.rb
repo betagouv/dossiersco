@@ -1,9 +1,9 @@
 class Etablissement < ActiveRecord::Base
-  has_many :dossier_eleve
-  has_many :agent
-  has_many :tache_import
-  has_many :piece_attendue
-  has_many :modele
+  has_many :dossier_eleve, dependent: :destroy
+  has_many :agent, dependent: :destroy
+  has_many :tache_import, dependent: :destroy
+  has_many :piece_attendue, dependent: :destroy
+  has_many :modele, dependent: :destroy
 
   validates :code_postal, length: { is: 5 }, numericality: { only_integer: true }, allow_nil: true
 
