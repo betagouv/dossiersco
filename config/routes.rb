@@ -81,8 +81,6 @@ Rails.application.routes.draw do
 
   post '/agent/valider_plusieurs_dossiers', to: 'inscriptions#valider_plusieurs_dossiers'
 
-  get '/agent/options', to: 'inscriptions#options'
-
   get '/agent/convocations', to: 'inscriptions#convocations'
 
   get '/agent/deconnexion', to: 'inscriptions#deconnexion'

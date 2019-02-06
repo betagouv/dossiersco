@@ -51,9 +51,6 @@
           <li class="nav-item <%= 'active' if request.fullpath.include? '/liste_des_eleves' %>">
             <%= link_to 'Liste des élèves', agent_liste_des_eleves_path, {class: 'nav-link'} %>
           </li>
-          <li class="nav-item <%= 'active' if request.fullpath.include? '/options' %>">
-            <%= link_to 'Options', agent_options_path, {class: 'nav-link'} %>
-          </li>
           <li class="nav-item <%= 'active' if request.fullpath.include? '/convocations' %>">
             <%= link_to 'Convocations', agent_convocations_path, {class: 'nav-link'} %>
           </li>
