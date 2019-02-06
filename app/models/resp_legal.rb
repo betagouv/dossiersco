@@ -1,10 +1,6 @@
 class RespLegal < ActiveRecord::Base
   belongs_to :dossier_eleve
 
-  validates :adresse_ant, presence: true, if: :adresse?
-  validates :ville_ant, presence: true, if: :ville?
-  validates :code_postal_ant, presence: true, if: :code_postal?
-
   def meme_adresse autre_resp_legal
     return false if autre_resp_legal.nil?
     meme_adresse = true

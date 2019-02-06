@@ -6,18 +6,6 @@ class RespLegalTest < ActiveSupport::TestCase
     assert Fabricate.build(:resp_legal).valid?
   end
 
-  def test_responsable_legal_invalide_si_une_adresse_ant_vide
-    responsable_legal = Fabricate.build(:resp_legal)
-    responsable_legal.adresse = "14 rue"
-    responsable_legal.adresse_ant = "14 rue"
-    responsable_legal.ville = "Paris"
-    responsable_legal.ville_ant = "Paris"
-    responsable_legal.code_postal = "75012"
-    responsable_legal.code_postal_ant = nil
-    assert responsable_legal.invalid?
-    assert_equal ["ne peut être vide"], responsable_legal.errors[:code_postal_ant]
-  end
-
   def test_detection_adresses_identiques_cas_degenere
     assert RespLegal.new.adresse_inchangee
   end
@@ -46,8 +34,6 @@ class RespLegalTest < ActiveSupport::TestCase
   def test_adresse_inchangee_si_ancienne_vide
     responsable_legal = RespLegal.new adresse: '42 rue', code_postal: '75020', ville: 'Paris', adresse_ant: nil, ville_ant: nil, code_postal_ant: nil
     assert responsable_legal.adresse_inchangee
-
   end
-
 end
 

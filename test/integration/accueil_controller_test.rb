@@ -234,24 +234,6 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Famille : Responsable légal 1", doc.css("body > main > div.col-12 > h2").text
   end
 
-  def test_affichage_des_options_choisis_sur_la_page_validation
-    eleve = Eleve.create(identifiant: 'XXX', date_naiss: '1970-01-01', niveau_classe_ant: '3')
-    etablissement = Etablissement.create(nom: 'college test')
-    dossier_eleve = DossierEleve.create(eleve_id: eleve.id, etablissement_id: etablissement.id)
-    eleve.option << Option.create(nom: 'anglais', groupe: 'LV1')
-    option_choisie = Option.create(nom: 'grec', groupe: 'LCA')
-    demande = Demande.create(option_id: option_choisie.id, eleve_id: eleve.id)
-    option_abandonnee = Option.create(nom: 'latin', groupe: 'LCA')
-    abandon = Abandon.create(option_id: option_abandonnee.id, eleve_id: eleve.id)
-
-    post '/identification', params: {identifiant: 'xxx', annee: '1970', mois: '01', jour: '01'}
-    get '/validation'
-
-    assert response.parsed_body.include? 'anglais'
-    assert response.parsed_body.include? "<strong>grec</strong>"
-    assert response.parsed_body.include? "<strong>latin</strong>"
-  end
-
   def test_une_famille_remplit_letape_administration
     post '/identification', params: { identifiant: '2', annee: '1915', mois: '12', jour: '19' }
     get '/administration'
