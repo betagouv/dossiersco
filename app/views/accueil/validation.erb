@@ -13,24 +13,13 @@
 
 	<div class="card">
 		<div class="card-body">
-			<% eleve.demande.each do |demande| %>
+			<% dossier_eleve.options_pedagogiques.each do |option| %>
 				<div class="row mb-2">
-          <div class="col-7"><%= t('.demande_option') %> <strong><%= demande.option.nom %></strong>
+          <div class="col-7"><%= t('.demande_option') %> <strong><%= option.nom %></strong>
 					</div>
 					<div class="col-3">
-						<a id='modifier-<%=demande.option.nom%>' href="/eleve">
+						<a id='modifier-<%= option.nom %>' href="/eleve">
 							<div class="btn btn-outline-secondary btn-sm">Modifier</div>
-						</a>
-					</div>
-				</div>
-			<% end %>
-			<% eleve.abandon.each do |abandon| %>
-				<div class="row mb-2">
-          <div class="col-7"><%= t('.abandon_option') %> <strong><%= abandon.option.nom %></strong>
-					</div>
-					<div class="col-3">
-						<a id='modifier-<%=abandon.option.nom%>' href="/eleve">
-              <div class="btn btn-outline-secondary btn-sm"><%= t('.modifier') %></div>
 						</a>
 					</div>
 				</div>
