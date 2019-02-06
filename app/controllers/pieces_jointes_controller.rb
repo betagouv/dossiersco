@@ -4,8 +4,7 @@ class PiecesJointesController < ApplicationController
   before_action :retrouve_piece_jointe, only: [:update, :valider, :refuser]
 
   def create
-    PieceJointe.create!(piece_jointe_params.merge(dossier_eleve: @eleve.dossier_eleve))
-    piece_jointe.soumet!
+    PieceJointe.create!(piece_jointe_params.merge(dossier_eleve: @eleve.dossier_eleve, etat: PieceJointe::ETATS[:soumis]))
     redirect_to '/pieces_a_joindre'
   end
 
