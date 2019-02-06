@@ -4,6 +4,7 @@ class DossiersAffelnetController < ApplicationController
   before_action :identification_agent
 
   def create
+    if params[:fichier].present?
     DossierAffelnet.where(etablissement: agent_connecté.etablissement).destroy_all
     tempfile = params[:fichier].tempfile
     @nom_fichier = params[:fichier].original_filename
@@ -25,6 +26,10 @@ class DossiersAffelnetController < ApplicationController
     end
     @nombre_de_lignes = DossierAffelnet.where(etablissement: agent_connecté.etablissement).count
     render :traitement_import
+    else
+      flash[:alert] = t('inscriptions.import_siecle.fichier_manquant')
+      redirect_to agent_import_siecle_path
+    end
   end
 
   def traiter
