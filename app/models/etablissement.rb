@@ -6,6 +6,7 @@ class Etablissement < ActiveRecord::Base
   has_many :modele, dependent: :destroy
 
   validates :code_postal, length: { is: 5 }, numericality: { only_integer: true }, allow_nil: true
+  validates :uai, presence: true
 
   def classes
     dossier_eleve.collect(&:eleve).collect(&:classe_ant).reject(&:nil?).uniq
