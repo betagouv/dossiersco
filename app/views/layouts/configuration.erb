@@ -30,28 +30,73 @@
 
   <body>
 
-  <%= render partial: 'partials/navbar_espaces_agent', locals: {espace_courant: 'Configuration',
-                                                                lien_espace_courant: configuration_path,
-                                                                autre_espace: 'Suivi des dossiers',
-                                                                lien_autre_espace: agent_tableau_de_bord_path} %>
+    <header class="navbar navbar-expand-lg navbar-light bg-white">
+      <div class="navbar-logo">
+        <%= link_to root_path do %>
+          <img src='/images/republique_francaise.svg' class='logo'>
+          <span class="navbar-brand" >DossierSCO</span>
+        <% end %>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
 
-    <nav class="menu-agents container navbar navbar-expand-lg navbar-light bg-white">
+      <div class="collapse navbar-collapse navbar-links" id="navbarSupportedContent">
         <ul class="navbar-nav">
-          <li class="nav-item <%= 'active' if request.fullpath == '/options_pedagogiques' %>">
-            <%= link_to 'Options pédagogiques', options_pedagogiques_path, {class: 'nav-link'} %>
-          </li>
-          <li class="nav-item <%= 'active' if request.fullpath.include? '/mef' %>">
-            <%= link_to 'MEF', configuration_mef_index_path, {class: 'nav-link'} %>
-          </li>
-          <li class="nav-item <%= 'active' if request.fullpath.include? '/agent' %>">
-            <%= link_to 'Agents', configuration_agents_path, {class: 'nav-link'} %>
-          </li>
-          <% if super_admin?(@agent_connecté.identifiant) %>
-            <li class="nav-item <%= 'active' if request.fullpath.include? '/etablissement' %>">
-              <%= link_to 'Etablissement', configuration_etablissements_path, {class: 'nav-link'} %>
+          <% unless @agent_connecté.nil? %>
+            <% if @agent_connecté.admin? %>
+              <li class="nav-item">
+                <%= link_to t('.suivi_inscription'), agent_tableau_de_bord_path, {class: 'nav-link'}%>
+              </li>
+            <% end %>
+            <% if super_admin?(@agent_connecté.identifiant) %>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                                                                                               aria-haspopup="true" aria-expanded="false">
+                  <%= @agent_connecté.etablissement.nom %>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <% Etablissement.all.each do |etablissement| %>
+                    <%= link_to "#{etablissement.nom} (#{etablissement.departement})", changer_etablissement_configuration_agent_path(@agent_connecté, etablissement: etablissement), {method: :post, class: 'dropdown-item'} %>
+                  <% end %>
+                </div>
+              </li>
+            <% else %>
+              <li class="nav-item">
+                <span class="nav-link"><%= @agent_connecté.etablissement.nom %></span>
+              </li>
+            <% end %>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                                                                                             aria-haspopup="true" aria-expanded="false">
+                <%= @agent_connecté.identifiant %>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <%= link_to "Se déconnecter", agent_deconnexion_path, {class: "dropdown-item"} %>
+              </div>
             </li>
           <% end %>
         </ul>
+      </div>
+    </header>
+
+    <nav class="menu-agents navbar navbar-expand-lg navbar-light bg-white">
+      <ul class="navbar-nav">
+        <li class="nav-item <%= 'active' if request.fullpath == '/options_pedagogiques' %>">
+          <%= link_to 'Options pédagogiques', options_pedagogiques_path, {class: 'nav-link'} %>
+        </li>
+        <li class="nav-item <%= 'active' if request.fullpath.include? '/mef' %>">
+          <%= link_to 'MEF', configuration_mef_index_path, {class: 'nav-link'} %>
+        </li>
+        <li class="nav-item <%= 'active' if request.fullpath.include? '/agent' %>">
+          <%= link_to 'Agents', configuration_agents_path, {class: 'nav-link'} %>
+        </li>
+        <% if super_admin?(@agent_connecté.identifiant) %>
+          <li class="nav-item <%= 'active' if request.fullpath.include? '/etablissement' %>">
+            <%= link_to 'Etablissement', configuration_etablissements_path, {class: 'nav-link'} %>
+          </li>
+        <% end %>
+      </ul>
     </nav>
     <main role="main" class="container my-5">
 

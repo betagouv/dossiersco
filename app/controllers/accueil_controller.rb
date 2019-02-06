@@ -4,6 +4,7 @@ class AccueilController < ApplicationController
   before_action :retrouve_élève_connecté, except: [:index, :identification, :stats]
 
   def index
+    render layout: 'connexion'
   end
 
   def identification

@@ -11,6 +11,11 @@ fr:
           attributes:
             code_postal_ant:
               blank: "ne peut être vide"
+  layouts:
+    agent:
+      configuration: "Configuration"
+    configuration:
+      suivi_inscription: "Suivi des inscriptions"
   partials:
     navigation:
       eleve: Elève
