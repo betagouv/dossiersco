@@ -3,12 +3,6 @@
     <h2 class="card-header">Import depuis siecle</h2>
     <div class="card-body p-3">
 
-      <% if flash[:notice] %>
-        <div class="alert alert-success" role="alert">
-          <%= flash[:notice]  %>
-        </div>
-      <% end %>
-
       <% if @tache.statut != 'en_attente' && @tache.statut != 'en_cours' %>
         <%= form_for TacheImport.new, multipart: true do |form| %>
           <p class="card-text">Sélectionnez un fichier au format xls</p>

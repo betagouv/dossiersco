@@ -3,9 +3,13 @@ class TacheImportsController < ApplicationController
   layout 'agent'
 
   def create
-    tache_import = TacheImport.create!(tache_import_params.merge(etablissement: agent_connecté.etablissement))
-    TraiterImportsJob.perform_later tache_import.id
-    flash[:notice] = t('inscriptions.import_siecle.message_de_succes')
+    if params[:tache_import].present?
+      tache_import = TacheImport.create(tache_import_params.merge(etablissement: agent_connecté.etablissement))
+      TraiterImportsJob.perform_later tache_import.id
+      flash[:notice] = t('inscriptions.import_siecle.message_de_succes')
+    else
+      flash[:alert] = t('inscriptions.import_siecle.fichier_manquant')
+    end
     redirect_to agent_import_siecle_path
   end
 

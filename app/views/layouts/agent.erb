@@ -63,15 +63,25 @@
 
     <main role="main" class="container my-5">
 
-    <div class="row row-offcanvas row-offcanvas-right justify-content-center">
-
-      <% if (defined? message_info) && (!message_info.nil?) %>
-        <div class="message_de_succes"><%= message_info %></div>
+      <% if flash[:notice] %>
+        <div class="alert alert-success" role="alert">
+          <%= flash[:notice]  %>
+        </div>
+      <% elsif flash[:alert] %>
+        <div class="alert alert-danger" role="alert">
+          <%= flash[:alert]  %>
+        </div>
       <% end %>
+      <div class="row row-offcanvas row-offcanvas-right justify-content-center">
 
-      <%= yield %>
 
-    </div><!--/row-->
+        <% if (defined? message_info) && (!message_info.nil?) %>
+          <div class="alert alert-success"><%= message_info %></div>
+        <% end %>
+
+        <%= yield %>
+
+      </div><!--/row-->
 
     </main><!--/.container-->
 

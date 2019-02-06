@@ -141,3 +141,4 @@ fr:
   inscriptions:
     import_siecle:
       message_de_succes: "L'import est en cours, un email va vous être envoyé quand il sera terminé"
+      fichier_manquant: "Vous n'avez pas indiqué de fichier à importer"
