@@ -86,20 +86,97 @@
 
   <ul class="nav nav-tabs" id="eleveTabs" role="tablist">
     <li class="nav-item">
-      <a class="nav-link active" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="true">Contact</a>
+      <a class="nav-link active" id="dossier-tab" data-toggle="tab" href="#dossier" role="tab" aria-controls="dossier" aria-selected="true">Dossier</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" id="echanges-tab" data-toggle="tab" href="#echanges" role="tab" aria-controls="echanges" aria-selected="false">Echanges</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" id="dossier-tab" data-toggle="tab" href="#dossier" role="tab" aria-controls="dossier" aria-selected="false">Dossier</a>
     </li>
   </ul>
 
   <div class="tab-content" id="eleveTabsContent">
 
+    <!-- Dossier -->
+    <div class="tab-pane fade show active" id="dossier" role="tabpanel" aria-labelledby="dossier-tab">
+
+      <h2 class="separation mt-3">Pieces jointes de l'élève <%= dossier_eleve.eleve.prenom %> <%= dossier_eleve.eleve.nom %></h2>
+
+      <div class="card-deck row">
+        <% @pieces_jointes.each do |piece| %>
+          <div class="col-12 col-md-6 mb-4">
+            <div class="card <%= piece.etat if piece.present? %>">
+              <h5 class="card-header"><%= '*' if piece.obligatoire %> <%= piece.nom %></h5>
+              <div class="card-body">
+                <p class="card-text"><%= piece.explication %></p>
+                <p class="card-text etat-piece-jointe"><%= t(".document_#{piece.etat}") if piece.etat.present?  %></p>
+                <div class="card-relat document">
+                  <%= form_for [:agent, piece], multipart: true, html: { class: "forms" } do |form| %>
+                    <% if piece.fichier.url.present? %>
+                      <% if piece.fichier.content_type.start_with?("image/") %>
+                        <%= image_tag(piece.fichier.url, alt:"preview piece jointe") %>
+                      <% else %>
+                        <%= link_to t('.voir_piece_jointe'), piece.fichier.url %>
+                      <% end %>
+                    <% end %>
+                    <%= form.hidden_field :piece_attendue_id %>
+                    <%= hidden_field_tag :eleve_id, params[:identifiant] %>
+                    <%= form.file_field :fichier, data: { btnClass: "btn btn-primary", text: "Parcourir"}, class: "filestyle" %>
+                    <button class="soumettre d-none" type="submit">Soumettre</button>
+                  <% end %>
+                  <br />
+                </div>
+                <% if piece.id.present? %>
+                  <%= link_to t('.valider'), valider_piece_jointe_path(piece, identifiant: params[:identifiant]),
+                              method: :put, class: "btn btn-success" %>
+                  <%= link_to t('.refuser'), refuser_piece_jointe_path(piece, identifiant: params[:identifiant]),
+                              method: :put, class: "btn btn-danger" %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <%= render partial: 'partials/image_box' %>
+
+      <script type="text/javascript" src="/js/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js"> </script>
+      <script>
+        $(document).ready(function() {
+          $('input[type=file]')[0].focus();
+
+          $('.forms').change(function() {
+            var data = $(this).serialize()
+            $(this).find( ".soumettre" ).click()
+            $("button[type='submit']").attr("disabled", "disabled").addClass('disabled')
+          })
+        });
+      </script>
+
+
+
+      <h2 class="separation mt-3">Instruction du dossier</h2>
+      <div class="d-flex justify-content-center align-items-center" style='text-align: center; width:100%'>
+        <form action='/agent/valider_inscription' method='POST'>
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+          <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
+          <button class="btn btn-lg btn-primary mr-2  <%= 'disabled' if dossier_eleve.etat == 'validé'%>"
+                  id="bouton-validation-inscription" type='submit'
+                  <%= 'disabled' if dossier_eleve.etat == 'validé'%>>Valider l'inscription</button>
+        </form>
+        <form action='/agent/eleve_sortant' method='POST'>
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+          <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
+          <button class="btn btn-outline-primary ml-2 <%= 'disabled' if dossier_eleve.etat == 'sortant'%>"
+                  id="bouton-eleve-sortant" type='submit'  <%= 'disabled' if dossier_eleve.etat == 'sortant'%>>
+            Cet élève est sorti·e de l'établissement</button>
+        </form>
+      </div>
+    </div>
+
     <!-- Contact -->
-    <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
       <% resp_legal_2 = dossier_eleve.resp_legal_2 %>
 
       <%= raw(construire [{type: 'contact', contact: resp_legal_1}]) %>
@@ -201,27 +278,6 @@
       <% end %>
     </div>
 
-    <!-- Dossier -->
-    <div class="tab-pane fade" id="dossier" role="tabpanel" aria-labelledby="dossier-tab">
-      <%= render partial: 'partials/pieces_jointes_eleve', locals: { dossier_eleve: dossier_eleve, action: "/agent/pieces_jointes_eleve/#{dossier_eleve.eleve.identifiant}#pieces" } %>
-      <h2 class="separation mt-3">Instruction du dossier</h2>
-      <div class="d-flex justify-content-center align-items-center" style='text-align: center; width:100%'>
-        <form action='/agent/valider_inscription' method='POST'>
-          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-          <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
-          <button class="btn btn-lg btn-primary mr-2  <%= 'disabled' if dossier_eleve.etat == 'validé'%>"
-            id="bouton-validation-inscription" type='submit'
-            <%= 'disabled' if dossier_eleve.etat == 'validé'%>>Valider l'inscription</button>
-        </form>
-        <form action='/agent/eleve_sortant' method='POST'>
-          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-          <input type="hidden" name="identifiant" value="<%= eleve.identifiant %>" />
-          <button class="btn btn-outline-primary ml-2 <%= 'disabled' if dossier_eleve.etat == 'sortant'%>"
-            id="bouton-eleve-sortant" type='submit'  <%= 'disabled' if dossier_eleve.etat == 'sortant'%>>
-            Cet élève est sorti·e de l'établissement</button>
-        </form>
-      </div>
-    </div>
   </div>
 </div>
 

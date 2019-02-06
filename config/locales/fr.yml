@@ -23,8 +23,6 @@ fr:
       document_soumis: "Votre document est transmis à l'établissement."
       document_invalide: "Votre document ne peut pas être pris en compte par l'établissement pour cette inscription. Un courriel vient de vous être envoyé. Merci de prendre connaissance de ce message et nous fournir une nouvelle version de ce document."
       document_valide: "Votre document a été examiné et approuvé par l'établissement."
-    pieces_jointes_eleve:
-      <<: *pieces_jointes
 
   dossiers_affelnet:
     traitement_import:
@@ -139,6 +137,10 @@ fr:
       edit:
         titre: "Modifier un établissement"
   inscriptions:
+    eleve:
+      <<: *pieces_jointes
+      valider: "Valider"
+      refuser: "Refuser"
     import_siecle:
       message_de_succes: "L'import est en cours, un email va vous être envoyé quand il sera terminé"
       fichier_manquant: "Vous n'avez pas indiqué de fichier à importer"

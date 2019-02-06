@@ -65,12 +65,6 @@ class InscriptionsController < ApplicationController
     head :ok
   end
 
-  def change_etat_fichier
-    piece = PieceJointe.find(params[:id])
-    piece.update(etat: params[:etat])
-    head :ok
-  end
-
   def eleve
     eleve = Eleve.find_by(identifiant: params[:identifiant])
     dossier_eleve = eleve.dossier_eleve

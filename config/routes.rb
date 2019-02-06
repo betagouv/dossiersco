@@ -16,7 +16,12 @@ Rails.application.routes.draw do
       end
     end
   end
-  resources :pieces_jointes,       only: [:create, :update]
+  resources :pieces_jointes, only: [:create, :update] do
+    member do
+      put 'valider'
+      put 'refuser'
+    end
+  end
   resources :agent_pieces_jointes, only: [:create, :update]
   resources :tache_imports, only: [:create]
 
@@ -59,8 +64,6 @@ Rails.application.routes.draw do
   get '/agent/import_siecle', to: 'inscriptions#new_import_siecle'
 
   get '/api/traiter_imports', to: 'inscriptions#declenche_traiter_imports'
-
-  post '/agent/change_etat_fichier', to: 'inscriptions#change_etat_fichier'
 
   get '/agent/eleve/:identifiant', to: 'inscriptions#eleve'
 
