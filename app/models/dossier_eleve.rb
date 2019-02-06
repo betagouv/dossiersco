@@ -18,6 +18,13 @@ class DossierEleve < ActiveRecord::Base
 
   has_and_belongs_to_many :options_pedagogiques
 
+  scope :pour, -> (etablissement) do
+    where(etablissement: etablissement)
+  end
+
+  scope :a_convoquer, -> do
+    where('etat in (?)', ['pas connecté', 'connecté'])
+  end
 
   def pieces_jointes
     etablissement.piece_attendue.map do |piece_attendue|

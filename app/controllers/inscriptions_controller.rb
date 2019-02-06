@@ -197,12 +197,8 @@ class InscriptionsController < ApplicationController
 
   def convocations
     etablissement = agent_connecté.etablissement
-    eleves = Eleve.all.select do |e|
-      d = e.dossier_eleve
-      d.etablissement_id == etablissement.id && (d.etat == 'pas connecté' || d.etat == 'connecté')
-    end
-
-    render :convocations, locals: {agent: agent_connecté,etablissement: etablissement, eleves: eleves}
+    eleves = DossierEleve.pour(etablissement).a_convoquer.map(&:eleve)
+    render :convocations, locals: {agent: agent_connecté, etablissement: etablissement, eleves: eleves}
   end
 
   def deconnexion

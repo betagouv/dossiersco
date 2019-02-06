@@ -47,6 +47,16 @@ class DossierEleveTest < ActiveSupport::TestCase
 
     assert_not dossier_eleve.pieces_manquantes?
     assert_equal [], dossier_eleve.pieces_manquantes
-
   end
+
+  test "#a_convoquer renvoie la liste des élèves à convoquer sur dossiersco" do
+    etablissement = Fabricate(:etablissement)
+    eleve_jamais_connecte = Fabricate(:dossier_eleve, etat: 'pas connecté', etablissement: etablissement)
+    eleve_connecte = Fabricate(:dossier_eleve, etat: 'connecté', etablissement: etablissement)
+    Fabricate(:dossier_eleve, etat: 'en attente', etablissement: etablissement)
+    Fabricate(:dossier_eleve, etat: 'validé', etablissement: etablissement)
+
+    assert_equal [eleve_jamais_connecte, eleve_connecte].sort, DossierEleve.pour(etablissement).a_convoquer.sort
+  end
+
 end
