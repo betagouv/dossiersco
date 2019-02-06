@@ -5,8 +5,7 @@ class InscriptionsController < ApplicationController
   layout 'agent'
 
   def agent
-    @cacher_navbar = true
-    render :identification
+    render :identification, layout: 'connexion'
   end
 
   def post_agent
