@@ -332,6 +332,10 @@ h2, h4 {
     border: 2px dashed #00bf00;
 }
 
+.link-to-eleve {
+    cursor: pointer;
+}
+
 /*modal*/
 .modal-dialog {
     height: 90vh;
