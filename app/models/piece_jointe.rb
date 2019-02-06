@@ -6,11 +6,27 @@ class PieceJointe < ActiveRecord::Base
 
   mount_uploader :fichier, FichierUploader
 
+  ETATS = { soumis: 'soumis', valide: 'valide', invalide: 'invalide' }
+
+  validates :etat, inclusion: { in: ETATS.values }
+
   def ext
     self.clef.match(/(\w+$)/im)[1].downcase
   end
 
   def nom_etablissement
     dossier_eleve.etablissement.nom
+  end
+
+  def valide!
+    update!(etat: ETATS[:valide])
+  end
+
+  def invalide!
+    update!(etat: ETATS[:invalide])
+  end
+
+  def soumet!
+    update!(etat: ETATS[:soumis])
   end
 end
