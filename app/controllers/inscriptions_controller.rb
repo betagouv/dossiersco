@@ -202,19 +202,6 @@ class InscriptionsController < ApplicationController
     redirect_to '/agent/liste_des_eleves'
   end
 
-  def options
-    etablissement = agent_connecté.etablissement
-    eleves_par_classe = DossierEleve.where(etablissement_id: etablissement.id).collect(&:eleve).group_by(&:niveau_classe_ant)
-    eleves = Eleve.all.select {|e| e.dossier_eleve.etablissement_id == etablissement.id && e.dossier_eleve.etat != 'sortant'}
-    nb_max_options = 0
-    eleves.each do |e|
-      nb_max_options = e.options_apres_montee.count if e.options_apres_montee.count > nb_max_options
-    end
-
-    render :options, locals: {agent: agent_connecté,etablissement: etablissement, eleves_par_classe: eleves_par_classe,
-                                   eleves: eleves, nb_max_options: nb_max_options}
-  end
-
   def convocations
     etablissement = agent_connecté.etablissement
     eleves = Eleve.all.select do |e|
