@@ -20,16 +20,15 @@
     </tr></thead>
     <tbody>
       <% lignes_eleves.each do |ligne_eleve| %>
-        <% cliquable = "class='clickable-row' data-href='/agent/eleve/#{ligne_eleve.identifiant}'" %>
-        <tr id="<%= ligne_eleve.id %>" style='cursor:pointer'>
+        <tr data-eleve-id="<%= ligne_eleve.identifiant %>" class='link-to-eleve'>
           <td></td>
           <td><%= ligne_eleve.dossier_id %></td>
-          <td <%= cliquable %> ><%= ligne_eleve.classe_ant %></td>
-          <td <%= cliquable %> ><%= ligne_eleve.prenom %></td>
-          <td <%= cliquable %> ><%= ligne_eleve.nom %></td>
-          <td <%= cliquable %> ><%= ligne_eleve.etat %></td>
+          <td><%= ligne_eleve.classe_ant %></td>
+          <td><%= ligne_eleve.prenom %></td>
+          <td><%= ligne_eleve.nom %></td>
+          <td><%= ligne_eleve.etat %></td>
           <td><%= ligne_eleve.dossier_maj.to_datetime.localtime.strftime("%Y/%m/%d %H:%M ") %></td>
-          <td <%= cliquable %> >
+          <td>
             <% rl = RespLegal.new(
               adresse: ligne_eleve.adresse,
               ville: ligne_eleve.ville,
@@ -39,7 +38,7 @@
               code_postal_ant: ligne_eleve.code_postal_ant) %>
             <%= rl.adresse_inchangee ? "" : "✓" %>
         </td>
-          <td <%= cliquable %> >
+          <td>
             <%= ligne_eleve.demi_pensionnaire ? "✓" : "" %>
           </td>
           <td>
@@ -79,6 +78,12 @@
     })
   })
   jQuery(document).ready(function($) {
+    $(".link-to-eleve").click(function (event) {
+      var href = "/agent/eleve/" + $(this).data("eleve-id")
+      if (event.metaKey) { window.open(href, '_blank') }
+      else { window.location.replace(href) }
+      
+    })
     $(".clickable-row").click(function(event) {
       var href = $(this).data("href")
       if (event.metaKey) { window.open(href, '_blank') }
