@@ -28,4 +28,9 @@ class ApplicationHelperTest < ActionDispatch::IntegrationTest
     assert ! super_admin?('Pascal')
   end
 
+  test "super_admin? renvoie true sur un deuxième super admin" do
+    ENV['SUPER_ADMIN'] = "Henri, Lucien"
+    assert super_admin?('Lucien')
+  end
+
 end
