@@ -52,20 +52,6 @@ jobs:
             bundle exec rake test
             bundle exec rake test:system
 
-  deploy-demo:
-    docker:
-      - image: buildpack-deps:trusty
-    steps:
-      - checkout
-      - run:
-          name: Add Scalingo to known hosts
-          environment:
-            SCALINGO_HOST_KEY: "|1|rCJ9j3/S2ovJX0u5+rSaRdcJFNs=|ZZCIj5S3sESR0XvaYt21rHQuSXg= ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDfQUeQtFdEpELjbpiCvY7Y+ASBJBrII7cB9FG+HC7TuEGQ6TdLaUb1maYeUS4mcmEUGhDUF7pblD0LOKYJOdochygbRI+kHq9ImrbpQzYLarwdY//MuqtmOYp7g/lyNcQxRxkPyrN9cFSwj6ddLKUw3CdS3w5FABSmIC26Ykrc/vWzFeVElro4iwbNoaJRom50DRbipNV1zaatYqldG1zWpH7laD4Rtw3rgXUhA3D3rYk5SnEBPSGv3RIDxol+5t8as9ylPY5MIOiI5kPAGZBWgjMuSRvKZpJrhFU1PfMHljGdpBgC5kFRAfHolBJwsVvlZpkgj2SqV+rYzHtH/v/x"
-          command: echo $SCALINGO_HOST_KEY >> ~/.ssh/known_hosts
-      - run:
-          name: Deploy
-          command: git push -f git@scalingo.com:dossiersco-demo development:master
-
   deploy-production:
     docker:
       - image: buildpack-deps:trusty
