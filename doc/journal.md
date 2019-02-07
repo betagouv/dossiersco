@@ -9,7 +9,7 @@
 
 - On pourrait essayer de faire un autre format, attention à prévoir le temps de le faire.
 - Plutôt que d'utiliser mattermost, on va tenter Drift pour le support utilisateur.
-- Faire avancer la checklist de la bonne communauté  https://github.com/betagouv/dossiersco/community en commançant par un template issue.
+- Faire avancer la checklist de la bonne communauté  https://github.com/betagouv/dossiersco/community en commençant par un template issue.
 - Expliciter le regard du coach cette semaine
 - Changement de posture pour une attention plus forte sur l'opérationnel, pour les échanges politiques, nous allons nous appuyer sur nos alliées.
 - On commence à prendre l'habitude d'écrire un post-it pour organiser les digressions.
