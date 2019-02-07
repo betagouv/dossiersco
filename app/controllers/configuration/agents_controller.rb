@@ -45,7 +45,7 @@ module Configuration
 
     private
     def agent_params
-      params.require(:agent).permit(:identifiant, :prenom, :nom, :password, :etablissement_id, :admin)
+      params.require(:agent).permit(:identifiant, :prenom, :nom, :password, :etablissement_id, :admin, :email)
     end
 
     def cherche_agent

@@ -21,6 +21,7 @@ class ConfigurationTest < ActionDispatch::IntegrationTest
     attributs = Fabricate.attributes_for(:agent)
     fill_in "agent_identifiant", with: attributs[:identifiant]
     fill_in "agent_password", with: attributs[:password]
+    fill_in "agent_email", with: attributs[:email]
     click_button "valider"
 
     assert_selector "td", text: attributs[:identifiant]

@@ -3,4 +3,5 @@ class Agent < ActiveRecord::Base
   has_secure_password
 
   validates :identifiant, uniqueness: { case_sensitive: false }
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
 end
