@@ -9,7 +9,7 @@ class AgentsControllerTest < ActionDispatch::IntegrationTest
     identification_agent(admin)
 
     post configuration_agents_path, params: {agent: {identifiant: 'identifiant quelconque', password: 'password quelconque',
-                                       etablissement_id: etablissement.id}}
+                                       etablissement_id: etablissement.id, email: 'test@test.fr'}}
 
     assert_equal 1, Agent.where(identifiant: 'identifiant quelconque', etablissement_id: etablissement.id).count
   end

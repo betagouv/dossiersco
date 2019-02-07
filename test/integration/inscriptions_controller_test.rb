@@ -39,7 +39,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     doc = Nokogiri::HTML(response.body)
 
-    assert_match I18n.t('inscriptions.import_siecle.message_de_succes'), doc.css('.alert-success').text
+    assert_match I18n.t('inscriptions.import_siecle.message_de_succes', email: 'pierre@test.fr'), doc.css('.alert-success').text
   end
 
   def test_traiter_zero_imports

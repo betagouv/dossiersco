@@ -147,5 +147,5 @@ fr:
       valider: "Valider"
       refuser: "Refuser"
     import_siecle:
-      message_de_succes: "L'import est en cours, un email va vous être envoyé quand il sera terminé"
+      message_de_succes: "L'import est en cours, un email va être envoyé à l'adresse %{email} une fois l'import terminé"
       fichier_manquant: "Vous n'avez pas indiqué de fichier à importer"
