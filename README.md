@@ -11,7 +11,7 @@ Inscrire ses enfants au collège sans se déplacer, sans redonner d'information 
 
 - Vous pouvez nous retrouver chaque lundi et jeudi au [110bis Lab](http://www.education.gouv.fr/110bislab/pid37871/bienvenue-au-110-bis-le-lab-d-innovation-de-l-education-nationale.html) rue de Grenelle à Paris
 - Retrouvez notre [agenda public](https://calendar.google.com/calendar/embed?src=contact%40dossiersco.beta.gouv.fr&ctz=Europe%2FParis)
-- [Journal de l'équipe](https://github.com/betagouv/dossiersco/blob/master/doc/journal.md)
+- [Journal de l'équipe](https://github.com/betagouv/dossiersco/blob/production/doc/journal.md)
 
 ## Documentation
 
