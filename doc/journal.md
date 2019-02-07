@@ -1,6 +1,47 @@
 # Journal
 
 
+## Semaine du 1er au 7 février
+
+*Nous sommes heureux d'avoir ouvert la porte, nous attendons les établissements*
+
+### Vie de l'équipe
+
+- On pourrait essayer de faire un autre format, attention à prévoir le temps de le faire.
+- Plutôt que d'utiliser mattermost, on va tenter Drift pour le support utilisateur.
+- Faire avancer la checklist de la bonne communauté  https://github.com/betagouv/dossiersco/community en commançant par un template issue.
+- Expliciter le regard du coach cette semaine
+- Changement de posture pour une attention plus forte sur l'opérationnel, pour les échanges politiques, nous allons nous appuyer sur nos alliées.
+- On commence à prendre l'habitude d'écrire un post-it pour organiser les digressions.
+- Pierre utilise le git de keybase pour les notes discrètes
+- On continue à tourner toutes les 25 minutes au clavier, ça apporte du rythme.
+- La priorisation du backlog, pour choisir le travail de la semaine, était tourné uniquement vers les bug
+- Nous avons commencé une carte d'histoire des utilisateurs et utilisatrices du dernier conseil de classe à la constitution des emplois du temps de rentrée. C'est un travail qui nous aidera à : 
+    - prioriser le backlog
+    - faire une roadmap
+    - faire des annonces
+- On fait un peu plus équipe avec le lab 110bis, et c'est vraiment chouette.
+- Nous sommes alignés sur le fait de monter rapidement un kickoff
+- Nous sommes en production, d'ailleurs on a décidé de n'avoir qu'un environnement de production (la démo est supprimée) https://dossiersco.beta.gouv.fr.
+
+> Le temps n'est pas une variable d'ajustement
+
+
+### Code
+
+
+
+### Intraprenariat
+
+- Pierre et Christophe rendent visite au collège Oeben de Paris
+- Pierre a noué des contacts très intéressant avec des académies grace au dispositif mis en place par le lab 110Bis lors de la réunion mensuelle des recteurs.
+
+> Le service en ligne d'inscription des collégiens qui transforme une campagne de masse en accueil individualisé des familles.
+
+
+---
+
+
 ## Semaine du 25 au 31 janvier
 
 *On maintient la porte entre-fermée aux personnes utilisatrices, et on a hâte de l'ouvrir*
