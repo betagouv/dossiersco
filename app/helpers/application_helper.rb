@@ -10,6 +10,6 @@ module ApplicationHelper
     env_super_admin = ENV['SUPER_ADMIN']
     env_super_admin ||= ""
     identifiant ||= ""
-    env_super_admin.upcase.split(',').include?(identifiant.upcase)
+    env_super_admin.upcase.split(',').map(&:strip).include?(identifiant.upcase)
   end
 end
