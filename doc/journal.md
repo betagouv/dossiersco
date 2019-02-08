@@ -29,12 +29,37 @@
 
 ### Code
 
+- [Echec de l'import de la base élèves du collège test PILATRE](https://github.com/betagouv/dossiersco/issues/321)
+- [Voir la pièce jointe : fonctionne avec une image, pas un pdf](https://github.com/betagouv/dossiersco/issues/313)
+- [ajouter un layout login (pour inscription et agent)](https://github.com/betagouv/dossiersco/issues/331)
+- [Identifier chaque établissement de manière unique](https://github.com/betagouv/dossiersco/issues/310)
+- [Interface famille, Avis d'imposition, voir la pièce jointe : message d'erreur](https://github.com/betagouv/dossiersco/issues/314)
+- [Impossible d'uploader une pièce jointe](https://github.com/betagouv/dossiersco/issues/302)
+- [Ecran "Elève en cours de traitement" pas responsive : on ne voit pas la colonne "attestation d'assurance"](https://github.com/betagouv/dossiersco/issues/316)
+- [Zéro option pédagogique apparait sur test Arago, écran élève](https://github.com/betagouv/dossiersco/issues/315)
+- [Erreur 500 lorsqu'on fait un import siecle sans indiquer un fichier](https://github.com/betagouv/dossiersco/issues/318)
+- [Erreur 500 lorsqu'on fait un import affelnet sans indiquer un fichier](https://github.com/betagouv/dossiersco/issues/317)
+- [Application Timeout : message après clic sur https://demo.dossiersco.beta.gouv.fr/agent/options](https://github.com/betagouv/dossiersco/issues/309)
+- [Supprimer l'ancienne colonne clef dans pièce_jointes (une fois la nouvelle façon de gérer les upload en place)](https://github.com/betagouv/dossiersco/issues/265)
+- [upload direct d'un fichier d'import siecle crée un timeout en environnement de prod (démo compris)](https://github.com/betagouv/dossiersco/issues/291)
+- [récupérer les documents de prod de l'année dernière (sur s3)](https://github.com/betagouv/dossiersco/issues/256)
+- [Vérifier l'utilisation de rack_ssl_enforcer](https://github.com/betagouv/dossiersco/issues/188)
+- [Force l'accès à l'application en SSL](https://github.com/betagouv/dossiersco/issues/301)
+- [mettre en place https](https://github.com/betagouv/dossiersco/issues/269)
+- [Supprimer l'ancien fichier sur s3 quand on modifie une pièce jointe](https://github.com/betagouv/dossiersco/issues/168)
+- [Quand on modifie la 2e pièce jointe, c'est la première qui est remplacée, pas la 2e](https://github.com/betagouv/dossiersco/issues/290)
+- [Garantir le bon fonctionnement du processus d'inscription](https://github.com/betagouv/dossiersco/issues/287)
+- [mettre en place rubocop](https://github.com/betagouv/dossiersco/issues/262)
+- [Prise en compte de la configuration « obligatoire » de certaines pièces](https://github.com/betagouv/dossiersco/issues/228)
 
 
 ### Intraprenariat
 
 - Pierre et Christophe rendent visite au collège Oeben de Paris
 - Pierre a noué des contacts très intéressant avec des académies grace au dispositif mis en place par le lab 110Bis lors de la réunion mensuelle des recteurs.
+- OEBEN, collège testeur 2018, demande à revenir et veut tester une classe. Rdv mardi matin
+- Appeler Paul Le Flem
+- Appeler Jean Bertin
 
 > Le service en ligne d'inscription des collégiens qui transforme une campagne de masse en accueil individualisé des familles.
 
