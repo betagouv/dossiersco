@@ -15,7 +15,7 @@ Inscrire ses enfants au collège sans se déplacer, sans redonner d'information 
 
 ## Documentation
 
-- [L'histoire des décisions d'architecture](https://github.com/betagouv/dossiersco/tree/development/doc/architecture)
+- [L'histoire des décisions d'architecture](https://github.com/betagouv/dossiersco/tree/production/doc/architecture)
 - le [suivi du processus d'accueil des établissements beta-testeur](https://github.com/betagouv/dossiersco/projects/2)
 - le [suivi des travaux sur le projet](https://github.com/betagouv/dossiersco/projects/1)
 
