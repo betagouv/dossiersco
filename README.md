@@ -4,7 +4,7 @@
 
 Inscrire ses enfants au collège sans se déplacer, sans redonner d'information déjà connues et sans flux papier.
 
-[dossiersco.fr](http://dossiersco.fr/)
+[dossiersco.fr](https://dossiersco.fr/)
 
 ## Vie de l'équipe
 
