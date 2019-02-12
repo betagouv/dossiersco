@@ -3,7 +3,7 @@ module Configuration
     layout 'configuration'
 
     before_action :identification_agent
-    before_action :if_agent_is_admin
+    before_action :if_agent_is_admin, except: [:edit, :update]
     before_action :cherche_agent, only: [:edit, :update, :destroy]
 
     def new
@@ -22,10 +22,14 @@ module Configuration
     end
 
     def index
-      @agents = Agent.where(etablissement: agent_connecté.etablissement)
+      super_admins = ENV['SUPER_ADMIN'].present? ? ENV['SUPER_ADMIN'].gsub(' ', "").split(",") : ['']
+      @agents = Agent.where(etablissement: agent_connecté.etablissement).where.not("identifiant IN (?)", super_admins)
     end
 
     def edit
+      unless @agent == @agent_connecté || @agent_connecté.admin?
+        redirect_to agent_tableau_de_bord_path
+      end
     end
 
     def update
@@ -40,7 +44,7 @@ module Configuration
 
     def changer_etablissement
       @agent_connecté.update(etablissement_id: params[:etablissement])
-      redirect_back(fallback_location: agent_tableau_de_bord_path)
+      redirect_to agent_tableau_de_bord_path
     end
 
     private
