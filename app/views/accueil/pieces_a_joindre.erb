@@ -25,6 +25,12 @@
   </form>
 </div>
 
+<div id="modal-chargement" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-content d-flex align-items-center justify-content-center" role="document">
+    <%= t('.modal-chargement') %>
+  </div>
+</div>
+
 <%= render partial: 'partials/image_box' %>
 <script>
   $(document).ready(function() {
@@ -33,6 +39,7 @@
     $('.forms').change(function() {
       var data = $(this).serialize()
       $(this).find( ".soumettre" ).click()
+      $('#modal-chargement').show()
       $("button[type='submit']").attr("disabled", "disabled").addClass('disabled')
     })
   });
