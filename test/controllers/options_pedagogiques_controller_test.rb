@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class OptionsPedagogiquesControllerTest < ActionDispatch::IntegrationTest
@@ -5,16 +7,16 @@ class OptionsPedagogiquesControllerTest < ActionDispatch::IntegrationTest
     @option_pedagogique = Fabricate(:option_pedagogique)
   end
 
-  test "should get index" do
+  test 'should get index' do
     admin = Fabricate(:admin)
-    post agent_url, params: {identifiant: admin.identifiant, mot_de_passe: admin.password}
+    post agent_url, params: { identifiant: admin.identifiant, mot_de_passe: admin.password }
     follow_redirect!
 
     get options_pedagogiques_url
     assert_response :success
   end
 
-  test "should get new" do
+  test 'should get new' do
     admin = Fabricate(:admin)
     identification_agent(admin)
 
@@ -22,18 +24,18 @@ class OptionsPedagogiquesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should create option_pedagogique" do
+  test 'should create option_pedagogique' do
     admin = Fabricate(:admin)
     identification_agent(admin)
 
     assert_difference('OptionPedagogique.count') do
-      post options_pedagogiques_url, params: { option_pedagogique: { nom: "maçonnerie"  } }
+      post options_pedagogiques_url, params: { option_pedagogique: { nom: 'maçonnerie' } }
     end
 
     assert_redirected_to options_pedagogiques_url
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     admin = Fabricate(:admin)
     identification_agent(admin)
 
@@ -41,15 +43,15 @@ class OptionsPedagogiquesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should update option_pedagogique" do
+  test 'should update option_pedagogique' do
     admin = Fabricate(:admin)
     identification_agent(admin)
 
-    patch option_pedagogique_url(@option_pedagogique), params: { option_pedagogique: { nom: "couture" } }
+    patch option_pedagogique_url(@option_pedagogique), params: { option_pedagogique: { nom: 'couture' } }
     assert_redirected_to options_pedagogiques_url
   end
 
-  test "should destroy option_pedagogique" do
+  test 'should destroy option_pedagogique' do
     admin = Fabricate(:admin)
     identification_agent(admin)
 
