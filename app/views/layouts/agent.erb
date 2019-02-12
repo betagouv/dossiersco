@@ -72,6 +72,7 @@
                 <%= @agent_connecté.identifiant %>
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <%= link_to 'Mon profil', edit_configuration_agent_path(@agent_connecté), {class: "dropdown-item"} %>
                 <%= link_to "Se déconnecter", agent_deconnexion_path, {class: "dropdown-item"} %>
               </div>
             </li>

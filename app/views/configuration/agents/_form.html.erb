@@ -39,10 +39,12 @@
     </div>
   <% end %>
 
-  <div class="form-check">
-    <%= f.check_box :admin, class: 'form-check-input'%>
-    <%= f.label :admin, class: 'form-check-label' %>
-  </div>
+  <% if @agent_connecté.admin? %>
+    <div class="form-check">
+      <%= f.check_box :admin, class: 'form-check-input'%>
+      <%= f.label :admin, class: 'form-check-label' %>
+    </div>
+  <% end %>
   <div class="form-group">
     <%= f.submit 'valider', class: 'btn btn-primary my-3' %>
   </div>

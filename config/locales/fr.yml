@@ -135,7 +135,7 @@ fr:
       new:
         titre: "Créer un agent"
       edit:
-        titre: "Modifier un agent"
+        titre: "Mon profil"
     etablissements:
       new:
         titre: "Créer un établissement"

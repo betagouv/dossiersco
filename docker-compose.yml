@@ -19,7 +19,7 @@ services:
       RUBYOPT: -KU
       RAILS_ENV: development
       SESSION_SECRET: notreallysecret
-      SUPER_ADMIN: pierre, yannick
+      SUPER_ADMIN: pierre, yannick, lucien
     depends_on:
       - postgres
   test:

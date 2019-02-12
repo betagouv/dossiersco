@@ -40,4 +40,32 @@ class AgentsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to configuration_agents_path
     assert_equal Agent.find(agent.id).prenom, 'Ibrahima'
   end
+
+  test 'Un agent peu accéder à son profil' do
+    agent = Fabricate(:agent)
+
+    identification_agent(agent)
+    get edit_configuration_agent_path(agent)
+
+    assert_response :success
+  end
+
+  test "Un agent ne peut pas acceder à l'édition d'un autre agent" do
+    agent_un = Fabricate(:agent)
+    agent_deux = Fabricate(:agent)
+
+    identification_agent(agent_un)
+    get edit_configuration_agent_path(agent_deux)
+
+    assert_redirected_to agent_tableau_de_bord_path
+  end
+
+  test "Un agent modifie sont profil" do
+    agent = Fabricate(:agent)
+
+    identification_agent(agent)
+    patch configuration_agent_path(agent), params: { agent: { prenom: 'Lucien' } }
+
+    assert_equal Agent.find(agent.id).prenom, 'Lucien'
+  end
 end
