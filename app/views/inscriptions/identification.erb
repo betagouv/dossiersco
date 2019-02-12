@@ -1,32 +1,22 @@
-<div class="site-wrapper">
-
-  <div class="site-wrapper-inner">
-    <div class="padding">
-      <h1 class="text-center">Agent EPLE</h1>
-    </div>
-    <div class="cover-container">
-
-      <div class="container">
-
-        <form class="form-signin mx-auto" action="/agent" method="post">
-          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-
-          <% if session[:erreur_login] %>
-            <p class="erreur"><%= session[:erreur_login] %></p>
-            <% session.delete :erreur_login %>
-          <% end %>
-
-          <label class="col-form-label" for="formGroupExampleInput">Identifiant</label>
-          <input name="identifiant" type="text" class="form-control" id="formGroupExampleInput" placeholder="intendant.collegexyz@ac-paris.fr" autofocus>
-
-          <label class="col-form-label" for="mot-de-passe">Mot de passe</label>
-          <input name="mot_de_passe" type="password" class="form-control" id="mot-de-passe" >
-
-          <button class="btn btn-lg btn-primary btn-block mt-3">Connexion</button>
-
-        </form>
-
-      </div>
-    </div>
+  <div class="padding">
+    <h1 class="text-center">Agent EPLE</h1>
   </div>
-</div>
+    <div class="row">
+      <form class="form-signin col-md-4 col-12 mx-auto" action="/agent" method="post">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+        <% if session[:erreur_login] %>
+          <p class="erreur"><%= session[:erreur_login] %></p>
+          <% session.delete :erreur_login %>
+        <% end %>
+
+        <label class="col-form-label" for="formGroupExampleInput">Identifiant</label>
+        <input name="identifiant" type="text" class="form-control" id="formGroupExampleInput" placeholder="intendant.collegexyz@ac-paris.fr" autofocus>
+
+        <label class="col-form-label" for="mot-de-passe">Mot de passe</label>
+        <input name="mot_de_passe" type="password" class="form-control" id="mot-de-passe" >
+
+        <button class="btn btn-lg btn-primary btn-block mt-3">Connexion</button>
+
+      </form>
+    </div>
