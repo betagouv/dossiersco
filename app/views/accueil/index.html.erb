@@ -7,7 +7,7 @@
 
     <div class="container">
       <div class="row">
-        <form class="form-signin col-md-4 mx-auto" action="/identification" method="post">
+        <form class="form-signin col-md-4 col-12 mx-auto" action="/identification" method="post">
           <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
           <% if session[:message_erreur] %>
             <p class="erreur"><%= session[:message_erreur] %></p>
@@ -35,27 +35,3 @@
     </footer>
   </div>
 </div>
-
-<script>
-  var container = document.getElementsByClassName("date_form")[0];
-  var index_avancement = {'jour': 0, 'mois': 1, 'annee': 2};
-  var avancement_saisie = 0;
-  container.onkeyup = function(e) {
-    var target = e.srcElement;
-    var maxLength = parseInt(target.attributes["maxlength"].value, 10);
-    var longueurDejaTapee = target.value.length;
-    if (longueurDejaTapee >= maxLength
-      && index_avancement[target.name] == avancement_saisie) { // Retour en arrière
-      avancement_saisie++;
-      var next = target;
-      while (next = next.nextElementSibling) {
-        if (next == null)
-          break;
-        if (next.tagName.toLowerCase() == "input") {
-          next.focus();
-          break;
-        }
-      }
-    }
-  }
-</script>
