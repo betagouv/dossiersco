@@ -60,5 +60,6 @@ make console
 - On attrape toutes les erreurs sur [Sentry](https://sentry.io/betagouv-pe/rails/)
 - Sur les environnements de développement et staging les emails sortants sont envoyés
     avec [Letter Opener Web](https://github.com/ryanb/letter_opener). On peut les consulter à l'url '/letter_opener'
+- Envoie de SMS avec [NEXMO](https://www.nexmo.com/)
 
 
