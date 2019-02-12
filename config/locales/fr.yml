@@ -149,3 +149,4 @@ fr:
     import_siecle:
       message_de_succes: "L'import est en cours, un email va être envoyé à l'adresse %{email} une fois l'import terminé"
       fichier_manquant: "Vous n'avez pas indiqué de fichier à importer"
+      modal-chargement: "Votre fichier est en cours d'import. Merci de patienter"
