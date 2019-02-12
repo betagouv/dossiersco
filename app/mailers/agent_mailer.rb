@@ -60,4 +60,12 @@ class AgentMailer < ApplicationMailer
       format.text
     end
   end
+
+  def erreur_import(email)
+    mail(subject: "L'import de votre base élève a échoué",
+         reply_to: 'contact@dossiersco.beta.gouv.fr',
+         to: email) do |format|
+      format.text
+    end
+  end
 end

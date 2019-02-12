@@ -63,6 +63,12 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
   if ENV['laisser_partir_les_emails']
     config.action_mailer.delivery_method = :mailjet_api
+    config.action_mailer.default_options = {
+      delivery_method_options: {
+        api_key: ENV['MAILER_API_KEY'],
+        secret_key: ENV['MAILER_SECRET_KEY']
+      }
+    }
   else
     config.action_mailer.delivery_method = :letter_opener_web
   end
