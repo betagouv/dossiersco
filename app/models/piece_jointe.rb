@@ -15,7 +15,7 @@ class PieceJointe < ActiveRecord::Base
   end
 
   def nom_etablissement
-    dossier_eleve.etablissement.nom
+    dossier_eleve.etablissement.nom if dossier_eleve.etablissement
   end
 
   def valide!
