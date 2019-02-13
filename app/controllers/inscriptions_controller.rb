@@ -1,5 +1,3 @@
-require 'traitement'
-
 class InscriptionsController < ApplicationController
   before_action :identification_agent, except: [:post_agent, :agent]
   layout 'agent'
@@ -107,13 +105,6 @@ class InscriptionsController < ApplicationController
       render :piece_attendues,
           locals: {piece_attendues: etablissement.piece_attendue, agent: agent_connecté}
     end
-  end
-
-  def post_pdf
-    eleve = Eleve.find_by identifiant: params[:identifiant]
-    pdf = genere_pdf eleve
-    agent = Agent.find_by(identifiant: session[:identifiant])
-    send_data pdf.render, type: 'application/pdf', disposition: 'inline'
   end
 
   def valider_inscription
