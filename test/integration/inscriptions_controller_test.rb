@@ -2,7 +2,6 @@
 
 require 'test_helper'
 require 'fixtures'
-require 'import_siecle'
 init
 
 class InscriptionsControllerTest < ActionDispatch::IntegrationTest
@@ -35,45 +34,12 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
   def test_affiche_message_que_limport_est_en_cours
     post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
-    post '/tache_imports', params: { tache_import: { fichier: 'tests/test_import_siecle.xls' } }
+    post '/tache_imports', params: { tache_import: { fichier: 'tests/test_import_siecle.xls', job_klass: 'ImporterSiecle' } }
     follow_redirect!
 
     doc = Nokogiri::HTML(response.body)
 
     assert_match I18n.t('inscriptions.import_siecle.message_de_succes', email: 'pierre@test.fr'), doc.css('.alert-success').text
-  end
-
-  def test_traiter_zero_imports
-    get '/api/traiter_imports'
-    assert_equal 200, response.status
-  end
-
-  def test_creer_des_options
-    Option.destroy_all
-    etablissement_id = Etablissement.find_by(nom: 'College Jean-Francois Oeben').id
-    colonnes_siecle = [
-      { libelle: 'ANGLAIS LV1', cle_gestion: 'AGL1', code: 'O',
-        nom_attendu: 'Anglais', groupe_attendu: 'Langue vivante 1' },
-      { libelle: 'ESPAGNOL LV2', cle_gestion: 'ESP2', code: 'O',
-        nom_attendu: 'Espagnol', groupe_attendu: 'Langue vivante 2' },
-      { libelle: 'ESPAGNOL LV2 ND', cle_gestion: 'ES2ND', code: 'O',
-        nom_attendu: 'Espagnol non débutant', groupe_attendu: 'Langue vivante 2' },
-      { libelle: 'ALLEMAND LV2', cle_gestion: 'ALL2', code: 'O',
-        nom_attendu: 'Allemand', groupe_attendu: 'Langue vivante 2' },
-      { libelle: 'ALLEMAND LV2 ND', cle_gestion: 'AL2ND', code: 'O',
-        nom_attendu: 'Allemand non débutant', groupe_attendu: 'Langue vivante 2' },
-      { libelle: 'LCA LATIN', cle_gestion: 'LCALA', code: 'F',
-        nom_attendu: 'Latin', groupe_attendu: "Langues et cultures de l'antiquité" },
-      { libelle: 'LCA GREC', cle_gestion: 'LCAGR', code: 'F',
-        nom_attendu: 'Grec', groupe_attendu: "Langues et cultures de l'antiquité" }
-    ]
-
-    colonnes_siecle.each do |colonne|
-      creer_option colonne[:libelle], colonne[:cle_gestion], colonne[:code]
-
-      option = Option.where(nom: colonne[:nom_attendu], groupe: colonne[:groupe_attendu])
-      assert_equal 1, option.count
-    end
   end
 
   def test_options_demande_et_abandon
