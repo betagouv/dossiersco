@@ -1,7 +1,7 @@
 require 'traitement'
 
 class InscriptionsController < ApplicationController
-  before_action :identification_agent, except: [:post_agent, :agent, :declenche_traiter_imports]
+  before_action :identification_agent, except: [:post_agent, :agent]
   layout 'agent'
 
   def agent
@@ -57,11 +57,6 @@ class InscriptionsController < ApplicationController
     @tache = agent_connecté.etablissement.tache_import.last
     @tache ||= TacheImport.new(etablissement: agent_connecté.etablissement)
     render :import_siecle
-  end
-
-  def declenche_traiter_imports
-    traiter_imports
-    head :ok
   end
 
   def eleve

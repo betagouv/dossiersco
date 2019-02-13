@@ -63,8 +63,6 @@ Rails.application.routes.draw do
 
   get '/agent/import_siecle', to: 'inscriptions#new_import_siecle'
 
-  get '/api/traiter_imports', to: 'inscriptions#declenche_traiter_imports'
-
   get '/agent/eleve/:identifiant', to: 'inscriptions#eleve'
 
   get '/agent/piece_attendues', to: 'inscriptions#pieces_attendues'

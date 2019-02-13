@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_07_100118) do
+ActiveRecord::Schema.define(version: 2019_02_13_145128) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -255,14 +255,11 @@ ActiveRecord::Schema.define(version: 2019_02_07_100118) do
 
   create_table "tache_imports", force: :cascade do |t|
     t.string "statut"
-    t.string "url"
     t.integer "etablissement_id"
     t.datetime "created_at"
-    t.string "nom_a_importer"
-    t.string "prenom_a_importer"
-    t.string "message"
     t.datetime "updated_at"
     t.string "fichier"
+    t.string "job_klass"
   end
 
   create_table "traces", force: :cascade do |t|

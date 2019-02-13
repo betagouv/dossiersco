@@ -31,12 +31,15 @@ class ConfigurationTest < ActionDispatch::IntegrationTest
     click_link 'Suivi des inscriptions'
     click_link 'Import'
 
-    assert_selector 'h2', text: 'Import depuis siecle'
 
-    attach_file('tache_import_fichier', Rails.root + 'test/fixtures/files/test_import_siecle.xls')
+    within('.siecle') do
+      assert_selector 'h2', text: 'Importer un fichier'
+      choose 'SIECLE'
+      attach_file('tache_import_fichier', Rails.root + 'test/fixtures/files/test_import_siecle.xls')
+    end
 
     assert_equal 7, DossierEleve.count
-    click_button 'Importer le fichier SIECLE'
+    click_button 'Importer un fichier'
     assert_enqueued_jobs 1
 
     # assert_equal 9, DossierEleve.count
