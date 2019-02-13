@@ -1,5 +1,3 @@
-require 'traitement'
-
 class AccueilController < ApplicationController
   before_action :retrouve_élève_connecté, except: [:index, :identification, :stats]
 
@@ -180,38 +178,6 @@ class AccueilController < ApplicationController
     dossier_eleve.etape_la_plus_avancee = etape_la_plus_avancee
     dossier_eleve.save!
     redirect_to "/#{etape_la_plus_avancee}"
-  end
-
-  def piece
-    dossier_eleve = get_dossier_eleve params[:dossier_eleve]
-
-    # Vérifier les droits d'accès
-    famille_autorisé = params[:dossier_eleve] == session[:identifiant]
-
-    agent = Agent.find_by(identifiant: session[:identifiant])
-    agent_autorisé = agent.present? and (dossier_eleve.etablissement == agent.etablissement)
-
-    usager_autorisé = famille_autorisé || agent_autorisé
-
-    objet_demandé = params[:s3_key]
-    objet_présent = PieceJointe.find_by(dossier_eleve_id: dossier_eleve.id, clef: params[:s3_key])
-    clef_objet_présent = objet_présent.clef if objet_présent.present?
-    objet_conforme = objet_demandé == clef_objet_présent
-
-    if usager_autorisé and objet_conforme
-      extension = objet_présent.ext
-      fichier = get_fichier_s3(objet_demandé)
-      if extension == 'pdf'
-        content_type 'application/pdf'
-      elsif extension == 'jpg' or extension == 'jpeg'
-        content_type 'image/jpeg'
-      elsif extension == 'png'
-        content_type 'image/png'
-      end
-      send_data fichier.url(Time.now.to_i + 30)
-    else
-      redirect_to '/'
-    end
   end
 
   def post_pieces_a_joindre

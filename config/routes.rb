@@ -50,8 +50,6 @@ Rails.application.routes.draw do
   get '/pieces_a_joindre', to: 'accueil#pieces_a_joindre'
   post '/pieces_a_joindre', to: 'accueil#post_pieces_a_joindre'
 
-  get '/piece/:dossier_eleve/:code_piece/:s3_key', to: 'accueil#piece'
-
   get '/deconnexion', to: 'accueil#deconnexion'
 
   get '/stats', to: 'accueil#stats'
@@ -67,8 +65,6 @@ Rails.application.routes.draw do
 
   get '/agent/piece_attendues', to: 'inscriptions#pieces_attendues'
   post '/agent/piece_attendues', to: 'inscriptions#post_pieces_attendues'
-
-  post '/agent/pdf', to: 'inscriptions#post_pdf'
 
   post '/agent/valider_inscription', to: 'inscriptions#valider_inscription'
 
@@ -95,8 +91,6 @@ Rails.application.routes.draw do
   post '/agent/supprime_option', to: 'inscriptions#supprime_option'
 
   post '/agent/supprime_piece_attendue', to: 'inscriptions#supprime_piece_attendue'
-
-  get '/agent/pdf', to: 'inscriptions#pdf'
 
   get '/agent/relance', to: 'inscriptions#relance'
   post '/agent/relance_sms', to: 'inscriptions#relance_sms'
