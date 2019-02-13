@@ -3,6 +3,7 @@ fr:
   activerecord:
     errors:
       messages:
+        record_invalid: "%{errors}"
         taken: "%{value} n'est pas disponible"
         required: "doit exister"
         blank: "ne peut être vide"

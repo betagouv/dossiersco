@@ -4,6 +4,7 @@ require 'test_helper'
 
 class ConfigurationTest < ActionDispatch::IntegrationTest
   include ::ActiveJob::TestHelper
+
   test "Configuration basique : ajout d'agent, import fichier siecle, modification option pédagogique" do
     admin = Fabricate(:admin)
 
