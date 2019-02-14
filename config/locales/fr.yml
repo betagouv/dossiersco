@@ -148,7 +148,8 @@ fr:
       <<: *pieces_jointes
       valider: "Valider"
       refuser: "Refuser"
-    import_siecle:
+  tache_imports:    
+    new:
       titre_import: "Importer un fichier"
       selectionner_fichier: "Sélectionnez un fichier au format xls"
       importer_fichier: "Importer un fichier"

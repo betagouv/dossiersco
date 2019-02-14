@@ -61,11 +61,11 @@
         <li class="nav-item <%= 'active' if request.fullpath.include? '/mef' %>">
           <%= link_to 'MEF', configuration_mef_index_path, {class: 'nav-link'} %>
         </li>
-        <li class="nav-item <%= 'active' if request.fullpath.include? '/import' %>">
-          <%= link_to 'Import', agent_import_siecle_path, {class: 'nav-link'} %>
+        <li class="nav-item <%= 'active' if request.fullpath.include? '/tache_import' %>">
+          <%= link_to 'Import', new_tache_import_path, {class: 'nav-link'} %>
         </li>
         <li class="nav-item <%= 'active' if request.fullpath.include? '/piece_attendues' %>">
-          <%= link_to 'Pièces attendues', agent_piece_attendues_path, {class: 'nav-link'} %>
+          <%= link_to 'Pièces attendues', piece_attendues_path, {class: 'nav-link'} %>
         </li>
         <li class="nav-item <%= 'active' if request.fullpath.include? '/agent' %>">
           <%= link_to 'Agents', configuration_agents_path, {class: 'nav-link'} %>
@@ -78,6 +78,15 @@
       </ul>
     </nav>
     <main role="main" class="container my-5">
+    <% if flash[:notice] %>
+      <div class="alert alert-success" role="alert">
+        <%= flash[:notice]  %>
+      </div>
+    <% elsif flash[:alert] %>
+      <div class="alert alert-danger" role="alert">
+        <%= flash[:alert]  %>
+      </div>
+    <% end %>
 
     <% if (defined? message_info) && (!message_info.nil?) %>
       <div class="message_de_succes"><%= message_info %></div>

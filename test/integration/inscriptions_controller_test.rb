@@ -39,7 +39,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     doc = Nokogiri::HTML(response.body)
 
-    assert_match I18n.t('inscriptions.import_siecle.message_de_succes', email: 'pierre@test.fr'), doc.css('.alert-success').text
+    assert_match I18n.t('tache_imports.new.message_de_succes', email: 'pierre@test.fr'), doc.css('.alert-success').text
   end
 
   def test_options_demande_et_abandon
@@ -117,7 +117,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
   def test_un_agent_ajoute_une_nouvelle_piece_attendue
     post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
-    post '/agent/piece_attendues', params: { nom: 'Photo d’identité', explication: 'Pour coller sur le carnet' }
+    post '/piece_attendues', params: { nom: 'Photo d’identité', explication: 'Pour coller sur le carnet' }
 
     post '/identification', params: { identifiant: '5', annee: '1970', mois: '01', jour: '01' }
     get '/pieces_a_joindre'

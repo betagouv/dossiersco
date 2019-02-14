@@ -23,7 +23,7 @@ Rails.application.routes.draw do
     end
   end
   resources :agent_pieces_jointes, only: [:create, :update]
-  resources :tache_imports, only: [:create]
+  resources :tache_imports, only: [:new, :create]
 
   post '/identification', to: 'accueil#identification'
   get '/accueil', to: 'accueil#accueil'
@@ -59,12 +59,10 @@ Rails.application.routes.draw do
 
   get '/agent/liste_des_eleves', to: 'inscriptions#liste_des_eleves'
 
-  get '/agent/import_siecle', to: 'inscriptions#new_import_siecle'
-
   get '/agent/eleve/:identifiant', to: 'inscriptions#eleve'
 
-  get '/agent/piece_attendues', to: 'inscriptions#pieces_attendues'
-  post '/agent/piece_attendues', to: 'inscriptions#post_pieces_attendues'
+  get '/piece_attendues', to: 'inscriptions#pieces_attendues'
+  post '/piece_attendues', to: 'inscriptions#post_pieces_attendues'
 
   post '/agent/valider_inscription', to: 'inscriptions#valider_inscription'
 
