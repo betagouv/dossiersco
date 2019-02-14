@@ -12,3 +12,4 @@
 //
 //= require rails-ujs
 //= require turbolinks
+//= require drift
