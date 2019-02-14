@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'fixtures'
-init
 
 class ConfigurationControllerTest < ActionDispatch::IntegrationTest
   def test_un_agent_non_admin_ne_peut_pas_acceder_a_la_configuration
