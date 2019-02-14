@@ -9,8 +9,8 @@
 - La Startup ZAM nous présente sa démarche pour construire une roadmap, et ça donne envie.
 - Notre seul environnement est maintenant https://dossiersco.fr :-)
 - Cette semaine on a fait du mobProgramming à distance.
-- Les échanges sans caméra, à propos d'autre chose que le code ne sont pas super fluide (écoute plus difficile ?).
-- Malgré tout, le résultat sont surprenant. Les réserves que nous avions sur le mobProgramming à distance sont levées.
+- Les échanges sans caméra, à propos d'autre chose que le code ne sont pas super fluides (écoute plus difficile ?).
+- Malgré tout, les résultats sont surprenants. Les réserves que nous avions sur le mobProgramming à distance sont levées.
 - Notre stack : 
     - appear.in pour le son, et un petit coucou avec caméra (attention à allumer la caméra pour les discussions autre que le code)
     - Visual Studio Code avec le plugin Live Share pour le partage d'éditeur, de terminal et de serveur (qui permet à chaque participant de regarder le résultat dans son navigateur)
