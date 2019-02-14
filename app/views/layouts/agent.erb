@@ -87,14 +87,6 @@
         <li class="nav-item <%= 'active' if request.fullpath.include? '/tableau_de_bord' %>">
           <%= link_to 'Tableau de bord', agent_tableau_de_bord_path, {class: 'nav-link'} %>
         </li>
-        <% if @agent_connecté && @agent_connecté.admin? %>
-          <li class="nav-item <%= 'active' if request.fullpath.include? '/import' %>">
-            <%= link_to 'Import', agent_import_siecle_path, {class: 'nav-link'} %>
-          </li>
-          <li class="nav-item <%= 'active' if request.fullpath.include? '/piece_attendues' %>">
-            <%= link_to 'Pièces attendues', agent_piece_attendues_path, {class: 'nav-link'} %>
-          </li>
-        <% end %>
         <li class="nav-item <%= 'active' if request.fullpath.include? '/liste_des_eleves' %>">
           <%= link_to 'Liste des élèves', agent_liste_des_eleves_path, {class: 'nav-link'} %>
         </li>
