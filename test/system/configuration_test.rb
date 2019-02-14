@@ -29,9 +29,7 @@ class ConfigurationTest < ActionDispatch::IntegrationTest
 
     assert_selector 'td', text: attributs[:identifiant]
 
-    click_link 'Suivi des inscriptions'
     click_link 'Import'
-
 
     within('.siecle') do
       assert_selector 'h2', text: 'Importer un fichier'
