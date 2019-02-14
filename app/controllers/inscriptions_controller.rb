@@ -51,12 +51,6 @@ class InscriptionsController < ApplicationController
         pieces_jointes: pieces_jointes}
   end
 
-  def new_import_siecle
-    @tache = agent_connecté.etablissement.tache_import.last
-    @tache ||= TacheImport.new(etablissement: agent_connecté.etablissement)
-    render :import_siecle
-  end
-
   def eleve
     eleve = Eleve.find_by(identifiant: params[:identifiant])
     dossier_eleve = eleve.dossier_eleve
@@ -79,7 +73,7 @@ class InscriptionsController < ApplicationController
   def pieces_attendues
     etablissement = agent_connecté.etablissement
     piece_attendues = etablissement.piece_attendue
-    render :piece_attendues, locals: {agent: agent_connecté, piece_attendues: piece_attendues}
+    render :piece_attendues, locals: {agent: agent_connecté, piece_attendues: piece_attendues}, layout: 'configuration'
   end
 
   def post_pieces_attendues
@@ -91,10 +85,10 @@ class InscriptionsController < ApplicationController
 
     if !params[:nom].present?
       message = "Une pièce doit comporter un nom"
-      render :piece_attendues, locals: {piece_attendues: etablissement.piece_attendue, message: message}
+      render :piece_attendues, locals: {piece_attendues: etablissement.piece_attendue, message: message}, layout: 'configuration'
     elsif piece_attendue.present? && (piece_attendue.nom == code_piece)
       message = "#{params[:nom]} existe déjà"
-      render :piece_attendues, locals: {piece_attendues: etablissement.piece_attendue, message: message}
+      render :piece_attendues, locals: {piece_attendues: etablissement.piece_attendue, message: message}, layout: 'configuration'
     else
       piece_attendue = PieceAttendue.create!(
           nom: params[:nom],
@@ -103,7 +97,8 @@ class InscriptionsController < ApplicationController
           etablissement_id: etablissement.id,
           code: code_piece)
       render :piece_attendues,
-          locals: {piece_attendues: etablissement.piece_attendue, agent: agent_connecté}
+          locals: {piece_attendues: etablissement.piece_attendue, agent: agent_connecté}, 
+          layout: 'configuration'
     end
   end
 

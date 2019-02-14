@@ -28,4 +28,13 @@ class TacheImportsControllerTest < ActionDispatch::IntegrationTest
       assert_equal 'ImporterAffelnet', TacheImport.last.job_klass
     end
   end
+
+  test "Affiche la page du formulaire" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+
+    get new_tache_import_path
+
+    assert_response :success
+  end
 end
