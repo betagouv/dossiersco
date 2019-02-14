@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'fixtures'
-init
 
 class AgentsControllerTest < ActionDispatch::IntegrationTest
   test 'Un admin crée un agent qui a un établissement lié' do
