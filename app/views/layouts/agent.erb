@@ -113,16 +113,22 @@
     <% end %>
     <div class="row justify-content-center">
 
-
       <% if (defined? message_info) && (!message_info.nil?) %>
         <div class="alert alert-success"><%= message_info %></div>
       <% end %>
 
       <%= yield %>
 
-    </div><!--/row-->
+    </div>
 
-    </main><!--/.container-->
-
+    </main>
+    <script>
+      drift.identify(<%= @agent_connecté.id %>, {
+        email: '<%= @agent_connecté.email %>',
+        name: '<%= @agent_connecté.prenom %> <%= @agent_connecté.nom %> (<%= @agent_connecté.etablissement.nom %>)',
+        postalcode: '<%= @agent_connecté.etablissement.code_postal %>',
+        city: '<%= @agent_connecté.etablissement.ville %>'
+      })
+    </script>
   </body>
 </html>
