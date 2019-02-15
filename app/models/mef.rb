@@ -1,5 +1,6 @@
 class Mef < ApplicationRecord
   belongs_to :etablissement
+  has_and_belongs_to_many :options_pedagogiques
 
   validates_presence_of :code, :libelle
 

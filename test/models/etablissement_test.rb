@@ -24,4 +24,23 @@ class EtablissementTest < ActiveSupport::TestCase
     etablissement = Fabricate.build(:etablissement, code_postal: nil)
     assert '', etablissement.departement
   end
+
+  test 'purge' do
+    etablissement = Fabricate.create(:etablissement)
+    dossier_eleve = Fabricate.create(:dossier_eleve, etablissement: etablissement)
+    tache_import = Fabricate.create(:tache_import, etablissement: etablissement)
+    dossier_affelnet = Fabricate.create(:dossier_affelnet, etablissement: etablissement)
+    mef = Fabricate.create(:mef, etablissement: etablissement)
+    option_pedagogique = mef.options_pedagogiques.create
+
+    etablissement.purge!
+
+    assert_equal 0, etablissement.dossier_eleve.count
+    assert_equal 0, Eleve.where(id: dossier_eleve.eleve.id).count
+    assert_equal 0, etablissement.tache_import.count
+    assert_equal 0, etablissement.dossier_affelnets.count
+    assert_equal 0, etablissement.mef.count
+    assert_equal 0, OptionPedagogique.where(mef: mef).count
+  end
+
 end

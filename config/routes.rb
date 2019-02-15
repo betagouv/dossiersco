@@ -10,7 +10,9 @@ Rails.application.routes.draw do
 
   namespace :configuration do
     resources :mef
-    resources :etablissements
+    resources :etablissements do
+      put 'purge'
+    end
     resources :agents do
       member do
         post 'changer_etablissement'

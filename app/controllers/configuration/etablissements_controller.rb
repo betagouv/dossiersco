@@ -40,6 +40,11 @@ module Configuration
       redirect_to configuration_etablissements_path, notice: "L'établissement a bien été supprimé"
     end
 
+    def purge
+      agent_connecté.etablissement.purge!
+      redirect_to new_tache_import_path, notice: t('.purge_succes')
+    end
+
     private
 
     def etablissement_params
