@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resource  :configuration,        only: [:show]
   resources :options_pedagogiques, except: [:show]
+
   namespace :configuration do
     resources :mef
     resources :etablissements
@@ -16,12 +17,16 @@ Rails.application.routes.draw do
       end
     end
   end
+
   resources :pieces_jointes, only: [:create, :update] do
     member do
       put 'valider'
       put 'refuser'
     end
   end
+
+  resources :pieces_attendues, only: [:index, :create]
+
   resources :agent_pieces_jointes, only: [:create, :update]
   resources :tache_imports, only: [:new, :create]
 
@@ -60,9 +65,6 @@ Rails.application.routes.draw do
   get '/agent/liste_des_eleves', to: 'inscriptions#liste_des_eleves'
 
   get '/agent/eleve/:identifiant', to: 'inscriptions#eleve'
-
-  get '/piece_attendues', to: 'inscriptions#pieces_attendues'
-  post '/piece_attendues', to: 'inscriptions#post_pieces_attendues'
 
   post '/agent/valider_inscription', to: 'inscriptions#valider_inscription'
 

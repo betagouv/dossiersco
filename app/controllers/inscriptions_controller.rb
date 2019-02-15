@@ -32,7 +32,7 @@ class InscriptionsController < ApplicationController
     pieces_jointes = PieceJointe
       .joins(:dossier_eleve,:piece_attendue)
       .select('dossier_eleves.id as dossier_id').select('pieces_jointes.*')
-      .where(piece_attendues:{etablissement_id: agent_connecté.etablissement.id})
+      .where(pieces_attendues: {etablissement_id: agent_connecté.etablissement.id})
       .group_by(&:dossier_eleve_id)
     messages = Message
       .joins(:dossier_eleve)
@@ -47,7 +47,7 @@ class InscriptionsController < ApplicationController
         lignes_eleves: lignes_eleves,
         message_info: message_info,
         messages: messages,
-        pieces_attendues: agent_connecté.etablissement.piece_attendue,
+        pieces_attendues: agent_connecté.etablissement.pieces_attendues,
         pieces_jointes: pieces_jointes}
   end
 
@@ -68,38 +68,6 @@ class InscriptionsController < ApplicationController
       eleve: eleve,
       dossier_eleve: dossier_eleve,
       meme_adresse: meme_adresse}
-  end
-
-  def pieces_attendues
-    etablissement = agent_connecté.etablissement
-    piece_attendues = etablissement.piece_attendue
-    render :piece_attendues, locals: {agent: agent_connecté, piece_attendues: piece_attendues}, layout: 'configuration'
-  end
-
-  def post_pieces_attendues
-    etablissement = agent_connecté.etablissement
-    code_piece = params[:nom].gsub(/[^a-zA-Z0-9]/, '_').upcase.downcase
-    piece_attendue = PieceAttendue.find_by(
-        code: code_piece,
-        etablissement: etablissement.id)
-
-    if !params[:nom].present?
-      message = "Une pièce doit comporter un nom"
-      render :piece_attendues, locals: {piece_attendues: etablissement.piece_attendue, message: message}, layout: 'configuration'
-    elsif piece_attendue.present? && (piece_attendue.nom == code_piece)
-      message = "#{params[:nom]} existe déjà"
-      render :piece_attendues, locals: {piece_attendues: etablissement.piece_attendue, message: message}, layout: 'configuration'
-    else
-      piece_attendue = PieceAttendue.create!(
-          nom: params[:nom],
-          explication: params[:explication],
-          obligatoire: params[:obligatoire],
-          etablissement_id: etablissement.id,
-          code: code_piece)
-      render :piece_attendues,
-          locals: {piece_attendues: etablissement.piece_attendue, agent: agent_connecté}, 
-          layout: 'configuration'
-    end
   end
 
   def valider_inscription

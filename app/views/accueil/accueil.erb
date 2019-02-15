@@ -18,7 +18,7 @@
 
 	<p>Veuillez vous munir des pièces administratives suivantes :</p>
 	<ul>
-		<% @dossier_eleve.etablissement.piece_attendue.each do |piece| %>
+		<% @dossier_eleve.etablissement.pieces_attendues.each do |piece| %>
 			<li><strong><%= piece.nom %></strong></li>
 			<% if piece.explication.present? %>
 				<p><%= piece.explication %></p>

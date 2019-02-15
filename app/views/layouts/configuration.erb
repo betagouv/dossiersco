@@ -64,8 +64,8 @@
         <li class="nav-item <%= 'active' if request.fullpath.include? '/tache_import' %>">
           <%= link_to 'Import', new_tache_import_path, {class: 'nav-link'} %>
         </li>
-        <li class="nav-item <%= 'active' if request.fullpath.include? '/piece_attendues' %>">
-          <%= link_to 'Pièces attendues', piece_attendues_path, {class: 'nav-link'} %>
+        <li class="nav-item <%= 'active' if request.fullpath.include? '/pieces_attendues' %>">
+          <%= link_to 'Pièces attendues', pieces_attendues_path, {class: 'nav-link'} %>
         </li>
         <li class="nav-item <%= 'active' if request.fullpath.include? '/agent' %>">
           <%= link_to 'Agents', configuration_agents_path, {class: 'nav-link'} %>
