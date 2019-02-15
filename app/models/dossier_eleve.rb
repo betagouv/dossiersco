@@ -27,7 +27,7 @@ class DossierEleve < ActiveRecord::Base
   end
 
   def pieces_jointes
-    etablissement.piece_attendue.map do |piece_attendue|
+    etablissement.pieces_attendues.map do |piece_attendue|
       PieceJointe.find_or_initialize_by(piece_attendue: piece_attendue, dossier_eleve: self)
     end
   end

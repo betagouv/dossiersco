@@ -29,4 +29,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'dossier eleve', 'dossier eleves'
   inflect.irregular 'DossierEleve', 'DossierEleves'
   inflect.irregular 'dossier_eleve', 'dossier_eleves'
+  inflect.irregular 'piece attendue', 'pieces attendues'
+  inflect.irregular 'PieceAttendue', 'PiecesAttendues'
+  inflect.irregular 'piece_attendue', 'pieces_attendues'
 end

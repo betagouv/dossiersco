@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_13_145128) do
+ActiveRecord::Schema.define(version: 2019_02_14_232304) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -217,7 +217,7 @@ ActiveRecord::Schema.define(version: 2019_02_13_145128) do
     t.index ["etablissement_id"], name: "index_options_pedagogiques_on_etablissement_id"
   end
 
-  create_table "piece_attendues", force: :cascade do |t|
+  create_table "pieces_attendues", force: :cascade do |t|
     t.string "nom"
     t.string "code"
     t.string "explication"
