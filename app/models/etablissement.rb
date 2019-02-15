@@ -4,6 +4,8 @@ class Etablissement < ActiveRecord::Base
   has_many :tache_import, dependent: :destroy
   has_many :pieces_attendues, dependent: :destroy
   has_many :modele, dependent: :destroy
+  has_many :dossier_affelnets, dependent: :destroy
+  has_many :mef, dependent: :destroy
 
   validates :code_postal, length: { is: 5 }, numericality: { only_integer: true }, allow_nil: true
   validates :uai, presence: true
@@ -38,5 +40,14 @@ class Etablissement < ActiveRecord::Base
 
   def departement
     code_postal.present? ? code_postal[0..1] : ''
+  end
+
+  def purge!
+    eleves = dossier_eleve.map{ |d| d.eleve }
+    dossier_eleve.destroy_all
+    eleves.each{|e| e.destroy}
+    tache_import.destroy_all
+    dossier_affelnets.destroy_all
+    mef.destroy_all
   end
 end

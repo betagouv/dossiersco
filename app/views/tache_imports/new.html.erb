@@ -29,6 +29,10 @@
   </div>
 </div>
 
+<div class="col-12">
+  <%= link_to(t('.purger_etablissement', etablissement: @agent_connecté.etablissement.nom), configuration_etablissement_purge_path(@agent_connecté.etablissement), method: :put, data: {confirm: t('.confirmer_purge') }) %>
+</div>
+
 <div id="modal-chargement" class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-content d-flex align-items-center justify-content-center" role="document">
       <%= t('.modal-chargement') %>

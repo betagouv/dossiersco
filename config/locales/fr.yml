@@ -143,12 +143,13 @@ fr:
         titre: "Créer un établissement"
       edit:
         titre: "Modifier un établissement"
+      purge_succes:  "L'établissement a bien été purgé"
   inscriptions:
     eleve:
       <<: *pieces_jointes
       valider: "Valider"
       refuser: "Refuser"
-  tache_imports:    
+  tache_imports:
     new:
       titre_import: "Importer un fichier"
       selectionner_fichier: "Sélectionnez un fichier au format xls"
@@ -158,3 +159,5 @@ fr:
       message_de_succes: "L'import est en cours, un email va être envoyé à l'adresse %{email} une fois l'import terminé"
       fichier_manquant: "Vous n'avez pas indiqué de fichier à importer"
       modal-chargement: "Votre fichier est en cours d'import. Merci de patienter"
+      purger_etablissement: "Purger l'établissement %{etablissement}"
+      confirmer_purge:  "Voulez-vraiment purger l'établissement ? Tous les dossiers élèves, les MEF et les options pédagogiques seront supprimés !"

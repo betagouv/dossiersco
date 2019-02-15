@@ -18,4 +18,13 @@ class ConfigurationControllerTest < ActionDispatch::IntegrationTest
     get configuration_url
     assert_response :success
   end
+
+  def test_un_admin_peut_purger_son_etablissement
+    agent = Fabricate(:admin)
+    identification_agent(agent)
+
+    put configuration_etablissement_purge_path(agent.etablissement)
+
+    assert_equal "L'établissement a bien été purgé", flash[:notice]
+  end
 end
