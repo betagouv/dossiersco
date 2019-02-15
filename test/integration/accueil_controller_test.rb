@@ -286,10 +286,10 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     post '/validation'
 
     mail = ActionMailer::Base.deliveries.last
-    assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
+    assert_equal 'contact@dossiersco.fr', mail['from'].to_s
     assert mail['to'].addresses.collect(&:to_s).include? 'test@test.com'
     assert mail['to'].addresses.collect(&:to_s).include? 'test2@test.com'
-    assert mail['to'].addresses.collect(&:to_s).include? 'contact@dossiersco.beta.gouv.fr'
+    assert mail['to'].addresses.collect(&:to_s).include? 'contact@dossiersco.fr'
     assert_equal 'Réinscription de votre enfant au collège', mail['subject'].to_s
     part = mail.html_part || mail.text_part || mail
     assert part.body.decoded.include? 'réinscription de votre enfant Pierre Blayo'

@@ -1,16 +1,16 @@
 class AgentMailer < ApplicationMailer
-    default from: "contact@dossiersco.beta.gouv.fr"
+    default from: "contact@dossiersco.fr"
 
     def emails
         @eleve.dossier_eleve.resp_legal.map{ |resp_legal| resp_legal.email } +
-            ['contact@dossiersco.beta.gouv.fr']
+            ['contact@dossiersco.fr']
     end
 
     def contacter_une_famille(eleve, message)
         @message = message
         @eleve = eleve
         mail(subject: "Réinscription de votre enfant au collège",
-            reply_to: ['contact@dossiersco.beta.gouv.fr', @eleve.dossier_eleve.etablissement.email],
+            reply_to: ['contact@dossiersco.fr', @eleve.dossier_eleve.etablissement.email],
             to: emails) do |format|
                 format.text
             end
@@ -28,8 +28,8 @@ class AgentMailer < ApplicationMailer
         etablissement = eleve.dossier_eleve.etablissement
         resp_legal = eleve.dossier_eleve.resp_legal_1
         mail(subject: "Réinscription de votre enfant au collège",
-            reply_to:['contact@dossiersco.beta.gouv.fr', etablissement.email],
-            to: ['contact@dossiersco.beta.gouv.fr', resp_legal.email, etablissement.email]) do |format|
+            reply_to:['contact@dossiersco.fr', etablissement.email],
+            to: ['contact@dossiersco.fr', resp_legal.email, etablissement.email]) do |format|
                 format.text { render plain: contenu }
             end
     end
@@ -40,9 +40,9 @@ class AgentMailer < ApplicationMailer
     # point de vue sécurité; ne met pas l'établissement en copie pour ne pas les spammer
     def invitations_parents(eleve)
         @eleve = eleve
-        destinataires = [eleve.dossier_eleve.resp_legal.first.email, 'contact@dossiersco.beta.gouv.fr']
+        destinataires = [eleve.dossier_eleve.resp_legal.first.email, 'contact@dossiersco.fr']
         mail(subject: "Réinscription de votre enfant au collège",
-            reply_to: ['contact@dossiersco.beta.gouv.fr', @eleve.dossier_eleve.etablissement.email],
+            reply_to: ['contact@dossiersco.fr', @eleve.dossier_eleve.etablissement.email],
             to: destinataires) do |format|
                 format.text
             end
@@ -51,7 +51,7 @@ class AgentMailer < ApplicationMailer
   def succes_import(email, statistiques)
     @statistiques = statistiques
     mail(subject: "Import de votre base élève dans DossierSCO",
-         reply_to: 'contact@dossiersco.beta.gouv.fr',
+         reply_to: 'contact@dossiersco.fr',
          to: email) do |format|
       format.text
     end
@@ -59,7 +59,7 @@ class AgentMailer < ApplicationMailer
 
   def erreur_import(email)
     mail(subject: "L'import de votre base élève a échoué",
-         reply_to: 'contact@dossiersco.beta.gouv.fr',
+         reply_to: 'contact@dossiersco.fr',
          to: email) do |format|
       format.text
     end

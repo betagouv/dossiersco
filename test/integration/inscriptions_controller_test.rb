@@ -247,12 +247,12 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     post '/agent/contacter_une_famille', params: { identifiant: '6', message: 'Message de test' }
 
     mail = ActionMailer::Base.deliveries.last
-    assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
+    assert_equal 'contact@dossiersco.fr', mail['from'].to_s
     assert mail['to'].addresses.collect(&:to_s).include? 'test@test.com'
     assert mail['to'].addresses.collect(&:to_s).include? 'test2@test.com'
-    assert mail['to'].addresses.collect(&:to_s).include? 'contact@dossiersco.beta.gouv.fr'
+    assert mail['to'].addresses.collect(&:to_s).include? 'contact@dossiersco.fr'
     assert mail['reply_to'].addresses.collect(&:to_s).include? 'etablissement@email.com'
-    assert mail['reply_to'].addresses.collect(&:to_s).include? 'contact@dossiersco.beta.gouv.fr'
+    assert mail['reply_to'].addresses.collect(&:to_s).include? 'contact@dossiersco.fr'
     assert_equal 'Réinscription de votre enfant au collège', mail['subject'].to_s
     part = mail.html_part || mail.text_part || mail
     assert part.body.decoded.include? 'Tillion'
@@ -292,10 +292,10 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     post '/agent/valider_inscription', params: { identifiant: '4' }
 
     mail = ActionMailer::Base.deliveries.last
-    assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
+    assert_equal 'contact@dossiersco.fr', mail['from'].to_s
     assert mail['to'].addresses.collect(&:to_s).include? 'test@test.com'
     assert mail['to'].addresses.collect(&:to_s).include? 'test2@test.com'
-    assert mail['to'].addresses.collect(&:to_s).include? 'contact@dossiersco.beta.gouv.fr'
+    assert mail['to'].addresses.collect(&:to_s).include? 'contact@dossiersco.fr'
     assert_equal 'Réinscription de votre enfant au collège', mail['subject'].to_s
     part = mail.html_part || mail.text_part || mail
     assert part.body.decoded.include? 'Votre enfant est bien inscrit.'
@@ -313,12 +313,12 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     message.envoyer
 
     mail = ActionMailer::Base.deliveries.last
-    assert_equal 'contact@dossiersco.beta.gouv.fr', mail['from'].to_s
+    assert_equal 'contact@dossiersco.fr', mail['from'].to_s
     assert mail['to'].addresses.collect(&:to_s).include? 'test@test.com'
     assert mail['to'].addresses.collect(&:to_s).include? 'etablissement@email.com'
-    assert mail['to'].addresses.collect(&:to_s).include? 'contact@dossiersco.beta.gouv.fr'
+    assert mail['to'].addresses.collect(&:to_s).include? 'contact@dossiersco.fr'
     assert mail['reply_to'].addresses.collect(&:to_s).include? 'etablissement@email.com'
-    assert mail['reply_to'].addresses.collect(&:to_s).include? 'contact@dossiersco.beta.gouv.fr'
+    assert mail['reply_to'].addresses.collect(&:to_s).include? 'contact@dossiersco.fr'
     assert_equal 'Réinscription de votre enfant au collège', mail['subject'].to_s
     part = mail.html_part || mail.text_part || mail
     assert part.body.decoded.include? 'Réinscription de votre enfant Edith Piaf au collège'
