@@ -2,8 +2,7 @@ module Configuration
   class EtablissementsController < ApplicationController
     layout 'configuration'
 
-    before_action :identification_agent
-    before_action :if_agent_is_admin
+    before_action :if_agent_is_admin, except: [:new, :create]
     before_action :cherche_etablissement, only: [:show, :edit, :update, :destroy]
 
     def index
@@ -15,13 +14,13 @@ module Configuration
 
     def new
       @etablissement = Etablissement.new
+      render layout: 'connexion'
     end
 
     def create
-      @etablissement = Etablissement.new(etablissement_params)
-
-      if @etablissement.save
-        redirect_to configuration_etablissements_path
+      agent = EnregistrementPremierAgentService.new.execute(etablissement_params[:uai])
+      if agent
+        redirect_to new_configuration_etablissement_path, notice:t('.mail_envoye', mail_ce: agent.email)
       else
         render :new
       end

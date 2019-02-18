@@ -1,7 +1,8 @@
 class Agent < ActiveRecord::Base
   belongs_to :etablissement
-  has_secure_password
+  has_secure_password validations: false
 
+  validates :password, presence: true, if: -> { self.jeton.nil? }
   validates :identifiant, uniqueness: { case_sensitive: false }
   validates :email, presence: true, uniqueness: { case_sensitive: false }
 

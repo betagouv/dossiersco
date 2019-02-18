@@ -1,4 +1,21 @@
 <div class="col-md-6 col-12 offset-md-3">
   <h1 class="mb-3"><%= t(".titre") %></h1>
-  <%= render 'form' %>
+  <%= form_for([:configuration, @etablissement]) do |f| %>
+    <% if @etablissement.errors.any? %>
+      <div id="error_explanation">
+        <ul class="list-unstyled">
+          <% @etablissement.errors.full_messages.each do |message| %>
+            <li class="alert alert-danger"><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="form-group">
+      <%= f.label :uai %>
+      <%= f.text_field :uai, class: 'form-control'%>
+    </div>
+    <div class="form-group">
+    <%= f.submit t('.inscrire'), class: 'btn btn-primary my-3' %>
+  </div>
+  <% end %>
 </div>

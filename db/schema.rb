@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_14_232304) do
+ActiveRecord::Schema.define(version: 2019_02_18_145208) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 2019_02_14_232304) do
     t.boolean "admin"
     t.string "password_digest"
     t.string "email"
+    t.string "jeton"
   end
 
   create_table "contact_urgences", force: :cascade do |t|

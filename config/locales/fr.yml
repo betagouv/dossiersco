@@ -145,6 +145,9 @@ fr:
     etablissements:
       new:
         titre: "Créer un établissement"
+        inscrire: "Inscrire l'établissement"
+      create:
+        mail_envoye: "Un mail a été envoyé à %{mail_ce}"
       edit:
         titre: "Modifier un établissement"
       purge_succes:  "L'établissement a bien été purgé"
@@ -153,6 +156,11 @@ fr:
       <<: *pieces_jointes
       valider: "Valider"
       refuser: "Refuser"
+    identification:
+      inscription: "Inscrire mon établissement sur DossierSCO"
+      identifiant: "Identifiant"
+      mot_de_passe: "Mot de passe"
+      se_connecter: "Se connecter"
   tache_imports:
     create:
       tache_deja_en_traitement: "Un import est déjà en cours"
