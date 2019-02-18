@@ -27,7 +27,7 @@ module Configuration
     end
 
     def edit
-      unless @agent == @agent_connecté || @agent_connecté.admin?
+      if @agent != @agent_connecté
         redirect_to agent_tableau_de_bord_path
       end
     end
