@@ -3,6 +3,10 @@
 require 'test_helper'
 
 class OptionPedagogiqueTest < ActiveSupport::TestCase
+  test 'a une fabrique valide' do
+    assert Fabricate.build(:option_pedagogique).valid?
+  end
+
   test 'sans mef, filtre_par renvoie un tableau vide' do
     assert_equal [], OptionPedagogique.filtre_par(nil)
   end

@@ -18,7 +18,7 @@ class OptionsPedagogiquesController < ApplicationController
   end
 
   def create
-    @option_pedagogique = OptionPedagogique.new(option_pedagogique_params)
+    @option_pedagogique = OptionPedagogique.new(option_pedagogique_params.merge(etablissement: agent_connecté.etablissement))
 
     if @option_pedagogique.save
       redirect_to options_pedagogiques_url, notice: 'Option pedagogique was successfully created.'

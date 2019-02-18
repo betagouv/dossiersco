@@ -10,11 +10,11 @@ class DossierEleve < ActiveRecord::Base
   belongs_to :mef_origine, class_name: 'Mef', required: false
   belongs_to :mef_destination, class_name: 'Mef', required: false
 
-  has_many :resp_legal
-  has_many :piece_jointe
-  has_many :message
+  has_many :resp_legal, dependent: :destroy
+  has_many :piece_jointe, dependent: :destroy
+  has_many :message, dependent: :destroy
 
-  has_one :contact_urgence
+  has_one :contact_urgence, dependent: :destroy
 
   has_and_belongs_to_many :options_pedagogiques
 

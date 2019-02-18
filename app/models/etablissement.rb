@@ -42,12 +42,11 @@ class Etablissement < ActiveRecord::Base
     code_postal.present? ? code_postal[0..1] : ''
   end
 
-  def purge!
-    eleves = dossier_eleve.map{ |d| d.eleve }
+  def purge_dossiers_eleves!
+    eleves = dossier_eleve.all.map(&:eleve)
     dossier_eleve.destroy_all
-    eleves.each{|e| e.destroy}
+    eleves.map(&:destroy)
     tache_import.destroy_all
     dossier_affelnets.destroy_all
-    mef.destroy_all
   end
 end
