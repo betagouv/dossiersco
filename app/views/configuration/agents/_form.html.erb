@@ -1,9 +1,9 @@
-<%= form_for([:configuration, @agent]) do |f| %>
+<%= form_for([:configuration, @agent_connecté]) do |f| %>
 
-  <% if @agent.errors.any? %>
+  <% if @agent_connecté.errors.any? %>
     <div id="error_explanation">
       <ul class="list-unstyled">
-      <% @agent.errors.full_messages.each do |message| %>
+      <% @agent_connecté.errors.full_messages.each do |message| %>
         <li class=" "><%= message %></li>
       <% end %>
       </ul>
@@ -27,24 +27,8 @@
   </div>
   <div class="form-group">
     <%= f.label :password %>
-    <%= f.text_field :password, class: 'form-control'%>
+    <%= f.password_field :password, class: 'form-control'%>
   </div>
-
-  <% if super_admin?(session[:identifiant]) %>
-    <div class="form-group">
-      <%= f.label :etablissement_id %>
-      <%= f.select :etablissement_id,
-        options_for_select( Etablissement.all.map{ |e| [e.nom, e.id]}, selected_key = f.object.etablissement_id),
-        {}, { class: 'form-control' }%>
-    </div>
-  <% end %>
-
-  <% if @agent_connecté.admin? %>
-    <div class="form-check">
-      <%= f.check_box :admin, class: 'form-check-input'%>
-      <%= f.label :admin, class: 'form-check-label' %>
-    </div>
-  <% end %>
   <div class="form-group">
     <%= f.submit 'valider', class: 'btn btn-primary my-3' %>
   </div>

@@ -37,4 +37,14 @@ class AgentTest < ActiveSupport::TestCase
     agent = Fabricate(:agent, nom: nil, prenom: nil, email: "alexandre@astier.com")
     assert_equal "alexandre@astier.com", agent.nom_complet
   end
+
+  test 'mot de passe obligatoire si pas de jeton' do
+    assert Fabricate.build(:agent, password: nil, jeton: nil).invalid?
+    assert Fabricate.build(:agent, password: 'a-password', jeton: nil).valid?
+  end
+
+  test 'jeton obligatoire si pas de mot de passe' do
+    assert Fabricate.build(:agent, password: nil, password_confirmation: nil, jeton: nil).invalid?
+    assert Fabricate.build(:agent, password: nil, password_confirmation: nil, jeton: 'a-sha1-token').valid?
+  end
 end
