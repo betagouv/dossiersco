@@ -68,7 +68,7 @@ task :charger_donnees_exemple => ['db:drop', 'db:setup'] do
   eleves.each { |eleve| eleve.update(ville_naiss: 'Paris', pays_naiss: 'France') }
 
   oeben = Etablissement.create!({
-     nom: "College Jean-Francois Oeben",
+     nom: "Jean-Francois Oeben",
      date_limite: "samedi 3 juin 2018",
      adresse: "21 Rue de Reuilly",
      ville: "Paris",
@@ -83,7 +83,7 @@ task :charger_donnees_exemple => ['db:drop', 'db:setup'] do
                 identifiant: 'jules')
 
   tillion = Etablissement.create!({
-      nom: "Collège Germaine Tillion",
+      nom: "Germaine Tillion",
       date_limite: "samedi 6 juin 2018",
       adresse: "8 Avenue Vincent d'Indy",
       ville: 'Paris',

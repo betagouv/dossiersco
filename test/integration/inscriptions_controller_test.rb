@@ -330,7 +330,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     # Etablissements
     assert_equal Etablissement.count, doc.css('.etablissement').count
     names = doc.css('.etablissement > .row > .nom').collect(&:text).collect(&:strip)
-    assert names.include? 'Collège Germaine Tillion'
+    assert names.include? 'Germaine Tillion'
     # Classes - on a 4 classes sur Tillion et 2 sur Oeben dont 2 du même nom entre
     # les deux établissements
     names = doc.css('.etablissement .classe > .row > .nom').collect(&:text).collect(&:strip)

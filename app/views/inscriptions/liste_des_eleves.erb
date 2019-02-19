@@ -1,7 +1,7 @@
 <div class="col-12">
   <h1 class="separation">Eleves en cours de traitement</h1>
-  <div>
-    <%= agent.etablissement.nom %> : <span id="total_dossiers" class="badge badge-danger"><%= lignes_eleves.count('*') %></span> dossiers.
+  <div class="my-2">
+    Collège <%= agent.etablissement.nom %> : <span id="total_dossiers" class="badge badge-danger"><%= lignes_eleves.count('*') %></span> dossiers.
   </div>
 
   <table class="table table-striped table-bordered table-condensed table-hover"
