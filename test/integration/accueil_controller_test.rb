@@ -52,8 +52,8 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     post '/identification', params: { identifiant: '1', annee: '1995', mois: '11', jour: '19' }
     follow_redirect!
     doc = Nokogiri::HTML(response.parsed_body)
-    assert_equal 'College Jean-Francois Oeben', doc.xpath('//div//h1/text()').to_s
-    assert_equal 'College Jean-Francois Oeben.', doc.xpath("//strong[@id='etablissement']/text()").to_s.strip
+    assert_equal 'Collège Jean-Francois Oeben', doc.xpath('//div//h1/text()').to_s
+    assert_equal 'Jean-Francois Oeben.', doc.xpath("//strong[@id='etablissement']/text()").to_s.strip
     assert_equal 'samedi 3 juin 2018', doc.xpath("//strong[@id='date-limite']/text()").to_s
   end
 
