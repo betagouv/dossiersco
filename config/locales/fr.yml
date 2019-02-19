@@ -166,4 +166,5 @@ fr:
       fichier_affelnet: "AFFELNET"
       modal-chargement: "Votre fichier est en cours d'import. Merci de patienter"
       purger_etablissement: "Purger l'établissement %{etablissement}"
-      confirmer_purge:  "Voulez-vraiment purger l'établissement ? Tous les dossiers élèves, les MEF et les options pédagogiques seront supprimés !"
+      confirmer_purge:  "Voulez-vraiment purger l'établissement ? Tous les dossiers élèves seront supprimés !"
+      modal_purge: "La purge est en cours, cela peut prendre du temps"
