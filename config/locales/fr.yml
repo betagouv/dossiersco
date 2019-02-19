@@ -8,6 +8,10 @@ fr:
         required: "doit exister"
         blank: "ne peut être vide"
       models:
+        tache_import:
+          attributes:
+            statut:
+              inclusion: "%{model} %{attribute} = %{value}"
         resp_legal:
           attributes:
             code_postal_ant:
@@ -150,14 +154,16 @@ fr:
       valider: "Valider"
       refuser: "Refuser"
   tache_imports:
+    create:
+      tache_deja_en_traitement: "Un import est déjà en cours"
+      message_de_succes: "L'import est en cours, un email va être envoyé à l'adresse %{email} une fois l'import terminé"
+      fichier_manquant: "Vous n'avez pas indiqué de fichier à importer"
     new:
       titre_import: "Importer un fichier"
       selectionner_fichier: "Sélectionnez un fichier au format xls"
       importer_fichier: "Importer un fichier"
       fichier_siecle: "SIECLE"
       fichier_affelnet: "AFFELNET"
-      message_de_succes: "L'import est en cours, un email va être envoyé à l'adresse %{email} une fois l'import terminé"
-      fichier_manquant: "Vous n'avez pas indiqué de fichier à importer"
       modal-chargement: "Votre fichier est en cours d'import. Merci de patienter"
       purger_etablissement: "Purger l'établissement %{etablissement}"
       confirmer_purge:  "Voulez-vraiment purger l'établissement ? Tous les dossiers élèves, les MEF et les options pédagogiques seront supprimés !"

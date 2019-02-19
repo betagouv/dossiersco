@@ -39,7 +39,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     doc = Nokogiri::HTML(response.body)
 
-    assert_match I18n.t('tache_imports.new.message_de_succes', email: 'pierre@test.fr'), doc.css('.alert-success').text
+    assert_match I18n.t('tache_imports.create.message_de_succes', email: 'pierre@test.fr'), doc.css('.alert-success').text
   end
 
   def test_options_demande_et_abandon

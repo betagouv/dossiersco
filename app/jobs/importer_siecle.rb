@@ -14,12 +14,16 @@ class ImporterSiecle < ApplicationJob
     ville_resp_legal2: 131, code_postal_resp_legal2: 132, email_resp_legal2: 125}
 
   def perform(tache_id, email)
+    tache = TacheImport.find(tache_id)
     begin
-      tache = TacheImport.find(tache_id)
+      raise
+      tache.update(statut: TacheImport::STATUTS[:en_traitement])
       statistiques = import_xls tache.fichier.path, tache.etablissement_id
       mail = AgentMailer.succes_import(email, statistiques)
+      tache.update(statut: TacheImport::STATUTS[:terminee])
       mail.deliver_now
     rescue
+      tache.update(statut: TacheImport::STATUTS[:en_erreur])
       AgentMailer.erreur_import(email).deliver_now
     end
   end
