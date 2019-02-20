@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
   root to: 'accueil#index'
-  get '/test-sentry-famille', to: "pages#test_sentry_famille"
-  get '/test-sentry-agent', to: "pages#test_sentry_agent"
 
   resource  :dossier_affelnet, only: [:create] do
     post :traiter
