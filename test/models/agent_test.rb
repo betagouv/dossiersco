@@ -17,4 +17,24 @@ class AgentTest < ActiveSupport::TestCase
     Fabricate(:agent, identifiant: 'henri')
     assert Fabricate.build(:agent, identifiant: 'Henri').invalid?
   end
+
+  test "renvoie le nom complet de l'agent" do
+    agent = Fabricate(:agent, nom: 'Astier', prenom: 'Alexandre')
+    assert_equal "Alexandre Astier", agent.nom_complet
+  end
+
+  test "renvoie le prenom pour le nom complet si pas de nom" do
+    agent = Fabricate(:agent, prenom: 'Alexandre', nom: nil)
+    assert_equal "Alexandre", agent.nom_complet
+  end
+
+  test "renvoie le nom pour le nom complet si pas de prenom" do
+    agent = Fabricate(:agent, nom: 'Astier', prenom: nil)
+    assert_equal "Astier", agent.nom_complet
+  end
+
+  test "renvoie l'email pour le nom complet si pas de prenom ni nom" do
+    agent = Fabricate(:agent, nom: nil, prenom: nil, email: "alexandre@astier.com")
+    assert_equal "alexandre@astier.com", agent.nom_complet
+  end
 end
