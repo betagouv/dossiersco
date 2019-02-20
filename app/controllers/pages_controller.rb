@@ -13,24 +13,4 @@ class PagesController < ApplicationController
   def get_eleve
     @eleve ||= Eleve.find_by(identifiant: session[:identifiant])
   end
-
-  def test_sentry_agent
-    identification_agent
-    test_sentry
-  end
-
-  def test_sentry_famille
-    retrouve_élève_connecté
-    test_sentry
-  end
-
-  private
-  def test_sentry
-    begin
-      1 / 0
-    rescue ZeroDivisionError => exception
-      Raven.capture_exception(exception)
-    end
-    render plain: "L'exception a été normalement capturée par Sentry"
-  end
 end
