@@ -36,7 +36,7 @@ class AgentsControllerTest < ActionDispatch::IntegrationTest
     put configuration_agent_path(agent), params: { agent: { prenom: 'Ibrahima' } }
 
     assert_redirected_to configuration_agents_path
-    assert_equal Agent.find(agent.id).prenom, 'Ibrahima'
+    assert_equal 'Ibrahima', Agent.find(agent.id).prenom
   end
 
   test 'Un agent peu accéder à son profil' do
@@ -58,12 +58,23 @@ class AgentsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to agent_tableau_de_bord_path
   end
 
-  test "Un agent modifie sont profil" do
+  test 'Un agent modifie son profil' do
     agent = Fabricate(:agent)
-
     identification_agent(agent)
-    patch configuration_agent_path(agent), params: { agent: { prenom: 'Lucien' } }
 
-    assert_equal Agent.find(agent.id).prenom, 'Lucien'
+    put configuration_agent_path(agent), params: { agent: { prenom: 'Lucien' } }
+
+    assert_redirected_to configuration_agents_path
+    assert_equal 'Lucien', Agent.find(agent.id).prenom
   end
+
+  test 'contient un agent_connecté' do
+    agent = Fabricate(:agent, jeton: 'uber_jeton')
+
+    get configuration_agent_activation_path(agent, jeton: 'uber_jeton')
+
+    assert_equal agent, assigns(:agent_connecté)
+  end
+
+
 end
