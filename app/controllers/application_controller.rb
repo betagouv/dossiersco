@@ -10,6 +10,9 @@ class ApplicationController < ActionController::Base
 
   def agent_connecté
     @agent_connecté ||= Agent.find_by(identifiant: session[:identifiant])
+    Raven.user_context(user_name: @agent_connecté.nom_complet, email: @agent_connecté.email)
+    Raven.extra_context({etablissement: @agent_connecté.etablissement.nom, code_postal: @agent_connecté.etablissement.code_postal})
+    @agent_connecté
   end
 
   def identification_agent
