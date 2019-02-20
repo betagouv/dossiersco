@@ -4,7 +4,7 @@ module Configuration
 
     before_action :identification_agent
     before_action :if_agent_is_admin, except: [:edit, :update]
-    before_action :cherche_agent, only: [:edit, :update, :destroy]
+    before_action :cherche_agent, only: [:destroy]
 
     def new
       @agent = Agent.new
@@ -27,14 +27,20 @@ module Configuration
     end
 
     def edit
-      if @agent != @agent_connecté
-        redirect_to agent_tableau_de_bord_path
-      end
     end
 
     def update
-      @agent.update(agent_params)
-      redirect_to configuration_agents_path
+      @agent_connecté.jeton = nil
+      if @agent_connecté.update(agent_params)
+        session[:identifiant] = @agent_connecté.identifiant
+        redirect_to configuration_agents_path, notice: t('messages.compte_cree')
+      else
+        if @agent_connecté.jeton
+          render :activation, layout: 'connexion'
+        else
+          render :edit
+        end
+      end
     end
 
     def destroy
@@ -45,6 +51,10 @@ module Configuration
     def changer_etablissement
       @agent_connecté.update(etablissement_id: params[:etablissement])
       redirect_to agent_tableau_de_bord_path
+    end
+
+    def activation
+      render layout: 'connexion'
     end
 
     private

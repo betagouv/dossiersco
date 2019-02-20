@@ -14,12 +14,16 @@ class ApplicationController < ActionController::Base
   end
 
   def agent_connecté
-    @agent_connecté ||= Agent.find_by(identifiant: session[:identifiant])
+    if params[:jeton]
+      @agent_connecté ||= Agent.find_by(jeton: params[:jeton])
+    else
+      @agent_connecté ||= Agent.find_by(identifiant: session[:identifiant])
+    end
   end
 
   def identification_agent
     unless agent_connecté.present?
-      redirect_to '/agent'
+      redirect_to '/agent', alert: t('messages.probleme_identification')
       return
     end
     ajoute_information_utilisateur_pour_sentry({
@@ -44,5 +48,4 @@ class ApplicationController < ActionController::Base
   def ajoute_information_utilisateur_pour_sentry(infos)
     Raven.tags_context({type_utilisateur: infos[:type_utilisateur], dossiersco_id: infos[:dossiersco_id]})
   end
-
 end

@@ -27,7 +27,7 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                                                                                                aria-haspopup="true" aria-expanded="false">
-                  <%= @agent_connecté.etablissement.nom %>
+                  <%= affiche_etablissement(@agent_connecté.etablissement) %>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <% Etablissement.all.each do |etablissement| %>
@@ -37,7 +37,7 @@
               </li>
             <% else %>
               <li class="nav-item">
-                <span class="nav-link"><%= @agent_connecté.etablissement.nom %></span>
+                <span class="nav-link"><%= affiche_etablissement(@agent_connecté.etablissement) %></span>
               </li>
             <% end %>
             <li class="nav-item dropdown">

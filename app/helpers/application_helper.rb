@@ -12,4 +12,8 @@ module ApplicationHelper
     identifiant ||= ""
     env_super_admin.upcase.split(',').map(&:strip).include?(identifiant.upcase)
   end
+
+  def affiche_etablissement(etablissement)
+    "#{etablissement.nom} - #{etablissement.uai}"
+  end
 end

@@ -33,7 +33,9 @@ fr:
       document_soumis: "Votre document est transmis à l'établissement."
       document_invalide: "Votre document ne peut pas être pris en compte par l'établissement pour cette inscription. Un courriel vient de vous être envoyé. Merci de prendre connaissance de ce message et nous fournir une nouvelle version de ce document."
       document_valide: "Votre document a été examiné et approuvé par l'établissement."
-
+  messages:
+    probleme_identification: "Nous n'avons pas pu vous identifier"
+    compte_cree: "Votre compte à bien été créé"
   dossiers_affelnet:
     traitement_import:
       traiter_le_dossier: "Traiter le dossier"
@@ -138,10 +140,12 @@ fr:
       valider_inscription: "Valider l'inscription"
   configuration:
     agents:
+      activation:
+        titre_html: "Activation du compte <br/> %{email}"
       new:
         titre: "Créer un agent"
       edit:
-        titre: "Mon profil"
+        titre_html: "Modification du profil <br/> %{email}"
     etablissements:
       new:
         titre: "Créer un établissement"
