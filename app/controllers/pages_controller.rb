@@ -14,8 +14,18 @@ class PagesController < ApplicationController
     @eleve ||= Eleve.find_by(identifiant: session[:identifiant])
   end
 
-  def test_sentry
+  def test_sentry_agent
     identification_agent
+    test_sentry
+  end
+
+  def test_sentry_famille
+    retrouve_élève_connecté
+    test_sentry
+  end
+
+  private
+  def test_sentry
     begin
       1 / 0
     rescue ZeroDivisionError => exception
