@@ -4,6 +4,7 @@ class Eleve < ActiveRecord::Base
   has_many :demande
   has_many :abandon
   belongs_to :montee, required: false
+  delegate :email_resp_legal_1, to: :dossier_eleve
 
   def genere_demandes_possibles
     return unless self.montee.present?

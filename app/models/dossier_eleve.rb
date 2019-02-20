@@ -40,6 +40,10 @@ class DossierEleve < ActiveRecord::Base
     self.resp_legal.find {|r| r.priorite == 2}
   end
 
+  def email_resp_legal_1
+    self.resp_legal_1.email if self.resp_legal_1
+  end
+
   def allocataire
     enfants = self.resp_legal.first.enfants_a_charge || 0
     enfants > 1
