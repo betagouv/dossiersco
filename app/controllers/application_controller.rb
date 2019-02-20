@@ -5,10 +5,7 @@ class ApplicationController < ActionController::Base
     if @eleve
       ajoute_information_utilisateur_pour_sentry({
         type_utilisateur: "famille",
-        utilisateur: @eleve.identifiant,
-        email: @eleve.email_resp_legal_1,
-        etablissement: @eleve.dossier_eleve.etablissement.nom,
-        code_postal: @eleve.dossier_eleve.etablissement.code_postal
+        dossiersco_id: @eleve.id
       })
     else
       session[:message_erreur] = "Vous avez été déconnecté par mesure de sécurité. Merci de vous identifier avant de continuer."
@@ -24,10 +21,7 @@ class ApplicationController < ActionController::Base
     identifiant = agent_connecté.present? ? agent_connecté.identifiant : '<anonyme>'
     ajoute_information_utilisateur_pour_sentry({
       type_utilisateur: "agent",
-      utilisateur: agent_connecté.nom_complet,
-      email: agent_connecté.email,
-      etablissement: agent_connecté.etablissement.nom,
-      code_postal: agent_connecté.etablissement.code_postal
+      dossiersco_id: agent_connecté.id
     })
     Trace.create(identifiant: identifiant,
                  categorie: 'agent',
@@ -46,8 +40,7 @@ class ApplicationController < ActionController::Base
 
   private
   def ajoute_information_utilisateur_pour_sentry(infos)
-    Raven.user_context(user_name: infos[:utilisateur], email: infos[:email])
-    Raven.tags_context({type_utilisateur: infos[:type_utilisateur], user_name: infos[:utilisateur],  etablissement: infos[:etablissement], code_postal: infos[:code_postal]})
+    Raven.tags_context({type_utilisateur: infos[:type_utilisateur], dossiersco_id: infos[:dossiersco_id]})
   end
 
 end
