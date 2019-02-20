@@ -33,6 +33,6 @@ class ApplicationController < ActionController::Base
   private
   def ajoute_information_utilisateur_pour_sentry
     Raven.user_context(user_name: agent_connecté.nom_complet, email: agent_connecté.email)
-    Raven.extra_context({etablissement: agent_connecté.etablissement.nom, code_postal: agent_connecté.etablissement.code_postal})
+    Raven.tags_context({etablissement: agent_connecté.etablissement.nom, code_postal: agent_connecté.etablissement.code_postal})
   end
 end
