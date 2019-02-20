@@ -10,13 +10,11 @@ class ApplicationController < ActionController::Base
 
   def agent_connecté
     @agent_connecté ||= Agent.find_by(identifiant: session[:identifiant])
-    Raven.user_context(user_name: @agent_connecté.nom_complet, email: @agent_connecté.email)
-    Raven.extra_context({etablissement: @agent_connecté.etablissement.nom, code_postal: @agent_connecté.etablissement.code_postal})
-    @agent_connecté
   end
 
   def identification_agent
     identifiant = agent_connecté.present? ? agent_connecté.identifiant : '<anonyme>'
+    ajoute_information_utilisateur_pour_sentry
     Trace.create(identifiant: identifiant,
                  categorie: 'agent',
                  page_demandee: request.path_info,
@@ -30,5 +28,11 @@ class ApplicationController < ActionController::Base
     elsif agent_connecté.nil?
       redirect_to root_path
     end
+  end
+
+  private
+  def ajoute_information_utilisateur_pour_sentry
+    Raven.user_context(user_name: agent_connecté.nom_complet, email: agent_connecté.email)
+    Raven.extra_context({etablissement: agent_connecté.etablissement.nom, code_postal: agent_connecté.etablissement.code_postal})
   end
 end
