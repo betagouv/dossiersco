@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       member do
         post 'changer_etablissement'
       end
+      get 'activation'
     end
   end
 
