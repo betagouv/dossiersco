@@ -20,10 +20,30 @@
 
 ### Code
 
-- 
+- [Identifier le domaine d'envoi de mail #195](https://github.com/betagouv/dossiersco/issues/195)
+- [rendre invisible les super Admin](https://github.com/betagouv/dossiersco/issues/367)
+- [vérouiller l'UI pendant l'upload de pièces jointes](https://github.com/betagouv/dossiersco/issues/292)
+- [Identifier les établissements créés, sans doublon](https://github.com/betagouv/dossiersco/issues/276)
+- [Utilité des boutons modifier dans https://demo.dossiersco.beta.gouv.fr/configuration/etablissements](https://github.com/betagouv/dossiersco/issues/311)
+- [bloquer l'interface graphique pendant l'upload d'un fichier d'import](https://github.com/betagouv/dossiersco/issues/346)
+- [pouvoir modifier mon profil agent](https://github.com/betagouv/dossiersco/issues/335)
+- [Un agent admin ne peut pas modifier les informations du superadmin](https://github.com/betagouv/dossiersco/issues/362)
+- [récupérer et changer les DNS de dossiersco.fr](https://github.com/betagouv/dossiersco/issues/304)
+- [Fausse impression au survol des lignes de la liste des élèves](https://github.com/betagouv/dossiersco/issues/231)
+- [pas de changement d'établissement en tant que super admin](https://github.com/betagouv/dossiersco/issues/351)
+- [lancer les invitations pour le kickoff](https://github.com/betagouv/dossiersco/issues/337)
+- [La liste des options pédagogique de PILATRE est longue car elle comprend celles des autres établissements (y compris lycée)](https://github.com/betagouv/dossiersco/issues/354)
+- [Déplacer le paramétrages des pièces attendues dans le module "configuration"](https://github.com/betagouv/dossiersco/issues/378)
+- [Envoyer un email d"explication en cas d'erreur de l'import](https://github.com/betagouv/dossiersco/issues/342)
+- [Préremplir les dossiers d'inscription en 6e](https://github.com/betagouv/dossiersco/issues/197)
+- [documenter matomo (dinsic)](https://github.com/betagouv/dossiersco/issues/339)
+- [revoir l'import affelnet](https://github.com/betagouv/dossiersco/issues/341)
+- [organiser le bien-traîtement de nos utilisateurs](https://github.com/betagouv/dossiersco/issues/257)
+- [contacter l'équipe technique](https://github.com/betagouv/dossiersco/issues/340)
 
 ### Intraprenariat
 
+- Contact avec Denecourt
 - Invitations au collège envoyées
 - Invitation au kickoff envoyé
 - Premiers travaux sur une storymap
