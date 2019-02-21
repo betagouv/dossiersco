@@ -1,4 +1,22 @@
 <div class="col-md-6 col-12 offset-md-3">
   <h1 class="mb-3"><%= t(".titre") %></h1>
-  <%= render 'form' %>
+  <%= form_for([:configuration, @agent]) do |f| %>
+
+  <% if @agent.errors.any? %>
+    <div id="error_explanation">
+      <ul class="list-unstyled">
+      <% @agent.errors.full_messages.each do |message| %>
+        <li class="alert alert-danger"><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :email %>
+    <%= f.email_field :email, class: 'form-control'%>
+  </div>
+  <div class="form-group">
+    <%= f.submit t('.ajouter'), class: 'btn btn-primary my-3' %>
+  </div>
+<% end %>
 </div>

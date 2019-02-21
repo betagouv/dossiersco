@@ -11,10 +11,6 @@
   <% end %>
   <%= hidden_field_tag :jeton, params[:jeton] if params[:jeton] %>
   <div class="form-group">
-    <%= f.label :email %>
-    <%= f.email_field :email, class: 'form-control'%>
-  </div>
-  <div class="form-group">
     <%= f.label :prenom %>
     <%= f.text_field :prenom, class: 'form-control'%>
   </div>

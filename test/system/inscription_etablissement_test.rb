@@ -19,6 +19,29 @@ class InscriptionEtablissementTest < ActionDispatch::IntegrationTest
     visit "/configuration/agents/#{agent.id}/activation?jeton=#{agent.jeton}"
 
     assert_selector 'h1', text: 'Activation du compte ce.0780119F@ac-versailles.fr'
+    fill_in 'agent_password', with: 'jaimelepoulet'
+    click_button 'valider'
+
+    assert_selector 'div', text: 'Votre compte à bien été créé'
+    click_link 'Ajouter un agent'
+
+    assert_selector 'h1', text: 'Ajouter un agent'
+    fill_in 'agent_email', with: 'agent@email.fr'
+    click_button 'Ajouter'
+
+    assert_selector 'td', text: 'agent@email.fr'
+    assert_text 'Un email a été envoyé à l\'adresse agent@email.fr pour finaliser son inscription'
+
+    visit "/agent/deconnexion"
+
+    agent = Agent.find_by(email: 'agent@email.fr')
+    visit "/configuration/agents/#{agent.id}/activation?jeton=#{agent.jeton}"
+
+    assert_selector 'h1', text: 'Activation du compte agent@email.fr'
+    fill_in 'agent_password', with: 'jemangequedeslegumes'
+    click_button 'valider'
+
+    assert_selector 'div', text: 'Votre compte à bien été créé'
   end
 
 end
