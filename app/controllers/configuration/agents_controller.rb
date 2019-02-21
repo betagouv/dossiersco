@@ -3,7 +3,7 @@ module Configuration
     layout 'configuration'
 
     before_action :identification_agent
-    before_action :if_agent_is_admin, except: [:edit, :update]
+    before_action :if_agent_is_admin, except: [:edit, :update, :activation]
 
     def new
       @agent = Agent.new
@@ -11,10 +11,12 @@ module Configuration
 
     def create
       @agent = Agent.new(agent_params)
-      @agent.etablissement ||= agent_connecté.etablissement
-
+      @agent.identifiant = @agent.email
+      @agent.etablissement = @agent_connecté.etablissement
+      @agent.jeton = SecureRandom.base58(26)
       if @agent.save
-        redirect_to configuration_agents_path
+        AgentMailer.invite_agent(@agent, @agent_connecté).deliver_now
+        redirect_to configuration_agents_path, notice: t('.invitation_envoyee', email: @agent.email)
       else
         render :new
       end
