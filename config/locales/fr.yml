@@ -140,10 +140,15 @@ fr:
       valider_inscription: "Valider l'inscription"
   configuration:
     agents:
+      index:
+        ajouter_un_agent: "Ajouter un agent"
       activation:
         titre_html: "Activation du compte <br/> %{email}"
       new:
-        titre: "Créer un agent"
+        titre: "Ajouter un agent"
+        ajouter: "Ajouter"
+      create:
+        invitation_envoyee: "Un email a été envoyé à l'adresse %{email} pour finaliser son inscription"
       edit:
         titre_html: "Modification du profil <br/> %{email}"
     etablissements:
