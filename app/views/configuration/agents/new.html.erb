@@ -15,6 +15,10 @@
     <%= f.label :email %>
     <%= f.email_field :email, class: 'form-control'%>
   </div>
+  <div class="form-check">
+    <%= f.check_box :admin, class: 'form-check-input'%>
+    <%= f.label :admin, class: 'form-check-label' %>
+  </div>
   <div class="form-group">
     <%= f.submit t('.ajouter'), class: 'btn btn-primary my-3' %>
   </div>

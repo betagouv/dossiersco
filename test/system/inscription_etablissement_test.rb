@@ -22,11 +22,12 @@ class InscriptionEtablissementTest < ActionDispatch::IntegrationTest
     fill_in 'agent_password', with: 'jaimelepoulet'
     click_button 'valider'
 
-    assert_selector 'div', text: 'Votre compte à bien été créé'
+    assert_selector 'div', text: 'Votre compte a bien été créé'
     click_link 'Ajouter un agent'
 
     assert_selector 'h1', text: 'Ajouter un agent'
     fill_in 'agent_email', with: 'agent@email.fr'
+    check 'agent_admin'
     click_button 'Ajouter'
 
     assert_selector 'td', text: 'agent@email.fr'
@@ -41,7 +42,8 @@ class InscriptionEtablissementTest < ActionDispatch::IntegrationTest
     fill_in 'agent_password', with: 'jemangequedeslegumes'
     click_button 'valider'
 
-    assert_selector 'div', text: 'Votre compte à bien été créé'
+    assert_selector 'div', text: 'Votre compte a bien été créé'
+    assert_selector 'a', text: 'Agents'
   end
 
 end
