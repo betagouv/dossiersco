@@ -35,7 +35,7 @@ fr:
       document_valide: "Votre document a été examiné et approuvé par l'établissement."
   messages:
     probleme_identification: "Nous n'avons pas pu vous identifier"
-    compte_cree: "Votre compte à bien été créé"
+    compte_cree: "Votre compte a bien été créé"
   dossiers_affelnet:
     traitement_import:
       traiter_le_dossier: "Traiter le dossier"
@@ -151,6 +151,8 @@ fr:
         invitation_envoyee: "Un email a été envoyé à l'adresse %{email} pour finaliser son inscription"
       edit:
         titre_html: "Modification du profil <br/> %{email}"
+      form:
+        nouveau_mot_de_passe: 'Nouveau mot de passe'
     etablissements:
       new:
         titre: "Créer un établissement"
