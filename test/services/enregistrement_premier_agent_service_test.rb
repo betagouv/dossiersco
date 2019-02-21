@@ -15,7 +15,7 @@ class EnregistrementPremierAgentServiceTest < ActiveSupport::TestCase
   test 'avec un UAI du 78, l\'adresse est celle de l\'académie de Versailles' do
       service = EnregistrementPremierAgentService.new
       email = service.construit_email_chef_etablissement('0780119F')
-      assert_equal 'ce.0780119F@ac-yvelines.fr', email
+      assert_equal 'ce.0780119F@ac-versailles.fr', email
   end
 
   test 'avec un UAI du 75, l\'adresse est celle de l\'académie de Paris' do
