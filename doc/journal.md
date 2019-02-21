@@ -1,5 +1,38 @@
 # Journal
 
+## 7e Semaine - du 15 au 21 février
+
+**On avance commercialement, et on prépare l'inscription autonome des établisements**
+
+### Vie de l'équipe
+
+- Nous allons communiquer avec les utilisateurs via l'application principalement, en mettant en place, sous peu, un mécanisme d'affichage des dernières modifications
+- C'est la première fois que nous avons un gros bout de code coincé sur une branche
+- Yannick n'est pas à l'aise avec cette situation, on fait du stock
+- Nous avons fait cet ensemble de ticket en sens inverse. Dans l'autre sens nous aurions pu faire les tickets un par un
+- Est-ce qu'on perd des informations à faire notre prise de recul de la façon dont on le fait aujourd'hui ?
+- Nous sommes génés par le manque de feedback utilisateurs. Sont-ils connectés ? Ont-ils des problèmes ?
+- C'est la période de clôture comptable, combinée aux vacances d'hiver, est-ce que ça explique le peu de feedback des agents-utilisateurs ?
+- C'est chouette d'avoir Stéphane qui fait des tests utilisateurs avec le collège de Vergèze.
+- Nous avons besoin de construire une boucle de feedback vis à vis des établissements (où en sont-ils de l'usage de application)
+- Nous avons envie d'essayer de faire une demi-journée (ou deux) par semaine en binômage avec Pierre
+- Nous n'avons jamais été aussi près de tous avoir un badge pour le lab 110 bis ; Merci Léa \o/
+
+### Code
+
+-
+
+### Intraprenariat
+
+- Réunion avec le département de Paris et l'académie de Paris pour de l'intégration de DossierSCO dans leur ENT
+- Début de contact avec l'académie de Nancy-Metz et Lyon
+- Premier contact avec Nicolas Babut
+- Des premiers échanges avec la DNE du primaire
+- Nous avons lu cet article qui promet des échanges intéressants autour des pièces jointes : https://www.unicef.fr/article/l-ecole-pour-chaque-enfant-des-efforts-restent-faire
+
+
+---
+
 ## Semaine du 8 au 14 février
 
 *On se dote de moyens pour piloter dossiersco*
