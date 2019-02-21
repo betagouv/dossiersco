@@ -10,7 +10,7 @@ class InscriptionEtablissementTest < ActionDispatch::IntegrationTest
     click_link 'Inscrire mon établissement sur DossierSCO'
     fill_in 'Uai', with: '0780119F'
     click_button 'Inscrire l\'établissement'
-    assert_selector 'div', text: 'Un mail a été envoyé à ce.0780119F@ac-paris.fr'
+    assert_selector 'div', text: 'Un mail a été envoyé à ce.0780119F@ac-yvelines.fr'
 
     etablissement = Etablissement.find_by(uai: '0780119F')
     assert_equal '0780119F', etablissement.uai
@@ -18,7 +18,6 @@ class InscriptionEtablissementTest < ActionDispatch::IntegrationTest
     agent = Agent.find_by(etablissement: etablissement)
     visit "/configuration/agents/#{agent.id}/activation?jeton=#{agent.jeton}"
 
-    assert_selector 'h1', text: 'Activation du compte ce.0780119F@ac-paris.fr'
     assert_selector 'h1', text: 'Activation du compte ce.0780119F@ac-yvelines.fr'
   end
 
