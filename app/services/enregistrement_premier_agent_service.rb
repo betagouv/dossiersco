@@ -17,5 +17,5 @@ class EnregistrementPremierAgentService
     ACADEMIES[departement]
   end
 
-  ACADEMIES = {75 => 'paris', 78 => 'yvelines'}
+  ACADEMIES = {75 => 'paris', 78 => 'versailles'}
 end

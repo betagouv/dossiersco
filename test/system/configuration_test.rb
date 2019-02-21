@@ -5,7 +5,7 @@ require 'test_helper'
 class ConfigurationTest < ActionDispatch::IntegrationTest
   include ::ActiveJob::TestHelper
 
-  test "Configuration basique : ajout d'agent, import fichier siecle, modification option pédagogique" do
+  test "Configuration basique : import fichier siecle, modification option pédagogique" do
     admin = Fabricate(:admin)
 
     visit '/agent'
@@ -18,15 +18,6 @@ class ConfigurationTest < ActionDispatch::IntegrationTest
     assert_selector 'h1', text: 'Eleves en cours de traitement'
 
     click_link 'Configuration'
-    click_link 'Agents'
-    click_link text: 'Créer un nouvel agent'
-
-    attributs = Fabricate.attributes_for(:agent)
-    fill_in 'agent_password', with: attributs[:password]
-    click_button 'valider'
-
-    assert_selector 'td', text: attributs[:identifiant]
-
     click_link 'Import'
 
     within('.siecle') do
