@@ -4,7 +4,6 @@ module Configuration
 
     before_action :identification_agent
     before_action :if_agent_is_admin, except: [:edit, :update]
-    before_action :cherche_agent, only: [:destroy]
 
     def new
       @agent = Agent.new
@@ -27,6 +26,7 @@ module Configuration
     end
 
     def edit
+      @agent = @agent_connecté
     end
 
     def update
@@ -35,6 +35,7 @@ module Configuration
         session[:identifiant] = @agent_connecté.identifiant
         redirect_to configuration_agents_path, notice: t('messages.compte_cree')
       else
+        @agent = @agent_connecté
         if @agent_connecté.jeton
           render :activation, layout: 'connexion'
         else
@@ -44,6 +45,7 @@ module Configuration
     end
 
     def destroy
+      @agent = Agent.find(params[:id])
       @agent.destroy
       redirect_to configuration_agents_path, notice: "L'agent a bien été supprimé"
     end
@@ -54,6 +56,7 @@ module Configuration
     end
 
     def activation
+      @agent = @agent_connecté
       render layout: 'connexion'
     end
 
@@ -62,8 +65,5 @@ module Configuration
       params.require(:agent).permit(:identifiant, :prenom, :nom, :password, :etablissement_id, :admin, :email)
     end
 
-    def cherche_agent
-      @agent = Agent.find(params[:id])
-    end
   end
 end
