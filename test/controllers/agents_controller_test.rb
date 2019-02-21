@@ -28,17 +28,6 @@ class AgentsControllerTest < ActionDispatch::IntegrationTest
     assert_equal [], agents - assigns(:agents)
   end
 
-  test 'Un admin modifie un agent de son établissement' do
-    admin = Fabricate(:admin)
-    agent = Fabricate(:agent, etablissement: admin.etablissement, prenom: 'Jean')
-
-    identification_agent(admin)
-    put configuration_agent_path(agent), params: { agent: { prenom: 'Ibrahima' } }
-
-    assert_redirected_to configuration_agents_path
-    assert_equal 'Ibrahima', Agent.find(agent.id).prenom
-  end
-
   test 'Un agent peu accéder à son profil' do
     agent = Fabricate(:agent)
 
@@ -48,14 +37,15 @@ class AgentsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "Un agent ne peut pas acceder à l'édition d'un autre agent" do
+  test "Un agent ne peut pas acceder qu'à son compte en édition" do
     agent_un = Fabricate(:agent)
     agent_deux = Fabricate(:agent)
-
     identification_agent(agent_un)
+
     get edit_configuration_agent_path(agent_deux)
 
-    assert_redirected_to agent_tableau_de_bord_path
+    assert_response :success
+    assert_equal agent_un, assigns(:agent_connecté)
   end
 
   test 'Un agent modifie son profil' do
