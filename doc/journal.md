@@ -20,7 +20,16 @@
 
 ### Code
 
--
+- [Contacter collège CAZES à St BEAT, académie de Toulouse, suite au bug rencontré lundi](https://github.com/betagouv/dossiersco/issues/391)
+- [Rencontrer la DSI de la mairie de Paris et du rectorat](https://github.com/betagouv/dossiersco/issues/289)
+- [Remonter des informations de contexte à Sentry](https://github.com/betagouv/dossiersco/issues/388)
+- [Test email envoyé en démo](https://github.com/betagouv/dossiersco/issues/233)
+- [ajouter un feedback pendant la purge (ça peut être long)](https://github.com/betagouv/dossiersco/issues/383)
+- [empécher de déclencher un nouvel import s'il y en a un déjà en cours](https://github.com/betagouv/dossiersco/issues/374)
+- [Supprimer le mot 'collège' dans le nom d'un établissement et l'ajouter dans le code](https://github.com/betagouv/dossiersco/issues/387)
+- [Message d'erreur juste après identification des agents](https://github.com/betagouv/dossiersco/issues/382)
+- [purger les dossiers d'inscription d'un établissement](https://github.com/betagouv/dossiersco/issues/357)
+- [appeler l'academie de Nancy-grand est](https://github.com/betagouv/dossiersco/issues/405)
 
 ### Intraprenariat
 
