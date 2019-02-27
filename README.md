@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/betagouv/dossiersco.svg?style=svg)](https://circleci.com/gh/betagouv/dossiersco)
 
-Inscrire ses enfants au collège sans se déplacer, sans redonner d'information déjà connues et sans flux papier.
+Inscrire ses enfants au collège sans se déplacer, sans redonner d'informations déjà connues et sans flux papier.
 
 [dossiersco.fr](https://dossiersco.fr/)
 
@@ -15,19 +15,19 @@ Inscrire ses enfants au collège sans se déplacer, sans redonner d'information 
 ## Documentation
 
 - [L'histoire des décisions d'architecture](https://github.com/betagouv/dossiersco/tree/production/doc/architecture)
-- le [suivi du processus d'accueil des établissements beta-testeur](https://github.com/betagouv/dossiersco/projects/2)
+- le [suivi du processus d'accueil des établissements beta-testeurs](https://github.com/betagouv/dossiersco/projects/2)
 - le [suivi des travaux sur le projet](https://github.com/betagouv/dossiersco/projects/1)
 
 ## Développement
 
-Pour faciliter la mise en place d'environnement, nous nous basons sur [docker](https://www.docker.com/). Les commandes principales sont placé dans un [`Makefile`](https://www.gnu.org/software/make/manual/make.html). Il est possible que certaines commandes particulière nécessite malgré tout d'explorer les commandes ̀ docker` et plus particulièrement `docker-compose`.
+Pour faciliter la mise en place d'environnement, nous nous basons sur [docker](https://www.docker.com/). Les commandes principales sont placées dans un [`Makefile`](https://www.gnu.org/software/make/manual/make.html). Il est possible que certaines commandes particulières nécessitent malgré tout d'explorer les commandes ̀ docker` et plus particulièrement `docker-compose`.
 
 Pour cloner le repository :
 ```bash
 git clone https://github.com/betagouv/dossiersco.git
 ```
 
-Pour constuire le projet (installer les gems entre autre) :
+Pour constuire le projet (installer les gems entre autres) :
 ```bash
 make build
 ```
