@@ -158,6 +158,7 @@ fr:
         titre: "Créer un établissement"
         inscrire: "Inscrire l'établissement"
       create:
+        uai_invalid: "Nous n'avons pas reconnu l'uai que vous avez renseigné"
         mail_envoye: "Un mail a été envoyé à %{mail_ce}"
       edit:
         titre: "Modifier un établissement"

@@ -13,7 +13,6 @@ module Configuration
     end
 
     def new
-      @etablissement = Etablissement.new
       render layout: 'connexion'
     end
 
@@ -22,7 +21,8 @@ module Configuration
       if agent
         redirect_to new_configuration_etablissement_path, notice:t('.mail_envoye', mail_ce: agent.email)
       else
-        render :new
+        flash[:error] = t('.uai_invalid')
+        render :new, layout: 'connexion'
       end
     end
 

@@ -1,6 +1,7 @@
 class EnregistrementPremierAgentService
 
   def execute(uai)
+    return false unless uai_valide?(uai)
     etablissement = Etablissement.create!(uai: uai)
     jeton = SecureRandom.base58(26)
     email = construit_email_chef_etablissement(uai)
@@ -18,7 +19,7 @@ class EnregistrementPremierAgentService
     ACADEMIES[departement]
   end
 
-  def uai_valid?(uai)
+  def uai_valide?(uai)
     a_un_format_valide?(uai) &&
     contient_un_departement?(uai) &&
     a_une_clef_de_verification_valide?(uai)
@@ -33,7 +34,7 @@ class EnregistrementPremierAgentService
   end
 
   def a_une_clef_de_verification_valide?(uai)
-    clef = uai.last
+    clef = uai.last.downcase
     return false if ['i', 'q', 'o'].include?(clef)
     chiffres = uai[0..6].to_i
     clef == "abcdefghjklmnprstuvwxyz"[chiffres % 23]
