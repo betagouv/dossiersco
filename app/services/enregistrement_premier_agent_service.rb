@@ -1,7 +1,8 @@
 class EnregistrementPremierAgentService
 
   def execute(uai)
-    return false unless uai_valide?(uai)
+    raise StandardError, 'uai_invalide' unless uai_valide?(uai)
+    raise StandardError, 'uai_existant' if Etablissement.exists?(uai: uai)
     etablissement = Etablissement.create!(uai: uai)
     jeton = SecureRandom.base58(26)
     email = construit_email_chef_etablissement(uai)

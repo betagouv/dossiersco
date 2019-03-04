@@ -159,6 +159,7 @@ fr:
         inscrire: "Inscrire l'établissement"
       create:
         uai_invalid: "Nous n'avons pas reconnu l'uai que vous avez renseigné"
+        uai_existant: "Cet uai est déjà enregistré, veuillez contacter votre chef d'établissement"
         mail_envoye: "Un mail a été envoyé à %{mail_ce}"
       edit:
         titre: "Modifier un établissement"

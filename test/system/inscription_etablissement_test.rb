@@ -47,17 +47,17 @@ class InscriptionEtablissementTest < ActionDispatch::IntegrationTest
   end
 
   test 'inscription bloqué si un compte déjà créé avec cet UAI' do
-    etablissement = Fabricate(:etablissement, uai: '0780119F')
-    Fabricate(:agent, email: 'ce.0780119F@ac-paris.fr', identifiant: 'ce.0780119F@ac-paris.fr', etablissement: etablissement)
+    etablissement = Fabricate(:etablissement, uai: '0500079P')
+    Fabricate(:agent, email: 'ce.0500079P@ac-paris.fr', identifiant: 'ce.0500079P@ac-paris.fr', etablissement: etablissement)
 
-    assert_not_nil Etablissement.find_by(uai: '0780119F')
-    assert_not_nil Agent.find_by(email: 'ce.0780119F@ac-paris.fr')
+    assert_not_nil Etablissement.find_by(uai: '0500079P')
+    assert_not_nil Agent.find_by(email: 'ce.0500079P@ac-paris.fr')
 
     visit '/'
     click_link 'Vous êtes agent en EPLE ?'
     click_link 'Inscrire mon établissement sur DossierSCO'
-    fill_in 'Uai', with: '0780119F'
+    fill_in 'Uai', with: '0500079P'
     click_button 'Inscrire l\'établissement'
-    assert_selector 'div', text: 'Un mail a été envoyé à ce.0780119F@ac-versailles.fr'
+    assert_selector 'div', text: I18n.t('configuration.etablissements.create.uai_existant')
   end
 end
