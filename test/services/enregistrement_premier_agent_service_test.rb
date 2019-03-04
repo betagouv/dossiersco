@@ -5,16 +5,24 @@ class EnregistrementPremierAgentServiceTest < ActiveSupport::TestCase
 
   test 'crée un établissement et un agent administrateur à partir d\'un uai' do
     assert_emails 1 do
-      agent = EnregistrementPremierAgentService.new.execute('0753936w')
-      assert_equal '0753936w', agent.etablissement.uai
-      assert_equal 'ce.0753936w@ac-paris.fr', agent.email
+      agent = EnregistrementPremierAgentService.new.execute('0720081X')
+      assert_equal '0720081X', agent.etablissement.uai
+      assert_equal 'ce.0720081X@ac-nantes.fr', agent.email
       assert agent.admin?
     end
   end
 
   test "pas de création d'établissement si l'uai n'est pas valide" do
-    assert_emails 0 do
-      assert ! EnregistrementPremierAgentService.new.execute('0753936y')
+    assert_raise StandardError do
+      EnregistrementPremierAgentService.new.execute('0753936y')
+    end
+  end
+
+  test "blocage si l'uai est déjà enregistré" do
+    Fabricate(:etablissement, uai: '7200727C')
+    service = EnregistrementPremierAgentService.new
+    assert_raise StandardError do
+      EnregistrementPremierAgentService.new.execute('7200727C')
     end
   end
 
