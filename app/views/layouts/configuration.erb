@@ -70,11 +70,9 @@
         <li class="nav-item <%= 'active' if request.fullpath.include? '/agent' %>">
           <%= link_to 'Agents', configuration_agents_path, {class: 'nav-link'} %>
         </li>
-        <% if super_admin?(@agent_connecté.email) %>
-          <li class="nav-item <%= 'active' if request.fullpath.include? '/etablissement' %>">
-            <%= link_to 'Etablissement', configuration_etablissements_path, {class: 'nav-link'} %>
-          </li>
-        <% end %>
+        <li class="nav-item <%= 'active' if request.fullpath.include? '/etablissement' %>">
+          <%= link_to 'Etablissement', configuration_etablissement_path(@agent_connecté.etablissement), {class: 'nav-link'} %>
+        </li>
       </ul>
     </nav>
     <main role="main" class="container my-5">
@@ -96,13 +94,13 @@
 
     </main><!--/.container-->
     <script>
-      drift.identify(<%= @agent_connecté.id %>, {
-        email: '<%= @agent_connecté.email %>',
-        name: '<%= @agent_connecté.prenom %> <%= @agent_connecté.nom %> (<%= @agent_connecté.etablissement.nom %>)',
-        postalcode: '<%= @agent_connecté.etablissement.code_postal %>',
-        city: '<%= @agent_connecté.etablissement.ville %>'
-      })
+drift.identify(<%= @agent_connecté.id %>, {
+  email: '<%= @agent_connecté.email %>',
+  name: '<%= @agent_connecté.prenom %> <%= @agent_connecté.nom %> (<%= @agent_connecté.etablissement.nom %>)',
+  postalcode: '<%= @agent_connecté.etablissement.code_postal %>',
+  city: '<%= @agent_connecté.etablissement.ville %>'
+})
     </script>
-<% end %>
+  <% end %>
 
-<%= render template: 'layouts/application' %>
+  <%= render template: 'layouts/application' %>
