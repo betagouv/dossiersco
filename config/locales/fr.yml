@@ -174,7 +174,7 @@ fr:
       refuser: "Refuser"
     identification:
       inscription: "Inscrire mon établissement sur DossierSCO"
-      identifiant: "Identifiant"
+      email: "Email"
       mot_de_passe: "Mot de passe"
       se_connecter: "Se connecter"
   tache_imports:

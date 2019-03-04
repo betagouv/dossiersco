@@ -11,7 +11,7 @@ module Configuration
 
     def create
       @agent = Agent.new(agent_params)
-      @agent.identifiant = @agent.email
+      @agent.email = @agent.email
       @agent.etablissement = @agent_connecté.etablissement
       @agent.jeton = SecureRandom.base58(26)
       if @agent.save
@@ -24,7 +24,7 @@ module Configuration
 
     def index
       super_admins = ENV['SUPER_ADMIN'].present? ? ENV['SUPER_ADMIN'].gsub(' ', "").split(",") : ['']
-      @agents = Agent.where(etablissement: agent_connecté.etablissement).where.not("identifiant IN (?)", super_admins)
+      @agents = Agent.where(etablissement: agent_connecté.etablissement).where.not("email IN (?)", super_admins)
     end
 
     def edit
@@ -34,7 +34,7 @@ module Configuration
     def update
       @agent_connecté.jeton = nil
       if @agent_connecté.update(agent_params)
-        session[:identifiant] = @agent_connecté.identifiant
+        session[:agent_email] = @agent_connecté.email
         redirect_to configuration_agents_path, notice: t('messages.compte_cree')
       else
         @agent = @agent_connecté
@@ -64,7 +64,7 @@ module Configuration
 
     private
     def agent_params
-      params.require(:agent).permit(:identifiant, :prenom, :nom, :password, :etablissement_id, :admin, :email)
+      params.require(:agent).permit(:prenom, :nom, :password, :etablissement_id, :admin, :email)
     end
 
   end

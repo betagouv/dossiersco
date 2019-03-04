@@ -48,7 +48,7 @@ class InscriptionEtablissementTest < ActionDispatch::IntegrationTest
 
   test 'inscription bloqué si un compte déjà créé avec cet UAI' do
     etablissement = Fabricate(:etablissement, uai: '0500079P')
-    Fabricate(:agent, email: 'ce.0500079P@ac-paris.fr', identifiant: 'ce.0500079P@ac-paris.fr', etablissement: etablissement)
+    Fabricate(:agent, email: 'ce.0500079P@ac-paris.fr', etablissement: etablissement)
 
     assert_not_nil Etablissement.find_by(uai: '0500079P')
     assert_not_nil Agent.find_by(email: 'ce.0500079P@ac-paris.fr')
