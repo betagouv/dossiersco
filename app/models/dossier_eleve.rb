@@ -96,7 +96,7 @@ class DossierEleve < ActiveRecord::Base
 
   def valide
     update(etat: 'validé')
-    mail = AgentMailer.mail_validation_inscription(eleve)
+    mail = FamilleMailer.mail_validation_inscription(eleve)
     mail.deliver_now
   end
 
