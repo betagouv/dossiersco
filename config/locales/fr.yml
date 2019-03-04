@@ -1,6 +1,9 @@
 
 fr:
   activerecord:
+    attributes:
+      etablissement:
+          uai: "UAI"
     errors:
       messages:
         record_invalid: "%{errors}"
@@ -143,6 +146,8 @@ fr:
       index:
         ajouter_un_agent: "Ajouter un agent"
       activation:
+        explication_html: "Votre établissement a bien été inscrit.</br>
+        Il ne vous reste plus qu'à remplir vos informations pour vous connecter"
         titre_html: "Activation du compte <br/> %{email}"
       new:
         titre: "Ajouter un agent"
@@ -152,13 +157,14 @@ fr:
       edit:
         titre_html: "Modification du profil <br/> %{email}"
       form:
-        nouveau_mot_de_passe: 'Nouveau mot de passe'
+        nouveau_mot_de_passe: 'Nouveau mot de passe *'
     etablissements:
       new:
-        titre: "Créer un établissement"
-        inscrire: "Inscrire l'établissement"
+        explication: "Merci de saisir votre UAI ci-dessous. Un email sera alors envoyé à votre chef d'établissement contenant un lien pour finaliser l'inscription."
+        titre: "Inscrire mon établissement"
+        inscrire: "Envoyer la demande d'inscription"
       create:
-        uai_invalid: "Nous n'avons pas reconnu l'uai que vous avez renseigné"
+        uai_invalide: "Nous n'avons pas reconnu l'uai que vous avez renseigné"
         uai_existant: "Cet uai est déjà enregistré, veuillez contacter votre chef d'établissement"
         mail_envoye: "Un mail a été envoyé à %{mail_ce}"
       edit:
