@@ -14,12 +14,12 @@ class Message < ActiveRecord::Base
     destinataire == "rl2" ? dossier_eleve.portable_rl2 : dossier_eleve.portable_rl1
   end
 
-  def envoyer_sms
+  def envoyer_sms(http = Net::HTTP)
     if numero
       numero_prefixe = numero.gsub(/[[:space:]]/,'').gsub(/^0/,'+33')
       uri = URI.parse("https://rest.nexmo.com/sms/json")
 
-      https = Net::HTTP.new(uri.host,uri.port)
+      https = http.new(uri.host, uri.port)
       https.use_ssl = true
 
       header = {'Content-Type': 'application/json'}
@@ -28,7 +28,7 @@ class Message < ActiveRecord::Base
         'api_secret':"#{ENV['NEXMO_SECRET']}",
         'from': ENV['NEXMO_SENDER'], 'to': numero_prefixe, 'text': contenu}
 
-      request = Net::HTTP::Post.new(uri.request_uri, header)
+      request = http::Post.new(uri.request_uri, header)
       request.body = payload.to_json
 
       response = https.request(request)
