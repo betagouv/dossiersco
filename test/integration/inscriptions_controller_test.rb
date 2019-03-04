@@ -6,26 +6,31 @@ init
 
 class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   def test_entree_succes_agent
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    agent = Fabricate(:agent)
+    post '/agent', params: { email: agent.email, mot_de_passe: agent.password }
     follow_redirect!
-    assert response.body.include? 'Collège Germaine Tillion'
+    assert response.body.include? agent.email
   end
 
   def test_entree_mauvais_mdp_agent
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'pierre' }
+    agent = Fabricate(:admin)
+    post '/agent', params: { email: agent.email, mot_de_passe: 'mauvais mot de passe' }
     follow_redirect!
     assert response.body.include? 'Ces informations ne correspondent pas à un agent enregistré'
   end
 
   def test_entree_mauvais_identifiant_agent
-    post '/agent', params: { identifiant: 'jacques', mot_de_passe: 'pierre' }
+    agent = Fabricate(:admin)
+    post '/agent', params: { email: 'jacques@laposte.net', mot_de_passe: 'pierre' }
     follow_redirect!
     assert response.body.include? 'Ces informations ne correspondent pas à un agent enregistré'
   end
 
   def test_nombre_dossiers_total
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
-    follow_redirect!
+    agent = Fabricate(:agent)
+    5.times {Fabricate(:dossier_eleve, etablissement: agent.etablissement, resp_legal: [Fabricate(:resp_legal)])}
+
+    identification_agent(agent)
     doc = Nokogiri::HTML(response.body)
     selector = '#total_dossiers'
     affichage_total_dossiers = doc.css(selector).text
@@ -33,13 +38,15 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_affiche_message_que_limport_est_en_cours
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    agent = Fabricate(:admin)
+    identification_agent(agent)
+
     post '/tache_imports', params: { tache_import: { fichier: 'tests/test_import_siecle.xls', job_klass: 'ImporterSiecle' } }
     follow_redirect!
 
     doc = Nokogiri::HTML(response.body)
 
-    assert_match I18n.t('tache_imports.create.message_de_succes', email: 'pierre@test.fr'), doc.css('.alert-success').text
+    assert_match I18n.t('tache_imports.create.message_de_succes', email: agent.email), doc.css('.alert-success').text
   end
 
   def test_options_demande_et_abandon
@@ -107,7 +114,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_un_agent_visualise_un_eleve
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    agent = Fabricate(:agent)
+    identification_agent(agent)
 
     get '/agent/eleve/2'
 
@@ -116,7 +124,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_valide_une_inscription
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    agent = Fabricate(:agent)
+    identification_agent(agent)
 
     post '/agent/valider_inscription', params: { identifiant: '4' }
     eleve = Eleve.find_by(identifiant: '4')
@@ -128,7 +137,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_un_eleve_est_sortant
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    agent = Fabricate(:agent)
+    identification_agent(agent)
 
     post '/agent/eleve_sortant', params: { identifiant: '4' }
     eleve = Eleve.find_by(identifiant: '4')
@@ -140,7 +150,10 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_liste_des_eleves
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    eleve = Eleve.find_by(identifiant: 2)
+    agent = Fabricate(:agent, etablissement: eleve.dossier_eleve.etablissement)
+    identification_agent(agent)
+
     get '/agent/liste_des_eleves'
 
     assert response.body.include? 'Edith'
@@ -154,7 +167,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     resp_legal.adresse = 'Nouvelle adresse'
     resp_legal.save
 
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    agent = Fabricate(:agent, etablissement: eleve.dossier_eleve.etablissement)
+    identification_agent(agent)
     get '/agent/liste_des_eleves'
 
     assert response.body.include? '✓'
@@ -165,7 +179,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     dossier_eleve = eleve.dossier_eleve
     dossier_eleve.update(demi_pensionnaire: true)
 
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
+    identification_agent(agent)
     get '/agent/liste_des_eleves'
 
     assert response.body.include? '✓'
@@ -176,7 +191,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     dossier_eleve = DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first.id
     RespLegal.create! dossier_eleve_id: dossier_eleve.id, email: 'test@test.com', priorite: 1
 
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
+    identification_agent(agent)
     get '/agent/eleve/XXX'
 
     assert response.body.include? "Ce formulaire envoie un message à la famille de l'élève."
@@ -189,7 +205,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
                       tel_principal: '0101010101', tel_secondaire: '0606060606', email: 'test@test.com', priorite: 1
     ContactUrgence.create! dossier_eleve_id: dossier_eleve.id, tel_principal: '0103030303'
 
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
+    identification_agent(agent)
     get '/agent/eleve/XXX'
 
     assert response.body.include? '0101010101'
@@ -202,15 +219,18 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     dossier_eleve = DossierEleve.create!(eleve_id: e.id, etablissement_id: Etablissement.first.id)
     resp_legal = RespLegal.create(email: 'test@test.com', dossier_eleve_id: dossier_eleve.id)
 
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
+    identification_agent(agent)
     get '/agent/liste_des_eleves'
 
     assert response.body.include? 'far fa-envelope'
   end
 
   def test_affiche_decompte_historique_message_envoyes
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
-    post '/agent/contacter_une_famille', params: { identifiant: '2', message: 'Message de test' }
+    eleve = Eleve.find_by(identifiant: 2)
+    agent = Fabricate(:agent, etablissement: eleve.dossier_eleve.etablissement)
+    identification_agent(agent)
+    post '/agent/contacter_une_famille', params: { identifiant: eleve.identifiant, message: 'Message de test' }
     get '/agent/liste_des_eleves'
 
     assert response.body.include? '(1)'
@@ -221,7 +241,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     dossier_eleve = Eleve.find_by(identifiant: '2').dossier_eleve
     assert_equal 'connecté', dossier_eleve.etat
 
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
+    identification_agent(agent)
     get '/agent/liste_des_eleves'
 
     assert response.body.include? 'connecté'
@@ -233,17 +254,17 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     dossier_eleve = Eleve.find_by(identifiant: '2').dossier_eleve
     assert_equal 'en attente de validation', dossier_eleve.etat
 
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
+    identification_agent(agent)
     get '/agent/liste_des_eleves'
 
     assert response.body.include? 'en attente de validation'
   end
 
   def test_un_agent_envoi_un_mail_a_une_famille
-    agent = Agent.find_by(identifiant: 'pierre')
+    agent = Fabricate(:agent)
     agent.etablissement.update(email: 'etablissement@email.com')
-
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    identification_agent(agent)
     post '/agent/contacter_une_famille', params: { identifiant: '6', message: 'Message de test' }
 
     mail = ActionMailer::Base.deliveries.last
@@ -264,7 +285,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     eleve.dossier_eleve.resp_legal.each { |rl| rl.update(email: nil) }
     assert_equal 0, Message.where(categorie: 'sms').count
 
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    agent = Fabricate(:agent, etablissement: eleve.dossier_eleve.etablissement)
+    identification_agent(agent)
     post '/agent/contacter_une_famille', params: { identifiant: '6', message: 'Message de test' }
 
     assert_equal 0, ActionMailer::Base.deliveries.count
@@ -273,11 +295,13 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
   def test_trace_messages_envoyes
     assert_equal 0, Message.count
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
-    post '/agent/contacter_une_famille', params: { identifiant: '6', message: 'Message de test' }
-
     eleve = Eleve.find_by(identifiant: '6')
     dossier = eleve.dossier_eleve
+
+    agent = Fabricate(:agent, etablissement: dossier.etablissement)
+    identification_agent(agent)
+    post '/agent/contacter_une_famille', params: { identifiant: '6', message: 'Message de test' }
+
 
     assert_equal 1, Message.count
     message = Message.first
@@ -288,7 +312,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_envoi_un_mail_quand_un_agent_valide_un_dossier
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    agent = Fabricate(:agent)
+    identification_agent(agent)
     post '/agent/valider_inscription', params: { identifiant: '4' }
 
     mail = ActionMailer::Base.deliveries.last
@@ -305,7 +330,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   def test_lenvoie_dun_email_de_relance
     eleve = Eleve.find_by(identifiant: 2)
     template = 'Réinscription de votre enfant <%= eleve.prenom %> <%= eleve.nom %> au collège'
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    agent = Fabricate(:agent, etablissement: eleve.dossier_eleve.etablissement)
+    identification_agent(agent)
     post '/agent/relance_emails', params: { ids: eleve.dossier_eleve.id, template: template }
 
     assert_equal 1, Message.count
@@ -346,7 +372,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     resp_legal_1 = Eleve.find_by(identifiant: '2').dossier_eleve.resp_legal_1
     resp_legal_1.update adresse: 'Nouvelle adresse'
 
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    agent = Fabricate(:agent, etablissement: resp_legal_1.dossier_eleve.etablissement)
+    identification_agent(agent)
 
     get '/agent/eleve/2'
 
@@ -355,7 +382,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_page_eleve_agent_affiche_adresse_sans_changement
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    agent = Fabricate(:agent)
+    identification_agent(agent)
 
     get '/agent/eleve/2'
 
@@ -369,7 +397,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     RespLegal.create! dossier_eleve_id: d.id,
                       tel_principal: '0101010101', tel_secondaire: '0606060606', email: 'test@test.com', priorite: 1
 
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    agent = Fabricate(:agent, etablissement: d.etablissement)
+    identification_agent(agent)
     get '/agent/eleve/XXX'
 
     doc = Nokogiri::HTML(response.body)
@@ -377,7 +406,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_historique_messages_envoyes
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    agent = Fabricate(:agent)
+    identification_agent(agent)
     post '/agent/contacter_une_famille', params: { identifiant: '2', message: 'Message 1' }
     post '/agent/contacter_une_famille', params: { identifiant: '2', message: 'Message 2' }
     get '/agent/eleve/2'
@@ -398,7 +428,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal 0, ActionMailer::Base.deliveries.count
 
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    agent = Fabricate(:agent, etablissement: dossier_eleve1.etablissement)
+    identification_agent(agent)
     post '/agent/valider_plusieurs_dossiers', params: { ids: ids }
 
     assert_equal 2, ActionMailer::Base.deliveries.count
@@ -412,8 +443,11 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
   def test_propose_modeles_messages
     modele = Modele.create(nom: 'Cantine')
-    Agent.find_by(identifiant: 'pierre').etablissement.modele << modele
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+
+    agent = Fabricate(:agent)
+    agent.etablissement.modele << modele
+    identification_agent(agent)
+
     get '/agent/eleve/4'
 
     doc = Nokogiri::HTML(response.body)
@@ -424,28 +458,41 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   def test_rendu_modele
     skip('manipulation des templates / render dans le controller à revoir')
     modele = Modele.create(nom: 'Cantine', contenu: 'Salut <%= eleve.prenom %>')
-    Agent.find_by(identifiant: 'pierre').etablissement.modele << modele
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+
+    agent = Fabricate(:agent)
+    agent.etablissement.modele << modele
+    identification_agent(agent)
+
     get "/agent/fusionne_modele/#{modele.id}/eleve/4"
     assert_equal 'Salut Pierre', response.body
   end
 
   def test_liste_resp_legaux
-    eleve = Eleve.find_by(nom: 'Piaf')
-    eleve.dossier_eleve.update(etat: 'pas connecté')
-    eleve_2 = Eleve.find_by(nom: 'Blayo')
-    eleve_2.dossier_eleve.update(etat: 'connecté')
-    post '/agent', params: { identifiant: 'pierre', mot_de_passe: 'demaulmont' }
+    agent = Fabricate(:agent)
+    dossier_eleve_non_connecté = Fabricate(:dossier_eleve,
+      etablissement: agent.etablissement,
+      etat: 'pas connecté',
+      resp_legal: [Fabricate(:resp_legal, priorite: 1)],
+      eleve: Fabricate(:eleve, nom: 'Piaf'))
+    dossier_eleve_connecté = Fabricate(:dossier_eleve,
+      etablissement: agent.etablissement,
+      etat: 'connecté',
+      resp_legal: [Fabricate(:resp_legal, priorite: 1)],
+      eleve: Fabricate(:eleve, nom: 'Blayo'))
+
+      identification_agent(agent)
 
     get '/agent/convocations'
 
-    resp_legal_1 = eleve.dossier_eleve.resp_legal.find { |d| d.priorite == 1 }
-    resp_legal_1_eleve_2 = eleve_2.dossier_eleve.resp_legal.find { |d| d.priorite == 1 }
+    assert_response :success
+
+    resp_legal_connecté = dossier_eleve_non_connecté.resp_legal.find { |d| d.priorite == 1 }
+    resp_legal_non_connecté = dossier_eleve_connecté.resp_legal.find { |d| d.priorite == 1 }
     doc = Nokogiri::HTML(response.body)
-    assert_equal resp_legal_1.prenom, doc.css('tbody > tr:nth-child(1) > td:nth-child(4)').text.strip
-    assert_equal resp_legal_1.nom, doc.css('tbody > tr:nth-child(1) > td:nth-child(5)').text.strip
-    assert_equal resp_legal_1.tel_principal, doc.css('tbody > tr:nth-child(1) > td:nth-child(6)').text.strip
-    assert_equal resp_legal_1.tel_secondaire, doc.css('tbody > tr:nth-child(1) > td:nth-child(7)').text.strip
-    assert_equal resp_legal_1_eleve_2.prenom, doc.css('tbody > tr:nth-child(2) > td:nth-child(4)').text.strip
+    assert_equal resp_legal_connecté.prenom, doc.css('tbody > tr:nth-child(1) > td:nth-child(4)').text.strip
+    assert_equal resp_legal_connecté.nom, doc.css('tbody > tr:nth-child(1) > td:nth-child(5)').text.strip
+    assert_equal resp_legal_connecté.tel_principal, doc.css('tbody > tr:nth-child(1) > td:nth-child(6)').text.strip
+    assert_equal resp_legal_connecté.tel_secondaire, doc.css('tbody > tr:nth-child(1) > td:nth-child(7)').text.strip
+    assert_equal resp_legal_non_connecté.prenom, doc.css('tbody > tr:nth-child(2) > td:nth-child(4)').text.strip
   end
 end

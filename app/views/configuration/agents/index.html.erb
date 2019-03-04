@@ -4,7 +4,7 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Identifiant</th>
+      <th>Email</th>
       <th>Prenom</th>
       <th>Nom</th>
       <th>Admin</th>
@@ -15,7 +15,7 @@
   <tbody>
     <% @agents.each do |agent| %>
       <tr>
-        <td><%= agent.identifiant %></td>
+        <td><%= agent.email %></td>
         <td><%= agent.nom %></td>
         <td><%= agent.prenom %></td>
         <td><%= "<span class='fas fa-check'></span>".html_safe if agent.admin? %></td>

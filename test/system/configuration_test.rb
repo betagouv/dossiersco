@@ -11,7 +11,7 @@ class ConfigurationTest < ActionDispatch::IntegrationTest
     visit '/agent'
     assert_selector 'h1', text: 'Agent EPLE'
 
-    fill_in 'identifiant', with: admin.identifiant
+    fill_in 'email', with: admin.email
     fill_in 'mot_de_passe', with: admin.password
     click_button 'Se connecter'
 

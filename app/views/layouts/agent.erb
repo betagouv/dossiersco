@@ -23,7 +23,7 @@
                 <%= link_to t('.configuration'), configuration_path, {class: 'nav-link'}%>
               </li>
             <% end %>
-            <% if super_admin?(@agent_connecté.identifiant) %>
+            <% if super_admin?(@agent_connecté.email) %>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                                                                                                aria-haspopup="true" aria-expanded="false">
@@ -43,7 +43,7 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                                                                                              aria-haspopup="true" aria-expanded="false">
-                <%= @agent_connecté.identifiant %>
+                <%= @agent_connecté.email %>
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <%= link_to 'Mon profil', edit_configuration_agent_path(@agent_connecté), {class: "dropdown-item"} %>

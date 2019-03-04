@@ -8,14 +8,14 @@ class AgentTest < ActiveSupport::TestCase
     assert Fabricate.build(:admin).valid?
   end
 
-  test "l'identifiant d'un agent est unique" do
-    Fabricate(:agent, identifiant: 'Henri')
-    assert Fabricate.build(:agent, identifiant: 'Henri').invalid?
+  test "l'email d'un agent est unique" do
+    Fabricate(:agent, email: 'henri@laposte.net')
+    assert Fabricate.build(:agent, email: 'henri@laposte.net').invalid?
   end
 
-  test "l'identifiant d'un agent est unique peu importe la casse" do
-    Fabricate(:agent, identifiant: 'henri')
-    assert Fabricate.build(:agent, identifiant: 'Henri').invalid?
+  test "l'email d'un agent est unique peu importe la casse" do
+    Fabricate(:agent, email: 'Henri@LaPoStE.nEt')
+    assert Fabricate.build(:agent, email: 'Henri@LaPoStE.nEt').invalid?
   end
 
   test "renvoie le nom complet de l'agent" do

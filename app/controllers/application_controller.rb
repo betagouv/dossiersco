@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
     if params[:jeton]
       @agent_connecté ||= Agent.find_by(jeton: params[:jeton])
     else
-      @agent_connecté ||= Agent.find_by(identifiant: session[:identifiant])
+      @agent_connecté ||= Agent.find_by(email: session[:agent_email])
     end
   end
 
@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
       type_utilisateur: "agent",
       dossiersco_id: agent_connecté.id
     })
-    Trace.create(identifiant: agent_connecté.identifiant,
+    Trace.create(identifiant: agent_connecté.email,
                  categorie: 'agent',
                  page_demandee: request.path_info,
                  adresse_ip: request.ip)

@@ -21,7 +21,7 @@
                 <%= link_to t('.suivi_inscription'), agent_tableau_de_bord_path, {class: 'nav-link'}%>
               </li>
            <% end %>
-            <% if super_admin?(@agent_connecté.identifiant) %>
+            <% if super_admin?(@agent_connecté.email) %>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                                                                                                aria-haspopup="true" aria-expanded="false">
@@ -41,7 +41,7 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                                                                                              aria-haspopup="true" aria-expanded="false">
-                <%= @agent_connecté.identifiant %>
+                <%= @agent_connecté.email %>
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <%= link_to 'Mon profil', edit_configuration_agent_path(@agent_connecté), {class: "dropdown-item"} %>
@@ -70,7 +70,7 @@
         <li class="nav-item <%= 'active' if request.fullpath.include? '/agent' %>">
           <%= link_to 'Agents', configuration_agents_path, {class: 'nav-link'} %>
         </li>
-        <% if super_admin?(@agent_connecté.identifiant) %>
+        <% if super_admin?(@agent_connecté.email) %>
           <li class="nav-item <%= 'active' if request.fullpath.include? '/etablissement' %>">
             <%= link_to 'Etablissement', configuration_etablissements_path, {class: 'nav-link'} %>
           </li>
