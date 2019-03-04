@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   namespace :configuration do
     resources :mef
-    resources :etablissements do
+    resources :etablissements, expect: [:index, :destroy] do
       put 'purge'
     end
     resources :agents do

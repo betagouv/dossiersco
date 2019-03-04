@@ -3,11 +3,7 @@ module Configuration
     layout 'configuration'
 
     before_action :if_agent_is_admin, except: [:new, :create]
-    before_action :cherche_etablissement, only: [:show, :edit, :update, :destroy]
-
-    def index
-      @etablissements = Etablissement.all
-    end
+    before_action :cherche_etablissement, only: [:show, :edit, :update]
 
     def show
     end
@@ -31,12 +27,7 @@ module Configuration
 
     def update
       @etablissement.update(etablissement_params)
-      redirect_to configuration_etablissements_path
-    end
-
-    def destroy
-      @etablissement.destroy
-      redirect_to configuration_etablissements_path, notice: "L'établissement a bien été supprimé"
+      redirect_to configuration_etablissement_path(@etablissement)
     end
 
     def purge
