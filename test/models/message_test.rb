@@ -12,7 +12,8 @@ class MessageLegalTest < ActiveSupport::TestCase
 
     assert_equal 1, Message.count
     message = Message.first
-    message.envoyer
+
+    message.envoyer_sms(FakeHttp)
 
     message = Message.first
     assert_equal 'sms', message.categorie
@@ -21,3 +22,27 @@ class MessageLegalTest < ActiveSupport::TestCase
     assert message.contenu.include? 'Tillion'
   end
 end
+
+class FakeHttp
+  def initialize(host, port)
+    @request = Struct.new(:body)
+  end
+
+  def use_ssl=(boolean)
+  end
+
+  def request(request)
+    response = @request.new
+    response.body = {messages: [{status: "envoyé"}]}.to_json
+    response
+  end
+
+  class Post
+    def initialize(uri, header)
+    end
+
+    def body=(body)
+    end
+  end
+end
+
