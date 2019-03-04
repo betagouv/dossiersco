@@ -1,2 +1,11 @@
-Finaliser mon inscription à DossierSCO :
-<%= configuration_agent_activation_url(@agent, jeton: @agent.jeton) %>
+Madame, Monsieur le principal,
+
+Vous avez souhaité inscrire votre établissement (<%= @agent.etablissement.uai %>) à DossierSCO et nous vous remercions de la confiance que vous nous accordez.
+
+Une dernière étape est nécessaire pour finaliser l'inscription, merci de cliquer sur le lien suivant : <%= configuration_agent_activation_url(@agent, jeton: @agent.jeton) %>
+
+À bientôt sur DossierSCO !
+
+-- Pierre pour L'équipe de DossierSCO
+DossierSCO est un service expérimental du ministère de l'Éducation nationale facilitant l'inscription au collège.
+https://dossiersco.fr

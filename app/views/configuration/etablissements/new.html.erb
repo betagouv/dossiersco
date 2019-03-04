@@ -4,6 +4,7 @@
     <div class="alert alert-danger"><%= flash[:error] %></div>
   <% end %>
 
+  <p><%= t('.explication') %></p>
   <%= form_for([:configuration, Etablissement.new]) do |f| %>
     <div class="form-group">
       <%= f.label :uai %>

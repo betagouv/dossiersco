@@ -8,8 +8,8 @@ class InscriptionEtablissementTest < ActionDispatch::IntegrationTest
     visit '/'
     click_link 'Vous êtes agent en EPLE ?'
     click_link 'Inscrire mon établissement sur DossierSCO'
-    fill_in 'Uai', with: '0780119F'
-    click_button 'Inscrire l\'établissement'
+    fill_in 'UAI', with: '0780119F'
+    click_button "Envoyer la demande d'inscription"
     assert_selector 'div', text: 'Un mail a été envoyé à ce.0780119F@ac-versailles.fr'
 
     etablissement = Etablissement.find_by(uai: '0780119F')
@@ -56,8 +56,8 @@ class InscriptionEtablissementTest < ActionDispatch::IntegrationTest
     visit '/'
     click_link 'Vous êtes agent en EPLE ?'
     click_link 'Inscrire mon établissement sur DossierSCO'
-    fill_in 'Uai', with: '0500079P'
-    click_button 'Inscrire l\'établissement'
+    fill_in 'UAI', with: '0500079P'
+    click_button "Envoyer la demande d'inscription"
     assert_selector 'div', text: I18n.t('configuration.etablissements.create.uai_existant')
   end
 end

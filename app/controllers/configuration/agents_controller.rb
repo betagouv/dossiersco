@@ -32,12 +32,14 @@ module Configuration
     end
 
     def update
+      ancien_jeton = @agent_connecté.jeton
       @agent_connecté.jeton = nil
       if @agent_connecté.update(agent_params)
         session[:agent_email] = @agent_connecté.email
         redirect_to configuration_agents_path, notice: t('messages.compte_cree')
       else
         @agent = @agent_connecté
+        @agent.jeton = ancien_jeton
         if @agent_connecté.jeton
           render :activation, layout: 'connexion'
         else
