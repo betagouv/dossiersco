@@ -104,7 +104,7 @@ class InscriptionsController < ApplicationController
     resp_legaux.each { |r| (emails_presents = true) if r.email.present?}
     session[:message_info] = "Votre message ne peut être acheminé."
     if emails_presents
-      mail = AgentMailer.contacter_une_famille(eleve, params[:message])
+      mail = FamilleMailer.contacter_une_famille(eleve, params[:message])
       part = mail.html_part || mail.text_part || mail
       Message.create(categorie:"mail", contenu: part.body, etat: "envoyé", dossier_eleve: eleve.dossier_eleve)
       mail.deliver_now
