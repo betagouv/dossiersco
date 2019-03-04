@@ -1,4 +1,5 @@
 class EnregistrementPremierAgentService
+
   def execute(uai)
     etablissement = Etablissement.create!(uai: uai)
     jeton = SecureRandom.base58(26)
@@ -13,9 +14,31 @@ class EnregistrementPremierAgentService
   end
 
   def retrouve_academie(uai)
-    departement = uai[0, 3].to_i
+    departement = uai[0..2]
     ACADEMIES[departement]
   end
 
-  ACADEMIES = {75 => 'paris', 78 => 'versailles'}
+  def uai_valid?(uai)
+    a_un_format_valide?(uai) &&
+    contient_un_departement?(uai) &&
+    a_une_clef_de_verification_valide?(uai)
+  end
+
+  def a_un_format_valide?(uai)
+    uai =~ /^[0-9]{7}[a-zA-Z]$/
+  end
+
+  def contient_un_departement?(uai)
+    ACADEMIES.keys.include?(uai[0..2])
+  end
+
+  def a_une_clef_de_verification_valide?(uai)
+    clef = uai.last
+    return false if ['i', 'q', 'o'].include?(clef)
+    chiffres = uai[0..6].to_i
+    clef == "abcdefghjklmnprstuvwxyz"[chiffres % 23]
+  end
+
+  ACADEMIES = JSON.parse(File.read(File.join(Rails.root, 'app', 'services', 'academies.json')))
+
 end

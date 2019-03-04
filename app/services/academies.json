@@ -1,0 +1,124 @@
+{
+  "025": "besancon",
+  "039": "besancon",
+  "070": "besancon",
+  "090": "besancon",
+
+  "024": "bordeaux",
+  "033": "bordeaux",
+  "040": "bordeaux",
+  "047": "bordeaux",
+  "064": "bordeaux",
+
+  "014": "caen",
+  "050": "caen",
+  "061": "caen",
+
+  "003": "clermont",
+  "015": "clermont",
+  "043": "clermont",
+  "063": "clermont",
+
+  "620": "corse",
+  "720": "corse",
+
+  "094": "creteil",
+  "077": "creteil",
+  "093": "creteil",
+
+  "021": "dijon",
+  "058": "dijon",
+  "071": "dijon",
+  "089": "dijon",
+
+  "007": "grenoble",
+  "026": "grenoble",
+  "038": "grenoble",
+  "073": "grenoble",
+  "074": "grenoble",
+
+  "971": "guadeloupe",
+  "977": "guadeloupe",
+  "978": "guadeloupe",
+
+  "973": "guyane",
+
+  "059": "lille",
+  "062": "lille",
+
+  "019": "limoge",
+  "023": "limoge",
+  "087": "limoge",
+
+  "001": "lyon",
+  "042": "lyon",
+  "069": "lyon",
+
+  "972": "martinique",
+
+  "011": "montpellier",
+  "030": "montpellier",
+  "034": "montpellier",
+  "048": "montpellier",
+  "066": "montpellier",
+
+  "054": "nancy-metz",
+  "055": "nancy-metz",
+  "057": "nancy-metz",
+  "088": "nancy-metz",
+
+  "044": "nantes",
+  "049": "nantes",
+  "053": "nantes",
+  "072": "nantes",
+  "085": "nantes",
+
+  "006": "nice",
+  "083": "nice",
+
+  "018": "orleans-tours",
+  "028": "orleans-tours",
+  "036": "orleans-tours",
+  "037": "orleans-tours",
+  "041": "orleans-tours",
+  "045": "orleans-tours",
+
+  "075": "paris",
+
+  "016": "poitiers",
+  "017": "poitiers",
+  "079": "poitiers",
+  "086": "poitiers",
+
+  "008": "reims",
+  "010": "reims",
+  "051": "reims",
+  "052": "reims",
+
+  "022": "rennes",
+  "029": "rennes",
+  "035": "rennes",
+  "056": "rennes",
+
+  "974": "reunion",
+
+  "027": "rouen",
+  "076": "rouen",
+
+  "067": "strasbourg",
+  "068": "strasbourg",
+
+  "009": "toulouse",
+  "012": "toulouse",
+  "031": "toulouse",
+  "032": "toulouse",
+  "046": "toulouse",
+  "065": "toulouse",
+  "081": "toulouse",
+  "082": "toulouse",
+
+  "078": "versailles",
+  "091": "versailles",
+  "092": "versailles",
+  "095": "versailles"
+}
