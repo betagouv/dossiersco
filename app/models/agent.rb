@@ -3,7 +3,6 @@ class Agent < ActiveRecord::Base
   has_secure_password validations: false
 
   validates :password_digest, presence: true, if: -> { self.jeton.nil? }
-  validates :identifiant, uniqueness: { case_sensitive: false }
   validates :email, presence: true, uniqueness: { case_sensitive: false }
 
   def nom_complet

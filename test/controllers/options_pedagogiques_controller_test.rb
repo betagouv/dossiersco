@@ -9,7 +9,7 @@ class OptionsPedagogiquesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get index' do
     admin = Fabricate(:admin)
-    post agent_url, params: { identifiant: admin.identifiant, mot_de_passe: admin.password }
+    post agent_url, params: { email: admin.email, mot_de_passe: admin.password }
     follow_redirect!
 
     get options_pedagogiques_url

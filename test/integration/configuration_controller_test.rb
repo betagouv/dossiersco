@@ -24,7 +24,6 @@ class ConfigurationControllerTest < ActionDispatch::IntegrationTest
     identification_agent(agent)
 
     put configuration_etablissement_purge_path(agent.etablissement)
-
     assert_equal "L'établissement a bien été purgé", flash[:notice]
   end
 end

@@ -7,10 +7,10 @@ class InscriptionsController < ApplicationController
   end
 
   def post_agent
-    mon_agent = Agent.find_by(identifiant: params[:identifiant])
+    mon_agent = Agent.find_by(email: params[:email])
 
     if mon_agent && mon_agent.authenticate(params[:mot_de_passe])
-      session[:identifiant] = mon_agent.identifiant
+      session[:agent_email] = mon_agent.email
       redirect_to agent_liste_des_eleves_path
     else
       session[:erreur_login] = "Ces informations ne correspondent pas à un agent enregistré"

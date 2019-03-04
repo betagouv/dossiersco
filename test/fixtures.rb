@@ -75,7 +75,7 @@ def init
   cree_dossier_eleve eleves[1], oeben, 'pas connecté'
   cree_dossier_eleve eleves[6], oeben, 'pas connecté'
 
-  Agent.create!(password: '$2a$10$6njb4Rn4RHyFFJpP5QEJGutErgZVOr6/cCM17IKoIsiQDZQABBN2a', nom: 'César', prenom: 'Jules', email: 'cesar@rome.it', etablissement_id: oeben.id, identifiant: 'jules')
+  Agent.create!(password: '$2a$10$6njb4Rn4RHyFFJpP5QEJGutErgZVOr6/cCM17IKoIsiQDZQABBN2a', nom: 'César', prenom: 'Jules', email: 'cesar@rome.it', etablissement_id: oeben.id)
 
   tillion = Etablissement.create!(
     uai: '0753936w',
@@ -138,7 +138,7 @@ def init
   montee_4eme.demandabilite << grec_obligatoire_d
   montee_4eme.abandonnabilite << latin_d
 
-  Agent.create!(password: 'demaulmont', nom: 'De Maulmont', prenom: 'Pierre', email: 'pierre@test.fr', etablissement_id: tillion.id, identifiant: 'pierre', admin: true)
+  Agent.create!(password: 'demaulmont', nom: 'De Maulmont', prenom: 'Pierre', email: 'pierre@test.fr', etablissement_id: tillion.id, admin: true)
 end
 
 def cree_dossier_eleve(eleve, etablissement, etat = 'en attente de validation')
