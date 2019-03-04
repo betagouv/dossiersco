@@ -17,11 +17,11 @@ module Configuration
     end
 
     def create
-      agent = EnregistrementPremierAgentService.new.execute(etablissement_params[:uai])
-      if agent
+      begin
+        agent = EnregistrementPremierAgentService.new.execute(etablissement_params[:uai])
         redirect_to new_configuration_etablissement_path, notice:t('.mail_envoye', mail_ce: agent.email)
-      else
-        flash[:error] = t('.uai_invalid')
+      rescue StandardError => error
+        flash[:error] = t(".#{error}")
         render :new, layout: 'connexion'
       end
     end
