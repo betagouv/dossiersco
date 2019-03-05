@@ -67,7 +67,27 @@
         <% end %>
       </ul>
 
-      <h2 class="separation mt-3">Instruction du dossier</h2>
+      <h2 class="separation mt-3">MEF</h2>
+
+      <span id="afficher-message-flash"></span>
+
+      <%= form_for(@dossier_eleve, url: modifier_mef_eleve_path(@dossier_eleve), remote: true) do |f| %>
+        <div class="form-group row">
+          <%= f.label :mef_origine, 'Mef actuel', class: 'col-sm-4 col-form-label' %>
+          <div class="col-sm-5">
+            <%= f.collection_select :mef_origine_id, @dossier_eleve.etablissement.mef, :id, :libelle, {}, {class: 'form-control'} %>
+          </div>
+        </div>
+        <div class="form-group row">
+          <%= f.label :mef_destination, 'Mef de destination', class: 'col-sm-4 col-form-label' %>
+          <div class="col-sm-5">
+            <%= f.collection_select :mef_destination_id, @dossier_eleve.etablissement.mef, :id, :libelle, {}, {class: 'form-control'} %>
+          </div>
+        </div>
+        <%= f.submit 'Modifier les MEF', class: 'btn btn-outline-primary' %>
+      <% end %>
+
+      <h2 class="separation my-5">Instruction du dossier</h2>
       <div class="d-flex justify-content-center align-items-center mb-4" style='text-align: center; width:100%'>
         <form action='/agent/valider_inscription' method='POST'>
           <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
