@@ -61,6 +61,24 @@ class InscriptionsController < ApplicationController
     render :eleve
   end
 
+  def modifier_mef_eleve
+    @dossier_eleve = DossierEleve.find(params[:dossier_eleve_id])
+    params_mef = params.require(:dossier_eleve).permit(:mef_destination_id, :mef_origine_id)
+    if @dossier_eleve.update(params_mef)
+      respond_to do |format|
+        format.html { redirect_to "/agent/eleve/#{@dossier_eleve.eleve.identifiant}" }
+        flash[:notice_mef] = t('.changements_enregistres')
+        format.js {render :layout => false}
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to "/agent/eleve/#{@dossier_eleve.eleve.identifiant}" }
+        flash[:alert_mef] = t('.changements_non_enregistres')
+        format.js {render :layout => false}
+      end
+    end
+  end
+
   def valider_inscription
     eleve = Eleve.find_by identifiant: params[:identifiant]
     dossier_eleve = eleve.dossier_eleve

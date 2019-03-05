@@ -149,6 +149,9 @@ fr:
         titre: "Modifier un établissement"
       purge_succes:  "L'établissement a bien été purgé"
   inscriptions:
+    modifier_mef_eleve:
+      changements_enregistres: "Les changements ont été enregistrés"
+      changements_non_enregistres: "Une erreur est survenue, les changements n'ont pas été pris en compte"
     eleve:
       <<: *pieces_jointes
       valider: "Valider"

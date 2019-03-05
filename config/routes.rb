@@ -68,6 +68,8 @@ Rails.application.routes.draw do
 
   get '/agent/eleve/:identifiant', to: 'inscriptions#eleve'
 
+  patch '/agent/eleve/:dossier_eleve_id/modifier-mef-eleve', to: 'inscriptions#modifier_mef_eleve', as: 'modifier_mef_eleve'
+
   post '/agent/valider_inscription', to: 'inscriptions#valider_inscription'
 
   post '/agent/eleve_sortant', to: 'inscriptions#eleve_sortant'

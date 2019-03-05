@@ -1,0 +1,6 @@
+$('#afficher-message-flash').html('')
+<% if flash[:notice_mef] %>
+  $('#afficher-message-flash').html("<div class='alert alert-success' role='alert'><%= flash[:notice_mef] %></div>")
+<% elsif flash[:alert_mef] %>
+  $('#afficher-message-flash').html("<div class='alert alert-danger' role='alert'><%= flash[:alert_mef] %></div>")
+<% end %>
