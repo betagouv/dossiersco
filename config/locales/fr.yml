@@ -170,6 +170,10 @@ fr:
       edit:
         titre: "Modifier un établissement"
       purge_succes:  "L'établissement a bien été purgé"
+      show:
+        envoye_restreint: "Les messages seront envoyé à l'email %{email}"
+        attention_envoye_aux_parents: "Attention, des messages partirons directement aux famillles. Vous n'êtes pas dans une confiuration de test"
+
   inscriptions:
     modifier_mef_eleve:
       changements_enregistres: "Les changements ont été enregistrés"

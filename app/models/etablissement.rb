@@ -7,7 +7,7 @@ class Etablissement < ActiveRecord::Base
   has_many :dossier_affelnets, dependent: :destroy
   has_many :mef, dependent: :destroy
 
-  validates :code_postal, length: { is: 5 }, numericality: { only_integer: true }, allow_nil: true
+  validates :code_postal, length: { is: 5 }, numericality: { only_integer: true }, allow_blank: true
   validates :uai, presence: true
 
   def classes
@@ -48,5 +48,10 @@ class Etablissement < ActiveRecord::Base
     eleves.map(&:destroy)
     tache_import.destroy_all
     dossier_affelnets.destroy_all
+  end
+
+  def email_chef
+    service = EnregistrementPremierAgentService.new
+    service.construit_email_chef_etablissement(self.uai)
   end
 end
