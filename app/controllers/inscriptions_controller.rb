@@ -52,22 +52,13 @@ class InscriptionsController < ApplicationController
   end
 
   def eleve
-    eleve = Eleve.find_by(identifiant: params[:identifiant])
-    dossier_eleve = eleve.dossier_eleve
-    @pieces_jointes = dossier_eleve.pieces_jointes
-    emails_presents = false
-    resp_legaux = dossier_eleve.resp_legal
-    resp_legaux.each { |r| (emails_presents = true) if r.email.present?}
-    meme_adresse = resp_legaux.first.meme_adresse resp_legaux.second
-    modeles = agent_connecté.etablissement.modele
-    render :eleve,
-      locals: {
-      emails_presents: emails_presents,
-      agent: agent_connecté,
-      modeles: modeles,
-      eleve: eleve,
-      dossier_eleve: dossier_eleve,
-      meme_adresse: meme_adresse}
+    @dossier_eleve = Eleve.find_by(identifiant: params[:identifiant]).dossier_eleve
+    @pieces_jointes = @dossier_eleve.pieces_jointes
+    @emails_presents = false
+    @dossier_eleve.resp_legal.each { |r| (@emails_presents = true) if r.email.present?}
+    @meme_adresse = @dossier_eleve.resp_legal.first.meme_adresse @dossier_eleve.resp_legal.second
+    @modeles = agent_connecté.etablissement.modele
+    render :eleve
   end
 
   def valider_inscription
