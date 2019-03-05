@@ -282,17 +282,26 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_envoyer_un_mail_quand_la_demande_dinscription_est_valide
-    post '/identification', params: { identifiant: '4', annee: '1970', mois: '01', jour: '01' }
+    eleve = Fabricate(:eleve)
+    resp_legal = Fabricate(:resp_legal, priorite: 1, email: "mon_email@yahoo.fr")
+    etablissement = Fabricate(:etablissement, nom: "Mon établissement", envoyer_aux_familles: true)
+    dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve, resp_legal: [resp_legal], etablissement: etablissement)
+
+    post '/identification', params: {
+      identifiant: eleve.identifiant,
+      annee: eleve.annee_de_naissance,
+      mois: eleve.mois_de_naissance,
+      jour: eleve.jour_de_naissance
+    }
     post '/validation'
 
     mail = ActionMailer::Base.deliveries.last
     assert_equal 'contact@dossiersco.fr', mail['from'].to_s
-    assert mail['to'].addresses.collect(&:to_s).include? 'test@test.com'
-    assert mail['to'].addresses.collect(&:to_s).include? 'test2@test.com'
-    assert mail['to'].addresses.collect(&:to_s).include? 'contact@dossiersco.fr'
+    assert_equal [resp_legal.email, 'contact@dossiersco.fr'].sort, mail['to'].addresses.sort
     assert_equal 'Réinscription de votre enfant au collège', mail['subject'].to_s
     part = mail.html_part || mail.text_part || mail
-    assert part.body.decoded.include? 'réinscription de votre enfant Pierre Blayo'
-    assert part.body.decoded.include? 'Tillion'
+    assert part.body.decoded.include? 'réinscription de votre enfant'
+    assert part.body.decoded.include? eleve.nom
+    assert part.body.decoded.include? etablissement.nom
   end
 end
