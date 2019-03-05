@@ -26,8 +26,11 @@ module Configuration
     end
 
     def update
-      @etablissement.update(etablissement_params)
-      redirect_to configuration_etablissement_path(@etablissement)
+      if @etablissement.update(etablissement_params)
+        redirect_to configuration_etablissement_path(@etablissement)
+      else
+        render :edit
+      end
     end
 
     def purge
@@ -38,7 +41,7 @@ module Configuration
     private
 
     def etablissement_params
-      params.require(:etablissement).permit(:nom, :email, :adresse, :ville, :code_postal, :message_permanence, :message_infirmerie, :gere_demi_pension, :signataire, :date_limite, :uai)
+      params.require(:etablissement).permit(:nom, :email, :adresse, :ville, :code_postal, :message_permanence, :message_infirmerie, :gere_demi_pension, :signataire, :date_limite, :uai, :envoyer_aux_parents)
     end
 
     def cherche_etablissement

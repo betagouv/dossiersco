@@ -52,6 +52,10 @@
     <%= f.label :date_limite %>
     <%= f.text_field :date_limite, class: 'form-control'%>
   </div>
+  <div class="form-check mb-3">
+    <%= f.check_box :envoyer_aux_parents, class: 'form-check-input'%>
+    <%= f.label :envoyer_aux_parents, class: 'form-check-label' %>
+  </div>
   <div class="form-group">
     <%= f.submit 'valider', class: 'btn btn-primary my-3' %>
   </div>

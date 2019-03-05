@@ -262,22 +262,25 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_un_agent_envoi_un_mail_a_une_famille
-    agent = Fabricate(:agent)
-    agent.etablissement.update(email: 'etablissement@email.com')
+    etablissement = Fabricate(:etablissement, nom: "Collège de làbas", envoyer_aux_familles: true)
+    resp_legal = Fabricate(:resp_legal, email: "henri@laposte.net", priorite: 1)
+    dossier_eleve = Fabricate(:dossier_eleve, etablissement: etablissement, resp_legal: [resp_legal])
+    eleve = dossier_eleve.eleve
+    agent = Fabricate(:agent, etablissement: etablissement)
     identification_agent(agent)
-    post '/agent/contacter_une_famille', params: { identifiant: '6', message: 'Message de test' }
+
+    post '/agent/contacter_une_famille', params: { identifiant: eleve.identifiant, message: 'Message de test' }
 
     mail = ActionMailer::Base.deliveries.last
+
     assert_equal 'contact@dossiersco.fr', mail['from'].to_s
-    assert mail['to'].addresses.collect(&:to_s).include? 'test@test.com'
-    assert mail['to'].addresses.collect(&:to_s).include? 'test2@test.com'
-    assert mail['to'].addresses.collect(&:to_s).include? 'contact@dossiersco.fr'
-    assert mail['reply_to'].addresses.collect(&:to_s).include? 'etablissement@email.com'
-    assert mail['reply_to'].addresses.collect(&:to_s).include? 'contact@dossiersco.fr'
+    assert_equal [resp_legal.email, 'contact@dossiersco.fr'].sort, mail['to'].addresses.sort
+    assert_equal ['contact@dossiersco.fr'].sort,
+      mail['reply_to'].addresses.sort
     assert_equal 'Réinscription de votre enfant au collège', mail['subject'].to_s
     part = mail.html_part || mail.text_part || mail
-    assert part.body.decoded.include? 'Tillion'
-    assert part.body.decoded.include? 'Emile'
+    assert part.body.decoded.include? etablissement.nom
+    assert part.body.decoded.include? eleve.nom
   end
 
   def test_envoie_par_sms_les_messages_aux_familles_sans_email
@@ -312,27 +315,37 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_envoi_un_mail_quand_un_agent_valide_un_dossier
-    agent = Fabricate(:agent)
+    etablissement = Fabricate(:etablissement, nom: "Collège de làbas", envoyer_aux_familles: true)
+    resp_legal = Fabricate(:resp_legal, email: "henri@laposte.net", priorite: 1)
+    dossier_eleve = Fabricate(:dossier_eleve, etablissement: etablissement, resp_legal: [resp_legal])
+    eleve = dossier_eleve.eleve
+    agent = Fabricate(:agent, etablissement: etablissement)
     identification_agent(agent)
-    post '/agent/valider_inscription', params: { identifiant: '4' }
+
+    post '/agent/valider_inscription', params: { identifiant: eleve.identifiant }
 
     mail = ActionMailer::Base.deliveries.last
     assert_equal 'contact@dossiersco.fr', mail['from'].to_s
-    assert mail['to'].addresses.collect(&:to_s).include? 'test@test.com'
-    assert mail['to'].addresses.collect(&:to_s).include? 'test2@test.com'
-    assert mail['to'].addresses.collect(&:to_s).include? 'contact@dossiersco.fr'
+
+    assert_equal [resp_legal.email, 'contact@dossiersco.fr'].sort, mail['to'].addresses.sort
+    assert_equal ['contact@dossiersco.fr'].sort,
+      mail['reply_to'].addresses.sort
     assert_equal 'Réinscription de votre enfant au collège', mail['subject'].to_s
     part = mail.html_part || mail.text_part || mail
     assert part.body.decoded.include? 'Votre enfant est bien inscrit.'
-    assert part.body.decoded.include? 'Pierre'
+    assert part.body.decoded.include? eleve.nom
   end
 
   def test_lenvoie_dun_email_de_relance
-    eleve = Eleve.find_by(identifiant: 2)
-    template = 'Réinscription de votre enfant <%= eleve.prenom %> <%= eleve.nom %> au collège'
-    agent = Fabricate(:agent, etablissement: eleve.dossier_eleve.etablissement)
+    etablissement = Fabricate(:etablissement, envoyer_aux_familles: true)
+    resp_legal = Fabricate(:resp_legal, email: "henri@laposte.net", priorite: 1)
+    dossier_eleve = Fabricate(:dossier_eleve, etablissement: etablissement, resp_legal: [resp_legal])
+    eleve = dossier_eleve.eleve
+    agent = Fabricate(:agent, etablissement: etablissement)
     identification_agent(agent)
-    post '/agent/relance_emails', params: { ids: eleve.dossier_eleve.id, template: template }
+
+    template = 'Réinscription de votre enfant <%= eleve.prenom %> <%= eleve.nom %> au collège'
+    post '/agent/relance_emails', params: { ids: dossier_eleve.id, template: template }
 
     assert_equal 1, Message.count
     message = Message.first
@@ -340,14 +353,12 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     mail = ActionMailer::Base.deliveries.last
     assert_equal 'contact@dossiersco.fr', mail['from'].to_s
-    assert mail['to'].addresses.collect(&:to_s).include? 'test@test.com'
-    assert mail['to'].addresses.collect(&:to_s).include? 'etablissement@email.com'
-    assert mail['to'].addresses.collect(&:to_s).include? 'contact@dossiersco.fr'
-    assert mail['reply_to'].addresses.collect(&:to_s).include? 'etablissement@email.com'
-    assert mail['reply_to'].addresses.collect(&:to_s).include? 'contact@dossiersco.fr'
+    assert_equal [etablissement.email_chef, resp_legal.email, 'contact@dossiersco.fr'].sort, mail['to'].addresses.sort
+    assert_equal [etablissement.email_chef, 'contact@dossiersco.fr'].sort,
+      mail['reply_to'].addresses.sort
     assert_equal 'Réinscription de votre enfant au collège', mail['subject'].to_s
     part = mail.html_part || mail.text_part || mail
-    assert part.body.decoded.include? 'Réinscription de votre enfant Edith Piaf au collège'
+    assert part.body.decoded.include? "Réinscription de votre enfant #{eleve.prenom} #{eleve.nom} au collège"
   end
 
   def test_stats

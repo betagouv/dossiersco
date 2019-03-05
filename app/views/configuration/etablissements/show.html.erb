@@ -9,6 +9,13 @@
     <li>Message de permanence : <%= @etablissement.message_permanence %></li>
     <li>Message d'infirmerie : <%= @etablissement.message_infirmerie %></li>
     <li>Gère la demi pension : <%= @etablissement.gere_demi_pension ? 'Oui' : 'Non' %></li>
+    <li>
+      <% if @etablissement.envoyer_aux_parents? %>
+        <strong><%= t('.attention_envoye_aux_parents') %></strong>
+      <% else %>
+        <%= t('.envoye_restreint', email: @etablissement.email_chef) %>
+      <% end %>
+    </li>
     <li>Signataire : <%= @etablissement.signataire %></li>
   </ul>
 
