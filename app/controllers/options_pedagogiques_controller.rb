@@ -5,7 +5,7 @@ class OptionsPedagogiquesController < ApplicationController
   before_action :set_option_pedagogique, only: [:edit, :update, :destroy]
 
   def index
-    @options_pedagogiques = OptionPedagogique.all
+    @options_pedagogiques = OptionPedagogique.where(etablissement: agent_connecté.etablissement)
   end
 
   def new

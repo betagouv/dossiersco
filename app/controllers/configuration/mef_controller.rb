@@ -6,7 +6,7 @@ module Configuration
     before_action :set_mef, only: [:show, :edit, :update, :destroy]
 
     def index
-      @mef = Mef.all
+      @mef = Mef.where(etablissement: agent_connecté.etablissement)
     end
 
     def new
