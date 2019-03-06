@@ -1,15 +1,6 @@
 class Message < ActiveRecord::Base
   belongs_to :dossier_eleve
 
-  def envoyer
-    case self.categorie
-    when "mail"
-      FamilleMailer.message_differe(dossier_eleve.eleve, contenu).deliver_now
-    when "sms"
-      envoyer_sms
-    end
-  end
-
   def numero
     destinataire == "rl2" ? dossier_eleve.portable_rl2 : dossier_eleve.portable_rl1
   end
