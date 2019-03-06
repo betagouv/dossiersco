@@ -274,9 +274,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     mail = ActionMailer::Base.deliveries.last
 
     assert_equal 'contact@dossiersco.fr', mail['from'].to_s
-    assert_equal [resp_legal.email, 'contact@dossiersco.fr'].sort, mail['to'].addresses.sort
-    assert_equal ['contact@dossiersco.fr'].sort,
-      mail['reply_to'].addresses.sort
+    assert_equal [resp_legal.email, agent.email], mail['to'].addresses.sort
+    assert_equal [agent.email].sort, mail['reply_to'].addresses.sort
     assert_equal 'Réinscription de votre enfant au collège', mail['subject'].to_s
     part = mail.html_part || mail.text_part || mail
     assert part.body.decoded.include? etablissement.nom
@@ -327,38 +326,12 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     mail = ActionMailer::Base.deliveries.last
     assert_equal 'contact@dossiersco.fr', mail['from'].to_s
 
-    assert_equal [resp_legal.email, 'contact@dossiersco.fr'].sort, mail['to'].addresses.sort
-    assert_equal ['contact@dossiersco.fr'].sort,
-      mail['reply_to'].addresses.sort
+    assert_equal resp_legal.email, mail['to'].to_s
+    assert_equal agent.email, mail['reply_to'].to_s
     assert_equal 'Réinscription de votre enfant au collège', mail['subject'].to_s
     part = mail.html_part || mail.text_part || mail
     assert part.body.decoded.include? 'Votre enfant est bien inscrit.'
     assert part.body.decoded.include? eleve.nom
-  end
-
-  def test_lenvoie_dun_email_de_relance
-    etablissement = Fabricate(:etablissement, envoyer_aux_familles: true)
-    resp_legal = Fabricate(:resp_legal, email: "henri@laposte.net", priorite: 1)
-    dossier_eleve = Fabricate(:dossier_eleve, etablissement: etablissement, resp_legal: [resp_legal])
-    eleve = dossier_eleve.eleve
-    agent = Fabricate(:agent, etablissement: etablissement)
-    identification_agent(agent)
-
-    template = 'Réinscription de votre enfant <%= eleve.prenom %> <%= eleve.nom %> au collège'
-    post '/agent/relance_emails', params: { ids: dossier_eleve.id, template: template }
-
-    assert_equal 1, Message.count
-    message = Message.first
-    message.envoyer
-
-    mail = ActionMailer::Base.deliveries.last
-    assert_equal 'contact@dossiersco.fr', mail['from'].to_s
-    assert_equal [etablissement.email_chef, resp_legal.email, 'contact@dossiersco.fr'].sort, mail['to'].addresses.sort
-    assert_equal [etablissement.email_chef, 'contact@dossiersco.fr'].sort,
-      mail['reply_to'].addresses.sort
-    assert_equal 'Réinscription de votre enfant au collège', mail['subject'].to_s
-    part = mail.html_part || mail.text_part || mail
-    assert part.body.decoded.include? "Réinscription de votre enfant #{eleve.prenom} #{eleve.nom} au collège"
   end
 
   def test_stats
