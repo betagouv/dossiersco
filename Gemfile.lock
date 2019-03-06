@@ -229,6 +229,8 @@ GEM
     ruby-ole (1.2.12.1)
     ruby-progressbar (1.10.0)
     ruby_dep (1.5.0)
+    rubycas-client (2.3.9)
+      activesupport
     rubyzip (1.2.2)
     sass (3.7.3)
       sass-listen (~> 4.0.0)
@@ -321,6 +323,7 @@ DEPENDENCIES
   roo
   roo-xls
   rubocop
+  rubycas-client
   sass-rails (~> 5.0)
   selenium-webdriver
   sentry-raven
