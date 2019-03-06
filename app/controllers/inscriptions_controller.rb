@@ -65,7 +65,9 @@ class InscriptionsController < ApplicationController
     eleve = Eleve.find_by identifiant: params[:identifiant]
     dossier_eleve = eleve.dossier_eleve
     emails = dossier_eleve.resp_legal.map{ |resp_legal| resp_legal.email }
-    dossier_eleve.valide
+    dossier_eleve.valide!
+    mail = FamilleMailer.mail_validation_inscription(eleve, @agent_connecté)
+    mail.deliver_now
 
     redirect_to "/agent/liste_des_eleves"
   end
@@ -86,7 +88,7 @@ class InscriptionsController < ApplicationController
     resp_legaux.each { |r| (emails_presents = true) if r.email.present?}
     session[:message_info] = "Votre message ne peut être acheminé."
     if emails_presents
-      mail = FamilleMailer.contacter_une_famille(eleve, params[:message])
+      mail = FamilleMailer.contacter_une_famille(eleve, @agent_connecté, params[:message])
       part = mail.html_part || mail.text_part || mail
       Message.create(categorie:"mail", contenu: part.body, etat: "envoyé", dossier_eleve: eleve.dossier_eleve)
       mail.deliver_now
@@ -130,7 +132,10 @@ class InscriptionsController < ApplicationController
   def valider_plusieurs_dossiers
     ids = params["ids"]
     ids.each do |id|
-      DossierEleve.find(id).valide
+      dossier_eleve = DossierEleve.find(id)
+      dossier_eleve.valide!
+      mail = FamilleMailer.mail_validation_inscription(dossier_eleve.eleve, @agent_connecté)
+      mail.deliver_now
     end
     redirect_to '/agent/liste_des_eleves'
   end
@@ -150,8 +155,8 @@ class InscriptionsController < ApplicationController
     total_dossiers = agent_connecté.etablissement.dossier_eleve.count
     etats, notes, moyenne, dossiers_avec_commentaires = agent_connecté.etablissement.stats
     render :tableau_de_bord,
-        locals: {agent: agent_connecté, total_dossiers: total_dossiers, etats: etats,
-                 notes: notes, moyenne: moyenne, dossiers_avec_commentaires: dossiers_avec_commentaires.sort_by(&:date_signature).reverse}
+      locals: {agent: agent_connecté, total_dossiers: total_dossiers, etats: etats,
+               notes: notes, moyenne: moyenne, dossiers_avec_commentaires: dossiers_avec_commentaires.sort_by(&:date_signature).reverse}
   end
 
   def pieces_jointes_eleve
@@ -192,7 +197,7 @@ class InscriptionsController < ApplicationController
     end
 
     render :relance,
-        locals: {ids: ids, emails: emails, telephones: telephones}
+      locals: {ids: ids, emails: emails, telephones: telephones}
   end
 
   def relance_sms

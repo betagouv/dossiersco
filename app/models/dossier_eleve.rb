@@ -94,10 +94,8 @@ class DossierEleve < ActiveRecord::Base
     pieces_manquantes.any?
   end
 
-  def valide
+  def valide!
     update(etat: 'validé')
-    mail = FamilleMailer.mail_validation_inscription(eleve)
-    mail.deliver_now
   end
 
 end
