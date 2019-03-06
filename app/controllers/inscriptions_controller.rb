@@ -3,6 +3,7 @@ class InscriptionsController < ApplicationController
   layout 'agent'
 
   def agent
+    flash[:notice] = "Utilisez votre email pour vous connecter."
     render :identification, layout: 'connexion'
   end
 
