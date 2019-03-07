@@ -143,7 +143,7 @@ namespace :db do
     montee_4eme.demandabilite << grec_obligatoire_d
     montee_4eme.abandonnabilite << latin_d
 
-    Agent.create!(password: '$2a$10$6rCT8xgJx8/gYVVzbnzR1eC4ceDMmtCXXbgmFx37quW9Sw0231Dk2',
+    Agent.create!(password: '$2a$10$e1UQDDv5tAjurM3H6VecRe5pwt3lOTqHg7PQoTHKsfhffqeYWbkQe',
                   nom: 'De Maulmont', prenom: 'Pierre', etablissement_id: tillion.id,
                   email: 'pierre.de-maulmont@ac-paris.fr', admin: true)
   end
