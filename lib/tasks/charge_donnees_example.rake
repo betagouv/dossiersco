@@ -145,7 +145,7 @@ task :charger_donnees_exemple => ['db:drop', 'db:setup'] do
 
   Agent.create!(password: '$2a$10$6njb4Rn4RHyFFJpP5QEJGutErgZVOr6/cCM17IKoIsiQDZQABBN2a',
                 nom: 'De Maulmont', prenom: 'Pierre', etablissement_id: tillion.id,
-                email: 'piere@test.fr', admin: true)
+                email: 'pierre.de-maulmont@ac-paris.fr', admin: true)
 end
 
 def cree_dossier_eleve eleve, etablissement, etat = 'en attente de validation'
