@@ -1,5 +1,5 @@
 desc "Charger des données exemple"
-task :charger_donnees_exemple => ['db:drop', 'db:migrate'] do
+task :charger_donnees_exemple => ['db:truncate'] do
   return if Rails.env.production?
   eleves = [
     {prenom: 'Edith',
