@@ -1,5 +1,6 @@
 desc "Charger des données exemple"
 task :charger_donnees_exemple => ['db:drop', 'db:setup'] do
+  return if Rails.new.production?
   eleves = [
     {prenom: 'Edith',
      nom: 'Piaf',
