@@ -3,8 +3,10 @@
 <% end %>
 <% content_for :body do %>
     <nav class="navbar navbar-light navbar-expand-md d-flex align-items-center bg-white">
-      <img src='/images/republique_francaise.svg' class='logo'>
-      <span class="navbar-brand">DossierSCO</span>
+      <%= link_to root_path do %>
+        <img src='/images/republique_francaise.svg' class='logo'>
+        <span class="navbar-brand" >DossierSCO</span>
+      <% end %>
       <% if session[:identifiant].present? %>
         <a class="ml-auto p-2" href="/deconnexion">Se d&eacute;connecter</a>
       <% end %>
