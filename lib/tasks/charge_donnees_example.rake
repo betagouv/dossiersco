@@ -80,9 +80,6 @@ task :charger_donnees_exemple => ['db:drop', 'db:migrate'] do
   cree_dossier_eleve eleves[1], oeben, 'pas connecté'
   cree_dossier_eleve eleves[6], oeben, 'pas connecté'
 
-  Agent.create!(password: '$2a$10$6njb4Rn4RHyFFJpP5QEJGutErgZVOr6/cCM17IKoIsiQDZQABBN2a',
-                nom: 'César', prenom: 'Jules', etablissement_id: oeben.id, email: 'jules@rome.it')
-
   tillion = Etablissement.create!({
     uai: "0753936W",
     nom: "Germaine Tillion",
