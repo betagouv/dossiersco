@@ -1,5 +1,5 @@
 class FamilleMailer < ApplicationMailer
-  default from: "contact@dossiersco.fr"
+  default from: "equipe@dossiersco.fr"
 
   def contacter_une_famille(eleve, agent, message)
     @eleve = eleve

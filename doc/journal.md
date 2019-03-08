@@ -1,8 +1,35 @@
 # Journal
 
+## 8e Semaine - du 1er au 7 mars
+
+**Nos premieres utilisatrices et utilisateurs discutent avec nous**
+
+### Vie de l'équipe
+
+- Christophe et Yannick ont un badge pour le lab 110Bis ! Merci Léa !
+- On se sent bien au lab 110 bis, ça se voit au déjeuner :-).
+- On a splitté : binôme développement, binôme intraprenariat; c'était plutôt chouette.
+- Être en deux groupes nous a donné l'impression que nous étions plus ensemble.
+- Cette nouvelle organisation semble nous convenir comme un gant.
+- C'était cool de faire un [conseil](http://ut7.fr/blog/2015/11/18/animer-vos-retrospectives-avec-le-conseil.html) avec Stéphane.
+
+
+### Développement
+
+- 
+
+### Intraprenariat
+
+- Reception du premier message d'un utilisateur via Drift.
+- Pose d'une date pour le premier OpenLab de la saison 2 : rendez-vous le 29 mars à 9h30 au lab 110 Bis.
+- Premiers retours d'utilisateurs et utilisatrices à propos de DossierSCO.
+- Création d'une page [à propos](https://dossiersco.fr/a-propos) qui dévoile un peu les coulisses de l'équipe et du projet.
+- Rendez-vous important pour parler de SIECLE.
+
+---
 ## 7e Semaine - du 15 au 21 février
 
-**On avance commercialement, et on prépare l'inscription autonome des établisements**
+**On avance commercialement, et on prépare l'inscription autonome des établissements**
 
 ### Vie de l'équipe
 

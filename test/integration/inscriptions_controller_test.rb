@@ -273,7 +273,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     mail = ActionMailer::Base.deliveries.last
 
-    assert_equal 'contact@dossiersco.fr', mail['from'].to_s
+    assert_equal 'equipe@dossiersco.fr', mail['from'].to_s
     assert_equal [resp_legal.email, agent.email], mail['to'].addresses.sort
     assert_equal [agent.email].sort, mail['reply_to'].addresses.sort
     assert_equal 'Réinscription de votre enfant au collège', mail['subject'].to_s
@@ -324,7 +324,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     post '/agent/valider_inscription', params: { identifiant: eleve.identifiant }
 
     mail = ActionMailer::Base.deliveries.last
-    assert_equal 'contact@dossiersco.fr', mail['from'].to_s
+    assert_equal 'equipe@dossiersco.fr', mail['from'].to_s
 
     assert_equal resp_legal.email, mail['to'].to_s
     assert_equal agent.email, mail['reply_to'].to_s
