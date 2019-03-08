@@ -10,7 +10,7 @@ class InscriptionEtablissementTest < ActionDispatch::IntegrationTest
     click_link 'Inscrire mon établissement sur DossierSCO'
     fill_in 'UAI', with: '0780119F'
     click_button "Envoyer la demande d'inscription"
-    assert_selector 'div', text: 'Un mail a été envoyé à ce.0780119F@ac-versailles.fr'
+    assert_selector 'div', text: 'Un mail a été envoyé à ce.0780119f@ac-versailles.fr'
 
     etablissement = Etablissement.find_by(uai: '0780119F')
     assert_equal '0780119F', etablissement.uai
@@ -18,7 +18,7 @@ class InscriptionEtablissementTest < ActionDispatch::IntegrationTest
     agent = Agent.find_by(etablissement: etablissement)
     visit "/configuration/agents/#{agent.id}/activation?jeton=#{agent.jeton}"
 
-    assert_selector 'h1', text: 'Activation du compte ce.0780119F@ac-versailles.fr'
+    assert_selector 'h1', text: 'Activation du compte ce.0780119f@ac-versailles.fr'
     fill_in 'agent_password', with: 'jaimelepoulet'
     click_button 'valider'
 
@@ -48,10 +48,10 @@ class InscriptionEtablissementTest < ActionDispatch::IntegrationTest
 
   test 'inscription bloqué si un compte déjà créé avec cet UAI' do
     etablissement = Fabricate(:etablissement, uai: '0500079P')
-    Fabricate(:agent, email: 'ce.0500079P@ac-paris.fr', etablissement: etablissement)
+    Fabricate(:agent, email: 'ce.0500079p@ac-paris.fr', etablissement: etablissement)
 
     assert_not_nil Etablissement.find_by(uai: '0500079P')
-    assert_not_nil Agent.find_by(email: 'ce.0500079P@ac-paris.fr')
+    assert_not_nil Agent.find_by(email: 'ce.0500079p@ac-paris.fr')
 
     visit '/'
     click_link 'Vous êtes agent en EPLE ?'

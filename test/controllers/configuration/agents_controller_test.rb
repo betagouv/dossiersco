@@ -13,6 +13,15 @@ class AgentsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 1, Agent.where(email: 'test@test.fr', etablissement_id: etablissement.id).count
   end
 
+  test "enregistre un agent avec un email enregistré en minuscule" do
+
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+    post configuration_agents_path, params: { agent: { email: 'TeSt@tEsT.fR' } }
+
+    assert_equal 1, Agent.where(email: 'test@test.fr', etablissement_id: admin.etablissement.id).count
+  end
+
   test 'Un admin liste les agents de son établiseement' do
     agents = []
     agents << admin = Fabricate(:admin)
