@@ -296,7 +296,7 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     post '/validation'
 
     mail = ActionMailer::Base.deliveries.last
-    assert_equal 'contact@dossiersco.fr', mail['from'].to_s
+    assert_equal 'equipe@dossiersco.fr', mail['from'].to_s
     assert_equal [resp_legal.email].sort, mail['to'].addresses.sort
     assert_equal 'Réinscription de votre enfant au collège', mail['subject'].to_s
     part = mail.html_part || mail.text_part || mail

@@ -1,6 +1,6 @@
 class AgentMailer < ApplicationMailer
-  default from: "contact@dossiersco.fr",
-    reply_to: "contact@dossiersco.fr"
+  default from: "equipe@dossiersco.fr",
+    reply_to: "equipe@dossiersco.fr"
 
   def succes_import(email, statistiques)
     @statistiques = statistiques
