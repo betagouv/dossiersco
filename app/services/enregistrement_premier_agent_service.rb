@@ -6,13 +6,13 @@ class EnregistrementPremierAgentService
     etablissement = Etablissement.create!(uai: uai.upcase)
     jeton = SecureRandom.base58(26)
     email = construit_email_chef_etablissement(uai)
-    agent = Agent.create!(etablissement: etablissement, email: email, jeton: jeton, admin: true)
+    agent = Agent.create!(etablissement: etablissement, email: email.downcase, jeton: jeton, admin: true)
     AgentMailer.invite_premier_agent(agent).deliver_now
     agent
   end
 
   def construit_email_chef_etablissement(uai)
-    "ce.#{uai}@ac-#{retrouve_academie(uai)}.fr".downcase
+    "ce.#{uai}@ac-#{retrouve_academie(uai)}.fr"
   end
 
   def retrouve_academie(uai)

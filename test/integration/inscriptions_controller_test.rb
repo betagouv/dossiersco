@@ -5,10 +5,19 @@ require 'fixtures'
 init
 
 class InscriptionsControllerTest < ActionDispatch::IntegrationTest
+
   def test_entree_succes_agent
     agent = Fabricate(:agent)
     post '/agent', params: { email: agent.email, mot_de_passe: agent.password }
     follow_redirect!
+    assert response.body.include? agent.email
+  end
+
+  test "La casse en saisi n'est pas un soucis pour se connecter" do
+    agent = Fabricate(:agent, email: "ubber@laposte.net")
+    post '/agent', params: { email: "uBbeR@lApOsTe.nEt", mot_de_passe: agent.password }
+    follow_redirect!
+
     assert response.body.include? agent.email
   end
 

@@ -7,8 +7,16 @@ class EnregistrementPremierAgentServiceTest < ActiveSupport::TestCase
     assert_emails 1 do
       agent = EnregistrementPremierAgentService.new.execute('0720081X')
       assert_equal '0720081X', agent.etablissement.uai
-      assert_equal 'ce.0720081X@ac-nantes.fr', agent.email
+      assert_equal 'ce.0720081x@ac-nantes.fr', agent.email
       assert agent.admin?
+    end
+  end
+
+  test "l'UAI est enregistré en majuscule, sauf dans l'email" do
+    assert_emails 1 do
+      agent = EnregistrementPremierAgentService.new.execute('0720081x')
+      assert_equal '0720081X', agent.etablissement.uai
+      assert_equal 'ce.0720081x@ac-nantes.fr', agent.email
     end
   end
 

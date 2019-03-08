@@ -59,4 +59,5 @@ class EtablissementTest < ActiveSupport::TestCase
     etablissement = Fabricate.build(:etablissement, uai: "0755433Y")
     assert_equal "ce.0755433Y@ac-paris.fr", etablissement.email_chef
   end
+
 end
