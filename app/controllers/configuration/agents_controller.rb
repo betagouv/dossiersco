@@ -11,7 +11,7 @@ module Configuration
 
     def create
       @agent = Agent.new(agent_params)
-      @agent.email = @agent.email
+      @agent.email = @agent.email.downcase
       @agent.etablissement = @agent_connecté.etablissement
       @agent.jeton = SecureRandom.base58(26)
       if @agent.save

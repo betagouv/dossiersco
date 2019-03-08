@@ -8,7 +8,7 @@ class InscriptionsController < ApplicationController
   end
 
   def post_agent
-    mon_agent = Agent.find_by(email: params[:email])
+    mon_agent = Agent.find_by(email: params[:email].downcase)
 
     if mon_agent && mon_agent.authenticate(params[:mot_de_passe])
       session[:agent_email] = mon_agent.email

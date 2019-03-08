@@ -2,8 +2,8 @@ class EnregistrementPremierAgentService
 
   def execute(uai)
     raise StandardError, 'uai_invalide' unless uai_valide?(uai)
-    raise StandardError, 'uai_existant' if Etablissement.exists?(uai: uai)
-    etablissement = Etablissement.create!(uai: uai)
+    raise StandardError, 'uai_existant' if Etablissement.exists?(uai: uai.upcase)
+    etablissement = Etablissement.create!(uai: uai.upcase)
     jeton = SecureRandom.base58(26)
     email = construit_email_chef_etablissement(uai)
     agent = Agent.create!(etablissement: etablissement, email: email, jeton: jeton, admin: true)
@@ -12,7 +12,7 @@ class EnregistrementPremierAgentService
   end
 
   def construit_email_chef_etablissement(uai)
-    "ce.#{uai}@ac-#{retrouve_academie(uai)}.fr"
+    "ce.#{uai}@ac-#{retrouve_academie(uai)}.fr".downcase
   end
 
   def retrouve_academie(uai)
