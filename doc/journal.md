@@ -16,7 +16,26 @@
 
 ### Développement
 
-- 
+- [Echec de l'import élèves : Evariste GALOIS](https://github.com/betagouv/dossiersco/issues/422)
+- [La page de DossierSCO de beta.gouv renvoie vers URL obsolète](https://github.com/betagouv/dossiersco/issues/415)
+- [Quand on crée un nouvel établissement il a déjà des options pédagogiques](https://github.com/betagouv/dossiersco/issues/401)
+- [Si un collège est déjà inscrit, bloquer la procédure d'inscription par l'agent pour éviter le doublon et l'en informer](https://github.com/betagouv/dossiersco/issues/421)
+- [Présenter les coulisses de DossierSCO](https://github.com/betagouv/dossiersco/issues/208)
+- [Inscription autonome d'un établissement](https://github.com/betagouv/dossiersco/issues/345)
+- [Doublon d'un même MEF dans Editer, Options pédagogique (interface Agents)](https://github.com/betagouv/dossiersco/issues/416)
+- [Distinguer le fait d'être dans le module configuration et suivi](https://github.com/betagouv/dossiersco/issues/413)
+- [visualiser les options d'un élève](https://github.com/betagouv/dossiersco/issues/368)
+- [Trouver l'adresse mail d'un chef d'établissement de n'importe quelle académie](https://github.com/betagouv/dossiersco/issues/406)
+- [Echec de l'import élèves : Le BOCAGE](https://github.com/betagouv/dossiersco/issues/423)
+- [Modifier la classe d'inscription d'un élève dans l'interface agent](https://github.com/betagouv/dossiersco/issues/271)
+- [Automatiser la formalisation de l'embarquement d'un collège](https://github.com/betagouv/dossiersco/issues/182)
+- [Bloquer l'envoi d'emails par DossierSCO aux familles mais pas aux agents](https://github.com/betagouv/dossiersco/issues/426)
+- [Saisir et modifier les données de la campagne](https://github.com/betagouv/dossiersco/issues/404)
+- [Revoir wording inscription d'un établissement et d'un agent](https://github.com/betagouv/dossiersco/issues/403)
+- [Un admin peut modifier son établissement](https://github.com/betagouv/dossiersco/issues/384)
+- [Supprimer les identifiants pour les agents](https://github.com/betagouv/dossiersco/issues/407)
+- [accueillir un agent](https://github.com/betagouv/dossiersco/issues/355)
+- [utiliser l'email agent comme login](https://github.com/betagouv/dossiersco/issues/353)
 
 ### Intraprenariat
 
@@ -25,6 +44,8 @@
 - Premiers retours d'utilisateurs et utilisatrices à propos de DossierSCO.
 - Création d'une page [à propos](https://dossiersco.fr/a-propos) qui dévoile un peu les coulisses de l'équipe et du projet.
 - Rendez-vous important pour parler de SIECLE.
+- [Contacter DPD académie de Paris à propos du token API Particulier](https://github.com/betagouv/dossiersco/issues/418)
+- [Organiser des tests avec les familles à Malraux 45](https://github.com/betagouv/dossiersco/issues/419)
 
 ---
 ## 7e Semaine - du 15 au 21 février
