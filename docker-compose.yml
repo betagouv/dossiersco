@@ -19,7 +19,7 @@ services:
       RUBYOPT: -KU
       RAILS_ENV: development
       SESSION_SECRET: notreallysecret
-      SUPER_ADMIN: pierre, yannick, lucien
+      SUPER_ADMIN: yaf@elsif.fr
     depends_on:
       - postgres
   test:
