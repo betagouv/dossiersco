@@ -8,7 +8,7 @@
       <th>Prénom</th>
       <th>Nom</th>
       <th>Admin</th>
-      <th colspan="2"></th>
+      <th></th>
     </tr>
   </thead>
 
@@ -19,7 +19,6 @@
         <td><%= agent.nom %></td>
         <td><%= agent.prenom %></td>
         <td><%= "<span class='fas fa-check'></span>".html_safe if agent.admin? %></td>
-        <td><%= link_to 'Modifier', edit_configuration_agent_path(agent) %></td>
         <td>
           <%= link_to_if(@agent_connecté != agent, "Supprimer", [:configuration, agent],
                          method: :delete, data: { confirm: 'Voulez-vous vraiment supprimer cet agent ?' })
