@@ -24,6 +24,7 @@ fr:
       configuration: "Configuration"
     configuration:
       suivi_inscription: "Suivi des inscriptions"
+      tableau_de_bord: "Tableau de bord"
   partials:
     navigation:
       eleve: Elève
