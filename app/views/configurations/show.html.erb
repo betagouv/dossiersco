@@ -1,0 +1,36 @@
+<div class="card">
+  <div class="card content">
+    <h3><%= t('.agents') %></h3>
+    <%= t('.nombre_agents_html', nombre: @stats.agents) %>
+  </div>
+</div>
+
+
+<div class="card">
+  <div class="card content">
+    <h3><%= t('.options_pedagogiques') %></h3>
+    <%= t('.nombre_options_pedagogiques_html', options: @stats.options, mef: @stats.mef) %>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card content">
+    <h3><%= t('.import') %></h3>
+    <%= t('.nombre_dossiers_eleves', dossiers: @stats.dossiers) %>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card content">
+    <h3><%= t('.campagne') %></h3>
+    <%= t('.info_campagne', date_fin: @stats.date_fin) %>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card content">
+    <h3><%= t('.etablissement') %></h3>
+    <%= t('.information_etablissement_html', uai: @stats.uai, nom: @stats.nom_etablissement, code_postal: @stats.code_postal) %>
+  </div>
+</div>
+
