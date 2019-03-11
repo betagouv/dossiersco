@@ -174,6 +174,18 @@ fr:
       show:
         envoye_restreint: "Les envois de messages que vous déclencherez seront envoyé à l'email %{email}"
         attention_envoye_aux_familles: "Attention, des messages partirons directement aux famillles. Vous n'êtes pas dans une confiuration de test"
+  configurations:
+    show:
+      agents: Agents
+      nombre_agents_html: "<strong>%{nombre} agents</strong> inscrits pour votre établissement sur Dossiersco"
+      options_pedagogiques: Options Pédagogiques
+      nombre_options_pedagogiques_html: "<ul><li>%{options} options pédagogiques</li><li>%{mef} mefs</li></ul>"
+      import: Dossiers Élèves
+      nombre_dossiers_eleves: "%{dossiers} dossiers élèves pour votre établissement"
+      campagne: Campagne
+      info_campagne: "Fin de campagne au %{date_fin}"
+      etablissement: Établissement
+      information_etablissement_html: "<ul><li>%{uai}</li><li>%{nom}</li><li>%{code_postal}</li></ul>"
 
   inscriptions:
     modifier_mef_eleve:
