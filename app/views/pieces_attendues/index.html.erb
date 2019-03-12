@@ -31,7 +31,7 @@
   <%= form_for PieceAttendue.new do |form| %>
     <%= form.label :nom %>
     <%= form.text_field :nom, placeholder: 'Ex : Livret de famille' %>
-    <%= form.label :explication, html: {style: 'margin-left:10px'} %>
+    <%= form.label :explication, 'Explication pour la famille', html: {style: 'margin-left:10px'} %>
     <%= form.text_field :explication %>
     <%= form.label :obligatoire, html: {style: 'margin-left:10px'} %>
     <%= form.check_box :obligatoire %>
