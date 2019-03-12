@@ -1,20 +1,21 @@
-<% if notice.present? %>
-  <p class="alert alert-success" id="notice"><%= notice %></p>
-<% end %>
+<section class="section">
+  <h1>Options Pedagogiques</h1>
 
-<h1>Options Pedagogiques</h1>
+  <div class="text-right">
+    <%= link_to 'Nouvelle Option Pedagogique', new_option_pedagogique_path, {class: 'button-outline primary'} %>
+  </div>
 
-<table class="table">
-  <thead>
+  <table class="table">
+    <thead>
     <tr>
       <td>Nom</td>
       <td>Groupe</td>
       <td>Obligatoire</td>
       <td colspan="2"></td>
     </tr>
-  </thead>
+    </thead>
 
-  <tbody>
+    <tbody>
     <% @options_pedagogiques.each do |option_pedagogique| %>
       <tr>
         <td><%= option_pedagogique.nom %></td>
@@ -24,9 +25,6 @@
         <td><%= link_to 'Supprimer', option_pedagogique, method: :delete, data: { confirm: 'Etes vous sure ?' } %></td>
       </tr>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'Nouvelle Option Pedagogique', new_option_pedagogique_path %>
+    </tbody>
+  </table>
+</section>

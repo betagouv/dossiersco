@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       end
       get 'activation'
     end
+    resources :pieces_attendues, expect: [:show]
   end
 
   resources :pieces_jointes, only: [:create, :update] do
@@ -28,7 +29,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :pieces_attendues, only: [:index, :create]
 
   resources :agent_pieces_jointes, only: [:create, :update]
   resources :tache_imports, only: [:new, :create]

@@ -1,80 +1,73 @@
 <% content_for :head do %>
-    <%= javascript_include_tag 'agent', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'agent', 'data-turbolinks-track': 'reload' %>
 <% end %>
 
 <% content_for :body do %>
 
-    <header class="navbar navbar-expand-lg navbar-light bg-white">
-      <div class="navbar-logo">
-        <%= link_to root_path do %>
-          <img src='/images/republique_francaise.svg' class='logo'>
-          <span class="navbar-brand" >DossierSCO</span>
-        <% end %>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      </div>
+  <header class="navbar" role="navigation">
+    <div class="navbar__container">
+      <a class="navbar__home" href="/agent/tableau_de_bord">
+        <img class="navbar__logo" src="/images/republique_francaise.svg" alt="logo Dossiersco" />
+        <span class="navbar__domain">DossierSCO.fr</span>
+      </a>
 
-      <div class="collapse navbar-collapse navbar-links" id="navbarSupportedContent">
-        <ul class="navbar-nav">
+      <nav>
+        <ul class="nav__links">
           <% unless @agent_connecté.nil? %>
             <% if @agent_connecté.admin? %>
-              <li class="nav-item">
+              <li class="nav__item">
                 <%= link_to t('.configuration'), configuration_path, {class: 'nav-link'}%>
               </li>
             <% end %>
             <% if super_admin?(@agent_connecté.email) %>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                                                                                               aria-haspopup="true" aria-expanded="false">
+              <li class="nav__item">
+                <div class="dropdown">
                   <%= affiche_etablissement(@agent_connecté.etablissement) %>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <% Etablissement.all.each do |etablissement| %>
-                    <%= link_to "#{etablissement.nom} (#{etablissement.departement})", changer_etablissement_configuration_agent_path(@agent_connecté, etablissement: etablissement), {method: :post, class: 'dropdown-item'} %>
-                  <% end %>
+                  <div class="dropdown-content">
+                    <% Etablissement.all.each do |etablissement| %>
+                      <%= link_to "#{etablissement.nom} (#{etablissement.departement})",
+                                  changer_etablissement_configuration_agent_path(@agent_connecté, etablissement: etablissement),
+                                  {method: :post} %>
+                    <% end %>
+                  </div>
                 </div>
               </li>
             <% else %>
-              <li class="nav-item">
-                <span class="nav-link"><%= affiche_etablissement(@agent_connecté.etablissement) %></span>
+              <li class="nav__item">
+                <%= affiche_etablissement(@agent_connecté.etablissement) %>
               </li>
             <% end %>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                                                                                             aria-haspopup="true" aria-expanded="false">
+            <li class="nav__item">
+              <div class="dropdown">
                 <%= @agent_connecté.email %>
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <%= link_to 'Mon profil', edit_configuration_agent_path(@agent_connecté), {class: "dropdown-item"} %>
-                <%= link_to "Se déconnecter", agent_deconnexion_path, {class: "dropdown-item"} %>
+                <div class="dropdown-content">
+                  <%= link_to 'Mon profil', edit_configuration_agent_path(@agent_connecté), {class: "dropdown-item"} %>
+                  <%= link_to "Se déconnecter", agent_deconnexion_path, {class: "dropdown-item"} %>
+                </div>
               </div>
             </li>
           <% end %>
         </ul>
-      </div>
+      </nav>
+    </div>
+    <div class="navbar__container">
+      <nav>
+        <ul class="nav__links">
+          <li class="nav__item <%= 'active' if request.fullpath.include? '/tableau_de_bord' %>">
+            <%= link_to 'Tableau de bord', agent_tableau_de_bord_path %>
+          </li>
+          <li class="nav__item <%= 'active' if request.fullpath.include? '/liste_des_eleves' %>">
+            <%= link_to 'Liste des élèves', agent_liste_des_eleves_path %>
+          </li>
+          <li class="nav__item <%= 'active' if request.fullpath.include? '/convocations' %>">
+            <%= link_to 'Convocations', agent_convocations_path %>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-    </header>
-
-    <nav class="menu-agents pl-5 navbar navbar-expand-lg navbar-light bg-white">
-      <ul class="navbar-nav ml-5">
-        <li class="nav-item <%= 'active' if request.fullpath.include? '/tableau_de_bord' %>">
-          <%= link_to 'Tableau de bord', agent_tableau_de_bord_path, {class: 'nav-link'} %>
-        </li>
-        <li class="nav-item <%= 'active' if request.fullpath.include? '/liste_des_eleves' %>">
-          <%= link_to 'Liste des élèves', agent_liste_des_eleves_path, {class: 'nav-link'} %>
-        </li>
-        <li class="nav-item <%= 'active' if request.fullpath.include? '/convocations' %>">
-          <%= link_to 'Convocations', agent_convocations_path, {class: 'nav-link'} %>
-        </li>
-        <li class="nav-item <%= 'active' if request.fullpath.include? '/export' %>">
-          <%= link_to 'Export', agent_export_path, {class: 'nav-link'} %>
-        </li>
-      </ul>
-    </nav>
-
-
-    <main role="main" class="container my-5">
+  <main role="main" class="container">
 
     <% if flash[:notice] %>
       <div class="alert alert-success" role="alert">
@@ -85,24 +78,21 @@
         <%= flash[:alert]  %>
       </div>
     <% end %>
-    <div class="row justify-content-center">
 
-      <% if (defined? message_info) && (!message_info.nil?) %>
-        <div class="alert alert-success"><%= message_info %></div>
-      <% end %>
+    <% if (defined? message_info) && (!message_info.nil?) %>
+      <div class="alert alert-success"><%= message_info %></div>
+    <% end %>
 
-      <%= yield %>
+    <%= yield %>
 
-    </div>
-
-    </main>
-    <script>
-      drift.identify(<%= @agent_connecté.id %>, {
-        email: '<%= @agent_connecté.email %>',
-        name: '<%= @agent_connecté.prenom %> <%= @agent_connecté.nom %> (<%= @agent_connecté.etablissement.nom %>)',
-        postalcode: '<%= @agent_connecté.etablissement.code_postal %>',
-        city: '<%= @agent_connecté.etablissement.ville %>'
-      })
-    </script>
+  </main>
+  <script>
+    drift.identify(<%= @agent_connecté.id %>, {
+      email: '<%= @agent_connecté.email %>',
+      name: '<%= @agent_connecté.prenom %> <%= @agent_connecté.nom %> (<%= @agent_connecté.etablissement.nom %>)',
+      postalcode: '<%= @agent_connecté.etablissement.code_postal %>',
+      city: '<%= @agent_connecté.etablissement.ville %>'
+    })
+  </script>
 <% end %>
 <%= render template: 'layouts/application' %>
