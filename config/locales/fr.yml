@@ -186,6 +186,16 @@ fr:
       info_campagne: "Fin de campagne au %{date_fin}"
       etablissement: Établissement
       information_etablissement_html: "<ul><li>%{uai}</li><li>%{nom}</li><li>%{code_postal}</li></ul>"
+      pieces_attendues: Pièces attendues
+      ajouter_un_agent: Ajouter un agent
+      seul_agent: Vous êtes le seul agent dans votre établissement.
+      aucun_dossier: Il n'y a pas encore de dossiers élèves, vous pouvez importer un fichier SIECLE pour en ajouter.
+      importer un fichier: Importer un fichier SIECLE
+      aucun_mef_et_option: Vous n'avez pas de mef et d'options pédagogiques. Vous pouvez importer un fichier SIECLE pour en ajouter.
+      information_etablissement_manquantes: Les informations de votre établissement ne sont pas complètes. Vous pouvez les modifier en suivant le lien.
+      modifier_informations: Modifier les informations
+      aucune_piece_attendue: Vous n'avez aucune pièce justificative attendue pour l'inscription
+      ajouter_piece_justificative: Ajouter une pièce
 
   inscriptions:
     modifier_mef_eleve:

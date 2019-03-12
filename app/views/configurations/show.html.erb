@@ -2,10 +2,30 @@
   <div class="col-md-4 col-12">
     <div class="card card-configuration">
       <div class="card-header">
+        <h3><%= t('.import') %></h3>
+      </div>
+      <div class="card-body">
+        <% if @stats.dossiers == 0 %>
+          <p class="card-text"><%= t('.aucun_dossier') %></p>
+          <%= link_to t('.importer un fichier'), new_tache_import_path %>
+      <% else %>
+          <p class="card-text"><%= t('.nombre_dossiers_eleves', dossiers: @stats.dossiers) %></p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 col-12">
+    <div class="card card-configuration">
+      <div class="card-header">
         <h3><%= t('.agents') %></h3>
       </div>
       <div class="card-body">
-        <p class="card-text"><%= t('.nombre_agents_html', nombre: @stats.agents) %></p>
+        <% if @stats.agents <= 1 %>
+          <p class="card-text"><%= t('.seul_agent', nombre: @stats.agents) %></p>
+        <% else %>
+          <p class="card-text"><%= t('.nombre_agents_html', nombre: @stats.agents) %></p>
+        <% end %>
+        <%= link_to t('.ajouter_un_agent'), new_configuration_agent_path %>
       </div>
     </div>
   </div>
@@ -15,17 +35,12 @@
         <h3><%= t('.options_pedagogiques') %></h3>
       </div>
       <div class="card-body">
-        <p class="card-text"><%= t('.nombre_options_pedagogiques_html', options: @stats.options, mef: @stats.mef) %></p>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4 col-12">
-    <div class="card card-configuration">
-      <div class="card-header">
-        <h3><%= t('.import') %></h3>
-      </div>
-      <div class="card-body">
-        <p class="card-text"><%= t('.nombre_dossiers_eleves', dossiers: @stats.dossiers) %></p>
+        <% if @stats.mef == 0 && @stats.options == 0 %>
+          <p class="card-text"><%= t('.aucun_mef_et_option') %></p>
+          <%= link_to t('.importer un fichier'), new_tache_import_path %>
+      <% else %>
+          <p class="card-text"><%= t('.nombre_options_pedagogiques_html', options: @stats.options, mef: @stats.mef) %></p>
+        <% end %>
       </div>
     </div>
   </div>
@@ -47,7 +62,34 @@
         <h3><%= t('.etablissement') %></h3>
       </div>
       <div class="card-body">
-        <p class="card-text"><%= t('.information_etablissement_html', uai: @stats.uai, nom: @stats.nom_etablissement, code_postal: @stats.code_postal) %></p>
+        <% unless @stats.nom_etablissement || @stats.code_postal %>
+          <p class="card-text"><%= t('.information_etablissement_manquantes') %></p>
+          <%= link_to t('.modifier_informations'), edit_configuration_etablissement_path(@agent_connecté.etablissement) %>
+      <% else %>
+          <p class="card-text"><%= t('.information_etablissement_html', uai: @stats.uai, nom: @stats.nom_etablissement,
+                                     code_postal: @stats.code_postal) %></p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 col-12">
+    <div class="card card-configuration">
+      <div class="card-header">
+        <h3><%= t('.pieces_attendues') %></h3>
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+          <% if @stats.pieces_attendues.size  == 0  %>
+            <p class="card-text"><%= t('.aucune_piece_attendue') %></p>
+            <%= link_to t('.ajouter_piece_justificative'), pieces_attendues_path %>
+          <% else %>
+            <ul>
+              <% @stats.pieces_attendues.each do |piece| %>
+                <li><%= piece %></li>
+              <% end %>
+            </ul>
+          <% end %>
+        </p>
       </div>
     </div>
   </div>
