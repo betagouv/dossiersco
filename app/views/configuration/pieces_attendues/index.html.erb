@@ -1,0 +1,30 @@
+<section class="section">
+  <h1>Pièces attendues</h1>
+
+  <div class="text-right">
+    <%= link_to link_to 'Nouvelle pièce', new_configuration_piece_attendue_path, {class: 'button-outline primary'} %>
+  </div>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th>nom</th>
+      <th>Explication</th>
+      <th>Obligatoire</th>
+      <th colspan="2"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @pieces_attendues.each do |piece| %>
+      <tr>
+        <td><%= piece.nom %></td>
+        <td><%= piece.explication %></td>
+        <td><%= piece.obligatoire ? 'Oui' : 'Non' %></td>
+        <td><%= link_to 'Editer', edit_configuration_piece_attendue_path(piece) %></td>
+        <td><%= link_to 'Supprimer', [:configuration, piece], method: :delete, data: { confirm: 'Etes vous sûr ?' } %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</section>

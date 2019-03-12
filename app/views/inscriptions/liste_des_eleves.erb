@@ -1,4 +1,4 @@
-<div class="col-12">
+<section class="section">
   <h1 class="separation">Eleves en cours de traitement</h1>
   <div class="my-2">
     Collège <%= agent.etablissement.nom %> : <span id="total_dossiers" class="badge badge-danger"><%= lignes_eleves.count('*') %></span> dossiers.
@@ -51,14 +51,12 @@
       <% end %>
     </tbody>
   </table>
-</div>
-
+</section>
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/yadcf/0.9.3/jquery.dataTables.yadcf.min.js"></script>
 <script src="https://cdn.datatables.net/select/1.2.6/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
-<%= render partial: 'partials/image_box' %>
 <script type="text/javascript" charset="utf-8">
   $('.etat').click(function() {
     var id = $(this).parent().data('piece-id');
