@@ -5,21 +5,17 @@ require 'test_helper'
 class ConfigurationTest < ActionDispatch::IntegrationTest
   include ::ActiveJob::TestHelper
 
-  test "Configuration basique : import fichier siecle, modification option pédagogique" do
+  test "Configuration basique : un agent se connect, déclenche un import de fichier" do
     admin = Fabricate(:admin)
-
     visit '/agent'
     assert_selector 'h1', text: 'Agent EPLE'
-
     fill_in 'email', with: admin.email
     fill_in 'mot_de_passe', with: admin.password
     click_button 'Se connecter'
-
     assert_selector 'h1', text: 'Eleves en cours de traitement'
 
     click_link 'Configuration'
     click_link 'Import'
-
     within('.siecle') do
       assert_selector 'h2', text: 'Importer un fichier'
       choose 'SIECLE'

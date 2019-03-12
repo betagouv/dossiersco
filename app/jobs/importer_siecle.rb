@@ -28,10 +28,8 @@ class ImporterSiecle < ApplicationJob
   end
 
   def import_xls fichier, etablissement_id, nom_a_importer=nil, prenom_a_importer=nil
-
     import_mef(fichier, etablissement_id)
-    compte_rendu = import_dossiers_eleve(fichier, etablissement_id, nom_a_importer, prenom_a_importer)
-    compte_rendu
+    import_dossiers_eleve(fichier, etablissement_id, nom_a_importer, prenom_a_importer)
   end
 
   def import_dossiers_eleve(fichier, etablissement_id, nom_a_importer, prenom_a_importer)
@@ -129,8 +127,6 @@ class ImporterSiecle < ApplicationJob
     mef_destination = Mef.niveau_superieur(mef_origine) if mef_origine.present?
 
     dossier_eleve = DossierEleve.find_or_initialize_by(eleve_id: eleve.id, etablissement_id: etablissement_id)
-    puts dossier_eleve.inspect
-    puts mef_origine.inspect
     dossier_eleve.mef_origine = mef_origine
     dossier_eleve.mef_destination = mef_destination
 
