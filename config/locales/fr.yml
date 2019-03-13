@@ -151,6 +151,7 @@ fr:
         Il ne vous reste plus qu'à remplir vos informations pour vous connecter"
         titre_html: "Activation du compte <br/> %{email}"
       new:
+        explication_agent_admin: (En étant admin il pourra acceder à la partie configuration)
         titre: "Ajouter un agent"
         ajouter: "Ajouter"
       create:
@@ -216,6 +217,8 @@ fr:
       message_de_succes: "L'import est en cours, un email va être envoyé à l'adresse %{email} une fois l'import terminé"
       fichier_manquant: "Vous n'avez pas indiqué de fichier à importer"
     new:
+      titre_purge_etablissement: Purge de l'établissement
+      message_prevention_purge: Attention ! Ceci supprimera tous les dossiers élèves
       titre_import: "Importer un fichier"
       selectionner_fichier: "Sélectionnez un fichier au format xls"
       importer_fichier: "Importer un fichier"

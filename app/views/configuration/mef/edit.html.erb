@@ -1,10 +1,8 @@
-<div class="col-md-6 col-12 offset-md-3">
+<section class="section">
 
-  <h1 class="mb-3">Editer un MEF</h1>
+  <h1>Editer un MEF</h1>
 
-<%= render 'form', mef: @mef %>
+  <%= render 'form', mef: @mef %>
 
-<%= link_to 'Show', [:configuration, @mef] %> |
-<%= link_to 'Retour', configuration_mef_index_path %>
-
-</div>
+  <%= link_to 'Retour', configuration_mef_index_path, class: 'button-outline small secondary' %>
+</section>

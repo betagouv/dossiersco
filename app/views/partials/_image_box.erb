@@ -1,66 +1,63 @@
-<div class="modal fade" id="modal-pieces-jointes" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="titre-modal-pj"></h5>
-        <button type="button" class="close fermer" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" id="affichage-doc">
-        <!-- Zone d'affichage du document -->
-      </div>
-      <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-secondary rotation" data-degres="-90">Tourner <i class="fas fa-undo"></i></button>
-        <span>
-        <button type="button" class="btn btn-secondary rotation" data-degres="90">Tourner <i class="fas fa-redo"></i></button>
-        <button type="button" class="btn btn-secondary fermer" data-dismiss="modal">Fermer</button>
-        </span>
-      </div>
+<div class="modal__backdrop" id="modal-pieces-jointes">
+  <div class="modal modal-piece-jointe">
+    <div class="row mb-2">
+      <h5 class="modal-title" id="titre-modal-pj"></h5>
+      <button type="button" class="button-outline secondary fermer-modal" aria-label="Close">
+        Fermer
+      </button>
+    </div>
+    <div class="modal-body mb-2" id="affichage-doc">
+      <!-- Zone d'affichage du document -->
+    </div>
+    <div class="modal-footer justify-content-between">
+      <button type="button" class="button secondary rotation" data-degres="-90">Tourner <i class="fas fa-undo"></i></button>
+      <span>
+      <button type="button" class="button secondary rotation" data-degres="90">Tourner <i class="fas fa-redo"></i></button>
+      <button type="button" class="button-outline secondary fermer-modal" data-dismiss="modal">Fermer</button>
+      </span>
     </div>
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function () {
     $('.lien-piece-jointe').click(function() {
-      var url = $(this).data('url');
-      var ext = $(this).data('ext');
+      console.log('coucou')
+      let url = $(this).data('url');
+      let ext = $(this).data('ext');
+      let nom = $(this).data('nom');
 
+      $('#titre-modal-pj').html(nom)
       if (ext === 'pdf') {
         $('#affichage-doc').html("<iframe id='iframe-piece-jointe' src='" + url + "' ></iframe>")
       }
       else {
         $('#affichage-doc').html("<img id='iframe-piece-jointe' src='" + url + "' style='height: 100%'>")
       }
+      $('#modal-pieces-jointes').css('display', 'block')
     });
-    $('#modal-pieces-jointes').on('hide.bs.modal', function (e) {
-        $('#iframe-piece-jointe').attr('src', ' ');
-    })
 
-    var rotation = 0
+    let rotation = 0
     $('.rotation').click(function() {
         degres = $(this).data('degres')
-        var img = $('#affichage-doc img')
-        var scale = img.height() / img.width()
+        let img = $('#affichage-doc img')
+        let scale = img.height() / img.width()
         rotation = (rotation + degres) % 360
 
         if ((rotation % 360) === 0) {
           reset_rotation();
         }
         else {
-          var transform = 'rotate('+rotation+'deg)'
+          let transform = 'rotate('+rotation+'deg)'
           transform += (rotation % 180) === 0 ? '' : ' scale('+scale+') translate(0px,'+scale*img.height()/2+'px)'
           img.css('transform', transform);
         }
      })
 
-    $('.fermer').click(reset_rotation)
-    $(document).keyup(function(e) {
-      if(e.keyCode === 27) // touche escape
-        reset_rotation()
-    });
+    $('.fermer-modal').click(function() {
+      $('#modal-pieces-jointes').css('display', 'none')
+      reset_rotation()
+    })
     function reset_rotation() {
       rotation = 0;
       $('#affichage-doc img').css('transform', 'none');

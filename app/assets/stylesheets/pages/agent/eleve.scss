@@ -2,3 +2,18 @@
   font-size: 1.3rem;
   margin-bottom: 2.5rem;
 }
+
+.modal-piece-jointe {
+  margin: 1rem !important;
+  height: 97% !important;
+  width: 97% !important;
+  max-width: none !important;
+  text-align: center;
+  .modal-header {
+    text-align: right;
+  }
+}
+
+.lien-piece-jointe {
+  cursor: pointer;
+}
