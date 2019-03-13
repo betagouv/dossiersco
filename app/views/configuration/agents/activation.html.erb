@@ -1,5 +1,5 @@
-<div class="col-md-6 col-12 offset-md-3">
-  <h1 class="mb-3"><%= t(".titre_html", email: @agent_connecté.email) %></h1>
+<section class="section">
+  <h1><%= t(".titre_html", email: @agent_connecté.email) %></h1>
   <p><%= t('.explication_html') %></p>
   <%= render 'form' %>
-</div>
+</section>

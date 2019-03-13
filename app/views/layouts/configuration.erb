@@ -79,11 +79,11 @@
 
   <main role="main" class="container my-5">
     <% if flash[:notice] %>
-      <div class="alert alert-success" role="alert">
+      <div class="notification success mt-1">
         <%= flash[:notice]  %>
       </div>
     <% elsif flash[:alert] %>
-      <div class="alert alert-danger" role="alert">
+      <div class="notification error mt-1">
         <%= flash[:alert]  %>
       </div>
     <% end %>

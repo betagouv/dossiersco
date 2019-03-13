@@ -1,328 +1,335 @@
-<% @section = 1 %>
-
-<div class="col-12 col-md-8">
-
-  <ul class="nav nav-tabs" id="eleveTabs" role="tablist">
-    <li class="nav-item">
-      <a class="nav-link active" id="dossier-tab" data-toggle="tab" href="#dossier" role="tab" aria-controls="dossier" aria-selected="true">Dossier</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" id="echanges-tab" data-toggle="tab" href="#echanges" role="tab" aria-controls="echanges" aria-selected="false">Echanges</a>
-    </li>
-  </ul>
-
-  <div class="tab-content" id="eleveTabsContent">
-
-    <!-- Dossier -->
-    <div class="tab-pane fade show active" id="dossier" role="tabpanel" aria-labelledby="dossier-tab">
-
-      <h2 class="separation mt-3">Pieces jointes de l'élève <%= @dossier_eleve.eleve.prenom %> <%= @dossier_eleve.eleve.nom %></h2>
-
-      <div class="card-deck row">
-        <% @pieces_jointes.each do |piece| %>
-          <div class="col-12 col-md-6 mb-4">
-            <div class="card <%= piece.etat if piece.present? %>">
-              <h5 class="card-header"><%= '*' if piece.obligatoire %> <%= piece.nom %></h5>
-              <div class="card-body">
-                <p class="card-text"><%= piece.explication %></p>
-                <p class="card-text etat-piece-jointe"><%= t(".document_#{piece.etat}") if piece.etat.present?  %></p>
-                <div class="card-relat document">
-                  <%= form_for [:agent, piece], multipart: true, html: { class: "forms" } do |form| %>
-                    <% if piece.fichier.url.present? %>
-                      <% if piece.fichier.content_type.start_with?("image/") %>
-                        <%= image_tag(piece.fichier.url, alt:"preview piece jointe") %>
-                      <% else %>
-                        <%= link_to t('.voir_piece_jointe'), piece.fichier.url %>
+<section class="section">
+  <h1>Élève <%= @dossier_eleve.eleve.prenom %> <%= @dossier_eleve.eleve.nom %></h1>
+  <div id="dashboard" class="dashboard">
+    <aside class="side-menu" role="navigation">
+      <ul>
+        <li><a class="active lien-section" data-target="#pieces-jointes">Pieces jointes</a></li>
+        <li><a class="lien-section" data-target="#options">Mef / options</a></li>
+        <li><a class="lien-section" data-target="#contact">Contact</a></li>
+        <li><a class="lien-section" data-target="#echanges">Échanges</a></li>
+        <li><a class="lien-section" data-target="#dossier">Dossier</a></li>
+      </ul>
+    </aside>
+    <div class="main" id="pieces-jointes">
+      <div class="panel">
+        <div class="panel__header">
+          <h3>Pieces jointes</h3>
+        </div>
+        <div class="cards">
+          <% @pieces_jointes.each do |piece| %>
+            <div class="card mb-2 <%= piece.etat if piece.present? %>">
+              <div class="card__content">
+                <h4><%= '*' if piece.obligatoire %> <%= piece.nom %></h4>
+                  <div class="card-relat document">
+                    <%= form_for [:agent, piece], multipart: true, html: { class: "forms" } do |form| %>
+                      <% if piece.fichier.url.present? %>
+                        <div class="lien-piece-jointe" data-url="<%= piece.fichier.url %>" data-nom="<%= piece.nom %>">
+                          <% if piece.fichier.content_type.start_with?("image/") %>
+                            <%= image_tag(piece.fichier.url, alt:"preview piece jointe") %>
+                          <% else %>
+                            <%= link_to t('.voir_piece_jointe'), piece.fichier.url %>
+                          <% end %>
+                        </div>
                       <% end %>
+                      <%= form.hidden_field :piece_attendue_id %>
+                      <%= hidden_field_tag :eleve_id, params[:identifiant] %>
+                      <div class="form__group mb-2">
+                        <%= form.file_field :fichier, data: { btnClass: "button", text: "Parcourir"} %>
+                        <button class="soumettre hide" type="submit">Soumettre</button>
+                      </div>
                     <% end %>
-                    <%= form.hidden_field :piece_attendue_id %>
-                    <%= hidden_field_tag :eleve_id, params[:identifiant] %>
-                    <%= form.file_field :fichier, data: { btnClass: "btn btn-primary", text: "Parcourir"}, class: "filestyle" %>
-                    <button class="soumettre d-none" type="submit">Soumettre</button>
-                  <% end %>
-                  <br />
+                    <% if piece.id.present? %>
+                      <div class="form__group">
+                        <%= link_to t('.valider'), valider_piece_jointe_path(piece, identifiant: params[:identifiant]),
+                                    method: :put, class: "button" %>
+                        <%= link_to t('.refuser'), refuser_piece_jointe_path(piece, identifiant: params[:identifiant]),
+                                    method: :put, class: "button warning" %>
+                      </div>
+                    <% end %>
                 </div>
-                <% if piece.id.present? %>
-                  <%= link_to t('.valider'), valider_piece_jointe_path(piece, identifiant: params[:identifiant]),
-                              method: :put, class: "btn btn-success" %>
-                  <%= link_to t('.refuser'), refuser_piece_jointe_path(piece, identifiant: params[:identifiant]),
-                              method: :put, class: "btn btn-danger" %>
-                <% end %>
               </div>
             </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       </div>
+    </div>
 
-      <%= render partial: 'partials/image_box' %>
+    <div class="main hide" id="options">
+      <h2>Mef et options pédagogiques</h2>
 
-      <h2 class="separation mt-3">Options pédagogiques</h2>
+      <div class="panel" id="options">
+        <div class="panel__header">
+          <h3>Options pédagogiques</h3>
+        </div>
+        <ul class="mb-5">
+          <% @dossier_eleve.options_pedagogiques.each do |option| %>
+            <li><%= option.nom %></li>
+          <% end %>
+        </ul>
 
-      <ul class="mb-5">
-        <% @dossier_eleve.options_pedagogiques.each do |option| %>
-          <li><%= option.nom %></li>
-        <% end %>
-      </ul>
-
-      <h2 class="separation mt-3">MEF</h2>
-
-      <span id="afficher-message-flash"></span>
-
-      <%= form_for(@dossier_eleve, url: modifier_mef_eleve_path(@dossier_eleve), remote: true) do |f| %>
-        <div class="form-group row">
-          <%= f.label :mef_origine, 'Mef actuel', class: 'col-sm-4 col-form-label' %>
-          <div class="col-sm-5">
+      </div>
+      <div class="panel">
+        <div class="panel__header">
+          <h3>MEF</h3>
+        </div>
+        <span id="afficher-message-flash"></span>
+        <%= form_for(@dossier_eleve, url: modifier_mef_eleve_path(@dossier_eleve), remote: true) do |f| %>
+          <div class="form__group">
+            <%= f.label :mef_origine, 'Mef actuel' %>
             <%= f.collection_select :mef_origine_id, @dossier_eleve.etablissement.mef, :id, :libelle, {}, {class: 'form-control'} %>
           </div>
-        </div>
-        <div class="form-group row">
-          <%= f.label :mef_destination, 'Mef de destination', class: 'col-sm-4 col-form-label' %>
-          <div class="col-sm-5">
+
+          <div class="form__group">
+            <%= f.label :mef_destination, 'Mef de destination'%>
             <%= f.collection_select :mef_destination_id, @dossier_eleve.etablissement.mef, :id, :libelle, {}, {class: 'form-control'} %>
           </div>
-        </div>
-        <%= f.submit 'Modifier les MEF', class: 'btn btn-outline-primary' %>
-      <% end %>
-
-      <h2 class="separation my-5">Instruction du dossier</h2>
-      <div class="d-flex justify-content-center align-items-center mb-4" style='text-align: center; width:100%'>
-        <form action='/agent/valider_inscription' method='POST'>
-          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-          <input type="hidden" name="identifiant" value="<%= @dossier_eleve.eleve.identifiant %>" />
-          <button class="btn btn-lg btn-primary mr-2  <%= 'disabled' if @dossier_eleve.etat == 'validé'%>"
-                  id="bouton-validation-inscription" type='submit'
-                  <%= 'disabled' if @dossier_eleve.etat == 'validé'%>>Valider l'inscription</button>
-        </form>
-        <form action='/agent/eleve_sortant' method='POST'>
-          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-          <input type="hidden" name="identifiant" value="<%= @dossier_eleve.eleve.identifiant %>" />
-          <button class="btn btn-outline-primary ml-2 <%= 'disabled' if @dossier_eleve.etat == 'sortant'%>"
-                  id="bouton-eleve-sortant" type='submit'  <%= 'disabled' if @dossier_eleve.etat == 'sortant'%>>
-            Cet élève est sorti·e de l'établissement</button>
-        </form>
+          <div class="form__group">
+            <%= f.submit 'Modifier les MEF', class: 'button' %>
+          </div>
+        <% end %>
       </div>
-
     </div>
 
-    <!-- Contact -->
-    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-
-      <% @dossier_eleve.resp_legal.each do |resp_legal| %>
-        <h2 class="separation my-4">
-          <%= resp_legal.respond_to?(:lien_de_parente) ? resp_legal.lien_de_parente : 'Contact' %>
-          <%= resp_legal.prenom %> <%= resp_legal.nom %></h2>
-        <div class='mb-4'>
-          <% if resp_legal.tel_principal.present? %>
-				<span class='mr-1'>
-					<i class="fas fa-phone-square"></i> <strong><%= resp_legal.tel_principal %></strong>
-				</span>
-          <% end %>
-          <% if resp_legal.tel_secondaire.present? %>
-				<span class='my-3'>
-					<i class="fas fa-phone-square"></i> <%= resp_legal.tel_secondaire %>
-				</span>
-          <% end %>
-          <% if resp_legal.respond_to?(:email) && resp_legal.email.present? %>
-				<span>
-					<i class="fas fa-envelope mr-1"></i><%= resp_legal.email %>
-				</span>
-          <% end %>
+    <div class="main hide" id="contact">
+      <div class="panel">
+        <div class="form__group">
+          <label>Sexe</label>
+          <input type="text" value="<%= @dossier_eleve.eleve.sexe %>" disabled >
         </div>
-      <% end %>
-
-      <% if @dossier_eleve.resp_legal_2.present? %>
-         <p>Ces responsables légaux <strong>habitent à
-           <% if @meme_adresse %>
-               la même adresse
-           <% else %>
-               des adresses différentes
-           <% end %>
-         </strong></p>
-      <% end %>
-
-      <h2 class="separation my-4"><%= @dossier_eleve.eleve.classe_ant %> <%= @dossier_eleve.eleve.prenom%> <%=@dossier_eleve.eleve.nom%></h2>
-
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Sexe</label>
-        <div class="col-sm-5">
-          <input type="text" class="form-control" value="<%= @dossier_eleve.eleve.sexe %>" disabled >
+        <div class="form__group">
+          <label>Date de naissance</label>
+          <input type="date" value="<%= @dossier_eleve.eleve.date_naiss %>" disabled >
         </div>
       </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Date de naissance</label>
-        <div class="col-sm-5">
-          <input type="date" class="form-control" value="<%= @dossier_eleve.eleve.date_naiss %>" disabled >
+      <div class="panel">
+        <div class="panel__header">
+          <h3><%= @dossier_eleve.resp_legal.count > 1 ? 'Résponsables légaux' : 'Responsable légal' %></h3>
         </div>
-      </div>
-
-      <h2 class="separation my-4">Habite chez <%=@dossier_eleve.resp_legal_1.prenom %> <%=@dossier_eleve.resp_legal_1.nom %></h2>
-
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Lien de parenté</label>
-        <div class="col-sm-5">
-          <input type="text" class="form-control" value="<%= @dossier_eleve.resp_legal_1.lien_de_parente %>" disabled >
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Adresse</label>
-        <div class="col-sm-5">
-          <textarea class="form-control" disabled ><%= @dossier_eleve.resp_legal_1.adresse %></textarea>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Code postal</label>
-        <div class="col-sm-5">
-          <input type="text" class="form-control" value="<%= @dossier_eleve.resp_legal_1.code_postal %>" disabled >
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-4 col-form-label">Ville</label>
-        <div class="col-sm-5">
-          <input type="text" class="form-control" value="<%= @dossier_eleve.resp_legal_1.ville %>" disabled >
-        </div>
-      </div>
-
-      <% unless @dossier_eleve.resp_legal_1.adresse_inchangee %>
-        <div id="ancienne_adresse">
-          <hr/>
-          <div class="form-group row">
-            <label class="col-sm-4 col-form-label">Adresse</label>
-            <div class="col-sm-5">
-              <textarea class="form-control" disabled ><%= @dossier_eleve.resp_legal_1.adresse_ant %></textarea>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-4 col-form-label">Code postal</label>
-            <div class="col-sm-5">
-              <input type="text" class="form-control" value="<%= @dossier_eleve.resp_legal_1.code_postal_ant %>" disabled >
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-4 col-form-label">Ville</label>
-            <div class="col-sm-5">
-              <input type="text" class="form-control" value="<%= @dossier_eleve.resp_legal_1.ville_ant %>" disabled >
-            </div>
-          </div>
-        </div>
-      <% end %>
-      <% if @dossier_eleve.contact_urgence.present? %>
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">Lien avec l'élève</label>
-          <div class="col-sm-5">
-            <input type="text" class="form-control" value="<%= @dossier_eleve.contact_urgence.lien_avec_eleve %>" disabled >
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">Prénom</label>
-          <div class="col-sm-5">
-            <input class="form-control" value="<%= @dossier_eleve.contact_urgence.prenom %>" disabled >
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">nom</label>
-          <div class="col-sm-5">
-            <input type="text" class="form-control" value="<%= @dossier_eleve.contact_urgence.nom %>" disabled >
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">Téléphone principal</label>
-          <div class="col-sm-5">
-            <input type="text" class="form-control" value="<%= @dossier_eleve.contact_urgence.tel_principal %>" disabled >
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">Téléphone secondaire</label>
-          <div class="col-sm-5">
-            <input type="text" class="form-control" value="<%= @dossier_eleve.contact_urgence.tel_secondaire %>" disabled >
-          </div>
-        </div>
-      <% end %>
-    </div>
-
-    <!-- Echanges -->
-    <div class="tab-pane fade" id="echanges" role="tabpanel" aria-labelledby="echanges-tab">
-      <h2 class="separation mt-3">Envoyer un message</h2>
-
-        <div class='card'>
-          <div class='card-body'>
-            <% if @emails_presents %>
-              <p>Ce formulaire envoie un message à la famille de l'élève. Précisez par exemple si les pièces
-                justificatives ne sont pas conformes, et ce que la famille doit transmettre.</p>
-            <% elsif @dossier_eleve.portable_present %>
-              <p>Cette famille n'a pas déclaré d'adresse mail. Le formulaire ci-dessous vous permet
-                d'envoyer un texto. <strong>Soyez bref</strong> (moins de 140 caractères si possible).
-                L'émission des textos se fait en différé.</p>
-            <% else %>
-              <p>Cette famille n'a pas déclaré d'adresse mail, ni de téléphone portable.</p>
+        <% @dossier_eleve.resp_legal.each do |resp_legal| %>
+          <h4>
+            <%= resp_legal.respond_to?(:lien_de_parente) ? resp_legal.lien_de_parente : 'Contact' %>
+            <%= resp_legal.prenom %> <%= resp_legal.nom %>
+          </h4>
+          <ul class="list-unstyled">
+            <% if resp_legal.tel_principal.present? %>
+              <li>
+                <i class="fas fa-phone-square mr-1"></i> <strong><%= resp_legal.tel_principal %></strong>
+              </li>
             <% end %>
+            <% if resp_legal.tel_secondaire.present? %>
+              <li>
+                <i class="fas fa-phone-square mr-1"></i> <%= resp_legal.tel_secondaire %>
+              </li>
+            <% end %>
+            <% if resp_legal.respond_to?(:email) && resp_legal.email.present? %>
+              <li>
+                <i class="fas fa-envelope mr-1"></i><%= resp_legal.email %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+
+        <% if @dossier_eleve.resp_legal_2.present? %>
+          <p>Ces responsables légaux <strong>habitent à
+            <% if @meme_adresse %>
+              la même adresse
+            <% else %>
+              des adresses différentes
+            <% end %>
+          </strong>
+          </p>
+        <% end %>
+      </div>
+      <div class="panel">
+        <div class="panel__header">
+          <h3>Habite chez <%=@dossier_eleve.resp_legal_1.prenom %> <%=@dossier_eleve.resp_legal_1.nom %></h3>
+        </div>
+
+        <div class="form__group">
+          <label>Lien de parenté</label>
+          <input type="text" value="<%= @dossier_eleve.resp_legal_1.lien_de_parente %>" disabled >
+        </div>
+        <div class="form__group">
+          <label>Adresse</label>
+          <textarea disabled ><%= @dossier_eleve.resp_legal_1.adresse %></textarea>
+        </div>
+        <div class="form__group">
+          <label>Code postal</label>
+          <input type="text" value="<%= @dossier_eleve.resp_legal_1.code_postal %>" disabled >
+        </div>
+        <div class="form__group">
+          <label>Ville</label>
+          <input type="text" value="<%= @dossier_eleve.resp_legal_1.ville %>" disabled >
+        </div>
+        <% unless @dossier_eleve.resp_legal_1.adresse_inchangee %>
+          <div id="ancienne_adresse">
+            <hr/>
+            <div class="form__group">
+              <label>Adresse</label>
+              <textarea disabled ><%= @dossier_eleve.resp_legal_1.adresse_ant %></textarea>
+            </div>
+            <div class="form__group">
+              <label>Code postal</label>
+              <input type="text" value="<%= @dossier_eleve.resp_legal_1.code_postal_ant %>" disabled >
+            </div>
+            <div class="form__group">
+              <label>Ville</label>
+              <input type="text" value="<%= @dossier_eleve.resp_legal_1.ville_ant %>" disabled >
+            </div>
           </div>
+        <% end %>
+      </div>
+      <% if @dossier_eleve.contact_urgence.present? %>
+        <div class="panel">
+          <div class="panel__header">
+            <h3>Contact en cas d'urgence</h3>
+          </div>
+          <div class="form__group">
+            <label>Lien avec l'élève</label>
+            <input type="text" value="<%= @dossier_eleve.contact_urgence.lien_avec_eleve %>" disabled >
+          </div>
+          <div class="form__group">
+            <label>Prénom</label>
+            <input value="<%= @dossier_eleve.contact_urgence.prenom %>" disabled >
+          </div>
+          <div class="form__group">
+            <label>nom</label>
+            <input type="text" value="<%= @dossier_eleve.contact_urgence.nom %>" disabled >
+          </div>
+          <div class="form__group">
+            <label>Téléphone principal</label>
+            <input type="text" value="<%= @dossier_eleve.contact_urgence.tel_principal %>" disabled >
+          </div>
+          <div class="form__group">
+            <label>Téléphone secondaire</label>
+            <input type="text" value="<%= @dossier_eleve.contact_urgence.tel_secondaire %>" disabled >
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="main hide" id="echanges">
+      <div class="panel">
+        <div class="panel__header">
+          <h3>Envoyer un message</h3>
+        </div>
+        <div>
+          <% if @emails_presents %>
+            <p>Ce formulaire envoie un message à la famille de l'élève. Précisez par exemple si les pièces
+              justificatives ne sont pas conformes, et ce que la famille doit transmettre.</p>
+          <% elsif @dossier_eleve.portable_present %>
+            <p>Cette famille n'a pas déclaré d'adresse mail. Le formulaire ci-dessous vous permet
+              d'envoyer un texto. <strong>Soyez bref</strong> (moins de 140 caractères si possible).
+              L'émission des textos se fait en différé.</p>
+          <% else %>
+            <p>Cette famille n'a pas déclaré d'adresse mail, ni de téléphone portable.</p>
+          <% end %>
         </div>
 
         <% if @emails_presents || @dossier_eleve.portable_present %>
-        <form action="/agent/contacter_une_famille" method="POST" class="text-center">
-          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+          <form action="/agent/contacter_une_famille" method="POST" class="text-center">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
             <% if !@modeles.empty? %>
               Modèles: <select id="modeles">
-                <% @modeles.each do |modele| %>
-                  <option value=<%= modele.id %>><%= modele.nom %></option>
-                <% end %>
-              </select>
+            <% @modeles.each do |modele| %>
+              <option value=<%= modele.id %>><%= modele.nom %></option>
+            <% end %>
+          </select>
               <button id="inserer">Insérer</button>
             <% end %>
-          <% if !@emails_presents %>
-          <select name="Destinataire">
-            <option value="rl1">Responsable Légal 1: <%= @dossier_eleve.portable_rl1 %></option>
-            <option value="rl2">Responsable Légal 2: <%= @dossier_eleve.portable_rl2 %></option>
-          </select>
-          <% end %>
-          <input type="hidden" name="identifiant" value="<%= @dossier_eleve.eleve.identifiant %>" />
-          <textarea id="message" name='message' class="form-control" rows="6"></textarea>
-          <input id='envoyer-commentaire' value='Envoyer' type='submit' class='btn btn-outline-primary mt-1'/>
-        </form>
-        <% end %>
-      <br/>
-
-      <% if @dossier_eleve.message.count > 0 %>
-      <h2 class="separation mt-3">Historique</h2>
-      <div id="historique" class="container">
-      <% @dossier_eleve.message.each do |message| %>
-        <div class="message">
-          <div class='card'>
-              <div class="card-header">
-                <small class="text-muted"><%= message.categorie %> du <%= message.created_at %> (cliquez pour afficher/cacher)</small>
-              </div>
-              <div class='card-body' style="display:none;">
-              <% if message.categorie == "mail" %>
-              <%= message.contenu.gsub(/\n/,"<br/>") %>
-              <% else %>
-              <%= message.contenu %>
-              <% end %>
+            <% if !@emails_presents %>
+              <select name="Destinataire">
+                <option value="rl1">Responsable Légal 1: <%= @dossier_eleve.portable_rl1 %></option>
+                <option value="rl2">Responsable Légal 2: <%= @dossier_eleve.portable_rl2 %></option>
+              </select>
+            <% end %>
+            <input type="hidden" name="identifiant" value="<%= @dossier_eleve.eleve.identifiant %>" />
+            <div class="form__group">
+              <textarea id="message" name='message' rows="6"></textarea>
             </div>
+            <div class="form__group">
+              <input id='envoyer-commentaire' value='Envoyer' type='submit' class='button'/>
+            </div>
+          </form>
+        <% end %>
+      </div>
+      <% if @dossier_eleve.message.count > 0 %>
+        <div class="panel">
+          <div class="panel__header">
+            <h3>Historique des messages</h3>
+          </div>
+          <div id="historique">
+            <% @dossier_eleve.message.each do |message| %>
+              <div class="message">
+                <div>
+                  <small><%= message.categorie %> du <%= message.created_at %> (cliquez pour afficher/cacher)</small>
+                </div>
+                <div>
+                  <% if message.categorie == "mail" %>
+                    <%= message.contenu.gsub(/\n/,"<br/>") %>
+                  <% else %>
+                    <%= message.contenu %>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
           </div>
         </div>
       <% end %>
-      </div>
-      <% end %>
-
       <% if @dossier_eleve.commentaire %>
-        <h2 class="separation">Commentaire du <%= @dossier_eleve.date_signature_gmt_plus_2 %></h2>
+        <div class="panel">
+          <div class="panel__header">
+            <h3>Commentaire de la famille</h3>
+          </div>
+        </div>
+        <p>Commentaire écrit par la famille suite à la complétion du formulaire</p>
         <div id="commentaire"><strong><%= @dossier_eleve.satisfaction %></strong> : <%= @dossier_eleve.commentaire %></div>
       <% end %>
     </div>
+
+    <div class="main hide" id="dossier">
+      <div class="panel">
+        <div class="panel__header">
+          <h3>Instruction du dossier</h3>
+        </div>
+        <div class="text-center">
+          <form action='/agent/valider_inscription' method='POST'>
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <input type="hidden" name="identifiant" value="<%= @dossier_eleve.eleve.identifiant %>" />
+            <div class="form__group mb-2">
+              <button class="button  <%= 'disabled' if @dossier_eleve.etat == 'validé'%>"
+                      id="bouton-validation-inscription" type='submit'
+                      <%= 'disabled' if @dossier_eleve.etat == 'validé'%>>Valider l'inscription</button>
+            </div>
+          </form>
+          <form action='/agent/eleve_sortant' method='POST'>
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <input type="hidden" name="identifiant" value="<%= @dossier_eleve.eleve.identifiant %>" />
+            <div class="form__group">
+              <button class="button <%= 'disabled' if @dossier_eleve.etat == 'sortant'%>"
+                      id="bouton-eleve-sortant" type='submit'  <%= 'disabled' if @dossier_eleve.etat == 'sortant'%>>
+                Cet élève est sorti·e de l'établissement</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+</section>
 
 <%= render partial: 'partials/image_box' %>
+
 <script type="text/javascript" charset="utf-8">
   // Onglets
   $(document).ready(function() {
-    debugger;
-    if ($(location).attr('hash') == "#dossier") {
-      $("#dossier-tab").tab('show')
-    }
+    $('.lien-section').click(function() {
+      const target = $(this).data('target')
+      $('.lien-section').removeClass('active')
+      $(this).addClass('active')
+      $('.main').addClass('hide')
+      $(target).removeClass('hide')
+    })
+
     $('#eleveTabs a').on('click', function (e) {
       e.preventDefault()
       $(this).tab('show')
@@ -334,8 +341,8 @@
     // Modèles
     $('#inserer').click(function() {
       $.ajax({
-          method: "GET",
-          url: "/agent/fusionne_modele/"+$("#modeles").val()+"/eleve/<%= @dossier_eleve.eleve.identifiant %>"
+        method: "GET",
+        url: "/agent/fusionne_modele/"+$("#modeles").val()+"/eleve/<%= @dossier_eleve.eleve.identifiant %>"
       }).done(function(data) {
         $("#message").val($("#message").val()+(data ? "\n"+data : ""));
       })

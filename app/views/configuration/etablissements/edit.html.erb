@@ -1,62 +1,54 @@
-<div class="col-md-6 col-12 offset-md-3">
-  <h1 class="mb-3"><%= t(".titre") %></h1>
+<section class="section">
+  <h1><%= t(".titre") %></h1>
 
   <%= form_for([:configuration, @etablissement]) do |f| %>
-    <% if @etablissement.errors.any? %>
-      <div id="error_explanation">
-        <ul class="list-unstyled">
-          <% @etablissement.errors.full_messages.each do |message| %>
-            <li class="alert alert-danger"><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-    <div class="form-group">
+
+    <div class="form__group">
       <%= f.label :uai %>
-      <%= f.text_field :uai, class: 'form-control'%>
+      <%= f.text_field :uai %>
     </div>
-    <div class="form-group">
+    <div class="form__group">
       <%= f.label :nom %>
-      <%= f.text_field :nom, class: 'form-control'%>
+      <%= f.text_field :nom %>
     </div>
-    <div class="form-group">
+    <div class="form__group">
       <%= f.label :adresse %>
-      <%= f.text_field :adresse, class: 'form-control'%>
+      <%= f.text_field :adresse %>
     </div>
-    <div class="form-group">
+    <div class="form__group">
       <%= f.label :code_postal %>
-      <%= f.text_field :code_postal, class: 'form-control'%>
+      <%= f.text_field :code_postal %>
     </div>
-    <div class="form-group">
+    <div class="form__group">
       <%= f.label :ville %>
-      <%= f.text_field :ville, class: 'form-control'%>
+      <%= f.text_field :ville %>
     </div>
-    <div class="form-group">
+    <div class="form__group">
       <%= f.label :message_permanence %>
-      <%= f.text_area :message_permanence, class: 'form-control'%>
+      <%= f.text_area :message_permanence %>
     </div>
-    <div class="form-group">
+    <div class="form__group">
       <%= f.label :message_infirmerie %>
-      <%= f.text_area :message_infirmerie, class: 'form-control'%>
+      <%= f.text_area :message_infirmerie %>
     </div>
-    <div class="form-check mb-3">
-      <%= f.check_box :gere_demi_pension, class: 'form-check-input'%>
-      <%= f.label :gere_demi_pension, class: 'form-check-label' %>
+    <div class="form__group">
+      <%= f.check_box :gere_demi_pension %>
+      <%= f.label :gere_demi_pension, class: 'label-inline' %>
     </div>
-    <div class="form-group">
+    <div class="form__group">
       <%= f.label :signataire %>
-      <%= f.text_field :signataire, class: 'form-control'%>
+      <%= f.text_field :signataire %>
     </div>
-    <div class="form-group">
+    <div class="form__group">
       <%= f.label :date_limite %>
-      <%= f.text_field :date_limite, class: 'form-control'%>
+      <%= f.text_field :date_limite %>
     </div>
-    <div class="form-check mb-3">
-      <%= f.check_box :envoyer_aux_familles, class: 'form-check-input'%>
-      <%= f.label :envoyer_aux_familles, class: 'form-check-label' %>
+    <div class="form__group">
+      <%= f.check_box :envoyer_aux_familles %>
+      <%= f.label :envoyer_aux_familles, class: 'label-inline' %>
     </div>
-    <div class="form-group">
-      <%= f.submit 'valider', class: 'btn btn-primary my-3' %>
+    <div class="form__group">
+      <%= f.submit 'valider', class: 'button' %>
     </div>
   <% end %>
-</div>
+</section>

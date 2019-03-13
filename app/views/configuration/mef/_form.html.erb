@@ -4,25 +4,25 @@
       <h2><%= pluralize(mef.errors.count, "error") %> prohibited this mef from being saved:</h2>
 
       <ul class="list-unstyled">
-      <% mef.errors.full_messages.each do |message| %>
-        <li class="alert alert-danger"><%= message %></li>
-      <% end %>
+        <% mef.errors.full_messages.each do |message| %>
+          <li class="alert alert-danger"><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="form-group">
+  <div class="form__group">
     <%= form.label :libelle %>
-    <%= form.text_field :libelle, class: 'form-control' %>
+    <%= form.text_field :libelle %>
   </div>
 
-  <div class="form-group">
+  <div class="form__group">
     <%= form.label :code %>
-    <%= form.text_field :code, class: 'form-control' %>
+    <%= form.text_field :code %>
   </div>
 
-  <div class="actions">
-    <%= form.submit 'valider', class: 'btn btn-primary  my-3' %>
+  <div class="form__group">
+    <%= form.submit 'valider', class: 'button' %>
   </div>
 <% end %>
 
