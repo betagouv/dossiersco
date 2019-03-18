@@ -1,40 +1,46 @@
 <% content_for :head do %>
-    <%= javascript_include_tag 'famille', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'famille', 'data-turbolinks-track': 'reload' %>
 <% end %>
 <% content_for :body do %>
-    <nav class="navbar navbar-light navbar-expand-md d-flex align-items-center bg-white">
-      <%= link_to root_path do %>
-        <img src='/images/republique_francaise.svg' class='logo'>
-        <span class="navbar-brand" >DossierSCO</span>
-      <% end %>
-      <% if session[:identifiant].present? %>
-        <a class="ml-auto p-2" href="/deconnexion">Se d&eacute;connecter</a>
-      <% end %>
-    </nav>
 
-    <main role="main" class="container  mt-4">
+  <header class="navbar" role="navigation">
+    <div class="navbar__container">
+      <a class="navbar__home" href="/accueil">
+        <img class="navbar__logo" src="/images/republique_francaise.svg" alt="logo Dossiersco" />
+        <span class="navbar__domain">DossierSCO.fr</span>
+      </a>
+      <ul class="nav__links">
+        <% if session[:identifiant].present? %>
+          <li class="nav__item">
+            <%= link_to 'Se déconnecter', '/deconnexion' %>
+        <% end %>
+      </ul>
+    </div>
+  </header>
 
-      <%= yield %>
+  <main role="main" class="container  mt-4">
 
-    </main>
+    <%= yield %>
 
-    <!-- Piwik -->
-    <script type="text/javascript">
-      var _paq = _paq || [];
-      _paq.push(["setDomains", ["*.www.dossiersco.fr","*.dossiersco.beta.gouv.fr","*.dossiersco.fr"]]);
-      _paq.push(['trackPageView']);
-      _paq.push(['enableLinkTracking']);
-      (function() {
-        var u="//stats.data.gouv.fr/";
-        _paq.push(['setTrackerUrl', u+'piwik.php']);
-        _paq.push(['setSiteId', '54']);
-        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-      })();
-    </script>
+  </main>
 
-    <noscript><p><img src="//stats.data.gouv.fr/piwik.php?idsite=54" style="border:0;" alt="" /></p></noscript>
-    <!-- End Piwik Code -->
+  <!-- Piwik -->
+  <script type="text/javascript">
+    var _paq = _paq || [];
+    _paq.push(["setDomains", ["*.www.dossiersco.fr","*.dossiersco.beta.gouv.fr","*.dossiersco.fr"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//stats.data.gouv.fr/";
+      _paq.push(['setTrackerUrl', u+'piwik.php']);
+      _paq.push(['setSiteId', '54']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+
+  <noscript><p><img src="//stats.data.gouv.fr/piwik.php?idsite=54" style="border:0;" alt="" /></p></noscript>
+  <!-- End Piwik Code -->
 <% end %>
 
 <%= render template: 'layouts/application' %>

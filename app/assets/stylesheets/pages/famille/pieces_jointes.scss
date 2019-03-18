@@ -1,0 +1,11 @@
+.cards-famille {
+  display: flex;
+  justify-content: space-around;
+  form {
+    flex: 0 0 50%;
+    padding: 1rem;
+  }
+  .card {
+    padding: 1rem;
+  }
+}
