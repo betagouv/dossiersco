@@ -85,8 +85,8 @@ fr:
       options_pedagogiques: Options pédagogiques
     famille:
       <<: *infos_nom
-      titre_responsable_legal: "Famille : Responsable légal"
-      titre_contact_urgence: "Famille : Autre personne à contacter en cas d'urgence"
+      titre_responsable_legal: "Responsable légal"
+      titre_contact_urgence: "Autre personne à contacter en cas d'urgence"
       adresse: Adresse
       code_postal: Code postal
       ville: Ville
