@@ -21,9 +21,23 @@ class ImporterSiecleTest < ActiveJob::TestCase
   end
 
   test 'importer les mefs' do
+    assert_equal 0, Mef.count
+
+    etablissement = Fabricate(:etablissement)
+    fichier_xls = fixture_file_upload('files/test_import_siecle.xls')
+    importer = ImporterSiecle.new
+    importer.import_mef(fichier_xls, etablissement.id)
+
+    assert_equal 1, Mef.count
   end
 
-  test 'importer dossiers élève' do
+ test 'importer dossiers élève' do
+    assert_equal 0, DossierEleve.count
+    etablissement = Fabricate(:etablissement)
+    fichier_xls = fixture_file_upload('files/test_import_siecle.xls')
+    importer = ImporterSiecle.new
+    importer.import_dossiers_eleve(fichier_xls, etablissement.id)
+    assert_equal 2, DossierEleve.count
   end
 end
 

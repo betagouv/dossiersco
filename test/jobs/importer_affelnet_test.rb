@@ -7,11 +7,11 @@ class ImporterAffelnetTest < ActionDispatch::IntegrationTest
     fichier_affelnet = fixture_file_upload('files/test_import_affelnet.xlsm')
     tache = Fabricate(:tache_import, job_klass: 'ImporterAffelnet', fichier: fichier_affelnet)
 
-    assert_equal 7, DossierEleve.count
+    assert_equal 0, DossierEleve.count
 
     ImporterAffelnet.new.importer_affelnet(tache)
 
-    assert_equal 13, DossierEleve.count
+    assert_equal 6, DossierEleve.count
     assert_equal 1, Eleve.where(nom: 'VODOU').count
     assert_equal 1, Eleve.where(nom: 'FERSEN').count
 
