@@ -224,27 +224,4 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     assert response.parsed_body.include? 'Vous recevrez prochainement un courriel de confirmation'
   end
 
-  def test_envoyer_un_mail_quand_la_demande_dinscription_est_valide
-    eleve = Fabricate(:eleve)
-    resp_legal = Fabricate(:resp_legal, priorite: 1, email: "mon_email@yahoo.fr")
-    etablissement = Fabricate(:etablissement, nom: "Mon établissement", envoyer_aux_familles: true)
-    dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve, resp_legal: [resp_legal], etablissement: etablissement)
-
-    post '/identification', params: {
-      identifiant: eleve.identifiant,
-      annee: eleve.annee_de_naissance,
-      mois: eleve.mois_de_naissance,
-      jour: eleve.jour_de_naissance
-    }
-    post '/validation'
-
-    mail = ActionMailer::Base.deliveries.last
-    assert_equal 'equipe@dossiersco.fr', mail['from'].to_s
-    assert_equal [resp_legal.email].sort, mail['to'].addresses.sort
-    assert_equal 'Réinscription de votre enfant au collège', mail['subject'].to_s
-    part = mail.html_part || mail.text_part || mail
-    assert part.body.decoded.include? 'réinscription de votre enfant'
-    assert part.body.decoded.include? eleve.nom
-    assert part.body.decoded.include? etablissement.nom
-  end
 end

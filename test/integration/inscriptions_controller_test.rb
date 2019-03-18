@@ -327,27 +327,6 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'en attente', message.etat
   end
 
-  def test_envoi_un_mail_quand_un_agent_valide_un_dossier
-    etablissement = Fabricate(:etablissement, nom: "Collège de làbas", envoyer_aux_familles: true)
-    resp_legal = Fabricate(:resp_legal, email: "henri@laposte.net", priorite: 1)
-    dossier_eleve = Fabricate(:dossier_eleve, etablissement: etablissement, resp_legal: [resp_legal])
-    eleve = dossier_eleve.eleve
-    agent = Fabricate(:agent, etablissement: etablissement)
-    identification_agent(agent)
-
-    post '/agent/valider_inscription', params: { identifiant: eleve.identifiant }
-
-    mail = ActionMailer::Base.deliveries.last
-    assert_equal 'equipe@dossiersco.fr', mail['from'].to_s
-
-    assert_equal resp_legal.email, mail['to'].to_s
-    assert_equal agent.email, mail['reply_to'].to_s
-    assert_equal 'Réinscription de votre enfant au collège', mail['subject'].to_s
-    part = mail.html_part || mail.text_part || mail
-    assert part.body.decoded.include? 'Votre enfant est bien inscrit.'
-    assert part.body.decoded.include? eleve.nom
-  end
-
   def test_stats
     3.times { Fabricate(:etablissement) }
     get '/stats'
@@ -421,30 +400,6 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 2, doc.css('#historique div.message').count
     assert doc.css('#historique div.message:nth-child(1) .card-body').text.strip.include? 'Message 1'
     assert doc.css('#historique div.message:nth-child(2) .card-body').text.strip.include? 'Message 2'
-  end
-
-  def test_la_validation_de_plusieurs_dossiers_eleve
-    etablissement = Fabricate(:etablissement)
-    resp_legal_1 = Fabricate(:resp_legal)
-    dossier_eleve1 = Fabricate(:dossier_eleve, etablissement: etablissement, resp_legal: [resp_legal_1], etat: 'en attente de validation')
-    resp_legal_2 = Fabricate(:resp_legal)
-    dossier_eleve2 = Fabricate(:dossier_eleve, etablissement: etablissement, resp_legal: [resp_legal_2], etat: 'en attente de validation')
-
-    ids = [dossier_eleve1.id.to_s, dossier_eleve2.id.to_s]
-
-    assert_equal 0, ActionMailer::Base.deliveries.count
-
-    agent = Fabricate(:agent, etablissement: dossier_eleve1.etablissement)
-    identification_agent(agent)
-    post '/agent/valider_plusieurs_dossiers', params: { ids: ids }
-
-    assert_equal 2, ActionMailer::Base.deliveries.count
-
-    dossier_eleve1 = DossierEleve.find(dossier_eleve1.id)
-    dossier_eleve2 = DossierEleve.find(dossier_eleve2.id)
-
-    assert_equal 'validé', dossier_eleve2.etat
-    assert_equal 'validé', dossier_eleve1.etat
   end
 
   def test_propose_modeles_messages
