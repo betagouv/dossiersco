@@ -1,5 +1,43 @@
 # Journal
 
+## 9e Semaine - du 8 au 14 mars
+
+**Réunions institutionnelles prometteuses, mais les collèges nous manquent**
+
+### Vie de l'équipe
+
+- Frustration de Yannick sur le fait de ne pas trouver d'angle de travail pour dialoguer avec SIECLE.
+- Une piste serait de constituer la liste des hypothèses que l'on fait vis à vis de SIECLE.
+- Beaucoup de travail distribué cette semaine, mais avec un bon rythme malgré tout.
+- Les intrapreneurs ont travaillé pour la première fois en distribué.
+- Le réseau du lab 110Bis était pas top cette semaine.
+- Frustration de Pierre : nous avons moins échangé avec les collèges cette semaine.
+- Frustration de Christophe : nous ne savons pas ce que font les utilisateurs sur l'application (est-ce qu'ils se connectent ? Est-ce qu'ils téléversent les fichiers élèves ?).
+- Faut-il faire une doc ? Peut-être des petites vidéos par Pierre.
+- Les agents admin pourraient arriver sur le tableau de bord de configuration, et les autres sur celui des inscriptions.
+- Nous n'avons toujours pas traité les retours utilisateurs :-(
+- Yannick : « si je me projète sur ce que nous pourrions faire la semaine prochaine, c'est peut-être parce que je ne suis pas satisfait de ce que j'ai produit cette semaine (en faire plus ?) »
+
+
+### Développement
+
+- [En cas d'erreur sur la saisie du mot de passe lors d'une activation, on peut acceder aux menus](https://github.com/betagouv/dossiersco/issues/445)
+- [tableau de bord de configuration](https://github.com/betagouv/dossiersco/issues/312)
+- [Corriger fautes orthographe dans configuration/etablissements](https://github.com/betagouv/dossiersco/issues/429)
+- [En prod, quand le compte super admin clique sur modifier le compte de l'admin, il tombe sur le compte du super admin](https://github.com/betagouv/dossiersco/issues/436)
+- [Supprimer message contenant bandeau vert sur configuration/etablissements/new](https://github.com/betagouv/dossiersco/issues/430)
+- [Message d'erreur sur création établissement](https://github.com/betagouv/dossiersco/issues/431)
+
+### Intraprenariat
+
+- La discussion sur la poursuite de l'expérimentation avec les collèges parisiens a bien avancé.
+- Nos contact DNE et DGESCO ont pris une dimension opérationnelle au ministère.
+- Les contacts OpenAcademie sur Nancy avancent.
+- Les invitations à l'OpenLab sont parties.
+- Nous avons un début de présentation simple de DossierSCO.
+
+---
+
 ## 8e Semaine - du 1er au 7 mars
 
 **Nos premieres utilisatrices et utilisateurs discutent avec nous**
