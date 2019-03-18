@@ -27,12 +27,12 @@ class ImporterSiecle < ApplicationJob
     end
   end
 
-  def import_xls fichier, etablissement_id, nom_a_importer=nil, prenom_a_importer=nil
+  def import_xls fichier, etablissement_id
     import_mef(fichier, etablissement_id)
-    import_dossiers_eleve(fichier, etablissement_id, nom_a_importer, prenom_a_importer)
+    import_dossiers_eleve(fichier, etablissement_id)
   end
 
-  def import_dossiers_eleve(fichier, etablissement_id, nom_a_importer, prenom_a_importer)
+  def import_dossiers_eleve(fichier, etablissement_id)
     xls_document = Roo::Spreadsheet.open fichier
     lignes_siecle = (xls_document.first_row + 1..xls_document.last_row)
 
@@ -43,7 +43,7 @@ class ImporterSiecle < ApplicationJob
     lignes_siecle.each do |row|
       ligne_siecle = xls_document.row(row)
 
-      resultat = import_ligne etablissement_id, ligne_siecle, nom_a_importer, prenom_a_importer
+      resultat = import_ligne(etablissement_id, ligne_siecle)
 
       portables += 1 if resultat[:portable]
       emails += 1 if resultat[:email]
@@ -98,7 +98,7 @@ class ImporterSiecle < ApplicationJob
   end
 
 
-  def import_ligne etablissement_id, ligne_siecle, nom_a_importer=nil, prenom_a_importer=nil
+  def import_ligne(etablissement_id, ligne_siecle)
 
     resultat = {portable: false, email: false, eleve_importe: false}
 
@@ -114,8 +114,6 @@ class ImporterSiecle < ApplicationJob
     donnees_eleve = traiter_donnees_eleve donnees_eleve
 
     return resultat if donnees_eleve[:niveau_classe_ant].nil? || !ligne_siecle[COLONNES[:date_sortie]].nil?
-    return resultat if (nom_a_importer != nil and nom_a_importer != '') and donnees_eleve[:nom] != nom_a_importer
-    return resultat if (prenom_a_importer != nil and prenom_a_importer != '') and donnees_eleve[:prenom] != prenom_a_importer
 
     eleve = Eleve.find_or_initialize_by(identifiant: donnees_eleve[:identifiant])
 
