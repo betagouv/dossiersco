@@ -295,27 +295,6 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'en attente de validation', dossier.etat
   end
 
-  def test_un_agent_envoi_un_mail_a_une_famille
-    etablissement = Fabricate(:etablissement, nom: "Collège de làbas", envoyer_aux_familles: true)
-    resp_legal = Fabricate(:resp_legal, email: "henri@laposte.net", priorite: 1)
-    dossier_eleve = Fabricate(:dossier_eleve, etablissement: etablissement, resp_legal: [resp_legal])
-    eleve = dossier_eleve.eleve
-    agent = Fabricate(:agent, etablissement: etablissement)
-    identification_agent(agent)
-
-    post '/agent/contacter_une_famille', params: { identifiant: eleve.identifiant, message: 'Message de test' }
-
-    mail = ActionMailer::Base.deliveries.last
-
-    assert_equal 'equipe@dossiersco.fr', mail['from'].to_s
-    assert_equal [resp_legal.email, agent.email], mail['to'].addresses.sort
-    assert_equal [agent.email].sort, mail['reply_to'].addresses.sort
-    assert_equal 'Réinscription de votre enfant au collège', mail['subject'].to_s
-    part = mail.html_part || mail.text_part || mail
-    assert part.body.decoded.include? etablissement.nom
-    assert part.body.decoded.include? eleve.nom
-  end
-
   def test_envoie_par_sms_les_messages_aux_familles_sans_email
     resp_legal = Fabricate(:resp_legal, email: nil)
     dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
