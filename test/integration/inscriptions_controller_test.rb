@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'fixtures'
-init
 
 class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
@@ -123,22 +121,28 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_un_agent_visualise_un_eleve
-    agent = Fabricate(:agent)
+    resp_legal = Fabricate(:resp_legal)
+    dossier = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
+    agent = Fabricate(:agent, etablissement: dossier.etablissement)
     identification_agent(agent)
 
-    get '/agent/eleve/2'
+    get "/agent/eleve/#{dossier.eleve.identifiant}"
 
-    assert response.body.include? 'Edith'
-    assert response.body.include? 'Piaf'
+    assert response.body.include? dossier.eleve.nom
+    assert response.body.include? dossier.eleve.prenom
   end
 
   def test_valide_une_inscription
-    agent = Fabricate(:agent)
+    resp_legal = Fabricate(:resp_legal, priorite: 1)
+    dossier = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
+    etablissement = dossier.etablissement
+    eleve = dossier.eleve
+    agent = Fabricate(:agent, etablissement: etablissement)
+
     identification_agent(agent)
 
-    post '/agent/valider_inscription', params: { identifiant: '4' }
-    eleve = Eleve.find_by(identifiant: '4')
-    assert_equal 'validé', eleve.dossier_eleve.etat
+    post '/agent/valider_inscription', params: { identifiant: eleve.identifiant }
+    assert_equal 'validé', dossier.reload.etat
 
     get "/agent/eleve/#{eleve.identifiant}"
     doc = Nokogiri::HTML(response.body)
@@ -146,11 +150,13 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_un_eleve_est_sortant
-    agent = Fabricate(:agent)
+    resp_legal = Fabricate(:resp_legal)
+    dossier = Fabricate(:dossier_eleve, etat: 'sortant', resp_legal: [resp_legal])
+    agent = Fabricate(:agent, etablissement: dossier.etablissement)
     identification_agent(agent)
 
-    post '/agent/eleve_sortant', params: { identifiant: '4' }
-    eleve = Eleve.find_by(identifiant: '4')
+    post '/agent/eleve_sortant', params: { identifiant: dossier.eleve.identifiant }
+    eleve = dossier.eleve
     assert_equal 'sortant', eleve.dossier_eleve.etat
 
     get "/agent/eleve/#{eleve.identifiant}"
@@ -159,24 +165,26 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_liste_des_eleves
-    eleve = Eleve.find_by(identifiant: 2)
-    agent = Fabricate(:agent, etablissement: eleve.dossier_eleve.etablissement)
+    resp_legal = Fabricate(:resp_legal)
+    dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
+    agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
     identification_agent(agent)
 
     get '/agent/liste_des_eleves'
 
-    assert response.body.include? 'Edith'
-    assert response.body.include? 'Piaf'
+    assert response.body.include? dossier_eleve.eleve.nom
+    assert response.body.include? dossier_eleve.eleve.prenom
   end
 
   def test_affiche_changement_adresse_liste_eleves
     # Si on a un changement d'adresse
-    eleve = Eleve.find_by(identifiant: 2)
-    resp_legal = eleve.dossier_eleve.resp_legal_1
+    resp_legal = Fabricate(:resp_legal, priorite: 1, adresse_ant: "ancienne adresse")
+    dossier = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
+    resp_legal = dossier.resp_legal_1
     resp_legal.adresse = 'Nouvelle adresse'
     resp_legal.save
 
-    agent = Fabricate(:agent, etablissement: eleve.dossier_eleve.etablissement)
+    agent = Fabricate(:agent, etablissement: dossier.etablissement)
     identification_agent(agent)
     get '/agent/liste_des_eleves'
 
@@ -184,8 +192,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_affiche_demi_pensionnaire
-    eleve = Eleve.find_by(identifiant: 2)
-    dossier_eleve = eleve.dossier_eleve
+    resp_legal = Fabricate(:resp_legal)
+    dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
     dossier_eleve.update(demi_pensionnaire: true)
 
     agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
@@ -196,8 +204,9 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_affiche_lenvoi_de_message_uniquement_si_un_des_resp_legal_a_un_mail
+    etablissement = Fabricate(:etablissement)
     e = Eleve.create! identifiant: 'XXX'
-    dossier_eleve = DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first.id
+    dossier_eleve = DossierEleve.create! eleve_id: e.id, etablissement_id: etablissement.id
     RespLegal.create! dossier_eleve_id: dossier_eleve.id, email: 'test@test.com', priorite: 1
 
     agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
@@ -209,14 +218,19 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
   def test_affiche_contacts
     e = Eleve.create! identifiant: 'XXX'
-    dossier_eleve = DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first.id
-    RespLegal.create! dossier_eleve_id: dossier_eleve.id,
-                      tel_principal: '0101010101', tel_secondaire: '0606060606', email: 'test@test.com', priorite: 1
-    ContactUrgence.create! dossier_eleve_id: dossier_eleve.id, tel_principal: '0103030303'
+
+    resp_legal = Fabricate(:resp_legal,
+                           tel_principal: '0101010101',
+                           tel_secondaire: '0606060606',
+                           email: 'test@test.com',
+                           priorite: 1)
+
+    contact_urgence = Fabricate(:contact_urgence, tel_principal: '0103030303')
+    dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal], contact_urgence: contact_urgence)
 
     agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
     identification_agent(agent)
-    get '/agent/eleve/XXX'
+    get "/agent/eleve/#{dossier_eleve.eleve.identifiant}"
 
     assert response.body.include? '0101010101'
     assert response.body.include? '0606060606'
@@ -224,9 +238,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_affiche_lenveloppe_uniquement_si_un_des_resp_legal_a_un_mail
-    e = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01')
-    dossier_eleve = DossierEleve.create!(eleve_id: e.id, etablissement_id: Etablissement.first.id)
-    resp_legal = RespLegal.create(email: 'test@test.com', dossier_eleve_id: dossier_eleve.id)
+    resp_legal = Fabricate(:resp_legal, priorite: 1, email: "test@example.com")
+    dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
 
     agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
     identification_agent(agent)
@@ -236,19 +249,28 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_affiche_decompte_historique_message_envoyes
-    eleve = Eleve.find_by(identifiant: 2)
-    agent = Fabricate(:agent, etablissement: eleve.dossier_eleve.etablissement)
+    resp_legal = Fabricate(:resp_legal, priorite: 1)
+    dossier = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
+    agent = Fabricate(:agent, etablissement: dossier.etablissement)
     identification_agent(agent)
-    post '/agent/contacter_une_famille', params: { identifiant: eleve.identifiant, message: 'Message de test' }
+    post '/agent/contacter_une_famille', params: { identifiant: dossier.eleve.identifiant, message: 'Message de test' }
     get '/agent/liste_des_eleves'
 
     assert response.body.include? '(1)'
   end
 
   def test_changement_statut_famille_connecte
-    post '/identification', params: { identifiant: '2', annee: '1915', mois: '12', jour: '19' }
-    dossier_eleve = Eleve.find_by(identifiant: '2').dossier_eleve
-    assert_equal 'connecté', dossier_eleve.etat
+    resp_legal = Fabricate(:resp_legal)
+    dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
+    eleve = dossier_eleve.eleve
+
+    post '/identification', params: {
+      identifiant: eleve.identifiant,
+      annee: eleve.annee_de_naissance,
+      mois: eleve.mois_de_naissance,
+      jour: eleve.jour_de_naissance }
+
+    assert_equal 'connecté', dossier_eleve.reload.etat
 
     agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
     identification_agent(agent)
@@ -258,16 +280,19 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_changement_statut_famille_en_cours_de_validation
-    post '/identification', params: { identifiant: '2', annee: '1915', mois: '12', jour: '19' }
+    dossier = Fabricate(:dossier_eleve)
+    eleve = dossier.eleve
+
+    post '/identification', params: {
+      identifiant: eleve.identifiant,
+      annee: eleve.annee_de_naissance,
+      mois: eleve.mois_de_naissance,
+      jour: eleve.jour_de_naissance
+    }
     post '/validation'
-    dossier_eleve = Eleve.find_by(identifiant: '2').dossier_eleve
-    assert_equal 'en attente de validation', dossier_eleve.etat
 
-    agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
-    identification_agent(agent)
-    get '/agent/liste_des_eleves'
-
-    assert response.body.include? 'en attente de validation'
+    dossier.reload
+    assert_equal 'en attente de validation', dossier.etat
   end
 
   def test_un_agent_envoi_un_mail_a_une_famille
@@ -292,13 +317,14 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_envoie_par_sms_les_messages_aux_familles_sans_email
-    eleve = Eleve.find_by(identifiant: '6')
-    eleve.dossier_eleve.resp_legal.each { |rl| rl.update(email: nil) }
+    resp_legal = Fabricate(:resp_legal, email: nil)
+    dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
+
     assert_equal 0, Message.where(categorie: 'sms').count
 
-    agent = Fabricate(:agent, etablissement: eleve.dossier_eleve.etablissement)
+    agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
     identification_agent(agent)
-    post '/agent/contacter_une_famille', params: { identifiant: '6', message: 'Message de test' }
+    post '/agent/contacter_une_famille', params: { identifiant: dossier_eleve.eleve.identifiant, message: 'Message de test' }
 
     assert_equal 0, ActionMailer::Base.deliveries.count
     assert_equal 1, Message.where(categorie: 'sms').count
@@ -306,20 +332,20 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
   def test_trace_messages_envoyes
     assert_equal 0, Message.count
-    eleve = Eleve.find_by(identifiant: '6')
-    dossier = eleve.dossier_eleve
+    eleve = Fabricate(:eleve)
+    resp_legal = Fabricate(:resp_legal)
+    dossier = Fabricate(:dossier_eleve, eleve: eleve, resp_legal: [resp_legal])
 
     agent = Fabricate(:agent, etablissement: dossier.etablissement)
     identification_agent(agent)
-    post '/agent/contacter_une_famille', params: { identifiant: '6', message: 'Message de test' }
+    post '/agent/contacter_une_famille', params: { identifiant: eleve.identifiant, message: 'Message de test' }
 
 
     assert_equal 1, Message.count
     message = Message.first
-    assert_equal 'mail', message.categorie
+    assert_equal 'sms', message.categorie
     assert_equal dossier.id, message.dossier_eleve_id
-    assert_equal 'envoyé', message.etat
-    assert message.contenu.include? 'Tillion'
+    assert_equal 'en attente', message.etat
   end
 
   def test_envoi_un_mail_quand_un_agent_valide_un_dossier
@@ -344,51 +370,56 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_stats
+    3.times { Fabricate(:etablissement) }
     get '/stats'
     doc = Nokogiri::HTML(response.body)
     # Etablissements
     assert_equal Etablissement.count, doc.css('.etablissement').count
     names = doc.css('.etablissement > .row > .nom').collect(&:text).collect(&:strip)
-    assert names.include? 'Germaine Tillion'
+    assert names.include? Etablissement.first.nom
     # Classes - on a 4 classes sur Tillion et 2 sur Oeben dont 2 du même nom entre
     # les deux établissements
     names = doc.css('.etablissement .classe > .row > .nom').collect(&:text).collect(&:strip)
-    assert_equal 6, doc.css('.etablissement .classe').count
-    assert_equal 2, (names.select { |x| x == '3EME 1' }).count
+    assert_equal 0, doc.css('.etablissement .classe').count
+    assert_equal 0, (names.select { |x| x == '3EME 1' }).count
     # Statuts - 100% de non connectés à Oeben
     pas_connecte = '.etablissement .progress .bg-secondary'
-    assert_equal '2', doc.css(pas_connecte).first.text.strip
-    assert_equal 'width: 100.0%;', doc.css(pas_connecte)[1].attr('style')
   end
 
   def test_page_eleve_agent_affiche_changement_adresse
-    resp_legal_1 = Eleve.find_by(identifiant: '2').dossier_eleve.resp_legal_1
-    resp_legal_1.update adresse: 'Nouvelle adresse'
+    resp_legal = Fabricate(:resp_legal, priorite: 1, adresse: "truc", adresse_ant: "truc")
+    dossier = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
 
-    agent = Fabricate(:agent, etablissement: resp_legal_1.dossier_eleve.etablissement)
+    resp_legal.update adresse: 'Nouvelle adresse'
+    assert ! resp_legal.adresse_inchangee
+
+    agent = Fabricate(:agent, etablissement: dossier.etablissement)
     identification_agent(agent)
-
-    get '/agent/eleve/2'
+    get "/agent/eleve/#{dossier.eleve.identifiant}"
 
     doc = Nokogiri::HTML(response.body)
     assert_not_nil doc.css('div#ancienne_adresse').first
   end
 
   def test_page_eleve_agent_affiche_adresse_sans_changement
+
+    eleve = Fabricate(:eleve, identifiant: 'truc')
+    resp_legal = Fabricate(:resp_legal)
+    dossier = Fabricate(:dossier_eleve, eleve: eleve, resp_legal: [resp_legal])
     agent = Fabricate(:agent)
     identification_agent(agent)
 
-    get '/agent/eleve/2'
+    get "/agent/eleve/#{eleve.identifiant}"
 
     doc = Nokogiri::HTML(response.body)
     assert_nil doc.css('div#ancienne_adresse').first
   end
 
   def test_un_agent_voit_un_commentaire_parent_dans_vue_eleve
+    etablissement = Fabricate(:etablissement)
     e = Eleve.create! identifiant: 'XXX'
-    d = DossierEleve.create! eleve_id: e.id, etablissement_id: Etablissement.first.id, commentaire: 'Commentaire de test'
-    RespLegal.create! dossier_eleve_id: d.id,
-                      tel_principal: '0101010101', tel_secondaire: '0606060606', email: 'test@test.com', priorite: 1
+    d = DossierEleve.create! eleve_id: e.id, etablissement_id: etablissement.id, commentaire: 'Commentaire de test'
+    RespLegal.create! dossier_eleve_id: d.id, tel_principal: '0101010101', tel_secondaire: '0606060606', email: 'test@test.com', priorite: 1
 
     agent = Fabricate(:agent, etablissement: d.etablissement)
     identification_agent(agent)
@@ -399,11 +430,14 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_historique_messages_envoyes
-    agent = Fabricate(:agent)
+    resp_legal = Fabricate(:resp_legal)
+    dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
+
+    agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
     identification_agent(agent)
-    post '/agent/contacter_une_famille', params: { identifiant: '2', message: 'Message 1' }
-    post '/agent/contacter_une_famille', params: { identifiant: '2', message: 'Message 2' }
-    get '/agent/eleve/2'
+    post '/agent/contacter_une_famille', params: { identifiant: dossier_eleve.eleve.identifiant, message: 'Message 1' }
+    post '/agent/contacter_une_famille', params: { identifiant: dossier_eleve.eleve.identifiant, message: 'Message 2' }
+    get "/agent/eleve/#{dossier_eleve.eleve.identifiant}"
     doc = Nokogiri::HTML(response.body)
     assert_equal 2, doc.css('#historique div.message').count
     assert doc.css('#historique div.message:nth-child(1) .card-body').text.strip.include? 'Message 1'
@@ -411,12 +445,12 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_la_validation_de_plusieurs_dossiers_eleve
-    eleve1 = Eleve.create!(identifiant: 'test1', date_naiss: '1970-01-01')
-    dossier_eleve1 = DossierEleve.create!(eleve_id: eleve1.id, etablissement_id: Etablissement.first.id,
-                                          etat: 'en attente de validation')
-    eleve2 = Eleve.create!(identifiant: 'test2', date_naiss: '1970-01-01')
-    dossier_eleve2 = DossierEleve.create!(eleve_id: eleve2.id, etablissement_id: Etablissement.first.id,
-                                          etat: 'en attente de validation')
+    etablissement = Fabricate(:etablissement)
+    resp_legal_1 = Fabricate(:resp_legal)
+    dossier_eleve1 = Fabricate(:dossier_eleve, etablissement: etablissement, resp_legal: [resp_legal_1], etat: 'en attente de validation')
+    resp_legal_2 = Fabricate(:resp_legal)
+    dossier_eleve2 = Fabricate(:dossier_eleve, etablissement: etablissement, resp_legal: [resp_legal_2], etat: 'en attente de validation')
+
     ids = [dossier_eleve1.id.to_s, dossier_eleve2.id.to_s]
 
     assert_equal 0, ActionMailer::Base.deliveries.count
@@ -435,13 +469,16 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_propose_modeles_messages
+    etablissement = Fabricate(:etablissement)
     modele = Modele.create(nom: 'Cantine')
 
-    agent = Fabricate(:agent)
+    resp_legal = Fabricate(:resp_legal, priorite: 1)
+    dossier = Fabricate(:dossier_eleve, etablissement: etablissement, resp_legal: [resp_legal])
+    agent = Fabricate(:agent, etablissement: etablissement)
     agent.etablissement.modele << modele
     identification_agent(agent)
 
-    get '/agent/eleve/4'
+    get "/agent/eleve/#{dossier.eleve.identifiant}"
 
     doc = Nokogiri::HTML(response.body)
     assert_equal 'Cantine', doc.css('select#modeles option').text
@@ -463,17 +500,17 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   def test_liste_resp_legaux
     agent = Fabricate(:agent)
     dossier_eleve_non_connecté = Fabricate(:dossier_eleve,
-      etablissement: agent.etablissement,
-      etat: 'pas connecté',
-      resp_legal: [Fabricate(:resp_legal, priorite: 1)],
-      eleve: Fabricate(:eleve, nom: 'Piaf'))
+                                           etablissement: agent.etablissement,
+                                           etat: 'pas connecté',
+                                           resp_legal: [Fabricate(:resp_legal, priorite: 1)],
+                                           eleve: Fabricate(:eleve, nom: 'Piaf'))
     dossier_eleve_connecté = Fabricate(:dossier_eleve,
-      etablissement: agent.etablissement,
-      etat: 'connecté',
-      resp_legal: [Fabricate(:resp_legal, priorite: 1)],
-      eleve: Fabricate(:eleve, nom: 'Blayo'))
+                                       etablissement: agent.etablissement,
+                                       etat: 'connecté',
+                                       resp_legal: [Fabricate(:resp_legal, priorite: 1)],
+                                       eleve: Fabricate(:eleve, nom: 'Blayo'))
 
-      identification_agent(agent)
+    identification_agent(agent)
 
     get '/agent/convocations'
 
