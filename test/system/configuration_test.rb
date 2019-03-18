@@ -22,7 +22,7 @@ class ConfigurationTest < ActionDispatch::IntegrationTest
       attach_file('tache_import_fichier', Rails.root + 'test/fixtures/files/test_import_siecle.xls')
     end
 
-    assert_equal 7, DossierEleve.count
+    assert_equal 0, DossierEleve.count
     click_button 'Importer un fichier'
     assert_enqueued_jobs 1
 
