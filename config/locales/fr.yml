@@ -106,12 +106,6 @@ fr:
     administration:
       <<: *restauration
       engagement_demi_pension: "En validant cette étape, je m'engage à régler les frais de demi-pension dans les délais impartis."
-      demande_justif_pour_demi_pension: "Pour déterminer le tarif de la demi-pension pour votre enfant, l'établissement vous demande un justificatif. Sans ce justificatif, le tarif maximal vous sera appliqué."
-      pour_obtenir_ce_document: "Pour obtenir ce document :"
-      si_allocataire_caf: "Si vous êtes allocataire de la Caisse d'Allocation Famliliales"
-      instruction_pour_allocataire_caf: "le document vous a été adressé par la CAF. Il suffit de le scanner ou prendre en photo à l'étape suivante."
-      si_pas_allocataire_caf: "Si vous n'êtes pas allocataire"
-      instruction_pour_non_allocataire_caf_html: "merci de vous rendre sur le <a href='https://calculette-colleges-restauration.paris.fr/calculetteQF/' target='_blanck'>site de la Ville de Paris</a>, pour renseigner votre situation et obtenir le justificatif à transmettre à l'étape suivante. (Le site va s'ouvrir dans un nouvel onglet. Vous pourrez continuer sur DossierSCO sans avoir besoin de vous reconnecter.)"
       autorisation_de_sortie: Autorisation de sortie
       j_autorise: "J'autorise"
       je_n_autorise_pas: "Je n'autorise pas"
