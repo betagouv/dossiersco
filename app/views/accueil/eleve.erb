@@ -97,8 +97,7 @@
 <% @section = 1 %>
 <%= render partial: 'partials/navigation', locals: { dossier_eleve: @eleve.dossier_eleve } %>
 
-<div class="section">
-
+<section class="section">
 
   <form action="/eleve"  method="post">
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
@@ -132,7 +131,8 @@
 
     <%= render partial: 'partials/nouveau_precedent_suivant', :locals => { :precedent => "accueil"} %>
   </form>
-</div>
+</section>
+
 <script>
   document.getElementById("prenom").focus();
 </script>

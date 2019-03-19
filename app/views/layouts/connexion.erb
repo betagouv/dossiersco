@@ -14,21 +14,20 @@
   <main role="main" class="container mt-4">
 
     <% if flash[:notice] %>
-      <div class="alert alert-success" role="alert">
+      <div class="notification success mt-1">
         <%= flash[:notice]  %>
       </div>
     <% elsif flash[:alert] %>
-      <div class="alert alert-danger" role="alert">
+      <div class="notification error mt-1">
         <%= flash[:alert]  %>
       </div>
     <% end %>
-    <div class="">
 
-      <% if (defined? message_info) && (!message_info.nil?) %>
-        <div class="alert alert-success"><%= message_info %></div>
-      <% end %>
-      <%= yield %>
-    </div>
+    <% if (defined? message_info) && (!message_info.nil?) %>
+      <div class="notification success mt-1"><%= message_info %></div>
+    <% end %>
+
+    <%= yield %>
   </main>
 
 <% end %>

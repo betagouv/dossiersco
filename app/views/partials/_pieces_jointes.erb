@@ -8,11 +8,13 @@
           <p class="etat-piece-jointe"><%= t(".document_#{piece.etat}") if piece.etat.present?  %></p>
           <div class="card-relat document">
             <% if piece.fichier.url.present? %>
-              <% if piece.fichier.content_type.start_with?("image/") %>
-                <%= image_tag(piece.fichier.url, alt:"preview piece jointe", class: 'lien-piece-jointe') %>
-              <% else %>
-                <%= link_to t('.voir_piece_jointe'), piece.fichier.url %>
-              <% end %>
+              <div class="lien-piece-jointe" data-url="<%= piece.fichier.url %>" data-nom="<%= piece.nom %>">
+                <% if piece.fichier.content_type.start_with?("image/") %>
+                  <%= image_tag(piece.fichier.url, alt:"preview piece jointe") %>
+                <% else %>
+                  <%= link_to t('.voir_piece_jointe'), piece.fichier.url %>
+                <% end %>
+              </div>
             <% end %>
             <%= form.hidden_field :piece_attendue_id %>
             <div class="form__group">

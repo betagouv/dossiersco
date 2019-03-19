@@ -352,7 +352,6 @@
     $('input[type=file]')[0].focus();
 
     $('.forms').change(function() {
-      var data = $(this).serialize()
       $(this).find( ".soumettre" ).click()
       $("button[type='submit']").attr("disabled", "disabled").addClass('disabled')
     })
