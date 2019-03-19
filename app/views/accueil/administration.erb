@@ -10,45 +10,31 @@
     <h2 class="col separation"><%= t('.restauration_scolaire') %></h2>
 
 
-    <div class="form__group">
+    <div class="form__group" id="demi-pension" data-demi-pension="<%= dossier_eleve.demi_pensionnaire %>">
       <label>
-        <input type="radio" name="demi_pensionnaire" value="true" onclick="afficher_dp(event)" id='demi_pensionnaire'
+        <input type="radio" name="demi_pensionnaire" value="true" id='demi_pensionnaire'
                <% if dossier_eleve.demi_pensionnaire %> checked <% end %>><%= t('.demi_pensionnaire') %>
       </label>
       <label>
-        <input type="radio" name="demi_pensionnaire" value="false" onclick="masquer_dp(event)" id='externe'
+        <input type="radio" name="demi_pensionnaire" value="false" id='externe'
                <% if ! dossier_eleve.demi_pensionnaire %> checked <% end %>><%= t('.externe') %>
       </label>
     </div>
 
     <div id="dp" style="display: none;">
-
       <p class="text-danger"><%= t('.engagement_demi_pension') %></p>
-      <br />
-      <% if dossier_eleve.etablissement.gere_demi_pension %>
-        <p><%= t('.demande_justif_pour_demi_pension') %></p>
-        <p><%= t('.pour_obtenir_ce_document') %></p>
-        <ul>
-          <li>
-            <span <%= dossier_eleve.allocataire ?  "class=font-weight-bold" : '' %>><%= t('.si_allocataire_caf') %></span>, <%= t('.instruction_pour_allocataire_caf') %>
-          </li>
-          <li>
-            <span <%= dossier_eleve.allocataire ? '' : "class=font-weight-bold" %> ><%= t('.si_pas_allocataire_caf') %></span>, <%= t('.instruction_pour_non_allocataire_caf_html') %><br />
-          </li>
-        </ul>
-      <% end %>
     </div>
 
     <h2 class="separation mt-4"><%= t('.autorisation_de_sortie') %></h2>
 
-    <div class="form-check form-check-inline">
-      <label class="form-check-label">
-        <input class="form-check-input" type="radio" name="autorise_sortie" value="true" id='autorise_sortie'
+    <div>
+      <label>
+        <input type="radio" name="autorise_sortie" value="true" id='autorise_sortie'
                <% if dossier_eleve.autorise_sortie %> checked <% end %>><%= t('.j_autorise') %>
       </label>
     </div>
-    <div class="form-check form-check-inline">
-      <label class="form-check-label">
+    <div class="form__group">
+      <label>
         <input class="form-check-input" type="radio" name="autorise_sortie" value="false"
                <% if !dossier_eleve.autorise_sortie %> checked <% end %>><%= t('.je_n_autorise_pas') %>
       </label>
@@ -59,10 +45,10 @@
     <h2 class="separation mt-4"><%= t('.renseignements_medicaux') %></h2>
 
     <div class="row">
-      <div class="col">
-        <div class="form-check">
-          <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" value='true' name="renseignements_medicaux"  id='renseignements_medicaux'
+        <div class="form__group" data-renseignements-medicaux="<%= dossier_eleve.renseignements_medicaux %>"
+             id="form-renseignements-medicaux">
+          <label class="">
+            <input type="checkbox" value='true' name="renseignements_medicaux"  id='renseignements_medicaux'
                    <% if dossier_eleve.renseignements_medicaux %> checked <% end %>> <%= t('.envoyer_une_info_medicale') %>
           </label>
         </div>
@@ -71,7 +57,6 @@
             <%= dossier_eleve.etablissement.message_infirmerie %>
           </div>
         <% end %>
-      </div>
     </div>
 
     <h2 class="separation mt-4"><%= t('.droit_a_l_image') %></h2>
@@ -94,35 +79,35 @@
 </section>
 
 <script>
-  if (<%= dossier_eleve.demi_pensionnaire %>) {
-    document.querySelector('#dp').style.display = 'block'
-  }
+  $(document).ready(function() {
+    document.getElementById("demi_pensionnaire").focus();
 
-  function afficher_dp(e){
-    document.querySelector('#dp').style.display = 'block'
-  }
+    if ($('#demi-pension').data('demi-pension')) {
+      $('#dp').css('display', 'block')
+    }
 
-  function masquer_dp(e){
-    document.querySelector('#dp').style.display = 'none'
-  }
+    $('form').change( function () {
+      console.log($('input[name=demi_pensionnaire]:checked').val())
+      if ($('input[name=demi_pensionnaire]:checked').val() === 'true') {
+        $('#dp').css('display', 'block')
+        console.log('oui')
+      } else {
+        console.log('non')
+        $('#dp').css('display', 'none')
+      }
+    })
 
-  function afficher_reduction_tarif(e){
-    document.querySelector('#reduction_tarif').style.display = chk_reduction_tarif.checked ? 'block' : 'none'
-  }
-  if (<%= dossier_eleve.renseignements_medicaux %>) {
-    $('#message-infirmerie').removeClass('d-none')
-  }
-
-  $('#renseignements_medicaux').click(function(event) {
-    if (event.target.checked) {
+    if ($('#form-renseignements-medicaux').data('renseignements-medicaux')) {
       $('#message-infirmerie').removeClass('d-none')
     }
-    else {
-      $('#message-infirmerie').addClass('d-none')
-    }
-  })
-</script>
 
-<script>
-  document.getElementById("demi_pensionnaire").focus();
+    $('#renseignements_medicaux').click(function(event) {
+      if (event.target.checked) {
+        $('#message-infirmerie').removeClass('d-none')
+      }
+      else {
+        $('#message-infirmerie').addClass('d-none')
+      }
+    })
+  })
 </script>
