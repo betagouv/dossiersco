@@ -1,9 +1,8 @@
-
 fr:
   activerecord:
     attributes:
       etablissement:
-          uai: "UAI"
+        uai: "UAI"
     errors:
       messages:
         record_invalid: "%{errors}"
