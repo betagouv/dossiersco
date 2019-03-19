@@ -59,7 +59,7 @@ make console
 - Les mails transactionnels sont envoyés via [Mailjet](https://mailjet.com)
 - On attrape toutes les erreurs sur [Sentry](https://sentry.io/betagouv-pe/rails/)
 - Sur les environnements de développement et staging les emails sortants sont envoyés
-    avec [Letter Opener Web](https://github.com/ryanb/letter_opener). On peut les consulter à l'url '/letter_opener'
+    avec [Letter Opener Web](https://github.com/ryanb/letter_opener). On peut les consulter à l'url `/letter_opener`
 - Envoie de SMS avec [NEXMO](https://www.nexmo.com/)
 - Nous analysons les connexions avec [Matomo](https://matomo.org/). Pour accéder à l'interface du projet [dossierSco sur le compte de beta.gouv.fr](https://stats.data.gouv.fr/index.php?module=CoreHome&action=index&idSite=54&period=range&date=previous30&updated=1#?idSite=54&period=range&date=previous30&category=Dashboard_Dashboard&subcategory=1). Voir [beta.bouv.fr/suivi/](https://beta.gouv.fr/suivi/)
 - Support utilisateurs en direct à l'aide de [Drift](https://app.drift.com/)
