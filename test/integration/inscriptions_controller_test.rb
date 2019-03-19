@@ -53,7 +53,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     doc = Nokogiri::HTML(response.body)
 
-    assert_match I18n.t('tache_imports.create.message_de_succes', email: agent.email), doc.css('.alert-success').text
+    assert_match I18n.t('tache_imports.create.message_de_succes', email: agent.email), doc.css('.success').text
   end
 
   def test_options_demande_et_abandon
@@ -341,7 +341,6 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 0, doc.css('.etablissement .classe').count
     assert_equal 0, (names.select { |x| x == '3EME 1' }).count
     # Statuts - 100% de non connectés à Oeben
-    pas_connecte = '.etablissement .progress .bg-secondary'
   end
 
   def test_page_eleve_agent_affiche_changement_adresse
@@ -398,8 +397,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     get "/agent/eleve/#{dossier_eleve.eleve.identifiant}"
     doc = Nokogiri::HTML(response.body)
     assert_equal 2, doc.css('#historique div.message').count
-    assert doc.css('#historique div.message:nth-child(1) .card-body').text.strip.include? 'Message 1'
-    assert doc.css('#historique div.message:nth-child(2) .card-body').text.strip.include? 'Message 2'
+    assert doc.css('#historique > div > div').text.strip.include? 'Message 1'
+    assert doc.css('#historique > div > div').text.strip.include? 'Message 2'
   end
 
   def test_propose_modeles_messages

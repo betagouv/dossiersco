@@ -20,32 +20,32 @@
             <div class="card mb-2 <%= piece.etat if piece.present? %>">
               <div class="card__content">
                 <h4><%= '*' if piece.obligatoire %> <%= piece.nom %></h4>
-                  <div class="card-relat document">
-                    <%= form_for [:agent, piece], multipart: true, html: { class: "forms" } do |form| %>
-                      <% if piece.fichier.url.present? %>
-                        <div class="lien-piece-jointe" data-url="<%= piece.fichier.url %>" data-nom="<%= piece.nom %>">
-                          <% if piece.fichier.content_type.start_with?("image/") %>
-                            <%= image_tag(piece.fichier.url, alt:"preview piece jointe") %>
-                          <% else %>
-                            <%= link_to t('.voir_piece_jointe'), piece.fichier.url %>
-                          <% end %>
-                        </div>
-                      <% end %>
-                      <%= form.hidden_field :piece_attendue_id %>
-                      <%= hidden_field_tag :eleve_id, params[:identifiant] %>
-                      <div class="form__group mb-2">
-                        <%= form.file_field :fichier, data: { btnClass: "button", text: "Parcourir"} %>
-                        <button class="soumettre hide" type="submit">Soumettre</button>
+                <div class="card-relat document">
+                  <%= form_for [:agent, piece], multipart: true, html: { class: "forms" } do |form| %>
+                    <% if piece.fichier.url.present? %>
+                      <div class="lien-piece-jointe" data-url="<%= piece.fichier.url %>" data-nom="<%= piece.nom %>">
+                        <% if piece.fichier.content_type.start_with?("image/") %>
+                          <%= image_tag(piece.fichier.url, alt:"preview piece jointe") %>
+                        <% else %>
+                          <%= link_to t('.voir_piece_jointe'), piece.fichier.url %>
+                        <% end %>
                       </div>
                     <% end %>
-                    <% if piece.id.present? %>
-                      <div class="form__group">
-                        <%= link_to t('.valider'), valider_piece_jointe_path(piece, identifiant: params[:identifiant]),
-                                    method: :put, class: "button" %>
-                        <%= link_to t('.refuser'), refuser_piece_jointe_path(piece, identifiant: params[:identifiant]),
-                                    method: :put, class: "button warning" %>
-                      </div>
-                    <% end %>
+                    <%= form.hidden_field :piece_attendue_id %>
+                    <%= hidden_field_tag :eleve_id, params[:identifiant] %>
+                    <div class="form__group mb-2">
+                      <%= form.file_field :fichier, data: { btnClass: "button", text: "Parcourir"} %>
+                      <button class="soumettre hide" type="submit">Soumettre</button>
+                    </div>
+                  <% end %>
+                  <% if piece.id.present? %>
+                    <div class="form__group">
+                      <%= link_to t('.valider'), valider_piece_jointe_path(piece, identifiant: params[:identifiant]),
+                                  method: :put, class: "button" %>
+                      <%= link_to t('.refuser'), refuser_piece_jointe_path(piece, identifiant: params[:identifiant]),
+                                  method: :put, class: "button warning" %>
+                    </div>
+                  <% end %>
                 </div>
               </div>
             </div>
@@ -261,12 +261,12 @@
           <div id="historique">
             <% @dossier_eleve.message.each do |message| %>
               <div class="message">
-                <div>
-                  <small><%= message.categorie %> du <%= message.created_at %> (cliquez pour afficher/cacher)</small>
-                </div>
-                <div>
+                <p>
+                  <%= message.categorie %> du <%= message.created_at %> (cliquez pour afficher/cacher)
+                </p>
+                <div class="contenu-message d-none">
                   <% if message.categorie == "mail" %>
-                    <%= message.contenu.gsub(/\n/,"<br/>") %>
+                    <%= raw message.contenu.gsub(/\n/,"<br/>") %>
                   <% else %>
                     <%= message.contenu %>
                   <% end %>
@@ -281,9 +281,9 @@
           <div class="panel__header">
             <h3>Commentaire de la famille</h3>
           </div>
+          <p>Commentaire écrit par la famille suite à la complétion du formulaire</p>
+          <div id="commentaire"><strong><%= @dossier_eleve.satisfaction %></strong> : <%= @dossier_eleve.commentaire %></div>
         </div>
-        <p>Commentaire écrit par la famille suite à la complétion du formulaire</p>
-        <div id="commentaire"><strong><%= @dossier_eleve.satisfaction %></strong> : <%= @dossier_eleve.commentaire %></div>
       <% end %>
     </div>
 
@@ -330,13 +330,9 @@
       $(target).removeClass('hide')
     })
 
-    $('#eleveTabs a').on('click', function (e) {
-      e.preventDefault()
-      $(this).tab('show')
-    })
     // Historique
     $("#historique .message").on('click',function(e) {
-      $(this).find(".card-body").toggle();
+      $(this).find(".contenu-message").toggleClass('d-none');
     })
     // Modèles
     $('#inserer').click(function() {

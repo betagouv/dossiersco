@@ -164,7 +164,7 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     follow_redirect!
 
     doc = Nokogiri::HTML(response.parsed_body)
-    assert_equal 'Famille : Responsable légal', doc.css('body > main > div.col-12 > h2').text
+    assert_equal 'Responsable légal', doc.css('body > main > section > form > h2').text
   end
 
   def test_une_famille_remplit_letape_administration
