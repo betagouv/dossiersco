@@ -1,8 +1,9 @@
 <section class="section">
+  <div class="container">
+    <h1>Nouvelle pièce attendue</h1>
 
-  <h1>Nouvelle pièce attendue</h1>
+    <%= render 'form', piece_attendue: @piece_attendue %>
 
-  <%= render 'form', piece_attendue: @piece_attendue %>
-
-  <%= link_to 'Retour', configuration_pieces_attendues_path, class: 'button-outline small secondary' %>
+    <%= link_to 'Retour', configuration_pieces_attendues_path, class: 'button-outline small secondary mt-2' %>
+  </div>
 </section>

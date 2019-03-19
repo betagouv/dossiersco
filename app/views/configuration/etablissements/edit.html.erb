@@ -1,54 +1,56 @@
 <section class="section">
-  <h1><%= t(".titre") %></h1>
+  <div class="container">
+    <h1><%= t(".titre") %></h1>
 
-  <%= form_for([:configuration, @etablissement]) do |f| %>
+    <%= form_for([:configuration, @etablissement]) do |f| %>
 
-    <div class="form__group">
-      <%= f.label :uai %>
-      <%= f.text_field :uai %>
-    </div>
-    <div class="form__group">
-      <%= f.label :nom %>
-      <%= f.text_field :nom %>
-    </div>
-    <div class="form__group">
-      <%= f.label :adresse %>
-      <%= f.text_field :adresse %>
-    </div>
-    <div class="form__group">
-      <%= f.label :code_postal %>
-      <%= f.text_field :code_postal %>
-    </div>
-    <div class="form__group">
-      <%= f.label :ville %>
-      <%= f.text_field :ville %>
-    </div>
-    <div class="form__group">
-      <%= f.label :message_permanence %>
-      <%= f.text_area :message_permanence %>
-    </div>
-    <div class="form__group">
-      <%= f.label :message_infirmerie %>
-      <%= f.text_area :message_infirmerie %>
-    </div>
-    <div class="form__group">
-      <%= f.check_box :gere_demi_pension %>
-      <%= f.label :gere_demi_pension, class: 'label-inline' %>
-    </div>
-    <div class="form__group">
-      <%= f.label :signataire %>
-      <%= f.text_field :signataire %>
-    </div>
-    <div class="form__group">
-      <%= f.label :date_limite %>
-      <%= f.text_field :date_limite %>
-    </div>
-    <div class="form__group">
-      <%= f.check_box :envoyer_aux_familles %>
-      <%= f.label :envoyer_aux_familles, class: 'label-inline' %>
-    </div>
-    <div class="form__group">
-      <%= f.submit 'valider', class: 'button' %>
-    </div>
-  <% end %>
+      <div class="form__group">
+        <%= f.label :uai %>
+        <%= f.text_field :uai %>
+      </div>
+      <div class="form__group">
+        <%= f.label :nom %>
+        <%= f.text_field :nom %>
+      </div>
+      <div class="form__group">
+        <%= f.label :adresse %>
+        <%= f.text_field :adresse %>
+      </div>
+      <div class="form__group">
+        <%= f.label :code_postal %>
+        <%= f.text_field :code_postal %>
+      </div>
+      <div class="form__group">
+        <%= f.label :ville %>
+        <%= f.text_field :ville %>
+      </div>
+      <div class="form__group">
+        <%= f.label :message_permanence %>
+        <%= f.text_area :message_permanence %>
+      </div>
+      <div class="form__group">
+        <%= f.label :message_infirmerie %>
+        <%= f.text_area :message_infirmerie %>
+      </div>
+      <div class="form__group">
+        <%= f.check_box :gere_demi_pension %>
+        <%= f.label :gere_demi_pension, class: 'label-inline' %>
+      </div>
+      <div class="form__group">
+        <%= f.label :signataire %>
+        <%= f.text_field :signataire %>
+      </div>
+      <div class="form__group">
+        <%= f.label :date_limite %>
+        <%= f.text_field :date_limite %>
+      </div>
+      <div class="form__group">
+        <%= f.check_box :envoyer_aux_familles %>
+        <%= f.label :envoyer_aux_familles, class: 'label-inline' %>
+      </div>
+      <div class="form__group">
+        <%= f.submit 'valider', class: 'button' %>
+      </div>
+    <% end %>
+  </div>
 </section>

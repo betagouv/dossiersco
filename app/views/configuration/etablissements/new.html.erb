@@ -1,17 +1,19 @@
 <section class="section">
-  <h1><%= t(".titre") %></h1>
-  <% if flash[:error] %>
-    <div class="alert alert-danger"><%= flash[:error] %></div>
-  <% end %>
+  <div class="container">
+    <h1><%= t(".titre") %></h1>
+    <% if flash[:error] %>
+      <div class="alert alert-danger"><%= flash[:error] %></div>
+    <% end %>
 
-  <p><%= t('.explication') %></p>
-  <%= form_for([:configuration, Etablissement.new]) do |f| %>
-    <div class="form__group">
-      <%= f.label :uai %>
-      <%= f.text_field :uai%>
-    </div>
-    <div class="form__group">
-      <%= f.submit t('.inscrire'), class: 'button' %>
-    </div>
-  <% end %>
+    <p><%= t('.explication') %></p>
+    <%= form_for([:configuration, Etablissement.new]) do |f| %>
+      <div class="form__group">
+        <%= f.label :uai %>
+        <%= f.text_field :uai%>
+      </div>
+      <div class="form__group">
+        <%= f.submit t('.inscrire'), class: 'button' %>
+      </div>
+    <% end %>
+  </div>
 </section>

@@ -1,18 +1,20 @@
 <section class="section">
-  <h1><%= t(".titre") %></h1>
-  <%= form_for([:configuration, @agent]) do |f| %>
+  <div class="container">
+    <h1><%= t(".titre") %></h1>
+    <%= form_for([:configuration, @agent]) do |f| %>
 
-    <div class="form__group">
-      <%= f.label :email %>
-      <%= f.email_field :email%>
-    </div>
-    <div class="form__group">
-      <%= f.label :admin, class: 'label-inline' %>
-      <%= f.check_box :admin %>
-      <em><%= t('.explication_agent_admin') %></em>
-    </div>
-    <div class="form__group">
-      <%= f.submit t('.ajouter'), class: 'button' %>
-    </div>
-  <% end %>
+      <div class="form__group">
+        <%= f.label :email %>
+        <%= f.email_field :email%>
+      </div>
+      <div class="form__group">
+        <%= f.label :admin, class: 'label-inline' %>
+        <%= f.check_box :admin %>
+        <em><%= t('.explication_agent_admin') %></em>
+      </div>
+      <div class="form__group">
+        <%= f.submit t('.ajouter'), class: 'button' %>
+      </div>
+    <% end %>
+  </div>
 </section>
