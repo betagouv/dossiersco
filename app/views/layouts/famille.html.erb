@@ -20,27 +20,22 @@
 
   <main role="main" class="container  mt-4">
 
+    <% content_for :messages do %>
+      <% if flash[:notice] %>
+        <div class="notification success mt-1">
+          <%= flash[:notice]  %>
+        </div>
+      <% elsif flash[:alert] %>
+        <div class="notification error mt-1">
+          <%= flash[:alert]  %>
+        </div>
+      <% end %>
+    <% end %>
+
     <%= yield %>
 
   </main>
 
-  <!-- Piwik -->
-  <script type="text/javascript">
-    var _paq = _paq || [];
-    _paq.push(["setDomains", ["*.www.dossiersco.fr","*.dossiersco.beta.gouv.fr","*.dossiersco.fr"]]);
-    _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']);
-    (function() {
-      var u="//stats.data.gouv.fr/";
-      _paq.push(['setTrackerUrl', u+'piwik.php']);
-      _paq.push(['setSiteId', '54']);
-      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-    })();
-  </script>
-
-  <noscript><p><img src="//stats.data.gouv.fr/piwik.php?idsite=54" style="border:0;" alt="" /></p></noscript>
-  <!-- End Piwik Code -->
 <% end %>
 
 <%= render template: 'layouts/application' %>

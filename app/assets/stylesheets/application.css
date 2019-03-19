@@ -265,14 +265,6 @@ img {
     text-align: center;
 }
 
-.message_de_succes {
-    width: 100%;
-    background-color: lightgreen;
-    padding: 10px;
-    text-align: center;
-    margin-bottom: 30px;
-}
-
 .message_echec {
     width: 100%;
     background-color: #BB0000;

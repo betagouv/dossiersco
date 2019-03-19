@@ -2,7 +2,7 @@
   <div class="modal modal-piece-jointe">
     <div class="row mb-2">
       <h5 class="modal-title" id="titre-modal-pj"></h5>
-      <button type="button" class="button-outline secondary fermer-modal" aria-label="Close">
+      <button type="button" class="button-outline secondary fermer-modal hide-on-mobile" aria-label="Close">
         Fermer
       </button>
     </div>
@@ -10,11 +10,9 @@
       <!-- Zone d'affichage du document -->
     </div>
     <div class="modal-footer justify-content-between">
-      <button type="button" class="button secondary rotation" data-degres="-90">Tourner <i class="fas fa-undo"></i></button>
-      <span>
-      <button type="button" class="button secondary rotation" data-degres="90">Tourner <i class="fas fa-redo"></i></button>
-      <button type="button" class="button-outline secondary fermer-modal" data-dismiss="modal">Fermer</button>
-      </span>
+      <button type="button" class="button secondary rotation hide-on-mobile" data-degres="-90">Tourner <i class="fas fa-undo"></i></button>
+      <button type="button" class="button secondary rotation hide-on-mobile" data-degres="90">Tourner <i class="fas fa-redo"></i></button>
+      <button type="button" class="button-outline secondary fermer-modal ml-1" data-dismiss="modal">Fermer</button>
     </div>
   </div>
 </div>
@@ -22,7 +20,6 @@
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function () {
     $('.lien-piece-jointe').click(function() {
-      console.log('coucou')
       let url = $(this).data('url');
       let ext = $(this).data('ext');
       let nom = $(this).data('nom');

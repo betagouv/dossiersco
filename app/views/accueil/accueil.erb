@@ -1,31 +1,33 @@
 <section class="section">
+  <div class="container">
+    <h1 class="separation">Collège <%= @dossier_eleve.etablissement.nom %></h1>
 
-  <h1 class="separation">Collège <%= @dossier_eleve.etablissement.nom %></h1>
+    <p>Pour réinscrire votre enfant
+      <strong>
+        <%= @dossier_eleve.eleve.prenom %> <%= @dossier_eleve.eleve.nom %>
+      </strong>
+      au collège
+      <strong id="etablissement">
+        <%= @dossier_eleve.etablissement.nom %>.
+      </strong>
+    </p>
 
-  <p>Pour réinscrire votre enfant
-    <strong>
-      <%= @dossier_eleve.eleve.prenom %> <%= @dossier_eleve.eleve.nom %>
-    </strong>
-    au collège
-    <strong id="etablissement">
-      <%= @dossier_eleve.etablissement.nom %>.
-    </strong>
-  </p>
-
-  <p>Veuillez vous munir des pièces administratives suivantes :</p>
-  <ul>
-    <% @dossier_eleve.etablissement.pieces_attendues.each do |piece| %>
-      <li><strong><%= piece.nom %></strong></li>
-      <% if piece.explication.present? %>
-        <p><%= piece.explication %></p>
+    <p>Veuillez vous munir des pièces administratives suivantes :</p>
+    <ul>
+      <% @dossier_eleve.etablissement.pieces_attendues.each do |piece| %>
+        <li><strong><%= piece.nom %></strong></li>
+        <% if piece.explication.present? %>
+          <p><%= piece.explication %></p>
+        <% end %>
       <% end %>
-    <% end %>
-  </ul>
-  <p>et mettre à jour vos coordonnées sur ce site avant le <strong id="date-limite"><%= @dossier_eleve.etablissement.date_limite %></strong>.</p>
-
-  <a id='commencer-inscription' href="/eleve">
-    <button class="button">
-      Commencer l’inscription
-    </button>
-  </a>
+    </ul>
+    <p>et mettre à jour vos coordonnées sur ce site avant le <strong id="date-limite"><%= @dossier_eleve.etablissement.date_limite %></strong>.</p>
+    <div class="text-center">
+      <a id='commencer-inscription' href="/eleve">
+        <button class="button">
+          Commencer l’inscription
+        </button>
+      </a>
+    </div>
+  </div>
 </section>
