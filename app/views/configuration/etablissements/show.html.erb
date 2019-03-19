@@ -1,23 +1,25 @@
 <section class="section">
-  <h2><%= @etablissement.nom %> - <%= @etablissement.uai %></h2>
-  <ul class="list-unstyled">
-    <li>Adresse : <%= @etablissement.adresse %></li>
-    <li>Code postal : <%= @etablissement.code_postal %></li>
-    <li>Ville : <%= @etablissement.ville %></li>
-    <li>Date limite d'inscription : <%= @etablissement.date_limite %></li>
-    <li>Message de permanence : <%= @etablissement.message_permanence %></li>
-    <li>Message d'infirmerie : <%= @etablissement.message_infirmerie %></li>
-    <li>Gère la demi pension : <%= @etablissement.gere_demi_pension ? 'Oui' : 'Non' %></li>
-    <li>
-      <% if @etablissement.envoyer_aux_familles? %>
-        <strong><%= t('.attention_envoye_aux_familles') %></strong>
-      <% else %>
-        <%= t('.envoye_restreint', email: @agent_connecté.email) %>
-      <% end %>
-    </li>
-    <li>Signataire : <%= @etablissement.signataire %></li>
-  </ul>
+  <div class="container">
+    <h2><%= @etablissement.nom %> - <%= @etablissement.uai %></h2>
+    <ul class="list-unstyled">
+      <li>Adresse : <%= @etablissement.adresse %></li>
+      <li>Code postal : <%= @etablissement.code_postal %></li>
+      <li>Ville : <%= @etablissement.ville %></li>
+      <li>Date limite d'inscription : <%= @etablissement.date_limite %></li>
+      <li>Message de permanence : <%= @etablissement.message_permanence %></li>
+      <li>Message d'infirmerie : <%= @etablissement.message_infirmerie %></li>
+      <li>Gère la demi pension : <%= @etablissement.gere_demi_pension ? 'Oui' : 'Non' %></li>
+      <li>
+        <% if @etablissement.envoyer_aux_familles? %>
+          <strong><%= t('.attention_envoye_aux_familles') %></strong>
+        <% else %>
+          <%= t('.envoye_restreint', email: @agent_connecté.email) %>
+        <% end %>
+      </li>
+      <li>Signataire : <%= @etablissement.signataire %></li>
+    </ul>
 
-  <%= link_to 'Modifier', edit_configuration_etablissement_path(@etablissement), {class: 'button-outline primary'} %>
+    <%= link_to 'Modifier', edit_configuration_etablissement_path(@etablissement), {class: 'button-outline primary'} %>
+  </div>
 </section>
 

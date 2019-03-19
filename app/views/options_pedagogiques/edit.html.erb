@@ -1,9 +1,9 @@
-<div class="col-md-6 col-12 offset-md-3">
+<section class="section">
+  <div class="container">
+    <h1 class="mb-3">Editer une Option Pedagogique</h1>
 
-  <h1 class="mb-3">Editer une Option Pedagogique</h1>
+    <%= render 'form', option_pedagogique: @option_pedagogique %>
 
-  <%= render 'form', option_pedagogique: @option_pedagogique %>
-
-  <%= link_to 'Retour', options_pedagogiques_path %>
-
-</div>
+    <%= link_to 'Retour', options_pedagogiques_path, class: 'button-outline small secondary mt-2' %>
+  </div>
+</section>

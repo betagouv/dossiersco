@@ -10,24 +10,26 @@
     </div>
   <% end %>
 
-  <div class="form-group">
+  <div class="form__group">
     <%= form.label :nom %>
-    <%= form.text_field :nom, class: 'form-control' %>
+    <%= form.text_field :nom %>
   </div>
 
-  <div class="form-group">
+  <div class="form__group">
     <%= form.label :groupe %>
-    <%= form.text_field :groupe, class: 'form-control' %>
+    <%= form.text_field :groupe %>
   </div>
 
-  <div class="form-check">
-    <%= form.check_box :obligatoire, class: 'form-check-input' %>
-    <%= form.label :obligatoire, class: 'form-check-label' %>
+  <div class="form__group">
+    <%= form.check_box :obligatoire%>
+    <%= form.label :obligatoire, class: 'label-inline' %>
   </div>
 
-  <div class="form-check">
+  <div class=form__group">
     <%= form.collection_check_boxes(:mef_ids, Mef.all, :id, :libelle) %>
   </div>
 
-    <%= form.submit 'valider', class: 'btn btn-primary my-3'  %>
+  <div class=form__group">
+    <%= form.submit 'valider', class: 'button mt-2'  %>
+  </div>
 <% end %>
