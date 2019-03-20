@@ -1,11 +1,20 @@
 <section class="section cards">
-  <div class="row mb-2">
+  <div class="row mb-2 cards-configuration">
+    <% if @stats.eleves_sans_mef > 0 %>
+      <div class="card">
+        <div class="card__content">
+          <h3><%= t('.eleves_sans_mef') %></h3>
+          <p><%= t('.text_eleves_sans_mef', nombre: @stats.eleves_sans_mef) %></p>
+          <%= link_to t('.liste_des_eleves'), agent_liste_des_eleves_path %>
+        </div>
+      </div>
+    <% end %>
     <div class="card">
       <div class="card__content">
         <h3><%= t('.import') %></h3>
         <% if @stats.dossiers == 0 %>
           <p><%= t('.aucun_dossier') %></p>
-          <%= link_to t('.importer un fichier'), new_tache_import_path %>
+          <%= link_to t('.importer_un_fichier'), new_tache_import_path %>
         <% else %>
           <p><%= t('.nombre_dossiers_eleves', dossiers: @stats.dossiers) %></p>
         <% end %>
@@ -27,14 +36,12 @@
         <h3><%= t('.options_pedagogiques') %></h3>
         <% if @stats.mef == 0 && @stats.options == 0 %>
           <p><%= t('.aucun_mef_et_option') %></p>
-          <%= link_to t('.importer un fichier'), new_tache_import_path %>
+          <%= link_to t('.importer_un_fichier'), new_tache_import_path %>
         <% else %>
           <p><%= t('.nombre_options_pedagogiques_html', options: @stats.options, mef: @stats.mef) %></p>
         <% end %>
       </div>
     </div>
-  </div>
-  <div class="row">
     <div class="card">
       <div class="card__content">
         <h3><%= t('.campagne') %></h3>
