@@ -1,11 +1,13 @@
-<% if notice.present? %>
-  <p class="alert alert-success" id="notice"><%= notice %></p>
-<% end %>
+<section class="section">
 
-<h1>Etablissements</h1>
+  <h1>Etablissements</h1>
 
-<table class="table">
-  <thead>
+  <div class="text-right">
+    <%= link_to "Créer un nouvel établissement", new_configuration_etablissement_path, {class: 'button-outline primary'} %>
+  </div>
+
+  <table class="table">
+    <thead>
     <tr>
       <th>Uai</th>
       <th>Nom</th>
@@ -13,20 +15,18 @@
       <th>Code postal</th>
       <th colspan="2"></th>
     </tr>
-  </thead>
+    </thead>
 
-  <tbody>
+    <tbody>
     <% @etablissements.each do |etablissement| %>
       <tr>
-          <td><%= etablissement.uai %></td>
-          <td><%= link_to etablissement.nom, configuration_etablissement_path(etablissement)%></td>
-          <td><%= etablissement.ville %></td>
-          <td><%= etablissement.code_postal %></td>
+        <td><%= etablissement.uai %></td>
+        <td><%= link_to etablissement.nom, configuration_etablissement_path(etablissement)%></td>
+        <td><%= etablissement.ville %></td>
+        <td><%= etablissement.code_postal %></td>
         <td><%= link_to 'Modifier', edit_configuration_etablissement_path(etablissement) %></td>
       </tr>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-<%= link_to "Créer un nouvel établissement", new_configuration_etablissement_path %>
+    </tbody>
+  </table>
+</section>

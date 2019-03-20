@@ -1,3 +1,7 @@
-.card-configuration {
-  height: 100%;
+.cards-configuration {
+  flex-wrap: wrap;
+  .card {
+    flex: 0 0 31%;
+    margin: 0 0.5em 1rem 0.5rem;
+  }
 }

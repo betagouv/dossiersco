@@ -21,7 +21,12 @@ body {
     overflow-x: hidden;
     background-color: #f8f8fa;
     color: #383f45;
-    padding-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
 }
 
 header {
@@ -30,19 +35,28 @@ header {
 }
 
 footer {
-    padding: 30px 0;
+    flex-shrink: 0;
+}
+
+.section {
+    padding: 3em 0;
+}
+
+.button {
+    cursor: pointer;
+}
+
+.list-unstyled {
+    list-style: none;
 }
 
 img {
     margin: 0rem .1rem .2rem .2rem;
 }
 
-h2, h4 {
-    color: #606468;
-}
-
-.col-12 a {
-    text-decoration: none;
+.modal {
+    margin: auto;
+    margin-top: 17rem;
 }
 
 .upload {
@@ -83,6 +97,7 @@ h2, h4 {
     -ms-user-select: none;
     user-select: none;
     transition: background-color 0.2s ease;
+    text-decoration: none !important;
 }
 
 .arrow-steps .step:after,
@@ -163,47 +178,9 @@ h2, h4 {
 /*
  * Buttons
  */
-.btn {
-    cursor: pointer;
-}
-
-.btn-primary {
-    background-color: #003189;
-    border-color: #003189;
-}
-
-.btn-outline-primary,
-.btn-outline-primary:focus {
-    box-shadow: none;
-    color: #003189;
-    border-color: #003189;
-}
-
-.btn-primary:hover,
-.btn-primary:focus {
-    background-color: #003089d5;
-    border-color: #003089d5;
-}
-
-.btn-outline-primary:hover {
-    color: white;
-    background-color: #003089d5;
-    border-color: #003089d5;
-}
-
 .disabled, .disabled:hover {
     background-color: #a5a5a5 !important;
     border-color: #a5a5a5 !important;
-}
-
-.card {
-    margin-bottom: 20px;
-    padding-bottom: 0;
-}
-
-.card-body {
-    position: relative;
-    padding-bottom: 10px;
 }
 
 .card-relat {
@@ -286,14 +263,6 @@ h2, h4 {
 
 .form-signin {
     text-align: center;
-}
-
-.message_de_succes {
-    width: 100%;
-    background-color: lightgreen;
-    padding: 10px;
-    text-align: center;
-    margin-bottom: 30px;
 }
 
 .message_echec {

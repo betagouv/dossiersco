@@ -1,25 +1,30 @@
-<div class="padding">
+<section class="section">
   <h1 class="text-center">Agent EPLE</h1>
-</div>
-<div class="column">
-  <form class="form-signin col-md-4 col-12 mx-auto" action="/agent" method="post">
+  <form class="mb-2" action="/agent" method="post">
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 
+    <p class="notification success">DossierSCO améliore son design. N'hésitez pas à nous faire part de vos remarques par Drift
+      (la petite bulle bleue en bas à droite visible sur votre espace agent) ou par <a href="mailto:equipe@dossiersco.Fr">email</a></p>
+
     <% if session[:erreur_login] %>
-      <p class="erreur"><%= session[:erreur_login] %></p>
+      <p class="notification warning"><%= session[:erreur_login] %></p>
       <% session.delete :erreur_login %>
     <% end %>
+    <div class="form__group">
+      <label for="email"><%= t('.email') %></label>
+      <input name="email" type="text" id="email" placeholder="intendant.collegexyz@ac-paris.fr" autofocus>
+    </div>
 
-    <label class="col-form-label" for="formGroupExampleInput"><%= t('.email') %></label>
-    <input name="email" type="text" class="form-control" id="formGroupExampleInput" placeholder="intendant.collegexyz@ac-paris.fr" autofocus>
+    <div class="form__group">
+      <label for="mot-de-passe"><%= t('.mot_de_passe') %></label>
+      <input name="mot_de_passe" type="password" id="mot-de-passe" >
+    </div>
 
-    <label class="col-form-label" for="mot-de-passe"><%= t('.mot_de_passe') %></label>
-    <input name="mot_de_passe" type="password" class="form-control" id="mot-de-passe" >
-
-    <button class="btn btn-lg btn-primary btn-block mt-3"><%= t('.se_connecter') %></button>
-
+    <div class="form__group text-center">
+      <button class="button"><%= t('.se_connecter') %></button>
+    </div>
   </form>
-  <div class="col-md-4 col-12 mx-auto mt-5 text-center">
+  <div class="text-center">
     <%= link_to t('.inscription'), new_configuration_etablissement_path %>
   </div>
-</div>
+</section>

@@ -1,331 +1,331 @@
 <% form_resp_legal_1 = [
-  {
-    name: "lien_de_parente_rl1",
-    label: t('.lien_de_parente'),
-    type: "dropdown",
-    selected: @resp_legal_1.lien_de_parente,
-    disabledw: false,
-    options: @lien_de_parentes,
-    required: 'required'
-  },
-  {
-    name: "prenom_rl1",
-    label: t('.prenom'),
-    type: "text",
-    value: @resp_legal_1.prenom,
-    indication: "Prénom",
-    disabled: false,
-    required: 'required'
-  },
-  {
-    name: "nom_rl1",
-    label: t('.nom'),
-    type: "text",
-    value: @resp_legal_1.nom,
-    indication: "Nom",
-    disabled: false,
-    required: 'required'
-  },
-  {
-    name: "adresse_rl1",
-    label: t('.adresse'),
-    type: "libre",
-    value: @resp_legal_1.adresse,
-    indication: "Numéro et nom de voie",
-    disabled: false,
-    required: 'required',
-    lines: 3
-  },
-  {
-    name: "code_postal_rl1",
-    label: t('.code_postal'),
-    type: "text",
-    value: @resp_legal_1.code_postal,
-    indication: "Code postal",
-    disabled: false,
-    required: 'required'
-  },
-  {
-    name: "ville_rl1",
-    label: t('.ville'),
-    type: "text",
-    value: @resp_legal_1.ville,
-    indication: "Ville",
-    disabled: false,
-    required: 'required'
-  },
-  {
-    type: 'espace',
-    hauteur: '30'
-  },
-  {
-    name: "tel_principal_rl1",
-    label: t('.telephone_principal'),
-    type: "tel",
-    value: @resp_legal_1.tel_principal,
-    indication: "Numéro de téléphone",
-    required: 'required'
-  },
-  {
-    name: "tel_secondaire_rl1",
-    label: t('.telephone_secondaire'),
-    type: "tel",
-    value: @resp_legal_1.tel_secondaire,
-    indication: "Numéro de téléphone",
-  },
-  {
-    name: "email_rl1",
-    label: t('.email_principal'),
-    type: "tel",
-    value: @resp_legal_1.email,
-    indication: "Adresse email",
-  },
-  {
-    type: 'espace',
-    hauteur: '30'
-  },
-  {
-    name: "profession_rl1",
-    label: t('.profession'),
-    type: "dropdown",
-    options: @code_profession.map{ |k, v| v },
-    selected: @resp_legal_1.profession,
-    required: 'required'
-  },
-  {
-    type: 'espace',
-    hauteur: '30'
-  },
-  {
-    name: "enfants_a_charge_rl1",
-    label: t('.nb_total_enfants_a_charge'),
-    type: "text_custom",
-    value: @resp_legal_1.enfants_a_charge,
-    longueur_label: 7,
-    longueur_input: 2,
-    indication: '',
-    required: 'required'
-  },
-  {
-    type: 'espace',
-    hauteur: '30'
-  },
-  {
-    label: t('.coordonnees_communiquees'),
-    name: 'communique_info_parents_eleves_rl1',
-    type: 'radio_inverse',
-    options: {t('.j_accepte') => true, t('.j_accepte_pas') => false},
-    checked: @resp_legal_1.communique_info_parents_eleves || false
-  }]
+    {
+        name: "lien_de_parente_rl1",
+        label: t('.lien_de_parente'),
+        type: "dropdown",
+        selected: @resp_legal_1.lien_de_parente,
+        disabledw: false,
+        options: @lien_de_parentes,
+        required: 'required'
+    },
+    {
+        name: "prenom_rl1",
+        label: t('.prenom'),
+        type: "text",
+        value: @resp_legal_1.prenom,
+        indication: "Prénom",
+        disabled: false,
+        required: 'required'
+    },
+    {
+        name: "nom_rl1",
+        label: t('.nom'),
+        type: "text",
+        value: @resp_legal_1.nom,
+        indication: "Nom",
+        disabled: false,
+        required: 'required'
+    },
+    {
+        name: "adresse_rl1",
+        label: t('.adresse'),
+        type: "libre",
+        value: @resp_legal_1.adresse,
+        indication: "Numéro et nom de voie",
+        disabled: false,
+        required: 'required',
+        lines: 3
+    },
+    {
+        name: "code_postal_rl1",
+        label: t('.code_postal'),
+        type: "text",
+        value: @resp_legal_1.code_postal,
+        indication: "Code postal",
+        disabled: false,
+        required: 'required'
+    },
+    {
+        name: "ville_rl1",
+        label: t('.ville'),
+        type: "text",
+        value: @resp_legal_1.ville,
+        indication: "Ville",
+        disabled: false,
+        required: 'required'
+    },
+    {
+        type: 'espace',
+        hauteur: '30'
+    },
+    {
+        name: "tel_principal_rl1",
+        label: t('.telephone_principal'),
+        type: "tel",
+        value: @resp_legal_1.tel_principal,
+        indication: "Numéro de téléphone",
+        required: 'required'
+    },
+    {
+        name: "tel_secondaire_rl1",
+        label: t('.telephone_secondaire'),
+        type: "tel",
+        value: @resp_legal_1.tel_secondaire,
+        indication: "Numéro de téléphone",
+    },
+    {
+        name: "email_rl1",
+        label: t('.email_principal'),
+        type: "tel",
+        value: @resp_legal_1.email,
+        indication: "Adresse email",
+    },
+    {
+        type: 'espace',
+        hauteur: '30'
+    },
+    {
+        name: "profession_rl1",
+        label: t('.profession'),
+        type: "dropdown",
+        options: @code_profession.map{ |k, v| v },
+        selected: @resp_legal_1.profession,
+        required: 'required'
+    },
+    {
+        type: 'espace',
+        hauteur: '30'
+    },
+    {
+        name: "enfants_a_charge_rl1",
+        label: t('.nb_total_enfants_a_charge'),
+        type: "text_custom",
+        value: @resp_legal_1.enfants_a_charge,
+        longueur_label: 7,
+        longueur_input: 2,
+        indication: '',
+        required: 'required'
+    },
+    {
+        type: 'espace',
+        hauteur: '30'
+    },
+    {
+        label: t('.coordonnees_communiquees'),
+        name: 'communique_info_parents_eleves_rl1',
+        type: 'radio_inverse',
+        options: {t('.j_accepte') => true, t('.j_accepte_pas') => false},
+        checked: @resp_legal_1.communique_info_parents_eleves || false
+    }]
 
-if @resp_legal_2
-form_resp_legal_2 = [
-  {
-    name: "lien_de_parente_rl2",
-    label: t('.lien_de_parente'),
-    type: "dropdown",
-    selected: @resp_legal_2.lien_de_parente,
-    disabled: false,
-    options: @lien_de_parentes,
-    required: 'required'
-  },
-  {
-    name: "prenom_rl2",
-    label: t('.prenom'),
-    type: "text",
-    value: @resp_legal_2.prenom,
-    indication: "Prénom",
-    disabled: false,
-    required: 'required'
-  },
-  {
-    name: "nom_rl2",
-    label: t('.nom'),
-    type: "text",
-    value: @resp_legal_2.nom,
-    indication: "Nom",
-    disabled: false,
-    required: 'required'
-  }
-]
+   if @resp_legal_2
+     form_resp_legal_2 = [
+         {
+             name: "lien_de_parente_rl2",
+             label: t('.lien_de_parente'),
+             type: "dropdown",
+             selected: @resp_legal_2.lien_de_parente,
+             disabled: false,
+             options: @lien_de_parentes,
+             required: 'required'
+         },
+         {
+             name: "prenom_rl2",
+             label: t('.prenom'),
+             type: "text",
+             value: @resp_legal_2.prenom,
+             indication: "Prénom",
+             disabled: false,
+             required: 'required'
+         },
+         {
+             name: "nom_rl2",
+             label: t('.nom'),
+             type: "text",
+             value: @resp_legal_2.nom,
+             indication: "Nom",
+             disabled: false,
+             required: 'required'
+         }
+     ]
 
-fin_form_resp_legal_2 = [
-  {
-    name: "adresse_rl2",
-    label: t('.adresse'),
-    type: "libre",
-    value: @resp_legal_2.adresse,
-    indication: "Numéro et nom de voie",
-    disabled: false,
-    required: 'required',
-    lines: 3
-  },
-  {
-    name: "code_postal_rl2",
-    label: t('.code_postal'),
-    type: "text",
-    value: @resp_legal_2.code_postal,
-    indication: "Code postal",
-    disabled: false,
-    required: 'required'
-  },
-  {
-    name: "ville_rl2",
-    label: t('.ville'),
-    type: "text",
-    value: @resp_legal_2.ville,
-    indication: "Ville",
-    disabled: false,
-    required: 'required'
-  },
-  {
-    type: 'espace',
-    hauteur: '30'
-  },
-  {
-    name: "tel_principal_rl2",
-    label: t('.telephone_principal'),
-    type: "tel",
-    value: @resp_legal_2.tel_principal,
-    indication: "Numéro de téléphone",
-    required: 'required'
-  },
-  {
-    name: "tel_secondaire_rl2",
-    label: t('.telephone_secondaire'),
-    type: "tel",
-    value: @resp_legal_2.tel_secondaire,
-    indication: "Numéro de téléphone",
-  },
-  {
-    name: "email_rl2",
-    label: t('.email_principal'),
-    type: "tel",
-    value: @resp_legal_2.email,
-    indication: "Adresse email",
-  },
-  {
-    type: 'espace',
-    hauteur: '30'
-  },
-  {
-    name: "profession_rl2",
-    label: t('.profession'),
-    type: "dropdown",
-    options: @code_profession.map{ |k, v| v },
-    selected: @resp_legal_2.profession,
-    required: 'required'
-  },
-  {
-    type: 'espace',
-    hauteur: '30'
-  },
-  {
-    type: 'espace',
-    hauteur: '30'
-  },
-  {
-    label: t('.coordonnees_communiquees'),
-    name: 'communique_info_parents_eleves_rl2',
-    type: 'radio_inverse',
-    options: {t('.j_accepte') => true, t('.j_accepte_pas') => false},
-    checked: @resp_legal_2.communique_info_parents_eleves || false
-  }]
-end
+     fin_form_resp_legal_2 = [
+         {
+             name: "adresse_rl2",
+             label: t('.adresse'),
+             type: "libre",
+             value: @resp_legal_2.adresse,
+             indication: "Numéro et nom de voie",
+             disabled: false,
+             required: 'required',
+             lines: 3
+         },
+         {
+             name: "code_postal_rl2",
+             label: t('.code_postal'),
+             type: "text",
+             value: @resp_legal_2.code_postal,
+             indication: "Code postal",
+             disabled: false,
+             required: 'required'
+         },
+         {
+             name: "ville_rl2",
+             label: t('.ville'),
+             type: "text",
+             value: @resp_legal_2.ville,
+             indication: "Ville",
+             disabled: false,
+             required: 'required'
+         },
+         {
+             type: 'espace',
+             hauteur: '30'
+         },
+         {
+             name: "tel_principal_rl2",
+             label: t('.telephone_principal'),
+             type: "tel",
+             value: @resp_legal_2.tel_principal,
+             indication: "Numéro de téléphone",
+             required: 'required'
+         },
+         {
+             name: "tel_secondaire_rl2",
+             label: t('.telephone_secondaire'),
+             type: "tel",
+             value: @resp_legal_2.tel_secondaire,
+             indication: "Numéro de téléphone",
+         },
+         {
+             name: "email_rl2",
+             label: t('.email_principal'),
+             type: "tel",
+             value: @resp_legal_2.email,
+             indication: "Adresse email",
+         },
+         {
+             type: 'espace',
+             hauteur: '30'
+         },
+         {
+             name: "profession_rl2",
+             label: t('.profession'),
+             type: "dropdown",
+             options: @code_profession.map{ |k, v| v },
+             selected: @resp_legal_2.profession,
+             required: 'required'
+         },
+         {
+             type: 'espace',
+             hauteur: '30'
+         },
+         {
+             type: 'espace',
+             hauteur: '30'
+         },
+         {
+             label: t('.coordonnees_communiquees'),
+             name: 'communique_info_parents_eleves_rl2',
+             type: 'radio_inverse',
+             options: {t('.j_accepte') => true, t('.j_accepte_pas') => false},
+             checked: @resp_legal_2.communique_info_parents_eleves || false
+         }]
+   end
 
-form_contact_urgence = [
-  {
-    name: "lien_avec_eleve_urg",
-    label: t('.lien_avec_eleve'),
-    type: "text",
-    value: @contact_urgence.present? ? @contact_urgence.lien_avec_eleve : nil,
-    indication: "Lien avec l'élève",
-    disabled: false
-  },
-  {
-    name: "prenom_urg",
-    label: t('.prenom'),
-    type: "text",
-    value: @contact_urgence.present? ? @contact_urgence.prenom : nil,
-    indication: "Prénom",
-    disabled: false
-  },
-  {
-    name: "nom_urg",
-    label: t('.nom'),
-    type: "text",
-    value: @contact_urgence.present? ? @contact_urgence.nom : nil,
-    indication: "Nom",
-    disabled: false
-  },
-  {
-    type: 'espace',
-    hauteur: '30'
-  },
-  {
-    name: "tel_principal_urg",
-    label: t('.telephone_principal'),
-    type: "tel",
-    value: @contact_urgence.present? ? @contact_urgence.tel_principal : nil,
-    indication: "Numéro de téléphone",
-  },
-  {
-    name: "tel_secondaire_urg",
-    label: t('.telephone_secondaire'),
-    type: "tel",
-    value: @contact_urgence.present? ? @contact_urgence.tel_secondaire : nil,
-    indication: "Numéro de téléphone",
-  },
-]
+   form_contact_urgence = [
+       {
+           name: "lien_avec_eleve_urg",
+           label: t('.lien_avec_eleve'),
+           type: "text",
+           value: @contact_urgence.present? ? @contact_urgence.lien_avec_eleve : nil,
+           indication: "Lien avec l'élève",
+           disabled: false
+       },
+       {
+           name: "prenom_urg",
+           label: t('.prenom'),
+           type: "text",
+           value: @contact_urgence.present? ? @contact_urgence.prenom : nil,
+           indication: "Prénom",
+           disabled: false
+       },
+       {
+           name: "nom_urg",
+           label: t('.nom'),
+           type: "text",
+           value: @contact_urgence.present? ? @contact_urgence.nom : nil,
+           indication: "Nom",
+           disabled: false
+       },
+       {
+           type: 'espace',
+           hauteur: '30'
+       },
+       {
+           name: "tel_principal_urg",
+           label: t('.telephone_principal'),
+           type: "tel",
+           value: @contact_urgence.present? ? @contact_urgence.tel_principal : nil,
+           indication: "Numéro de téléphone",
+       },
+       {
+           name: "tel_secondaire_urg",
+           label: t('.telephone_secondaire'),
+           type: "tel",
+           value: @contact_urgence.present? ? @contact_urgence.tel_secondaire : nil,
+           indication: "Numéro de téléphone",
+       },
+   ]
 %>
 
 <% @section = 2 %>
 <%= render partial: 'partials/navigation', locals: { dossier_eleve: @dossier_eleve } %>
 
-<div class="col-12">
-
-  <h2 class="separation"><%= t('.titre_responsable_legal') %><%= " 1" if @resp_legal_2.present?%></h2>
+<section class="section">
 
   <form action="/famille" method="POST">
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 
+    <h2 class="separation"><%= t('.titre_responsable_legal') %><%= " 1" if @resp_legal_2.present?%></h2>
+
     <%= raw(construire form_resp_legal_1) %>
 
-<% if @resp_legal_2 %>
-<div id='resp_legal_2' class='<%= "d-none" unless @resp_legal_2.present? %>' >
-  <h2 class="mt-5 separation"><%= t('.titre_responsable_legal') %> 2</h2>
+    <% if @resp_legal_2 %>
+      <div id='resp_legal_2' class='<%= "d-none" unless @resp_legal_2.present? %>' >
+        <h2 class="mt-5 separation"><%= t('.titre_responsable_legal') %> 2</h2>
 
-    <%= raw(construire form_resp_legal_2) %>
+        <%= raw(construire form_resp_legal_2) %>
 
-    <div class="row">
-      <div class="col-sm-4"></div>
-      <div class="col-sm-5 col-sm-offset-4">
-        <div class="form-check">
-          <label class="form-check-label">
-            <div class="btn btn-outline-primary" id="meme_adresse_que_rl1" ><small>Recopier l'adresse du responsable légal 1</small></div>
-          </label>
+        <div class="row">
+          <div class="col-sm-4"></div>
+          <div class="col-sm-5 col-sm-offset-4">
+            <div class="form-check">
+              <label class="form-check-label">
+                <div id="meme_adresse_que_rl1" ><small>Recopier l'adresse du responsable légal 1</small></div>
+              </label>
+            </div>
+          </div>
         </div>
+
+        <span style="display:block; height: 5px;"></span>
+
+        <%= raw(construire fin_form_resp_legal_2) %>
+
       </div>
+    <% end %>
+
+    <a href="#" id='ajouter_contact_urgence' class='<%= "d-none" if @contact_urgence.present? && !@contact_urgence.nom.empty? %> btn btn-outline-primary' >
+      <%= t('.ajouter_contact_urgence') %>
+    </a>
+    <div id='contact_urgence' class='<%= "d-none" unless @contact_urgence.present? && !@contact_urgence.nom.empty? %>' >
+      <h2 class="mt-5 separation"><%= t('.titre_contact_urgence') %></h2>
+
+      <%= raw(construire form_contact_urgence) %>
     </div>
-
-    <span style="display:block; height: 5px;"></span>
-
-    <%= raw(construire fin_form_resp_legal_2) %>
-
-</div>
-<% end %>
-
-<a href="#" id='ajouter_contact_urgence' class='<%= "d-none" if @contact_urgence.present? && !@contact_urgence.nom.empty? %> btn btn-outline-primary' >
-    <%= t('.ajouter_contact_urgence') %>
-</a>
-<div id='contact_urgence' class='<%= "d-none" unless @contact_urgence.present? && !@contact_urgence.nom.empty? %>' >
-  <h2 class="mt-5 separation"><%= t('.titre_contact_urgence') %></h2>
-
-  <%= raw(construire form_contact_urgence) %>
-</div>
     <%= render partial: 'partials/nouveau_precedent_suivant', :locals => { :precedent => "eleve"} %>
   </form>
-</div>
+</section>
 
 <script>
   var input_email_rl1 = $('input[name=email_rl1]')
@@ -346,33 +346,32 @@ form_contact_urgence = [
   })
 
   $('#meme_adresse_que_rl1').click(function() {
-      $("#adresse_rl2").val($("#adresse_rl1").val());
-      $("#code_postal_rl2").val($("#code_postal_rl1").val());
-      $("#ville_rl2").val($("#ville_rl1").val());
+    $("#adresse_rl2").val($("#adresse_rl1").val());
+    $("#code_postal_rl2").val($("#code_postal_rl1").val());
+    $("#ville_rl2").val($("#ville_rl1").val());
   })
   $('#ajouter_contact_urgence').click(function(e) {
-        if ($('#contact_urgence').hasClass('d-none')) {
-          $(this).html("Ne pas ajouter un contact en cas d'urgence");
-          $('#contact_urgence').removeClass('d-none');
-          $('#lien_avec_eleve_urg').focus();
-          e.preventDefault(); // Empêche un reload de la page
-          $('html, body').animate({
-              scrollTop: $('#contact_urgence').offset().top
-          }, 1000);
-        }
-        else {
-          $(this).html("Ajouter un contact en cas d'urgence");
-          $('#contact_urgence').addClass('d-none');
-          $('#lien_avec_eleve_urg').focus();
-          $("input[name='lien_avec_eleve_urg']").val('');
-          $("input[name='prenom_urg']").val('');
-          $("input[name='nom_urg']").val('');
-          $("input[name='tel_principal_urg']").val('');
-          $("input[name='tel_secondaire_urg']").val('');
-          $("html, body").animate({
-            scrollTop: $(document).height()
-          }, 1000);
-        }
-    })
-
+    if ($('#contact_urgence').hasClass('d-none')) {
+      $(this).html("Ne pas ajouter un contact en cas d'urgence");
+      $('#contact_urgence').removeClass('d-none');
+      $('#lien_avec_eleve_urg').focus();
+      e.preventDefault(); // Empêche un reload de la page
+      $('html, body').animate({
+        scrollTop: $('#contact_urgence').offset().top
+      }, 1000);
+    }
+    else {
+      $(this).html("Ajouter un contact en cas d'urgence");
+      $('#contact_urgence').addClass('d-none');
+      $('#lien_avec_eleve_urg').focus();
+      $("input[name='lien_avec_eleve_urg']").val('');
+      $("input[name='prenom_urg']").val('');
+      $("input[name='nom_urg']").val('');
+      $("input[name='tel_principal_urg']").val('');
+      $("input[name='tel_secondaire_urg']").val('');
+      $("html, body").animate({
+        scrollTop: $(document).height()
+      }, 1000);
+    }
+  })
 </script>

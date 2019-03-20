@@ -1,0 +1,29 @@
+.mt-1 {
+  margin-top: 1rem
+}
+
+.mt-2 {
+  margin-top: 2rem
+}
+
+.mb-2 {
+  margin-bottom: 2rem !important;
+}
+
+.mr-1 {
+  margin-right: 1rem;
+}
+
+.ml-1 {
+  margin-left: 1rem;
+}
+
+.d-none {
+  display: none;
+}
+
+@media (max-width: 999px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+}

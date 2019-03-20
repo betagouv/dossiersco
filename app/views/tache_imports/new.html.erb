@@ -1,58 +1,64 @@
-<div class="col-12">
-  <div class="card siecle">
-    <h2 class="card-header"><%= t('.titre_import') %></h2>
-    <div class="card-body p-3">
-
+<section class="section">
+  <div class="panel siecle">
+    <div class="panel__header">
+      <h3><%= t('.titre_import') %></h3>
+    </div>
       <% if @tache.statut != 'en_attente' && @tache.statut != 'en_cours' %>
         <%= form_for TacheImport.new, multipart: true do |form| %>
-        <label>
-          <%= form.radio_button :job_klass, 'ImporterSiecle', {checked: true} %>
-          <%= t('.fichier_siecle') %>
-        </label>
-        <label>
-          <%= form.radio_button :job_klass, 'ImporterAffelnet' %>
-          <%= t('.fichier_affelnet') %>
-        </label>
-          <p class="card-text"><%= t('.selectionner_fichier') %></p>
-          <div class="card-relat document mb-3">
-            <%= form.file_field :fichier, data: { btnClass: "btn btn-primary", text: "Parcourir"}, class: "filestyle" %>
+          <div class="form__group">
+            <label>
+              <%= form.radio_button :job_klass, 'ImporterSiecle', {checked: true} %>
+              <%= t('.fichier_siecle') %>
+            </label>
+            <label>
+              <%= form.radio_button :job_klass, 'ImporterAffelnet' %>
+              <%= t('.fichier_affelnet') %>
+            </label>
           </div>
-          <div class="col">
-            <button type="submit" class="btn btn-primary float-right">
+          <p class="card-text"><%= t('.selectionner_fichier') %></p>
+          <div class="form__group">
+            <%= form.file_field :fichier %>
+          </div>
+          <div class="form__group">
+            <button type="submit" class="button" id="soumettre-fichier">
               <%= t('.importer_fichier') %>
-              <img src="../images/suivant.png" alt="suivant" title="suivant">
             </button>
           </div>
         <% end %>
       <% end %>
+  </div>
+
+  <div class="panel">
+    <div class="panel__header">
+      <h3><%= t('.titre_purge_etablissement') %></h3>
     </div>
+    <p><%= t('.message_prevention_purge') %></p>
+    <%= link_to(t('.purger_etablissement', etablissement: @agent_connecté.etablissement.nom),
+                configuration_etablissement_purge_path(@agent_connecté.etablissement),
+                method: :put, data: {confirm: t('.confirmer_purge') },
+                id: 'bouton-purge', class: 'button warning') %>
+  </div>
+</section>
+
+<div class="modal__backdrop" id="modal-chargement">
+  <div class="modal">
+    <h4><%= t('.modal-chargement') %></h4>
   </div>
 </div>
 
-<div class="col-12">
-  <%= link_to(t('.purger_etablissement', etablissement: @agent_connecté.etablissement.nom),
-              configuration_etablissement_purge_path(@agent_connecté.etablissement),
-              method: :put, data: {confirm: t('.confirmer_purge') }, id: 'bouton-purge') %>
-</div>
-
-<div id="modal-chargement" class="modal modal-message" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-content d-flex align-items-center justify-content-center" role="document">
-      <%= t('.modal-chargement') %>
+<div class="modal__backdrop" id="modal-purge">
+  <div class="modal">
+    <h4><%= t('.modal_purge') %></h4>
   </div>
 </div>
 
-<div id="modal-purge" class="modal modal-message" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-content d-flex align-items-center justify-content-center" role="document">
-    <%= t('.modal_purge') %>
-  </div>
-</div>
-
-<script type="text/javascript" src="/js/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js"> </script>
 <script type="text/javascript" charset="utf-8">
-  $('.btn[type="submit"]').click(function () {
-    $('#modal-chargement').show()
-  })
-  $('#bouton-purge').click(function () {
-    $('#modal-purge').show()
+  $(document).ready(function() {
+    $('#soumettre-fichier').click(function () {
+      $('#modal-chargement').css('display', 'block')
+    })
+    $('#bouton-purge').click(function () {
+      $('#modal-purge').css('display', 'block')
+    })
   })
 </script>

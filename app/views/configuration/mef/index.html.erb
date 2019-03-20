@@ -1,19 +1,20 @@
-<% if notice.present? %>
-  <p class="alert alert-success" id="notice"><%= notice %></p>
-<% end %>
+<section class="section">
+  <h1>Mef</h1>
 
-<h1>Mef</h1>
+  <div class="text-right">
+    <%= link_to link_to 'Nouveau Mef', new_configuration_mef_path, {class: 'button-outline primary'} %>
+  </div>
 
-<table class="table">
-  <thead>
+  <table class="table">
+    <thead>
     <tr>
       <th>Libelle</th>
       <th>Code</th>
       <th colspan="2"></th>
     </tr>
-  </thead>
+    </thead>
 
-  <tbody>
+    <tbody>
     <% @mef.each do |mef| %>
       <tr>
         <td><%= mef.libelle %></td>
@@ -22,9 +23,6 @@
         <td><%= link_to 'Supprimer', [:configuration, mef], method: :delete, data: { confirm: 'Etes vous sûr ?' } %></td>
       </tr>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'Nouveau Mef', new_configuration_mef_path %>
+    </tbody>
+  </table>
+</section>
