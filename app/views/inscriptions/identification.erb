@@ -3,6 +3,9 @@
   <form class="mb-2" action="/agent" method="post">
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 
+    <p class="notification success">DossierSCO améliore son design. N'hésitez pas à nous faire part de vos remarques par Drift
+      (la petite bulle bleue en bas à droite visible sur votre espace agent) ou par <a href="mailto:equipe@dossiersco.Fr">email</a></p>
+
     <% if session[:erreur_login] %>
       <p class="notification warning"><%= session[:erreur_login] %></p>
       <% session.delete :erreur_login %>
