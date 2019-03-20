@@ -17,7 +17,7 @@ class ConfigurationTest < ActionDispatch::IntegrationTest
     click_link 'Configuration'
     click_link 'Import'
     within('.siecle') do
-      assert_selector 'h2', text: 'Importer un fichier'
+      assert_selector 'h3', text: 'Importer un fichier'
       choose 'SIECLE'
       attach_file('tache_import_fichier', Rails.root + 'test/fixtures/files/test_import_siecle.xls')
     end

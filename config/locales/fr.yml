@@ -1,9 +1,8 @@
-
 fr:
   activerecord:
     attributes:
       etablissement:
-          uai: "UAI"
+        uai: "UAI"
     errors:
       messages:
         record_invalid: "%{errors}"
@@ -85,8 +84,8 @@ fr:
       options_pedagogiques: Options pédagogiques
     famille:
       <<: *infos_nom
-      titre_responsable_legal: "Famille : Responsable légal"
-      titre_contact_urgence: "Famille : Autre personne à contacter en cas d'urgence"
+      titre_responsable_legal: "Responsable légal"
+      titre_contact_urgence: "Autre personne à contacter en cas d'urgence"
       adresse: Adresse
       code_postal: Code postal
       ville: Ville
@@ -105,14 +104,9 @@ fr:
       demi_pensionnaire: Demi-pensionnaire
       externe: Externe
     administration:
+      lire_reglement_dp: Lire le réglement de demi-pension
       <<: *restauration
-      engagement_demi_pension: "En validant cette étape, je m'engage à régler les frais de demi-pension dans les délais impartis."
-      demande_justif_pour_demi_pension: "Pour déterminer le tarif de la demi-pension pour votre enfant, l'établissement vous demande un justificatif. Sans ce justificatif, le tarif maximal vous sera appliqué."
-      pour_obtenir_ce_document: "Pour obtenir ce document :"
-      si_allocataire_caf: "Si vous êtes allocataire de la Caisse d'Allocation Famliliales"
-      instruction_pour_allocataire_caf: "le document vous a été adressé par la CAF. Il suffit de le scanner ou prendre en photo à l'étape suivante."
-      si_pas_allocataire_caf: "Si vous n'êtes pas allocataire"
-      instruction_pour_non_allocataire_caf_html: "merci de vous rendre sur le <a href='https://calculette-colleges-restauration.paris.fr/calculetteQF/' target='_blanck'>site de la Ville de Paris</a>, pour renseigner votre situation et obtenir le justificatif à transmettre à l'étape suivante. (Le site va s'ouvrir dans un nouvel onglet. Vous pourrez continuer sur DossierSCO sans avoir besoin de vous reconnecter.)"
+      engagement_demi_pension: "En validant cette étape j'accepte le réglement de demi-pension."
       autorisation_de_sortie: Autorisation de sortie
       j_autorise: "J'autorise"
       je_n_autorise_pas: "Je n'autorise pas"
@@ -151,6 +145,7 @@ fr:
         Il ne vous reste plus qu'à remplir vos informations pour vous connecter"
         titre_html: "Activation du compte <br/> %{email}"
       new:
+        explication_agent_admin: (En étant admin il pourra acceder à la partie configuration)
         titre: "Ajouter un agent"
         ajouter: "Ajouter"
       create:
@@ -176,6 +171,9 @@ fr:
         attention_envoye_aux_familles: "Attention, des messages partirons directement aux famillles. Vous n'êtes pas dans une confiuration de test"
   configurations:
     show:
+      liste_des_eleves: Voir la liste des élèves
+      eleves_sans_mef: Élèves sans MEF
+      text_eleves_sans_mef: "%{nombre} élèves n'ont pas de Mef d'origine"
       agents: Agents
       nombre_agents_html: "<strong>%{nombre} agents</strong> inscrits pour votre établissement sur Dossiersco"
       options_pedagogiques: Options Pédagogiques
@@ -190,7 +188,7 @@ fr:
       ajouter_un_agent: Ajouter un agent
       seul_agent: Vous êtes le seul agent dans votre établissement.
       aucun_dossier: Il n'y a pas encore de dossiers élèves, vous pouvez importer un fichier SIECLE pour en ajouter.
-      importer un fichier: Importer un fichier SIECLE
+      importer_un_fichier: Importer un fichier SIECLE
       aucun_mef_et_option: Vous n'avez pas de mef et d'options pédagogiques. Vous pouvez importer un fichier SIECLE pour en ajouter.
       information_etablissement_manquantes: Les informations de votre établissement ne sont pas complètes. Vous pouvez les modifier en suivant le lien.
       modifier_informations: Modifier les informations
@@ -216,6 +214,8 @@ fr:
       message_de_succes: "L'import est en cours, un email va être envoyé à l'adresse %{email} une fois l'import terminé"
       fichier_manquant: "Vous n'avez pas indiqué de fichier à importer"
     new:
+      titre_purge_etablissement: Purge de l'établissement
+      message_prevention_purge: Attention ! Ceci supprimera tous les dossiers élèves
       titre_import: "Importer un fichier"
       selectionner_fichier: "Sélectionnez un fichier au format xls"
       importer_fichier: "Importer un fichier"

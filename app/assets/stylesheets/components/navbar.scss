@@ -36,7 +36,9 @@
 }
 
 .active {
-  border-bottom: 4px solid;
+  a {
+    color: var(--theme-primary);
+  }
 }
 
 .bg-pink {

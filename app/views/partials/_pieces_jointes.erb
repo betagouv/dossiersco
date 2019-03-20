@@ -1,24 +1,24 @@
-<div class="card-deck row">
+<div class="cards-famille">
   <% @pieces_jointes.each do |piece| %>
-    <%= form_for piece, multipart: true, html: { class: "col-12 col-md-6 forms" } do |form| %>
-      <div class="card mb-4 <%= piece.etat if piece.present? %>">
-        <h5 class="card-header"><%= '*' if piece.obligatoire %> <%= piece.nom %></h5>
-        <div class="card-body">
-          <p class="card-text"><%= piece.explication %></p>
-          <p class="card-text etat-piece-jointe"><%= t(".document_#{piece.etat}") if piece.etat.present?  %></p>
+    <%= form_for piece, multipart: true do |form| %>
+      <div class="card mb-2 <%= piece.etat if piece.present? %>">
+        <h4><%= '*' if piece.obligatoire %> <%= piece.nom %></h4>
+        <div>
+          <p><%= piece.explication %></p>
+          <p class="etat-piece-jointe"><%= t(".document_#{piece.etat}") if piece.etat.present?  %></p>
           <div class="card-relat document">
             <% if piece.fichier.url.present? %>
-              <% if piece.fichier.content_type.start_with?("image/") %>
-                <%= image_tag(piece.fichier.url, alt:"preview piece jointe") %>
-              <% else %>
-                <%= link_to t('.voir_piece_jointe'), piece.fichier.url %>
-              <% end %>
+              <div class="lien-piece-jointe" data-url="<%= piece.fichier.url %>" data-nom="<%= piece.nom %>">
+                <% if piece.fichier.content_type.start_with?("image/") %>
+                  <%= image_tag(piece.fichier.url, alt:"preview piece jointe") %>
+                <% else %>
+                  <%= link_to t('.voir_piece_jointe'), piece.fichier.url %>
+                <% end %>
+              </div>
             <% end %>
             <%= form.hidden_field :piece_attendue_id %>
-            <div class="custom-file">
-              <%= form.file_field :fichier, class: "custom-file-input", id: "customFile" %>
-              <input type="file" class="custom-file-input" id="customFileLangHTML">
-              <label class="custom-file-label" for="customFile" data-browse="Parcourir" >Choisir un fichier</label>
+            <div class="form__group">
+              <%= form.file_field :fichier %>
             </div>
             <span id="fichier_<%= piece.code %>"></span>
             <br />
@@ -31,3 +31,12 @@
     <% end %>
   <% end %>
 </div>
+
+<script>
+  $(document).ready(function() {
+    $('form').change(function() {
+      $(this).find(".soumettre").click()
+      $('#modal-chargement').css('display', 'block')
+    })
+  });
+</script>

@@ -1,8 +1,12 @@
+<section class="section">
+  <h1>Agents</h1>
 
-<h1>Agents</h1>
+  <div class="text-right">
+    <%= link_to t('.ajouter_un_agent'), new_configuration_agent_path, {class: 'button-outline primary'} %>
+  </div>
 
-<table class="table">
-  <thead>
+  <table class="table">
+    <thead>
     <tr>
       <th>Email</th>
       <th>Prénom</th>
@@ -10,9 +14,9 @@
       <th>Admin</th>
       <th></th>
     </tr>
-  </thead>
+    </thead>
 
-  <tbody>
+    <tbody>
     <% @agents.each do |agent| %>
       <tr>
         <td><%= agent.email %></td>
@@ -26,8 +30,6 @@
         </td>
       </tr>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-<%= link_to t('.ajouter_un_agent'), new_configuration_agent_path %>
+    </tbody>
+  </table>
+</section>

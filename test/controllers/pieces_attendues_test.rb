@@ -6,7 +6,7 @@ class PiecesAttenduesTest < ActionDispatch::IntegrationTest
     admin = Fabricate(:admin)
     identification_agent(admin)
 
-    get pieces_attendues_path
+    get configuration_pieces_attendues_path
 
     assert_response :success
   end
@@ -15,9 +15,9 @@ class PiecesAttenduesTest < ActionDispatch::IntegrationTest
     admin = Fabricate(:admin)
     identification_agent(admin)
 
-    post pieces_attendues_path, params: {piece_attendue: {nom: "livret", explication: "parce que", obligatoire: false}}
+    post configuration_pieces_attendues_path, params: {piece_attendue: {nom: "livret", explication: "parce que", obligatoire: false}}
 
-    assert_redirected_to pieces_attendues_path
+    assert_redirected_to configuration_pieces_attendues_path
     assert_equal "livret", PieceAttendue.last.nom
     assert_equal "parce que", PieceAttendue.last.explication
     assert_equal false, PieceAttendue.last.obligatoire

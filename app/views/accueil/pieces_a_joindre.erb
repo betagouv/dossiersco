@@ -1,32 +1,33 @@
 <% @section = 4 %>
-<% nb_documents_demandes = dossier_eleve.etablissement.pieces_attendues.size %>
 
 <%= render partial: 'partials/navigation', locals: { dossier_eleve: dossier_eleve } %>
 
-<div class="col-12">
+<section class="section">
+  <div class="container">
 
-  <h2 class="separation"><%= t('.pieces_a_joindre') %></h2>
+    <h2 class="separation"><%= t('.pieces_a_joindre') %></h2>
 
-  <% if defined? message  %>
-    <div class="message_echec"><%= message %></div>
-  <% end %>
-  <div class='card'>
-    <div class='card-body'>
-      <p><%= t('.pieces_obligatoires') %></p>
+    <div class="panel">
+
+      <% if defined? message  %>
+        <div class="message_echec"><%= message %></div>
+      <% end %>
+      <div>
+        <p><%= t('.pieces_obligatoires') %></p>
+      </div>
+      <%= t('.instructions_html') %>
     </div>
-  </div>
-  <div class='card'>
-    <div class='card-body'><%= t('.instructions_html') %></div>
-  </div>
-  <%= render partial: 'partials/pieces_jointes', locals: { dossier_eleve: dossier_eleve, action: "/enregistre_piece_jointe" } %>
-  <form action="/pieces_a_joindre" method='POST'>
-    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-    <%= render partial: 'partials/nouveau_precedent_suivant', :locals => { :precedent => "administration"} %>
-  </form>
-</div>
 
-<div id="modal-chargement" class="modal modal-message" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-content d-flex align-items-center justify-content-center" role="document">
+    <%= render partial: 'partials/pieces_jointes', locals: { dossier_eleve: dossier_eleve, action: "/enregistre_piece_jointe" } %>
+    <form action="/pieces_a_joindre" method='POST'>
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <%= render partial: 'partials/nouveau_precedent_suivant', :locals => { :precedent => "administration"} %>
+    </form>
+  </div>
+</section>
+
+<div class="modal__backdrop" id="modal-chargement">
+  <div class="modal">
     <%= t('.modal-chargement') %>
   </div>
 </div>
@@ -35,12 +36,5 @@
 <script>
   $(document).ready(function() {
     $('input[type=file]')[0].focus();
-
-    $('.forms').change(function() {
-      var data = $(this).serialize()
-      $(this).find( ".soumettre" ).click()
-      $('#modal-chargement').show()
-      $("button[type='submit']").attr("disabled", "disabled").addClass('disabled')
-    })
   });
 </script>

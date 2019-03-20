@@ -1,0 +1,29 @@
+<%= form_for [:configuration, piece_attendue] do |form| %>
+  <% if piece_attendue.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(piece_attendue.errors.count, "error") %> prohibited this piece_attendue from being saved:</h2>
+
+      <ul class="list-unstyled">
+        <% piece_attendue.errors.full_messages.each do |message| %>
+          <li class="alert alert-danger"><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form__group">
+    <%= form.label :nom %>
+    <%= form.text_field :nom %>
+  </div>
+  <div class="form__group">
+    <%= form.label :explication, 'Explication pour la famille' %>
+    <%= form.text_area :explication  %>
+  </div>
+  <div class="form__group">
+    <%= form.label :obligatoire, class: 'label-inline' %>
+    <%= form.check_box :obligatoire  %>
+  </div>
+  <div class="form__group">
+    <%= form.submit 'valider', class: 'button' %>
+  </div>
+<% end %>

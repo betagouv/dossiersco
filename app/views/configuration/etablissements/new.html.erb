@@ -1,17 +1,19 @@
-<div class="col-md-6 col-12 offset-md-3">
-  <h1 class="mb-3"><%= t(".titre") %></h1>
-  <% if flash[:error] %>
-    <div class="alert alert-danger"><%= flash[:error] %></div>
-  <% end %>
+<section class="section">
+  <div class="container">
+    <h1><%= t(".titre") %></h1>
+    <% if flash[:error] %>
+      <div class="alert alert-danger"><%= flash[:error] %></div>
+    <% end %>
 
-  <p><%= t('.explication') %></p>
-  <%= form_for([:configuration, Etablissement.new]) do |f| %>
-    <div class="form-group">
-      <%= f.label :uai %>
-      <%= f.text_field :uai, class: 'form-control'%>
-    </div>
-    <div class="form-group">
-    <%= f.submit t('.inscrire'), class: 'btn btn-primary my-3' %>
+    <p><%= t('.explication') %></p>
+    <%= form_for([:configuration, Etablissement.new]) do |f| %>
+      <div class="form__group">
+        <%= f.label :uai %>
+        <%= f.text_field :uai%>
+      </div>
+      <div class="form__group">
+        <%= f.submit t('.inscrire'), class: 'button' %>
+      </div>
+    <% end %>
   </div>
-  <% end %>
-</div>
+</section>

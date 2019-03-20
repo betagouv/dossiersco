@@ -1,37 +1,34 @@
-<div class="site-wrapper">
-  <div class="site-wrapper-inner">
-    <div class="padding">
-      <h1 class="text-center"><%= t('identification.titre') %></h1>
-      <p class="lead text-center"><%= t('identification.baseline') %></p>
-    </div>
-
-    <div class="container">
-      <div class="row">
-        <form class="form-signin col-md-4 col-12 mx-auto" action="/identification" method="post">
-          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-          <% if session[:message_erreur] %>
-            <p class="erreur"><%= session[:message_erreur] %></p>
-          <% end %>
-
-          <label class="col-form-label" for="identifiant" id="label_identifiant"><%= t('identification.labels.identifiant') %></label>
-          <input name="identifiant" type="text" class="form-control" id="identifiant" placeholder="<%= t('identification.placeholders.identifiant') %>" autofocus>
-
-          <label class="col-form-label" for="jour" id="label_date"><%= t('identification.labels.date_de_naissance') %></label>
-          <div class='date_form'>
-            <input name="jour" type="number" class="form-control form-date" id="date_jour" maxlength="2" placeholder="<%= t('identification.placeholders.jour') %>" style="width:24%;" max="31" required>
-            <input name="mois" type="number" class="form-control form-date" id="date_mois" maxlength="2" placeholder="<%= t('identification.placeholders.mois') %>" style="width:24%;" max="12" required>
-            <input name="annee" type="number" class="form-control form-date" id="date_annee" maxlength="4" placeholder="<%= t('identification.placeholders.annee') %>" style="width: 46%;" max='2018' required>
-          </div>
-          <button class="btn btn-lg btn-primary btn-block mt-4"><%= t('identification.connexion') %></button>
-
-        </form>
-      </div>
-    </div>
-
-    <footer class="mastfoot">
-      <div class="inner">
-        <p class="text-center"><a href="/agent"><%= t('identification.agent_ple?') %></a></p>
-      </div>
-    </footer>
+<section class="section">
+  <div>
+    <h1 class="text-center"><%= t('identification.titre') %></h1>
+    <p class="lead text-center"><%= t('identification.baseline') %></p>
   </div>
-</div>
+
+  <form action="/identification" method="post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <% if session[:message_erreur] %>
+      <p class="notification warning"><%= session[:message_erreur] %></p>
+    <% end %>
+
+    <div class="form__group">
+      <label class="col-form-label" for="identifiant" id="label_identifiant"><%= t('identification.labels.identifiant') %></label>
+      <input name="identifiant" type="text" class="form-control" id="identifiant" placeholder="<%= t('identification.placeholders.identifiant') %>" autofocus>
+    </div>
+
+    <div class="form__group">
+      <label class="" for="jour" id="label_date"><%= t('identification.labels.date_de_naissance') %></label>
+      <input name="jour" type="number" id="date_jour" maxlength="2" placeholder="<%= t('identification.placeholders.jour') %>" style="width:25%;" max="31" required>
+      <input name="mois" type="number" id="date_mois" maxlength="2" placeholder="<%= t('identification.placeholders.mois') %>" style="width:25%;" max="12" required>
+      <input name="annee" type="number" id="date_annee" maxlength="4" placeholder="<%= t('identification.placeholders.annee') %>" style="width: 48%;" max='2018' required>
+    </div>
+
+    <div class="form__group text-center">
+      <button class="button"><%= t('identification.connexion') %></button>
+    </div>
+
+  </form>
+
+  <div id="lien-si-agent">
+    <p class="text-center"><a href="/agent"><%= t('identification.agent_ple?') %></a></p>
+  </div>
+</section>

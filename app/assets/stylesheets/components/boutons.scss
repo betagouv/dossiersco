@@ -1,0 +1,18 @@
+.boutton-enregistrer {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  img {
+    margin: 0;
+    margin-left: 1rem;
+  }
+
+}.bouton-retour {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  img {
+    margin: 0;
+    margin-right: 1rem;
+  }
+}
