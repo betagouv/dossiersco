@@ -23,6 +23,8 @@
 
     <div id="dp" style="display: none;">
       <p class="text-danger"><%= t('.engagement_demi_pension') %></p>
+      <%= link_to_if dossier_eleve.etablissement.reglement_demi_pension, t('.lire_reglement_dp'),
+                     dossier_eleve.etablissement.reglement_demi_pension_url, target:'_blank' %>
     </div>
 
     <h2 class="separation mt-4"><%= t('.autorisation_de_sortie') %></h2>

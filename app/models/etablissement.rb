@@ -8,6 +8,8 @@ class Etablissement < ActiveRecord::Base
   has_many :mef, dependent: :destroy
   has_many :options_pedagogiques, dependent: :destroy
 
+  mount_uploader :reglement_demi_pension, FichierEtablissementUploader
+
   validates :code_postal, length: { is: 5 }, numericality: { only_integer: true }, allow_blank: true
   validates :uai, presence: true
 
