@@ -171,6 +171,9 @@ fr:
         attention_envoye_aux_familles: "Attention, des messages partirons directement aux famillles. Vous n'êtes pas dans une confiuration de test"
   configurations:
     show:
+      liste_des_eleves: Voir la liste des élèves
+      eleves_sans_mef: Élèves sans MEF
+      text_eleves_sans_mef: "%{nombre} élèves n'ont pas de Mef d'origine"
       agents: Agents
       nombre_agents_html: "<strong>%{nombre} agents</strong> inscrits pour votre établissement sur Dossiersco"
       options_pedagogiques: Options Pédagogiques
@@ -185,7 +188,7 @@ fr:
       ajouter_un_agent: Ajouter un agent
       seul_agent: Vous êtes le seul agent dans votre établissement.
       aucun_dossier: Il n'y a pas encore de dossiers élèves, vous pouvez importer un fichier SIECLE pour en ajouter.
-      importer un fichier: Importer un fichier SIECLE
+      importer_un_fichier: Importer un fichier SIECLE
       aucun_mef_et_option: Vous n'avez pas de mef et d'options pédagogiques. Vous pouvez importer un fichier SIECLE pour en ajouter.
       information_etablissement_manquantes: Les informations de votre établissement ne sont pas complètes. Vous pouvez les modifier en suivant le lien.
       modifier_informations: Modifier les informations
