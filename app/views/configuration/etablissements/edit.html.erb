@@ -49,6 +49,10 @@
         <%= f.label :envoyer_aux_familles, class: 'label-inline' %>
       </div>
       <div class="form__group">
+        <%= f.label :reglement_demi_pension %>
+        <%= f.file_field :reglement_demi_pension %>
+      </div>
+      <div class="form__group">
         <%= f.submit 'valider', class: 'button' %>
       </div>
     <% end %>

@@ -104,8 +104,9 @@ fr:
       demi_pensionnaire: Demi-pensionnaire
       externe: Externe
     administration:
+      lire_reglement_dp: Lire le réglement de demi-pension
       <<: *restauration
-      engagement_demi_pension: "En validant cette étape, je m'engage à régler les frais de demi-pension dans les délais impartis."
+      engagement_demi_pension: "En validant cette étape j'accepte le réglement de demi-pension."
       autorisation_de_sortie: Autorisation de sortie
       j_autorise: "J'autorise"
       je_n_autorise_pas: "Je n'autorise pas"
