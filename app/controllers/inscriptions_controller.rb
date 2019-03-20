@@ -197,7 +197,6 @@ class InscriptionsController < ApplicationController
     pieces_existantes = PieceJointe.where(piece_attendue_id: params[:piece_attendue_id])
     if pieces_existantes.size >= 1
       message = 'Cette piece ne peut être supprimé'
-      raise
     else
       PieceAttendue.find(params[:piece_attendue_id]).delete
     end
