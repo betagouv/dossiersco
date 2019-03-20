@@ -23,8 +23,9 @@
 
     <div id="dp" style="display: none;">
       <p class="text-danger"><%= t('.engagement_demi_pension') %></p>
-      <%= link_to_if dossier_eleve.etablissement.reglement_demi_pension, t('.lire_reglement_dp'),
-                     dossier_eleve.etablissement.reglement_demi_pension_url, target:'_blank' %>
+      <% if dossier_eleve.etablissement.reglement_demi_pension.present? %>
+        <%= link_to t('.lire_reglement_dp'), dossier_eleve.etablissement.reglement_demi_pension_url, target:'_blank' %>
+      <% end %>
     </div>
 
     <h2 class="separation mt-4"><%= t('.autorisation_de_sortie') %></h2>
@@ -47,18 +48,18 @@
     <h2 class="separation mt-4"><%= t('.renseignements_medicaux') %></h2>
 
     <div class="row">
-        <div class="form__group" data-renseignements-medicaux="<%= dossier_eleve.renseignements_medicaux %>"
-             id="form-renseignements-medicaux">
-          <label class="">
-            <input type="checkbox" value='true' name="renseignements_medicaux"  id='renseignements_medicaux'
-                   <% if dossier_eleve.renseignements_medicaux %> checked <% end %>> <%= t('.envoyer_une_info_medicale') %>
-          </label>
+      <div class="form__group" data-renseignements-medicaux="<%= dossier_eleve.renseignements_medicaux %>"
+           id="form-renseignements-medicaux">
+        <label class="">
+          <input type="checkbox" value='true' name="renseignements_medicaux"  id='renseignements_medicaux'
+                 <% if dossier_eleve.renseignements_medicaux %> checked <% end %>> <%= t('.envoyer_une_info_medicale') %>
+        </label>
+      </div>
+      <% if dossier_eleve.etablissement.message_infirmerie.present? %>
+        <div id="message-infirmerie" class="d-none">
+          <%= dossier_eleve.etablissement.message_infirmerie %>
         </div>
-        <% if dossier_eleve.etablissement.message_infirmerie.present? %>
-          <div id="message-infirmerie" class="d-none">
-            <%= dossier_eleve.etablissement.message_infirmerie %>
-          </div>
-        <% end %>
+      <% end %>
     </div>
 
     <h2 class="separation mt-4"><%= t('.droit_a_l_image') %></h2>
