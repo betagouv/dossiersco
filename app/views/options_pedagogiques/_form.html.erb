@@ -20,14 +20,16 @@
     <%= form.text_field :groupe %>
   </div>
 
-  <div class="form__group">
+  <div class="form__group mb-2">
     <%= form.check_box :obligatoire%>
     <%= form.label :obligatoire, class: 'label-inline' %>
   </div>
 
-  <div class=form__group">
-    <%= form.collection_check_boxes(:mef_ids, Mef.all, :id, :libelle) %>
-  </div>
+    <%= form.collection_check_boxes(:mef_ids, @agent_connecté.etablissement.mef, :id, :libelle) do |b| %>
+      <div class=form__group">
+        <%= b.label(class: "label-inline") { b.check_box + b.text } %>
+      </div>
+    <% end %>
 
   <div class=form__group">
     <%= form.submit 'valider', class: 'button mt-2'  %>
