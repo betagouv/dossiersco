@@ -1,5 +1,36 @@
 # Journal
 
+## 10e Semaine - du 15 au 21 mars
+
+**S.T.R.U.C.T.U.R.A.T.I.O.N.**
+
+### Vie de l'équipe
+
+- On a commencé une liste des questions à propos de SIECLE
+- Pierre prend confiance en lui, les jours pairs, et devient plus autonome
+- Plus de binôme permanent, mais des points de synchro très régulier
+- Participation fructueuse d'un nouveau coach : Raphaël Pierquin
+- Faire attention au checkin, ça permet de se rappeler que certaines personnes ne sont pas forcement toutes présente dans la pièce
+- Une question qui gratte : pourquoi DossierSCO est en dehors d'Open Académie ? Est-ce que c'est mieux ? moins bien ?
+
+### Développement
+
+- 
+
+### Intraprenariat
+
+- On a commencé à observer le comportement des béta testeurs
+- Le partage des informations lié à ces comportements ont été partagé sur Slack, c'est peut-être une bonne idée de les consolider ailleurs
+- Préparation de l'OpenLab
+- Cadrage du premier rendez-vous DossierSCO-DGESCO-DNE
+- Traitement des retours utilisatrices et utilisateurs
+- Participation à un évènement avec le DNE et l'académie de Paris
+- Il va falloir relancer l'académie de Nancy
+
+---
+
+
+
 ## 9e Semaine - du 8 au 14 mars
 
 **Réunions institutionnelles prometteuses, mais les collèges nous manquent**
