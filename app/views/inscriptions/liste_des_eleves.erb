@@ -77,17 +77,12 @@
   })
   jQuery(document).ready(function($) {
     $(".link-to-eleve").click(function (event) {
-      var href = "/agent/eleve/" + $(this).data("eleve-id")
-      if (event.metaKey) { window.open(href, '_blank') }
-      else { window.location.replace(href) }
-
+      if (event.target.className != ' select-checkbox') {
+        let href = "/agent/eleve/" + $(this).data("eleve-id")
+        if (event.metaKey) { window.open(href, '_blank') }
+        else { window.location.replace(href) }
+      }
     })
-    $(".clickable-row").click(function(event) {
-      var href = $(this).data("href")
-      if (event.metaKey) { window.open(href, '_blank') }
-      else { window.location.replace(href) }
-    });
-    var events = $('#events');
     table = $('#table_liste_des_eleves').DataTable({
     "dom": 'Bflrtip',
     "bJQueryUI": true,
