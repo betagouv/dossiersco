@@ -38,6 +38,28 @@ class ImporterSiecleTest < ActiveJob::TestCase
     importer = ImporterSiecle.new
     importer.import_dossiers_eleve(fichier_xls, etablissement.id)
     assert_equal 2, DossierEleve.count
+ end
+
+ test "n'importe pas les élève en 3eme" do
+    etablissement = Fabricate(:etablissement)
+    importer = ImporterSiecle.new
+    mef = Fabricate(:mef, libelle: '3EME')
+    ligne = Array.new(34)
+    ligne[9] = '18/05/1991'
+    ligne[32] = mef.code
+    ligne[33] = mef.libelle
+    importer.import_ligne(etablissement.id, ligne)
+    assert_empty DossierEleve.where(mef_origine: mef)
+ end
+
+  test "On arrive  à crééer un MEF 3EME" do
+    etablissement = Fabricate(:etablissement)
+    importer = ImporterSiecle.new
+    ligne = Array.new(34)
+    ligne[32] = '10310019110'
+    ligne[33] = "3EME"
+    importer.import_ligne_mef(etablissement.id, ligne)
+    assert_equal 1, Mef.all.count
   end
 end
 
