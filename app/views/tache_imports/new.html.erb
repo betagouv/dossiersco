@@ -28,6 +28,14 @@
       <% end %>
   </div>
 
+  <div class="panel siecle">
+    <div class="panel__header">
+      <h3><%= t('.titre_export') %></h3>
+    </div>
+    <p><%= t('.export_classes') %></p>
+    <%= link_to t('.telecharger'), export_options_configuration_exports_path, class: 'button' %>
+  </div>
+
   <div class="panel">
     <div class="panel__header">
       <h3><%= t('.titre_purge_etablissement') %></h3>

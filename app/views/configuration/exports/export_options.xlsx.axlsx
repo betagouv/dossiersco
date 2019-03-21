@@ -1,0 +1,7 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "export_eleve_dossiersco") do |sheet|
+  sheet.add_row @entete
+  @lignes.each do |ligne|
+    sheet.add_row ligne
+  end
+end

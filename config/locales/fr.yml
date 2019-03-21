@@ -216,7 +216,10 @@ fr:
     new:
       titre_purge_etablissement: Purge de l'établissement
       message_prevention_purge: Attention ! Ceci supprimera tous les dossiers élèves
-      titre_import: "Importer un fichier"
+      titre_import: Importer un fichier
+      titre_export: Exporter un fichier
+      export_classes: Fichier Excel comprenant les options choisis par les familles
+      telecharger: Télécharger le fichier
       selectionner_fichier: "Sélectionnez un fichier au format xls"
       importer_fichier: "Importer un fichier"
       fichier_siecle: "SIECLE"

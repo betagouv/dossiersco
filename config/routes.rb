@@ -20,6 +20,11 @@ Rails.application.routes.draw do
       get 'activation'
     end
     resources :pieces_attendues, expect: [:show]
+    resource :exports, only: :[] do
+      collection do
+        get 'export-options', :defaults => { :format => 'xlsx' }
+      end
+    end
   end
 
   resources :pieces_jointes, only: [:create, :update] do
@@ -28,6 +33,7 @@ Rails.application.routes.draw do
       put 'refuser'
     end
   end
+
 
 
   resources :agent_pieces_jointes, only: [:create, :update]
