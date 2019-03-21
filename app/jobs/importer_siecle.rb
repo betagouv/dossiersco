@@ -60,12 +60,14 @@ class ImporterSiecle < ApplicationJob
 
     lignes_siecle.each do |row|
       ligne_siecle = xls_document.row(row)
-
-      next unless ligne_siecle[COLONNES[:code_mef]].present?
-      next unless ligne_siecle[COLONNES[:niveau_classe_ant]].present?
-
-      Mef.find_or_create_by!(etablissement_id: etablissement_id, code: ligne_siecle[COLONNES[:code_mef]], libelle: ligne_siecle[COLONNES[:niveau_classe_ant]])
+      import_ligne_mef(etablissement_id, ligne_siecle)
     end
+  end
+
+  def import_ligne_mef(etablissement_id, ligne_siecle)
+    return unless ligne_siecle[COLONNES[:code_mef]].present?
+    return unless ligne_siecle[COLONNES[:niveau_classe_ant]].present?
+    Mef.find_or_create_by!(etablissement_id: etablissement_id, code: ligne_siecle[COLONNES[:code_mef]], libelle: ligne_siecle[COLONNES[:niveau_classe_ant]])
   end
 
   def import_ligne_adresse etablissement_id, ligne_siecle
@@ -101,6 +103,8 @@ class ImporterSiecle < ApplicationJob
   def import_ligne(etablissement_id, ligne_siecle)
 
     resultat = {portable: false, email: false, eleve_importe: false}
+    return resultat if ligne_siecle[COLONNES[:niveau_classe_ant]] =~ /^3.*$/
+    return resultat if ligne_siecle[COLONNES[:niveau_classe_ant]].nil? || !ligne_siecle[COLONNES[:date_sortie]].nil?
 
     champs_eleve = [:sexe,:nationalite, :date_naiss, :prenom, :prenom_2, :prenom_3, :nom,
       :identifiant, :pays_naiss, :commune_naiss, :ville_naiss_etrangere, :classe_ant,
@@ -113,7 +117,6 @@ class ImporterSiecle < ApplicationJob
 
     donnees_eleve = traiter_donnees_eleve donnees_eleve
 
-    return resultat if donnees_eleve[:niveau_classe_ant].nil? || !ligne_siecle[COLONNES[:date_sortie]].nil?
 
     eleve = Eleve.find_or_initialize_by(identifiant: donnees_eleve[:identifiant])
 
