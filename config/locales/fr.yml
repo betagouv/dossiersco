@@ -113,9 +113,9 @@ fr:
       mon_enfant_a_quitter_le_college: "mon enfant à quitter le collège après le dernier cours de l'après-midi (ou après le repas s'il n'a pas cours l'après-midi), en cas d'absence de professeur et sous mon entière responsabilité."
       renseignements_medicaux: "Renseignements médicaux"
       envoyer_une_info_medicale: "Je souhaite envoyer par écrit au secrétariat une information médicale (PAI, PPS, PAP)."
-      droit_a_l_image: "Droit à l'image"
+      photo_de_classe: "Photo de classe"
       <<: *acceptation
-      enfant_photographie: "que mon enfant soit photographié à l'occasion des photos de classe."
+      enfant_photographie: "que mon enfant soit photographié à l'occasion de la photo de classe."
     pieces_a_joindre:
       pieces_a_joindre: Pièces à joindre
       pieces_obligatoires: "Les pièces précédées d'un * sont obligatoires."
