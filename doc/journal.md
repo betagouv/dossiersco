@@ -15,7 +15,17 @@
 
 ### Développement
 
-- 
+- [Doublons sur les MEFS dans "Editer une option pédagogique](https://github.com/betagouv/dossiersco/issues/456)
+- [Ne pas laisser un élève de 3ème s'inscrire en 2nde sur dossierSCO](https://github.com/betagouv/dossiersco/issues/452)
+- [Exporter tous les dossiers d'élève d'un établissement](https://github.com/betagouv/dossiersco/issues/329)
+- [Demander autorisation droit à l'image spécifiquement pour photo de classe](https://github.com/betagouv/dossiersco/issues/450)
+- [Alerter les agents des dossiers sans mef de destination](https://github.com/betagouv/dossiersco/issues/319)
+- [La famille accepte le règlement intérieur de demi-pension, spécifique à l'établissement](https://github.com/betagouv/dossiersco/issues/394)
+- [Supprimer le texte sur le texte sur "Pour déterminer le tarif de la demi-pension pour votre enfant...", qui n'existe pas dans tous les collèges](https://github.com/betagouv/dossiersco/issues/448)
+- [remplacer bootstrap par le template date.gouv](https://github.com/betagouv/dossiersco/issues/443)
+- [Ajouter un test pour l'import](https://github.com/betagouv/dossiersco/issues/440)
+- [tester les reply_to des divers mails](https://github.com/betagouv/dossiersco/issues/439)
+- [la zone de liste déroulante, pour sélectionner une classe dans "liste des élèves" ne fonctionne pas](https://github.com/betagouv/dossiersco/issues/361)
 
 ### Intraprenariat
 
