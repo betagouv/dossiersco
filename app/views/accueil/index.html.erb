@@ -15,7 +15,7 @@
       <input name="identifiant" type="text" class="form-control" id="identifiant" placeholder="<%= t('identification.placeholders.identifiant') %>" autofocus>
     </div>
 
-    <div class="form__group">
+    <div class="form__group" id="date_form">
       <label class="" for="jour" id="label_date"><%= t('identification.labels.date_de_naissance') %></label>
       <input name="jour" type="number" id="date_jour" maxlength="2" placeholder="<%= t('identification.placeholders.jour') %>" style="width:25%;" max="31" required>
       <input name="mois" type="number" id="date_mois" maxlength="2" placeholder="<%= t('identification.placeholders.mois') %>" style="width:25%;" max="12" required>
@@ -32,3 +32,27 @@
     <p class="text-center"><a href="/agent"><%= t('identification.agent_ple?') %></a></p>
   </div>
 </section>
+
+<script>
+  var container = document.getElementById("date_form");
+  var index_avancement = {'jour': 0, 'mois': 1, 'annee': 2};
+  var avancement_saisie = 0;
+  container.onkeyup = function(e) {
+    var target = e.srcElement;
+    var maxLength = parseInt(target.attributes["maxlength"].value, 10);
+    var longueurDejaTapee = target.value.length;
+    if (longueurDejaTapee >= maxLength
+      && index_avancement[target.name] == avancement_saisie) { // Retour en arrière
+      avancement_saisie++;
+      var next = target;
+      while (next = next.nextElementSibling) {
+        if (next == null)
+          break;
+        if (next.tagName.toLowerCase() == "input") {
+          next.focus();
+          break;
+        }
+      }
+    }
+  }
+</script>
