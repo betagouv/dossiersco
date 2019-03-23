@@ -10,7 +10,7 @@
         <span class="navbar__domain">DossierSCO.fr</span>
       </a>
       <ul class="nav__links">
-        <% if session[:identifiant].present? %>
+        <% if @eleve.present? %>
           <li class="nav__item">
             <%= link_to 'Se déconnecter', '/deconnexion' %>
         <% end %>
