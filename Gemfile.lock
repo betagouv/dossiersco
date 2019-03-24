@@ -98,6 +98,8 @@ GEM
     excon (0.62.0)
     execjs (2.7.0)
     fabrication (2.20.1)
+    faker (1.9.3)
+      i18n (>= 0.7)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
     ffi (1.10.0)
@@ -329,6 +331,7 @@ DEPENDENCIES
   clockwork
   concurrent-ruby
   fabrication
+  faker
   fog-aws
   jbuilder (~> 2.5)
   letter_opener_web
