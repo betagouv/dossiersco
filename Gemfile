@@ -34,6 +34,7 @@ group :test do
   gem 'poltergeist'
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
+  gem 'faker'
   gem 'rails-controller-testing'
 end
 
