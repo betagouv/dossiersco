@@ -21,7 +21,7 @@ class TestCasEntController < ApplicationController
     ticket = params[:ticket]
 
 
-    url = "https://preprod-paris.opendigitaleducation.com/cas/serviceValidate?service=https%3A%2F%2Fdossiersc-demo.scalingo.io%2Fretour-ent&ticket=#{ticket}"
+    url = "https://preprod-paris.opendigitaleducation.com/cas/serviceValidate?service=https%3A%2F%2Fdossiersco-demo.scalingo.io%2Fretour-ent&ticket=#{ticket}"
 
     puts url
     url = URI.parse(url)
@@ -31,7 +31,7 @@ class TestCasEntController < ApplicationController
         http.request(req)
         puts "req: #{req}"
     }
-    puts res.body
+    puts res
     puts "-" * 20
 
 
