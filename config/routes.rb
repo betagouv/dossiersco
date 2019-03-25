@@ -41,6 +41,7 @@ Rails.application.routes.draw do
 
   get '/test-cas-ent', to: 'test_cas_ent#new'
   get '/cas-ent', to: 'test_cas_ent#retour_cas'
+  get '/retour-ent', to: 'test_cas_ent#retour_ent'
 
 
   post '/identification', to: 'accueil#identification'
