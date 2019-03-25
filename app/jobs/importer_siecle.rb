@@ -39,6 +39,7 @@ class ImporterSiecle < ApplicationJob
     portables = 0
     emails = 0
     nb_eleves_importes = 0
+    @eleves_non_importes = []
 
     lignes_siecle.each do |row|
       ligne_siecle = xls_document.row(row)
@@ -51,7 +52,7 @@ class ImporterSiecle < ApplicationJob
     end
 
     {portable: (portables * 100) / nb_eleves_importes, email: (emails * 100) / nb_eleves_importes,
-    eleves: nb_eleves_importes}
+    eleves: nb_eleves_importes, eleves_non_importes: @eleves_non_importes}
   end
 
   def import_mef(fichier, etablissement_id)
@@ -99,12 +100,14 @@ class ImporterSiecle < ApplicationJob
     adresse
   end
 
-
   def import_ligne(etablissement_id, ligne_siecle)
-
     resultat = {portable: false, email: false, eleve_importe: false}
     return resultat if ligne_siecle[COLONNES[:niveau_classe_ant]] =~ /^3.*$/
     return resultat if ligne_siecle[COLONNES[:niveau_classe_ant]].nil? || !ligne_siecle[COLONNES[:date_sortie]].nil?
+    if ligne_siecle[COLONNES[:identifiant]].nil?
+      @eleves_non_importes << "#{ligne_siecle[COLONNES[:prenom]]} #{ligne_siecle[COLONNES[:nom]]} (#{ligne_siecle[COLONNES[:date_naiss]]})"
+      return resultat
+    end
 
     champs_eleve = [:sexe,:nationalite, :date_naiss, :prenom, :prenom_2, :prenom_3, :nom,
       :identifiant, :pays_naiss, :commune_naiss, :ville_naiss_etrangere, :classe_ant,
