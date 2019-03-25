@@ -82,6 +82,7 @@ fr:
       pays_de_nationalite: Pays de nationalité
       lv2: "Langue Vivante 2"
       options_pedagogiques: Options pédagogiques
+      explication_options_pedagogiques: "Voici les options ouvertes. Celles qui sont cochées correspondent à celles que votre enfant suit actuellement."
     famille:
       <<: *infos_nom
       titre_responsable_legal: "Responsable légal"
