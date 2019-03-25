@@ -32,6 +32,6 @@ class TestCasEntController < ApplicationController
     puts res.body
     puts "-" * 20
 
-    render text: "OK ENT : #{res.body}"
+    render plain: "OK ENT : #{res.body}"
   end
 end
