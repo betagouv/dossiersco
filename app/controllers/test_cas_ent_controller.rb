@@ -22,12 +22,18 @@ class TestCasEntController < ApplicationController
 
 
     url = "https://preprod-paris.opendigitaleducation.com/cas/serviceValidate?service=https%3A%2F%2Fdossiersc-demo.scalingo.io%2Fretour-ent&ticket=#{ticket}"
+
     puts url
-
-    res = Net::HTTP::Get(url)
-    puts res.inspect
-
+    url = URI.parse(url)
+    puts url
+    req = Net::HTTP::Get.new(url.to_s)
+    res = Net::HTTP.start(url.host, url.port, use_ssl: true) {|http|
+        http.request(req)
+        puts "req: #{req}"
+    }
+    puts res.body
     puts "-" * 20
+
 
   end
 end
