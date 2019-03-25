@@ -6,13 +6,6 @@ class TestCasEntController < ApplicationController
     render layout: false
   end
 
-  def retour_cas
-    puts "-" * 20
-    puts "RETOUR CAS"
-    puts params.inspect
-    puts "-" * 20
-  end
-
   def retour_ent
     puts "-" * 20
     puts "RETOUR ENT"
