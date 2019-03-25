@@ -25,15 +25,13 @@ class TestCasEntController < ApplicationController
 
     puts url
     url = URI.parse(url)
-    puts url
     req = Net::HTTP::Get.new(url.to_s)
     res = Net::HTTP.start(url.host, url.port, use_ssl: true) {|http|
         http.request(req)
-        puts "req: #{req}"
     }
-    puts res
+    puts res.body
     puts "-" * 20
 
-
+    render text: "OK ENT : #{res.body}"
   end
 end
