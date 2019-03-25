@@ -15,7 +15,7 @@ class TestCasEntController < ApplicationController
 
   def retour_ent
     puts "-" * 20
-    puts "RETOUR CAS"
+    puts "RETOUR ENT"
     puts params.inspect
 
     ticket = params[:ticket]
@@ -33,5 +33,12 @@ class TestCasEntController < ApplicationController
     puts "-" * 20
 
     render plain: "OK ENT : #{res.body}"
+  end
+
+  def from_ent
+    puts "-" * 20
+    puts "from ENT"
+    puts "-" * 20
+    redirect_to 'https://preprod-paris.opendigitaleducation.com/cas/login?service=https%3A%2F%2Fdossiersco-demo.scalingo.io%2Fretour-ent'
   end
 end

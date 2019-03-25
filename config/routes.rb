@@ -39,9 +39,8 @@ Rails.application.routes.draw do
   resources :agent_pieces_jointes, only: [:create, :update]
   resources :tache_imports, only: [:new, :create]
 
-  get '/test-cas-ent', to: 'test_cas_ent#new'
-  get '/cas-ent', to: 'test_cas_ent#retour_cas'
   get '/retour-ent', to: 'test_cas_ent#retour_ent'
+  get '/from-ent', to: 'test_cas_ent#from_ent'
 
 
   post '/identification', to: 'accueil#identification'
