@@ -1,14 +1,14 @@
 require 'net/http'
 
-class TestCasEntController < ApplicationController
+class AuthentificationCasEntController < ApplicationController
 
   def new
     render layout: false
   end
 
-  def retour_ent
+  def retour_cas
     puts "-" * 20
-    puts "RETOUR ENT"
+    puts "RETOUR CAS"
     puts params.inspect
 
     ticket = params[:ticket]
@@ -28,7 +28,7 @@ class TestCasEntController < ApplicationController
     render plain: "OK ENT : #{res.body}"
   end
 
-  def from_ent
+  def appel_direct_ent
     puts "-" * 20
     puts "from ENT"
     puts "-" * 20
