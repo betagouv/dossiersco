@@ -1,5 +1,3 @@
-puts "-" * 20
-puts "YAF Dans le fichier init Carrierwave"
 if Rails.env.production?
   CarrierWave.configure do |config|
     config.fog_provider = 'fog/aws'
@@ -12,12 +10,10 @@ if Rails.env.production?
     config.fog_directory  = ENV['S3_BUCKET_NAME']
     config.fog_public     = false
     config.fog_attributes = { cache_control: "public, max-age=#{365.days.to_i}" }
-puts "YAF config production"
   end
 else
   CarrierWave.configure do |config|
     config.storage = :file
     config.enable_processing = false
-puts "YAF config local"
   end
 end
