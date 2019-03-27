@@ -62,7 +62,7 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
   config.action_mailer.default_url_options = {
-    host: "https://dossiersco.fr/"
+    host: "https://dossiersco.fr"
   }
 
   if ENV['laisser_partir_les_emails']
