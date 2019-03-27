@@ -362,9 +362,6 @@
       $('#contact_urgence').removeClass('d-none');
       $('#lien_avec_eleve_urg').focus();
       e.preventDefault(); // Empêche un reload de la page
-      $('html, body').animate({
-        scrollTop: $('#contact_urgence').offset().top
-      }, 1000);
     }
     else {
       $(this).html("Ajouter un contact en cas d'urgence");
@@ -375,9 +372,6 @@
       $("input[name='nom_urg']").val('');
       $("input[name='tel_principal_urg']").val('');
       $("input[name='tel_secondaire_urg']").val('');
-      $("html, body").animate({
-        scrollTop: $(document).height()
-      }, 1000);
     }
   })
 
