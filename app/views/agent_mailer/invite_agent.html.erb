@@ -1,0 +1,4 @@
+<p>Madame, Monsieur,</p>
+
+<p>Vous venez d'être invité par <%= @admin.email %> à rejoindre DossierSCO. Pour finaliser votre inscription veuillez cliquer sur ce lien :<br>
+  <%= link_to configuration_agent_activation_url(@agent_invite, jeton: @agent_invite.jeton), configuration_agent_activation_url(@agent_invite, jeton: @agent_invite.jeton) %></p>

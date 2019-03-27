@@ -18,6 +18,7 @@ class AgentMailer < ApplicationMailer
   def invite_premier_agent(agent)
     @agent = agent
     mail(subject: "Activez votre compte DossierSCO", to: @agent.email) do |format|
+      format.html
       format.text
     end
   end
@@ -26,6 +27,7 @@ class AgentMailer < ApplicationMailer
     @agent_invite = agent_invite
     @admin = admin
     mail(subject: "Activez votre compte agent sur DossierSCO", to: @agent_invite.email) do |format|
+      format.html
       format.text
     end
   end
