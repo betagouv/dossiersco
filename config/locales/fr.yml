@@ -138,6 +138,14 @@ fr:
       certifie_sur_l_honneur: "En tant que responsable légal de %{prenom_eleve}, je certifie sur l'honneur l'exactitude des informations communiquées et m'engage à tenir le collège informé de tout changement de situation ou de coordonnées."
       valider_inscription: "Valider l'inscription"
   configuration:
+    mef:
+      update:
+        mef_mis_a_jour: Le MEF a bien été mis à jour
+      destroy:
+        mef_utilise: Des dossiers élèves sont liés à ce MEF vous ne pouvez pas le supprimer
+        mef_supprime: Le MEF a bien été supprimé
+      create:
+        mef_cree: Le MEF a bien été créé
     agents:
       index:
         ajouter_un_agent: "Ajouter un agent"
