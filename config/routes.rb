@@ -34,10 +34,16 @@ Rails.application.routes.draw do
     end
   end
 
-
-
   resources :agent_pieces_jointes, only: [:create, :update]
   resources :tache_imports, only: [:new, :create]
+
+  namespace :api do
+    resource :communes, only: :[] do
+      collection do
+        get 'deduire_commune'
+      end
+    end
+  end
 
   get '/retour-ent', to: 'authentification_cas_ent#retour_cas'
   get '/from-ent', to: 'authentification_cas_ent#appel_direct_ent'
