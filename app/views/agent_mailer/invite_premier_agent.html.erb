@@ -2,7 +2,7 @@
 
 <p>Vous avez souhaité inscrire votre établissement (<%= @agent.etablissement.uai %>) à DossierSCO et nous vous remercions de la confiance que vous nous accordez.</p>
 
-<p>Une dernière étape est nécessaire pour finaliser l'inscription, merci de cliquer sur le lien suivant : <%= link_to configuration_agent_activation_url(@agent, jeton: @agent.jeton) %></p>
+<p>Une dernière étape est nécessaire pour finaliser l'inscription, merci de cliquer sur le lien suivant : <%= link_to configuration_agent_activation_url(@agent, jeton: @agent.jeton), configuration_agent_activation_url(@agent, jeton: @agent.jeton) %></p>
 
 <p>À bientôt sur DossierSCO !</p>
 
