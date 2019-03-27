@@ -18,6 +18,7 @@ module Configuration
         AgentMailer.invite_agent(@agent, @agent_connecté).deliver_now
         redirect_to configuration_agents_path, notice: t('.invitation_envoyee', email: @agent.email)
       else
+        flash[:alert] = "L'email #{@agent.email} est déjà utilisé"
         render :new
       end
     end
