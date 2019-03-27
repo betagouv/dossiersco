@@ -21,7 +21,7 @@ module Configuration
       @mef.etablissement = agent_connecté.etablissement
 
       if @mef.save
-        redirect_to configuration_mef_index_url, notice: 'Mef was successfully created.'
+        redirect_to configuration_mef_index_url, notice: t('.mef_cree')
       else
         render :new
       end
@@ -29,15 +29,24 @@ module Configuration
 
     def update
       if @mef.update(mef_params)
-        redirect_to configuration_mef_index_url, notice: 'Mef was successfully updated.'
+        redirect_to configuration_mef_index_url, notice: t('.mef_mis_a_jour')
       else
         render :edit
       end
     end
 
     def destroy
-      @mef.destroy
-      redirect_to configuration_mef_index_url, notice: 'Mef was successfully destroyed.'
+      mef_origine = DossierEleve.where(mef_origine: @mef)
+      mef_destination = DossierEleve.where(mef_destination: @mef)
+
+      if mef_origine.blank? && mef_destination.blank?
+        @mef.destroy
+        redirect_to configuration_mef_index_url, notice: t('.mef_supprime')
+      else
+        @mef = Mef.where(etablissement: agent_connecté.etablissement)
+        flash[:alert] = t('.mef_utilise')
+        render :index
+      end
     end
 
     private
