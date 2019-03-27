@@ -109,7 +109,7 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     assert_attr 'Blayo', '#nom_rl1', doc
     assert_attr '20 bd Segur', '#adresse_rl1', doc
     assert_attr '75007', '#code_postal_rl1', doc
-    assert_attr 'Paris', '#ville_rl1', doc
+    assert_equal 'PARIS', doc.css('#ville_rl1').children.text.gsub!(/\s+/, '')
     assert_attr '0612345678', '#tel_principal_rl1', doc
     assert_attr '0112345678', '#tel_secondaire_rl1', doc
     assert_attr 'test@gmail.com', '#email_rl1', doc
