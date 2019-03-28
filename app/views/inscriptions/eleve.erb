@@ -76,12 +76,12 @@
         <%= form_for(@dossier_eleve, url: modifier_mef_eleve_path(@dossier_eleve), remote: true) do |f| %>
           <div class="form__group">
             <%= f.label :mef_origine, 'Mef actuel' %>
-            <%= f.collection_select :mef_origine_id, @dossier_eleve.etablissement.mef, :id, :libelle, {}, {class: 'form-control'} %>
+            <%= f.collection_select :mef_origine_id, @dossier_eleve.etablissement.mef, :id, :libelle, {include_blank: t('.aucune')}, {class: 'form-control'} %>
           </div>
 
           <div class="form__group">
             <%= f.label :mef_destination, 'Mef de destination'%>
-            <%= f.collection_select :mef_destination_id, @dossier_eleve.etablissement.mef, :id, :libelle, {}, {class: 'form-control'} %>
+            <%= f.collection_select :mef_destination_id, @dossier_eleve.etablissement.mef, :id, :libelle, {include_blank: t('.aucune')}, {class: 'form-control'} %>
           </div>
           <div class="form__group">
             <%= f.submit 'Modifier les MEF', class: 'button' %>
