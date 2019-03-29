@@ -9,6 +9,7 @@
 - Semaine consacrée à la préparation de l'openlab qui nous fait nous concentrer sur l'existant de DossierSCO et relever des bugs
 - Embarquer de nouveaux collèges par nous-mêmes, sans attendre le relais académique, est désormais la priorité
 - Premier openlab où l'on a pu vérifier une fois de plus que l'équipe était soudée
+- Un grand merci à l'équipe du 110Bis pour son aide sur l'openlab (coucou Eve-Amélie !)
 - Bon premier contact avec Noëmie qui va mener des entretiens utilisateurs
 
 
