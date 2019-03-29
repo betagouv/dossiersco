@@ -1,5 +1,27 @@
 # Journal
 
+## 11e semaine - du 25 au 29 mars
+
+**Openlab prometteur, approfondissement de nos relations institutionnelles**
+
+### Vie de l'équipe
+
+- Semaine consacrée à la préparation de l'openlab qui nous fait nous concentrer sur l'existant de DossierSCO et relever des bugs
+- Embarquer de nouveaux collèges par nous-mêmes, sans attendre le relais académique, est désormais la priorité
+- Premier openlab où l'on a pu vérifier une fois de plus que l'équipe était soudée
+- Bon premier contact avec Noëmie qui va mener des entretiens utilisateurs
+
+
+### Développement
+
+
+### Intraprenariat
+
+- Préparation de l'openlab
+- Un partenariat se noue avec la DNE
+- La communauté DossierSCO naît sous nos yeux à l'openlab
+- L'openlab a donné à Stephane une idée pour la suite : un openlab ambassadeur
+
 ## 10e Semaine - du 15 au 21 mars
 
 **S.T.R.U.C.T.U.R.A.T.I.O.N.**
