@@ -120,8 +120,7 @@ class ImporterSiecle < ApplicationJob
 
     donnees_eleve = traiter_donnees_eleve donnees_eleve
 
-
-    eleve = Eleve.find_or_initialize_by(identifiant: donnees_eleve[:identifiant])
+    eleve = Eleve.creation_ou_retrouve_par(donnees_eleve[:identifiant])
 
     return resultat if eleve.id.present? && donnees_eleve[:classe_ant] != eleve.classe_ant
 

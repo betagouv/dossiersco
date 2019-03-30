@@ -12,19 +12,18 @@ class AccueilController < ApplicationController
       redirect_to root_path
       return
     end
-    Trace.create(identifiant: params[:identifiant],
-                 categorie: 'famille',
-                 page_demandee: request.path_info,
-                 adresse_ip: request.ip)
-    identifiant = normalise_alphanum params[:identifiant]
-    dossier_eleve = get_dossier_eleve identifiant
+
+    Trace.create(identifiant: params[:identifiant], categorie: 'famille', page_demandee: request.path_info, adresse_ip: request.ip)
 
     date_saisie = "#{params[:annee]}-#{params[:mois]}-#{params[:jour]}"
+    dossier_eleve = DossierEleve.par_identifiant(params[:identifiant])
+
     if dossier_eleve.present? && (dossier_eleve.eleve.date_naiss == date_saisie)
       if dossier_eleve.etat == 'pas connecté'
         dossier_eleve.update(etat: 'connecté')
       end
-      session[:identifiant] = identifiant
+      session[:identifiant] = params[:identifiant]
+
       if dossier_eleve.derniere_etape.present?
         redirect_to "/#{dossier_eleve.derniere_etape}"
       elsif dossier_eleve.etape_la_plus_avancee.present?
@@ -42,10 +41,6 @@ class AccueilController < ApplicationController
   def accueil
     @eleve.dossier_eleve.update derniere_etape: 'accueil'
     @dossier_eleve = @eleve.dossier_eleve
-  end
-
-  def normalise_alphanum chaine
-    chaine.gsub(/[^[:alnum:]]/, '').upcase
   end
 
   def get_eleve
@@ -126,10 +121,6 @@ class AccueilController < ApplicationController
       dossier_eleve.update(etat: 'en attente de validation')
     end
     sauve_et_redirect dossier_eleve, 'confirmation'
-  end
-
-  def get_dossier_eleve identifiant
-    DossierEleve.joins(:eleve).find_by(eleves: {identifiant: identifiant})
   end
 
   def administration

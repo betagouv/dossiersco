@@ -38,4 +38,13 @@ class EleveTest < ActiveSupport::TestCase
     eleve = Fabricate.build(:eleve, date_naiss: '2004-04-27')
     assert_equal '27', eleve.jour_de_naissance
   end
+
+  test "#par_identifiant" do
+    eleve = Fabricate(:eleve)
+    assert_equal eleve, Eleve.par_identifiant(eleve.identifiant)
+
+    eleve = Fabricate(:eleve, identifiant: "TRUC")
+    assert_equal eleve, Eleve.par_identifiant("truc")
+  end
+
 end
