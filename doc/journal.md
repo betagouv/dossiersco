@@ -15,6 +15,18 @@
 
 ### Développement
 
+- [Je crée une autre personne à contacter d'urgence et le focus remonte en haut de page](https://github.com/betagouv/dossiersco/issues/477)
+- [Impossible d'uploader le règlement intérieur de la demi-pension](https://github.com/betagouv/dossiersco/issues/478)
+- [Empêcher un agent de supprimer un MEF si un élève y est affecté](https://github.com/betagouv/dossiersco/issues/475)
+- [Faire pointer le lien d'activation de compte sur le bon serveur](https://github.com/betagouv/dossiersco/issues/470)
+- [Pas de feedback quand je tente d'ajouter un agent déjà existant dans dossiersco](https://github.com/betagouv/dossiersco/issues/471)
+- [détecter la ville à partir du code postal](https://github.com/betagouv/dossiersco/issues/459)
+- [Le lien "A propos" est cassé](https://github.com/betagouv/dossiersco/issues/465)
+- [Erreur 404 au moment de visualiser la pièce jointe, coté Elèves](https://github.com/betagouv/dossiersco/issues/457)
+- [élèves provenant de siecle sans identifiant](https://github.com/betagouv/dossiersco/issues/285)
+- [Indiquer “pour rappel, durant l’année (N-1) 2018/19, votre enfant était inscrit à telle option…”](https://github.com/betagouv/dossiersco/issues/455)
+- [Ajouter "pour l’année scolaire (N+1) 2019/20" à la rubrique Option pédagogique](https://github.com/betagouv/dossiersco/issues/453)
+
 
 ### Intraprenariat
 
