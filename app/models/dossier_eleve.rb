@@ -26,6 +26,12 @@ class DossierEleve < ActiveRecord::Base
     where('etat in (?)', ['pas connecté', 'connecté'])
   end
 
+  def self.par_identifiant(identifiant)
+    eleve = Eleve.par_identifiant(identifiant)
+    return eleve.dossier_eleve if eleve.kind_of?(Eleve)
+    nil
+  end
+
   def pieces_jointes
     etablissement.pieces_attendues.map do |piece_attendue|
       PieceJointe.find_or_initialize_by(piece_attendue: piece_attendue, dossier_eleve: self)

@@ -6,6 +6,15 @@ class Eleve < ActiveRecord::Base
   belongs_to :montee, required: false
   delegate :email_resp_legal_1, to: :dossier_eleve
 
+  def self.par_identifiant(identifiant)
+    identifiant = identifiant.gsub(/[^[:alnum:]]/, '').upcase
+    find_by(identifiant: identifiant)
+  end
+
+  def self.creation_ou_retrouve_par(identifiant)
+    find_or_initialize_by(identifiant: identifiant.gsub(/[^[:alnum:]]/, '').upcase)
+  end
+
   def genere_demandes_possibles
     return unless self.montee.present?
     options = self.montee.demandabilite.map { |d| d.option }
