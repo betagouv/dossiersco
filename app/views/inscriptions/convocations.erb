@@ -1,10 +1,11 @@
 <section class="section">
 
-  <h1 class="separation">Elèves non inscrits</h1>
+  <h1 class="separation"><%= t('.eleve_non_inscrit') %></h1>
 
   <% if defined? message  %>
     <div class="message_echec"><%= message %></div>
   <% end %>
+
 
   <table id="options" class="table table-striped table-bordered table-condensed table-hover">
     <thead>
@@ -19,72 +20,20 @@
       </tr>
     </thead>
     <tbody>
-      <% eleves.each do |eleve| %>
-        <% resp_legal_1 = eleve.dossier_eleve.resp_legal.find {|d| d.priorite == 1} %>
+      <% @eleves_non_inscrits.each do |dossier_eleve| %>
+        <% resp_legal_1 = dossier_eleve.resp_legal.find {|d| d.priorite == 1} %>
         <tr>
-          <td><%= eleve.classe_ant %></td>
-          <td><%= eleve.prenom %></td>
-          <td><%= eleve.nom %></td>
+          <td><%= dossier_eleve.eleve.classe_ant %></td>
+          <td><%= dossier_eleve.eleve.prenom %></td>
+          <td><%= dossier_eleve.eleve.nom %></td>
           <td><%= resp_legal_1.prenom %></td>
           <td><%= resp_legal_1.nom %></td>
           <td><%= resp_legal_1.tel_principal %></td>
           <td><%= resp_legal_1.tel_secondaire %></td>
         </tr>
       <% end %>
-  </table>
-</section>
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/yadcf/0.9.3/jquery.dataTables.yadcf.min.js"></script>
-<script src="https://cdn.datatables.net/select/1.2.6/js/dataTables.select.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
-<script type="text/javascript" charset="utf-8">
-$(document).ready( function () {
+      <%= will_paginate @eleves_non_inscrits %>
 
-  table = $('#options').DataTable({
-    "dom": 'Bfrtip', // Pour les boutons
-    "bJQueryUI": true,
-    "bStateSave": true,
-    "order": [[ 0, "asc" ], [2, "asc"]],
-    "pageLength": 30,
-    language: {
-      processing:     "Traitement en cours...",
-      search:         "Rechercher&nbsp;:",
-      lengthMenu:    "Afficher _MENU_ &eacute;l&egrave;ves",
-      info:           "Affichage des &eacute;l&egrave;ves _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&egrave;ves",
-      infoEmpty:      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&egrave;ves",
-      infoFiltered:   "(filtr&eacute; de _MAX_ &eacute;l&egrave;ves au total)",
-      infoPostFix:    "",
-      loadingRecords: "Chargement en cours...",
-      zeroRecords:    "Aucun &eacute;l&egrave;ve &agrave; afficher",
-      emptyTable:     "Aucune donnée disponible dans le tableau",
-      paginate: {
-        first:      "Premier",
-        previous:   "Pr&eacute;c&eacute;dent",
-        next:       "Suivant",
-        last:       "Dernier"
-      },
-      aria: {
-        sortAscending:  ": activer pour trier la colonne par ordre croissant",
-        sortDescending: ": activer pour trier la colonne par ordre décroissant"
-      }
-    },
-    buttons: [
-    {
-      extend: "excelHtml5"
-    },
-    {
-      extend: "pdfHtml5"
-    },
-    {
-      extend: "print"
-    }
-    ],
-  });
-});
-</script>
+      </table>
+</section>
+

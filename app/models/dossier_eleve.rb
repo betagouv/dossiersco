@@ -18,6 +18,8 @@ class DossierEleve < ActiveRecord::Base
 
   has_and_belongs_to_many :options_pedagogiques
 
+  default_scope {joins(:eleve)}
+
   scope :pour, -> (etablissement) do
     where(etablissement: etablissement)
   end

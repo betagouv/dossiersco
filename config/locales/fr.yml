@@ -18,6 +18,23 @@ fr:
           attributes:
             code_postal_ant:
               blank: "ne peut être vide"
+  will_paginate:
+    previous_label: "&#8592; Précédent"
+    next_label: "Suivant &#8594;"
+    page_gap: "&hellip;"
+
+    page_entries_info:
+      single_page:
+        zero:  "No %{model} found"
+        one:   "Displaying 1 %{model}"
+        other: "Displaying all %{count} %{model}"
+      single_page_html:
+        zero:  "No %{model} found"
+        one:   "Displaying <b>1</b> %{model}"
+        other: "Displaying <b>all&nbsp;%{count}</b> %{model}"
+
+      multi_page: "Displaying %{model} %{from} - %{to} of %{count} in total"
+      multi_page_html: "Displaying %{model} <b>%{from}&nbsp;-&nbsp;%{to}</b> of <b>%{count}</b> in total"
   layouts:
     agent:
       configuration: "Configuration"
@@ -205,6 +222,8 @@ fr:
       ajouter_piece_justificative: Ajouter une pièce
 
   inscriptions:
+    convocations:
+      eleve_non_inscrit: Elèves pas encore inscrits
     modifier_mef_eleve:
       changements_enregistres: "Les changements ont été enregistrés"
       changements_non_enregistres: "Une erreur est survenue, les changements n'ont pas été pris en compte"

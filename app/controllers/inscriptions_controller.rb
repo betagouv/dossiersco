@@ -160,8 +160,7 @@ class InscriptionsController < ApplicationController
 
   def convocations
     etablissement = agent_connecté.etablissement
-    eleves = DossierEleve.pour(etablissement).a_convoquer.map(&:eleve)
-    render :convocations, locals: {agent: agent_connecté, etablissement: etablissement, eleves: eleves}
+    @eleves_non_inscrits = DossierEleve.pour(etablissement).a_convoquer.paginate(page: params[:page], per_page: 10)
   end
 
   def deconnexion
