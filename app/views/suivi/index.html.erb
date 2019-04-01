@@ -1,0 +1,17 @@
+<h1>Suivi de l'embarquement des établissement</h1>
+
+<ul>
+  <li>
+    <%= t('.pas_encore_connectes', count: @suivi.pas_encore_connecte) %> 
+  </li>
+  <li>
+    <%= t('.eleves_importes', count: @suivi.eleves_importe) %>
+  </li>
+  <li>
+    <%= t('.piece_attendue_configure', count: @suivi.piece_attendue_configure) %>
+  </li>
+  <li>
+    <%= t('.familles_connectes', count: @suivi.familles_connectes) %>
+  </li>
+</ul>
+
