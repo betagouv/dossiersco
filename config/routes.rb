@@ -118,6 +118,7 @@ Rails.application.routes.draw do
 
   get '/redirection_erreur', to: 'pages#redirection_erreur'
   get '/a-propos', to: 'pages#a_propos'
+  get '/suivi', to: 'suivi#index'
 
   mount LetterOpenerWeb::Engine, at: "/letter_opener" unless ENV['laisser_partir_les_emails']
 end
