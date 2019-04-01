@@ -4,7 +4,7 @@ URL_CAS = 'https://ent.parisclassenumerique.fr/cas'
 if Rails.env.production?
   URL_RETOUR = CGI.escape('https://dossiersco.scalingo.io/retour-ent')
 else
-  URL_RETOUR = CGI.escape('https://dossiersco-demo.scalingo.io/retour-ent')
+  URL_RETOUR = CGI.escape('https://demo.dossiersco.fr/retour-ent')
 end
 
 
