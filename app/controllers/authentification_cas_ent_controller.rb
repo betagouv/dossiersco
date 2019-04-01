@@ -1,5 +1,13 @@
 require 'net/http'
 
+URL_CAS = 'https://ent.parisclassenumerique.fr/cas'
+if Rails.env.production?
+  URL_RETOUR = CGI.escape('https://dossiersco.scalingo.io/retour-ent')
+else
+  URL_RETOUR = CGI.escape('https://dossiersco-demo.scalingo.io/retour-ent')
+end
+
+
 class AuthentificationCasEntController < ApplicationController
 
   def new
@@ -14,13 +22,13 @@ class AuthentificationCasEntController < ApplicationController
     ticket = params[:ticket]
 
 
-    url = "https://preprod-paris.opendigitaleducation.com/cas/serviceValidate?service=https%3A%2F%2Fdossiersco-demo.scalingo.io%2Fretour-ent&ticket=#{ticket}"
+    url = "#{URL_CAS}/serviceValidate?service=#{URL_RETOUR}&ticket=#{ticket}"
 
     puts url
     url = URI.parse(url)
     req = Net::HTTP::Get.new(url.to_s)
     res = Net::HTTP.start(url.host, url.port, use_ssl: true) {|http|
-        http.request(req)
+      http.request(req)
     }
     puts res.body
     puts "-" * 20
@@ -32,6 +40,6 @@ class AuthentificationCasEntController < ApplicationController
     puts "-" * 20
     puts "from ENT"
     puts "-" * 20
-    redirect_to 'https://preprod-paris.opendigitaleducation.com/cas/login?service=https%3A%2F%2Fdossiersco-demo.scalingo.io%2Fretour-ent'
+    redirect_to "#{URL_CAS}/login?service=#{URL_RETOUR}"
   end
 end
