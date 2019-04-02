@@ -224,6 +224,7 @@ fr:
   inscriptions:
     convocations:
       telecharger_convocations: "Télécharger les convocations pour l'inscription"
+      telechargement_en_cours: "La génération des documents est en cours, cela peut prendre un peut de temps"
       eleve_non_inscrit: Elèves pas encore inscrits
     modifier_mef_eleve:
       changements_enregistres: "Les changements ont été enregistrés"

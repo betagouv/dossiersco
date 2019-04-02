@@ -5,7 +5,7 @@ class GenerePdf
 
     noms_pdf = []
     classes.each do |classes_dossiers|
-      classe_des_eleves = classes_dossiers[0].present? ? classes_dossiers[0].gsub(/\s+/, "") : ""
+      classe_des_eleves = classes_dossiers[0].present? ? classes_dossiers[0].gsub(/\s+/, "") : "sans-classe"
       dossiers_eleve = classes_dossiers[1]
       pdf = Pdf.new(etablissement, classe_des_eleves, dossiers_eleve)
       noms_pdf << pdf.nom
