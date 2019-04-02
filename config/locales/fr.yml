@@ -223,6 +223,7 @@ fr:
 
   inscriptions:
     convocations:
+      telecharger_convocations: "Télécharger les convocations pour l'inscription"
       eleve_non_inscrit: Elèves pas encore inscrits
     modifier_mef_eleve:
       changements_enregistres: "Les changements ont été enregistrés"

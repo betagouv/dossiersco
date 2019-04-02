@@ -6,6 +6,7 @@
     <div class="message_echec"><%= message %></div>
   <% end %>
 
+  <%= link_to t('.telecharger_convocations'), telecharger_pdf_convocation_path, class: 'button mb-2' %>
 
   <table id="options" class="table table-striped table-bordered table-condensed table-hover">
     <thead>
@@ -34,6 +35,6 @@
       <% end %>
       <%= will_paginate @eleves_non_inscrits %>
 
-      </table>
+    </table>
 </section>
 
