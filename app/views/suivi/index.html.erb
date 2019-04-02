@@ -2,7 +2,10 @@
 
 <ul>
   <li>
-    <%= t('.pas_encore_connectes', count: @suivi.pas_encore_connecte) %> 
+    <%= t('.pas_encore_connectes', count: @suivi.pas_encore_connecte) %>
+    <% if @agent_connecté && super_admin?(@agent_connecté.email) %>
+      <%= link_to 'Détail', suivi_pas_encore_connectes_detail_path %>
+    <% end %>
   </li>
   <li>
     <%= t('.eleves_importes', count: @suivi.eleves_importe) %>
