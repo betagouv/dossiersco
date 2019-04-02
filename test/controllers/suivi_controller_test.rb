@@ -52,6 +52,22 @@ class SuiviControllerTest < ActionDispatch::IntegrationTest
     assert_equal 1, assigns(:suivi).familles_connectes
   end
 
+  test '#pas_encore_connectes listes les établissements pas encore connectés' do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
 
+    agent_pas_connecte = Fabricate(:agent, jeton: 'jeton')
+    etablissement_pas_connecte = Fabricate(:etablissement, agent: [agent_pas_connecte])
+
+    agent = Fabricate(:agent, jeton: nil)
+    stef_pas_connecte = Fabricate(:agent, jeton: 'un autre jeton')
+    yannick_pas_connecte = Fabricate(:agent, jeton: 'encore un jeton')
+    etablissement = Fabricate(:etablissement, agent: [agent, stef_pas_connecte, yannick_pas_connecte])
+
+    get suivi_pas_encore_connectes_detail_url
+
+    assert_equal [etablissement_pas_connecte], assigns(:etablissements)
+
+  end
 end
 

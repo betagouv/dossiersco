@@ -1,5 +1,7 @@
 class SuiviController < ApplicationController
   layout 'connexion'
+  before_action :agent_connecté
+  before_action :identification_agent, only: [:pas_encore_connectes]
 
   def index
     @suivi = Suivi.new
@@ -22,8 +24,16 @@ class SuiviController < ApplicationController
         @suivi.familles_connectes += 1
       end
     end
+  end
 
-
+  def pas_encore_connectes
+    @etablissements = []
+    Etablissement.all.each do |etablissement|
+      if etablissement.agent.count == 1 &&
+          etablissement.agent.first.jeton.present?
+        @etablissements << etablissement
+      end
+    end
   end
 
 end
