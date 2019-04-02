@@ -45,6 +45,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/telecharger_pdf_convocation', to: 'inscriptions#pdf_convocation'
+
   get '/retour-ent', to: 'authentification_cas_ent#retour_cas'
   get '/from-ent', to: 'authentification_cas_ent#appel_direct_ent'
 

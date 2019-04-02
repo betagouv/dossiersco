@@ -224,4 +224,11 @@ class InscriptionsController < ApplicationController
     end
     redirect_to '/agent/liste_des_eleves'
   end
+
+  def pdf_convocation
+    etablissement = @agent_connecté.etablissement
+    pdf = GenerePdf.new
+    zip_data = pdf.generer_par_classe(etablissement)
+    send_data(zip_data, :type => 'application/zip', :filename => "convocations.zip")
+  end
 end
