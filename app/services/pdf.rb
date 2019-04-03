@@ -54,8 +54,7 @@ class Pdf
                  :indent_paragraphs => 20
 
         pdf.move_down 10
-        pdf.text "Vos identifiants sont : <b>#{dossier_eleve.eleve.identifiant}</b> " +
-                     "et la date de naissance de votre enfant", :inline_format => true
+        pdf.text "Votre identifiant est : <b>#{dossier_eleve.eleve.identifiant}</b> "
 
         pdf.move_down 10
         pdf.text "En réalisant la démarche en ligne vous n’avez pas à nous remettre le dossier papier.", :style => :bold,
