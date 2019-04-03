@@ -1,18 +1,18 @@
 <% @section = 5 %>
 
-<%= render partial:'partials/navigation', locals: { dossier_eleve: dossier_eleve } %>
+<%= render partial:'partials/navigation', locals: { dossier_eleve: @dossier_eleve } %>
 
 <section class="section">
   <div class="container">
 
     <h2 class="separation"><%= t('.titre') %></h2>
 
-    <p><%= t('.dossier_complet_html', eleve: "#{eleve.prenom} #{eleve.nom}", niveau: eleve.niveau_classe_ant[0].to_i - 1, etablissement: dossier_eleve.etablissement.nom) %></p>
+    <p><%= t('.dossier_complet_html', eleve: "#{@eleve.prenom} #{@eleve.nom}", niveau: @eleve.niveau_classe_ant[0].to_i - 1, etablissement: @dossier_eleve.etablissement.nom) %></p>
     <p><%= t('.verifier_informations') %></p>
 
     <div class="card">
       <div class="panel">
-        <% dossier_eleve.options_pedagogiques.each do |option| %>
+        <% @dossier_eleve.options_pedagogiques.each do |option| %>
           <div class="row mt-1">
             <div>
               <%= t('.demande_option') %> <strong><%= option.nom %></strong>
@@ -26,7 +26,7 @@
         <div class="row mt-1">
           <div>
             <%= t('.restauration_scolaire') %>&nbsp;:
-            <strong><%= dossier_eleve.demi_pensionnaire ? 'demi-pensionnaire' : 'externe' %></strong>
+            <strong><%= @dossier_eleve.demi_pensionnaire ? 'demi-pensionnaire' : 'externe' %></strong>
           </div>
           <a id='demi-pensionnaire' href="/administration">
             <div class="btn btn-outline-secondary btn-sm"><%= t('.modifier') %></div>
@@ -36,7 +36,7 @@
         <div class="row mt-1">
           <div>
             <%= t('.sortie') %>
-            <strong><%= dossier_eleve.autorise_sortie ? t('.autorisee') : t('.non_autorisee') %></strong>
+            <strong><%= @dossier_eleve.autorise_sortie ? t('.autorisee') : t('.non_autorisee') %></strong>
           </div>
           <a href="/administration">
             <div class="btn btn-outline-secondary btn-sm">Modifier</div>
@@ -47,8 +47,8 @@
 
     <form action='/validation' method='POST' class="mt-2">
       <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-      <%= render partial:'partials/champ_check', locals: { desc: t('.certifie_sur_l_honneur', prenom_eleve: dossier_eleve.eleve.prenom),
-                                                           name: 'signature', condition: dossier_eleve.signature, required: 'required' }%>
+      <%= render partial:'partials/champ_check', locals: { desc: t('.certifie_sur_l_honneur', prenom_eleve: @eleve.prenom),
+                                                           name: 'signature', condition: @dossier_eleve.signature, required: 'required' }%>
 
       <div class="text-center mt-2">
         <button type='submit' class="button"><%= t('.valider_inscription') %></button>
