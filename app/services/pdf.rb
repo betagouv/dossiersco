@@ -45,7 +45,7 @@ class Pdf
         pdf.move_down 10
 
         etablissement.pieces_attendues.each do |piece|
-          pdf.text "- #{piece.nom}"
+          pdf.text "- #{piece.nom}", :indent_paragraphs => 20
         end
 
         pdf.move_down 10
