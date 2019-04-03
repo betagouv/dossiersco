@@ -9,29 +9,19 @@ class SuiviController < ApplicationController
     Etablissement.all.each do |etablissement|
       if etablissement.agent.count == 1 &&
           etablissement.agent.first.jeton.present?
-        @suivi.pas_encore_connecte += 1
+        @suivi.pas_encore_connecte << etablissement
       end
 
       if etablissement.dossier_eleve.count > 0
-        @suivi.eleves_importe += 1
+        @suivi.eleves_importe << etablissement
       end
 
       if etablissement.pieces_attendues.count > 0
-        @suivi.piece_attendue_configure += 1
+        @suivi.piece_attendue_configure << etablissement
       end
 
       if etablissement.dossier_eleve.map(&:etat).include?('connecté')
-        @suivi.familles_connectes += 1
-      end
-    end
-  end
-
-  def pas_encore_connectes
-    @etablissements = []
-    Etablissement.all.each do |etablissement|
-      if etablissement.agent.count == 1 &&
-          etablissement.agent.first.jeton.present?
-        @etablissements << etablissement
+        @suivi.familles_connectes << etablissement
       end
     end
   end
@@ -42,9 +32,10 @@ class Suivi
   attr_accessor :pas_encore_connecte, :eleves_importe, :piece_attendue_configure, :familles_connectes
 
   def initialize
-    @pas_encore_connecte = 0
-    @eleves_importe = 0
-    @piece_attendue_configure = 0
-    @familles_connectes = 0
+    @pas_encore_connecte = []
+    @eleves_importe = []
+    @piece_attendue_configure = []
+    @familles_connectes = []
   end
 end
+

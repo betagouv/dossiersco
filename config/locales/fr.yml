@@ -280,20 +280,8 @@ fr:
       modal_purge: "La purge est en cours, cela peut prendre du temps"
   suivi:
     index:
-      pas_encore_connectes:
-        zero: "Tous les établissements créés se sont connectés"
-        one: "1 établissement crée mais pas encore connectés"
-        other: "%{count} établissements créés qui ne se sont pas encore connectés"
-      eleves_importes:
-        zero: "Aucun établissement a importé ses élèves"
-        one: "1 établissement a déjà importé ses élèves"
-        other: "%{count} établissements ont déjà importés leurs élèves"
-      piece_attendue_configure:
-        zero: "Aucun établissement a configuré ses pièces attendues"
-        one: "1 établissement a configuré ses pièces attendues"
-        other: "%{count} établissements ont configurés leurs pièces attendues"
-      familles_connectes:
-        zero: "Aucun établissement n'a de familles déjà connectés"
-        one: "1 établissement a des familles déjà connectés"
-        other: "%{count} établissements ont des familles déjà connectés"
+      pas_encore_connectes: "Liste des établissements créés, mais dont aucun agent ne s'est connectés pour le moment"
+      eleves_importes: "Liste des établissements qui ont déjà importé leurs élèves"
+      piece_attendue_configure: "Liste des établissement qui ont ajouté des pièces attendues"
+      familles_connectes: "Liste des établissement qui ont déjà des familles qui se sont connectés"
 
