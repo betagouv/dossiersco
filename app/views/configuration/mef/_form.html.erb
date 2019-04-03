@@ -1,16 +1,4 @@
 <%= form_for [:configuration, mef] do |form| %>
-  <% if mef.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(mef.errors.count, "error") %> prohibited this mef from being saved:</h2>
-
-      <ul class="list-unstyled">
-        <% mef.errors.full_messages.each do |message| %>
-          <li class="alert alert-danger"><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div class="form__group">
     <%= form.label :libelle %>
     <%= form.text_field :libelle %>

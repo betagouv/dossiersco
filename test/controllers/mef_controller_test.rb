@@ -25,10 +25,11 @@ class MefControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create mef' do
     admin = Fabricate(:admin)
+    etablissement = Fabricate(:etablissement)
     identification_agent(admin)
 
     assert_difference('Mef.count') do
-      post configuration_mef_index_url, params: { mef: { code: @mef.code, libelle: @mef.libelle } }
+      post configuration_mef_index_url, params: { mef: { code: rand(1000), libelle: rand(1000), etablissement: etablissement } }
     end
 
     assert_redirected_to configuration_mef_index_url

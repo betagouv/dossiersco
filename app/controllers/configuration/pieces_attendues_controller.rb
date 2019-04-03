@@ -21,7 +21,7 @@ module Configuration
       @piece_attendue.etablissement = agent_connecté.etablissement
 
       if @piece_attendue.save
-        redirect_to configuration_pieces_attendues_path, notice: 'Piece attendue was successfully created.'
+        redirect_to configuration_pieces_attendues_path, notice: t('.piece_cree')
       else
         render :new
       end
@@ -29,7 +29,7 @@ module Configuration
 
     def update
       if @piece_attendue.update(piece_attendue_params)
-        redirect_to configuration_pieces_attendues_path, notice: 'Piece attendue was successfully updated.'
+        redirect_to configuration_pieces_attendues_path, notice: t('.piece_mise_a_jour')
       else
         render :edit
       end
@@ -37,7 +37,7 @@ module Configuration
 
     def destroy
       @piece_attendue.destroy
-      redirect_to configuration_pieces_attendues_path, notice: 'Piece attendue was successfully destroyed.'
+      redirect_to configuration_pieces_attendues_path, notice: t('.piece_mise_a_jour')
     end
 
     private

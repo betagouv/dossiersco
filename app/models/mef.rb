@@ -2,7 +2,8 @@ class Mef < ApplicationRecord
   belongs_to :etablissement
   has_and_belongs_to_many :options_pedagogiques
 
-  validates_presence_of :code, :libelle
+  validates :code, presence: true, uniqueness: true
+  validates :libelle, presence: true, uniqueness: true
 
   def self.niveau_superieur(mef_origine)
     libelle_caracteres = mef_origine.libelle.split('')

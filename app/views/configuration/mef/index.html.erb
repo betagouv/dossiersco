@@ -19,7 +19,7 @@
       <tr>
         <td><%= mef.libelle %></td>
         <td><%= mef.code %></td>
-        <td><%= link_to 'Editer', edit_configuration_mef_path(mef) %></td>
+        <td><%= link_to 'Modifier', edit_configuration_mef_path(mef) %></td>
         <td><%= link_to 'Supprimer', [:configuration, mef], method: :delete, data: { confirm: 'Etes vous sûr ?' } %></td>
       </tr>
     <% end %>

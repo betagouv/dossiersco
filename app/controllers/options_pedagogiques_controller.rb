@@ -21,7 +21,7 @@ class OptionsPedagogiquesController < ApplicationController
     @option_pedagogique = OptionPedagogique.new(option_pedagogique_params.merge(etablissement: agent_connecté.etablissement))
 
     if @option_pedagogique.save
-      redirect_to options_pedagogiques_url, notice: 'Option pedagogique was successfully created.'
+      redirect_to options_pedagogiques_url, notice: t('.option_cree')
     else
       render :new
     end
@@ -29,7 +29,7 @@ class OptionsPedagogiquesController < ApplicationController
 
   def update
     if @option_pedagogique.update(option_pedagogique_params)
-      redirect_to options_pedagogiques_url, notice: 'Option pedagogique was successfully updated.'
+      redirect_to options_pedagogiques_url, notice: t('.option_mise_a_jour')
     else
       render :edit
     end
@@ -37,7 +37,7 @@ class OptionsPedagogiquesController < ApplicationController
 
   def destroy
     @option_pedagogique.destroy
-    redirect_to options_pedagogiques_url, notice: 'Option pedagogique was successfully destroyed.'
+    redirect_to options_pedagogiques_url, notice: t('.option_supprimee')
   end
 
   private
