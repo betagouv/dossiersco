@@ -1,20 +1,55 @@
 <h1>Suivi de l'embarquement des établissement</h1>
 
-<ul>
-  <li>
-    <%= t('.pas_encore_connectes', count: @suivi.pas_encore_connecte) %>
-    <% if @agent_connecté && super_admin?(@agent_connecté.email) %>
-      <%= link_to 'Détail', suivi_pas_encore_connectes_detail_path %>
+
+<section>
+  <p>
+  <%= t('.pas_encore_connectes') %>
+  </p>
+
+  <ul>
+    <% @suivi.pas_encore_connecte.each do |etablissement| %>
+      <li><%= link_to(etablissement.uai, "http://www.opencartecomptable.fr/#/etablissements?code_uai=#{etablissement.uai}") %></li>
     <% end %>
-  </li>
-  <li>
-    <%= t('.eleves_importes', count: @suivi.eleves_importe) %>
-  </li>
-  <li>
-    <%= t('.piece_attendue_configure', count: @suivi.piece_attendue_configure) %>
-  </li>
-  <li>
-    <%= t('.familles_connectes', count: @suivi.familles_connectes) %>
+  </ul>
+</section>
+
+<section>
+  <p>
+  <%= t('.eleves_importes') %>
+  </p>
+
+  <ul>
+    <% @suivi.eleves_importe.each do |etablissement| %>
+      <li><%= link_to(etablissement.uai, "http://www.opencartecomptable.fr/#/etablissements?code_uai=#{etablissement.uai}") %></li>
+    <% end %>
+  </ul>
+</section>
+
+<section>
+  <p>
+  <%= t('.piece_attendue_configure') %>
+  </p>
+
+  <ul>
+    <% @suivi.piece_attendue_configure.each do |etablissement| %>
+      <li><%= link_to(etablissement.uai, "http://www.opencartecomptable.fr/#/etablissements?code_uai=#{etablissement.uai}") %></li>
+    <% end %>
+  </ul>
+</section>
+
+<section>
+  <p>
+  <%= t('.familles_connectes') %>
+  </p>
+
+  <ul>
+    <% @suivi.familles_connectes.each do |etablissement| %>
+      <li><%= link_to(etablissement.uai, "http://www.opencartecomptable.fr/#/etablissements?code_uai=#{etablissement.uai}") %></li>
+    <% end %>
+  </ul>
+</section>
+
+
   </li>
 </ul>
 

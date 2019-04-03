@@ -31,7 +31,9 @@
   <div class="container">
     <ul class="footer__links">
       <a href="/a-propos">A propos</a>
-      <a href="/suivi">Suivi</a>
+      <% if @agent_connecté && super_admin?(@agent_connecté.email) %>
+        <a href="/suivi">Suivi</a>
+      <% end %>
     </ul>
   </div>
 </footer>
