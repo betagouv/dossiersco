@@ -23,6 +23,7 @@ module Configuration
       if @mef.save
         redirect_to configuration_mef_index_url, notice: t('.mef_cree')
       else
+        flash[:alert] = t('.erreur_create_mef', champs: @mef.errors.first[0], erreur: @mef.errors.first[1])
         render :new
       end
     end

@@ -34,7 +34,11 @@
       </div>
       <div class="form__group">
         <%= f.check_box :gere_demi_pension %>
-        <%= f.label :gere_demi_pension, class: 'label-inline' %>
+        <%= f.label :gere_demi_pension, t('.gere_demi_pension'), class: 'label-inline' %>
+      </div>
+      <div class="form__group">
+        <%= f.label :reglement_demi_pension, t('.reglement_demi_pension') %>
+        <%= f.file_field :reglement_demi_pension %>
       </div>
       <div class="form__group">
         <%= f.label :signataire %>
@@ -46,11 +50,7 @@
       </div>
       <div class="form__group">
         <%= f.check_box :envoyer_aux_familles %>
-        <%= f.label :envoyer_aux_familles, class: 'label-inline' %>
-      </div>
-      <div class="form__group">
-        <%= f.label :reglement_demi_pension %>
-        <%= f.file_field :reglement_demi_pension %>
+        <%= f.label :envoyer_aux_familles, t('.activer_envoie'), class: 'label-inline' %>
       </div>
       <div class="form__group">
         <%= f.submit 'valider', class: 'button' %>

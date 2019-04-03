@@ -21,7 +21,7 @@
         <td><%= piece.nom %></td>
         <td><%= piece.explication %></td>
         <td><%= piece.obligatoire ? 'Oui' : 'Non' %></td>
-        <td><%= link_to 'Editer', edit_configuration_piece_attendue_path(piece) %></td>
+        <td><%= link_to 'Modifier', edit_configuration_piece_attendue_path(piece) %></td>
         <td><%= link_to 'Supprimer', [:configuration, piece], method: :delete, data: { confirm: 'Etes vous sûr ?' } %></td>
       </tr>
     <% end %>

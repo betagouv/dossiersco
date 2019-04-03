@@ -1,4 +1,11 @@
 fr:
+  options_pedagogiques:
+    create:
+      option_cree: "L'option pédagogique a bien été créée"
+    update:
+      option_mise_a_jour: "L'option pédagogique a été mise à jour"
+    destroy:
+      option_supprimee: "L'option pédagogique a été supprimée"
   activerecord:
     attributes:
       etablissement:
@@ -39,6 +46,7 @@ fr:
     agent:
       configuration: "Configuration"
     configuration:
+      import: Import des élèves
       suivi_inscription: "Suivi des inscriptions"
       tableau_de_bord: "Tableau de bord"
   partials:
@@ -155,6 +163,13 @@ fr:
       certifie_sur_l_honneur: "En tant que responsable légal de %{prenom_eleve}, je certifie sur l'honneur l'exactitude des informations communiquées et m'engage à tenir le collège informé de tout changement de situation ou de coordonnées."
       valider_inscription: "Valider l'inscription"
   configuration:
+    pieces_attendues:
+      create:
+        piece_cree: "La pièce attendue a bien été créée"
+      update:
+        piece_mise_a_jour: "La pièce attendue a été mise à jour"
+      destroy:
+        piece_mise_a_jour: "La pièce attendue a été supprimée"
     mef:
       update:
         mef_mis_a_jour: Le MEF a bien été mis à jour
@@ -162,6 +177,7 @@ fr:
         mef_utilise: Des dossiers élèves sont liés à ce MEF vous ne pouvez pas le supprimer
         mef_supprime: Le MEF a bien été supprimé
       create:
+        erreur_create_mef: "%{champs} %{erreur}"
         mef_cree: Le MEF a bien été créé
     agents:
       index:
@@ -190,6 +206,9 @@ fr:
         uai_existant: "Cet uai est déjà enregistré, veuillez contacter votre chef d'établissement"
         mail_envoye: "Un mail a été envoyé à %{mail_ce}"
       edit:
+        activer_envoie: "Activer l'envoi des emails aux familles"
+        gere_demi_pension: "Collège gérant la demi-pension"
+        reglement_demi_pension: "Règlement demi-pension"
         titre: "Modifier un établissement"
       purge_succes:  "L'établissement a bien été purgé"
       show:
@@ -199,11 +218,11 @@ fr:
     show:
       liste_des_eleves: Voir la liste des élèves
       eleves_sans_mef: Élèves sans MEF
-      text_eleves_sans_mef: "%{nombre} élèves n'ont pas de Mef d'origine"
+      text_eleves_sans_mef: "%{nombre} élèves n'ont pas de MEF d'origine"
       agents: Agents
       nombre_agents_html: "<strong>%{nombre} agents</strong> inscrits pour votre établissement sur Dossiersco"
       options_pedagogiques: Options Pédagogiques
-      nombre_options_pedagogiques_html: "<ul><li>%{options} options pédagogiques</li><li>%{mef} mefs</li></ul>"
+      nombre_options_pedagogiques_html: "<ul><li>%{options} options pédagogiques</li><li>%{mef} MEF</li></ul>"
       import: Dossiers Élèves
       nombre_dossiers_eleves: "%{dossiers} dossiers élèves pour votre établissement"
       campagne: Campagne
@@ -215,7 +234,7 @@ fr:
       seul_agent: Vous êtes le seul agent dans votre établissement.
       aucun_dossier: Il n'y a pas encore de dossiers élèves, vous pouvez importer un fichier SIECLE pour en ajouter.
       importer_un_fichier: Importer un fichier SIECLE
-      aucun_mef_et_option: Vous n'avez pas de mef et d'options pédagogiques. Vous pouvez importer un fichier SIECLE pour en ajouter.
+      aucun_mef_et_option: Vous n'avez pas de MEF et d'options pédagogiques. Vous pouvez importer un fichier SIECLE pour en ajouter.
       information_etablissement_manquantes: Les informations de votre établissement ne sont pas complètes. Vous pouvez les modifier en suivant le lien.
       modifier_informations: Modifier les informations
       aucune_piece_attendue: Vous n'avez aucune pièce justificative attendue pour l'inscription
@@ -249,7 +268,7 @@ fr:
       message_prevention_purge: Attention ! Ceci supprimera tous les dossiers élèves
       titre_import: Importer un fichier
       titre_export: Exporter un fichier
-      export_classes: Fichier Excel comprenant les options choisis par les familles
+      export_classes: Fichier Excel comprenant les options choisies par les familles
       telecharger: Télécharger le fichier
       selectionner_fichier: "Sélectionnez un fichier au format xls"
       importer_fichier: "Importer un fichier"
