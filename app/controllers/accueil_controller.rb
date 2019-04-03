@@ -51,6 +51,7 @@ class AccueilController < ApplicationController
     options_destination.each{ |o| @options_pedagogiques << o }
     @options_pedagogiques_selectionnees.each{ |o| @options_pedagogiques << o }
     @options_pedagogiques.uniq!
+    @options_etablissement = OptionPedagogique.where(etablissement: @eleve.dossier_eleve.etablissement)
     render 'accueil/eleve'
   end
 
