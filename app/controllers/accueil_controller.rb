@@ -45,8 +45,12 @@ class AccueilController < ApplicationController
 
   def get_eleve
     @eleve.dossier_eleve.update derniere_etape: 'eleve'
-    @options_pedagogiques = OptionPedagogique.filtre_par(@eleve.dossier_eleve.mef_destination)
     @options_pedagogiques_selectionnees = @eleve.dossier_eleve.options_pedagogiques
+    options_destination = OptionPedagogique.filtre_par(@eleve.dossier_eleve.mef_destination)
+    @options_pedagogiques = []
+    options_destination.each{ |o| @options_pedagogiques << o }
+    @options_pedagogiques_selectionnees.each{ |o| @options_pedagogiques << o }
+    @options_pedagogiques.uniq!
     render 'accueil/eleve'
   end
 
@@ -57,7 +61,8 @@ class AccueilController < ApplicationController
     end
 
     @eleve.dossier_eleve.options_pedagogiques = []
-    OptionPedagogique.all.each do |option|
+    @options_pedagogiques = OptionPedagogique.where(etablissement: @eleve.dossier_eleve.etablissement)
+    @options_pedagogiques.each do |option|
       if params[option.nom].present?
         @eleve.dossier_eleve.options_pedagogiques << option
       end
@@ -107,7 +112,7 @@ class AccueilController < ApplicationController
   end
 
   def validation
-    render 'validation', locals: { eleve: @eleve, dossier_eleve: @eleve.dossier_eleve }
+    @dossier_eleve = @eleve.dossier_eleve
   end
 
   def post_validation
