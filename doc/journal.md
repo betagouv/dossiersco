@@ -1,6 +1,24 @@
 # Journal
 
-## 11e semaine - du 25 au 29 mars
+## 12e semaine - du 30 mars au 4 avril
+
+** **
+
+### Vie de l'équipe
+
+
+
+### Développement
+
+
+### Intraprenariat
+
+- Rédaction de la charte d'adhésion d'un établissement à DossierSCO et test sur un premier client
+- Rédaction de users stories suite à l'openlab
+- Premiere piste pour les indicateurs de succès
+- Premier courrier autorisant l'expérimentation de DossierSCO dans une académie
+
+## 11e semaine - du 22 au 29 mars
 
 **Openlab prometteur, approfondissement de nos relations institutionnelles**
 
