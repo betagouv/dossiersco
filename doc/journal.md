@@ -10,6 +10,15 @@
 
 ### Développement
 
+- [Dans l'écran de validation, un doublon apparait sur les options pédagogiques choisies](https://github.com/betagouv/dossiersco/issues/479)
+- [Connaitre le degré d'implication des établissements](https://github.com/betagouv/dossiersco/issues/483)
+- [Wording dans Configuration, Tableau de bord](https://github.com/betagouv/dossiersco/issues/474)
+- [Proposer des options pédagogiques quoi qu'il arrive](https://github.com/betagouv/dossiersco/issues/320)
+- [Editer les convocations des familles pour l'inscription](https://github.com/betagouv/dossiersco/issues/482)
+- [Problème sur la visualisation de pièce jointe](https://github.com/betagouv/dossiersco/issues/463)
+- [En tant que super admin identifié, je veux aller vers le collège TILLION : message d'erreur](https://github.com/betagouv/dossiersco/issues/461)
+- [Coté agent, un élève inscrit a le même MEF d'origine et de destination](https://github.com/betagouv/dossiersco/issues/480)
+- [L'option pédagogique obligatoire n'est pas proposée à la famille](https://github.com/betagouv/dossiersco/issues/476)
 
 ### Intraprenariat
 
