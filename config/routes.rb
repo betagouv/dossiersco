@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resource :exports, only: :[] do
       collection do
         get 'export-options', :defaults => { :format => 'xlsx' }
+        get 'export-siecle', :defaults => { :format => 'xml' }
       end
     end
   end

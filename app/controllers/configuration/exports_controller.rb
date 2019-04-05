@@ -9,6 +9,12 @@ module Configuration
       end
     end
 
+    def export_siecle
+      respond_to do |format|
+        format.xml
+      end
+    end
+
     private
 
     def faire_lignes
