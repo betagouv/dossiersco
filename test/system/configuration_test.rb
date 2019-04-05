@@ -15,7 +15,7 @@ class ConfigurationTest < ActionDispatch::IntegrationTest
     assert_selector 'h1', text: 'Eleves en cours de traitement'
 
     click_link 'Configuration'
-    click_link 'Import des élèves'
+    click_link 'Import/export des élèves'
     within('.siecle') do
       assert_selector 'h3', text: 'Importer un fichier'
       choose 'SIECLE'
