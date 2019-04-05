@@ -46,7 +46,7 @@ fr:
     agent:
       configuration: "Configuration"
     configuration:
-      import: Import des élèves
+      import_export: "Import/export des élèves"
       suivi_inscription: "Suivi des inscriptions"
       tableau_de_bord: "Tableau de bord"
   partials:
@@ -278,6 +278,10 @@ fr:
       purger_etablissement: "Purger l'établissement %{etablissement}"
       confirmer_purge:  "Voulez-vraiment purger l'établissement ? Tous les dossiers élèves seront supprimés !"
       modal_purge: "La purge est en cours, cela peut prendre du temps"
+      titre_export_xml: "Export d'un XML pour SIECLE"
+      explication_export_xml: "Télécharger un export XML pour importer les modifications sur les dossiers élèves dans SIECLE. Pour l'import dans SIECLE, vous devez passer par l'interface d'import d'application privée"
+      telecharger_xml: "Télécharger"
+
   suivi:
     index:
       pas_encore_connectes: "Liste des établissements créés, mais dont aucun agent ne s'est connectés pour le moment"

@@ -55,7 +55,7 @@
             <%= link_to t('.tableau_de_bord'), configuration_path, {class: 'nav-link'} %>
           </li>
           <li class="nav__item <%= 'active' if request.fullpath.include? '/tache_import' %>">
-            <%= link_to t('.import'), new_tache_import_path, {class: 'nav-link'} %>
+            <%= link_to t('.import_export'), new_tache_import_path, {class: 'nav-link'} %>
           </li>
           <li class="nav__item <%= 'active' if request.fullpath.include? '/mef' %>">
             <%= link_to 'MEF', configuration_mef_index_path, {class: 'nav-link'} %>
