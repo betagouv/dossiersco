@@ -20,6 +20,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     xsd = Nokogiri::XML::Schema(File.read(Rails.root.join('doc/import_prive/schema_Import_3.0.xsd')))
     xml = Nokogiri::XML(response.body)
     assert_equal [], xsd.validate(xml)
+    File.delete(fixture_file)
   end
 
   test '#export-options' do
