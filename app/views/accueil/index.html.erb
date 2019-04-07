@@ -17,9 +17,9 @@
 
     <div class="form__group">
       <label class="" for="jour" id="label_date"><%= t('identification.labels.date_de_naissance') %></label>
-      <input name="jour" type="number" id="date_jour" maxlength="2" placeholder="<%= t('identification.placeholders.jour') %>" style="width:25%;" max="31" required>
-      <input name="mois" type="number" id="date_mois" maxlength="2" placeholder="<%= t('identification.placeholders.mois') %>" style="width:25%;" max="12" required>
-      <input name="annee" type="number" id="date_annee" maxlength="4" placeholder="<%= t('identification.placeholders.annee') %>" style="width: 48%;" max='2018' required>
+      <input name="jour" type="number" id="date_jour" min="1" maxlength="2" placeholder="<%= t('identification.placeholders.jour') %>" style="width:25%;" max="31" required>
+      <input name="mois" type="number" id="date_mois" min="1" maxlength="2" placeholder="<%= t('identification.placeholders.mois') %>" style="width:25%;" max="12" required>
+      <input name="annee" type="number" id="date_annee" min="2000" maxlength="4" placeholder="<%= t('identification.placeholders.annee') %>" style="width: 48%;" max='2018' required>
     </div>
 
     <div class="form__group text-center">
