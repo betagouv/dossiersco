@@ -12,8 +12,12 @@ module Clockwork
   # end
 
 
-  every(1.minutes, 'reload demo db', :at => '00:30', :if => lambda { |t| Rails.env.demo?  }) do
-    puts 'reload demo ?'
+  if ENV['RAILS_ENV'] == 'demo'
+    every(5.minutes, 'reload demo db') do
+      puts 'reload demo data'
+      `rails db:drop db:schema:load db:seed:demo`
+      puts 'end of data reloading'
+    end
   end
   #every(10.seconds, 'frequent.job')
   #every(3.minutes, 'less.frequent.job')
