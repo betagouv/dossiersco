@@ -34,7 +34,6 @@ group :test do
   gem 'poltergeist'
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
-  gem 'faker'
   gem 'rails-controller-testing'
 end
 
@@ -60,3 +59,4 @@ gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: 'c8ac844'
 gem 'axlsx_rails'
 gem 'will_paginate'
 gem 'prawn-rails'
+gem 'faker'
