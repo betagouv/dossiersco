@@ -2,10 +2,18 @@
 
 ## 12e semaine - du 30 mars au 4 avril
 
-** **
+**Des chartes et des communautés**
 
 ### Vie de l'équipe
 
+- Comment contacter les établissements, sans le faire au téléphone un par un ?
+- Aider des ambassadeurs pour « vendre » dossiersco dans les établissements
+- Informer les recteurs que nous allons envoyer des vagues de mails aux établissements
+- Organiser des rencontres ambassadeurs aux endroits où Christophe va se rendre
+- Les participantes et participants de l'OpenLab sont très emballé-e-s
+- Mise en place d'une page de suivi de l'embarquement des établissemens
+- Nous focalisons les développements sur certains points particuliers plutôt que d'arroser sur tout les sujets
+- Nous travaillons de plus en plus de manière distribué, nous mettons en place une point quotidien (pour ceux qui travaillent ce jour là) à 14h
 
 
 ### Développement
