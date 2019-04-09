@@ -10,6 +10,7 @@ module Configuration
     end
 
     def export_siecle
+      @etablissement = @agent_connecté.etablissement
       respond_to do |format|
         format.xml
       end
