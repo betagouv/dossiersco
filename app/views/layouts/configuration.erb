@@ -57,9 +57,6 @@
           <li class="nav__item <%= 'active' if request.fullpath.include? '/tache_import' %>">
             <%= link_to t('.import_export'), new_tache_import_path, {class: 'nav-link'} %>
           </li>
-          <li class="nav__item <%= 'active' if request.fullpath.include? '/mef' %>">
-            <%= link_to 'MEF', configuration_mef_index_path, {class: 'nav-link'} %>
-          </li>
           <li class="nav__item <%= 'active' if request.fullpath == '/options_pedagogiques' %>">
             <%= link_to 'Options pédagogiques', options_pedagogiques_path, {class: 'nav-link'} %>
           </li>
