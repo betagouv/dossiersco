@@ -322,9 +322,9 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal 1, Message.count
     message = Message.first
-    assert_equal 'sms', message.categorie
+    assert_equal 'mail', message.categorie
     assert_equal dossier.id, message.dossier_eleve_id
-    assert_equal 'en attente', message.etat
+    assert_equal 'envoyé', message.etat
   end
 
   def test_stats

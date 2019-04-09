@@ -7,4 +7,8 @@ Fabricator(:resp_legal) do
   nom { sequence(:nom) { |i| "Ford_#{i}" } }
   tel_principal  { sequence(:tel) { |i| "012345670#{i}" } }
   tel_secondaire   { sequence(:tel) { |i| "022345670#{i}" } }
+  email 'henri@laposte.net'
+  profession "11"
+  enfants_a_charge 1
+  communique_info_parents_eleves false
 end
