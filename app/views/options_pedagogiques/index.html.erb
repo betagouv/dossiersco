@@ -17,6 +17,7 @@
             <li>
               <%= "#{option.nom} #{option.groupe} " %>
               <%= link_to t('.modifier'), edit_option_pedagogique_url(option) %>
+              <%= " option abandonnable ? " %> <%= check_box_tag(:truc) %>
             </li>
           <% end %>
         </ul>
