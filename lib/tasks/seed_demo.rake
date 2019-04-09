@@ -4,7 +4,7 @@ namespace :db do
 
   namespace :seed do
     desc "Charge les données de démo"
-    task "demo" => :environment do
+    task :demo => :environment do
       load(seed_demo_file)
     end
   end
