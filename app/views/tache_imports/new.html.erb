@@ -5,6 +5,7 @@
     </div>
       <% if @tache.statut != 'en_attente' && @tache.statut != 'en_cours' %>
         <%= form_for TacheImport.new, multipart: true do |form| %>
+        <p><i class="fas fa-info-circle blue"></i> <%= t('.aide_siecle') %></p>
           <div class="form__group">
             <label>
               <%= form.radio_button :job_klass, 'ImporterSiecle', {checked: true} %>
