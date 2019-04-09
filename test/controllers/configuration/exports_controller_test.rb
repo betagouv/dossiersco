@@ -8,6 +8,8 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     admin = Fabricate(:admin)
     identification_agent(admin)
 
+    3.times { Fabricate(:dossier_eleve, etablissement: admin.etablissement) }
+
     get export_siecle_configuration_exports_path
 
     assert_response :success
