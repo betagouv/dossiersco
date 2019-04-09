@@ -3,6 +3,7 @@ fr:
     index:
       nouveau_mef: 'Nouveau Mef'
       nouvelle_option_pedagogique: 'Nouvelle option pédagogique'
+      modifier: 'modifier'
     create:
       option_cree: "L'option pédagogique a bien été créée"
     update:
