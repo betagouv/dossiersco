@@ -6,6 +6,7 @@ class OptionsPedagogiquesController < ApplicationController
 
   def index
     @mefs = Mef.where(etablissement: @agent_connecté.etablissement).includes(:options_pedagogiques)
+    @options_pedagogiques = OptionPedagogique.where(etablissement: @agent_connecté.etablissement)
   end
 
   def new
@@ -38,6 +39,28 @@ class OptionsPedagogiquesController < ApplicationController
   def destroy
     @option_pedagogique.destroy
     redirect_to options_pedagogiques_url, notice: t('.option_supprimee')
+  end
+
+  def ajoute_option_au_mef
+    @mef = Mef.find(params[:id])
+    @option = OptionPedagogique.find(params[:option])
+    if @mef.options_pedagogiques.include?(@option)
+      head :ok
+    else
+      @mef.options_pedagogiques << @option
+      respond_to do |format|
+        format.js{render :layout => false}
+      end
+    end
+  end
+
+  def enleve_option_au_mef
+    @mef = Mef.find(params[:mef])
+    @option = OptionPedagogique.find(params[:id])
+    @mef.options_pedagogiques.delete(@option)
+    respond_to do |format|
+      format.js{render :layout => false}
+    end
   end
 
   private

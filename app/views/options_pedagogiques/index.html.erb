@@ -9,18 +9,25 @@
 
     <div class="panel">
       <div class="panel__header">
-      <h3><%= "#{mef.libelle} (#{mef.code}) " %><%= link_to t('.modifier'), edit_configuration_mef_url(mef) %></h3>
+        <h3><%= "#{mef.libelle} (#{mef.code}) " %></h3> <small class="panel__header-extra"><%= link_to t('.modifier'), edit_configuration_mef_url(mef) %></small>
       </div>
       <div class="cards">
-        <ul>
+        <table class="table">
+          <tbody data-mef-id="<%= mef.id %>">
           <% mef.options_pedagogiques.each do |option| %>
-            <li>
-              <%= "#{option.nom} #{option.groupe} " %>
-              <%= link_to t('.modifier'), edit_option_pedagogique_url(option) %>
-              <%= " option abandonnable ? " %> <%= check_box_tag(:truc) %>
-            </li>
+            <tr class="small-line" data-option-id="<%= option.id %>">
+              <td><%= "#{option.nom} #{option.groupe} " %></td>
+              <td><%= " option abandonnable ? " %> <%= check_box_tag(:truc) %></td>
+              <td><%= link_to t('.modifier'), edit_option_pedagogique_path(option) %></td>
+              <td><%= link_to enleve_option_au_mef_option_pedagogique_path(id: option.id, mef: mef.id), method: :delete, remote: true do %><i class='fas fa-times'></i><% end %></td>
+            </tr>
           <% end %>
-        </ul>
+          </tbody>
+        </table>
+          <%= form_tag ajoute_option_au_mef_option_pedagogique_path(mef), remote: true, class: 'm-0 mt-1' do %>
+            <%= select_tag "option", options_for_select(@options_pedagogiques.collect{ |u| [u.nom, u.id] }), class: 'small-select' %>
+            <button class="button-outline small secondary" type="submit"><%= t('.ajouter_option') %></button>
+          <% end %>
       </div>
     </div>
   <% end %>
