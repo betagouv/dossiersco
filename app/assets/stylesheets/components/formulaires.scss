@@ -1,5 +1,11 @@
 select {
   background-position: top 1em right -2em;
-  background-size: 60px;
+  background-size: 63px;
   padding-right: 45px;
+}
+
+.small-select {
+  padding: 0px 5px;
+  background-position: top 0.5em right -2.5em;
+  padding-right: 32px;
 }

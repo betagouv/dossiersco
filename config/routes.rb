@@ -6,7 +6,12 @@ Rails.application.routes.draw do
   end
 
   resource  :configuration,        only: [:show]
-  resources :options_pedagogiques, except: [:show]
+  resources :options_pedagogiques, except: [:show] do
+    member do
+      post 'ajoute_option_au_mef'
+      delete 'enleve_option_au_mef'
+    end
+  end
 
   namespace :configuration do
     resources :mef

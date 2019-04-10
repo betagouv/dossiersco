@@ -1,6 +1,7 @@
 fr:
   options_pedagogiques:
     index:
+      ajouter_option: "Ajouter l'option"
       nouveau_mef: 'Nouveau Mef'
       nouvelle_option_pedagogique: 'Nouvelle option pédagogique'
       modifier: 'modifier'
