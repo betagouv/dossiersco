@@ -1,6 +1,5 @@
 class Eleve < ActiveRecord::Base
   has_one :dossier_eleve, dependent: :destroy
-  has_and_belongs_to_many :option
   has_many :demande
   has_many :abandon
   belongs_to :montee, required: false
