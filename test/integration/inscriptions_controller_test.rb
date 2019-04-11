@@ -56,20 +56,6 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_match I18n.t('tache_imports.create.message_de_succes', email: agent.email), doc.css('.success').text
   end
 
-  def test_options_demande_et_abandon
-    eleve = Eleve.create!(identifiant: 'XXX', date_naiss: '1970-01-01')
-    eleve.option << Option.create(nom: 'espagnol', groupe: 'lv2')
-    eleve.option << Option.create(nom: 'espagnol', groupe: 'lv2')
-    latin = Option.create(nom: 'latin', groupe: 'LCA', modalite: 'facultative')
-    eleve.option << latin
-    grec = Option.create(nom: 'grec', groupe: 'LCA', modalite: 'facultative')
-
-    grec_d = Demande.create(option_id: grec.id, eleve_id: eleve.id)
-    latin_a = Abandon.create(option_id: latin.id, eleve_id: eleve.id)
-
-    assert_equal ['espagnol', 'grec (+)', 'latin (-)'], eleve.options_apres_montee
-  end
-
   def test_destinataire_sms
     dossier = DossierEleve.new
     dossier.resp_legal = [RespLegal.new(
