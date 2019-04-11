@@ -6,12 +6,7 @@ Rails.application.routes.draw do
   end
 
   resource  :configuration,        only: [:show]
-  resources :options_pedagogiques, except: [:show] do
-    member do
-      post 'ajoute_option_au_mef'
-      delete 'enleve_option_au_mef'
-    end
-  end
+  resources :options_pedagogiques, except: [:show]
 
   namespace :configuration do
     resources :mef
@@ -31,6 +26,7 @@ Rails.application.routes.draw do
         get 'export-siecle', :defaults => { :format => 'xml' }
       end
     end
+    resources :montees_pedagogiques, only: [:create, :destroy]
   end
 
   resources :pieces_jointes, only: [:create, :update] do

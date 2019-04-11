@@ -5,29 +5,40 @@
     <%= link_to t('.nouvelle_option_pedagogique'), new_option_pedagogique_path, {class: 'button-outline primary'} %>
   </div>
 
-  <% @mefs.each do |mef| %>
-
+  <% @montees_pedagogiques_par_mef.each do |mef_montees_pedagogiques| %>
+    <% mef_destination, montees_pedagogiques = mef_montees_pedagogiques[0], mef_montees_pedagogiques[1] %>
     <div class="panel">
       <div class="panel__header">
-        <h3><%= "#{mef.libelle} (#{mef.code}) " %></h3> <small class="panel__header-extra"><%= link_to t('.modifier'), edit_configuration_mef_url(mef) %></small>
+        <h3><%= "#{mef_destination.libelle}" %></h3>
+        <small class="panel__header-extra">
+          <%= link_to t('.modifier'), edit_configuration_mef_path(montees_pedagogiques[0]) %>
+        </small>
       </div>
-      <div class="cards">
-        <table class="table">
-          <tbody data-mef-id="<%= mef.id %>">
-          <% mef.options_pedagogiques.each do |option| %>
-            <tr class="small-line" data-option-id="<%= option.id %>">
-              <td><%= "#{option.nom} #{option.groupe} " %></td>
-              <td><%= " option abandonnable ? " %> <%= check_box_tag(:truc) %></td>
-              <td><%= link_to t('.modifier'), edit_option_pedagogique_path(option) %></td>
-              <td><%= link_to enleve_option_au_mef_option_pedagogique_path(id: option.id, mef: mef.id), method: :delete, remote: true do %><i class='fas fa-times'></i><% end %></td>
-            </tr>
-          <% end %>
-          </tbody>
-        </table>
-          <%= form_tag ajoute_option_au_mef_option_pedagogique_path(mef), remote: true, class: 'm-0 mt-1' do %>
-            <%= select_tag "option", options_for_select(@options_pedagogiques.collect{ |u| [u.nom, u.id] }), class: 'small-select' %>
-            <button class="button-outline small secondary" type="submit"><%= t('.ajouter_option') %></button>
-          <% end %>
+      <div class="cards" data-mef-destination="<%= mef_destination.id %>">
+        <% montees_pedagogiques.group_by(&:mef_origine).each do |mef_montee| %>
+          <% mef_origine, montees = mef_montee[0], mef_montee[1] %>
+          <table class="table">
+            <h6 class="mb-0 mt-1">MEF d'origine : <%= mef_origine.libelle %></h6>
+            <tbody data-mef-origine="<%= mef_origine.id %>">
+            <% montees.each do |montee| %>
+              <tr class="small-line" data-option-id="<%= montee.option_pedagogique.id %>">
+                <td><%= "#{montee.option_pedagogique.nom} #{montee.option_pedagogique.groupe} " %></td>
+                <td><%= "abandonnable" if montee.abandonnable %></td>
+                <td><%= link_to t('.modifier'), edit_option_pedagogique_path(montee.option_pedagogique) %></td>
+                <td><%= link_to configuration_montee_pedagogique_path(montee.id),
+                                method: :delete, remote: true do %><i class='fas fa-times'></i><% end %></td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        <% end %>
+        <%= form_tag configuration_montees_pedagogiques_path(mef_destination: mef_destination), remote: true, class: 'm-0 mt-1' do %>
+          <%= select_tag "mef_origine", options_for_select(@mefs.collect{ |u| [u.libelle, u.id] }), class: 'small-select' %>
+          <%= select_tag "option", options_for_select(@options_pedagogiques.collect{ |u| [u.nom, u.id] }), class: 'small-select' %>
+          <%= label_tag "abandonnable-#{mef_destination.id}", "Abandonnable", class: 'label-inline ml-1' %>
+          <%= check_box_tag "abandonnable-#{mef_destination.id}" %>
+          <button class="button-outline small secondary" type="submit"><%= t('.ajouter_option') %></button>
+        <% end %>
       </div>
     </div>
   <% end %>

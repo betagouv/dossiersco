@@ -32,4 +32,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'piece attendue', 'pieces attendues'
   inflect.irregular 'PieceAttendue', 'PiecesAttendues'
   inflect.irregular 'piece_attendue', 'pieces_attendues'
+  inflect.irregular 'montee_pedagogique', 'montees_pedagogiques'
+  inflect.irregular 'monteePedagogique', 'monteesPedagogiques'
+  inflect.irregular 'montee pedagogique', 'montees pedagogiques'
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_11_085210) do
+ActiveRecord::Schema.define(version: 2019_04_11_100017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 2019_04_11_085210) do
     t.string "derniere_etape"
     t.bigint "mef_origine_id"
     t.bigint "mef_destination_id"
+    t.json "options_origines", default: {}
     t.index ["eleve_id"], name: "index_dossier_eleves_on_eleve_id"
     t.index ["mef_destination_id"], name: "index_dossier_eleves_on_mef_destination_id"
     t.index ["mef_origine_id"], name: "index_dossier_eleves_on_mef_origine_id"
@@ -156,6 +157,16 @@ ActiveRecord::Schema.define(version: 2019_04_11_085210) do
     t.string "contenu"
   end
 
+  create_table "montees_pedagogiques", force: :cascade do |t|
+    t.bigint "option_pedagogique_id"
+    t.boolean "abandonnable"
+    t.bigint "mef_origine_id"
+    t.bigint "mef_destination_id"
+    t.index ["mef_destination_id"], name: "index_montees_pedagogiques_on_mef_destination_id"
+    t.index ["mef_origine_id"], name: "index_montees_pedagogiques_on_mef_origine_id"
+    t.index ["option_pedagogique_id"], name: "index_montees_pedagogiques_on_option_pedagogique_id"
+  end
+
   create_table "options_pedagogiques", force: :cascade do |t|
     t.string "nom"
     t.string "groupe"
@@ -225,5 +236,8 @@ ActiveRecord::Schema.define(version: 2019_04_11_085210) do
   add_foreign_key "dossier_eleves_options_pedagogiques", "dossier_eleves"
   add_foreign_key "dossier_eleves_options_pedagogiques", "options_pedagogiques"
   add_foreign_key "dossiers_affelnet", "etablissements"
+  add_foreign_key "montees_pedagogiques", "mef", column: "mef_destination_id"
+  add_foreign_key "montees_pedagogiques", "mef", column: "mef_origine_id"
+  add_foreign_key "montees_pedagogiques", "options_pedagogiques"
   add_foreign_key "options_pedagogiques", "etablissements"
 end

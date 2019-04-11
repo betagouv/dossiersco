@@ -1,6 +1,0 @@
-$("tbody[data-mef-id='" + <%= @mef.id %> + "']").append("<tr class='small-line'>" +
-  "<td><%= "#{@option.nom} #{@option.groupe} " %></td>" +
-  "<td><%= ' option abandonnable ? ' %> <%= j check_box_tag('truc') %></td>" +
-  "<td><%= j link_to t('options_pedagogiques.index.modifier'), edit_option_pedagogique_url(@option) %></td>" +
-  "<td><%= j link_to "<i class='fas fa-times'></i>".html_safe, enleve_option_au_mef_option_pedagogique_path(id: @option.id, mef:@mef.id), method: :delete, remote: true %></td>" +
-  "</tr>");

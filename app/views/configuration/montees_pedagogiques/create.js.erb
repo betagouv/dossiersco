@@ -1,0 +1,7 @@
+$(".cards[data-mef-destination='<%= @mef_destination.id %>']").find("tbody[data-mef-origine='<%= @mef_origine.id %>']").append("<tr class='small-line' data-option-id='<%= @montee.option_pedagogique.id %>'>" +
+    "<td><%= "#{@montee.option_pedagogique.nom} #{@montee.option_pedagogique.groupe} " %></td>" +
+    "<td><%= "abandonnable" if @montee.abandonnable %></td>" +
+    "<td><%= j link_to t('options_pedagogiques.index.modifier'), edit_option_pedagogique_path(@montee.option_pedagogique) %></td>" +
+    "<td><%= j link_to "<i class='fas fa-times'></i>".html_safe, configuration_montee_pedagogique_path(@montee.id), method: :delete, remote: true %></td>" +
+  "</tr>"
+)

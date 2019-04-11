@@ -19,16 +19,16 @@ class ImporterSiecle < ApplicationJob
 
   def perform(tache_id, email)
     tache = TacheImport.find(tache_id)
-    begin
+    # begin
       tache.update(statut: TacheImport::STATUTS[:en_traitement])
       statistiques = import_xls tache.fichier.path, tache.etablissement_id
       mail = AgentMailer.succes_import(email, statistiques)
       tache.update(statut: TacheImport::STATUTS[:terminee])
       mail.deliver_now
-    rescue
-      tache.update(statut: TacheImport::STATUTS[:en_erreur])
-      AgentMailer.erreur_import(email).deliver_now
-    end
+    # rescue
+    #   tache.update(statut: TacheImport::STATUTS[:en_erreur])
+    #   AgentMailer.erreur_import(email).deliver_now
+    # end
   end
 
   def import_xls fichier, etablissement_id
@@ -155,13 +155,15 @@ class ImporterSiecle < ApplicationJob
       option.update(obligatoire: true) if ligne_siecle[colonne + 1] == 'O'
 
       if ligne_siecle[COLONNES[:code_mef]].present?
-        mef = Mef.find_by(code: ligne_siecle[COLONNES[:code_mef]], etablissement_id: etablissement_id)
-        unless option.mef.include? mef
-          option.mef << mef
-        end
+        MonteePedagogique.find_or_create_by(mef_origine: mef_origine, mef_destination: mef_destination, option_pedagogique: option)
       end
 
-      dossier_eleve.options_pedagogiques << option
+      option_origine = {}
+      option_origine[:nom] = option.nom
+      option_origine[:groupe] = option.groupe
+
+      dossier_eleve.options_origines[option.id] = option_origine
+      dossier_eleve.save!
     end
 
     champs_resp_legal = [:nom, :prenom, :tel_principal, :tel_secondaire, :lien_de_parente,
