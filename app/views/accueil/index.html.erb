@@ -34,4 +34,14 @@
       <p class="text-center"><a href="https://ent.parisclassenumerique.fr/cas/login?service=https%3A%2F%2Fdemo.dossiersco.fr%2Fretour-ent"> m'authentifier avec mon ENT </a></p>
     <% end %>
   </div>
+
+  <% unless Rails.env.production? %>
+    <div class="text-center">
+      <p>Vous n'êtes pas sur un environnement de production. Les données sont ici anonymisés. Vous pouvez donc vous connecter avec les comptes suivant : </p>
+      <ul>
+        <li><%= link_to "Élève Maxence Hénry", '/identification?identifiant=WZRIRFEQRC&annee=2004&mois=02&jour=18', method: :post %></li>
+        <li><%= link_to "Élève Laura Léroy", '/identification?identifiant=CKDVLKXOCC&annee=2005&mois=10&jour=07', method: :post %></li>
+      </ul>
+    </div>
+  <% end %>
 </section>
