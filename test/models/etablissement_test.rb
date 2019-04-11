@@ -31,14 +31,13 @@ class EtablissementTest < ActiveSupport::TestCase
     tache_import = Fabricate.create(:tache_import, etablissement: etablissement)
     dossier_affelnet = Fabricate.create(:dossier_affelnet, etablissement: etablissement)
     mef = Fabricate.create(:mef, etablissement: etablissement)
-    option_pedagogique = mef.options_pedagogiques.create!(etablissement: mef.etablissement)
-    dossier_eleve.options_pedagogiques << option_pedagogique
+    # option_pedagogique = mef.options_pedagogiques.create!(etablissement: mef.etablissement)
+    # dossier_eleve.options_pedagogiques << option_pedagogique
     resp_legal = Fabricate(:resp_legal, dossier_eleve: dossier_eleve)
     piece_jointe = Fabricate(:piece_jointe, dossier_eleve: dossier_eleve)
     message = Fabricate(:message, dossier_eleve: dossier_eleve)
     contact_urgence = Fabricate(:contact_urgence, dossier_eleve: dossier_eleve)
 
-    assert_not_equal 0, mef.options_pedagogiques.count
     etablissement.purge_dossiers_eleves!
 
     assert_equal 0, etablissement.dossier_eleve.count
@@ -46,8 +45,8 @@ class EtablissementTest < ActiveSupport::TestCase
     assert_equal 0, etablissement.tache_import.count
     assert_equal 0, etablissement.dossier_affelnets.count
     assert_not_equal 0, etablissement.mef.count
-    assert_not_equal 0, mef.options_pedagogiques.count
-    assert_equal [], option_pedagogique.dossier_eleves
+    # assert_not_equal 0, mef.options_pedagogiques.count
+    # assert_equal [], option_pedagogique.dossier_eleves
 
     assert_equal false, Message.exists?(message.id)
     assert_equal false, ContactUrgence.exists?(contact_urgence.id)
