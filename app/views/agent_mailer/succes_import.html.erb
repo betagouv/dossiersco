@@ -1,0 +1,25 @@
+<p>Bonjour,</p>
+
+<p>L'import de <%= @statistiques[:eleves] %> élèves sur DossierSCO est terminé.</p>
+
+<p>Le taux de téléphones portable présents est de <%= @statistiques[:portable] %>% et <%= @statistiques[:email] %>% pour les emails.</p>
+
+<% if @statistiques[:eleves_non_importes] && @statistiques[:eleves_non_importes].count > 0 %>
+  <p>
+  Un ou plusieurs élèves n'ont pas été importés :
+
+  <ul>
+    <% @statistiques[:eleves_non_importes].each do |eleve| %>
+      <li><%= eleve %></li>
+    <% end %>
+  </ul>
+  </p>
+<% end %>
+
+<p>
+<%= agent_liste_des_eleves_path %>
+</p>
+
+<p>
+L'équipe DossierSCO
+</p>

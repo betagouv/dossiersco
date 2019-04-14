@@ -39,8 +39,9 @@
     <div class="text-center">
       <p>Vous n'êtes pas sur un environnement de production. Les données sont ici anonymisés. Vous pouvez donc vous connecter avec les comptes suivant : </p>
       <ul>
-        <li><%= link_to "Élève Maxence Hénry", '/identification?identifiant=WZRIRFEQRC&annee=2004&mois=02&jour=18', method: :post %></li>
-        <li><%= link_to "Élève Laura Léroy", '/identification?identifiant=CKDVLKXOCC&annee=2005&mois=10&jour=07', method: :post %></li>
+        <% Eleve.all.sample(3).each do |eleve| %>
+          <li><%= link_to "Élève #{eleve.prenom} #{eleve.nom}", "/identification?identifiant=#{eleve.identifiant}&annee=#{eleve.annee_de_naissance}&mois=#{eleve.mois_de_naissance}&jour=#{eleve.jour_de_naissance}", method: :post %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
