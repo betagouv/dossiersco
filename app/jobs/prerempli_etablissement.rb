@@ -2,6 +2,7 @@ class PrerempliEtablissement < ActiveJob::Base
   include HTTParty
 
   def initialize(scrappeur = HTTParty)
+    super
     @scrappeur = scrappeur
   end
 

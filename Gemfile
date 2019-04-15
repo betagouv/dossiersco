@@ -35,6 +35,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
   gem 'rails-controller-testing'
+  gem 'fakeweb', '~> 1.3'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
