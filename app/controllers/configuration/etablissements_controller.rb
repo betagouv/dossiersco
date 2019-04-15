@@ -15,7 +15,7 @@ module Configuration
     def create
       begin
         agent = EnregistrementPremierAgentService.new.execute(etablissement_params[:uai])
-        PrerempliEtablissementJob.perform_later(etablissement_params[:uai])
+        PrerempliEtablissement.perform_later(agent.etablissement.uai)
         redirect_to new_configuration_etablissement_path, notice:t('.mail_envoye', mail_ce: agent.email)
       rescue StandardError => error
         flash[:error] = t(".#{error}")
