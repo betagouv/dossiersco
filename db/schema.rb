@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_11_100017) do
+ActiveRecord::Schema.define(version: 2019_04_15_150734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -162,6 +162,8 @@ ActiveRecord::Schema.define(version: 2019_04_11_100017) do
     t.boolean "abandonnable"
     t.bigint "mef_origine_id"
     t.bigint "mef_destination_id"
+    t.bigint "etablissement_id"
+    t.index ["etablissement_id"], name: "index_montees_pedagogiques_on_etablissement_id"
     t.index ["mef_destination_id"], name: "index_montees_pedagogiques_on_mef_destination_id"
     t.index ["mef_origine_id"], name: "index_montees_pedagogiques_on_mef_origine_id"
     t.index ["option_pedagogique_id"], name: "index_montees_pedagogiques_on_option_pedagogique_id"
@@ -236,6 +238,7 @@ ActiveRecord::Schema.define(version: 2019_04_11_100017) do
   add_foreign_key "dossier_eleves_options_pedagogiques", "dossier_eleves"
   add_foreign_key "dossier_eleves_options_pedagogiques", "options_pedagogiques"
   add_foreign_key "dossiers_affelnet", "etablissements"
+  add_foreign_key "montees_pedagogiques", "etablissements"
   add_foreign_key "montees_pedagogiques", "mef", column: "mef_destination_id"
   add_foreign_key "montees_pedagogiques", "mef", column: "mef_origine_id"
   add_foreign_key "montees_pedagogiques", "options_pedagogiques"

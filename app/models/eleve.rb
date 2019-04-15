@@ -1,8 +1,5 @@
 class Eleve < ActiveRecord::Base
   has_one :dossier_eleve, dependent: :destroy
-  has_many :demande
-  has_many :abandon
-  belongs_to :montee, required: false
   delegate :email_resp_legal_1, to: :dossier_eleve
 
   def self.par_identifiant(identifiant)

@@ -17,11 +17,11 @@
       <div class="cards" data-mef-destination="<%= mef_destination.id %>">
         <% montees_pedagogiques.group_by(&:mef_origine).each do |mef_montee| %>
           <% mef_origine, montees = mef_montee[0], mef_montee[1] %>
+          <h6 class="mb-0 mt-1">MEF d'origine : <%= mef_origine.libelle %></h6>
           <table class="table">
-            <h6 class="mb-0 mt-1">MEF d'origine : <%= mef_origine.libelle %></h6>
             <tbody data-mef-origine="<%= mef_origine.id %>">
             <% montees.each do |montee| %>
-              <tr class="small-line" data-option-id="<%= montee.option_pedagogique.id %>">
+              <tr class="small-line" data-montee-id="<%= montee.id %>" data-option-id="<%= montee.option_pedagogique.id %>">
                 <td><%= "#{montee.option_pedagogique.nom} #{montee.option_pedagogique.groupe} " %></td>
                 <td><%= "abandonnable" if montee.abandonnable %></td>
                 <td><%= link_to t('.modifier'), edit_option_pedagogique_path(montee.option_pedagogique) %></td>

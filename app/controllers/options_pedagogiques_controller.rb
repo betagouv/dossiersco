@@ -6,7 +6,7 @@ class OptionsPedagogiquesController < ApplicationController
 
   def index
     @mefs = Mef.where(etablissement: @agent_connecté.etablissement)
-    @montees_pedagogiques_par_mef = MonteePedagogique.all.group_by(&:mef_destination)
+    @montees_pedagogiques_par_mef = MonteePedagogique.where(etablissement_id: @agent_connecté.etablissement.id).group_by(&:mef_destination)
     @options_pedagogiques = OptionPedagogique.where(etablissement: @agent_connecté.etablissement)
   end
 

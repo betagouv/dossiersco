@@ -155,7 +155,8 @@ class ImporterSiecle < ApplicationJob
       option.update(obligatoire: true) if ligne_siecle[colonne + 1] == 'O'
 
       if ligne_siecle[COLONNES[:code_mef]].present?
-        MonteePedagogique.find_or_create_by(mef_origine: mef_origine, mef_destination: mef_destination, option_pedagogique: option)
+        MonteePedagogique.find_or_create_by(mef_origine: mef_origine, mef_destination: mef_destination,
+                                            option_pedagogique: option, etablissement_id: etablissement_id )
       end
 
       option_origine = {}
