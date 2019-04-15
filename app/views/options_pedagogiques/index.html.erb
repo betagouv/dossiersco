@@ -24,7 +24,7 @@
               <tr class="small-line" data-montee-id="<%= montee.id %>" data-option-id="<%= montee.option_pedagogique.id %>">
                 <td><%= "#{montee.option_pedagogique.nom} #{montee.option_pedagogique.groupe} " %></td>
                 <td><%= "abandonnable" if montee.abandonnable %></td>
-                <td><%= link_to t('.modifier'), edit_option_pedagogique_path(montee.option_pedagogique) %></td>
+                <td><%= link_to t('.modifier'), edit_configuration_montee_pedagogique_path(montee) %></td>
                 <td><%= link_to configuration_montee_pedagogique_path(montee.id),
                                 method: :delete, remote: true do %><i class='fas fa-times'></i><% end %></td>
               </tr>

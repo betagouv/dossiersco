@@ -1,0 +1,23 @@
+<section class="section">
+  <div class="container">
+    <h1>Editer une montée pédagogique</h1>
+
+    <%= form_for [:configuration, @montee_pedagogique] do |form| %>
+      <p>Mef d'origine : <%= @montee_pedagogique.mef_origine.libelle %></p>
+      <p>Mef de destination : <%= @montee_pedagogique.mef_destination.libelle %></p>
+
+      <div class="form__group">
+        <%= form.label :abandonnable, class: 'label-inline' %>
+        <%= form.check_box :abandonnable %>
+      </div>
+
+      <div class="form__group">
+        <%= form.submit 'valider', class: 'button' %>
+      </div>
+    <% end %>
+
+
+
+    <%= link_to 'Retour', options_pedagogiques_path, class: 'button-outline small secondary mt-2' %>
+  </div>
+</section>

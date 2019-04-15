@@ -7,7 +7,7 @@ class MonteePedagogique < ActiveRecord::Base
 
   def unique
     montee = MonteePedagogique.find_by(mef_destination: self.mef_destination, mef_origine: self.mef_origine, option_pedagogique: self.option_pedagogique)
-    if montee.present?
+    if montee.present? && montee.id != self.id
       errors.add(:montee_pedagogique, "existe déjà")
     end
   end

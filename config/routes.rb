@@ -26,7 +26,7 @@ Rails.application.routes.draw do
         get 'export-siecle', :defaults => { :format => 'xml' }
       end
     end
-    resources :montees_pedagogiques, only: [:create, :destroy]
+    resources :montees_pedagogiques, only: [:create, :edit, :update, :destroy]
   end
 
   resources :pieces_jointes, only: [:create, :update] do
