@@ -4,6 +4,7 @@ namespace :db do
 
   desc "Anonymise les données élèves et resp_légal"
   task :anonymise => :environment do
+    return if Rails.env.production?
     Eleve.all.each do |eleve|
       eleve.identifiant = Faker::Alphanumeric.alpha(10).upcase
       eleve.nom = Faker::Name.last_name if eleve.nom.present?

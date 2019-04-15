@@ -5,6 +5,7 @@ namespace :db do
   namespace :seed do
     desc "Charge les données de démo"
     task :demo => :environment do
+      return if Rails.env.production?
       load(seed_demo_file)
     end
   end
