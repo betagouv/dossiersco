@@ -16,3 +16,4 @@ class EtablissementsControllerTest < ActionDispatch::IntegrationTest
   end
 
 end
+

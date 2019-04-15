@@ -4,6 +4,9 @@ ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 require 'rails/test_help'
 
+require 'fakeweb'
+FakeWeb.allow_net_connect = false
+
 class ActiveSupport::TestCase
   def html_escape(text)
     ERB::Util.html_escape(text)
@@ -13,6 +16,7 @@ class ActiveSupport::TestCase
     post agent_url, params: { email: agent.email, mot_de_passe: agent.password }
     follow_redirect!
   end
+
 end
 
 require 'capybara/rails'
@@ -34,3 +38,5 @@ class ActionDispatch::IntegrationTest
     Capybara.use_default_driver
   end
 end
+
+
