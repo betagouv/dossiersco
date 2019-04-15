@@ -1,5 +1,39 @@
 # Journal
 
+## 13e semaine - du 5 avril au 14 avril
+
+**L'équipe gagne en maturité, c'est bon signe pour passer à l'échelle**
+
+### Vie de l'équipe
+
+- La réunion hebdo avec la DNE est décalée...
+- Nous n'avons pas partagé la « charte » fourni par la DNE à propos des téléservices. A faire: le partager dans le repertoire doc de l'application.
+- Comment organiser le support pour rester agréable et efficace avec les agents des établissements
+- Nous allons faire un screencast pour présenter DossierSCO, un autre pour présenter l'interface famille, et un autre pour l'interface agent.
+- L'équipe ne va plus beaucoup au 110 Bis lab.
+- L'habitude du point de 14h n'est pas encore bien installé
+- C'est chouette de pouvoir utiliser le slack si jamais on a envie de partager des trucs en dehors du point
+- Très sympa d'accueillir Noémie et Maïtanée en renfort dans l'équipe ;-)
+- Nous pourrons nous servir du blog pour parler, entre autre, des nouvelles fonctionnalités livrées
+
+### Développement
+
+- [Ajouter un lien sur la liste des élèves dans le mail d'import](https://github.com/betagouv/dossiersco/issues/472)
+- [pré-remplir le formulaire établissement](https://github.com/betagouv/dossiersco/issues/385)
+- [Expliciter le mode opératoire de l'import SIECLE](https://github.com/betagouv/dossiersco/issues/473)
+- [L'option pédagogique obligatoire n'est pas proposée à la famille](https://github.com/betagouv/dossiersco/issues/476)
+- [Indiquer sur l'environnement de démo les identifiants à utiliser](https://github.com/betagouv/dossiersco/issues/489)
+
+### Intraprenariat
+
+- Un établissement c'est inscrit en autonome, il n'a pas faire l'import siecle, il a créé lui même les options et les MEF
+- Dossiersco s'équipe d'un blog (pour le moment accessible uniquement en HTTP)
+- Nous allons pouvoir communiquer plus largement (de la documentation, de l'information, du partage communautaire
+- Des collèges approchent DossierSCO d'eux même, et ça c'est bien :)
+
+
+---
+
 ## 12e semaine - du 30 mars au 4 avril
 
 **Des chartes et des communautés**
@@ -35,6 +69,8 @@
 - Premiere piste pour les indicateurs de succès
 - Premier courrier autorisant l'expérimentation de DossierSCO dans une académie
 
+---
+
 ## 11e semaine - du 22 au 29 mars
 
 **Openlab prometteur, approfondissement de nos relations institutionnelles**
@@ -69,6 +105,8 @@
 - Un partenariat se noue avec la DNE
 - La communauté DossierSCO naît sous nos yeux à l'openlab
 - L'openlab a donné à Stephane une idée pour la suite : un openlab ambassadeur
+
+---
 
 ## 10e Semaine - du 15 au 21 mars
 
