@@ -11,7 +11,7 @@
       <div class="panel__header">
         <h3><%= "#{mef_destination.libelle}" %></h3>
         <small class="panel__header-extra">
-          <%= link_to t('.modifier'), edit_configuration_mef_path(montees_pedagogiques[0]) %>
+          <%= link_to t('.modifier'), edit_configuration_mef_path(mef_destination) %>
         </small>
       </div>
       <div class="cards" data-mef-destination="<%= mef_destination.id %>">
@@ -25,7 +25,7 @@
                 <td><%= "#{montee.option_pedagogique.nom} #{montee.option_pedagogique.groupe} " %></td>
                 <td><%= "abandonnable" if montee.abandonnable %></td>
                 <td><%= link_to t('.modifier'), edit_configuration_montee_pedagogique_path(montee) %></td>
-                <td><%= link_to configuration_montee_pedagogique_path(montee.id),
+                <td class="text-right"><%= link_to configuration_montee_pedagogique_path(montee.id),
                                 method: :delete, remote: true do %><i class='fas fa-times'></i><% end %></td>
               </tr>
             <% end %>

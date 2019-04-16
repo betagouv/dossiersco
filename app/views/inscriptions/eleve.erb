@@ -62,6 +62,9 @@
           <h3>Options pédagogiques</h3>
         </div>
         <ul class="mb-5">
+          <% @dossier_eleve.options_origines.each do |id, option| %>
+            <li><%= option['nom'] %></li>
+          <% end %>
           <% @dossier_eleve.options_pedagogiques.each do |option| %>
             <li><%= option.nom %></li>
           <% end %>

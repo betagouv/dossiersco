@@ -6,7 +6,8 @@ class MonteePedagogique < ActiveRecord::Base
   validate :unique
 
   def unique
-    montee = MonteePedagogique.find_by(mef_destination: self.mef_destination, mef_origine: self.mef_origine, option_pedagogique: self.option_pedagogique)
+    montee = MonteePedagogique.find_by(mef_destination: self.mef_destination, mef_origine: self.mef_origine,
+                                       option_pedagogique: self.option_pedagogique, etablissement_id: self.etablissement_id)
     if montee.present? && montee.id != self.id
       errors.add(:montee_pedagogique, "existe déjà")
     end

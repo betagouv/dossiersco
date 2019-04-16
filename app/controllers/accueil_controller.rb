@@ -44,14 +44,15 @@ class AccueilController < ApplicationController
   end
 
   def get_eleve
-    @eleve.dossier_eleve.update derniere_etape: 'eleve'
-    @options_pedagogiques_selectionnees = @eleve.dossier_eleve.options_pedagogiques
-    options_destination = OptionPedagogique.filtre_par(@eleve.dossier_eleve.mef_destination)
-    @options_pedagogiques = []
-    options_destination.each{ |o| @options_pedagogiques << o }
-    @options_pedagogiques_selectionnees.each{ |o| @options_pedagogiques << o }
-    @options_pedagogiques.uniq!
-    @options_etablissement = OptionPedagogique.where(etablissement: @eleve.dossier_eleve.etablissement)
+    dossier_eleve = @eleve.dossier_eleve
+    dossier_eleve.update derniere_etape: 'eleve'
+
+    @montees_pedagogiques = MonteePedagogique.where(mef_origine: dossier_eleve.mef_origine,
+                                                    mef_destination: dossier_eleve.mef_destination,
+                                                    etablissement_id: dossier_eleve.etablissement.id)
+    @options_origines = []
+    dossier_eleve.options_origines.each { |id, option| @options_origines << option["nom"]}
+    @options_etablissement = OptionPedagogique.where(etablissement: dossier_eleve.etablissement)
     render 'accueil/eleve'
   end
 
@@ -60,7 +61,6 @@ class AccueilController < ApplicationController
     identite_eleve.each do |info|
       @eleve[info] = params[info] if params.has_key?(info)
     end
-
     @eleve.dossier_eleve.options_pedagogiques = []
     @options_pedagogiques = OptionPedagogique.where(etablissement: @eleve.dossier_eleve.etablissement)
     @options_pedagogiques.each do |option|

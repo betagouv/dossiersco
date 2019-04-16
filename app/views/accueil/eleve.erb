@@ -1,6 +1,6 @@
 <%
-    premier_prenom = [
-        {
+  premier_prenom = [
+      {
           name: "prenom",
           label: t('.prenom'),
           type: "text",
@@ -8,28 +8,28 @@
           indication: "Prénom",
           disabled: false,
           required: 'required'
-        }]
+      }]
 
-    autres_prenoms = [
-        {
+  autres_prenoms = [
+      {
           name: "prenom_2",
           label: t('.prenom_2'),
           type: "text",
           value: @eleve.prenom_2,
           indication: "Deuxième prénom (optionnel)",
           disabled: false
-        },
-        {
+      },
+      {
           name: "prenom_3",
           label: t('.prenom_3'),
           type: "text",
           value: @eleve.prenom_3,
           indication: "Troisième prénom (optionnel)",
           disabled: false
-        }]
+      }]
 
-    reste_identite = [
-        {
+  reste_identite = [
+      {
           name: "nom",
           label: t('.nom'),
           type: "text",
@@ -37,19 +37,19 @@
           indication: "Nom",
           disabled: false,
           required: 'required'
-        },
-        {
+      },
+      {
           name: "sexe",
           label: t('.sexe'),
           type: "radio",
           options: [t('.feminin'), t('.masculin')],
           checked: @eleve.sexe
-        },
-        {
+      },
+      {
           type: "espace",
           hauteur: 20,
-        },
-        {
+      },
+      {
           name: "ville_naiss",
           label: t('.ville_de_naissance'),
           type: "text",
@@ -57,8 +57,8 @@
           indication: "Ville de naissance",
           disabled: false,
           required: 'required'
-        },
-        {
+      },
+      {
           name: "pays_naiss",
           label: t('.pays_de_naissance'),
           type: "text",
@@ -66,12 +66,12 @@
           indication: "Pays de naissance",
           disabled: false,
           required: 'required'
-        },
-        {
+      },
+      {
           type: "espace",
           hauteur: 20,
-        },
-        {
+      },
+      {
           name: "nationalite",
           label: t('.pays_de_nationalite'),
           type: "text",
@@ -79,19 +79,19 @@
           indication: "Pays de nationalité",
           disabled: false,
           required: 'required'
-        },
-        {
+      },
+      {
           type: "espace",
           hauteur: 10,
-        }]
+      }]
 
-    enseignement_facultatif = [
-    {
-        name: "latin",
-        label: t('.lv2'),
-        type: "checkbox",
-    }
-    ]
+  enseignement_facultatif = [
+      {
+          name: "latin",
+          label: t('.lv2'),
+          type: "checkbox",
+      }
+  ]
 %>
 
 <% @section = 1 %>
@@ -114,19 +114,26 @@
 
     <%= raw(construire reste_identite) %>
 
-    <% if @options_pedagogiques.present? %>
+    <% if @montees_pedagogiques.present? %>
       <h3 class="separation"><%= t('.options_pedagogiques') %></h3>
       <p><%= t('.explication_options_pedagogiques') %></p>
 
-      <% @options_pedagogiques.each do |option| %>
+      TODO: revoir le systeme pour enregistrer un abandon d'option
+      <% @montees_pedagogiques.each do |montee| %>
         <%= label_tag do %>
-          <% if @options_pedagogiques_selectionnees.include?(option) %>
-            <%= check_box_tag option.nom, option.id, :checked %>
+          <% if @eleve.dossier_eleve.options_pedagogiques.include?(montee.option_pedagogique) ||
+              @options_origines.include?(montee.option_pedagogique.nom) %>
+            <% if !montee.abandonnable && @options_origines.include?(montee.option_pedagogique.nom) %>
+              <%= check_box_tag montee.option_pedagogique.nom, montee.option_pedagogique.id, :checked,
+                                disabled: 'disabled', class: 'disabled'%>
+            <% else %>
+              <%= check_box_tag montee.option_pedagogique.nom, montee.option_pedagogique.id, :checked%>
+            <% end %>
           <% else %>
-            <%= check_box_tag option.nom, option.id %>
+            <%= check_box_tag montee.option_pedagogique.nom, montee.option_pedagogique.id %>
           <% end %>
-            <%= option.nom %>
-          <% end %>
+          <%= montee.option_pedagogique.nom %>
+        <% end %>
       <% end %>
 
     <% else %>

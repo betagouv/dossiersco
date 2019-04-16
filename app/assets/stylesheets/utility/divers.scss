@@ -34,6 +34,10 @@
   color: #0053b3;
 }
 
+.text-right {
+  text-align: right !important;
+}
+
 @media (max-width: 999px) {
   .hide-on-mobile {
     display: none !important;
