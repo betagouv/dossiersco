@@ -29,7 +29,7 @@
         <% end %>
       </PERSONNES>
       <ELEVES>
-        <% @etablissement.dossier_eleve.each do |dossier_eleve| %>
+        <% @etablissement.dossier_eleve.where("mef_destination_id is not null").each do |dossier_eleve| %>
           <ELEVE>
             <ID_PRV_ELE><%= dossier_eleve.id %></ID_PRV_ELE>
             <NOM_DE_FAMILLE><%= dossier_eleve.eleve.nom %></NOM_DE_FAMILLE>
