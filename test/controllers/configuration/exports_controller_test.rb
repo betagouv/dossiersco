@@ -13,6 +13,9 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
       Fabricate(:dossier_eleve, etablissement: admin.etablissement, resp_legal: [resp])
     end
 
+    resp = Fabricate(:resp_legal)
+    Fabricate(:dossier_eleve, mef_destination: nil, etablissement: admin.etablissement, resp_legal: [resp])
+
     get export_siecle_configuration_exports_path
 
     assert_response :success
