@@ -4,14 +4,18 @@ require 'roo-xls'
 class ImporterSiecle < ApplicationJob
   queue_as :default
 
+  discard_on(StandardError) do |job, error|
+    ExceptionNotifier.caught(error)
+  end
+
   COLONNES = {sexe: 0, nationalite: 1, prenom: 6, prenom_2: 7, prenom_3: 8, nom: 4, date_naiss: 9, identifiant: 11,
-    ville_naiss_etrangere: 20, commune_naiss: 21, pays_naiss: 22, code_mef: 32, niveau_classe_ant: 33, classe_ant: 34,
-    nom_resp_legal1: 99, prenom_resp_legal1: 101, date_sortie: 13,
-    tel_principal_resp_legal1: 102, tel_secondaire_resp_legal1: 104, lien_de_parente_resp_legal1: 103,
-    adresse_resp_legal1: 108, ville_resp_legal1: 112, code_postal_resp_legal1: 113, email_resp_legal1: 106,
-    nom_resp_legal2: 118, prenom_resp_legal2: 120, tel_principal_resp_legal2: 121,
-    tel_secondaire_resp_legal2: 123, lien_de_parente_resp_legal2: 122, adresse_resp_legal2: 127,
-    ville_resp_legal2: 131, code_postal_resp_legal2: 132, email_resp_legal2: 125}
+              ville_naiss_etrangere: 20, commune_naiss: 21, pays_naiss: 22, code_mef: 32, niveau_classe_ant: 33, classe_ant: 34,
+              nom_resp_legal1: 99, prenom_resp_legal1: 101, date_sortie: 13,
+              tel_principal_resp_legal1: 102, tel_secondaire_resp_legal1: 104, lien_de_parente_resp_legal1: 103,
+              adresse_resp_legal1: 108, ville_resp_legal1: 112, code_postal_resp_legal1: 113, email_resp_legal1: 106,
+              nom_resp_legal2: 118, prenom_resp_legal2: 120, tel_principal_resp_legal2: 121,
+              tel_secondaire_resp_legal2: 123, lien_de_parente_resp_legal2: 122, adresse_resp_legal2: 127,
+              ville_resp_legal2: 131, code_postal_resp_legal2: 132, email_resp_legal2: 125}
 
   def perform(tache_id, email)
     tache = TacheImport.find(tache_id)
@@ -52,7 +56,7 @@ class ImporterSiecle < ApplicationJob
     end
 
     {portable: (portables * 100) / nb_eleves_importes, email: (emails * 100) / nb_eleves_importes,
-    eleves: nb_eleves_importes, eleves_non_importes: @eleves_non_importes}
+     eleves: nb_eleves_importes, eleves_non_importes: @eleves_non_importes}
   end
 
   def import_mef(fichier, etablissement_id)
@@ -68,7 +72,12 @@ class ImporterSiecle < ApplicationJob
   def import_ligne_mef(etablissement_id, ligne_siecle)
     return unless ligne_siecle[COLONNES[:code_mef]].present?
     return unless ligne_siecle[COLONNES[:niveau_classe_ant]].present?
-    Mef.find_or_create_by!(etablissement_id: etablissement_id, code: ligne_siecle[COLONNES[:code_mef]], libelle: ligne_siecle[COLONNES[:niveau_classe_ant]])
+    mef = Mef.find_by(etablissement_id: etablissement_id, code: ligne_siecle[COLONNES[:code_mef]], libelle: ligne_siecle[COLONNES[:niveau_classe_ant]])
+    mef ||= Mef.new(etablissement_id: etablissement_id, code: ligne_siecle[COLONNES[:code_mef]], libelle: ligne_siecle[COLONNES[:niveau_classe_ant]])
+    unless mef.save
+      puts mef.errors.full_messages.join(', ')
+      raise mef.errors.full_messages.join(', ')
+    end
   end
 
   def import_ligne_adresse etablissement_id, ligne_siecle
@@ -85,9 +94,9 @@ class ImporterSiecle < ApplicationJob
 
       resp_legal = RespLegal.find_by(priorite: i.to_i, dossier_eleve_id: eleve.dossier_eleve.id)
       resp_legal.update(
-          ville_ant: donnees_resp_legal[:ville],
-          adresse_ant: (concatener_adresse ligne_siecle, resp_legal.priorite),
-          code_postal_ant: donnees_resp_legal[:code_postal])
+        ville_ant: donnees_resp_legal[:ville],
+        adresse_ant: (concatener_adresse ligne_siecle, resp_legal.priorite),
+        code_postal_ant: donnees_resp_legal[:code_postal])
     end
   end
 
@@ -110,8 +119,8 @@ class ImporterSiecle < ApplicationJob
     end
 
     champs_eleve = [:sexe,:nationalite, :date_naiss, :prenom, :prenom_2, :prenom_3, :nom,
-      :identifiant, :pays_naiss, :commune_naiss, :ville_naiss_etrangere, :classe_ant,
-      :niveau_classe_ant]
+                    :identifiant, :pays_naiss, :commune_naiss, :ville_naiss_etrangere, :classe_ant,
+                    :niveau_classe_ant]
 
     donnees_eleve = {}
     champs_eleve.each do |champ|
@@ -129,11 +138,13 @@ class ImporterSiecle < ApplicationJob
     mef_origine = Mef.find_by(code: ligne_siecle[COLONNES[:code_mef]], libelle: ligne_siecle[COLONNES[:niveau_classe_ant]])
     mef_destination = Mef.niveau_superieur(mef_origine) if mef_origine.present?
 
-    dossier_eleve = DossierEleve.find_or_initialize_by(eleve_id: eleve.id, etablissement_id: etablissement_id)
+    dossier_eleve = DossierEleve.find_by(eleve_id: eleve.id, etablissement_id: etablissement_id)
+    dossier_eleve ||= DossierEleve.new(eleve_id: eleve.id, etablissement_id: etablissement_id)
     dossier_eleve.mef_origine = mef_origine
     dossier_eleve.mef_destination = mef_destination
 
     unless dossier_eleve.save
+      puts dossier_eleve.errors.full_messages.join(', ')
       raise dossier_eleve.errors.full_messages.join(', ')
     end
 
@@ -154,7 +165,7 @@ class ImporterSiecle < ApplicationJob
     end
 
     champs_resp_legal = [:nom, :prenom, :tel_principal, :tel_secondaire, :lien_de_parente,
-      :adresse, :code_postal, :ville, :email]
+                         :adresse, :code_postal, :ville, :email]
 
     donnees_resp_legal = {}
     ['1', '2'].each do |i|
