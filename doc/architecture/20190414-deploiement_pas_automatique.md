@@ -1,6 +1,6 @@
 # Déploiement pas automatique
 
-Status: accepté
+Status: en discussion / test
 
 ## Contexte
 
@@ -19,9 +19,19 @@ plateforme (pour le moment Scalingo) pourrait déployer.
 
 Le script est dans `bin/deploy`
 
+
+__en discussion__
+
+Laurent serais pour conserver un déploiement automatique. Yann, de Scalingo,
+nous conseil également de brancher le repo sur scalingo pour déployer
+automatiquement, tout en gardant circleci pour executer des tests et autres
+avant de déployer (si c'est pas vert, ça déploie pas apparement).
+
+C'est vrai que c'est quand même confortable de ne pas se soucier du
+déploiement.
+
 ## Conséquences
 
-Nous recommançons à avoir une branch de demo par défaut
-Nous n'aurions plus besoin de CircleCI (à condition que le script inclu
-l'execution des tests)
+Nous recommançons à avoir une branch de demo par défaut Nous n'aurions plus
+besoin de CircleCI (à condition que le script inclu l'execution des tests)
 
