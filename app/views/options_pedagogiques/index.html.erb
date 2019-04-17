@@ -11,17 +11,12 @@
       <div class="panel__header">
         <h3><%= "#{mef_destination.libelle}" %></h3>
         <small class="panel__header-extra">
-<<<<<<< HEAD
           <%= link_to t('.modifier'), edit_configuration_mef_path(mef_destination) %>
-=======
-          <%= link_to t('.modifier'), edit_configuration_mef_path(montees_pedagogiques[0]) %>
->>>>>>> permet d'ajouter des montées pédagogiques
         </small>
       </div>
       <div class="cards" data-mef-destination="<%= mef_destination.id %>">
         <% montees_pedagogiques.group_by(&:mef_origine).each do |mef_montee| %>
           <% mef_origine, montees = mef_montee[0], mef_montee[1] %>
-<<<<<<< HEAD
           <h6 class="mb-0 mt-1">MEF d'origine : <%= mef_origine.libelle %></h6>
           <table class="table">
             <tbody data-mef-origine="<%= mef_origine.id %>">
@@ -31,17 +26,6 @@
                 <td><%= "abandonnable" if montee.abandonnable %></td>
                 <td><%= link_to t('.modifier'), edit_configuration_montee_pedagogique_path(montee) %></td>
                 <td class="text-right"><%= link_to configuration_montee_pedagogique_path(montee.id),
-=======
-          <table class="table">
-            <h6 class="mb-0 mt-1">MEF d'origine : <%= mef_origine.libelle %></h6>
-            <tbody data-mef-origine="<%= mef_origine.id %>">
-            <% montees.each do |montee| %>
-              <tr class="small-line" data-option-id="<%= montee.option_pedagogique.id %>">
-                <td><%= "#{montee.option_pedagogique.nom} #{montee.option_pedagogique.groupe} " %></td>
-                <td><%= "abandonnable" if montee.abandonnable %></td>
-                <td><%= link_to t('.modifier'), edit_option_pedagogique_path(montee.option_pedagogique) %></td>
-                <td><%= link_to configuration_montee_pedagogique_path(montee.id),
->>>>>>> permet d'ajouter des montées pédagogiques
                                 method: :delete, remote: true do %><i class='fas fa-times'></i><% end %></td>
               </tr>
             <% end %>
