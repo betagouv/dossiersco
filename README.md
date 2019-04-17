@@ -1,5 +1,7 @@
 # DossierSCO
 
+[![CircleCI](https://circleci.com/gh/betagouv/dossiersco.svg?style=svg)](https://circleci.com/gh/betagouv/dossiersco)
+
 Inscrire ses enfants au collège sans se déplacer, sans redonner d'informations déjà connues et sans flux papier.
 
 [dossiersco.fr](https://dossiersco.fr/)
