@@ -6,14 +6,15 @@
 
   <% @montees_pedagogiques_par_mef.each do |mef_montees_pedagogiques| %>
     <% mef_destination, montees_pedagogiques = mef_montees_pedagogiques[0], mef_montees_pedagogiques[1] %>
-    <div class="panel">
-      <div class="panel__header">
-        <h3><%= "#{mef_destination.libelle}" %></h3>
+    <div class="panel accordeon">
+      <div class="panel__header bouton-accordeon" data-mef-destination="<%= mef_destination.id %>">
+        <i class="fas fa-chevron-down"></i>
+        <h3 class="ml-1"><%= "#{mef_destination.libelle}" %></h3>
         <small class="panel__header-extra">
           <%= link_to t('.modifier'), edit_configuration_mef_path(mef_destination) %>
         </small>
       </div>
-      <div class="cards" data-mef-destination="<%= mef_destination.id %>">
+      <div class="cards contenu-accordeon" data-mef-destination="<%= mef_destination.id %>">
         <% montees_pedagogiques.group_by(&:mef_origine).each do |mef_montee| %>
           <% mef_origine, montees = mef_montee[0], mef_montee[1] %>
           <h6 class="mb-0 mt-1">MEF d'origine : <%= mef_origine.libelle %></h6>
@@ -43,3 +44,13 @@
   <% end %>
 </section>
 
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+  $('.contenu-accordeon:first').addClass('accordeon-ouvert')
+  $('.bouton-accordeon').click(function() {
+    let data = $(this).data('mef-destination')
+    $('.contenu-accordeon').removeClass('accordeon-ouvert')
+    $(".contenu-accordeon[data-mef-destination='" + data + "']").addClass('accordeon-ouvert')
+  })
+})
+</script>
