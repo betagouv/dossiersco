@@ -1,6 +1,6 @@
 # Déploiement pas automatique
 
-Status: proposée
+Status: accepté
 
 ## Contexte
 
@@ -17,7 +17,11 @@ Nous pourrions avoir un script qui permet de déployer facilement à partir de l
 branche courante. N'importe quel membre de l'équipe, ayant accès à la
 plateforme (pour le moment Scalingo) pourrait déployer.
 
+Le script est dans `bin/deploy`
+
 ## Conséquences
 
+Nous recommançons à avoir une branch de demo par défaut
 Nous n'aurions plus besoin de CircleCI (à condition que le script inclu
 l'execution des tests)
+
