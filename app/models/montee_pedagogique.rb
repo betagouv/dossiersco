@@ -2,6 +2,7 @@ class MonteePedagogique < ActiveRecord::Base
   belongs_to :mef_origine, class_name: 'Mef'
   belongs_to :mef_destination, class_name: 'Mef'
   belongs_to :option_pedagogique
+  belongs_to :etablissement
 
   validate :unique
 

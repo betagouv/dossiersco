@@ -61,5 +61,15 @@ class ImporterSiecleTest < ActiveJob::TestCase
     importer.import_ligne_mef(etablissement.id, ligne)
     assert_equal 1, Mef.all.count
   end
-end
 
+  test "Importe les options d'origine d'un dossier élève" do
+    etablissement = Fabricate(:etablissement)
+    fichier_xls = fixture_file_upload('files/test_import_siecle.xls')
+    importer = ImporterSiecle.new
+    importer.import_dossiers_eleve(fichier_xls, etablissement.id)
+    dossier_eleve = Eleve.find_by(identifiant: "080788316HE").dossier_eleve
+
+    assert_equal "ANGLAIS LV1", dossier_eleve.options_origines.first[1]['nom']
+    assert_equal "ANGLAIS LV1", dossier_eleve.options_pedagogiques.first.nom
+  end
+end

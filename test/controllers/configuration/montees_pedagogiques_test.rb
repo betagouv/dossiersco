@@ -22,7 +22,7 @@ class MonteesPedagogiquesTest < ActionDispatch::IntegrationTest
   test 'Un agent supprime une montée pédagogiques' do
     admin = Fabricate(:admin)
     identification_agent(admin)
-    montee_pedagogique = Fabricate(:montee_pedagogique)
+    montee_pedagogique = Fabricate(:montee_pedagogique, etablissement: admin.etablissement)
 
     assert_difference('MonteePedagogique.count', -1) do
       delete configuration_montee_pedagogique_path(montee_pedagogique)

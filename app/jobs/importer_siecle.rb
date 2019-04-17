@@ -158,7 +158,7 @@ class ImporterSiecle < ApplicationJob
         MonteePedagogique.find_or_create_by(mef_origine: mef_origine, mef_destination: mef_destination,
                                             option_pedagogique: option, etablissement_id: etablissement_id )
       end
-
+      dossier_eleve.options_pedagogiques << option
       option_origine = {}
       option_origine[:nom] = option.nom
       option_origine[:groupe] = option.groupe

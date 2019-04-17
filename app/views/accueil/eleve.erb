@@ -118,16 +118,15 @@
       <h3 class="separation"><%= t('.options_pedagogiques') %></h3>
       <p><%= t('.explication_options_pedagogiques') %></p>
 
-      TODO: revoir le systeme pour enregistrer un abandon d'option
       <% @montees_pedagogiques.each do |montee| %>
         <%= label_tag do %>
-          <% if @eleve.dossier_eleve.options_pedagogiques.include?(montee.option_pedagogique) ||
-              @options_origines.include?(montee.option_pedagogique.nom) %>
-            <% if !montee.abandonnable && @options_origines.include?(montee.option_pedagogique.nom) %>
-              <%= check_box_tag montee.option_pedagogique.nom, montee.option_pedagogique.id, :checked,
-                                disabled: 'disabled', class: 'disabled'%>
+          <% if @eleve.dossier_eleve.options_pedagogiques.include?(montee.option_pedagogique) %>
+            <% if montee.abandonnable %>
+              <%= check_box_tag montee.option_pedagogique.nom, montee.option_pedagogique.id, :checked %>
             <% else %>
-              <%= check_box_tag montee.option_pedagogique.nom, montee.option_pedagogique.id, :checked%>
+              <%= check_box_tag montee.option_pedagogique.nom, montee.option_pedagogique.id,
+                                :checked, disabled: 'disabled', class: 'disabled' %>
+              <%= hidden_field_tag montee.option_pedagogique.nom, montee.option_pedagogique.id %>
             <% end %>
           <% else %>
             <%= check_box_tag montee.option_pedagogique.nom, montee.option_pedagogique.id %>

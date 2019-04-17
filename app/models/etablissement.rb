@@ -7,7 +7,7 @@ class Etablissement < ActiveRecord::Base
   has_many :dossier_affelnets, dependent: :destroy
   has_many :mef, dependent: :destroy
   has_many :options_pedagogiques, dependent: :destroy
-  has_many :montee_pedagogiques, dependent: :destroy
+  has_many :montees_pedagogiques, dependent: :destroy
 
   mount_uploader :reglement_demi_pension, FichierEtablissementUploader
 
