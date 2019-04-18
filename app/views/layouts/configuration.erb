@@ -58,7 +58,7 @@
             <%= link_to t('.import_export'), new_tache_import_path, {class: 'nav-link'} %>
           </li>
           <li class="nav__item <%= 'active' if request.fullpath == '/options_pedagogiques' %>">
-            <%= link_to 'Options pédagogiques', options_pedagogiques_path, {class: 'nav-link'} %>
+            <%= link_to 'Carte des formations', options_pedagogiques_path, {class: 'nav-link'} %>
           </li>
           <li class="nav__item <%= 'active' if request.fullpath.include? '/pieces_attendues' %>">
             <%= link_to 'Pièces attendues', configuration_pieces_attendues_path, {class: 'nav-link'} %>
