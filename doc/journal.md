@@ -17,6 +17,11 @@
 
 ### Développement
 
+- [Ajouter les informations d'un établissement après inscription](https://github.com/betagouv/dossiersco/issues/491)
+- [Les parents remplissent des champs "téléphone" qui ne sont pas ceux de SIECLE](https://github.com/betagouv/dossiersco/issues/490)
+- [Faciliter l'accès à letter_opener en environnement de démo](https://github.com/betagouv/dossiersco/issues/515)
+- [Renommer le collège par défaut de l'environnement de démo](https://github.com/betagouv/dossiersco/issues/516)
+- [Revoir le wording des messages aux parents, à la fin de procédure d'inscription](https://github.com/betagouv/dossiersco/issues/499)
 
 ### Intraprenariat
 
