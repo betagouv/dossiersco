@@ -34,6 +34,9 @@
       <% if @agent_connecté && super_admin?(@agent_connecté.email) %>
         <a href="/suivi">Suivi</a>
       <% end %>
+      <% if @agent_connecté %>
+        <a href="/letter_opener">Emails envoyées</a>
+      <% end %>
     </ul>
   </div>
 </footer>
