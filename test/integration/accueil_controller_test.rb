@@ -221,7 +221,7 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     post '/identification', params: { identifiant: eleve.identifiant, annee: eleve.annee_de_naissance, mois: eleve.mois_de_naissance, jour: eleve.jour_de_naissance }
     follow_redirect!
 
-    assert response.parsed_body.include? 'Vous recevrez prochainement un courriel de confirmation'
+    assert response.parsed_body.include? "L'inscription ne sera validée qu'à réception d'un email de confirmation"
   end
 
 end

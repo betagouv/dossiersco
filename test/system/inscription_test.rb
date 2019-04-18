@@ -44,6 +44,6 @@ class InscriptionTest < ActionDispatch::IntegrationTest
     assert_selector 'h2', text: 'Validation'
 
     click_button("Valider l'inscription")
-    assert_selector 'h2', text: 'Réinscription validée'
+    assert_selector 'h2', text: 'Réinscription enregistrée'
   end
 end
