@@ -164,7 +164,7 @@ def cree_dossier_eleve eleve, etablissement, etat = 'en attente de validation'
     lien_de_parente: 'Père', prenom: 'Jean', nom: 'Blayo',
     adresse: '42 rue du départ', code_postal: '75018', ville: 'Paris',
     adresse_ant: '42 rue du départ', code_postal_ant: '75018', ville_ant: 'Paris',
-    tel_principal: '0123456789', tel_secondaire: '0602020202', email: 'test2@test.com',
+    tel_personnel: '0123456789', tel_portable: '0602020202', email: 'test2@test.com',
     profession: 'artisan', enfants_a_charge: 2,
     communique_info_parents_eleves: false,
     priorite: 2
@@ -184,7 +184,7 @@ def cree_resp_legal dossier_eleve
     lien_de_parente: 'Mère', prenom: 'Gertrude', nom: 'Martin',
     adresse: '42 rue victoire', code_postal: '75020', ville: 'Paris',
     adresse_ant: '42 rue victoire', code_postal_ant: '75020', ville_ant: 'Paris',
-    tel_principal: '0123456789', tel_secondaire: '0987654321', email: 'test@test.com',
+    tel_personnel: '0123456789', tel_portable: '0987654321', email: 'test@test.com',
     profession: 'concierge', enfants_a_charge: nil,
     communique_info_parents_eleves: true,
     priorite: 1

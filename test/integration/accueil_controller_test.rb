@@ -102,7 +102,7 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_persistence_du_resp_legal_1
-    doc = soumet_formulaire '/famille', params: { lien_de_parente_rl1: 'TUTEUR', prenom_rl1: 'Philippe', nom_rl1: 'Blayo', adresse_rl1: '20 bd Segur', code_postal_rl1: '75007', ville_rl1: 'Paris', tel_principal_rl1: '0612345678', tel_secondaire_rl1: '0112345678', email_rl1: 'test@gmail.com', profession_rl1: 'Retraité cadre, profession interm édiaire', enfants_a_charge_rl1: 3, communique_info_parents_eleves_rl1: 'true' }
+    doc = soumet_formulaire '/famille', params: { lien_de_parente_rl1: 'TUTEUR', prenom_rl1: 'Philippe', nom_rl1: 'Blayo', adresse_rl1: '20 bd Segur', code_postal_rl1: '75007', ville_rl1: 'Paris', tel_personnel_rl1: '0612345678', tel_portable_rl1: '0112345678', email_rl1: 'test@gmail.com', profession_rl1: 'Retraité cadre, profession interm édiaire', enfants_a_charge_rl1: 3, communique_info_parents_eleves_rl1: 'true' }
 
     assert_equal 'TUTEUR', doc.css('#lien_de_parente_rl1 option[@selected="selected"]').children.text
     assert_attr 'Philippe', '#prenom_rl1', doc
@@ -110,8 +110,8 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     assert_attr '20 bd Segur', '#adresse_rl1', doc
     assert_attr '75007', '#code_postal_rl1', doc
     assert_equal 'PARIS', doc.css('#ville_rl1').children.text.gsub!(/\s+/, '')
-    assert_attr '0612345678', '#tel_principal_rl1', doc
-    assert_attr '0112345678', '#tel_secondaire_rl1', doc
+    assert_attr '0612345678', '#tel_personnel_rl1', doc
+    assert_attr '0112345678', '#tel_portable_rl1', doc
     assert_attr 'test@gmail.com', '#email_rl1', doc
     assert_equal 'Retraité cadre, profession interm édiaire', doc.css('#profession_rl1 option[@selected="selected"]').children.text
     assert_attr '3', '#enfants_a_charge_rl1', doc

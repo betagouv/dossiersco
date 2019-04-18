@@ -6,7 +6,7 @@ class AddTelephoneToDossierEleve < ActiveRecord::Migration[5.2]
 
     RespLegal.all.each do |responsable|
       responsable.tel_personnel = responsable.tel_personnel
-      responsable.tel_portable = responsable.tel_secondaire
+      responsable.tel_portable = responsable.tel_portable
       responsable.save
     end
 

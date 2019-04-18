@@ -111,14 +111,14 @@
             <%= resp_legal.prenom %> <%= resp_legal.nom %>
           </h4>
           <ul class="list-unstyled">
-            <% if resp_legal.tel_principal.present? %>
+            <% if resp_legal.tel_personnel.present? %>
               <li>
-                <i class="fas fa-phone-square mr-1"></i> <strong><%= resp_legal.tel_principal %></strong>
+                <i class="fas fa-phone-square mr-1"></i> <strong><%= resp_legal.tel_personnel %></strong>
               </li>
             <% end %>
-            <% if resp_legal.tel_secondaire.present? %>
+            <% if resp_legal.tel_portable.present? %>
               <li>
-                <i class="fas fa-phone-square mr-1"></i> <%= resp_legal.tel_secondaire %>
+                <i class="fas fa-phone-square mr-1"></i> <%= resp_legal.tel_portable %>
               </li>
             <% end %>
             <% if resp_legal.respond_to?(:email) && resp_legal.email.present? %>

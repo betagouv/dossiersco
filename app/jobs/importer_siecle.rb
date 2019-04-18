@@ -11,10 +11,10 @@ class ImporterSiecle < ApplicationJob
   COLONNES = {sexe: 0, nationalite: 1, prenom: 6, prenom_2: 7, prenom_3: 8, nom: 4, date_naiss: 9, identifiant: 11,
               ville_naiss_etrangere: 20, commune_naiss: 21, pays_naiss: 22, code_mef: 32, niveau_classe_ant: 33, classe_ant: 34,
               nom_resp_legal1: 99, prenom_resp_legal1: 101, date_sortie: 13,
-              tel_principal_resp_legal1: 102, tel_secondaire_resp_legal1: 104, lien_de_parente_resp_legal1: 103,
+              tel_personnel_resp_legal1: 102, tel_portable_resp_legal1: 104, lien_de_parente_resp_legal1: 103,
               adresse_resp_legal1: 108, ville_resp_legal1: 112, code_postal_resp_legal1: 113, email_resp_legal1: 106,
-              nom_resp_legal2: 118, prenom_resp_legal2: 120, tel_principal_resp_legal2: 121,
-              tel_secondaire_resp_legal2: 123, lien_de_parente_resp_legal2: 122, adresse_resp_legal2: 127,
+              nom_resp_legal2: 118, prenom_resp_legal2: 120, tel_personnel_resp_legal2: 121,
+              tel_portable_resp_legal2: 123, lien_de_parente_resp_legal2: 122, adresse_resp_legal2: 127,
               ville_resp_legal2: 131, code_postal_resp_legal2: 132, email_resp_legal2: 125}
 
   def perform(tache_id, email)
@@ -164,7 +164,7 @@ class ImporterSiecle < ApplicationJob
       dossier_eleve.options_pedagogiques << option
     end
 
-    champs_resp_legal = [:nom, :prenom, :tel_principal, :tel_secondaire, :lien_de_parente,
+    champs_resp_legal = [:nom, :prenom, :tel_personnel, :tel_portable, :lien_de_parente,
                          :adresse, :code_postal, :ville, :email]
 
     donnees_resp_legal = {}
@@ -183,7 +183,7 @@ class ImporterSiecle < ApplicationJob
       resp_legal = RespLegal.find_or_initialize_by(dossier_eleve_id: dossier_eleve.id, priorite: i.to_i)
       resp_legal.update_attributes!(donnees_resp_legal)
 
-      resultat[:portable] = true if resp_legal.tel_principal =~ /^0[67]/ or resp_legal.tel_secondaire =~ /^0[67]/
+      resultat[:portable] = true if resp_legal.tel_personnel =~ /^0[67]/ or resp_legal.tel_portable =~ /^0[67]/
       resultat[:email] = true if resp_legal.email =~ /@.*\./
     end
 
