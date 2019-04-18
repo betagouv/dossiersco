@@ -1,6 +1,6 @@
 # Déploiement pas automatique
 
-Status: en discussion / test
+Status: rejeté
 
 ## Contexte
 
@@ -13,25 +13,13 @@ un membre de l'équipe.
 
 ## Decision
 
-Nous pourrions avoir un script qui permet de déployer facilement à partir de la
-branche courante. N'importe quel membre de l'équipe, ayant accès à la
-plateforme (pour le moment Scalingo) pourrait déployer.
+Après avoir envisager de revenir à un script qui permet de déployer facilement à partir de la
+branche courante, nous avons finalement opté pour garder un déploiement automatique.
 
-Le script est dans `bin/deploy`
+Par contre, pour résoudre le soucis du déploiement à partir de CircleCI avec la
+clef publique d'un membre de l'équipe, nous allons branché directement Scalingo
+à notre github.
 
-
-__en discussion__
-
-Laurent serais pour conserver un déploiement automatique. Yann, de Scalingo,
-nous conseil également de brancher le repo sur scalingo pour déployer
-automatiquement, tout en gardant circleci pour executer des tests et autres
-avant de déployer (si c'est pas vert, ça déploie pas apparement).
-
-C'est vrai que c'est quand même confortable de ne pas se soucier du
-déploiement.
-
-## Conséquences
-
-Nous recommançons à avoir une branch de demo par défaut Nous n'aurions plus
-besoin de CircleCI (à condition que le script inclu l'execution des tests)
-
+Nous allons également déployer automatiquement en production et en démo à
+partir d'une seule branche, renomé Master; Gestion en
+[trunk-based](https://en.wikipedia.org/wiki/Trunk_%28software%29).
