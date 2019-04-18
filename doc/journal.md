@@ -1,5 +1,31 @@
 # Journal
 
+## 14e semaine - du 15 avril au 18 avril
+
+**l'équipe s'étoffe**
+
+### Vie de l'équipe
+
+- C'est pas confortable de fermer une itération en début de semaine; préserver un créneau, même très court, pour fermer l'itération.
+- C'est une pratique intéressante de se retrouver en équipe (large) en début de semaine pour ouvrir l'itération. A refaire, ça permet de définir le focus de la semaine. Pas la peine de faire un truc trop long.
+- Pour communiquer sur les changements sur DossierSCO, le blog semble être plus simple à utiliser / renseigner. À partir du journal et d'une discussion avec l'équipe, nous devrions pouvoir écrire un article par semaine.
+- On dois vérifier que les messages transmis ont bien été reçu.
+- C'est chouette d'avoir découvert au bout d'une semaine seulement que nous avons eu un loupé de communication.
+- Si ça arrive à nouveau, nous pourrions peut-être ajouter une colonne « en attente »
+- Le blog dossiersco est accessible ! https://blog.dossiersco.fr/
+- 17 établissements connecté au moins une fois sur DossierSCO
+
+### Développement
+
+
+### Intraprenariat
+
+- la DNE et la DGESCO s'intéressent au produit, et on aime ça.
+- On a commencer les tests de retour dans siecle; le fichier XML généré semble ne pas être au bon format. Nous n'avons pas le bon fichier XSD peut-être ?
+
+---
+
+
 ## 13e semaine - du 5 avril au 14 avril
 
 **L'équipe gagne en maturité, c'est bon signe pour passer à l'échelle**
