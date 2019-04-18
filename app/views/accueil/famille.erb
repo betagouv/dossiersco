@@ -62,18 +62,25 @@
         hauteur: '30'
     },
     {
-        name: "tel_principal_rl1",
+        name: "tel_personnel_rl1",
         label: t('.telephone_principal'),
         type: "tel",
-        value: @resp_legal_1.tel_principal,
+        value: @resp_legal_1.tel_personnel,
         indication: "Numéro de téléphone",
         required: 'required'
     },
     {
-        name: "tel_secondaire_rl1",
+        name: "tel_portable_rl1",
         label: t('.telephone_secondaire'),
         type: "tel",
-        value: @resp_legal_1.tel_secondaire,
+        value: @resp_legal_1.tel_portable,
+        indication: "Numéro de téléphone",
+    },
+    {
+        name: "tel_professionnel_rl1",
+        label: t('.telephone_professionnel'),
+        type: "tel",
+        value: @resp_legal_1.tel_professionnel,
         indication: "Numéro de téléphone",
     },
     {
@@ -188,18 +195,25 @@
              hauteur: '30'
          },
          {
-             name: "tel_principal_rl2",
+             name: "tel_personnel_rl2",
              label: t('.telephone_principal'),
              type: "tel",
-             value: @resp_legal_2.tel_principal,
+             value: @resp_legal_2.tel_personnel,
              indication: "Numéro de téléphone",
              required: 'required'
          },
          {
-             name: "tel_secondaire_rl2",
+             name: "tel_portable_rl2",
              label: t('.telephone_secondaire'),
              type: "tel",
-             value: @resp_legal_2.tel_secondaire,
+             value: @resp_legal_2.tel_portable,
+             indication: "Numéro de téléphone",
+         },
+         {
+             name: "tel_professionnel_rl2",
+             label: t('.telephone_professionnel'),
+             type: "tel",
+             value: @resp_legal_2.tel_professionnel,
              indication: "Numéro de téléphone",
          },
          {

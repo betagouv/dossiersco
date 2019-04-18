@@ -80,9 +80,9 @@ class DossierEleve < ActiveRecord::Base
   end
 
   def portable responsable_legal
-    secondaire = responsable_legal.tel_secondaire
+    secondaire = responsable_legal.tel_portable
     return secondaire unless (secondaire.blank? || secondaire.start_with?("01"))
-    return responsable_legal.tel_principal
+    return responsable_legal.tel_personnel
   end
 
   def date_signature_gmt_plus_2

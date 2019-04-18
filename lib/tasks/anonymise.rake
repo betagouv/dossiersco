@@ -19,8 +19,8 @@ namespace :db do
       resp.adresse = Faker::Address.street_address if resp.adresse.present?
       resp.code_postal = Faker::Address.zip if resp.code_postal.present?
       resp.ville = Faker::Address.city if resp.ville.present?
-      resp.tel_principal = Faker::PhoneNumber.phone_number if resp.tel_principal.present?
-      resp.tel_secondaire = Faker::PhoneNumber.phone_number if resp.tel_secondaire.present?
+      resp.tel_personnel = Faker::PhoneNumber.phone_number if resp.tel_personnel.present?
+      resp.tel_portable = Faker::PhoneNumber.phone_number if resp.tel_portable.present?
       resp.save!
     end
 

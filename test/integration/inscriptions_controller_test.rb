@@ -59,10 +59,10 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   def test_destinataire_sms
     dossier = DossierEleve.new
     dossier.resp_legal = [RespLegal.new(
-      tel_principal: '01 12 34 56 78', tel_secondaire: '06 12 34 56 78', priorite: 1
+      tel_personnel: '01 12 34 56 78', tel_portable: '06 12 34 56 78', priorite: 1
     ),
                           RespLegal.new(
-                            tel_principal: '01 12 34 56 78', tel_secondaire: '06 12 34 56 99', priorite: 2
+                            tel_personnel: '01 12 34 56 78', tel_portable: '06 12 34 56 99', priorite: 2
                           )]
     message = Message.new(dossier_eleve: dossier, categorie: 'sms')
     assert_equal '06 12 34 56 78', message.numero
@@ -73,23 +73,23 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   def test_portable_rl1
     dossier = DossierEleve.new
     dossier.resp_legal = [RespLegal.new(
-      tel_principal: '01 12 34 56 78', tel_secondaire: '06 12 34 56 78', priorite: 1
+      tel_personnel: '01 12 34 56 78', tel_portable: '06 12 34 56 78', priorite: 1
     )]
     assert_equal '06 12 34 56 78', dossier.portable_rl1
     dossier.resp_legal = [RespLegal.new(
-      tel_principal: '06 12 34 56 78', tel_secondaire: nil, priorite: 1
+      tel_personnel: '06 12 34 56 78', tel_portable: nil, priorite: 1
     )]
     assert_equal '06 12 34 56 78', dossier.portable_rl1
     dossier.resp_legal = [RespLegal.new(
-      tel_principal: '06 12 34 56 78', tel_secondaire: '', priorite: 1
+      tel_personnel: '06 12 34 56 78', tel_portable: '', priorite: 1
     )]
     assert_equal '06 12 34 56 78', dossier.portable_rl1
     dossier.resp_legal = [RespLegal.new(
-      tel_principal: '06 12 34 56 78', tel_secondaire: '01 12 34 56 78', priorite: 1
+      tel_personnel: '06 12 34 56 78', tel_portable: '01 12 34 56 78', priorite: 1
     )]
     assert_equal '06 12 34 56 78', dossier.portable_rl1
     dossier.resp_legal = [RespLegal.new(
-      tel_principal: '07 12 34 56 78', tel_secondaire: '06 12 34 56 78', priorite: 1
+      tel_personnel: '07 12 34 56 78', tel_portable: '06 12 34 56 78', priorite: 1
     )]
     assert_equal '06 12 34 56 78', dossier.portable_rl1
   end
@@ -97,11 +97,11 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   def test_portable_rl2
     dossier = DossierEleve.new
     dossier.resp_legal = [RespLegal.new(
-      tel_principal: '01 12 34 56 78', tel_secondaire: '06 12 34 56 78', priorite: 1
+      tel_personnel: '01 12 34 56 78', tel_portable: '06 12 34 56 78', priorite: 1
     )]
     assert_nil dossier.portable_rl2
     dossier.resp_legal << RespLegal.new(
-      tel_principal: '01 12 34 56 78', tel_secondaire: '06 12 34 56 99', priorite: 2
+      tel_personnel: '01 12 34 56 78', tel_portable: '06 12 34 56 99', priorite: 2
     )
     assert_equal '06 12 34 56 99', dossier.portable_rl2
   end
@@ -206,8 +206,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     e = Eleve.create! identifiant: 'XXX'
 
     resp_legal = Fabricate(:resp_legal,
-                           tel_principal: '0101010101',
-                           tel_secondaire: '0606060606',
+                           tel_personnel: '0101010101',
+                           tel_portable: '0606060606',
                            email: 'test@test.com',
                            priorite: 1)
 
@@ -362,7 +362,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     etablissement = Fabricate(:etablissement)
     e = Eleve.create! identifiant: 'XXX'
     d = DossierEleve.create! eleve_id: e.id, etablissement_id: etablissement.id, commentaire: 'Commentaire de test'
-    RespLegal.create! dossier_eleve_id: d.id, tel_principal: '0101010101', tel_secondaire: '0606060606', email: 'test@test.com', priorite: 1
+    RespLegal.create! dossier_eleve_id: d.id, tel_personnel: '0101010101', tel_portable: '0606060606', email: 'test@test.com', priorite: 1
 
     agent = Fabricate(:agent, etablissement: d.etablissement)
     identification_agent(agent)
@@ -440,8 +440,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     doc = Nokogiri::HTML(response.body)
     assert_equal resp_legal_connecté.prenom, doc.css('tbody > tr:nth-child(1) > td:nth-child(4)').text.strip
     assert_equal resp_legal_connecté.nom, doc.css('tbody > tr:nth-child(1) > td:nth-child(5)').text.strip
-    assert_equal resp_legal_connecté.tel_principal, doc.css('tbody > tr:nth-child(1) > td:nth-child(6)').text.strip
-    assert_equal resp_legal_connecté.tel_secondaire, doc.css('tbody > tr:nth-child(1) > td:nth-child(7)').text.strip
+    assert_equal resp_legal_connecté.tel_personnel, doc.css('tbody > tr:nth-child(1) > td:nth-child(6)').text.strip
+    assert_equal resp_legal_connecté.tel_portable, doc.css('tbody > tr:nth-child(1) > td:nth-child(7)').text.strip
     assert_equal resp_legal_non_connecté.prenom, doc.css('tbody > tr:nth-child(2) > td:nth-child(4)').text.strip
   end
 end

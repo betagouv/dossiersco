@@ -120,8 +120,9 @@ fr:
       adresse: Adresse
       code_postal: Code postal
       ville: Ville
-      telephone_principal: Téléphone principal
-      telephone_secondaire: Téléphone secondaire
+      telephone_principal: Téléphone personnel
+      telephone_secondaire: Téléphone portable
+      telephone_professionnel: Téléphone professionnel
       email_principal: Email principal
       profession: Profession
       nb_total_enfants_a_charge: "Nombre total d'enfants à charge"
