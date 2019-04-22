@@ -4,8 +4,8 @@ ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 require 'rails/test_help'
 
-require 'fakeweb'
-FakeWeb.allow_net_connect = false
+require 'webmock/minitest'
+WebMock.disable_net_connect!
 
 class ActiveSupport::TestCase
   def html_escape(text)

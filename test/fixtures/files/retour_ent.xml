@@ -1,0 +1,47 @@
+<cas:serviceResponse xmlns:cas="http://www.yale.edu/tp/cas">
+  <cas:authenticationSuccess>
+    <cas:user>henri.ford7</cas:user>
+    <cas:attributes>
+      <cas:longTermAuthenticationRequestTokenUsed>false</cas:longTermAuthenticationRequestTokenUsed>
+      <cas:isFromNewLogin>false</cas:isFromNewLogin>
+      <cas:userAttributes>
+        <lastLogin xmlns="">2019-04-22T22:12:37.806+02:00</lastLogin>
+        <lastName xmlns="">FORD</lastName>
+        <country xmlns="">FRANCE</country>
+        <zipCode xmlns="">75020</zipCode>
+        <functions xmlns="">[[null,null]]</functions>
+        <city xmlns="">PARIS</city>
+        <lastDomain xmlns="">ent.parisclassenumerique.fr</lastDomain>
+        <displayName xmlns="">Henri FORD</displayName>
+        <functionalGroups xmlns="">[{"name":null,"id":null}]</functionalGroups>
+        <source xmlns="">AAF</source>
+        <title xmlns="">M.</title>
+        <type xmlns="">["Relative"]</type>
+        <federated xmlns="">true</federated>
+        <children xmlns="">[{"displayName":"FORD Mustang","externalId":"3284894","id":"d58o9e39-78f4-4ffd-9b50-f4828fa5dc71"}]</children>
+        <surname xmlns="">FORD</surname>
+        <modified xmlns="">2019-03-11T16:41:44.357+01:00</modified>
+        <id xmlns="">aab0c73b-fbc2-4857-97fa-97f58e686215</id>
+        <email xmlns="">henri@ford.com</email>
+        <address xmlns="">533 RUE DU TEST</address>
+        <created xmlns="">2017-08-21T18:11:11.698+02:00</created>
+        <subjectCodes xmlns="">[]</subjectCodes>
+        <homePhone xmlns=""/>
+        <mobile xmlns="">+33 6 45 20 21 93</mobile>
+        <profiles xmlns="">["Relative"]</profiles>
+        <externalId xmlns="">3349653</externalId>
+        <joinKey xmlns="">["3333923"]</joinKey>
+        <birthDate xmlns="">2018-01-09</birthDate>
+        <structureNodes xmlns="">[{"area":"01000$BASSIN PARIS","zipCode":"75001","address":"6 RUE MOLIÈRE","city":"PARIS","created":"2017-07-26T10:32:00.310+02:00","contract":"PU","externalId":"1385","source":"AAF","joinKey":["1385"],"type":"COLLEGE","phone":"+33 1 42 86 60 80","name":"CLG-JEAN-BAPTISTE POQUELIN-ac-PARIS","checksum":"9de2a123b490906cd54e031f6476d0d6536b5c52","modified":"2017-07-26T10:32:00.310+02:00","id":"f04074ae-e595-4e6b-96f5-26ce30c9dcdf","UAI":"0751703U","ministry":"MINISTERE DE L'EDUCATION NATIONALE","academy":"PARIS","SIRET":"19751703000015"}]</structureNodes>
+        <addressDiffusion xmlns="">true</addressDiffusion>
+        <firstName xmlns="">Henri</firstName>
+        <lastScheme xmlns="">https</lastScheme>
+        <administrativeStructures xmlns="">[{"id":null}]</administrativeStructures>
+        <mobilePhone xmlns="">["+33 6 95 45 60 93"]</mobilePhone>
+        <federatedIDP xmlns="">urn:fi:ac-paris:ts:1.0</federatedIDP>
+        <parents xmlns="">[{"displayName":null,"externalId":null,"id":null}]</parents>
+      </cas:userAttributes>
+    </cas:attributes>
+  </cas:authenticationSuccess>
+</cas:serviceResponse>
+
