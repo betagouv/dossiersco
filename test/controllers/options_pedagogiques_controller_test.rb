@@ -12,7 +12,7 @@ class OptionsPedagogiquesControllerTest < ActionDispatch::IntegrationTest
     post agent_url, params: { email: admin.email, mot_de_passe: admin.password }
     follow_redirect!
 
-    get options_pedagogiques_url
+    get configuration_options_pedagogiques_url
     assert_response :success
   end
 
@@ -20,7 +20,7 @@ class OptionsPedagogiquesControllerTest < ActionDispatch::IntegrationTest
     admin = Fabricate(:admin)
     identification_agent(admin)
 
-    get new_option_pedagogique_url
+    get new_configuration_option_pedagogique_url
     assert_response :success
   end
 
@@ -29,17 +29,17 @@ class OptionsPedagogiquesControllerTest < ActionDispatch::IntegrationTest
     identification_agent(admin)
 
     assert_difference('OptionPedagogique.count') do
-      post options_pedagogiques_url, params: { option_pedagogique: { nom: 'maçonnerie' } }
+      post configuration_options_pedagogiques_url, params: { option_pedagogique: { nom: 'maçonnerie' } }
     end
 
-    assert_redirected_to options_pedagogiques_url
+    assert_redirected_to configuration_options_pedagogiques_url
   end
 
   test 'should get edit' do
     admin = Fabricate(:admin)
     identification_agent(admin)
 
-    get edit_option_pedagogique_url(@option_pedagogique)
+    get edit_configuration_option_pedagogique_url(@option_pedagogique)
     assert_response :success
   end
 
@@ -47,8 +47,8 @@ class OptionsPedagogiquesControllerTest < ActionDispatch::IntegrationTest
     admin = Fabricate(:admin)
     identification_agent(admin)
 
-    patch option_pedagogique_url(@option_pedagogique), params: { option_pedagogique: { nom: 'couture' } }
-    assert_redirected_to options_pedagogiques_url
+    patch configuration_option_pedagogique_url(@option_pedagogique), params: { option_pedagogique: { nom: 'couture' } }
+    assert_redirected_to configuration_options_pedagogiques_url
   end
 
   test 'should destroy option_pedagogique' do
@@ -56,9 +56,19 @@ class OptionsPedagogiquesControllerTest < ActionDispatch::IntegrationTest
     identification_agent(admin)
 
     assert_difference('OptionPedagogique.count', -1) do
-      delete option_pedagogique_url(@option_pedagogique)
+      delete configuration_option_pedagogique_url(@option_pedagogique)
     end
 
-    assert_redirected_to options_pedagogiques_url
+    assert_redirected_to configuration_options_pedagogiques_url
+  end
+
+  test 'modifie une option en non abandonnable' do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+    mef_option = Fabricate(:mef_option_pedagogique)
+
+    post definie_abandonnabilite_configuration_options_pedagogiques_path, params: { abandonnable: false, mef_option_pedagogique_id: mef_option.id }
+
+    assert_equal false, MefOptionPedagogique.find(mef_option.id).abandonnable
   end
 end

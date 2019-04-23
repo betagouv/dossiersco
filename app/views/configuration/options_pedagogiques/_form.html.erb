@@ -1,4 +1,4 @@
-<%= form_with(model: option_pedagogique, local: true) do |form| %>
+<%= form_with(model: option_pedagogique, url: url, local: true) do |form| %>
   <% if option_pedagogique.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(option_pedagogique.errors.count, "error") %> prohibited this option_pedagogique from being saved:</h2>

@@ -1,6 +1,6 @@
 <%
-    premier_prenom = [
-        {
+  premier_prenom = [
+      {
           name: "prenom",
           label: t('.prenom'),
           type: "text",
@@ -8,28 +8,28 @@
           indication: "Prénom",
           disabled: false,
           required: 'required'
-        }]
+      }]
 
-    autres_prenoms = [
-        {
+  autres_prenoms = [
+      {
           name: "prenom_2",
           label: t('.prenom_2'),
           type: "text",
           value: @eleve.prenom_2,
           indication: "Deuxième prénom (optionnel)",
           disabled: false
-        },
-        {
+      },
+      {
           name: "prenom_3",
           label: t('.prenom_3'),
           type: "text",
           value: @eleve.prenom_3,
           indication: "Troisième prénom (optionnel)",
           disabled: false
-        }]
+      }]
 
-    reste_identite = [
-        {
+  reste_identite = [
+      {
           name: "nom",
           label: t('.nom'),
           type: "text",
@@ -37,19 +37,19 @@
           indication: "Nom",
           disabled: false,
           required: 'required'
-        },
-        {
+      },
+      {
           name: "sexe",
           label: t('.sexe'),
           type: "radio",
           options: [t('.feminin'), t('.masculin')],
           checked: @eleve.sexe
-        },
-        {
+      },
+      {
           type: "espace",
           hauteur: 20,
-        },
-        {
+      },
+      {
           name: "ville_naiss",
           label: t('.ville_de_naissance'),
           type: "text",
@@ -57,8 +57,8 @@
           indication: "Ville de naissance",
           disabled: false,
           required: 'required'
-        },
-        {
+      },
+      {
           name: "pays_naiss",
           label: t('.pays_de_naissance'),
           type: "text",
@@ -66,12 +66,12 @@
           indication: "Pays de naissance",
           disabled: false,
           required: 'required'
-        },
-        {
+      },
+      {
           type: "espace",
           hauteur: 20,
-        },
-        {
+      },
+      {
           name: "nationalite",
           label: t('.pays_de_nationalite'),
           type: "text",
@@ -79,19 +79,19 @@
           indication: "Pays de nationalité",
           disabled: false,
           required: 'required'
-        },
-        {
+      },
+      {
           type: "espace",
           hauteur: 10,
-        }]
+      }]
 
-    enseignement_facultatif = [
-    {
-        name: "latin",
-        label: t('.lv2'),
-        type: "checkbox",
-    }
-    ]
+  enseignement_facultatif = [
+      {
+          name: "latin",
+          label: t('.lv2'),
+          type: "checkbox",
+      }
+  ]
 %>
 
 <% @section = 1 %>
@@ -121,12 +121,17 @@
       <% @options_pedagogiques.each do |option| %>
         <%= label_tag do %>
           <% if @options_pedagogiques_selectionnees.include?(option) %>
-            <%= check_box_tag option.nom, option.id, :checked %>
+            <% if !option.abandonnable?(@eleve.dossier_eleve.mef_destination) && @option_origines_ids.include?(option.id)%>
+              <%= check_box_tag option.nom, option.id, :checked, disabled: 'disabled', class: 'disabled' %>
+              <%= hidden_field_tag option.nom, option.id %>
+            <% else %>
+              <%= check_box_tag option.nom, option.id, :checked %>
+            <% end %>
           <% else %>
             <%= check_box_tag option.nom, option.id %>
           <% end %>
-            <%= option.nom %>
-          <% end %>
+          <%= option.nom %>
+        <% end %>
       <% end %>
 
     <% else %>

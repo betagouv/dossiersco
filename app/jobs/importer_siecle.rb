@@ -162,6 +162,12 @@ class ImporterSiecle < ApplicationJob
       end
 
       dossier_eleve.options_pedagogiques << option
+      option_origine = {}
+      option_origine[:nom] = option.nom
+      option_origine[:groupe] = option.groupe
+
+      dossier_eleve.options_origines[option.id] = option_origine
+      dossier_eleve.save!
     end
 
     champs_resp_legal = [:nom, :prenom, :tel_personnel, :tel_portable, :lien_de_parente,

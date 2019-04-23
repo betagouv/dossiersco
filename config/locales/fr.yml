@@ -1,16 +1,4 @@
 fr:
-  options_pedagogiques:
-    index:
-      ajouter_option: "Ajouter l'option"
-      nouveau_mef: 'Nouveau Mef'
-      nouvelle_option_pedagogique: 'Nouvelle option pédagogique'
-      modifier: 'modifier'
-    create:
-      option_cree: "L'option pédagogique a bien été créée"
-    update:
-      option_mise_a_jour: "L'option pédagogique a été mise à jour"
-    destroy:
-      option_supprimee: "L'option pédagogique a été supprimée"
   activerecord:
     attributes:
       etablissement:
@@ -168,6 +156,18 @@ fr:
       certifie_sur_l_honneur: "En tant que responsable légal de %{prenom_eleve}, je certifie sur l'honneur l'exactitude des informations communiquées et m'engage à tenir le collège informé de tout changement de situation ou de coordonnées."
       valider_inscription: "Valider l'inscription"
   configuration:
+    options_pedagogiques:
+      index:
+        ajouter_option: "Ajouter l'option"
+        nouveau_mef: 'Nouveau Mef'
+        nouvelle_option_pedagogique: 'Nouvelle option pédagogique'
+        modifier: 'modifier'
+      create:
+        option_cree: "L'option pédagogique a bien été créée"
+      update:
+        option_mise_a_jour: "L'option pédagogique a été mise à jour"
+      destroy:
+        option_supprimee: "L'option pédagogique a été supprimée"
     pieces_attendues:
       create:
         piece_cree: "La pièce attendue a bien été créée"

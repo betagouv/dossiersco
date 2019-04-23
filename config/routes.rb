@@ -6,14 +6,17 @@ Rails.application.routes.draw do
   end
 
   resource  :configuration,        only: [:show]
-  resources :options_pedagogiques, except: [:show] do
-    member do
-      post 'ajoute_option_au_mef'
-      delete 'enleve_option_au_mef'
-    end
-  end
 
   namespace :configuration do
+    resources :options_pedagogiques, except: [:show] do
+      member do
+        post 'ajoute_option_au_mef'
+        delete 'enleve_option_au_mef'
+      end
+      collection do
+        post 'definie_abandonnabilite'
+      end
+    end
     resources :mef
     resources :etablissements, expect: [:index, :destroy] do
       put 'purge'
