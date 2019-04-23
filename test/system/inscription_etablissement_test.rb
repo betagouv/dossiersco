@@ -5,10 +5,16 @@ require 'test_helper'
 class InscriptionEtablissementTest < ActionDispatch::IntegrationTest
 
   test 'Inscription simple' do
+    uai = '0780119F'
+
+    request = "https://opencartecomptable.herokuapp.com/api/etablissements?code_uai=#{uai}"
+    body_response = [{nom: "Lab110Bis", adresse: "54 rue de bellechasse", code_postal: "75007", commune: "Paris"}].to_json
+    stub_request(:get, request).to_return(body: body_response)
+
     visit '/'
     click_link 'Vous êtes agent en EPLE ?'
     click_link 'Inscrire mon établissement sur DossierSCO'
-    fill_in 'UAI', with: '0780119F'
+    fill_in 'UAI', with: uai
     click_button "Envoyer la demande d'inscription"
     assert_selector 'div', text: 'Un mail a été envoyé à ce.0780119f@ac-versailles.fr'
 
