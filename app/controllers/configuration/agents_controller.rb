@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Configuration
   class AgentsController < ApplicationController
     layout 'configuration'
 
     before_action :identification_agent
-    before_action :if_agent_is_admin, except: [:edit, :update, :activation]
+    before_action :if_agent_is_admin, except: %i[edit update activation]
 
     def new
       @agent = Agent.new
@@ -24,8 +26,8 @@ module Configuration
     end
 
     def index
-      super_admins = ENV['SUPER_ADMIN'].present? ? ENV['SUPER_ADMIN'].gsub(' ', "").split(",") : ['']
-      @agents = Agent.where(etablissement: agent_connecté.etablissement).where.not("email IN (?)", super_admins)
+      super_admins = ENV['SUPER_ADMIN'].present? ? ENV['SUPER_ADMIN'].delete(' ').split(',') : ['']
+      @agents = Agent.where(etablissement: agent_connecté.etablissement).where.not('email IN (?)', super_admins)
     end
 
     def edit
@@ -66,9 +68,9 @@ module Configuration
     end
 
     private
+
     def agent_params
       params.require(:agent).permit(:prenom, :nom, :password, :etablissement_id, :admin, :email)
     end
-
   end
 end

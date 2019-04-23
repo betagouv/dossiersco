@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PagesController < ApplicationController
   def redirection_erreur
     if !get_eleve.nil?

@@ -60,22 +60,21 @@ class DossierEleveTest < ActiveSupport::TestCase
     assert_equal [eleve_jamais_connecte, eleve_connecte].sort, DossierEleve.pour(etablissement).a_convoquer.sort
   end
 
-  test "#par_identifiant" do
+  test '#par_identifiant' do
     eleve = Fabricate(:eleve, identifiant: 'UNINE')
     dossier = Fabricate(:dossier_eleve, eleve: eleve)
     assert_equal dossier, DossierEleve.par_identifiant('un_ine')
   end
 
-  test "#par_identifiant fonctionne aussi avec un identifiant en majuscule" do
+  test '#par_identifiant fonctionne aussi avec un identifiant en majuscule' do
     eleve = Fabricate(:eleve, identifiant: 'ENMAJUSCULE')
     dossier = Fabricate(:dossier_eleve, eleve: eleve)
     assert_equal dossier, DossierEleve.par_identifiant('EnMaJuScUlE')
   end
 
-  test "#par_identifiant ne contient que des alphanums" do
+  test '#par_identifiant ne contient que des alphanums' do
     eleve = Fabricate(:eleve, identifiant: 'ALPHANUM1234')
     dossier = Fabricate(:dossier_eleve, eleve: eleve)
     assert_equal dossier, DossierEleve.par_identifiant('alpha,num;1234!')
   end
-
 end

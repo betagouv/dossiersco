@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Modele < ActiveRecord::Base
-	belongs_to  :etablissement
+  belongs_to :etablissement
 end

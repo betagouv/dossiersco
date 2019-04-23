@@ -3,7 +3,6 @@
 require 'test_helper'
 
 class ExportsControllerTest < ActionDispatch::IntegrationTest
-
   test '#export-siecle' do
     admin = Fabricate(:admin)
     identification_agent(admin)
@@ -21,7 +20,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     fixture_file = "#{Rails.root}/test/fixtures/export_siecle.xml"
-    File.open(fixture_file, "a+") do |f|
+    File.open(fixture_file, 'a+') do |f|
       f.puts(response.body)
     end
 
@@ -39,6 +38,4 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
   end
-
-
 end

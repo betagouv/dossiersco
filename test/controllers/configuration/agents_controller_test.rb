@@ -13,8 +13,7 @@ class AgentsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 1, Agent.where(email: 'test@test.fr', etablissement_id: etablissement.id).count
   end
 
-  test "enregistre un agent avec un email enregistré en minuscule" do
-
+  test 'enregistre un agent avec un email enregistré en minuscule' do
     admin = Fabricate(:admin)
     identification_agent(admin)
     post configuration_agents_path, params: { agent: { email: 'TeSt@tEsT.fR' } }
@@ -73,6 +72,4 @@ class AgentsControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal agent, assigns(:agent_connecté)
   end
-
-
 end

@@ -36,7 +36,7 @@ class ApplicationHelperTest < ActionDispatch::IntegrationTest
   end
 
   test '#affiche_etablissement(etablissement) sans UAI, affiche le nom et le département quand ils sont renseigné)' do
-    etablissement = Fabricate(:etablissement, nom: "Papillon", code_postal: "30200")
+    etablissement = Fabricate(:etablissement, nom: 'Papillon', code_postal: '30200')
     expected = "Papillon - #{etablissement.uai}"
     assert_equal expected, affiche_etablissement(etablissement)
   end

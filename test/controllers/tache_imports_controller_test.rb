@@ -12,7 +12,7 @@ class TacheImportsControllerTest < ActionDispatch::IntegrationTest
     fichier_xls = fixture_file_upload('files/test_import_siecle.xls')
 
     assert_enqueued_with(job: ImporterSiecle) do
-      post tache_imports_path, params: { tache_import: { fichier: fichier_xls, job_klass: 'ImporterSiecle'} }
+      post tache_imports_path, params: { tache_import: { fichier: fichier_xls, job_klass: 'ImporterSiecle' } }
       assert_equal 'ImporterSiecle', TacheImport.last.job_klass
     end
   end
@@ -24,7 +24,7 @@ class TacheImportsControllerTest < ActionDispatch::IntegrationTest
     fichier_xls = fixture_file_upload('files/test_import_affelnet.xlsm')
 
     assert_enqueued_with(job: ImporterAffelnet) do
-      post tache_imports_path, params: { tache_import: { fichier: fichier_xls, job_klass: 'ImporterAffelnet'} }
+      post tache_imports_path, params: { tache_import: { fichier: fichier_xls, job_klass: 'ImporterAffelnet' } }
       assert_equal 'ImporterAffelnet', TacheImport.last.job_klass
     end
   end
@@ -36,7 +36,7 @@ class TacheImportsControllerTest < ActionDispatch::IntegrationTest
     Fabricate(:tache_import, statut: TacheImport::STATUTS[:en_traitement], etablissement: etablissement)
 
     fichier_xls = fixture_file_upload('files/test_import_siecle.xls')
-    post tache_imports_path, params: { tache_import: { fichier: fichier_xls, job_klass: 'ImporterSiecle'} }
+    post tache_imports_path, params: { tache_import: { fichier: fichier_xls, job_klass: 'ImporterSiecle' } }
 
     assert_redirected_to new_tache_import_path
     assert_equal I18n.t('tache_imports.create.tache_deja_en_traitement'), flash[:alert]
@@ -49,13 +49,13 @@ class TacheImportsControllerTest < ActionDispatch::IntegrationTest
     Fabricate(:tache_import, statut: TacheImport::STATUTS[:en_attente], etablissement: etablissement)
 
     fichier_xls = fixture_file_upload('files/test_import_siecle.xls')
-    post tache_imports_path, params: { tache_import: { fichier: fichier_xls, job_klass: 'ImporterSiecle'} }
+    post tache_imports_path, params: { tache_import: { fichier: fichier_xls, job_klass: 'ImporterSiecle' } }
 
     assert_redirected_to new_tache_import_path
     assert_equal I18n.t('tache_imports.create.tache_deja_en_traitement'), flash[:alert]
   end
 
-  test "Affiche la page du formulaire" do
+  test 'Affiche la page du formulaire' do
     admin = Fabricate(:admin)
     identification_agent(admin)
 

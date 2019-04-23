@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Configuration
   class PiecesAttenduesController < ApplicationController
     layout 'configuration'
 
     before_action :identification_agent
-    before_action :set_piece_attendue, only: [:edit, :update, :destroy]
+    before_action :set_piece_attendue, only: %i[edit update destroy]
 
     def index
       @pieces_attendues = PieceAttendue.where(etablissement: agent_connecté.etablissement)
@@ -13,8 +15,7 @@ module Configuration
       @piece_attendue = PieceAttendue.new
     end
 
-    def edit
-    end
+    def edit; end
 
     def create
       @piece_attendue = PieceAttendue.new(piece_attendue_params)
@@ -41,6 +42,7 @@ module Configuration
     end
 
     private
+
     def set_piece_attendue
       @piece_attendue = PieceAttendue.find(params[:id])
     end

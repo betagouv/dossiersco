@@ -23,25 +23,21 @@ class MessageLegalTest < ActiveSupport::TestCase
 end
 
 class FakeHttp
-  def initialize(host, port)
+  def initialize(_host, _port)
     @request = Struct.new(:body)
   end
 
-  def use_ssl=(boolean)
-  end
+  def use_ssl=(boolean); end
 
-  def request(request)
+  def request(_request)
     response = @request.new
-    response.body = {messages: [{status: "envoyé"}]}.to_json
+    response.body = { messages: [{ status: 'envoyé' }] }.to_json
     response
   end
 
   class Post
-    def initialize(uri, header)
-    end
+    def initialize(uri, header); end
 
-    def body=(body)
-    end
+    def body=(body); end
   end
 end
-

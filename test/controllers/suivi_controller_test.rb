@@ -3,7 +3,6 @@
 require 'test_helper'
 
 class SuiviControllerTest < ActionDispatch::IntegrationTest
-
   test "affiche aucune stats de suivi quand il n'y a pas d'établissement" do
     get suivi_url
 
@@ -14,7 +13,7 @@ class SuiviControllerTest < ActionDispatch::IntegrationTest
     assert_equal [], assigns(:suivi).familles_connectes
   end
 
-  test "un établissement connecté si un seul agent, avec jeton" do
+  test 'un établissement connecté si un seul agent, avec jeton' do
     agent_pas_connecte = Fabricate(:agent, jeton: 'jeton')
     etablissement_pas_connecte = Fabricate(:etablissement, agent: [agent_pas_connecte])
 
@@ -27,8 +26,7 @@ class SuiviControllerTest < ActionDispatch::IntegrationTest
     assert_equal [etablissement_pas_connecte], assigns(:suivi).pas_encore_connecte
   end
 
-
-  test "un etablissement avec eleves importe si dossier_evele" do
+  test 'un etablissement avec eleves importe si dossier_evele' do
     etablissement = Fabricate(:dossier_eleve).etablissement
     sans_dossier = Fabricate(:etablissement)
 
@@ -36,7 +34,7 @@ class SuiviControllerTest < ActionDispatch::IntegrationTest
     assert_equal [etablissement], assigns(:suivi).eleves_importe
   end
 
-  test "un etablissement avec des pieces attendues configurée" do
+  test 'un etablissement avec des pieces attendues configurée' do
     etablissement = Fabricate(:piece_attendue).etablissement
     etablissement_sans_piece_configure = Fabricate(:etablissement)
 
@@ -44,13 +42,11 @@ class SuiviControllerTest < ActionDispatch::IntegrationTest
     assert_equal [etablissement], assigns(:suivi).piece_attendue_configure
   end
 
-  test "un etablissement avec des familles connectes" do
-    etablissement = Fabricate(:dossier_eleve, etat: "connecté").etablissement
+  test 'un etablissement avec des familles connectes' do
+    etablissement = Fabricate(:dossier_eleve, etat: 'connecté').etablissement
     etablissement_sans_piece_configure = Fabricate(:etablissement)
 
     get suivi_url
     assert_equal [etablissement], assigns(:suivi).familles_connectes
   end
-
 end
-

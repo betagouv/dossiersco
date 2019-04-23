@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   root to: 'accueil#index'
 
-  resource  :dossier_affelnet, only: [:create] do
+  resource :dossier_affelnet, only: [:create] do
     post :traiter
   end
 
@@ -18,7 +20,7 @@ Rails.application.routes.draw do
       end
     end
     resources :mef
-    resources :etablissements, expect: [:index, :destroy] do
+    resources :etablissements, expect: %i[index destroy] do
       put 'purge'
     end
     resources :agents do
@@ -30,21 +32,21 @@ Rails.application.routes.draw do
     resources :pieces_attendues, expect: [:show]
     resource :exports, only: :[] do
       collection do
-        get 'export-options', :defaults => { :format => 'xlsx' }
-        get 'export-siecle', :defaults => { :format => 'xml' }
+        get 'export-options', defaults: { format: 'xlsx' }
+        get 'export-siecle', defaults: { format: 'xml' }
       end
     end
   end
 
-  resources :pieces_jointes, only: [:create, :update] do
+  resources :pieces_jointes, only: %i[create update] do
     member do
       put 'valider'
       put 'refuser'
     end
   end
 
-  resources :agent_pieces_jointes, only: [:create, :update]
-  resources :tache_imports, only: [:new, :create]
+  resources :agent_pieces_jointes, only: %i[create update]
+  resources :tache_imports, only: %i[new create]
 
   namespace :api do
     resource :communes, only: :[] do
@@ -58,7 +60,6 @@ Rails.application.routes.draw do
 
   get '/retour-ent', to: 'authentification_cas_ent#retour_cas'
   get '/from-ent', to: 'authentification_cas_ent#appel_direct_ent'
-
 
   post '/identification', to: 'accueil#identification'
   get '/accueil', to: 'accueil#accueil'
@@ -130,5 +131,5 @@ Rails.application.routes.draw do
   get '/redirection_erreur', to: 'pages#redirection_erreur'
   get '/suivi', to: 'suivi#index'
 
-  mount LetterOpenerWeb::Engine, at: "/letter_opener" unless ENV['laisser_partir_les_emails']
+  mount LetterOpenerWeb::Engine, at: '/letter_opener' unless ENV['laisser_partir_les_emails']
 end

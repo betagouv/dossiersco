@@ -119,7 +119,6 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
   end
 
   def soumet_formulaire(*arguments_du_post)
-
     resp_legal = Fabricate(:resp_legal)
     dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
     eleve = dossier_eleve.eleve
@@ -223,5 +222,4 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
 
     assert response.parsed_body.include? "L'inscription ne sera validée qu'à réception d'un email de confirmation"
   end
-
 end

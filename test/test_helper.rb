@@ -16,7 +16,6 @@ class ActiveSupport::TestCase
     post agent_url, params: { email: agent.email, mot_de_passe: agent.password }
     follow_redirect!
   end
-
 end
 
 require 'capybara/rails'
@@ -38,5 +37,3 @@ class ActionDispatch::IntegrationTest
     Capybara.use_default_driver
   end
 end
-
-

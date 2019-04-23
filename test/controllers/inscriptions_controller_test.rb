@@ -11,7 +11,7 @@ class InscriptionControllerTest < ActionDispatch::IntegrationTest
     dossier_eleve = Fabricate(:dossier_eleve, mef_destination: mef_a_modifier)
 
     patch modifier_mef_eleve_path(dossier_eleve),
-        params: {dossier_eleve: {mef_destination_id: nouveau_mef.id}}
+          params: { dossier_eleve: { mef_destination_id: nouveau_mef.id } }
 
     dossier_eleve.reload
 
@@ -26,7 +26,7 @@ class InscriptionControllerTest < ActionDispatch::IntegrationTest
     dossier_eleve = Fabricate(:dossier_eleve, mef_origine: mef_a_modifier)
 
     patch modifier_mef_eleve_path(dossier_eleve),
-        params: {dossier_eleve: {mef_origine_id: nouveau_mef.id}}
+          params: { dossier_eleve: { mef_origine_id: nouveau_mef.id } }
 
     dossier_eleve.reload
 

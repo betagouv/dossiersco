@@ -55,8 +55,7 @@ class EtablissementTest < ActiveSupport::TestCase
   end
 
   test "reconstruit l'email de sont chef d'établissement" do
-    etablissement = Fabricate.build(:etablissement, uai: "0755433Y")
-    assert_equal "ce.0755433Y@ac-paris.fr", etablissement.email_chef
+    etablissement = Fabricate.build(:etablissement, uai: '0755433Y')
+    assert_equal 'ce.0755433Y@ac-paris.fr', etablissement.email_chef
   end
-
 end

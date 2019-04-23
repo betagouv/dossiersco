@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Configuration
   class ExportsController < ApplicationController
     before_action :if_agent_is_admin

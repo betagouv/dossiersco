@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PieceJointe < ActiveRecord::Base
   belongs_to :dossier_eleve
   belongs_to :piece_attendue
@@ -6,16 +8,16 @@ class PieceJointe < ActiveRecord::Base
 
   mount_uploader :fichier, FichierUploader
 
-  ETATS = { soumis: 'soumis', valide: 'valide', invalide: 'invalide' }
+  ETATS = { soumis: 'soumis', valide: 'valide', invalide: 'invalide' }.freeze
 
   validates :etat, inclusion: { in: ETATS.values }
 
   def ext
-    self.clef.match(/(\w+$)/im)[1].downcase
+    clef.match(/(\w+$)/im)[1].downcase
   end
 
   def nom_etablissement
-    dossier_eleve.etablissement.nom if dossier_eleve.etablissement
+    dossier_eleve.etablissement&.nom
   end
 
   def valide!

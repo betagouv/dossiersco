@@ -3,7 +3,6 @@
 require 'test_helper'
 
 class InscriptionsControllerTest < ActionDispatch::IntegrationTest
-
   def test_entree_succes_agent
     agent = Fabricate(:agent)
     post '/agent', params: { email: agent.email, mot_de_passe: agent.password }
@@ -12,8 +11,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "La casse en saisi n'est pas un soucis pour se connecter" do
-    agent = Fabricate(:agent, email: "ubber@laposte.net")
-    post '/agent', params: { email: "uBbeR@lApOsTe.nEt", mot_de_passe: agent.password }
+    agent = Fabricate(:agent, email: 'ubber@laposte.net')
+    post '/agent', params: { email: 'uBbeR@lApOsTe.nEt', mot_de_passe: agent.password }
     follow_redirect!
 
     assert response.body.include? agent.email
@@ -35,7 +34,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
   def test_nombre_dossiers_total
     agent = Fabricate(:agent)
-    5.times {Fabricate(:dossier_eleve, etablissement: agent.etablissement, resp_legal: [Fabricate(:resp_legal)])}
+    5.times { Fabricate(:dossier_eleve, etablissement: agent.etablissement, resp_legal: [Fabricate(:resp_legal)]) }
 
     identification_agent(agent)
     doc = Nokogiri::HTML(response.body)
@@ -164,7 +163,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
   def test_affiche_changement_adresse_liste_eleves
     # Si on a un changement d'adresse
-    resp_legal = Fabricate(:resp_legal, priorite: 1, adresse_ant: "ancienne adresse")
+    resp_legal = Fabricate(:resp_legal, priorite: 1, adresse_ant: 'ancienne adresse')
     dossier = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
     resp_legal = dossier.resp_legal_1
     resp_legal.adresse = 'Nouvelle adresse'
@@ -224,7 +223,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_affiche_lenveloppe_uniquement_si_un_des_resp_legal_a_un_mail
-    resp_legal = Fabricate(:resp_legal, priorite: 1, email: "test@example.com")
+    resp_legal = Fabricate(:resp_legal, priorite: 1, email: 'test@example.com')
     dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
 
     agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
@@ -254,7 +253,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
       identifiant: eleve.identifiant,
       annee: eleve.annee_de_naissance,
       mois: eleve.mois_de_naissance,
-      jour: eleve.jour_de_naissance }
+      jour: eleve.jour_de_naissance
+    }
 
     assert_equal 'connecté', dossier_eleve.reload.etat
 
@@ -305,7 +305,6 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     identification_agent(agent)
     post '/agent/contacter_une_famille', params: { identifiant: eleve.identifiant, message: 'Message de test' }
 
-
     assert_equal 1, Message.count
     message = Message.first
     assert_equal 'mail', message.categorie
@@ -330,11 +329,11 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_page_eleve_agent_affiche_changement_adresse
-    resp_legal = Fabricate(:resp_legal, priorite: 1, adresse: "truc", adresse_ant: "truc")
+    resp_legal = Fabricate(:resp_legal, priorite: 1, adresse: 'truc', adresse_ant: 'truc')
     dossier = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
 
     resp_legal.update adresse: 'Nouvelle adresse'
-    assert ! resp_legal.adresse_inchangee
+    assert !resp_legal.adresse_inchangee
 
     agent = Fabricate(:agent, etablissement: dossier.etablissement)
     identification_agent(agent)
@@ -345,7 +344,6 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_page_eleve_agent_affiche_adresse_sans_changement
-
     eleve = Fabricate(:eleve, identifiant: 'truc')
     resp_legal = Fabricate(:resp_legal)
     dossier = Fabricate(:dossier_eleve, eleve: eleve, resp_legal: [resp_legal])

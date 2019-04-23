@@ -5,7 +5,7 @@ require 'test_helper'
 class ConfigurationTest < ActionDispatch::IntegrationTest
   include ::ActiveJob::TestHelper
 
-  test "Configuration basique : un agent se connect, déclenche un import de fichier" do
+  test 'Configuration basique : un agent se connect, déclenche un import de fichier' do
     admin = Fabricate(:admin)
     visit '/agent'
     assert_selector 'h1', text: 'Agent EPLE'

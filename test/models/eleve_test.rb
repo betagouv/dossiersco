@@ -22,12 +22,11 @@ class EleveTest < ActiveSupport::TestCase
     assert_equal '27', eleve.jour_de_naissance
   end
 
-  test "#par_identifiant" do
+  test '#par_identifiant' do
     eleve = Fabricate(:eleve)
     assert_equal eleve, Eleve.par_identifiant(eleve.identifiant)
 
-    eleve = Fabricate(:eleve, identifiant: "TRUC")
-    assert_equal eleve, Eleve.par_identifiant("truc")
+    eleve = Fabricate(:eleve, identifiant: 'TRUC')
+    assert_equal eleve, Eleve.par_identifiant('truc')
   end
-
 end

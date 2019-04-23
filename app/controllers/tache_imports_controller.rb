@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TacheImportsController < ApplicationController
   before_action :identification_agent
   layout 'configuration'
@@ -9,7 +11,7 @@ class TacheImportsController < ApplicationController
 
   def create
     tache = TacheImport.find_by(etablissement: agent_connecté.etablissement,
-                     statut: [TacheImport::STATUTS[:en_attente], TacheImport::STATUTS[:en_traitement]])
+                                statut: [TacheImport::STATUTS[:en_attente], TacheImport::STATUTS[:en_traitement]])
 
     if tache.present?
       flash[:alert] = t('.tache_deja_en_traitement')

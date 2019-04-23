@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Configuration
   class MefController < ApplicationController
     layout 'configuration'
 
     before_action :identification_agent
-    before_action :set_mef, only: [:show, :edit, :update, :destroy]
+    before_action :set_mef, only: %i[show edit update destroy]
 
     def index
       @mef = Mef.where(etablissement: agent_connecté.etablissement)
@@ -13,8 +15,7 @@ module Configuration
       @mef = Mef.new
     end
 
-    def edit
-    end
+    def edit; end
 
     def create
       @mef = Mef.new(mef_params)
@@ -51,6 +52,7 @@ module Configuration
     end
 
     private
+
     def set_mef
       @mef = Mef.find(params[:id])
     end

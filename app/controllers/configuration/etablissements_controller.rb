@@ -1,30 +1,28 @@
+# frozen_string_literal: true
+
 module Configuration
   class EtablissementsController < ApplicationController
     layout 'configuration'
 
-    before_action :if_agent_is_admin, except: [:new, :create]
-    before_action :cherche_etablissement, only: [:show, :edit, :update]
+    before_action :if_agent_is_admin, except: %i[new create]
+    before_action :cherche_etablissement, only: %i[show edit update]
 
-    def show
-    end
+    def show; end
 
     def new
       render layout: 'connexion'
     end
 
     def create
-      begin
-        agent = EnregistrementPremierAgentService.new.execute(etablissement_params[:uai])
-        PrerempliEtablissement.perform_later(agent.etablissement.uai)
-        redirect_to new_configuration_etablissement_path, notice:t('.mail_envoye', mail_ce: agent.email)
-      rescue StandardError => error
-        flash[:error] = t(".#{error}")
-        render :new, layout: 'connexion'
-      end
+      agent = EnregistrementPremierAgentService.new.execute(etablissement_params[:uai])
+      PrerempliEtablissement.perform_later(agent.etablissement.uai)
+      redirect_to new_configuration_etablissement_path, notice: t('.mail_envoye', mail_ce: agent.email)
+    rescue StandardError => error
+      flash[:error] = t(".#{error}")
+      render :new, layout: 'connexion'
     end
 
-    def edit
-    end
+    def edit; end
 
     def update
       if @etablissement.update(etablissement_params)

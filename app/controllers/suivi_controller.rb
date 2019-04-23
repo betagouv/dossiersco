@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SuiviController < ApplicationController
   layout 'connexion'
   before_action :agent_connecté
@@ -8,7 +10,7 @@ class SuiviController < ApplicationController
 
     Etablissement.all.each do |etablissement|
       if etablissement.agent.count == 1 &&
-          etablissement.agent.first.jeton.present?
+         etablissement.agent.first.jeton.present?
         @suivi.pas_encore_connecte << etablissement
       end
 
@@ -25,7 +27,6 @@ class SuiviController < ApplicationController
       end
     end
   end
-
 end
 
 class Suivi
@@ -38,4 +39,3 @@ class Suivi
     @familles_connectes = []
   end
 end
-

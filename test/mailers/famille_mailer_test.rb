@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class FamilleMailerTest < ActionMailer::TestCase
-
-  test "contacter_une_famille" do
+  test 'contacter_une_famille' do
     etablissement = Fabricate(:etablissement, envoyer_aux_familles: true)
     agent = Fabricate(:agent, etablissement: etablissement)
     eleve = Fabricate(:eleve)
@@ -25,7 +26,7 @@ class FamilleMailerTest < ActionMailer::TestCase
     assert email.body.include?('un message spécifique')
   end
 
-  test "envoyer mail confirmation" do
+  test 'envoyer mail confirmation' do
     etablissement = Fabricate(:etablissement, envoyer_aux_familles: true)
     eleve = Fabricate(:eleve)
     resp_legal = Fabricate(:resp_legal, email: 'henri@ford.com')
@@ -47,7 +48,7 @@ class FamilleMailerTest < ActionMailer::TestCase
     assert email.body.include? eleve.nom
   end
 
-  test "mail validation inscription" do
+  test 'mail validation inscription' do
     etablissement = Fabricate(:etablissement, envoyer_aux_familles: true)
     agent = Fabricate(:agent, etablissement: etablissement)
     eleve = Fabricate(:eleve)
@@ -69,6 +70,4 @@ class FamilleMailerTest < ActionMailer::TestCase
     assert email.body.include? etablissement.nom
     assert email.body.include? eleve.nom
   end
-
-
 end

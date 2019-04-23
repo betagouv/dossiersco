@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OptionPedagogique < ApplicationRecord
   belongs_to :etablissement
   has_and_belongs_to_many :dossier_eleves
@@ -6,7 +8,8 @@ class OptionPedagogique < ApplicationRecord
 
   def self.filtre_par(mef)
     return [] unless mef
-    joins(:mef).where(mef: {id: mef.id})
+
+    joins(:mef).where(mef: { id: mef.id })
   end
 
   def abandonnable?(mef)

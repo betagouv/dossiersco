@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'roo'
 require 'roo-xls'
 
@@ -30,6 +32,6 @@ class ImporterAffelnet < ApplicationJob
       RespLegal.create!(dossier_eleve: dossier_eleve, priorite: 1)
       nombre_eleves_importes += 1
     end
-    {portable: 0, email: 0, eleves: nombre_eleves_importes}
+    { portable: 0, email: 0, eleves: nombre_eleves_importes }
   end
 end

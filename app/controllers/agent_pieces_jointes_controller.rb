@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AgentPiecesJointesController < ApplicationController
   layout 'agent'
 
@@ -15,6 +17,7 @@ class AgentPiecesJointesController < ApplicationController
   end
 
   private
+
   def piece_jointe_params
     params.require(:piece_jointe).permit(:fichier, :piece_attendue_id)
   end
@@ -23,4 +26,3 @@ class AgentPiecesJointesController < ApplicationController
     @eleve ||= Eleve.find_by(identifiant: params[:eleve_id])
   end
 end
-

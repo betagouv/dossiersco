@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class Agent < ActiveRecord::Base
   belongs_to :etablissement
   has_secure_password validations: false
 
-  validates :password_digest, presence: true, if: -> { self.jeton.nil? }
+  validates :password_digest, presence: true, if: -> { jeton.nil? }
   validates :email, presence: true, uniqueness: { case_sensitive: false }
 
   def nom_complet

@@ -3,12 +3,11 @@
 require 'test_helper'
 
 class InscriptionEtablissementTest < ActionDispatch::IntegrationTest
-
   test 'Inscription simple' do
     uai = '0780119F'
 
     request = "https://opencartecomptable.herokuapp.com/api/etablissements?code_uai=#{uai}"
-    body_response = [{nom: "Lab110Bis", adresse: "54 rue de bellechasse", code_postal: "75007", commune: "Paris"}].to_json
+    body_response = [{ nom: 'Lab110Bis', adresse: '54 rue de bellechasse', code_postal: '75007', commune: 'Paris' }].to_json
     stub_request(:get, request).to_return(body: body_response)
 
     visit '/'
@@ -39,7 +38,7 @@ class InscriptionEtablissementTest < ActionDispatch::IntegrationTest
     assert_selector 'td', text: 'agent@email.fr'
     assert_text 'Un email a été envoyé à l\'adresse agent@email.fr pour finaliser son inscription'
 
-    visit "/agent/deconnexion"
+    visit '/agent/deconnexion'
 
     agent = Agent.find_by(email: 'agent@email.fr')
     visit "/configuration/agents/#{agent.id}/activation?jeton=#{agent.jeton}"
