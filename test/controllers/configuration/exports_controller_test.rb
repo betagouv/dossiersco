@@ -9,11 +9,16 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
     3.times do
       resp = Fabricate(:resp_legal)
-      Fabricate(:dossier_eleve, etablissement: admin.etablissement, resp_legal: [resp])
+      Fabricate(:dossier_eleve,
+                etablissement: admin.etablissement,
+                resp_legal: [resp])
     end
 
     resp = Fabricate(:resp_legal)
-    Fabricate(:dossier_eleve, mef_destination: nil, etablissement: admin.etablissement, resp_legal: [resp])
+    Fabricate(:dossier_eleve,
+              mef_destination: nil,
+              etablissement: admin.etablissement,
+              resp_legal: [resp])
 
     get export_siecle_configuration_exports_path
 
@@ -24,7 +29,8 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
       f.puts(response.body)
     end
 
-    xsd = Nokogiri::XML::Schema(File.read(Rails.root.join('doc/import_prive/schema_Import_3.0.xsd')))
+    schema = Rails.root.join('doc/import_prive/schema_Import_3.0.xsd')
+    xsd = Nokogiri::XML::Schema(File.read(schema))
     xml = Nokogiri::XML(response.body)
     assert_equal [], xsd.validate(xml)
     File.delete(fixture_file)
