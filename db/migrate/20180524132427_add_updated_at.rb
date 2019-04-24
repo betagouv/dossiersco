@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddUpdatedAt < ActiveRecord::Migration[5.1]
   def change
     add_column :contact_urgences, :updated_at, :datetime

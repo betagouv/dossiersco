@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddColonnesAdministrationToDossierEleves < ActiveRecord::Migration[5.1]
   def change
     add_column :dossier_eleves, :demi_pensionnaire, :boolean, default: false

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateDossierElevesTable < ActiveRecord::Migration[5.1]
   def change
     create_table :dossier_eleves do |t|
@@ -6,6 +8,5 @@ class CreateDossierElevesTable < ActiveRecord::Migration[5.1]
       t.datetime :created_at
       t.datetime :updated_at
     end
-
   end
 end

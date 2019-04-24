@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateTableTacheImports < ActiveRecord::Migration[5.1]
   def change
     create_table :tache_imports do |t|

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddFileFieldsToDossiersAffelnet < ActiveRecord::Migration[5.2]
   def change
     add_column :dossiers_affelnet, :nom, :string

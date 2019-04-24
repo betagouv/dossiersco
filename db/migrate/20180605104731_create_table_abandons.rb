@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateTableAbandons < ActiveRecord::Migration[5.1]
   def change
     create_table :abandons do |t|

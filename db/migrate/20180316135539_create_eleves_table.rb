@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateElevesTable < ActiveRecord::Migration[5.1]
   def change
     create_table :eleves do |t|
@@ -16,5 +18,3 @@ class CreateElevesTable < ActiveRecord::Migration[5.1]
     end
   end
 end
-
-

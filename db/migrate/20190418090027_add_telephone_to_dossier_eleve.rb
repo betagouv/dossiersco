@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddTelephoneToDossierEleve < ActiveRecord::Migration[5.2]
   def change
     add_column :resp_legals, :tel_personnel, :string

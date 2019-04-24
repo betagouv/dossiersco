@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddEtatToPieceJointes < ActiveRecord::Migration[5.1]
   def change
     add_column :piece_jointes, :etat, :string

@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class CreateRespLegalsTable < ActiveRecord::Migration[5.1]
   def change
     create_table :resp_legals do |t|
       t.integer :dossier_eleve_id
-      t.string :lien_de_parente 
+      t.string :lien_de_parente
       t.string :prenom
       t.string :nom
       t.string :adresse
@@ -16,6 +18,6 @@ class CreateRespLegalsTable < ActiveRecord::Migration[5.1]
       t.integer :enfants_a_charge
       t.integer :enfants_a_charge_secondaire
       t.boolean :communique_info_parents_eleves
-    end 
+    end
   end
 end
