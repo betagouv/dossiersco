@@ -20,6 +20,12 @@ class DossierEleve < ActiveRecord::Base
 
   has_and_belongs_to_many :options_pedagogiques
 
+
+  ETAT = { pas_connecte: 'pas connecté', connecte: 'connecté', en_attente: 'en attente', en_attente_de_validation: 'en attente de validation', valide: 'validé', sortant: 'sortant'}.freeze
+
+  validates :etat, inclusion: { in: ETAT.values }
+
+  # TODO fusionner Eleve et DossierEleve
   default_scope { joins(:eleve) }
 
   scope :pour, lambda { |etablissement|
@@ -27,7 +33,7 @@ class DossierEleve < ActiveRecord::Base
   }
 
   scope :a_convoquer, lambda {
-    where('etat in (?)', ['pas connecté', 'connecté'])
+    where('etat in (?)', [ETAT[:pas_connecte], ETAT[:connecte]])
   }
 
   def self.par_identifiant(identifiant)
@@ -67,7 +73,7 @@ class DossierEleve < ActiveRecord::Base
     template = Tilt['erb'].new { template }
     text = template.render(nil, eleve: eleve)
 
-    Message.create(categorie: 'sms', contenu: text, etat: 'en attente', dossier_eleve: self)
+    Message.create(categorie: 'sms', contenu: text, etat: ETAT[:en_attente], dossier_eleve: self)
   end
 
   def portable_present
@@ -108,6 +114,6 @@ class DossierEleve < ActiveRecord::Base
   end
 
   def valide!
-    update(etat: 'validé')
+    update(etat: ETAT[:valide])
   end
 end

@@ -18,6 +18,10 @@ fr:
           attributes:
             code_postal_ant:
               blank: "ne peut être vide"
+        dossier_eleve:
+          attributes:
+            etat:
+              inclusion: "%{model} %{attribute} = %{value}"
   will_paginate:
     previous_label: "&#8592; Précédent"
     next_label: "Suivant &#8594;"

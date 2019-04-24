@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require "test_helper"
 
 class DossierEleveTest < ActiveSupport::TestCase
-  test 'a une fabrique valide' do
+
+  test "a une fabrique valide" do
     assert Fabricate.build(:dossier_eleve).valid?
   end
 
-  test 'donne la liste des pièces jointes vierges' do
+  test "donne la liste des pièces jointes vierges" do
     etablissement = Fabricate(:etablissement)
     piece_attendue = Fabricate(:piece_attendue, etablissement: etablissement)
     dossier_eleve = Fabricate(:dossier_eleve, etablissement: etablissement)
@@ -17,7 +18,7 @@ class DossierEleveTest < ActiveSupport::TestCase
     assert_equal piece_attendue, dossier_eleve.pieces_jointes[0].piece_attendue
   end
 
-  test 'donne la liste avec la pièce jointe' do
+  test "donne la liste avec la pièce jointe" do
     etablissement = Fabricate(:etablissement)
     piece_attendue = Fabricate(:piece_attendue, etablissement: etablissement)
     dossier_eleve = Fabricate(:dossier_eleve, etablissement: etablissement)
@@ -39,7 +40,7 @@ class DossierEleveTest < ActiveSupport::TestCase
     assert_equal [piece_attendue_obligatoire], dossier_eleve.pieces_manquantes
   end
 
-  test '#pieces_manquantes? renvoie false si les pieces obligatoires sont présentes' do
+  test "#pieces_manquantes? renvoie false si les pieces obligatoires sont présentes" do
     etablissement = Fabricate(:etablissement)
     piece_attendue_facultative = Fabricate(:piece_attendue, obligatoire: false, etablissement: etablissement)
     piece_attendue_obligatoire = Fabricate(:piece_attendue, obligatoire: true, etablissement: etablissement)
@@ -50,31 +51,33 @@ class DossierEleveTest < ActiveSupport::TestCase
     assert_equal [], dossier_eleve.pieces_manquantes
   end
 
-  test '#a_convoquer renvoie la liste des élèves à convoquer sur dossiersco' do
+  test "#a_convoquer renvoie la liste des élèves à convoquer sur dossiersco" do
     etablissement = Fabricate(:etablissement)
-    eleve_jamais_connecte = Fabricate(:dossier_eleve, etat: 'pas connecté', etablissement: etablissement)
-    eleve_connecte = Fabricate(:dossier_eleve, etat: 'connecté', etablissement: etablissement)
-    Fabricate(:dossier_eleve, etat: 'en attente', etablissement: etablissement)
-    Fabricate(:dossier_eleve, etat: 'validé', etablissement: etablissement)
+    eleve_jamais_connecte = Fabricate(:dossier_eleve, etat: "pas connecté", etablissement: etablissement)
+    eleve_connecte = Fabricate(:dossier_eleve, etat: "connecté", etablissement: etablissement)
+    Fabricate(:dossier_eleve, etat: "en attente", etablissement: etablissement)
+    Fabricate(:dossier_eleve, etat: "validé", etablissement: etablissement)
 
-    assert_equal [eleve_jamais_connecte, eleve_connecte].sort, DossierEleve.pour(etablissement).a_convoquer.sort
+    expected = [eleve_jamais_connecte, eleve_connecte]
+    assert_equal expected.sort, DossierEleve.pour(etablissement).a_convoquer.sort
   end
 
-  test '#par_identifiant' do
-    eleve = Fabricate(:eleve, identifiant: 'UNINE')
+  test "#par_identifiant" do
+    eleve = Fabricate(:eleve, identifiant: "UNINE")
     dossier = Fabricate(:dossier_eleve, eleve: eleve)
-    assert_equal dossier, DossierEleve.par_identifiant('un_ine')
+    assert_equal dossier, DossierEleve.par_identifiant("un_ine")
   end
 
-  test '#par_identifiant fonctionne aussi avec un identifiant en majuscule' do
-    eleve = Fabricate(:eleve, identifiant: 'ENMAJUSCULE')
+  test "#par_identifiant fonctionne aussi avec un identifiant en majuscule" do
+    eleve = Fabricate(:eleve, identifiant: "ENMAJUSCULE")
     dossier = Fabricate(:dossier_eleve, eleve: eleve)
-    assert_equal dossier, DossierEleve.par_identifiant('EnMaJuScUlE')
+    assert_equal dossier, DossierEleve.par_identifiant("EnMaJuScUlE")
   end
 
-  test '#par_identifiant ne contient que des alphanums' do
-    eleve = Fabricate(:eleve, identifiant: 'ALPHANUM1234')
+  test "#par_identifiant ne contient que des alphanums" do
+    eleve = Fabricate(:eleve, identifiant: "ALPHANUM1234")
     dossier = Fabricate(:dossier_eleve, eleve: eleve)
-    assert_equal dossier, DossierEleve.par_identifiant('alpha,num;1234!')
+    assert_equal dossier, DossierEleve.par_identifiant("alpha,num;1234!")
   end
+
 end
