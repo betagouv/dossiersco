@@ -24,7 +24,7 @@
                 <div class="dropdown">
                   <%= affiche_etablissement(@agent_connecté.etablissement) %>
                   <div class="dropdown-content">
-                    <% Etablissement.all.each do |etablissement| %>
+                    <% Etablissement.all.order(:nom).each do |etablissement| %>
                       <%= link_to affiche_etablissement(etablissement),
                                   changer_etablissement_configuration_agent_path(@agent_connecté, etablissement: etablissement),
                                   {method: :post} %>
