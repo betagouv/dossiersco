@@ -1,0 +1,17 @@
+AllCops:
+  Exclude:
+    - 'tmp/**/*'
+    - 'vendor/bundle/**/*'
+
+
+Layout/EmptyLinesAroundClassBody:
+  Enabled: true
+  EnforcedStyle: empty_lines
+
+LineLength:
+  Max: 100
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+

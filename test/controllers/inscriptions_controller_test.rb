@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require "test_helper"
 
 class InscriptionControllerTest < ActionDispatch::IntegrationTest
+
   test "un agent modifie le mef de destination d'un élève" do
     agent = Fabricate(:agent)
     identification_agent(agent)
@@ -32,4 +33,5 @@ class InscriptionControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal nouveau_mef, dossier_eleve.mef_origine
   end
+
 end

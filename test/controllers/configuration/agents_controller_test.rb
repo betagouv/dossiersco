@@ -1,27 +1,29 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require "test_helper"
 
 class AgentsControllerTest < ActionDispatch::IntegrationTest
-  test 'Un admin crée un agent qui a un établissement lié' do
+
+  test "Un admin crée un agent qui a un établissement lié" do
     admin = Fabricate(:admin)
     etablissement = admin.etablissement
     identification_agent(admin)
 
-    post configuration_agents_path, params: { agent: { email: 'test@test.fr' } }
+    post configuration_agents_path, params: { agent: { email: "test@test.fr" } }
 
-    assert_equal 1, Agent.where(email: 'test@test.fr', etablissement_id: etablissement.id).count
+    assert_equal 1, Agent.where(email: "test@test.fr", etablissement_id: etablissement.id).count
   end
 
-  test 'enregistre un agent avec un email enregistré en minuscule' do
+  test "enregistre un agent avec un email enregistré en minuscule" do
     admin = Fabricate(:admin)
     identification_agent(admin)
-    post configuration_agents_path, params: { agent: { email: 'TeSt@tEsT.fR' } }
+    post configuration_agents_path, params: { agent: { email: "TeSt@tEsT.fR" } }
 
-    assert_equal 1, Agent.where(email: 'test@test.fr', etablissement_id: admin.etablissement.id).count
+    agent_count = Agent.where(email: "test@test.fr", etablissement_id: admin.etablissement.id).count
+    assert_equal 1, agent_count
   end
 
-  test 'Un admin liste les agents de son établiseement' do
+  test "Un admin liste les agents de son établiseement" do
     agents = []
     agents << admin = Fabricate(:admin)
     3.times do
@@ -35,7 +37,7 @@ class AgentsControllerTest < ActionDispatch::IntegrationTest
     assert_equal [], agents - assigns(:agents)
   end
 
-  test 'Un agent peu accéder à son profil' do
+  test "Un agent peu accéder à son profil" do
     agent = Fabricate(:agent)
 
     identification_agent(agent)
@@ -55,21 +57,22 @@ class AgentsControllerTest < ActionDispatch::IntegrationTest
     assert_equal agent_un, assigns(:agent_connecté)
   end
 
-  test 'Un agent modifie son profil' do
+  test "Un agent modifie son profil" do
     agent = Fabricate(:agent)
     identification_agent(agent)
 
-    put configuration_agent_path(agent), params: { agent: { prenom: 'Lucien' } }
+    put configuration_agent_path(agent), params: { agent: { prenom: "Lucien" } }
 
     assert_redirected_to configuration_agents_path
-    assert_equal 'Lucien', Agent.find(agent.id).prenom
+    assert_equal "Lucien", Agent.find(agent.id).prenom
   end
 
-  test 'contient un agent_connecté' do
-    agent = Fabricate(:agent, jeton: 'uber_jeton')
+  test "contient un agent_connecté" do
+    agent = Fabricate(:agent, jeton: "uber_jeton")
 
-    get configuration_agent_activation_path(agent, jeton: 'uber_jeton')
+    get configuration_agent_activation_path(agent, jeton: "uber_jeton")
 
     assert_equal agent, assigns(:agent_connecté)
   end
+
 end

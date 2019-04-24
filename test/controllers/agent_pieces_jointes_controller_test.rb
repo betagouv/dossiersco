@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require "test_helper"
 
 class AgentPiecesJointesControllerTest < ActionDispatch::IntegrationTest
-  test 'upload un fichier puis affiche un compte rendu du contenu' do
+
+  test "upload un fichier puis affiche un compte rendu du contenu" do
     admin = Fabricate(:admin)
     identification_agent(admin)
     piece_attendue = Fabricate(:piece_attendue)
     eleve = Fabricate(:dossier_eleve).eleve
 
-    piece_jointe = fixture_file_upload('files/sample.png', 'image/png')
+    piece_jointe = fixture_file_upload("files/sample.png", "image/png")
     post agent_pieces_jointes_url, params: {
       piece_jointe: {
         fichier: piece_jointe,
@@ -20,4 +21,5 @@ class AgentPiecesJointesControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to "/agent/eleve/#{eleve.identifiant}#dossier"
   end
+
 end
