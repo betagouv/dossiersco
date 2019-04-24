@@ -108,8 +108,9 @@ fr:
       adresse: Adresse
       code_postal: Code postal
       ville: Ville
-      telephone_principal: Téléphone principal
-      telephone_secondaire: Téléphone secondaire
+      telephone_principal: Téléphone personnel
+      telephone_secondaire: Téléphone portable
+      telephone_professionnel: Téléphone professionnel
       email_principal: Email principal
       profession: Profession
       nb_total_enfants_a_charge: "Nombre total d'enfants à charge"
@@ -254,6 +255,9 @@ fr:
       changements_enregistres: "Les changements ont été enregistrés"
       changements_non_enregistres: "Une erreur est survenue, les changements n'ont pas été pris en compte"
     eleve:
+      telephone_personnel: Personnel
+      telephone_portable: Portable
+      telephone_professionnel: Professionnel
       <<: *pieces_jointes
       valider: "Valider"
       refuser: "Refuser"

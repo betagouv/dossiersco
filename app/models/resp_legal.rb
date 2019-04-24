@@ -47,7 +47,7 @@ class RespLegal < ActiveRecord::Base
 
   def self.identites
     ["lien_de_parente", "prenom", "nom", "adresse", "code_postal", "ville", "tel_personnel",
-                           "tel_portable", "email", "profession", "enfants_a_charge",
+                           "tel_portable", "tel_professionnel", "email", "profession", "enfants_a_charge",
                            "communique_info_parents_eleves", "lien_avec_eleve"]
   end
 end

@@ -113,12 +113,17 @@
           <ul class="list-unstyled">
             <% if resp_legal.tel_personnel.present? %>
               <li>
-                <i class="fas fa-phone-square mr-1"></i> <strong><%= resp_legal.tel_personnel %></strong>
+                <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_personnel') %> : <%= resp_legal.tel_personnel %>
               </li>
             <% end %>
             <% if resp_legal.tel_portable.present? %>
               <li>
-                <i class="fas fa-phone-square mr-1"></i> <%= resp_legal.tel_portable %>
+                <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_portable') %> : <%= resp_legal.tel_portable %>
+              </li>
+            <% end %>
+            <% if resp_legal.tel_professionnel.present? %>
+              <li>
+                <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_professionnel') %> : <%= resp_legal.tel_professionnel %>
               </li>
             <% end %>
             <% if resp_legal.respond_to?(:email) && resp_legal.email.present? %>

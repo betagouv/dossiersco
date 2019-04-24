@@ -77,6 +77,13 @@
         indication: "Numéro de téléphone",
     },
     {
+        name: "tel_professionnel_rl1",
+        label: t('.telephone_professionnel'),
+        type: "tel",
+        value: @resp_legal_1.tel_professionnel,
+        indication: "Numéro de téléphone",
+    },
+    {
         name: "email_rl1",
         label: t('.email_principal'),
         type: "tel",
@@ -200,6 +207,13 @@
              label: t('.telephone_secondaire'),
              type: "tel",
              value: @resp_legal_2.tel_portable,
+             indication: "Numéro de téléphone",
+         },
+         {
+             name: "tel_professionnel_rl2",
+             label: t('.telephone_professionnel'),
+             type: "tel",
+             value: @resp_legal_2.tel_professionnel,
              indication: "Numéro de téléphone",
          },
          {
