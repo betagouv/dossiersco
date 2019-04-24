@@ -1,8 +1,4 @@
 class PagesController < ApplicationController
-  def a_propos
-    render layout: 'famille'
-  end
-
   def redirection_erreur
     if !get_eleve.nil?
       redirect_to accueil_path
