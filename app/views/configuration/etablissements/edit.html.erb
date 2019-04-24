@@ -41,11 +41,11 @@
         <%= f.file_field :reglement_demi_pension %>
       </div>
       <div class="form__group">
-        <%= f.label :signataire %>
-        <%= f.text_field :signataire %>
+        <%= f.label :signataire, t('.signataire') %>
+        <%= f.text_field :signataire, placeholder: "Ex : Yasmina MARTIN, principale du collège" %>
       </div>
       <div class="form__group">
-        <%= f.label :date_limite %>
+        <%= f.label :date_limite, t('.date_limite_inscription')%>
         <%= f.text_field :date_limite %>
       </div>
       <div class="form__group">
