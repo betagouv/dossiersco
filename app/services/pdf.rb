@@ -54,7 +54,7 @@ class Pdf
                  :indent_paragraphs => 20
 
         pdf.move_down 10
-        pdf.text "Votre identifiant est : <b>#{dossier_eleve.eleve.identifiant}</b> "
+        pdf.text "Votre identifiant est : <b>#{dossier_eleve.eleve.identifiant}</b> ", :inline_format => true
 
         pdf.move_down 10
         pdf.text "En réalisant la démarche en ligne vous n’avez pas à nous remettre le dossier papier.", :style => :bold,
