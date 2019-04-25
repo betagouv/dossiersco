@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class AddTelephoneToDossierEleve < ActiveRecord::Migration[5.2]
+
   def change
     add_column :resp_legals, :tel_personnel, :string
     add_column :resp_legals, :tel_portable, :string
@@ -15,4 +16,5 @@ class AddTelephoneToDossierEleve < ActiveRecord::Migration[5.2]
     remove_column :resp_legals, :tel_principal
     remove_column :resp_legals, :tel_secondaire
   end
+
 end

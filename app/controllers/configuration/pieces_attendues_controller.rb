@@ -2,7 +2,8 @@
 
 module Configuration
   class PiecesAttenduesController < ApplicationController
-    layout 'configuration'
+
+    layout "configuration"
 
     before_action :identification_agent
     before_action :set_piece_attendue, only: %i[edit update destroy]
@@ -22,7 +23,7 @@ module Configuration
       @piece_attendue.etablissement = agent_connecté.etablissement
 
       if @piece_attendue.save
-        redirect_to configuration_pieces_attendues_path, notice: t('.piece_cree')
+        redirect_to configuration_pieces_attendues_path, notice: t(".piece_cree")
       else
         render :new
       end
@@ -30,7 +31,7 @@ module Configuration
 
     def update
       if @piece_attendue.update(piece_attendue_params)
-        redirect_to configuration_pieces_attendues_path, notice: t('.piece_mise_a_jour')
+        redirect_to configuration_pieces_attendues_path, notice: t(".piece_mise_a_jour")
       else
         render :edit
       end
@@ -38,7 +39,7 @@ module Configuration
 
     def destroy
       @piece_attendue.destroy
-      redirect_to configuration_pieces_attendues_path, notice: t('.piece_mise_a_jour')
+      redirect_to configuration_pieces_attendues_path, notice: t(".piece_mise_a_jour")
     end
 
     private
@@ -50,5 +51,6 @@ module Configuration
     def piece_attendue_params
       params.require(:piece_attendue).permit(:nom, :code, :etablissement_id, :explication, :obligatoire)
     end
+
   end
 end

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class FamilleMailer < ApplicationMailer
-  default from: 'equipe@dossiersco.fr'
+
+  default from: "equipe@dossiersco.fr"
 
   def contacter_une_famille(eleve, agent, message)
     @eleve = eleve
@@ -14,7 +15,7 @@ class FamilleMailer < ApplicationMailer
       emails += [@eleve.dossier_eleve.resp_legal.find_by(priorite: 1).email]
     end
 
-    subject = 'Réinscription de votre enfant au collège'
+    subject = "Réinscription de votre enfant au collège"
     reply_to = agent.email
 
     mail(subject: subject, reply_to: reply_to, to: emails, &:text)
@@ -26,7 +27,7 @@ class FamilleMailer < ApplicationMailer
     return unless etablissement.envoyer_aux_familles
 
     email = @eleve.dossier_eleve.resp_legal.find_by(priorite: 1).email
-    subject = 'Réinscription de votre enfant au collège'
+    subject = "Réinscription de votre enfant au collège"
     reply_to = @eleve.dossier_eleve.etablissement.email_chef
 
     mail(subject: subject, reply_to: reply_to, to: email, &:text)
@@ -42,9 +43,10 @@ class FamilleMailer < ApplicationMailer
               agent.email
             end
 
-    subject = 'Réinscription de votre enfant au collège'
+    subject = "Réinscription de votre enfant au collège"
     reply_to = agent.email
 
     mail(subject: subject, reply_to: reply_to, to: email, &:text)
   end
+
 end

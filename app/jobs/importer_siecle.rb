@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
-require 'roo'
-require 'roo-xls'
+require "roo"
+require "roo-xls"
 
 class ImporterSiecle < ApplicationJob
+
   queue_as :default
 
   discard_on(StandardError) do |_job, error|
@@ -78,8 +79,8 @@ class ImporterSiecle < ApplicationJob
     mef = Mef.find_by(etablissement_id: etablissement_id, code: ligne_siecle[COLONNES[:code_mef]], libelle: ligne_siecle[COLONNES[:niveau_classe_ant]])
     mef ||= Mef.new(etablissement_id: etablissement_id, code: ligne_siecle[COLONNES[:code_mef]], libelle: ligne_siecle[COLONNES[:niveau_classe_ant]])
     unless mef.save
-      puts mef.errors.full_messages.join(', ')
-      raise mef.errors.full_messages.join(', ')
+      puts mef.errors.full_messages.join(", ")
+      raise mef.errors.full_messages.join(", ")
     end
   end
 
@@ -105,8 +106,8 @@ class ImporterSiecle < ApplicationJob
   end
 
   def concatener_adresse(ligne_siecle, priorite)
-    colonnes_adresse = { 'resp_legal1' => [108, 109, 110, 111], 'resp_legal2' => [127, 128, 129, 130] }
-    adresse = ''
+    colonnes_adresse = { "resp_legal1" => [108, 109, 110, 111], "resp_legal2" => [127, 128, 129, 130] }
+    adresse = ""
     colonnes_adresse["resp_legal#{priorite}"].each do |colonne|
       adresse << "#{ligne_siecle[colonne]} \n " unless ligne_siecle[colonne].nil?
     end
@@ -149,15 +150,15 @@ class ImporterSiecle < ApplicationJob
     dossier_eleve.mef_destination = mef_destination
 
     unless dossier_eleve.save
-      puts dossier_eleve.errors.full_messages.join(', ')
-      raise dossier_eleve.errors.full_messages.join(', ')
+      puts dossier_eleve.errors.full_messages.join(", ")
+      raise dossier_eleve.errors.full_messages.join(", ")
     end
 
     [38, 42, 46, 50, 54, 58, 62, 66, 70, 74].each do |colonne|
       next unless ligne_siecle[colonne].present?
 
       option = OptionPedagogique.find_or_create_by(etablissement_id: etablissement_id, nom: ligne_siecle[colonne])
-      option.update(obligatoire: true) if ligne_siecle[colonne + 1] == 'O'
+      option.update(obligatoire: true) if ligne_siecle[colonne + 1] == "O"
 
       if ligne_siecle[COLONNES[:code_mef]].present?
         mef = Mef.find_by(code: ligne_siecle[COLONNES[:code_mef]], etablissement_id: etablissement_id)
@@ -202,17 +203,17 @@ class ImporterSiecle < ApplicationJob
   end
 
   def traiter_donnees_eleve(donnees_eleve)
-    if donnees_eleve[:sexe] == 'M'
-      donnees_eleve[:sexe] = 'Masculin'
-    elsif donnees_eleve[:sexe] == 'F'
-      donnees_eleve[:sexe] = 'Féminin'
+    if donnees_eleve[:sexe] == "M"
+      donnees_eleve[:sexe] = "Masculin"
+    elsif donnees_eleve[:sexe] == "F"
+      donnees_eleve[:sexe] = "Féminin"
     end
-    if donnees_eleve[:date_naiss].class == Date
-      donnees_eleve[:date_naiss] = donnees_eleve[:date_naiss].strftime('%Y-%m-%d')
-    else
-      donnees_eleve[:date_naiss] = donnees_eleve[:date_naiss].split('/').reverse.join('-')
-    end
-    donnees_eleve[:ville_naiss] = if donnees_eleve[:pays_naiss] == 'FRANCE'
+    donnees_eleve[:date_naiss] = if donnees_eleve[:date_naiss].class == Date
+                                   donnees_eleve[:date_naiss].strftime("%Y-%m-%d")
+                                 else
+                                   donnees_eleve[:date_naiss].split("/").reverse.join("-")
+                                 end
+    donnees_eleve[:ville_naiss] = if donnees_eleve[:pays_naiss] == "FRANCE"
                                     donnees_eleve[:commune_naiss]
                                   else
                                     donnees_eleve[:ville_naiss_etrangere]
@@ -224,4 +225,5 @@ class ImporterSiecle < ApplicationJob
 
     donnees_eleve
   end
+
 end

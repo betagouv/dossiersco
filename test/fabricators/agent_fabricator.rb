@@ -4,7 +4,7 @@ Fabricator(:agent) do
   etablissement
   admin false
   email { sequence(:email) { |i| "toto_#{i}@test.com" } }
-  password 'demaulmont'
+  password "demaulmont"
 end
 
 Fabricator(:admin, from: :agent) do

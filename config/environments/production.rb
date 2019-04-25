@@ -22,7 +22,7 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -64,15 +64,15 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
   config.action_mailer.default_url_options = {
-    host: 'https://dossiersco.fr'
+    host: "https://dossiersco.fr"
   }
 
-  if ENV['laisser_partir_les_emails']
+  if ENV["laisser_partir_les_emails"]
     config.action_mailer.delivery_method = :mailjet_api
     config.action_mailer.default_options = {
       delivery_method_options: {
-        api_key: ENV['MAILER_API_KEY'],
-        secret_key: ENV['MAILER_SECRET_KEY']
+        api_key: ENV["MAILER_API_KEY"],
+        secret_key: ENV["MAILER_SECRET_KEY"]
       }
     }
   else
@@ -97,7 +97,7 @@ Rails.application.configure do
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
-  if ENV['RAILS_LOG_TO_STDOUT'].present?
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class AddEtatToPieceJointes < ActiveRecord::Migration[5.1]
+
   def change
     add_column :piece_jointes, :etat, :string
     remove_column :dossier_eleves, :etat_photo_identite
@@ -10,4 +11,5 @@ class AddEtatToPieceJointes < ActiveRecord::Migration[5.1]
     remove_column :dossier_eleves, :assurance_scolaire
     remove_column :dossier_eleves, :jugement_garde_enfant
   end
+
 end

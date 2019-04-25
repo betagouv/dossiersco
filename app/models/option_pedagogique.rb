@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class OptionPedagogique < ApplicationRecord
+
   belongs_to :etablissement
   has_and_belongs_to_many :dossier_eleves
   has_many :mef_options_pedagogiques
@@ -13,6 +14,7 @@ class OptionPedagogique < ApplicationRecord
   end
 
   def abandonnable?(mef)
-    self.mef_options_pedagogiques.find_by(mef: mef).abandonnable
+    mef_options_pedagogiques.find_by(mef: mef).abandonnable
   end
+
 end

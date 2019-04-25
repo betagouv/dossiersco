@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CreateEtablissementsTable < ActiveRecord::Migration[5.1]
+
   def change
     create_table :etablissements do |t|
       t.string :nom
@@ -8,4 +9,5 @@ class CreateEtablissementsTable < ActiveRecord::Migration[5.1]
     end
     add_column :dossier_eleves, :etablissement_id, :integer
   end
+
 end

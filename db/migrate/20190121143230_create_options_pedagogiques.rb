@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CreateOptionsPedagogiques < ActiveRecord::Migration[5.2]
+
   def change
     create_table :options_pedagogiques do |t|
       t.string :nom
@@ -9,4 +10,5 @@ class CreateOptionsPedagogiques < ActiveRecord::Migration[5.2]
       t.timestamps
     end
   end
+
 end

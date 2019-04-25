@@ -1,16 +1,17 @@
 # frozen_string_literal: true
 
-require 'uri'
-require 'net/http'
-require 'net/https'
-require 'json'
-require 'tilt/erb'
+require "uri"
+require "net/http"
+require "net/https"
+require "json"
+require "tilt/erb"
 
 class DossierEleve < ActiveRecord::Base
+
   belongs_to :eleve
   belongs_to :etablissement
-  belongs_to :mef_origine, class_name: 'Mef', required: false
-  belongs_to :mef_destination, class_name: 'Mef', required: false
+  belongs_to :mef_origine, class_name: "Mef", required: false
+  belongs_to :mef_destination, class_name: "Mef", required: false
 
   has_many :resp_legal, dependent: :destroy
   has_many :piece_jointe, dependent: :destroy
@@ -20,12 +21,11 @@ class DossierEleve < ActiveRecord::Base
 
   has_and_belongs_to_many :options_pedagogiques
 
-
-  ETAT = { pas_connecte: 'pas connecté', connecte: 'connecté', en_attente: 'en attente', en_attente_de_validation: 'en attente de validation', valide: 'validé', sortant: 'sortant'}.freeze
+  ETAT = { pas_connecte: "pas connecté", connecte: "connecté", en_attente: "en attente", en_attente_de_validation: "en attente de validation", valide: "validé", sortant: "sortant" }.freeze
 
   validates :etat, inclusion: { in: ETAT.values }
 
-  # TODO fusionner Eleve et DossierEleve
+  # TODO: fusionner Eleve et DossierEleve
   default_scope { joins(:eleve) }
 
   scope :pour, lambda { |etablissement|
@@ -33,7 +33,7 @@ class DossierEleve < ActiveRecord::Base
   }
 
   scope :a_convoquer, lambda {
-    where('etat in (?)', [ETAT[:pas_connecte], ETAT[:connecte]])
+    where("etat in (?)", [ETAT[:pas_connecte], ETAT[:connecte]])
   }
 
   def self.par_identifiant(identifiant)
@@ -70,10 +70,10 @@ class DossierEleve < ActiveRecord::Base
 
   def relance_sms(template = DEFAULT_TEMPLATE)
     # Construction du message
-    template = Tilt['erb'].new { template }
+    template = Tilt["erb"].new { template }
     text = template.render(nil, eleve: eleve)
 
-    Message.create(categorie: 'sms', contenu: text, etat: ETAT[:en_attente], dossier_eleve: self)
+    Message.create(categorie: "sms", contenu: text, etat: ETAT[:en_attente], dossier_eleve: self)
   end
 
   def portable_present
@@ -90,15 +90,15 @@ class DossierEleve < ActiveRecord::Base
 
   def portable(responsable_legal)
     secondaire = responsable_legal.tel_portable
-    return secondaire unless secondaire.blank? || secondaire.start_with?('01')
+    return secondaire unless secondaire.blank? || secondaire.start_with?("01")
 
     responsable_legal.tel_personnel
   end
 
   def date_signature_gmt_plus_2
-    return '' unless date_signature
+    return "" unless date_signature
 
-    date_signature.localtime('+02:00').strftime '%d/%m à %H:%M'
+    date_signature.localtime("+02:00").strftime "%d/%m à %H:%M"
   end
 
   def pieces_manquantes
@@ -116,4 +116,5 @@ class DossierEleve < ActiveRecord::Base
   def valide!
     update(etat: ETAT[:valide])
   end
+
 end

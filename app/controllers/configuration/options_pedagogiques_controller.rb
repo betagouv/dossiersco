@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 module Configuration
   class OptionsPedagogiquesController < ApplicationController
-    layout 'configuration'
+
+    layout "configuration"
 
     before_action :identification_agent
-    before_action :set_option_pedagogique, only: [:edit, :update, :destroy]
+    before_action :set_option_pedagogique, only: %i[edit update destroy]
 
     def index
       @mefs = Mef.where(etablissement: @agent_connecté.etablissement).includes(:options_pedagogiques)
@@ -23,7 +26,7 @@ module Configuration
       @option_pedagogique = OptionPedagogique.new(option_pedagogique_params.merge(etablissement: agent_connecté.etablissement))
 
       if @option_pedagogique.save
-        redirect_to configuration_options_pedagogiques_url, notice: t('.option_cree')
+        redirect_to configuration_options_pedagogiques_url, notice: t(".option_cree")
       else
         render :new
       end
@@ -31,7 +34,7 @@ module Configuration
 
     def update
       if @option_pedagogique.update(option_pedagogique_params)
-        redirect_to configuration_options_pedagogiques_url, notice: t('.option_mise_a_jour')
+        redirect_to configuration_options_pedagogiques_url, notice: t(".option_mise_a_jour")
       else
         render :edit
       end
@@ -39,7 +42,7 @@ module Configuration
 
     def destroy
       @option_pedagogique.destroy
-      redirect_to configuration_options_pedagogiques_url, notice: t('.option_supprimee')
+      redirect_to configuration_options_pedagogiques_url, notice: t(".option_supprimee")
     end
 
     def ajoute_option_au_mef
@@ -50,7 +53,7 @@ module Configuration
       else
         @mef.options_pedagogiques << @option
         respond_to do |format|
-          format.js{render :layout => false}
+          format.js { render layout: false }
         end
       end
     end
@@ -60,7 +63,7 @@ module Configuration
       @option = OptionPedagogique.find(params[:id])
       @mef.options_pedagogiques.delete(@option)
       respond_to do |format|
-        format.js{render :layout => false}
+        format.js { render layout: false }
       end
     end
 
@@ -71,12 +74,14 @@ module Configuration
     end
 
     private
+
     def set_option_pedagogique
       @option_pedagogique = OptionPedagogique.find(params[:id])
     end
 
     def option_pedagogique_params
-      params.require(:option_pedagogique).permit(:nom, :obligatoire, :groupe, {mef_ids: []})
+      params.require(:option_pedagogique).permit(:nom, :obligatoire, :groupe, mef_ids: [])
     end
+
   end
 end

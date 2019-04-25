@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class InscriptionsController < ApplicationController
+
   before_action :identification_agent, except: %i[post_agent agent]
-  layout 'agent'
+  layout "agent"
 
   def agent
-    render :identification, layout: 'connexion'
+    render :identification, layout: "connexion"
   end
 
   def post_agent
@@ -15,7 +16,7 @@ class InscriptionsController < ApplicationController
       session[:agent_email] = mon_agent.email
       redirect_to agent_liste_des_eleves_path
     else
-      session[:erreur_login] = 'Ces informations ne correspondent pas à un agent enregistré'
+      session[:erreur_login] = "Ces informations ne correspondent pas à un agent enregistré"
       redirect_to agent_path
     end
   end
@@ -23,22 +24,22 @@ class InscriptionsController < ApplicationController
   def liste_des_eleves
     lignes_eleves = DossierEleve
                     .joins(:eleve, :resp_legal)
-                    .select('dossier_eleves.id as dossier_id')
-                    .select('dossier_eleves.updated_at as dossier_maj')
-                    .select('dossier_eleves.*')
-                    .select('eleves.*')
-                    .select('resp_legals.email')
-                    .select('adresse,code_postal,ville,adresse_ant,code_postal_ant,ville_ant')
-                    .order('eleves.classe_ant DESC, dossier_eleves.etat, eleves.identifiant')
+                    .select("dossier_eleves.id as dossier_id")
+                    .select("dossier_eleves.updated_at as dossier_maj")
+                    .select("dossier_eleves.*")
+                    .select("eleves.*")
+                    .select("resp_legals.email")
+                    .select("adresse,code_postal,ville,adresse_ant,code_postal_ant,ville_ant")
+                    .order("eleves.classe_ant DESC, dossier_eleves.etat, eleves.identifiant")
                     .where(resp_legals: { priorite: 1 }, etablissement: agent_connecté.etablissement)
     pieces_jointes = PieceJointe
                      .joins(:dossier_eleve, :piece_attendue)
-                     .select('dossier_eleves.id as dossier_id').select('pieces_jointes.*')
+                     .select("dossier_eleves.id as dossier_id").select("pieces_jointes.*")
                      .where(pieces_attendues: { etablissement_id: agent_connecté.etablissement.id })
                      .group_by(&:dossier_eleve_id)
     messages = Message
                .joins(:dossier_eleve)
-               .select('dossier_eleves.id as dossier_id').select('messages.dossier_eleve_id')
+               .select("dossier_eleves.id as dossier_id").select("messages.dossier_eleve_id")
                .where(dossier_eleves: { etablissement_id: agent_connecté.etablissement.id })
                .group_by(&:dossier_eleve_id)
     message_info = session[:message_info]
@@ -70,13 +71,13 @@ class InscriptionsController < ApplicationController
     if @dossier_eleve.update(params_mef)
       respond_to do |format|
         format.html { redirect_to "/agent/eleve/#{@dossier_eleve.eleve.identifiant}" }
-        flash[:notice_mef] = t('.changements_enregistres')
+        flash[:notice_mef] = t(".changements_enregistres")
         format.js { render layout: false }
       end
     else
       respond_to do |format|
         format.html { redirect_to "/agent/eleve/#{@dossier_eleve.eleve.identifiant}" }
-        flash[:alert_mef] = t('.changements_non_enregistres')
+        flash[:alert_mef] = t(".changements_non_enregistres")
         format.js { render layout: false }
       end
     end
@@ -90,15 +91,15 @@ class InscriptionsController < ApplicationController
     mail = FamilleMailer.mail_validation_inscription(eleve, @agent_connecté)
     mail.deliver_now
 
-    redirect_to '/agent/liste_des_eleves'
+    redirect_to "/agent/liste_des_eleves"
   end
 
   def eleve_sortant
     eleve = Eleve.find_by identifiant: params[:identifiant]
     dossier_eleve = eleve.dossier_eleve
-    dossier_eleve.update(etat: 'sortant')
+    dossier_eleve.update(etat: "sortant")
 
-    redirect_to '/agent/liste_des_eleves'
+    redirect_to "/agent/liste_des_eleves"
   end
 
   def contacter_une_famille
@@ -107,58 +108,58 @@ class InscriptionsController < ApplicationController
     emails_presents = false
     resp_legaux = dossier_eleve.resp_legal
     resp_legaux.each { |r| (emails_presents = true) if r.email.present? }
-    session[:message_info] = 'Votre message ne peut être acheminé.'
+    session[:message_info] = "Votre message ne peut être acheminé."
     if emails_presents
       mail = FamilleMailer.contacter_une_famille(eleve, @agent_connecté, params[:message])
       part = mail.html_part || mail.text_part || mail
-      Message.create(categorie: 'mail', contenu: part.body, etat: 'envoyé', dossier_eleve: eleve.dossier_eleve)
+      Message.create(categorie: "mail", contenu: part.body, etat: "envoyé", dossier_eleve: eleve.dossier_eleve)
       mail.deliver_now
-      session[:message_info] = 'Votre message a été envoyé.'
+      session[:message_info] = "Votre message a été envoyé."
     elsif dossier_eleve.portable_rl1.present?
-      Message.create(categorie: 'sms',
+      Message.create(categorie: "sms",
                      contenu: params[:message],
-                     destinataire: params[:destinataire] || 'rl1',
-                     etat: 'en attente',
+                     destinataire: params[:destinataire] || "rl1",
+                     etat: "en attente",
                      dossier_eleve: eleve.dossier_eleve)
       session[:message_info] = "Votre message est en attente d'expédition."
     end
-    redirect_to '/agent/liste_des_eleves'
+    redirect_to "/agent/liste_des_eleves"
   end
 
   def relance_emails
     template = params[:template]
-    ids = params[:ids].split(',')
+    ids = params[:ids].split(",")
     dossier_eleves = []
 
     ids.each do |id|
       dossier = DossierEleve.find(id)
-      template = Tilt['erb'].new { template }
+      template = Tilt["erb"].new { template }
       contenu = template.render(nil, eleve: dossier.eleve)
-      Message.create(categorie: 'mail',
+      Message.create(categorie: "mail",
                      contenu: contenu,
-                     etat: 'en attente',
+                     etat: "en attente",
                      dossier_eleve: dossier)
     end
 
-    redirect_to '/agent/liste_des_eleves'
+    redirect_to "/agent/liste_des_eleves"
   end
 
   def fusionne_modele
     eleve = Eleve.find_by(identifiant: params[:identifiant])
     modele = Modele.find(params[:modele_id])
-    template = Tilt['erb'].new { modele.contenu }
+    template = Tilt["erb"].new { modele.contenu }
     template.render(nil, eleve: eleve)
   end
 
   def valider_plusieurs_dossiers
-    ids = params['ids']
+    ids = params["ids"]
     ids.each do |id|
       dossier_eleve = DossierEleve.find(id)
       dossier_eleve.valide!
       mail = FamilleMailer.mail_validation_inscription(dossier_eleve.eleve, @agent_connecté)
       mail.deliver_now
     end
-    redirect_to '/agent/liste_des_eleves'
+    redirect_to "/agent/liste_des_eleves"
   end
 
   def convocations
@@ -168,7 +169,7 @@ class InscriptionsController < ApplicationController
 
   def deconnexion
     reset_session
-    redirect_to '/agent'
+    redirect_to "/agent"
   end
 
   def tableau_de_bord
@@ -182,7 +183,7 @@ class InscriptionsController < ApplicationController
   def pieces_jointes_eleve
     eleve = Eleve.find_by(identifiant: params[:identifiant])
     dossier_eleve = eleve.dossier_eleve
-    upload_pieces_jointes dossier_eleve, params, 'valide'
+    upload_pieces_jointes dossier_eleve, params, "valide"
     redirect_to "/agent/eleve/#{eleve.identifiant}#dossier"
   end
 
@@ -198,7 +199,7 @@ class InscriptionsController < ApplicationController
   def supprime_piece_attendue
     pieces_existantes = PieceJointe.where(piece_attendue_id: params[:piece_attendue_id])
     if pieces_existantes.size >= 1
-      message = 'Cette piece ne peut être supprimé'
+      message = "Cette piece ne peut être supprimé"
     else
       PieceAttendue.find(params[:piece_attendue_id]).delete
     end
@@ -206,7 +207,7 @@ class InscriptionsController < ApplicationController
   end
 
   def relance
-    ids = params['ids'].split(',')
+    ids = params["ids"].split(",")
     emails = []
     telephones = []
 
@@ -222,17 +223,18 @@ class InscriptionsController < ApplicationController
 
   def relance_sms
     template = params[:template]
-    ids = params[:ids].split(',')
+    ids = params[:ids].split(",")
     ids.each do |id|
       DossierEleve.find(id).relance_sms template
     end
-    redirect_to '/agent/liste_des_eleves'
+    redirect_to "/agent/liste_des_eleves"
   end
 
   def pdf_convocation
     etablissement = @agent_connecté.etablissement
     pdf = GenerePdf.new
     zip_data = pdf.generer_par_classe(etablissement)
-    send_data(zip_data, type: 'application/zip', filename: 'convocations.zip')
+    send_data(zip_data, type: "application/zip", filename: "convocations.zip")
   end
+
 end

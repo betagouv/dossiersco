@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
+
   def redirection_erreur
     if !get_eleve.nil?
       redirect_to accueil_path
@@ -14,4 +15,5 @@ class PagesController < ApplicationController
   def get_eleve
     @eleve ||= Eleve.find_by(identifiant: session[:identifiant])
   end
+
 end

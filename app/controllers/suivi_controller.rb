@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class SuiviController < ApplicationController
-  layout 'connexion'
+
+  layout "connexion"
   before_action :agent_connecté
   before_action :identification_agent, only: [:pas_encore_connectes]
 
@@ -14,22 +15,20 @@ class SuiviController < ApplicationController
         @suivi.pas_encore_connecte << etablissement
       end
 
-      if etablissement.dossier_eleve.count > 0
-        @suivi.eleves_importe << etablissement
-      end
+      @suivi.eleves_importe << etablissement if etablissement.dossier_eleve.count > 0
 
-      if etablissement.pieces_attendues.count > 0
-        @suivi.piece_attendue_configure << etablissement
-      end
+      @suivi.piece_attendue_configure << etablissement if etablissement.pieces_attendues.count > 0
 
-      if etablissement.dossier_eleve.map(&:etat).include?('connecté')
+      if etablissement.dossier_eleve.map(&:etat).include?("connecté")
         @suivi.familles_connectes << etablissement
       end
     end
   end
+
 end
 
 class Suivi
+
   attr_accessor :pas_encore_connecte, :eleves_importe, :piece_attendue_configure, :familles_connectes
 
   def initialize
@@ -38,4 +37,5 @@ class Suivi
     @piece_attendue_configure = []
     @familles_connectes = []
   end
+
 end

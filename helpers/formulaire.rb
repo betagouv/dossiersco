@@ -3,7 +3,7 @@
 helpers do
   def construire(champs)
     champs.map do |champ|
-      render partials: 'partials/_champ', locals: champ
+      render partials: "partials/_champ", locals: champ
     end
           .join
   end

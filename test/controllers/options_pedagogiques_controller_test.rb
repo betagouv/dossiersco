@@ -30,7 +30,8 @@ class OptionsPedagogiquesControllerTest < ActionDispatch::IntegrationTest
     identification_agent(admin)
 
     assert_difference("OptionPedagogique.count") do
-      post configuration_options_pedagogiques_url, params: { option_pedagogique: { nom: "maçonnerie" } }
+      params = { option_pedagogique: { nom: "maçonnerie" } }
+      post configuration_options_pedagogiques_url, params: params
     end
 
     assert_redirected_to configuration_options_pedagogiques_url
@@ -48,33 +49,23 @@ class OptionsPedagogiquesControllerTest < ActionDispatch::IntegrationTest
     admin = Fabricate(:admin)
     identification_agent(admin)
 
-<<<<<<< HEAD
-    patch configuration_option_pedagogique_url(@option_pedagogique), params: { option_pedagogique: { nom: 'couture' } }
-    assert_redirected_to configuration_options_pedagogiques_url
-=======
     params = { option_pedagogique: { nom: "couture" } }
-    patch option_pedagogique_url(@option_pedagogique), params: params
-    assert_redirected_to options_pedagogiques_url
->>>>>>> rectifie les tests de controlleur avec les nouvelles regles rubocop
+    patch configuration_option_pedagogique_url(@option_pedagogique), params: params
+    assert_redirected_to configuration_options_pedagogiques_url
   end
 
   test "should destroy option_pedagogique" do
     admin = Fabricate(:admin)
     identification_agent(admin)
 
-<<<<<<< HEAD
-    assert_difference('OptionPedagogique.count', -1) do
-      delete configuration_option_pedagogique_url(@option_pedagogique)
-=======
     assert_difference("OptionPedagogique.count", -1) do
-      delete option_pedagogique_url(@option_pedagogique)
->>>>>>> rectifie les tests de controlleur avec les nouvelles regles rubocop
+      delete configuration_option_pedagogique_url(@option_pedagogique)
     end
 
     assert_redirected_to configuration_options_pedagogiques_url
   end
 
-  test 'modifie une option en non abandonnable' do
+  test "modifie une option en non abandonnable" do
     admin = Fabricate(:admin)
     identification_agent(admin)
     mef_option = Fabricate(:mef_option_pedagogique)

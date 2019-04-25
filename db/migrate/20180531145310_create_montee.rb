@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CreateMontee < ActiveRecord::Migration[5.1]
+
   def change
     create_table :montees do |t|
       t.integer :niveau_ant
@@ -24,4 +25,5 @@ class CreateMontee < ActiveRecord::Migration[5.1]
     remove_column :options, :niveau_debut
     remove_column :options, :etablissement_id
   end
+
 end

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'faker'
+require "faker"
 
 namespace :db do
-  desc 'Anonymise les données élèves et resp_légal'
+  desc "Anonymise les données élèves et resp_légal"
   task anonymise: :environment do
     return if Rails.env.production?
 

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class PieceJointe < ActiveRecord::Base
+
   belongs_to :dossier_eleve
   belongs_to :piece_attendue
 
@@ -8,7 +9,7 @@ class PieceJointe < ActiveRecord::Base
 
   mount_uploader :fichier, FichierUploader
 
-  ETATS = { soumis: 'soumis', valide: 'valide', invalide: 'invalide' }.freeze
+  ETATS = { soumis: "soumis", valide: "valide", invalide: "invalide" }.freeze
 
   validates :etat, inclusion: { in: ETATS.values }
 
@@ -31,4 +32,5 @@ class PieceJointe < ActiveRecord::Base
   def soumet!
     update!(etat: ETATS[:soumis])
   end
+
 end

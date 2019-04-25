@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
-ENV['RAILS_ENV'] ||= 'test'
-require_relative '../config/environment'
-require 'rails/test_help'
+ENV["RAILS_ENV"] ||= "test"
+require_relative "../config/environment"
+require "rails/test_help"
 
-require 'webmock/minitest'
+require "webmock/minitest"
 WebMock.disable_net_connect!
 
 class ActiveSupport::TestCase
+
   def html_escape(text)
     ERB::Util.html_escape(text)
   end
@@ -16,15 +17,17 @@ class ActiveSupport::TestCase
     post agent_url, params: { email: agent.email, mot_de_passe: agent.password }
     follow_redirect!
   end
+
 end
 
-require 'capybara/rails'
-require 'capybara/poltergeist'
-require 'capybara/minitest'
+require "capybara/rails"
+require "capybara/poltergeist"
+require "capybara/minitest"
 
 Capybara.javascript_driver = :poltergeist
 
 class ActionDispatch::IntegrationTest
+
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
   # Make `assert_*` methods behave like Minitest assertions
@@ -36,4 +39,5 @@ class ActionDispatch::IntegrationTest
     Capybara.reset_sessions!
     Capybara.use_default_driver
   end
+
 end

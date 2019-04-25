@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CreateContactUrgencesTable < ActiveRecord::Migration[5.1]
+
   def change
     create_table :contact_urgences do |t|
       t.integer :dossier_eleve_id
@@ -14,4 +15,5 @@ class CreateContactUrgencesTable < ActiveRecord::Migration[5.1]
       t.string :tel_secondaire
     end
   end
+
 end

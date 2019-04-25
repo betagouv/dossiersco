@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CreateAgentsTable < ActiveRecord::Migration[5.1]
+
   def change
     create_table :agents do |t|
       t.string :identifiant
@@ -12,4 +13,5 @@ class CreateAgentsTable < ActiveRecord::Migration[5.1]
       t.datetime :updated_at
     end
   end
+
 end

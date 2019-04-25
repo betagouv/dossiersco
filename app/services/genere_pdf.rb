@@ -1,19 +1,20 @@
 # frozen_string_literal: true
 
 class GenerePdf
+
   def generer_par_classe(etablissement)
     classes =  etablissement.dossier_eleve.group_by { |d| d.eleve.classe_ant }
 
     noms_pdf = []
     classes.each do |classes_dossiers|
-      classe_des_eleves = classes_dossiers[0].present? ? classes_dossiers[0].gsub(/\s+/, '') : 'sans-classe'
+      classe_des_eleves = classes_dossiers[0].present? ? classes_dossiers[0].gsub(/\s+/, "") : "sans-classe"
       dossiers_eleve = classes_dossiers[1]
       pdf = Pdf.new(etablissement, classe_des_eleves, dossiers_eleve)
       noms_pdf << pdf.nom
     end
 
     dossier = "#{Rails.root}/tmp/pdf/#{etablissement.nom}"
-    nom_zip = 'convocations.zip'
+    nom_zip = "convocations.zip"
     temp_file = Tempfile.new(nom_zip)
 
     begin
@@ -31,4 +32,5 @@ class GenerePdf
     end
     zip_data
   end
+
 end

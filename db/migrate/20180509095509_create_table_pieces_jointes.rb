@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CreateTablePiecesJointes < ActiveRecord::Migration[5.1]
+
   def change
     create_table :piece_jointes do |t|
       t.string :clef
@@ -14,4 +15,5 @@ class CreateTablePiecesJointes < ActiveRecord::Migration[5.1]
       t.integer :etablissement_id
     end
   end
+
 end

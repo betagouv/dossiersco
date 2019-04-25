@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Eleve < ActiveRecord::Base
+
   has_one :dossier_eleve, dependent: :destroy
   has_many :demande
   has_many :abandon
@@ -8,12 +9,12 @@ class Eleve < ActiveRecord::Base
   delegate :email_resp_legal_1, to: :dossier_eleve
 
   def self.par_identifiant(identifiant)
-    identifiant = identifiant.gsub(/[^[:alnum:]]/, '').upcase
+    identifiant = identifiant.gsub(/[^[:alnum:]]/, "").upcase
     find_by(identifiant: identifiant)
   end
 
   def self.creation_ou_retrouve_par(identifiant)
-    find_or_initialize_by(identifiant: identifiant.gsub(/[^[:alnum:]]/, '').upcase)
+    find_or_initialize_by(identifiant: identifiant.gsub(/[^[:alnum:]]/, "").upcase)
   end
 
   def genere_demandes_possibles
@@ -26,13 +27,13 @@ class Eleve < ActiveRecord::Base
     groupes_facultatives = []
     groupes_obligatoires_sans_choix = []
     options_par_groupe.each do |_groupe, options|
-      if options.first.modalite == 'obligatoire'
+      if options.first.modalite == "obligatoire"
         if options.size == 1
           groupes_obligatoires_sans_choix << options
         else
           groupes_obligatoires << options
         end
-      elsif options.first.modalite == 'facultative'
+      elsif options.first.modalite == "facultative"
         groupes_facultatives << options
       end
     end
@@ -47,9 +48,9 @@ class Eleve < ActiveRecord::Base
       {
         label: options.first.groupe,
         name: options.first.groupe,
-        type: 'radio',
+        type: "radio",
         options: options.collect(&:nom),
-        checked: options_du_groupe_demandees.size == 1 ? options_du_groupe_demandees[0] : ''
+        checked: options_du_groupe_demandees.size == 1 ? options_du_groupe_demandees[0] : ""
       }
     end
   end
@@ -63,15 +64,15 @@ class Eleve < ActiveRecord::Base
   end
 
   def annee_de_naissance
-    date_naiss.split('-')[0]
+    date_naiss.split("-")[0]
   end
 
   def mois_de_naissance
-    date_naiss.split('-')[1]
+    date_naiss.split("-")[1]
   end
 
   def jour_de_naissance
-    date_naiss.split('-')[2]
+    date_naiss.split("-")[2]
   end
 
   def facultative(options_du_groupe)
@@ -80,7 +81,7 @@ class Eleve < ActiveRecord::Base
         {
           name: option.nom,
           label: option.groupe,
-          type: 'check',
+          type: "check",
           condition: options_demandees.include?(option),
           desc: option.nom_et_info
         }
@@ -93,7 +94,7 @@ class Eleve < ActiveRecord::Base
       {
         name: options.first.nom,
         label: options.first.groupe,
-        type: 'hidden'
+        type: "hidden"
       }
     end
   end
@@ -107,7 +108,7 @@ class Eleve < ActiveRecord::Base
       {
         name: option.nom,
         label: "Poursuivre l'option",
-        type: 'check',
+        type: "check",
         condition: !options_abandonnees.include?(option),
         desc: option.nom_et_info
       }
@@ -119,9 +120,10 @@ class Eleve < ActiveRecord::Base
     options += option.map(&:nom).select { |o| o }
     options += demande.map(&:option).map(&:nom)
     (0...options.length).each do |i|
-      options[i] += ' (-)' if abandon.map(&:option).map(&:nom).include? options[i]
-      options[i] += ' (+)' if demande.map(&:option).map(&:nom).include? options[i]
+      options[i] += " (-)" if abandon.map(&:option).map(&:nom).include? options[i]
+      options[i] += " (+)" if demande.map(&:option).map(&:nom).include? options[i]
     end
     options.uniq.sort
   end
+
 end

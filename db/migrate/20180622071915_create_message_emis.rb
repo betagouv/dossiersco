@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CreateMessageEmis < ActiveRecord::Migration[5.2]
+
   def change
     create_table :messages do |t|
       t.integer :dossier_eleve_id
@@ -11,4 +12,5 @@ class CreateMessageEmis < ActiveRecord::Migration[5.2]
       t.datetime  :created_at
     end
   end
+
 end

@@ -1,16 +1,17 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+
   def retrouve_élève_connecté
     @eleve ||= Eleve.find_by(identifiant: session[:identifiant])
     if @eleve
       ajoute_information_utilisateur_pour_sentry(
-        type_utilisateur: 'famille',
+        type_utilisateur: "famille",
         dossiersco_id: @eleve.id
       )
     else
-      session[:message_erreur] = 'Vous avez été déconnecté par mesure de sécurité. Merci de vous identifier avant de continuer.'
-      redirect_to '/'
+      session[:message_erreur] = "Vous avez été déconnecté par mesure de sécurité. Merci de vous identifier avant de continuer."
+      redirect_to "/"
     end
   end
 
@@ -24,15 +25,15 @@ class ApplicationController < ActionController::Base
 
   def identification_agent
     unless agent_connecté.present?
-      redirect_to '/agent', alert: t('messages.probleme_identification')
+      redirect_to "/agent", alert: t("messages.probleme_identification")
       return
     end
     ajoute_information_utilisateur_pour_sentry(
-      type_utilisateur: 'agent',
+      type_utilisateur: "agent",
       dossiersco_id: agent_connecté.id
     )
     Trace.create(identifiant: agent_connecté.email,
-                 categorie: 'agent',
+                 categorie: "agent",
                  page_demandee: request.path_info,
                  adresse_ip: request.ip)
   end
@@ -50,4 +51,5 @@ class ApplicationController < ActionController::Base
   def ajoute_information_utilisateur_pour_sentry(infos)
     Raven.tags_context(type_utilisateur: infos[:type_utilisateur], dossiersco_id: infos[:dossiersco_id])
   end
+
 end

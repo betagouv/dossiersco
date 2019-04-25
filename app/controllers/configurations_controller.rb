@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class ConfigurationsController < ApplicationController
-  layout 'configuration'
+
+  layout "configuration"
 
   before_action :identification_agent
   before_action :if_agent_is_admin
@@ -22,4 +23,5 @@ class ConfigurationsController < ApplicationController
     @stats.code_postal = etablissement.code_postal
     @stats.pieces_attendues = etablissement.pieces_attendues.map(&:nom)
   end
+
 end

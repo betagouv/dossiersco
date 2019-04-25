@@ -2,7 +2,8 @@
 
 module Configuration
   class EtablissementsController < ApplicationController
-    layout 'configuration'
+
+    layout "configuration"
 
     before_action :if_agent_is_admin, except: %i[new create]
     before_action :cherche_etablissement, only: %i[show edit update]
@@ -10,16 +11,16 @@ module Configuration
     def show; end
 
     def new
-      render layout: 'connexion'
+      render layout: "connexion"
     end
 
     def create
       agent = EnregistrementPremierAgentService.new.execute(etablissement_params[:uai])
       PrerempliEtablissement.perform_later(agent.etablissement.uai)
-      redirect_to new_configuration_etablissement_path, notice: t('.mail_envoye', mail_ce: agent.email)
+      redirect_to new_configuration_etablissement_path, notice: t(".mail_envoye", mail_ce: agent.email)
     rescue StandardError => error
       flash[:error] = t(".#{error}")
-      render :new, layout: 'connexion'
+      render :new, layout: "connexion"
     end
 
     def edit; end
@@ -34,7 +35,7 @@ module Configuration
 
     def purge
       agent_connecté.etablissement.purge_dossiers_eleves!
-      redirect_to new_tache_import_path, notice: t('.purge_succes')
+      redirect_to new_tache_import_path, notice: t(".purge_succes")
     end
 
     private
@@ -48,5 +49,6 @@ module Configuration
     def cherche_etablissement
       @etablissement = Etablissement.find(params[:id])
     end
+
   end
 end

@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
-require 'roo'
-require 'roo-xls'
+require "roo"
+require "roo-xls"
 
 class ImporterAffelnet < ApplicationJob
+
   queue_as :default
 
   def perform(tache_id, email)
@@ -34,4 +35,5 @@ class ImporterAffelnet < ApplicationJob
     end
     { portable: 0, email: 0, eleves: nombre_eleves_importes }
   end
+
 end

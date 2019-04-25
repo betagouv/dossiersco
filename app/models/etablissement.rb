@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Etablissement < ActiveRecord::Base
+
   has_many :dossier_eleve, dependent: :destroy
   has_many :agent, dependent: :destroy
   has_many :tache_import, dependent: :destroy
@@ -27,22 +28,22 @@ class Etablissement < ActiveRecord::Base
     avec_feedback = []
     etats = {}
     DossierEleve
-      .where.not(etat: 'pas connecté')
+      .where.not(etat: "pas connecté")
       .select { |e| e.etablissement_id == id }
       .group_by(&:etat)
       .each_pair do |etat, dossiers_etat|
       etats[etat] = dossiers_etat.count
-      avec_feedback.push(*dossiers_etat) if etat.include? 'valid'
+      avec_feedback.push(*dossiers_etat) if etat.include? "valid"
     end
     notes = avec_feedback.collect(&:satisfaction)
     notes_renseignees = notes.select { |n| n > 0 }
-    moyenne = notes_renseignees.count > 0 ? format('%.2f', ((notes_renseignees.sum + 0.0) / notes_renseignees.count)).to_s : ''
+    moyenne = notes_renseignees.count > 0 ? format("%.2f", ((notes_renseignees.sum + 0.0) / notes_renseignees.count)).to_s : ""
     dossiers_avec_commentaires = avec_feedback.reject { |d| d if d.commentaire.nil? || d.commentaire.empty? }
     [etats, notes, moyenne, dossiers_avec_commentaires]
   end
 
   def departement
-    code_postal.present? ? code_postal[0..1] : ''
+    code_postal.present? ? code_postal[0..1] : ""
   end
 
   def purge_dossiers_eleves!
@@ -57,4 +58,5 @@ class Etablissement < ActiveRecord::Base
     service = EnregistrementPremierAgentService.new
     service.construit_email_chef_etablissement(uai)
   end
+
 end

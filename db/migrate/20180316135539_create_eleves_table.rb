@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CreateElevesTable < ActiveRecord::Migration[5.1]
+
   def change
     create_table :eleves do |t|
       t.string :identifiant
@@ -17,4 +18,5 @@ class CreateElevesTable < ActiveRecord::Migration[5.1]
       t.datetime :updated_at
     end
   end
+
 end

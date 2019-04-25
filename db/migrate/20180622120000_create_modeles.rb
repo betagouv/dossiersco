@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CreateModeles < ActiveRecord::Migration[5.2]
+
   def change
     create_table :modeles do |t|
       t.integer   :etablissement_id
@@ -8,4 +9,5 @@ class CreateModeles < ActiveRecord::Migration[5.2]
       t.string    :contenu
     end
   end
+
 end

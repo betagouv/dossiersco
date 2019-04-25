@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class EnregistrementPremierAgentService
+
   def execute(uai)
-    raise StandardError, 'uai_invalide' unless uai_valide?(uai)
-    raise StandardError, 'uai_existant' if Etablissement.exists?(uai: uai.upcase)
+    raise StandardError, "uai_invalide" unless uai_valide?(uai)
+    raise StandardError, "uai_existant" if Etablissement.exists?(uai: uai.upcase)
 
     etablissement = Etablissement.create!(uai: uai.upcase)
     jeton = SecureRandom.base58(26)
@@ -41,8 +42,9 @@ class EnregistrementPremierAgentService
     return false if %w[i q o].include?(clef)
 
     chiffres = uai[0..6].to_i
-    clef == 'abcdefghjklmnprstuvwxyz'[chiffres % 23]
+    clef == "abcdefghjklmnprstuvwxyz"[chiffres % 23]
   end
 
-  ACADEMIES = JSON.parse(File.read(File.join(Rails.root, 'app', 'services', 'academies.json')))
+  ACADEMIES = JSON.parse(File.read(File.join(Rails.root, "app", "services", "academies.json")))
+
 end

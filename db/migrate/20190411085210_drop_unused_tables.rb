@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class DropUnusedTables < ActiveRecord::Migration[5.2]
+
   def change
     drop_table :abandonnabilites
     drop_table :abandons
@@ -11,4 +12,5 @@ class DropUnusedTables < ActiveRecord::Migration[5.2]
     drop_table :montees
     drop_table :options
   end
+
 end

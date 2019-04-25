@@ -2,7 +2,8 @@
 
 module Configuration
   class MefController < ApplicationController
-    layout 'configuration'
+
+    layout "configuration"
 
     before_action :identification_agent
     before_action :set_mef, only: %i[show edit update destroy]
@@ -22,16 +23,16 @@ module Configuration
       @mef.etablissement = agent_connecté.etablissement
 
       if @mef.save
-        redirect_to configuration_mef_index_url, notice: t('.mef_cree')
+        redirect_to configuration_mef_index_url, notice: t(".mef_cree")
       else
-        flash[:alert] = t('.erreur_create_mef', champs: @mef.errors.first[0], erreur: @mef.errors.first[1])
+        flash[:alert] = t(".erreur_create_mef", champs: @mef.errors.first[0], erreur: @mef.errors.first[1])
         render :new
       end
     end
 
     def update
       if @mef.update(mef_params)
-        redirect_to configuration_mef_index_url, notice: t('.mef_mis_a_jour')
+        redirect_to configuration_mef_index_url, notice: t(".mef_mis_a_jour")
       else
         render :edit
       end
@@ -43,10 +44,10 @@ module Configuration
 
       if mef_origine.blank? && mef_destination.blank?
         @mef.destroy
-        redirect_to configuration_mef_index_url, notice: t('.mef_supprime')
+        redirect_to configuration_mef_index_url, notice: t(".mef_supprime")
       else
         @mef = Mef.where(etablissement: agent_connecté.etablissement)
-        flash[:alert] = t('.mef_utilise')
+        flash[:alert] = t(".mef_utilise")
         render :index
       end
     end
@@ -60,5 +61,6 @@ module Configuration
     def mef_params
       params.require(:mef).permit(:libelle, :code, :etablissement_id)
     end
+
   end
 end

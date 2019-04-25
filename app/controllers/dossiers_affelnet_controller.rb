@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class DossiersAffelnetController < ApplicationController
-  layout 'agent'
+
+  layout "agent"
 
   before_action :identification_agent
 
@@ -12,7 +13,7 @@ class DossiersAffelnetController < ApplicationController
       @nom_fichier = params[:fichier].original_filename
       xls_document = Roo::Spreadsheet.open tempfile
       xls_document.sheet(0).each do |hash|
-        next if hash[0] == 'Nom'
+        next if hash[0] == "Nom"
 
         DossierAffelnet.create!(
           etablissement: agent_connecté.etablissement,
@@ -30,14 +31,15 @@ class DossiersAffelnetController < ApplicationController
       @nombre_de_lignes = DossierAffelnet.where(etablissement: agent_connecté.etablissement).count
       render :traitement_import
     else
-      flash[:alert] = t('inscriptions.import_siecle.fichier_manquant')
+      flash[:alert] = t("inscriptions.import_siecle.fichier_manquant")
       redirect_to agent_import_siecle_path
     end
   end
 
   def traiter
-    @nom_fichier = 'perdu en route'
+    @nom_fichier = "perdu en route"
     @nombre_de_lignes = DossierAffelnet.where(etablissement: agent_connecté.etablissement).count
     render :traitement_import
   end
+
 end

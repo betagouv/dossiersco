@@ -18,19 +18,19 @@
 # end
 
 ActiveSupport::Inflector.inflections do |inflect|
-  inflect.irregular 'dossier affelnet', 'dossiers affelnet'
-  inflect.irregular 'dossier_affelnet', 'dossiers_affelnet'
-  inflect.irregular 'DossierAffelnet', 'DossiersAffelnet'
-  inflect.irregular 'OptionPedagogique', 'OptionsPedagogiques'
-  inflect.irregular 'option_pedagogique', 'options_pedagogiques'
-  inflect.irregular 'option pedagogique', 'options pedagogiques'
-  inflect.irregular 'mef', 'mef'
-  inflect.irregular 'piece_jointe', 'pieces_jointes'
-  inflect.irregular 'piece jointe', 'pieces jointes'
-  inflect.irregular 'dossier eleve', 'dossier eleves'
-  inflect.irregular 'DossierEleve', 'DossierEleves'
-  inflect.irregular 'dossier_eleve', 'dossier_eleves'
-  inflect.irregular 'piece attendue', 'pieces attendues'
-  inflect.irregular 'PieceAttendue', 'PiecesAttendues'
-  inflect.irregular 'piece_attendue', 'pieces_attendues'
+  inflect.irregular "dossier affelnet", "dossiers affelnet"
+  inflect.irregular "dossier_affelnet", "dossiers_affelnet"
+  inflect.irregular "DossierAffelnet", "DossiersAffelnet"
+  inflect.irregular "OptionPedagogique", "OptionsPedagogiques"
+  inflect.irregular "option_pedagogique", "options_pedagogiques"
+  inflect.irregular "option pedagogique", "options pedagogiques"
+  inflect.irregular "mef", "mef"
+  inflect.irregular "piece_jointe", "pieces_jointes"
+  inflect.irregular "piece jointe", "pieces jointes"
+  inflect.irregular "dossier eleve", "dossier eleves"
+  inflect.irregular "DossierEleve", "DossierEleves"
+  inflect.irregular "dossier_eleve", "dossier_eleves"
+  inflect.irregular "piece attendue", "pieces attendues"
+  inflect.irregular "PieceAttendue", "PiecesAttendues"
+  inflect.irregular "piece_attendue", "pieces_attendues"
 end

@@ -2,7 +2,8 @@
 
 module Configuration
   class AgentsController < ApplicationController
-    layout 'configuration'
+
+    layout "configuration"
 
     before_action :identification_agent
     before_action :if_agent_is_admin, except: %i[edit update activation]
@@ -18,7 +19,7 @@ module Configuration
       @agent.jeton = SecureRandom.base58(26)
       if @agent.save
         AgentMailer.invite_agent(@agent, @agent_connecté).deliver_now
-        redirect_to configuration_agents_path, notice: t('.invitation_envoyee', email: @agent.email)
+        redirect_to configuration_agents_path, notice: t(".invitation_envoyee", email: @agent.email)
       else
         flash[:alert] = "L'email #{@agent.email} est déjà utilisé"
         render :new
@@ -26,8 +27,8 @@ module Configuration
     end
 
     def index
-      super_admins = ENV['SUPER_ADMIN'].present? ? ENV['SUPER_ADMIN'].delete(' ').split(',') : ['']
-      @agents = Agent.where(etablissement: agent_connecté.etablissement).where.not('email IN (?)', super_admins)
+      super_admins = ENV["SUPER_ADMIN"].present? ? ENV["SUPER_ADMIN"].delete(" ").split(",") : [""]
+      @agents = Agent.where(etablissement: agent_connecté.etablissement).where.not("email IN (?)", super_admins)
     end
 
     def edit
@@ -39,12 +40,12 @@ module Configuration
       @agent_connecté.jeton = nil
       if @agent_connecté.update(agent_params)
         session[:agent_email] = @agent_connecté.email
-        redirect_to configuration_agents_path, notice: t('messages.compte_cree')
+        redirect_to configuration_agents_path, notice: t("messages.compte_cree")
       else
         @agent = @agent_connecté
         @agent.jeton = ancien_jeton
         if @agent_connecté.jeton
-          render :activation, layout: 'connexion'
+          render :activation, layout: "connexion"
         else
           render :edit
         end
@@ -64,7 +65,7 @@ module Configuration
 
     def activation
       @agent = @agent_connecté
-      render layout: 'connexion'
+      render layout: "connexion"
     end
 
     private
@@ -72,5 +73,6 @@ module Configuration
     def agent_params
       params.require(:agent).permit(:prenom, :nom, :password, :etablissement_id, :admin, :email)
     end
+
   end
 end

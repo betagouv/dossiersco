@@ -1,20 +1,21 @@
 # frozen_string_literal: true
 
 class PiecesJointesController < ApplicationController
+
   before_action :retrouve_élève_connecté, only: %i[create update]
   before_action :agent_connecté, only: %i[valider refuser]
   before_action :retrouve_piece_jointe, only: %i[update valider refuser]
 
   def create
     PieceJointe.create!(piece_jointe_params.merge(dossier_eleve: @eleve.dossier_eleve, etat: PieceJointe::ETATS[:soumis]))
-    redirect_to '/pieces_a_joindre'
+    redirect_to "/pieces_a_joindre"
   end
 
   def update
     piece_jointe = PieceJointe.find(params[:id])
     piece_jointe.update!(piece_jointe_params.merge(dossier_eleve: @eleve.dossier_eleve))
     piece_jointe.soumet!
-    redirect_to '/pieces_a_joindre'
+    redirect_to "/pieces_a_joindre"
   end
 
   def valider
@@ -36,4 +37,5 @@ class PiecesJointesController < ApplicationController
   def retrouve_piece_jointe
     @piece_jointe = PieceJointe.find(params[:id])
   end
+
 end
