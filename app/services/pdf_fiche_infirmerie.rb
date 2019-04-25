@@ -19,7 +19,7 @@ class PdfFicheInfirmerie
         pdf.bounding_box([280, 700], :width => 250, :height => 50) do
           pdf.text "Année #{Time.now.strftime('%Y')}-#{Time.now.strftime('%Y').to_i + 1}", :size => 14, :align => :right
         end
-        pdf.text "Fiche d'infirmerie", :size => 20, :align => :center
+        pdf.text "Fiche infirmerie", :size => 20, :align => :center
         pdf.move_down 15
 
         pdf.text "<b>NOM</b> : #{dossier_eleve.eleve.nom},    <b>Prénom</b> : #{dossier_eleve.eleve.prenom}," +
@@ -87,7 +87,7 @@ class PdfFicheInfirmerie
         pdf.text "Si votre enfant bénéficie d'un PAI (projet d'accueil individualisé) pour des troubles de santé" +
                      " chroniques, des allergies..., d'un PPS (plan personnalisé de scolarité) ou d'un PAP (plan" +
                      " d'accompagnement personnalisé) pour des troubles des apprentissage, veuillez prendre contact" +
-                     " avec l'infirmier(ère) de l'établissmeent ou la/le médecin" +
+                     " avec l'infirmier(ère) de l'établissement ou la/le médecin" +
                      " scolaire.", leading: 0, :size => 10, align: :justify
         pdf.move_down 8
         pdf.text "Date et signature du responsable légal :", :size => 10
