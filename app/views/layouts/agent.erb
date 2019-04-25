@@ -62,6 +62,9 @@
           <li class="nav__item <%= 'active' if request.fullpath.include? '/convocations' %>">
             <%= link_to 'Convocations', agent_convocations_path %>
           </li>
+          <li class="nav__item <%= 'active' if request.fullpath.include? '/fiches_infirmerie' %>">
+            <%= link_to 'Fiches infirmerie', agent_fiches_infirmeries_path %>
+          </li>
         </ul>
       </nav>
     </div>

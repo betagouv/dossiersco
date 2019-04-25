@@ -1,0 +1,13 @@
+<section class="section">
+
+  <h1 class="separation"><%= t('.fiches_infirmerie') %></h1>
+
+  <% if defined? message  %>
+    <div class="message_echec"><%= message %></div>
+  <% end %>
+
+  <p><%= t('.description_fiches_infirmerie') %></p>
+
+  <%= link_to t('.telecharger_fiches_infirmeries'), telecharger_fiches_infirmerie_path, class: 'button mb-2', id: 'telecharger_convocations' %>
+
+</section>

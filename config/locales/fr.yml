@@ -253,6 +253,10 @@ fr:
       ajouter_piece_justificative: Ajouter une pièce
 
   inscriptions:
+    fiches_infirmeries:
+      description_fiches_infirmerie: Edition de fiches infirmerie préremplies. La génération peut prendre du temps.
+      fiches_infirmerie: Fiches infirmerie
+      telecharger_fiches_infirmeries: Télécharger les fiches infirmerie
     convocations:
       telecharger_convocations: "Télécharger les convocations pour l'inscription"
       telechargement_en_cours: "La génération des documents est en cours, cela peut prendre un peut de temps"

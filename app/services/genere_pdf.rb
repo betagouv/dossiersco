@@ -2,14 +2,14 @@
 
 class GenerePdf
 
-  def generer_par_classe(etablissement)
-    classes =  etablissement.dossier_eleve.group_by { |d| d.eleve.classe_ant }
+  def generer_pdf_par_classes(etablissement, pdf_class)
+    classes =  etablissement.dossier_eleve.group_by{ |d| d.eleve.classe_ant }
 
     noms_pdf = []
     classes.each do |classes_dossiers|
       classe_des_eleves = classes_dossiers[0].present? ? classes_dossiers[0].gsub(/\s+/, "") : "sans-classe"
       dossiers_eleve = classes_dossiers[1]
-      pdf = Pdf.new(etablissement, classe_des_eleves, dossiers_eleve)
+      pdf = pdf_class.constantize.new(etablissement, classe_des_eleves, dossiers_eleve)
       noms_pdf << pdf.nom
     end
 
@@ -25,6 +25,7 @@ class GenerePdf
       end
 
       zip_data = File.read(temp_file.path)
+
     ensure
       temp_file.close
       temp_file.unlink
@@ -32,5 +33,4 @@ class GenerePdf
     end
     zip_data
   end
-
 end

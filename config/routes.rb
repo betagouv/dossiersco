@@ -56,7 +56,14 @@ Rails.application.routes.draw do
     end
   end
 
-  get "/telecharger_pdf_convocation", to: "inscriptions#pdf_convocation"
+  get '/agent/fiches_infirmeries', to: 'inscriptions#fiches_infirmeries'
+  get '/telecharger_fiches_infirmerie', to: 'inscriptions#pdf_fiches_infirmeries'
+
+  get '/agent/convocations', to: 'inscriptions#convocations'
+  get '/telecharger_pdf_convocation', to: 'inscriptions#pdf_convocation'
+
+  get '/retour-ent', to: 'authentification_cas_ent#retour_cas'
+  get '/from-ent', to: 'authentification_cas_ent#appel_direct_ent'
 
   get "/retour-ent", to: "authentification_cas_ent#retour_cas"
   get "/from-ent", to: "authentification_cas_ent#appel_direct_ent"
@@ -109,11 +116,9 @@ Rails.application.routes.draw do
 
   get "/agent/fusionne_modele/:modele_id/eleve/:identifiant", to: "inscriptions#fusionne_modele"
 
-  post "/agent/valider_plusieurs_dossiers", to: "inscriptions#valider_plusieurs_dossiers"
+  post '/agent/valider_plusieurs_dossiers', to: 'inscriptions#valider_plusieurs_dossiers'
 
-  get "/agent/convocations", to: "inscriptions#convocations"
-
-  get "/agent/deconnexion", to: "inscriptions#deconnexion"
+  get '/agent/deconnexion', to: 'inscriptions#deconnexion'
 
   get "/agent/tableau_de_bord", to: "inscriptions#tableau_de_bord"
 
