@@ -22,7 +22,9 @@ class DossierEleveTest < ActiveSupport::TestCase
     etablissement = Fabricate(:etablissement)
     piece_attendue = Fabricate(:piece_attendue, etablissement: etablissement)
     dossier_eleve = Fabricate(:dossier_eleve, etablissement: etablissement)
-    piece_jointe = Fabricate(:piece_jointe, dossier_eleve: dossier_eleve, piece_attendue: piece_attendue)
+    piece_jointe = Fabricate(:piece_jointe,
+                             dossier_eleve: dossier_eleve,
+                             piece_attendue: piece_attendue)
 
     assert_equal 1, dossier_eleve.pieces_jointes.count
     assert_equal piece_jointe, dossier_eleve.pieces_jointes[0]
@@ -31,10 +33,16 @@ class DossierEleveTest < ActiveSupport::TestCase
 
   test "#pieces_manquantes? renvoie true s'il manque des pieces obligatoires" do
     etablissement = Fabricate(:etablissement)
-    piece_attendue_facultative = Fabricate(:piece_attendue, obligatoire: false, etablissement: etablissement)
-    piece_attendue_obligatoire = Fabricate(:piece_attendue, obligatoire: true, etablissement: etablissement)
+    piece_attendue_facultative = Fabricate(:piece_attendue,
+                                           obligatoire: false,
+                                           etablissement: etablissement)
+    piece_attendue_obligatoire = Fabricate(:piece_attendue,
+                                           obligatoire: true,
+                                           etablissement: etablissement)
     dossier_eleve = Fabricate(:dossier_eleve, etablissement: etablissement)
-    piece_jointe = Fabricate(:piece_jointe, dossier_eleve: dossier_eleve, piece_attendue: piece_attendue_facultative)
+    Fabricate(:piece_jointe,
+              dossier_eleve: dossier_eleve,
+              piece_attendue: piece_attendue_facultative)
 
     assert dossier_eleve.pieces_manquantes?
     assert_equal [piece_attendue_obligatoire], dossier_eleve.pieces_manquantes
@@ -42,10 +50,16 @@ class DossierEleveTest < ActiveSupport::TestCase
 
   test "#pieces_manquantes? renvoie false si les pieces obligatoires sont présentes" do
     etablissement = Fabricate(:etablissement)
-    piece_attendue_facultative = Fabricate(:piece_attendue, obligatoire: false, etablissement: etablissement)
-    piece_attendue_obligatoire = Fabricate(:piece_attendue, obligatoire: true, etablissement: etablissement)
+    Fabricate(:piece_attendue,
+              obligatoire: false,
+              etablissement: etablissement)
+    piece_attendue_obligatoire = Fabricate(:piece_attendue,
+                                           obligatoire: true,
+                                           etablissement: etablissement)
     dossier_eleve = Fabricate(:dossier_eleve, etablissement: etablissement)
-    piece_jointe = Fabricate(:piece_jointe, dossier_eleve: dossier_eleve, piece_attendue: piece_attendue_obligatoire)
+    Fabricate(:piece_jointe,
+              dossier_eleve: dossier_eleve,
+              piece_attendue: piece_attendue_obligatoire)
 
     assert_not dossier_eleve.pieces_manquantes?
     assert_equal [], dossier_eleve.pieces_manquantes
@@ -53,7 +67,9 @@ class DossierEleveTest < ActiveSupport::TestCase
 
   test "#a_convoquer renvoie la liste des élèves à convoquer sur dossiersco" do
     etablissement = Fabricate(:etablissement)
-    eleve_jamais_connecte = Fabricate(:dossier_eleve, etat: "pas connecté", etablissement: etablissement)
+    eleve_jamais_connecte = Fabricate(:dossier_eleve,
+                                      etat: "pas connecté",
+                                      etablissement: etablissement)
     eleve_connecte = Fabricate(:dossier_eleve, etat: "connecté", etablissement: etablissement)
     Fabricate(:dossier_eleve, etat: "en attente", etablissement: etablissement)
     Fabricate(:dossier_eleve, etat: "validé", etablissement: etablissement)
@@ -78,6 +94,13 @@ class DossierEleveTest < ActiveSupport::TestCase
     eleve = Fabricate(:eleve, identifiant: "ALPHANUM1234")
     dossier = Fabricate(:dossier_eleve, eleve: eleve)
     assert_equal dossier, DossierEleve.par_identifiant("alpha,num;1234!")
+  end
+
+  test "ajoute un message à envoyer pour la relance SMS" do
+    assert_equal 0, Message.count
+    dossier = Fabricate(:dossier_eleve, resp_legal: [Fabricate(:resp_legal)])
+    dossier.relance_sms
+    assert_equal 1, Message.count
   end
 
 end

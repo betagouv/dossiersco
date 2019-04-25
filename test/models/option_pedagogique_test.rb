@@ -16,7 +16,7 @@ class OptionPedagogiqueTest < ActiveSupport::TestCase
     mef = Fabricate(:mef)
     autre_mef = Fabricate(:mef)
     option_de_mef = Fabricate(:option_pedagogique, mef: [mef])
-    option_autre_mef = Fabricate(:option_pedagogique, mef: [autre_mef])
+    Fabricate(:option_pedagogique, mef: [autre_mef])
 
     assert_equal [option_de_mef], OptionPedagogique.filtre_par(mef)
   end

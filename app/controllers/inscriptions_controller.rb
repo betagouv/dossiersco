@@ -43,12 +43,12 @@ class InscriptionsController < ApplicationController
     session.delete :message_info
     render :liste_des_eleves,
       locals: {
-        agent: agent_connecté,
-        lignes_eleves: lignes_eleves,
-        message_info: message_info,
-        messages: messages,
-        pieces_attendues: agent_connecté.etablissement.pieces_attendues,
-        pieces_jointes: pieces_jointes}
+      agent: agent_connecté,
+      lignes_eleves: lignes_eleves,
+      message_info: message_info,
+      messages: messages,
+      pieces_attendues: agent_connecté.etablissement.pieces_attendues,
+      pieces_jointes: pieces_jointes}
   end
 
   def eleve
@@ -108,7 +108,10 @@ class InscriptionsController < ApplicationController
     if emails_presents
       mail = FamilleMailer.contacter_une_famille(eleve, @agent_connecté, params[:message])
       part = mail.html_part || mail.text_part || mail
-      Message.create(categorie:"mail", contenu: part.body, etat: "envoyé", dossier_eleve: eleve.dossier_eleve)
+      Message.create(categorie: "mail",
+                     contenu: part.body,
+                     etat: "envoyé",
+                     dossier_eleve: eleve.dossier_eleve)
       mail.deliver_now
       session[:message_info] = "Votre message a été envoyé."
     elsif dossier_eleve.portable_rl1.present?
@@ -160,7 +163,8 @@ class InscriptionsController < ApplicationController
 
   def convocations
     etablissement = agent_connecté.etablissement
-    @eleves_non_inscrits = DossierEleve.pour(etablissement).a_convoquer.paginate(page: params[:page], per_page: 10)
+    @eleves_non_inscrits = DossierEleve.pour(etablissement).a_convoquer
+    @eleves_non_inscrits = @eleves_non_inscrits.paginate(page: params[:page], per_page: 10)
   end
 
   def pdf_convocation
@@ -190,8 +194,14 @@ class InscriptionsController < ApplicationController
     total_dossiers = agent_connecté.etablissement.dossier_eleve.count
     etats, notes, moyenne, dossiers_avec_commentaires = agent_connecté.etablissement.stats
     render :tableau_de_bord,
-      locals: {agent: agent_connecté, total_dossiers: total_dossiers, etats: etats,
-               notes: notes, moyenne: moyenne, dossiers_avec_commentaires: dossiers_avec_commentaires.sort_by(&:date_signature).reverse}
+      locals: {
+      agent: agent_connecté,
+      total_dossiers: total_dossiers,
+      etats: etats,
+      notes: notes,
+      moyenne: moyenne,
+      dossiers_avec_commentaires: dossiers_avec_commentaires.sort_by(&:date_signature).reverse
+    }
   end
 
   def pieces_jointes_eleve

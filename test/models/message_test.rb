@@ -4,22 +4,16 @@ require "test_helper"
 
 class MessageLegalTest < ActiveSupport::TestCase
 
-  def test_trace_sms_envoyes
-    assert_equal 0, Message.count
-
-    dossier = Fabricate(:dossier_eleve, resp_legal: [Fabricate(:resp_legal)])
-    dossier.relance_sms
-
-    assert_equal 1, Message.count
-    message = Message.first
-
+  test "appel l'api d'envoie de SMS" do
+    resp = Fabricate(:resp_legal, tel_portable: "1234567890")
+    dossier = Fabricate(:dossier_eleve, resp_legal: [resp])
+    message = Fabricate(:message, dossier_eleve: dossier, categorie: "sms")
     message.envoyer_sms(FakeHttp)
 
     message = Message.first
     assert_equal "sms", message.categorie
     assert_equal dossier.id, message.dossier_eleve_id
     assert_equal "erreur", message.etat
-    assert message.contenu.include? dossier.etablissement.nom
   end
 
 end

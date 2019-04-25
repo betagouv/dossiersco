@@ -24,18 +24,60 @@ class RespLegalTest < ActiveSupport::TestCase
     assert rl.adresse_inchangee
   end
 
-  def test_meme_adresse
-    r = RespLegal.new adresse: "42 rue", code_postal: "75020", ville: "Paris"
-    assert r.meme_adresse(r)
-    assert r.meme_adresse(RespLegal.new(adresse: r.adresse, code_postal: r.code_postal, ville: r.ville))
-    assert !r.meme_adresse(nil)
-    assert !r.meme_adresse(RespLegal.new(adresse: "30",      code_postal: r.code_postal, ville: r.ville))
-    assert !r.meme_adresse(RespLegal.new(adresse: r.adresse, code_postal: "59001",       ville: r.ville))
-    assert !r.meme_adresse(RespLegal.new(adresse: r.adresse, code_postal: r.code_postal, ville: "Lyon"))
+  test "même adresse avec sois" do
+    resp = RespLegal.new adresse: "42 rue", code_postal: "75020", ville: "Paris"
+    assert resp.meme_adresse(resp)
+  end
+
+  test "même adresse même sur un autre resp" do
+    resp = RespLegal.new adresse: "42 rue", code_postal: "75020", ville: "Paris"
+    autre_resp = RespLegal.new(
+      adresse: resp.adresse,
+      code_postal: resp.code_postal,
+      ville: resp.ville
+    )
+    assert resp.meme_adresse(autre_resp)
+  end
+
+  test "nil n'est pas une même adresse" do
+    resp = RespLegal.new adresse: "42 rue", code_postal: "75020", ville: "Paris"
+    assert !resp.meme_adresse(nil)
+  end
+
+  test "si adresse est différent, ce n'est pas une même adresse" do
+    resp = RespLegal.new adresse: "42 rue", code_postal: "75020", ville: "Paris"
+    assert !resp.meme_adresse(RespLegal.new(
+                                adresse: "30",
+                                code_postal: resp.code_postal,
+                                ville: resp.ville
+                              ))
+  end
+
+  test "si le code_postal est différent, ce n'est pas une même adresse" do
+    assert !resp.meme_adresse(RespLegal.new(
+                                adresse: resp.adresse,
+                                code_postal: "59001",
+                                ville: resp.ville
+                              ))
+  end
+
+  test "si la ville est différent, ce n'est pas une même adresse" do
+    assert !resp.meme_adresse(RespLegal.new(
+                                adresse: resp.adresse,
+                                code_postal: resp.code_postal,
+                                ville: "Lyon"
+                              ))
   end
 
   def test_adresse_inchangee_si_ancienne_vide
-    responsable_legal = RespLegal.new adresse: "42 rue", code_postal: "75020", ville: "Paris", adresse_ant: nil, ville_ant: nil, code_postal_ant: nil
+    responsable_legal = RespLegal.new(
+      adresse: "42 rue",
+      code_postal: "75020",
+      ville: "Paris",
+      adresse_ant: nil,
+      ville_ant: nil,
+      code_postal_ant: nil
+    )
     assert responsable_legal.adresse_inchangee
   end
 

@@ -45,8 +45,14 @@ class AgentTest < ActiveSupport::TestCase
   end
 
   test "jeton obligatoire si pas de mot de passe" do
-    assert Fabricate.build(:agent, password: nil, password_confirmation: nil, jeton: nil).invalid?
-    assert Fabricate.build(:agent, password: nil, password_confirmation: nil, jeton: "a-sha1-token").valid?
+    assert Fabricate.build(:agent,
+                           password: nil,
+                           password_confirmation: nil,
+                           jeton: nil).invalid?
+    assert Fabricate.build(:agent,
+                           password: nil,
+                           password_confirmation: nil,
+                           jeton: "a-sha1-token").valid?
   end
 
 end

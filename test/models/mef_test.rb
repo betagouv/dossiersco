@@ -17,9 +17,9 @@ class MefTest < ActiveSupport::TestCase
   end
 
   test "apres le mef 6eme vient le mef 5eme" do
-    mef_5 = Fabricate(:mef, libelle: "5EME")
-    mef_6 = Fabricate(:mef, libelle: "6EME", etablissement: mef_5.etablissement)
-    assert_equal(mef_5, Mef.niveau_superieur(mef_6))
+    mef5 = Fabricate(:mef, libelle: "5EME")
+    mef6 = Fabricate(:mef, libelle: "6EME", etablissement: mef5.etablissement)
+    assert_equal(mef5, Mef.niveau_superieur(mef6))
   end
 
 end
