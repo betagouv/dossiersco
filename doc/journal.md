@@ -1,5 +1,35 @@
 # Journal
 
+## 15e semaine - du 19 avril au 25 avril
+
+**7 ambassadeurs s'engagent pour DossierSCO**
+
+### Vie de l'équipe
+
+- l'équipe grandit sans poser de cloison entre celleux qui programment et celleux qui bizdev
+- C'est bien de garder les rituels : lundi pour s'accorder (planification), jeudi pour constater et rectifier (démo/rétro)
+- Nous avons tous été en distribué toute la semaine, et pour le moment ça se passe toujours bien
+- Pour garder le contenu proche, nous allons déplacer le repo de code sous Gitlab, pour le placer proche des repos privés de gestion d'acquisition, d'entreprenariat et autre. Fini le keybase pour le privée et le github pour le public. Attention à garder un lien mirroring sur github.
+
+### Développement
+
+- [L'UAI du collège TILLION apparaît dans l'interface Agents de la démo](https://github.com/betagouv/dossiersco/issues/524)
+- [Intitulés de champs des paramètres établissement prête à confusion](https://github.com/betagouv/dossiersco/issues/519)
+- [L'envoi par défaut des mails à pierre.de-maulmont@ac-paris.fr va gêner la conversion](https://github.com/betagouv/dossiersco/issues/523)
+- [En mode super admin, la liste des collèges n'est pas triée dans l'ordre alphabétique de nom de collège](https://github.com/betagouv/dossiersco/issues/520)
+- [Récupérer les téléphones pro dans l'import siecle](https://github.com/betagouv/dossiersco/issues/526)
+- [Configurer l'abandonnabilité d'une option](https://github.com/betagouv/dossiersco/issues/487)
+- [Faire une page contribution sur GitHub](https://github.com/betagouv/dossiersco/issues/432)
+- [Correction fautes d'orthographe sur page principale Demo](https://github.com/betagouv/dossiersco/issues/522)
+- [Afficher l'UAI si le nom du collègen'est pas renseigné](https://github.com/betagouv/dossiersco/issues/512)
+- [Imprimer les fiches infirmeries](https://github.com/betagouv/dossiersco/issues/468)
+
+### Intraprenariat
+
+
+---
+
+
 ## 14e semaine - du 15 avril au 18 avril
 
 **l'équipe s'étoffe**
