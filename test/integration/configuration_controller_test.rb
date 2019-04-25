@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require "test_helper"
 
 class ConfigurationControllerTest < ActionDispatch::IntegrationTest
+
   def test_un_agent_non_admin_ne_peut_pas_acceder_a_la_configuration
     agent = Fabricate(:agent)
     identification_agent(agent)
@@ -26,4 +27,5 @@ class ConfigurationControllerTest < ActionDispatch::IntegrationTest
     put configuration_etablissement_purge_path(agent.etablissement)
     assert_equal "L'établissement a bien été purgé", flash[:notice]
   end
+
 end
