@@ -30,7 +30,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
       f.puts(response.body)
     end
 
-    schema = Rails.root.join("doc/import_prive/schema_Import_3.0.xsd")
+    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
     xsd = Nokogiri::XML::Schema(File.read(schema))
     xml = Nokogiri::XML(response.body)
     assert_equal [], xsd.validate(xml)
