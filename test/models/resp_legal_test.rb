@@ -54,6 +54,7 @@ class RespLegalTest < ActiveSupport::TestCase
   end
 
   test "si le code_postal est différent, ce n'est pas une même adresse" do
+    resp = RespLegal.new adresse: "42 rue", code_postal: "75020", ville: "Paris"
     assert !resp.meme_adresse(RespLegal.new(
                                 adresse: resp.adresse,
                                 code_postal: "59001",
@@ -62,6 +63,7 @@ class RespLegalTest < ActiveSupport::TestCase
   end
 
   test "si la ville est différent, ce n'est pas une même adresse" do
+    resp = RespLegal.new adresse: "42 rue", code_postal: "75020", ville: "Paris"
     assert !resp.meme_adresse(RespLegal.new(
                                 adresse: resp.adresse,
                                 code_postal: resp.code_postal,
