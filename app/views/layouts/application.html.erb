@@ -34,7 +34,7 @@
       <% if @agent_connecté && super_admin?(@agent_connecté.email) %>
         <a href="/suivi">Suivi</a>
       <% end %>
-      <% if @agent_connecté %>
+      <% unless Rails.env.production? %>
         <a href="/letter_opener" class="ml-1">Emails envoyés</a>
       <% end %>
     </ul>
