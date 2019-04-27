@@ -60,9 +60,9 @@ class PdfFicheInfirmerie
           pdf.text "Nom : #{dossier_eleve.contact_urgence.nom}" +
                        "  Prénom : #{dossier_eleve.contact_urgence.prenom}", :inline_format => true
           pdf.text "Lien avec l'élève : #{dossier_eleve.contact_urgence.lien_avec_eleve}"
-          pdf.text "Tel. Personnel :" +
-                       " #{dossier_eleve.contact_urgence.tel_personnel.present? ? dossier_eleve.contact_urgence.tel_personnel : champ_libre}," +
-                       "     Portable : #{dossier_eleve.contact_urgence.tel_portable.present? ? dossier_eleve.contact_urgence.tel_portable : champ_libre}"
+          pdf.text "Tel. Principal :" +
+                       " #{dossier_eleve.contact_urgence.tel_principal.present? ? dossier_eleve.contact_urgence.tel_principal : champ_libre}," +
+                       "     Secondaire : #{dossier_eleve.contact_urgence.tel_secondaire.present? ? dossier_eleve.contact_urgence.tel_secondaire : champ_libre}"
         end
         pdf.move_down 8
 

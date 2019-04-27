@@ -175,7 +175,6 @@ class InscriptionsController < ApplicationController
   end
 
   def fiches_infirmeries
-
   end
 
   def pdf_fiches_infirmeries
