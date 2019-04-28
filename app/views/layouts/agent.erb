@@ -63,7 +63,7 @@
             <%= link_to 'Convocations', agent_convocations_path %>
           </li>
           <li class="nav__item <%= 'active' if request.fullpath.include? '/fiches_infirmerie' %>">
-            <%= link_to 'Fiches infirmerie', agent_fiches_infirmeries_path %>
+            <%= link_to 'Fiches infirmerie', fiches_infirmeries_etablissement_path(@etablissement) %>
           </li>
         </ul>
       </nav>

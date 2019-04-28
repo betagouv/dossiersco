@@ -21,6 +21,8 @@ class ApplicationController < ActionController::Base
                         else
                           Agent.find_by(email: session[:agent_email])
                         end
+    @etablissement = @agent_connecté.etablissement if @agent_connecté
+    @agent_connecté
   end
 
   def identification_agent

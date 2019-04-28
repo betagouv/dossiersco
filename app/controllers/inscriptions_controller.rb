@@ -174,16 +174,6 @@ class InscriptionsController < ApplicationController
     send_data(zip_data, :type => 'application/zip', :filename => "convocations.zip")
   end
 
-  def fiches_infirmeries
-  end
-
-  def pdf_fiches_infirmeries
-    etablissement = @agent_connecté.etablissement
-    pdf = GenerePdf.new
-    zip_data = pdf.generer_pdf_par_classes(etablissement, 'PdfFicheInfirmerie')
-    send_data(zip_data, :type => 'application/zip', :filename => "fiches-infirmerie.zip.zip")
-  end
-
   def deconnexion
     reset_session
     redirect_to '/agent'

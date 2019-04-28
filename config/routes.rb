@@ -9,6 +9,12 @@ Rails.application.routes.draw do
 
   resource  :configuration, only: [:show]
 
+  resources :etablissement, only: [] do
+    member do
+      get 'fiches_infirmeries', to: 'fiches_infirmeries#fiches_infirmeries'
+    end
+  end
+
   namespace :configuration do
     resources :options_pedagogiques, except: [:show] do
       member do
@@ -55,9 +61,6 @@ Rails.application.routes.draw do
       end
     end
   end
-
-  get '/agent/fiches_infirmeries', to: 'inscriptions#fiches_infirmeries'
-  get '/telecharger_fiches_infirmerie', to: 'inscriptions#pdf_fiches_infirmeries'
 
   get '/agent/convocations', to: 'inscriptions#convocations'
   get '/telecharger_pdf_convocation', to: 'inscriptions#pdf_convocation'

@@ -8,6 +8,10 @@
 
   <p><%= t('.description_fiches_infirmerie') %></p>
 
-  <%= link_to t('.telecharger_fiches_infirmeries'), telecharger_fiches_infirmerie_path, class: 'button mb-2', id: 'telecharger_convocations' %>
+  <%= link_to t('.telecharger_fiches_infirmeries'),
+    fiches_infirmeries_etablissement_path(@etablissement, format: 'zip'),
+    class: 'button mb-2',
+    id: 'telecharger_convocations'
+  %>
 
 </section>
