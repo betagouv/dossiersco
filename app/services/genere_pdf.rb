@@ -3,11 +3,17 @@
 class GenerePdf
 
   def generer_pdf_par_classes(etablissement, pdf_class)
-    classes =  etablissement.dossier_eleve.group_by{ |d| d.eleve.classe_ant }
+    classes = etablissement.dossier_eleve.
+      includes([:eleve, :resp_legal, :contact_urgence]).
+      group_by{ |d| d.eleve.classe_ant }
 
     noms_pdf = []
     classes.each do |classes_dossiers|
-      classe_des_eleves = classes_dossiers[0].present? ? classes_dossiers[0].gsub(/\s+/, "") : "sans-classe"
+      if classes_dossiers[0].present?
+        classe_des_eleves = classes_dossiers[0].gsub(/\s+/, "")
+      else
+        classe_des_eleves = "sans-classe"
+      end
       dossiers_eleve = classes_dossiers[1]
       pdf = pdf_class.constantize.new(etablissement, classe_des_eleves, dossiers_eleve)
       noms_pdf << pdf.nom
