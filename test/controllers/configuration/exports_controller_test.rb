@@ -8,6 +8,20 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     admin = Fabricate(:admin)
     identification_agent(admin)
 
+    resp = Fabricate(:resp_legal, communique_info_parents_eleves: nil)
+    dossier_eleve = Fabricate(:dossier_eleve,
+                              etablissement: admin.etablissement,
+                              resp_legal: [resp])
+
+    resp = Fabricate(:resp_legal, profession: nil)
+    dossier_eleve = Fabricate(:dossier_eleve,
+                              etablissement: admin.etablissement,
+                              resp_legal: [resp])
+
+    resp = Fabricate(:resp_legal, nom: nil)
+    dossier_eleve = Fabricate(:dossier_eleve,
+                              etablissement: admin.etablissement,
+                              resp_legal: [resp])
     3.times do
       resp = Fabricate(:resp_legal, enfants_a_charge: nil)
       dossier_eleve = Fabricate(:dossier_eleve,
@@ -41,7 +55,6 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
   test "#export-siecle lycée arago" do
     skip
-
     # changer ce fichier pour faire des tests
     fixture_file = "#{Rails.root}/test/fixtures/files/export-siecle-arago-lycee.xml"
 

@@ -12,18 +12,29 @@
     <DONNEES>
       <PERSONNES>
         <% @etablissement.dossier_eleve.map(&:resp_legal).flatten.each do |resp_legal| %>
+          <% next unless resp_legal.profession %>
+          <% next unless resp_legal.nom %>
           <PERSONNE>
             <ID_PRV_PER><%= resp_legal.id %></ID_PRV_PER>
             <CODE_CIVILITE>1</CODE_CIVILITE>
             <NOM_DE_FAMILLE><%= resp_legal.nom %></NOM_DE_FAMILLE>
             <PRENOM><%= resp_legal.prenom %></PRENOM>
-            <COMMUNICATION_ADRESSE><%= resp_legal.communique_info_parents_eleves %></COMMUNICATION_ADRESSE>
+            <COMMUNICATION_ADRESSE><%= resp_legal.communique_info_parents_eleves? ? true : false %></COMMUNICATION_ADRESSE>
+
             <CODE_PROFESSION><%= resp_legal.profession %></CODE_PROFESSION>
-            <TEL_PERSONNEL><%= resp_legal.tel_personnel %></TEL_PERSONNEL>
-            <TEL_PROFESSIONNEL>0555131415</TEL_PROFESSIONNEL>
-            <TEL_PORTABLE><%= resp_legal.tel_portable %></TEL_PORTABLE>
+            <% if resp_legal.tel_personnel %>
+              <TEL_PERSONNEL><%= resp_legal.tel_personnel %></TEL_PERSONNEL>
+            <% end %>
+            <% if resp_legal.tel_professionnel %>
+              <TEL_PROFESSIONNEL>0555131415</TEL_PROFESSIONNEL>
+            <% end %>
+            <% if resp_legal.tel_portable %>
+              <TEL_PORTABLE><%= resp_legal.tel_portable %></TEL_PORTABLE>
+            <% end %>
             <ACCEPTE_SMS>true</ACCEPTE_SMS>
-            <EMAIL><%= resp_legal.email %></EMAIL>
+            <% if resp_legal.email %>
+              <EMAIL><%= resp_legal.email %></EMAIL>
+            <% end %>
             <ENFANT_A_CHARGE><%= resp_legal.enfants_a_charge.nil? ? 0 : resp_legal.enfants_a_charge %></ENFANT_A_CHARGE>
           </PERSONNE>
         <% end %>
