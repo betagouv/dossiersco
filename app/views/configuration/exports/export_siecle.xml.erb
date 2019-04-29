@@ -24,7 +24,7 @@
             <TEL_PORTABLE><%= resp_legal.tel_portable %></TEL_PORTABLE>
             <ACCEPTE_SMS>true</ACCEPTE_SMS>
             <EMAIL><%= resp_legal.email %></EMAIL>
-            <ENFANT_A_CHARGE><%= resp_legal.enfants_a_charge %></ENFANT_A_CHARGE>
+            <ENFANT_A_CHARGE><%= resp_legal.enfants_a_charge.nil? ? 0 : resp_legal.enfants_a_charge %></ENFANT_A_CHARGE>
           </PERSONNE>
         <% end %>
       </PERSONNES>

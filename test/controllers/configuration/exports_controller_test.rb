@@ -9,7 +9,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     identification_agent(admin)
 
     3.times do
-      resp = Fabricate(:resp_legal)
+      resp = Fabricate(:resp_legal, enfants_a_charge: nil)
       dossier_eleve = Fabricate(:dossier_eleve,
                                 etablissement: admin.etablissement,
                                 resp_legal: [resp])
@@ -17,7 +17,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
       dossier_eleve.options_pedagogiques << option
     end
 
-    resp = Fabricate(:resp_legal)
+    resp = Fabricate(:resp_legal, enfants_a_charge: 2)
     Fabricate(:dossier_eleve,
               mef_destination: nil,
               etablissement: admin.etablissement,
@@ -40,7 +40,11 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "#export-siecle lycée arago" do
+    skip
+
+    # changer ce fichier pour faire des tests
     fixture_file = "#{Rails.root}/test/fixtures/files/export-siecle-arago-lycee.xml"
+
     schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
     xsd = Nokogiri::XML::Schema(File.read(schema))
     xml = Nokogiri::XML(File.read(fixture_file))
