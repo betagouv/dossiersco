@@ -15,3 +15,4 @@ resources/secrets
 log/
 tmp/
 public/uploads/
+coverage
