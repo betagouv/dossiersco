@@ -18,6 +18,5 @@ class PdfFicheInfirmerieTest < ActiveSupport::TestCase
     fiche = PdfFicheInfirmerie.new(etablissement, classe, DossierEleve.all)
     assert_equal "5EME.pdf", fiche.nom
   end
+
 end
-
-

@@ -8,7 +8,7 @@ class DossiersAffelnetController < ApplicationController
 
   def create
     if params[:fichier].present?
-      DossierAffelnet.where(etablissement: agent_connecté.etablissement).destroy_all
+      DossierAffelnet.where(etablissement: agent_connect.etablissement).destroy_all
       tempfile = params[:fichier].tempfile
       @nom_fichier = params[:fichier].original_filename
       xls_document = Roo::Spreadsheet.open tempfile
@@ -16,7 +16,7 @@ class DossiersAffelnetController < ApplicationController
         next if hash[0] == "Nom"
 
         DossierAffelnet.create!(
-          etablissement: agent_connecté.etablissement,
+          etablissement: agent_connecte.etablissement,
           nom: hash[0],
           prenom: hash[1],
           date_naissance: hash[2],
@@ -28,7 +28,7 @@ class DossiersAffelnetController < ApplicationController
           decision_de_passage: hash[8]
         )
       end
-      @nombre_de_lignes = DossierAffelnet.where(etablissement: agent_connecté.etablissement).count
+      @nombre_de_lignes = DossierAffelnet.where(etablissement: agent_connecte.etablissement).count
       render :traitement_import
     else
       flash[:alert] = t("inscriptions.import_siecle.fichier_manquant")
@@ -38,7 +38,7 @@ class DossiersAffelnetController < ApplicationController
 
   def traiter
     @nom_fichier = "perdu en route"
-    @nombre_de_lignes = DossierAffelnet.where(etablissement: agent_connecté.etablissement).count
+    @nombre_de_lignes = DossierAffelnet.where(etablissement: agent_connecte.etablissement).count
     render :traitement_import
   end
 

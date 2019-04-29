@@ -122,9 +122,7 @@ def cree_dossier_eleve(eleve, etablissement, etat = "en attente de validation")
     satisfaction: e.identifiant || 0 % 5,
     etat: etat
   )
-  if etat == "en attente de validation"
-    dossier_eleve.update commentaire: "Très bien", date_signature: Time.now
-  end
+  dossier_eleve.update commentaire: "Très bien", date_signature: Time.now if etat == "en attente de validation"
   RespLegal.create! dossier_eleve_id: dossier_eleve.id,
                     lien_de_parente: "Père", prenom: "Jean", nom: "Blayo",
                     adresse: "42 rue du départ", code_postal: "75018", ville: "Paris",

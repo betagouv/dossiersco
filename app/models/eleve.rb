@@ -20,13 +20,11 @@ class Eleve < ActiveRecord::Base
   def genere_demandes_possibles
     return unless montee.present?
 
-    options = montee.demandabilite.map(&:option)
-
-    options_par_groupe = options.group_by(&:groupe)
+    options_par_groupe = montee.demandabilite.map(&:option).group_by(&:groupe)
     groupes_obligatoires = []
     groupes_facultatives = []
     groupes_obligatoires_sans_choix = []
-    options_par_groupe.each do |_groupe, options|
+    options_par_groupe.each do |_, options|
       if options.first.modalite == "obligatoire"
         if options.size == 1
           groupes_obligatoires_sans_choix << options

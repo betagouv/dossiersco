@@ -2,7 +2,7 @@
 
 class ApplicationController < ActionController::Base
 
-  def retrouve_élève_connecté
+  def retrouve_eleve_connecte
     @eleve ||= Eleve.find_by(identifiant: session[:identifiant])
     if @eleve
       ajoute_information_utilisateur_pour_sentry(
@@ -15,35 +15,35 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def agent_connecté
-    @agent_connecté ||= if params[:jeton]
+  def agent_connecte
+    @agent_connecte ||= if params[:jeton]
                           Agent.find_by(jeton: params[:jeton])
                         else
                           Agent.find_by(email: session[:agent_email])
                         end
-    @etablissement = @agent_connecté.etablissement if @agent_connecté
-    @agent_connecté
+    @etablissement = @agent_connecte.etablissement if @agent_connecte
+    @agent_connecte
   end
 
   def identification_agent
-    unless agent_connecté.present?
+    unless agent_connecte.present?
       redirect_to "/agent", alert: t("messages.probleme_identification")
       return
     end
     ajoute_information_utilisateur_pour_sentry(
       type_utilisateur: "agent",
-      dossiersco_id: agent_connecté.id
+      dossiersco_id: agent_connecte.id
     )
-    Trace.create(identifiant: agent_connecté.email,
+    Trace.create(identifiant: agent_connecte.email,
                  categorie: "agent",
                  page_demandee: request.path_info,
                  adresse_ip: request.ip)
   end
 
   def if_agent_is_admin
-    if !agent_connecté.nil? && !agent_connecté.admin?
+    if !agent_connecte.nil? && !agent_connecte.admin?
       redirect_to agent_tableau_de_bord_path
-    elsif agent_connecté.nil?
+    elsif agent_connecte.nil?
       redirect_to root_path
     end
   end

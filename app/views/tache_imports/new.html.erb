@@ -50,8 +50,8 @@
       <h3><%= t('.titre_purge_etablissement') %></h3>
     </div>
     <p><%= t('.message_prevention_purge') %></p>
-    <%= link_to(t('.purger_etablissement', etablissement: @agent_connecté.etablissement.nom),
-                configuration_etablissement_purge_path(@agent_connecté.etablissement),
+    <%= link_to(t('.purger_etablissement', etablissement: @agent_connecte.etablissement.nom),
+                configuration_etablissement_purge_path(@agent_connecte.etablissement),
                 method: :put, data: {confirm: t('.confirmer_purge') },
                 id: 'bouton-purge', class: 'button warning') %>
   </div>

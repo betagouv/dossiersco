@@ -15,10 +15,10 @@ module Configuration
     def create
       @agent = Agent.new(agent_params)
       @agent.email.downcase!
-      @agent.etablissement = @agent_connecté.etablissement
+      @agent.etablissement = @agent_connecte.etablissement
       @agent.jeton = SecureRandom.base58(26)
       if @agent.save
-        AgentMailer.invite_agent(@agent, @agent_connecté).deliver_now
+        AgentMailer.invite_agent(@agent, @agent_connecte).deliver_now
         redirect_to configuration_agents_path, notice: t(".invitation_envoyee", email: @agent.email)
       else
         flash[:alert] = "L'email #{@agent.email} est déjà utilisé"
@@ -28,23 +28,23 @@ module Configuration
 
     def index
       super_admins = ENV["SUPER_ADMIN"].present? ? ENV["SUPER_ADMIN"].delete(" ").split(",") : [""]
-      @agents = Agent.where(etablissement: agent_connecté.etablissement).where.not("email IN (?)", super_admins)
+      @agents = Agent.where(etablissement: agent_connecte.etablissement).where.not("email IN (?)", super_admins)
     end
 
     def edit
-      @agent = @agent_connecté
+      @agent = @agent_connecte
     end
 
     def update
-      ancien_jeton = @agent_connecté.jeton
-      @agent_connecté.jeton = nil
-      if @agent_connecté.update(agent_params)
-        session[:agent_email] = @agent_connecté.email
+      ancien_jeton = @agent_connecte.jeton
+      @agent_connecte.jeton = nil
+      if @agent_connecte.update(agent_params)
+        session[:agent_email] = @agent_connecte.email
         redirect_to configuration_agents_path, notice: t("messages.compte_cree")
       else
-        @agent = @agent_connecté
+        @agent = @agent_connecte
         @agent.jeton = ancien_jeton
-        if @agent_connecté.jeton
+        if @agent_connecte.jeton
           render :activation, layout: "connexion"
         else
           render :edit
@@ -59,12 +59,12 @@ module Configuration
     end
 
     def changer_etablissement
-      @agent_connecté.update(etablissement_id: params[:etablissement])
+      @agent_connecte.update(etablissement_id: params[:etablissement])
       redirect_to agent_tableau_de_bord_path
     end
 
     def activation
-      @agent = @agent_connecté
+      @agent = @agent_connecte
       render layout: "connexion"
     end
 

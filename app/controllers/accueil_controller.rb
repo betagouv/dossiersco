@@ -2,7 +2,7 @@
 
 class AccueilController < ApplicationController
 
-  before_action :retrouve_élève_connecté, except: %i[index identification stats]
+  before_action :retrouve_eleve_connecte, except: %i[index identification stats]
   layout "famille"
 
   def index
@@ -44,7 +44,7 @@ class AccueilController < ApplicationController
     @dossier_eleve = @eleve.dossier_eleve
   end
 
-  def get_eleve
+  def eleve
     @eleve.dossier_eleve.update derniere_etape: "eleve"
     @options_pedagogiques_selectionnees = @eleve.dossier_eleve.options_pedagogiques
     @options_pedagogiques = OptionPedagogique.filtre_par(@eleve.dossier_eleve.mef_destination)
@@ -72,7 +72,7 @@ class AccueilController < ApplicationController
     redirect_to "/famille"
   end
 
-  def get_famille
+  def famille
     dossier_eleve = @eleve.dossier_eleve
     dossier_eleve.update derniere_etape: "famille"
     resp_legal1 = dossier_eleve.resp_legal_1
@@ -81,8 +81,8 @@ class AccueilController < ApplicationController
     contact_urgence = nil if contact_urgence.present? && !dossier_eleve.contact_urgence.nom.present?
     lien_de_parentes = ["MERE", "PERE", "AUTRE FAM.", "AUTRE LIEN", "TUTEUR", "ASE"]
 
-    @resp_legal_1 = resp_legal1
-    @resp_legal_2 = resp_legal2
+    @resp_legal1 = resp_legal1
+    @resp_legal2 = resp_legal2
     @contact_urgence = contact_urgence
     @code_profession = RespLegal.codes_profession
     @code_situation = code_situation

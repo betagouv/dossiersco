@@ -3,7 +3,7 @@
 class SuiviController < ApplicationController
 
   layout "connexion"
-  before_action :agent_connecté
+  before_action :agent_connecte
   before_action :identification_agent, only: [:pas_encore_connectes]
 
   def index
@@ -15,13 +15,11 @@ class SuiviController < ApplicationController
         @suivi.pas_encore_connecte << etablissement
       end
 
-      @suivi.eleves_importe << etablissement if etablissement.dossier_eleve.count > 0
+      @suivi.eleves_importe << etablissement if etablissement.dossier_eleve.positive?
 
-      @suivi.piece_attendue_configure << etablissement if etablissement.pieces_attendues.count > 0
+      @suivi.piece_attendue_configure << etablissement if etablissement.pieces_attendues.positive?
 
-      if etablissement.dossier_eleve.map(&:etat).include?("connecté")
-        @suivi.familles_connectes << etablissement
-      end
+      @suivi.familles_connectes << etablissement if etablissement.dossier_eleve.map(&:etat).include?("connecté")
     end
   end
 

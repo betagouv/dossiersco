@@ -8,7 +8,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     admin = Fabricate(:admin)
     identification_agent(admin)
 
-    resp = Fabricate(:resp_legal, email: '')
+    resp = Fabricate(:resp_legal, email: "")
     dossier_eleve = Fabricate(:dossier_eleve,
                               etablissement: admin.etablissement,
                               resp_legal: [resp])
@@ -17,7 +17,6 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     dossier_eleve = Fabricate(:dossier_eleve,
                               etablissement: admin.etablissement,
                               resp_legal: [resp])
-
 
     resp = Fabricate(:resp_legal, communique_info_parents_eleves: nil)
     dossier_eleve = Fabricate(:dossier_eleve,
@@ -38,7 +37,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
       dossier_eleve = Fabricate(:dossier_eleve,
                                 etablissement: admin.etablissement,
                                 resp_legal: [resp])
-      option = Fabricate(:option_pedagogique, nom: "un super nom d'option un peu long", obligatoire: "F", code_matiere: 'ALGEV')
+      option = Fabricate(:option_pedagogique, nom: "un super nom d'option un peu long", obligatoire: "F", code_matiere: "ALGEV")
       dossier_eleve.options_pedagogiques << option
     end
 
@@ -73,8 +72,6 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     xml = Nokogiri::XML(File.read(fixture_file))
     assert_equal [], xsd.validate(xml)
   end
-
-
 
   test "#export-options" do
     admin = Fabricate(:admin)

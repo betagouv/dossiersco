@@ -21,4 +21,7 @@ console: ## Run rails console
 routes: ## Run rails routes
 	docker-compose run --rm app bundle exec rails routes
 
-.PHONY: build run test clean stop
+rubocop: ## Run Rubocop
+	docker-compose run --rm app bundle exec rubocop -a
+
+.PHONY: build run test clean stop rubocop

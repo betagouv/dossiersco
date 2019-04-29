@@ -27,7 +27,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_entree_mauvais_identifiant_agent
-    agent = Fabricate(:admin)
+    Fabricate(:admin)
     post "/agent", params: { email: "jacques@laposte.net", mot_de_passe: "pierre" }
     follow_redirect!
     assert response.body.include? "Ces informations ne correspondent pas à un agent enregistré"
@@ -58,36 +58,46 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
   def test_destinataire_sms
     dossier = DossierEleve.new
-    dossier.resp_legal = [RespLegal.new(
-      tel_personnel: "01 12 34 56 78", tel_portable: "06 12 34 56 78", priorite: 1
-    ),
-                          RespLegal.new(
-                            tel_personnel: "01 12 34 56 78", tel_portable: "06 12 34 56 99", priorite: 2
-                          )]
+    dossier.resp_legal = [
+      RespLegal.new(
+        tel_personnel: "01 12 34 56 78", tel_portable: "06 12 34 56 78", priorite: 1
+      ),
+      RespLegal.new(
+        tel_personnel: "01 12 34 56 78", tel_portable: "06 12 34 56 99", priorite: 2
+      )
+    ]
     message = Message.new(dossier_eleve: dossier, categorie: "sms")
     assert_equal "06 12 34 56 78", message.numero
     message.destinataire = "rl2"
     assert_equal "06 12 34 56 99", message.numero
   end
 
-  def test_portable_rl1
+  test "dossier rl1 == tel portable du resp legal prio 1" do
     dossier = DossierEleve.new
     dossier.resp_legal = [RespLegal.new(
       tel_personnel: "01 12 34 56 78", tel_portable: "06 12 34 56 78", priorite: 1
     )]
     assert_equal "06 12 34 56 78", dossier.portable_rl1
+  end
+
+  test "dossier rl1 == tel perso quand pas de portable" do
+    dossier = DossierEleve.new
     dossier.resp_legal = [RespLegal.new(
       tel_personnel: "06 12 34 56 78", tel_portable: nil, priorite: 1
     )]
     assert_equal "06 12 34 56 78", dossier.portable_rl1
-    dossier.resp_legal = [RespLegal.new(
-      tel_personnel: "06 12 34 56 78", tel_portable: "", priorite: 1
-    )]
-    assert_equal "06 12 34 56 78", dossier.portable_rl1
+  end
+
+  test "rl1 == tel perso quand tel portable est un 01 et tel perso un 06" do
+    dossier = DossierEleve.new
     dossier.resp_legal = [RespLegal.new(
       tel_personnel: "06 12 34 56 78", tel_portable: "01 12 34 56 78", priorite: 1
     )]
     assert_equal "06 12 34 56 78", dossier.portable_rl1
+  end
+
+  test "rl1 == tel portable si commence par 06, même si le tel perso commence par 07" do
+    dossier = DossierEleve.new
     dossier.resp_legal = [RespLegal.new(
       tel_personnel: "07 12 34 56 78", tel_portable: "06 12 34 56 78", priorite: 1
     )]
@@ -203,7 +213,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_affiche_contacts
-    e = Eleve.create! identifiant: "XXX"
+    Eleve.create! identifiant: "XXX"
 
     resp_legal = Fabricate(:resp_legal,
                            tel_personnel: "0101010101",
@@ -321,12 +331,9 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal Etablissement.count, doc.css(".etablissement").count
     names = doc.css(".etablissement > .row > .nom").collect(&:text).collect(&:strip)
     assert names.include? Etablissement.first.nom
-    # Classes - on a 4 classes sur Tillion et 2 sur Oeben dont 2 du même nom entre
-    # les deux établissements
     names = doc.css(".etablissement .classe > .row > .nom").collect(&:text).collect(&:strip)
     assert_equal 0, doc.css(".etablissement .classe").count
     assert_equal 0, (names.select { |x| x == "3EME 1" }).count
-    # Statuts - 100% de non connectés à Oeben
   end
 
   def test_page_eleve_agent_affiche_changement_adresse
@@ -347,7 +354,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   def test_page_eleve_agent_affiche_adresse_sans_changement
     eleve = Fabricate(:eleve, identifiant: "truc")
     resp_legal = Fabricate(:resp_legal)
-    dossier = Fabricate(:dossier_eleve, eleve: eleve, resp_legal: [resp_legal])
+    Fabricate(:dossier_eleve, eleve: eleve, resp_legal: [resp_legal])
     agent = Fabricate(:agent)
     identification_agent(agent)
 

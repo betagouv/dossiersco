@@ -53,7 +53,7 @@
         <h3><%= t('.etablissement') %></h3>
         <% unless @stats.nom_etablissement || @stats.code_postal %>
           <p><%= t('.information_etablissement_manquantes') %></p>
-          <%= link_to t('.modifier_informations'), edit_configuration_etablissement_path(@agent_connecté.etablissement) %>
+          <%= link_to t('.modifier_informations'), edit_configuration_etablissement_path(@agent_connecte.etablissement) %>
         <% else %>
           <p><%= t('.information_etablissement_html', uai: @stats.uai, nom: @stats.nom_etablissement,
                    code_postal: @stats.code_postal) %></p>

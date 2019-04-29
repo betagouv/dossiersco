@@ -31,7 +31,7 @@
   <div class="container">
     <ul class="footer__links">
       <a href="https://blog.dossiersco.fr/a-propos/">A propos</a>
-      <% if @agent_connecté && super_admin?(@agent_connecté.email) %>
+      <% if @agent_connecte && super_admin?(@agent_connecte.email) %>
         <a href="/suivi">Suivi</a>
       <% end %>
       <% unless Rails.env.production? %>

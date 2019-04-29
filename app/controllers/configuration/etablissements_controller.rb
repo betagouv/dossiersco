@@ -34,7 +34,7 @@ module Configuration
     end
 
     def purge
-      agent_connecté.etablissement.purge_dossiers_eleves!
+      agent_connecte.etablissement.purge_dossiers_eleves!
       redirect_to new_tache_import_path, notice: t(".purge_succes")
     end
 

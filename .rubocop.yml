@@ -9,21 +9,39 @@ Layout/EmptyLinesAroundClassBody:
   EnforcedStyle: empty_lines
 
 LineLength:
-  Max: 100
+  Max: 150
+  Exclude:
+    - 'app/views/**/*erb*'
+    - 'app/models/dossier_eleve.rb'
 
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: double_quotes
 
+Style/Documentation:
+  Enabled: false
+
 Metrics/BlockLength:
+  Max: 30
   Exclude:
-    - 'test/system/**/*'
+    - 'test/**/*'
 
 Metrics/MethodLength:
-  Max: 15
-
-Metrics/AbcSize:
-  Max: 20
+  Max: 35
 
 Metrics/ClassLength:
-  Max: 220
+  Max: 170
+  Exclude:
+    - 'test/**/*'
+    - 'app/controllers/inscriptions_controller.rb'
+
+Metrics/AbcSize:
+  Max: 55
+  Exclude:
+    - 'test/**/*'
+
+Metrics/CyclomaticComplexity:
+  Max: 10
+
+Metrics/PerceivedComplexity:
+  Max: 15

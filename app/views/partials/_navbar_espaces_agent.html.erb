@@ -11,33 +11,33 @@
 
   <div class="collapse navbar-collapse navbar-links" id="navbarSupportedContent">
     <ul class="navbar-nav">
-      <% unless @agent_connecté.nil? %>
-        <% if @agent_connecté.admin? %>
+      <% unless @agent_connecte.nil? %>
+        <% if @agent_connecte.admin? %>
           <li class="nav-item">
             <%= link_to autre_espace, lien_autre_espace, {class: 'nav-link'}%>
           </li>
         <% end %>
-        <% if super_admin?(@agent_connecté.identifiant) %>
+        <% if super_admin?(@agent_connecte.identifiant) %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">
-              <%= @agent_connecté.etablissement.nom %>
+              <%= @agent_connecte.etablissement.nom %>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <% Etablissement.all.each do |etablissement| %>
-                <%= link_to "#{etablissement.nom} (#{etablissement.departement})", changer_etablissement_configuration_agent_path(@agent_connecté, etablissement: etablissement), {method: :post, class: 'dropdown-item'} %>
+                <%= link_to "#{etablissement.nom} (#{etablissement.departement})", changer_etablissement_configuration_agent_path(@agent_connecte, etablissement: etablissement), {method: :post, class: 'dropdown-item'} %>
               <% end %>
             </div>
           </li>
         <% else %>
           <li class="nav-item">
-            <span class="nav-link"><%= @agent_connecté.etablissement.nom %></span>
+            <span class="nav-link"><%= @agent_connecte.etablissement.nom %></span>
           </li>
         <% end %>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
              aria-haspopup="true" aria-expanded="false">
-            <%= @agent_connecté.identifiant %>
+            <%= @agent_connecte.identifiant %>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <%= link_to "Se déconnecter", agent_deconnexion_path, {class: "dropdown-item"} %>

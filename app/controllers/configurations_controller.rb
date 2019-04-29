@@ -8,7 +8,7 @@ class ConfigurationsController < ApplicationController
   before_action :if_agent_is_admin
 
   def show
-    etablissement = @agent_connecté.etablissement
+    etablissement = @agent_connecte.etablissement
     stats = Struct.new(:agents, :options, :mef, :dossiers, :date_fin, :uai, :nom_etablissement, :code_postal,
                        :pieces_attendues, :eleves_sans_mef)
     @stats = stats.new

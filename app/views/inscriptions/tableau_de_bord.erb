@@ -2,7 +2,7 @@
   <h1 class="separation">Tableau de bord</h1>
 
   <div>
-    Collège <%= @agent_connecté.etablissement.nom %> : <span id="total_dossiers" class="badge badge-danger"><%= total_dossiers %></span> dossiers.
+    Collège <%= @agent_connecte.etablissement.nom %> : <span id="total_dossiers" class="badge badge-danger"><%= total_dossiers %></span> dossiers.
   </div>
 
   <div>Nombre de notes : <%= notes.reject { |a| a == 0 }.count  %></div>

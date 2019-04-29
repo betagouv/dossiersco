@@ -9,7 +9,7 @@ module Configuration
     before_action :set_piece_attendue, only: %i[edit update destroy]
 
     def index
-      @pieces_attendues = PieceAttendue.where(etablissement: agent_connecté.etablissement)
+      @pieces_attendues = PieceAttendue.where(etablissement: agent_connecte.etablissement)
     end
 
     def new
@@ -20,7 +20,7 @@ module Configuration
 
     def create
       @piece_attendue = PieceAttendue.new(piece_attendue_params)
-      @piece_attendue.etablissement = agent_connecté.etablissement
+      @piece_attendue.etablissement = agent_connecte.etablissement
 
       if @piece_attendue.save
         redirect_to configuration_pieces_attendues_path, notice: t(".piece_cree")

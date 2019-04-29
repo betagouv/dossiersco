@@ -9,8 +9,8 @@ module Configuration
     before_action :set_option_pedagogique, only: %i[edit update destroy]
 
     def index
-      @mefs = Mef.where(etablissement: @agent_connecté.etablissement).includes(:options_pedagogiques)
-      @options_pedagogiques = OptionPedagogique.where(etablissement: @agent_connecté.etablissement)
+      @mefs = Mef.where(etablissement: @agent_connecte.etablissement).includes(:options_pedagogiques)
+      @options_pedagogiques = OptionPedagogique.where(etablissement: @agent_connecte.etablissement)
     end
 
     def new
@@ -23,7 +23,7 @@ module Configuration
     end
 
     def create
-      @option_pedagogique = OptionPedagogique.new(option_pedagogique_params.merge(etablissement: agent_connecté.etablissement))
+      @option_pedagogique = OptionPedagogique.new(option_pedagogique_params.merge(etablissement: agent_connecte.etablissement))
 
       if @option_pedagogique.save
         redirect_to configuration_options_pedagogiques_url, notice: t(".option_cree")

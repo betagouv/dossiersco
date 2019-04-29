@@ -13,7 +13,7 @@ module Configuration
     end
 
     def export_siecle
-      @etablissement = @agent_connecté.etablissement
+      @etablissement = @agent_connecte.etablissement
       respond_to do |format|
         format.xml
       end
@@ -22,11 +22,11 @@ module Configuration
     private
 
     def faire_lignes
-      options_etablissement = @agent_connecté.etablissement.options_pedagogiques
+      options_etablissement = @agent_connecte.etablissement.options_pedagogiques
       entet_options = options_etablissement.map(&:nom)
       @entete = ["classe actuelle", "MEF actuel", "prenom", "nom", "date naissance", "sexe"].concat(entet_options)
       @lignes = []
-      DossierEleve.where(etablissement: @agent_connecté.etablissement).each do |dossier|
+      DossierEleve.where(etablissement: @agent_connecte.etablissement).each do |dossier|
         options_eleve = []
         options_etablissement.each do |option|
           options_eleve << (dossier.options_pedagogiques.include?(option) ? "X" : "")

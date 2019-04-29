@@ -24,7 +24,7 @@
         <td><%= agent.prenom %></td>
         <td><%= "<span class='fas fa-check'></span>".html_safe if agent.admin? %></td>
         <td>
-          <%= link_to_if(@agent_connecté != agent, "Supprimer", [:configuration, agent],
+          <%= link_to_if(@agent_connecte != agent, "Supprimer", [:configuration, agent],
                          method: :delete, data: { confirm: 'Voulez-vous vraiment supprimer cet agent ?' })
           %>
         </td>

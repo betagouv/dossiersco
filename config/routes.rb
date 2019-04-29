@@ -11,8 +11,8 @@ Rails.application.routes.draw do
 
   resources :etablissement, only: [] do
     member do
-      get 'fiches_infirmeries', to: 'fiches_infirmeries#fiches_infirmeries'
-      get 'convocations', to: 'convocations#convocations'
+      get "fiches_infirmeries", to: "fiches_infirmeries#fiches_infirmeries"
+      get "convocations", to: "convocations#convocations"
     end
   end
 
@@ -63,8 +63,8 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/retour-ent', to: 'authentification_cas_ent#retour_cas'
-  get '/from-ent', to: 'authentification_cas_ent#appel_direct_ent'
+  get "/retour-ent", to: "authentification_cas_ent#retour_cas"
+  get "/from-ent", to: "authentification_cas_ent#appel_direct_ent"
 
   get "/retour-ent", to: "authentification_cas_ent#retour_cas"
   get "/from-ent", to: "authentification_cas_ent#appel_direct_ent"
@@ -72,10 +72,10 @@ Rails.application.routes.draw do
   post "/identification", to: "accueil#identification"
   get "/accueil", to: "accueil#accueil"
 
-  get "/eleve", to: "accueil#get_eleve"
+  get "/eleve", to: "accueil#eleve"
   post "/eleve", to: "accueil#post_eleve"
 
-  get "/famille", to: "accueil#get_famille"
+  get "/famille", to: "accueil#famille"
   post "/famille", to: "accueil#post_famille"
 
   get "/validation", to: "accueil#validation"
@@ -117,9 +117,9 @@ Rails.application.routes.draw do
 
   get "/agent/fusionne_modele/:modele_id/eleve/:identifiant", to: "inscriptions#fusionne_modele"
 
-  post '/agent/valider_plusieurs_dossiers', to: 'inscriptions#valider_plusieurs_dossiers'
+  post "/agent/valider_plusieurs_dossiers", to: "inscriptions#valider_plusieurs_dossiers"
 
-  get '/agent/deconnexion', to: 'inscriptions#deconnexion'
+  get "/agent/deconnexion", to: "inscriptions#deconnexion"
 
   get "/agent/tableau_de_bord", to: "inscriptions#tableau_de_bord"
 

@@ -9,7 +9,7 @@ module Configuration
     before_action :set_mef, only: %i[show edit update destroy]
 
     def index
-      @mef = Mef.where(etablissement: agent_connecté.etablissement)
+      @mef = Mef.where(etablissement: agent_connecte.etablissement)
     end
 
     def new
@@ -20,7 +20,7 @@ module Configuration
 
     def create
       @mef = Mef.new(mef_params)
-      @mef.etablissement = agent_connecté.etablissement
+      @mef.etablissement = agent_connecte.etablissement
 
       if @mef.save
         redirect_to configuration_mef_index_url, notice: t(".mef_cree")
@@ -46,7 +46,7 @@ module Configuration
         @mef.destroy
         redirect_to configuration_mef_index_url, notice: t(".mef_supprime")
       else
-        @mef = Mef.where(etablissement: agent_connecté.etablissement)
+        @mef = Mef.where(etablissement: agent_connecte.etablissement)
         flash[:alert] = t(".mef_utilise")
         render :index
       end

@@ -2,8 +2,8 @@
 
 class PiecesJointesController < ApplicationController
 
-  before_action :retrouve_élève_connecté, only: %i[create update]
-  before_action :agent_connecté, only: %i[valider refuser]
+  before_action :retrouve_eleve_connecte, only: %i[create update]
+  before_action :agent_connecte, only: %i[valider refuser]
   before_action :retrouve_piece_jointe, only: %i[update valider refuser]
 
   def create

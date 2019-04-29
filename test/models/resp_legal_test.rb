@@ -84,11 +84,11 @@ class RespLegalTest < ActiveSupport::TestCase
   end
 
   test "retourne un code profession 99 par défaut" do
-    assert_equal '99', RespLegal.code_profession_from("")
+    assert_equal "99", RespLegal.code_profession_from("")
   end
 
   test "retourne un code profession 45 pour les fonctionnaires" do
-    assert_equal '45', RespLegal.code_profession_from("Profession intermédiaire administrative de la fonction publique")
+    assert_equal "45", RespLegal.code_profession_from("Profession intermédiaire administrative de la fonction publique")
   end
 
 end

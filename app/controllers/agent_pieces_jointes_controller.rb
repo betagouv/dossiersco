@@ -4,7 +4,7 @@ class AgentPiecesJointesController < ApplicationController
 
   layout "agent"
 
-  before_action :identification_agent, :retrouve_eleve
+  before_action :identification_agent, :eleve
 
   def create
     PieceJointe.create!(piece_jointe_params.merge(dossier_eleve: @eleve.dossier_eleve, etat: "soumis"))
@@ -23,7 +23,7 @@ class AgentPiecesJointesController < ApplicationController
     params.require(:piece_jointe).permit(:fichier, :piece_attendue_id)
   end
 
-  def retrouve_eleve
+  def eleve
     @eleve ||= Eleve.find_by(identifiant: params[:eleve_id])
   end
 

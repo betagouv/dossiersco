@@ -11,9 +11,7 @@ class FamilleMailer < ApplicationMailer
     etablissement = @eleve.dossier_eleve.etablissement
     emails = [agent.email]
 
-    if etablissement.envoyer_aux_familles
-      emails += [@eleve.dossier_eleve.resp_legal.find_by(priorite: 1).email]
-    end
+    emails += [@eleve.dossier_eleve.resp_legal.find_by(priorite: 1).email] if etablissement.envoyer_aux_familles
 
     subject = "Réinscription de votre enfant au collège"
     reply_to = agent.email

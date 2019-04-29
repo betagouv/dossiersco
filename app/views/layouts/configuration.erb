@@ -11,35 +11,35 @@
 
       <nav>
         <ul class="nav__links">
-          <% unless @agent_connecté.nil? %>
-            <% if @agent_connecté.admin? %>
+          <% unless @agent_connecte.nil? %>
+            <% if @agent_connecte.admin? %>
               <li class="nav__item">
-                <%= link_to t('.suivi_inscription'), agent_tableau_de_bord_path, {class: 'nav-link'}%>
+                <%= link_to t('.suivi_inscription'),
+                  agent_tableau_de_bord_path,
+                  {class: 'nav-link'}%>
               </li>
             <% end %>
-            <% if super_admin?(@agent_connecté.email) %>
+            <% if super_admin?(@agent_connecte.email) %>
               <li class="nav__item">
                 <div class="dropdown">
-                  <%= affiche_etablissement(@agent_connecté.etablissement) %>
+                  <%= affiche_etablissement(@agent_connecte.etablissement) %>
                   <div class="dropdown-content">
                     <% Etablissement.all.order(:nom).each do |etablissement| %>
-                      <%= link_to "#{etablissement.nom} (#{etablissement.departement})",
-                                  changer_etablissement_configuration_agent_path(@agent_connecté, etablissement: etablissement),
-                                  {method: :post} %>
+                      <%= link_to "#{etablissement.nom} (#{etablissement.departement})", changer_etablissement_configuration_agent_path(@agent_connecte, etablissement: etablissement), {method: :post} %>
                     <% end %>
                   </div>
                 </div>
               </li>
             <% else %>
               <li class="nav__item">
-                <%= affiche_etablissement(@agent_connecté.etablissement) %>
+                <%= affiche_etablissement(@agent_connecte.etablissement) %>
               </li>
             <% end %>
             <li class="nav__item">
               <div class="dropdown">
-                <%= @agent_connecté.email %>
+                <%= @agent_connecte.email %>
                 <div class="dropdown-content">
-                  <%= link_to 'Mon profil', edit_configuration_agent_path(@agent_connecté), {class: "dropdown-item"} %>
+                  <%= link_to 'Mon profil', edit_configuration_agent_path(@agent_connecte), {class: "dropdown-item"} %>
                   <%= link_to "Se déconnecter", agent_deconnexion_path, {class: "dropdown-item"} %>
                 </div>
               </div>
@@ -64,7 +64,10 @@
             <%= link_to 'Pièces attendues', configuration_pieces_attendues_path, {class: 'nav-link'} %>
           </li>
           <li class="nav__item <%= 'active' if request.fullpath.include? '/etablissement' %>">
-            <%= link_to 'Etablissement', configuration_etablissement_path(@agent_connecté.etablissement), {class: 'nav-link'} %>
+            <%= link_to 'Etablissement', configuration_etablissement_path(@agent_connecte.etablissement), {class: 'nav-link'} %>
+          </li>
+          <li class="nav__item <%= 'active' if request.fullpath.include? '/etablissement' %>">
+            <%= link_to 'Etablissement', configuration_etablissement_path(@agent_connecte.etablissement), {class: 'nav-link'} %>
           </li>
           <li class="nav__item <%= 'active' if request.fullpath.include? '/agent' %>">
             <%= link_to 'Agents', configuration_agents_path, {class: 'nav-link'} %>
@@ -75,30 +78,30 @@
   </header>
 
   <main role="main" class="container my-5">
-    <% if flash[:notice] %>
-      <div class="notification success mt-1">
-        <%= flash[:notice]  %>
-      </div>
-    <% elsif flash[:alert] %>
-      <div class="notification error mt-1">
-        <%= flash[:alert]  %>
-      </div>
-    <% end %>
+  <% if flash[:notice] %>
+    <div class="notification success mt-1">
+      <%= flash[:notice]  %>
+    </div>
+  <% elsif flash[:alert] %>
+    <div class="notification error mt-1">
+      <%= flash[:alert]  %>
+    </div>
+  <% end %>
 
-    <% if (defined? message_info) && (!message_info.nil?) %>
-      <div class="message_de_succes"><%= message_info %></div>
-    <% end %>
+  <% if (defined? message_info) && (!message_info.nil?) %>
+    <div class="message_de_succes"><%= message_info %></div>
+  <% end %>
 
-    <%= yield %>
+  <%= yield %>
 
   </main>
   <script>
-    drift.identify(<%= @agent_connecté.id %>, {
-      email: '<%= @agent_connecté.email %>',
-      name: '<%= @agent_connecté.prenom %> <%= @agent_connecté.nom %> (<%= @agent_connecté.etablissement.nom %>)',
-      postalcode: '<%= @agent_connecté.etablissement.code_postal %>',
-      city: '<%= @agent_connecté.etablissement.ville %>'
-    })
+drift.identify(<%= @agent_connecte.id %>, {
+  email: '<%= @agent_connecte.email %>',
+  name: '<%= @agent_connecte.prenom %> <%= @agent_connecte.nom %> (<%= @agent_connecte.etablissement.nom %>)',
+  postalcode: '<%= @agent_connecte.etablissement.code_postal %>',
+  city: '<%= @agent_connecte.etablissement.ville %>'
+})
   </script>
 <% end %>
 

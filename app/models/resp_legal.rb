@@ -31,7 +31,7 @@ class RespLegal < ActiveRecord::Base
     codes_profession.each do |code, lib|
       return code.to_s if lib == libelle
     end
-    '99'
+    "99"
   end
 
   def self.codes_profession
