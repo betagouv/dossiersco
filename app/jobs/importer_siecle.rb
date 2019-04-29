@@ -157,7 +157,14 @@ class ImporterSiecle < ApplicationJob
     [38, 42, 46, 50, 54, 58, 62, 66, 70, 74].each do |colonne|
       next unless ligne_siecle[colonne].present?
 
-      option = OptionPedagogique.find_or_create_by(etablissement_id: etablissement_id, nom: ligne_siecle[colonne])
+      code = ligne_siecle[colonne - 1]
+      nom = ligne_siecle[colonne]
+
+      option = OptionPedagogique.find_or_create_by(
+        etablissement_id: etablissement_id,
+        nom: nom,
+        code_matiere: code
+      )
       option.update(obligatoire: true) if ligne_siecle[colonne + 1] == "O"
 
       if ligne_siecle[COLONNES[:code_mef]].present?

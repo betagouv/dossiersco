@@ -10,9 +10,11 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
     3.times do
       resp = Fabricate(:resp_legal)
-      Fabricate(:dossier_eleve,
-                etablissement: admin.etablissement,
-                resp_legal: [resp])
+      dossier_eleve = Fabricate(:dossier_eleve,
+                                etablissement: admin.etablissement,
+                                resp_legal: [resp])
+      option = Fabricate(:option_pedagogique, nom: "un super nom d'option un peu long", obligatoire: "F", code_matiere: 'ALGEV')
+      dossier_eleve.options_pedagogiques << option
     end
 
     resp = Fabricate(:resp_legal)
@@ -36,6 +38,16 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     assert_equal [], xsd.validate(xml)
     File.delete(fixture_file)
   end
+
+  test "#export-siecle lycée arago" do
+    fixture_file = "#{Rails.root}/test/fixtures/files/export-siecle-arago-lycee.xml"
+    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    xsd = Nokogiri::XML::Schema(File.read(schema))
+    xml = Nokogiri::XML(File.read(fixture_file))
+    assert_equal [], xsd.validate(xml)
+  end
+
+
 
   test "#export-options" do
     admin = Fabricate(:admin)

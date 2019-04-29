@@ -59,8 +59,9 @@
               <DATE_DEB_SCO>2017-09-04</DATE_DEB_SCO>
               <OPTIONS>
                 <% dossier_eleve.options_pedagogiques.each do |option| %>
+                  <% next if option.code_matiere.nil? %>
                   <OPTION>
-                    <CODE_MATIERE><%= option.nom %></CODE_MATIERE>
+                    <CODE_MATIERE><%= option.code_matiere %></CODE_MATIERE>
                     <CODE_MODALITE_ELECT><%= option.obligatoire ? "O" : "F" %></CODE_MODALITE_ELECT>
                   </OPTION>
                 <% end %>
