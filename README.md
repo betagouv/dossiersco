@@ -13,6 +13,11 @@ Inscrire ses enfants au collège sans se déplacer, sans redonner d'informations
 - [Journal de l'équipe](https://github.com/betagouv/dossiersco/blob/production/doc/journal.md)
 - Le [blog de l'équipe](https://blog.dossiersco.fr/)
 
+Nous avons quelques rituels, des rendez-vous régulier :
+- points quotidiens à 14h, en fonction des personnes présentes
+- planification en début de semaine vers 14h30
+- prise de recul sur le travail effectué le jeudi en fin d’aprèm (démo, rétro, journal)
+
 ## Documentation
 
 - [L'histoire des décisions d'architecture](https://github.com/betagouv/dossiersco/tree/production/doc/architecture)
