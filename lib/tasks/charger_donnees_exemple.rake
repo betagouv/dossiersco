@@ -92,7 +92,7 @@ namespace :db do
 
     PieceAttendue.create!(nom: "Assurance scolaire", code: "assurance_scolaire",
                           explication: "assurance de l'éleve 2018/2019", etablissement_id: tillion.id)
-    quotien_familial = PieceAttendue.create!(
+    PieceAttendue.create!(
       nom: "Quotien familial",
       code: "quotien_familial",
       explication: "Pour déterminer le tarif du restaurant",

@@ -76,12 +76,18 @@ class ImporterSiecle < ApplicationJob
     return unless ligne_siecle[COLONNES[:code_mef]].present?
     return unless ligne_siecle[COLONNES[:niveau_classe_ant]].present?
 
-    mef = Mef.find_by(etablissement_id: etablissement_id, code: ligne_siecle[COLONNES[:code_mef]], libelle: ligne_siecle[COLONNES[:niveau_classe_ant]])
-    mef ||= Mef.new(etablissement_id: etablissement_id, code: ligne_siecle[COLONNES[:code_mef]], libelle: ligne_siecle[COLONNES[:niveau_classe_ant]])
-    unless mef.save
-      puts mef.errors.full_messages.join(", ")
-      raise mef.errors.full_messages.join(", ")
-    end
+    mef = Mef.find_by(
+      etablissement_id: etablissement_id,
+      code: ligne_siecle[COLONNES[:code_mef]],
+      libelle: ligne_siecle[COLONNES[:niveau_classe_ant]]
+    )
+    mef ||= Mef.new(
+      etablissement_id: etablissement_id,
+      code: ligne_siecle[COLONNES[:code_mef]],
+      libelle: ligne_siecle[COLONNES[:niveau_classe_ant]]
+    )
+
+    raise mef.errors.full_messages.join(", ") unless mef.save
   end
 
   def import_ligne_adresse(_etablissement_id, ligne_siecle)

@@ -15,7 +15,7 @@ class ImporterAffelnet < ApplicationJob
       tache.update(statut: TacheImport::STATUTS[:terminee])
       mail = AgentMailer.succes_import(email, statistiques)
       mail.deliver_now
-    rescue Exception => e
+    rescue StandardError => e
       logger.error e
       tache.update(statut: TacheImport::STATUTS[:en_erreur])
       AgentMailer.erreur_import(email).deliver_now
