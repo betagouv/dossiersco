@@ -256,11 +256,12 @@ fr:
       description_fiches_infirmerie: Edition de fiches infirmerie préremplies. La génération peut prendre du temps.
       fiches_infirmerie: Fiches infirmerie
       telecharger_fiches_infirmeries: Télécharger les fiches infirmerie
-  inscriptions:
+  convocations:
     convocations:
       telecharger_convocations: "Télécharger les convocations pour l'inscription"
       telechargement_en_cours: "La génération des documents est en cours, cela peut prendre un peut de temps"
       eleve_non_inscrit: Elèves pas encore inscrits
+  inscriptions:
     modifier_mef_eleve:
       changements_enregistres: "Les changements ont été enregistrés"
       changements_non_enregistres: "Une erreur est survenue, les changements n'ont pas été pris en compte"

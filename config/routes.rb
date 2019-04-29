@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :etablissement, only: [] do
     member do
       get 'fiches_infirmeries', to: 'fiches_infirmeries#fiches_infirmeries'
+      get 'convocations', to: 'convocations#convocations'
     end
   end
 
@@ -61,9 +62,6 @@ Rails.application.routes.draw do
       end
     end
   end
-
-  get '/agent/convocations', to: 'inscriptions#convocations'
-  get '/telecharger_pdf_convocation', to: 'inscriptions#pdf_convocation'
 
   get '/retour-ent', to: 'authentification_cas_ent#retour_cas'
   get '/from-ent', to: 'authentification_cas_ent#appel_direct_ent'

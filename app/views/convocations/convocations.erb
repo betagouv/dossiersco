@@ -6,7 +6,10 @@
     <div class="message_echec"><%= message %></div>
   <% end %>
 
-  <%= link_to t('.telecharger_convocations'), telecharger_pdf_convocation_path, class: 'button mb-2', id: 'telecharger_convocations' %>
+  <%= link_to t('.telecharger_convocations'),
+    convocations_etablissement_path(@etablissement, format: "zip"),
+    class: 'button mb-2',
+    id: 'telecharger_convocations' %>
 
   <table id="options" class="table table-striped table-bordered table-condensed table-hover">
     <thead>

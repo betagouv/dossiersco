@@ -161,19 +161,6 @@ class InscriptionsController < ApplicationController
     redirect_to '/agent/liste_des_eleves'
   end
 
-  def convocations
-    etablissement = agent_connecté.etablissement
-    @eleves_non_inscrits = DossierEleve.pour(etablissement).a_convoquer
-    @eleves_non_inscrits = @eleves_non_inscrits.paginate(page: params[:page], per_page: 10)
-  end
-
-  def pdf_convocation
-    etablissement = @agent_connecté.etablissement
-    pdf = GenerePdf.new
-    zip_data = pdf.generer_pdf_par_classes(etablissement, 'PdfConvocation')
-    send_data(zip_data, :type => 'application/zip', :filename => "convocations.zip")
-  end
-
   def deconnexion
     reset_session
     redirect_to '/agent'
