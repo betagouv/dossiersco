@@ -8,6 +8,17 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     admin = Fabricate(:admin)
     identification_agent(admin)
 
+    resp = Fabricate(:resp_legal, email: '')
+    dossier_eleve = Fabricate(:dossier_eleve,
+                              etablissement: admin.etablissement,
+                              resp_legal: [resp])
+
+    resp = Fabricate(:resp_legal, email: nil)
+    dossier_eleve = Fabricate(:dossier_eleve,
+                              etablissement: admin.etablissement,
+                              resp_legal: [resp])
+
+
     resp = Fabricate(:resp_legal, communique_info_parents_eleves: nil)
     dossier_eleve = Fabricate(:dossier_eleve,
                               etablissement: admin.etablissement,

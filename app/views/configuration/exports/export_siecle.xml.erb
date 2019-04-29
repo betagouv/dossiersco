@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-15"?>
-<IMPORT_ELEVES xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="schema_Import_3.0.xsd" VERSION="">
+<IMPORT_ELEVES xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="schema_Import_3.1.xsd" VERSION="">
 
   <PARAMETRES>
     <UAJ><%= @etablissement.uai %></UAJ>
@@ -21,17 +21,17 @@
             <COMMUNICATION_ADRESSE><%= resp_legal.communique_info_parents_eleves? ? true : false %></COMMUNICATION_ADRESSE>
 
             <CODE_PROFESSION><%= RespLegal.code_profession_from(resp_legal.profession) %></CODE_PROFESSION>
-            <% if resp_legal.tel_personnel %>
+            <% if resp_legal.tel_personnel.present? %>
               <TEL_PERSONNEL><%= resp_legal.tel_personnel %></TEL_PERSONNEL>
             <% end %>
-            <% if resp_legal.tel_professionnel %>
+            <% if resp_legal.tel_professionnel.present? %>
               <TEL_PROFESSIONNEL>0555131415</TEL_PROFESSIONNEL>
             <% end %>
-            <% if resp_legal.tel_portable %>
+            <% if resp_legal.tel_portable.present? %>
               <TEL_PORTABLE><%= resp_legal.tel_portable %></TEL_PORTABLE>
             <% end %>
             <ACCEPTE_SMS>true</ACCEPTE_SMS>
-            <% if resp_legal.email %>
+            <% if resp_legal.email.present? %>
               <EMAIL><%= resp_legal.email %></EMAIL>
             <% end %>
             <ENFANT_A_CHARGE><%= resp_legal.enfants_a_charge.nil? ? 0 : resp_legal.enfants_a_charge %></ENFANT_A_CHARGE>
@@ -50,7 +50,6 @@
             <CODE_SEXE><%= dossier_eleve.eleve.sexe == 'Masculin' ? '1' : '2' %></CODE_SEXE>
             <CODE_PAYS>100</CODE_PAYS>
             <CODE_COMMUNE_INSEE_NAISS>75012</CODE_COMMUNE_INSEE_NAISS>
-            <EMAIL>victorhugo@test.fr</EMAIL>
             <ADHESION_TRANSPORT>false</ADHESION_TRANSPORT>
             <CODE_REGIME>3</CODE_REGIME>
             <DOUBLEMENT>false</DOUBLEMENT>
