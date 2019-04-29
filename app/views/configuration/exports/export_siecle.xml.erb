@@ -12,7 +12,6 @@
     <DONNEES>
       <PERSONNES>
         <% @etablissement.dossier_eleve.map(&:resp_legal).flatten.each do |resp_legal| %>
-          <% next unless resp_legal.profession %>
           <% next unless resp_legal.nom %>
           <PERSONNE>
             <ID_PRV_PER><%= resp_legal.id %></ID_PRV_PER>
@@ -21,7 +20,7 @@
             <PRENOM><%= resp_legal.prenom %></PRENOM>
             <COMMUNICATION_ADRESSE><%= resp_legal.communique_info_parents_eleves? ? true : false %></COMMUNICATION_ADRESSE>
 
-            <CODE_PROFESSION><%= resp_legal.profession %></CODE_PROFESSION>
+            <CODE_PROFESSION><%= RespLegal.code_profession_from(resp_legal.profession) %></CODE_PROFESSION>
             <% if resp_legal.tel_personnel %>
               <TEL_PERSONNEL><%= resp_legal.tel_personnel %></TEL_PERSONNEL>
             <% end %>

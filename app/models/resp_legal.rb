@@ -27,6 +27,13 @@ class RespLegal < ActiveRecord::Base
       equivalentes(code_postal, code_postal_ant)
   end
 
+  def self.code_profession_from(libelle)
+    codes_profession.each do |code, lib|
+      return code.to_s if lib == libelle
+    end
+    '99'
+  end
+
   def self.codes_profession
     { '99': "", '10': "agriculteur exploitant", '21': "artisan", '22': "commerçant et assimilé",
       '23': "chef d'entreprise de 10 salariés et+", '31': "profession libérale", '33': "cadre de la fonction publique",
