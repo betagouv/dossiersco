@@ -66,7 +66,6 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
   test "#export-siecle lycée arago" do
     skip
-    # changer ce fichier pour faire des tests
     fixture_file = "#{Rails.root}/test/fixtures/files/export-siecle-arago-lycee.xml"
 
     schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
