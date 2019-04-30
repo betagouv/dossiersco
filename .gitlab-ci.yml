@@ -31,4 +31,4 @@ deploy:
   environment: production
   script:
   - gem install dpl
-  - dpl --provider=scalingo --app=$SCALINGO_APP_NAME --api-key=$SCALINGO_PRODUCTION_KEY
+  - dpl --provider=scalingo --api-key=$SCALINGO_PRODUCTION_KEY
