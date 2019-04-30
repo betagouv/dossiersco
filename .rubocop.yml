@@ -4,7 +4,7 @@ AllCops:
     - 'tmp/**/*'
     - 'config/**/*'
     - 'db/**/*'
-    - 'vendor/bundle/**/*'
+    - 'vendor/**/*'
 
 Layout/EmptyLinesAroundClassBody:
   Enabled: true
