@@ -153,7 +153,7 @@ class InscriptionsController < ApplicationController
   end
 
   def valider_plusieurs_dossiers
-    ids = params["ids"]
+    ids = params["ids"] || []
     ids.each do |id|
       dossier_eleve = DossierEleve.find(id)
       dossier_eleve.valide!
