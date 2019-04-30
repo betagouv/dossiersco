@@ -37,7 +37,7 @@
 
   <% unless Rails.env.production? %>
     <div class="text-center">
-      <p>Vous n'êtes pas sur un environnement de production. Les données sont ici anonymisées. Vous pouvez donc vous connecter avec les comptes suivants : </p>
+      <p>Vous êtes sur un environnement de test. Les données existantes ici sont anonymisées. Vous pouvez donc vous connecter avec les comptes suivants : </p>
       <ul>
         <% Eleve.all.sample(3).each do |eleve| %>
           <li><%= link_to "Élève #{eleve.prenom} #{eleve.nom}", "/identification?identifiant=#{eleve.identifiant}&annee=#{eleve.annee_de_naissance}&mois=#{eleve.mois_de_naissance}&jour=#{eleve.jour_de_naissance}", method: :post %></li>

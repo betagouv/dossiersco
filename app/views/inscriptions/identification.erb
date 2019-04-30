@@ -29,7 +29,7 @@
   </div>
   <% unless Rails.env.production? %>
     <div class="text-center">
-      <p>Vous n'êtes pas sur un environnement de production, vous pouvez donc vous connecter avec les comptes suivant : </p>
+      <p>Vous êtes sur un environnement de test, vous pouvez donc vous connecter avec les comptes suivant : </p>
       <ul>
         <li><%= link_to "Agent d'EPLE", '/agent?email=ce.0753936w@ac-paris.fr&mot_de_passe=tilion', method: :post %></li>
       </ul>
