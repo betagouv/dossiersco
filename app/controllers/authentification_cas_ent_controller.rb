@@ -18,9 +18,7 @@ class AuthentificationCasEntController < ApplicationController
   def retour_cas
     data = donnees_ent(params[:ticket])
     dossier_eleve = retrouve_dossier_eleve(data)
-    unless dossier_eleve
-      redirect_to("/", error: "Nous n'avons pas pu retrouver votre dossier sur DossierSCO. Nous nous excusons pour ce soucis.") and return
-    end
+    redirect_to("/", error: I18n.t(".dossier_non_trouver")) && return unless dossier_eleve
 
     if eleve_et_etablissement_correspondant?(dossier_eleve, data)
       session[:identifiant] = dossier_eleve.eleve.identifiant
@@ -33,9 +31,9 @@ class AuthentificationCasEntController < ApplicationController
         redirect_to("accueil")
       end
     else
-      redirect_to("/", {notice: "Nous n'avons pas pu retrouver votre dossier sur DossierSCO. Nous nous excusons pour ce soucis."})
+      redirect_to("/", notice: "Nous n'avons pas pu retrouver votre dossier sur DossierSCO. Nous nous excusons pour ce soucis.")
     end
-    return
+    nil
   end
 
   def donnees_ent(ticket)
@@ -67,9 +65,7 @@ class AuthentificationCasEntController < ApplicationController
     nom = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["lastName"]
     adresse = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["address"]
     resp_legal = RespLegal.find_by(email: email, prenom: prenom, nom: nom, adresse: adresse)
-    if resp_legal
-      return resp_legal.dossier_eleve
-    end
+    return resp_legal.dossier_eleve if resp_legal
   end
 
   def appel_direct_ent
