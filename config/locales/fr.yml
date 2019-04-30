@@ -233,7 +233,7 @@ fr:
       text_eleves_sans_mef: "%{nombre} élèves n'ont pas de MEF d'origine"
       agents: Agents
       nombre_agents_html: "<strong>%{nombre} agents</strong> inscrits pour votre établissement sur Dossiersco"
-      options_pedagogiques: Options Pédagogiques
+      options_pedagogiques: "Carte des formations"
       nombre_options_pedagogiques_html: "<ul><li>%{options} options pédagogiques</li><li>%{mef} MEF</li></ul>"
       import: Dossiers Élèves
       nombre_dossiers_eleves: "%{dossiers} dossiers élèves pour votre établissement"
