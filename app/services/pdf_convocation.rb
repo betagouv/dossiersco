@@ -16,11 +16,9 @@ class PdfConvocation
         pdf.move_down 20
         pdf.text "DossierSCO", size: 20
 
-        pdf.bounding_box([280, 700], width: 250, height: 100) do
-          pdf.text "#{etablissement.ville}, le #{Time.now.strftime('%d/%m/%Y')}", leading: 5, align: :right
-          pdf.text "#{etablissement.signataire} du collège #{etablissement.nom}", leading: 5, align: :right
-          pdf.text "#{etablissement.adresse} #{etablissement.code_postal} #{etablissement.ville}", align: :right
-        end
+        pdf.text "#{etablissement.ville}, le #{Time.now.strftime('%d/%m/%Y')}", leading: 5, style: :bold
+        pdf.text "Collège #{etablissement.nom}", leading: 5, style: :bold
+        pdf.text "#{etablissement.adresse} #{etablissement.code_postal} #{etablissement.ville}", style: :bold
 
         pdf.move_down 20
         pdf.text "Inscriptions #{Time.now.strftime('%Y')}/#{Time.now.strftime('%Y').to_i + 1}", size: 20, align: :center
