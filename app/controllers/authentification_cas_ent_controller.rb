@@ -18,21 +18,24 @@ class AuthentificationCasEntController < ApplicationController
   def retour_cas
     data = donnees_ent(params[:ticket])
     dossier_eleve = retrouve_dossier_eleve(data)
+    unless dossier_eleve
+      redirect_to("/", error: "Nous n'avons pas pu retrouver votre dossier sur DossierSCO. Nous nous excusons pour ce soucis.") and return
+    end
 
     if eleve_et_etablissement_correspondant?(dossier_eleve, data)
       session[:identifiant] = dossier_eleve.eleve.identifiant
 
       if dossier_eleve.derniere_etape.present?
-        redirect_to("/#{dossier_eleve.derniere_etape}") && return
+        redirect_to("/#{dossier_eleve.derniere_etape}")
       elsif dossier_eleve.etape_la_plus_avancee.present?
-        redirect_to("/#{dossier_eleve.etape_la_plus_avancee}") && return
+        redirect_to("/#{dossier_eleve.etape_la_plus_avancee}")
       else
-        redirect_to("accueil") && return
+        redirect_to("accueil")
       end
-      return
     else
-      redirect_to("/", notice: "Nous n'avons pas pu retrouver votre dossier sur DossierSCO. Nous nous excusons pour ce soucis.") && return
+      redirect_to("/", {notice: "Nous n'avons pas pu retrouver votre dossier sur DossierSCO. Nous nous excusons pour ce soucis."})
     end
+    return
   end
 
   def donnees_ent(ticket)
@@ -64,10 +67,9 @@ class AuthentificationCasEntController < ApplicationController
     nom = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["lastName"]
     adresse = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["address"]
     resp_legal = RespLegal.find_by(email: email, prenom: prenom, nom: nom, adresse: adresse)
-    unless resp_legal
-      redirect_to("/", error: "Nous n'avons pas pu retrouver votre dossier sur DossierSCO. Nous nous excusons pour ce soucis.") && return
+    if resp_legal
+      return resp_legal.dossier_eleve
     end
-    resp_legal.dossier_eleve
   end
 
   def appel_direct_ent

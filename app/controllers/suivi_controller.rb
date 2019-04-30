@@ -15,9 +15,9 @@ class SuiviController < ApplicationController
         @suivi.pas_encore_connecte << etablissement
       end
 
-      @suivi.eleves_importe << etablissement if etablissement.dossier_eleve.positive?
+      @suivi.eleves_importe << etablissement if etablissement.dossier_eleve.count.positive?
 
-      @suivi.piece_attendue_configure << etablissement if etablissement.pieces_attendues.positive?
+      @suivi.piece_attendue_configure << etablissement if etablissement.pieces_attendues.count.positive?
 
       @suivi.familles_connectes << etablissement if etablissement.dossier_eleve.map(&:etat).include?("connecté")
     end

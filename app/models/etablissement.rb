@@ -37,7 +37,7 @@ class Etablissement < ActiveRecord::Base
     end
     notes = avec_feedback.collect(&:satisfaction)
     notes_renseignees = notes.select(&:positive?)
-    moyenne = notes_renseignees.positive? ? format("%.2f", ((notes_renseignees.sum + 0.0) / notes_renseignees.count)).to_s : ""
+    moyenne = notes_renseignees.count.positive? ? format("%.2f", ((notes_renseignees.sum + 0.0) / notes_renseignees.count)).to_s : ""
     dossiers_avec_commentaires = avec_feedback.reject { |d| d if d.commentaire.nil? || d.commentaire.empty? }
     [etats, notes, moyenne, dossiers_avec_commentaires]
   end

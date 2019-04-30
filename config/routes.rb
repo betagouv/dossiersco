@@ -27,9 +27,11 @@ Rails.application.routes.draw do
       end
     end
     resources :mef
+
     resources :etablissements, expect: %i[index destroy] do
       put "purge"
     end
+
     resources :agents do
       member do
         post "changer_etablissement"

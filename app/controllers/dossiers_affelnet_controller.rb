@@ -8,7 +8,7 @@ class DossiersAffelnetController < ApplicationController
 
   def create
     if params[:fichier].present?
-      DossierAffelnet.where(etablissement: agent_connect.etablissement).destroy_all
+      DossierAffelnet.where(etablissement: agent_connecte.etablissement).destroy_all
       tempfile = params[:fichier].tempfile
       @nom_fichier = params[:fichier].original_filename
       xls_document = Roo::Spreadsheet.open tempfile

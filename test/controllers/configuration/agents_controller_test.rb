@@ -54,7 +54,7 @@ class AgentsControllerTest < ActionDispatch::IntegrationTest
     get edit_configuration_agent_path(agent_deux)
 
     assert_response :success
-    assert_equal agent_un, assigns(:agent_connecté)
+    assert_equal agent_un, assigns(:agent_connecte)
   end
 
   test "Un agent modifie son profil" do
@@ -72,7 +72,7 @@ class AgentsControllerTest < ActionDispatch::IntegrationTest
 
     get configuration_agent_activation_path(agent, jeton: "uber_jeton")
 
-    assert_equal agent, assigns(:agent_connecté)
+    assert_equal agent, assigns(:agent_connecte)
   end
 
 end
