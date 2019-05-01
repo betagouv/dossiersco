@@ -31,4 +31,5 @@ deploy:
   environment: production
   script:
   - gem install dpl
-  - dpl --provider=scalingo --api-token=$SCALINGO_PRODUCTION_KEY
+  - dpl --provider=scalingo --api-token=$SCALINGO_PRODUCTION_KEY --app=dossiersco-demo
+  - dpl --provider=scalingo --api-token=$SCALINGO_PRODUCTION_KEY --app=dossiersco-production
