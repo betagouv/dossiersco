@@ -41,8 +41,8 @@ module Configuration
     private
 
     def etablissement_params
-      params.require(:etablissement).permit(:nom, :email, :adresse, :ville, :code_postal, :message_permanence,
-                                            :message_infirmerie, :gere_demi_pension, :signataire, :date_limite, :uai,
+      params.require(:etablissement).permit(:nom, :email, :adresse, :ville, :code_postal,
+                                            :gere_demi_pension, :signataire, :date_limite, :uai,
                                             :envoyer_aux_familles, :reglement_demi_pension)
     end
 

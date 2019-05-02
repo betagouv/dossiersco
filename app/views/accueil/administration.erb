@@ -55,11 +55,6 @@
                  <% if dossier_eleve.renseignements_medicaux %> checked <% end %>> <%= t('.envoyer_une_info_medicale') %>
         </label>
       </div>
-      <% if dossier_eleve.etablissement.message_infirmerie.present? %>
-        <div id="message-infirmerie" class="d-none">
-          <%= dossier_eleve.etablissement.message_infirmerie %>
-        </div>
-      <% end %>
     </div>
 
     <h2 class="separation mt-4"><%= t('.photo_de_classe') %></h2>
