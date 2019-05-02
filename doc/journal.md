@@ -27,6 +27,8 @@
 - Organisation d’un rendez-vous pour s’accorder sur les manières de travailler ensemble.  
 - Familiarisation de Maïtané avec les potentiels futurs parcours utilisateurs, bouillonnement d’idées.  
 
+### Chasse aux bugs
+- Le contact avec les utilisateurs nous permet de débusquer des bugs et de les corriger. Cette semaine, correction d'un réglage sur les MEF.
 
 ## 15e semaine - du 19 avril au 25 avril
 
