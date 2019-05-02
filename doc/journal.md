@@ -1,5 +1,33 @@
 # Journal
 
+## 16e semaine - du 29 avril au 3 mai
+
+*Décollage imminent* 
+
+### Acquisition
+- Emails aux ambassadeurs académie
+- Carte des ambassadeurs DossierSCO saison 2
+
+### Animation de communauté et communication
+- Abonnement à la lettre d’info
+- Réalisation du premier tutoriel “Configurer sa campagne d'inscription DossierSCO” + lien
+- Ajout de liens “Lire le blog” -  “S’abonner à la lettre d’infos” en footer
+- Ajout de l’environnement de démo dans la page “A propos”
+
+### Travailler ensemble
+- Environnements de travail. Temps d’adaptation en changeant d’outil dans un moment où le travail est dense. On reste sur la configuration actuelle mais on ne peut pas forcément se permettre d’adopter maintenant des choses avec lesquelles certain.es membres de l’équipe ne sont pas tout à fait à l’aise.
+- Semaine d’adaptation aux rituels d’équipe distribuée et asynchrone : la planification, les points équipe quotidiens, la démo/journal/rétro. Besoin de clarification des objectifs et les temps de rencontre.
+- Jardiner le backlog : reprendre une régularité de rdv entre nous pour garder un backlog clair et priorité.
+
+### Budget  
+- Inquiétude au sujet du refinancement 
+
+### UX  
+- Recrutement de premières personnes pour entretiens utilisateur saison 2.  
+- Organisation d’un rendez-vous pour s’accorder sur les manières de travailler ensemble.  
+- Familiarisation de Maïtané avec les potentiels futurs parcours utilisateurs, bouillonnement d’idées.  
+
+
 ## 15e semaine - du 19 avril au 25 avril
 
 **7 ambassadeurs s'engagent pour DossierSCO**
