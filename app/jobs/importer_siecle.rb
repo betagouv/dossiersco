@@ -147,7 +147,11 @@ class ImporterSiecle < ApplicationJob
 
     eleve.update_attributes!(donnees_eleve)
 
-    mef_origine = Mef.find_by(code: ligne_siecle[COLONNES[:code_mef]], libelle: ligne_siecle[COLONNES[:niveau_classe_ant]])
+    mef_origine = Mef.find_by(
+      etablissement_id: etablissement_id,
+      code: ligne_siecle[COLONNES[:code_mef]],
+      libelle: ligne_siecle[COLONNES[:niveau_classe_ant]]
+    )
     mef_destination = Mef.niveau_superieur(mef_origine) if mef_origine.present?
 
     dossier_eleve = DossierEleve.find_by(eleve_id: eleve.id, etablissement_id: etablissement_id)
