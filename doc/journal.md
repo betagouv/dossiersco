@@ -5,30 +5,52 @@
 *Décollage imminent* 
 
 ### Acquisition
+
 - Emails aux ambassadeurs académie
 - Carte des ambassadeurs DossierSCO saison 2
 
 ### Animation de communauté et communication
+
 - Abonnement à la lettre d’info
 - Réalisation du premier tutoriel “Configurer sa campagne d'inscription DossierSCO” + lien
 - Ajout de liens “Lire le blog” -  “S’abonner à la lettre d’infos” en footer
 - Ajout de l’environnement de démo dans la page “A propos”
 
 ### Travailler ensemble
+
 - Environnements de travail. Temps d’adaptation en changeant d’outil dans un moment où le travail est dense. On reste sur la configuration actuelle mais on ne peut pas forcément se permettre d’adopter maintenant des choses avec lesquelles certain.es membres de l’équipe ne sont pas tout à fait à l’aise.
 - Semaine d’adaptation aux rituels d’équipe distribuée et asynchrone : la planification, les points équipe quotidiens, la démo/journal/rétro. Besoin de clarification des objectifs et les temps de rencontre.
 - Jardiner le backlog : reprendre une régularité de rdv entre nous pour garder un backlog clair et priorité.
+- Le [code source](https://gitlab.com/dossiersco/dossiersco/) et le [backlog](https://gitlab.com/dossiersco/dossiersco/boards/1081817) est déplacé sur gitlab
 
 ### Budget  
+
 - Inquiétude au sujet du refinancement 
 
 ### UX  
+
 - Recrutement de premières personnes pour entretiens utilisateur saison 2.  
 - Organisation d’un rendez-vous pour s’accorder sur les manières de travailler ensemble.  
 - Familiarisation de Maïtané avec les potentiels futurs parcours utilisateurs, bouillonnement d’idées.  
 
 ### Chasse aux bugs
+
 - Le contact avec les utilisateurs nous permet de débusquer des bugs et de les corriger. Cette semaine, correction d'un réglage sur les MEF.
+
+
+### Tickets
+
+- [Lire les mails envoyés en démo même si pas connecté](https://gitlab.com/dossiersco/dossiersco/issues/534)
+- [Message d'erreur sur clic pour imprimer les fiches infirmeries](https://gitlab.com/dossiersco/dossiersco/issues/535)
+- [Wording](https://gitlab.com/dossiersco/dossiersco/issues/529)
+- [Coquilles et fautes d'orthographe](https://gitlab.com/dossiersco/dossiersco/issues/528)
+- [La purge élève affiche une erreur](https://gitlab.com/dossiersco/dossiersco/issues/544)
+- [Problème de mef non liés après import](https://gitlab.com/dossiersco/dossiersco/issues/545)
+
+### Dev
+
+
+---
 
 ## 15e semaine - du 19 avril au 25 avril
 
