@@ -37,10 +37,10 @@ class PdfConvocation
                  "vous connecter, sur un ordinateur de bureau, ordinateur portable, tablette connectée ou " \
                  "téléphone connecté, à l’adresse ci-dessous :", inline_format: true
 
-        pdf.move_down 15
+        pdf.move_down 10
         pdf.text "https://dossiersco.fr", size: 16, align: :center
 
-        pdf.move_down 15
+        pdf.move_down 10
         pdf.text "(Pour garantir l’accès le plus rapide au site, merci de saisir cette adresse dans la barre " \
                  "d’adresse de votre navigateur en saisissant l’adresse en entier, et non dans la barre " \
                  "de recherche)", inline_format: true, indent_paragraphs: 20
