@@ -137,8 +137,7 @@
              type: "dropdown",
              selected: @resp_legal2.lien_de_parente,
              disabled: false,
-             options: @lien_de_parentes,
-             required: 'required'
+             options: @lien_de_parentes
          },
          {
              name: "prenom_rl2",
@@ -146,8 +145,7 @@
              type: "text",
              value: @resp_legal2.prenom,
              indication: "Prénom",
-             disabled: false,
-             required: 'required'
+             disabled: false
          },
          {
              name: "nom_rl2",
@@ -155,8 +153,7 @@
              type: "text",
              value: @resp_legal2.nom,
              indication: "Nom",
-             disabled: false,
-             required: 'required'
+             disabled: false
          }
      ]
 
@@ -168,7 +165,6 @@
              value: @resp_legal2.adresse,
              indication: "Numéro et nom de voie",
              disabled: false,
-             required: 'required',
              lines: 3
          },
          {
@@ -177,8 +173,7 @@
              type: "text",
              value: @resp_legal2.code_postal,
              indication: "Code postal",
-             disabled: false,
-             required: 'required'
+             disabled: false
          },
          {
              name: "ville_rl2",
@@ -187,7 +182,6 @@
              selected: ville_rl2,
              indication: "Ville",
              disabled: false,
-             required: 'required',
              options: [ville_rl2]
          },
          {
@@ -199,29 +193,28 @@
              label: t('.telephone_principal'),
              type: "tel",
              value: @resp_legal2.tel_personnel,
-             indication: "Numéro de téléphone",
-             required: 'required'
+             indication: "Numéro de téléphone"
          },
          {
              name: "tel_portable_rl2",
              label: t('.telephone_secondaire'),
              type: "tel",
              value: @resp_legal2.tel_portable,
-             indication: "Numéro de téléphone",
+             indication: "Numéro de téléphone"
          },
          {
              name: "tel_professionnel_rl2",
              label: t('.telephone_professionnel'),
              type: "tel",
              value: @resp_legal2.tel_professionnel,
-             indication: "Numéro de téléphone",
+             indication: "Numéro de téléphone"
          },
          {
              name: "email_rl2",
              label: t('.email_principal'),
              type: "tel",
              value: @resp_legal2.email,
-             indication: "Adresse email",
+             indication: "Adresse email"
          },
          {
              type: 'espace',
@@ -232,8 +225,7 @@
              label: t('.profession'),
              type: "dropdown",
              options: @code_profession.map{ |k, v| v },
-             selected: @resp_legal2.profession,
-             required: 'required'
+             selected: @resp_legal2.profession
          },
          {
              type: 'espace',
@@ -286,14 +278,14 @@
            label: t('.telephone_principal'),
            type: "tel",
            value: @contact_urgence.present? ? @contact_urgence.tel_principal : nil,
-           indication: "Numéro de téléphone",
+           indication: "Numéro de téléphone"
        },
        {
            name: "tel_secondaire_urg",
            label: t('.telephone_secondaire'),
            type: "tel",
            value: @contact_urgence.present? ? @contact_urgence.tel_secondaire : nil,
-           indication: "Numéro de téléphone",
+           indication: "Numéro de téléphone"
        },
    ]
 %>
