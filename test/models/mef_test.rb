@@ -8,10 +8,6 @@ class MefTest < ActiveSupport::TestCase
     assert Fabricate.build(:mef).valid?
   end
 
-  test "invalide sans code" do
-    assert Fabricate.build(:mef, code: "").invalid?
-  end
-
   test "invalide sans libellé" do
     assert Fabricate.build(:mef, libelle: "").invalid?
   end

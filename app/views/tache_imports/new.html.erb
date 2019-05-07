@@ -20,11 +20,17 @@
           <div class="form__group">
             <%= form.file_field :fichier %>
           </div>
-          <div class="form__group">
-            <button type="submit" class="button" id="soumettre-fichier">
-              <%= t('.importer_fichier') %>
-            </button>
-          </div>
+          <% if Rails.env.demo? %>
+            <div class="form__group">
+              Pour sécuriser vos données, l'import de SIECLE est réservé aux collèges ayant créé un compte DossierSCO. Vous pouvez tester cette fonctionnalité après avoir créé votre compte sur <a href="https://dossiersco.fr/configuration/etablissements/new">https://dossiersco.fr/configuration/etablissements/new</a>
+            </div>
+          <% else %>
+            <div class="form__group">
+              <button type="submit" class="button" id="soumettre-fichier">
+                <%= t('.importer_fichier') %>
+              </button>
+            </div>
+          <% end %>
         <% end %>
       <% end %>
   </div>
