@@ -24,7 +24,7 @@
                   <%= form_for [:agent, piece], multipart: true, html: { class: "forms" } do |form| %>
                     <% if piece.fichier.url.present? %>
                       <div class="lien-piece-jointe" data-url="<%= piece.fichier.url %>" data-nom="<%= piece.nom %>">
-                        <% if piece.fichier.content_type.start_with?("image/") %>
+                        <% if piece.fichier.content_type.present? && piece.fichier.content_type.start_with?("image/") %>
                           <%= image_tag(piece.fichier.url, alt:"preview piece jointe") %>
                         <% else %>
                           <%= link_to t('.voir_piece_jointe'), piece.fichier.url %>
