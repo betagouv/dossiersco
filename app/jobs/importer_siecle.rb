@@ -78,10 +78,15 @@ class ImporterSiecle < ApplicationJob
 
     mef = Mef.find_by(
       etablissement_id: etablissement_id,
-      code: ligne_siecle[COLONNES[:code_mef]],
       libelle: ligne_siecle[COLONNES[:niveau_classe_ant]]
     )
-    mef ||= Mef.new(
+
+    if mef
+      mef.update(code: ligne_siecle[COLONNES[:code_mef]])
+      return
+    end
+
+    mef = Mef.new(
       etablissement_id: etablissement_id,
       code: ligne_siecle[COLONNES[:code_mef]],
       libelle: ligne_siecle[COLONNES[:niveau_classe_ant]]
