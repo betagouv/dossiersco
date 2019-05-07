@@ -12,6 +12,7 @@ class DossierEleve < ActiveRecord::Base
   belongs_to :etablissement
   belongs_to :mef_origine, class_name: "Mef", required: false
   belongs_to :mef_destination, class_name: "Mef", required: false
+  belongs_to :regime_sortie, required: false
 
   has_many :resp_legal, dependent: :destroy
   has_many :piece_jointe, dependent: :destroy

@@ -33,4 +33,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular "piece attendue", "pieces attendues"
   inflect.irregular "PieceAttendue", "PiecesAttendues"
   inflect.irregular "piece_attendue", "pieces_attendues"
+  inflect.irregular "RegimeSortie", "RegimesSortie"
+  inflect.irregular "regime_sortie", "regimes_sortie"
+  inflect.irregular "regime sortie", "regimes sortie"
 end

@@ -128,13 +128,14 @@ class AccueilController < ApplicationController
 
   def administration
     @eleve.dossier_eleve.update derniere_etape: "administration"
-    render "administration", locals: { dossier_eleve: @eleve.dossier_eleve }
+    @dossier_eleve = @eleve.dossier_eleve
+    render "administration"
   end
 
   def post_administration
     dossier_eleve = @eleve.dossier_eleve
     dossier_eleve.demi_pensionnaire = params["demi_pensionnaire"]
-    dossier_eleve.autorise_sortie = params["autorise_sortie"]
+    dossier_eleve.regime_sortie = RegimeSortie.find(params["regime_sortie"].to_i) if params["regime_sortie"].present?
     dossier_eleve.renseignements_medicaux = params["renseignements_medicaux"]
     dossier_eleve.check_paiement_cantine = params["check_paiement_cantine"]
     dossier_eleve.save!

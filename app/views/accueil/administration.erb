@@ -1,6 +1,6 @@
 <% @section = 3 %>
 
-<%= render partial: 'partials/navigation', locals: { dossier_eleve: dossier_eleve } %>
+<%= render partial: 'partials/navigation', locals: { dossier_eleve: @dossier_eleve } %>
 
 <section class="section">
 
@@ -10,49 +10,47 @@
     <h2 class="col separation"><%= t('.restauration_scolaire') %></h2>
 
 
-    <div class="form__group" id="demi-pension" data-demi-pension="<%= dossier_eleve.demi_pensionnaire %>">
+    <div class="form__group" id="demi-pension" data-demi-pension="<%= @dossier_eleve.demi_pensionnaire %>">
       <label>
         <input type="radio" name="demi_pensionnaire" value="true" id='demi_pensionnaire'
-               <% if dossier_eleve.demi_pensionnaire %> checked <% end %>><%= t('.demi_pensionnaire') %>
+               <% if @dossier_eleve.demi_pensionnaire %> checked <% end %>><%= t('.demi_pensionnaire') %>
       </label>
       <label>
         <input type="radio" name="demi_pensionnaire" value="false" id='externe'
-               <% if ! dossier_eleve.demi_pensionnaire %> checked <% end %>><%= t('.externe') %>
+               <% if ! @dossier_eleve.demi_pensionnaire %> checked <% end %>><%= t('.externe') %>
       </label>
     </div>
 
     <div id="dp" style="display: none;">
       <p class="text-danger"><%= t('.engagement_demi_pension') %></p>
-      <% if dossier_eleve.etablissement.reglement_demi_pension.present? %>
-        <%= link_to t('.lire_reglement_dp'), dossier_eleve.etablissement.reglement_demi_pension_url, target:'_blank' %>
+      <% if @dossier_eleve.etablissement.reglement_demi_pension.present? %>
+        <%= link_to t('.lire_reglement_dp'), @dossier_eleve.etablissement.reglement_demi_pension_url, target:'_blank' %>
       <% end %>
     </div>
 
-    <h2 class="separation mt-4"><%= t('.autorisation_de_sortie') %></h2>
+    <% if @dossier_eleve.etablissement.regimes_sortie.count > 1 %>
+      <h2 class="separation mt-4"><%= t('.autorisation_de_sortie') %></h2>
 
-    <div>
-      <label>
-        <input type="radio" name="autorise_sortie" value="true" id='autorise_sortie'
-               <% if dossier_eleve.autorise_sortie %> checked <% end %>><%= t('.j_autorise') %>
-      </label>
-    </div>
-    <div class="form__group">
-      <label>
-        <input class="form-check-input" type="radio" name="autorise_sortie" value="false"
-               <% if !dossier_eleve.autorise_sortie %> checked <% end %>><%= t('.je_n_autorise_pas') %>
-      </label>
-    </div>
-
-    <p><%= t('.mon_enfant_a_quitter_le_college') %></p>
+      <div>
+        <% @dossier_eleve.etablissement.regimes_sortie.each do |regime| %>
+          <label>
+            <input type="radio" name="regime_sortie" value="<%= regime.id %>" id="regime_sortie_<%= regime.id %>"
+                   <% if @dossier_eleve.regime_sortie == regime %> checked <% end %>>
+            <b><%= regime.nom %></b>
+          </label>
+          <p><%= regime.description %></p>
+        <% end %>
+      </div>
+    <% end %>
 
     <h2 class="separation mt-4"><%= t('.renseignements_medicaux') %></h2>
 
     <div class="row">
-      <div class="form__group" data-renseignements-medicaux="<%= dossier_eleve.renseignements_medicaux %>"
+      <div class="form__group" data-renseignements-medicaux="<%= @dossier_eleve.renseignements_medicaux %>"
            id="form-renseignements-medicaux">
         <label class="">
           <input type="checkbox" value='true' name="renseignements_medicaux"  id='renseignements_medicaux'
-                 <% if dossier_eleve.renseignements_medicaux %> checked <% end %>> <%= t('.envoyer_une_info_medicale') %>
+                 <% if @dossier_eleve.renseignements_medicaux %> checked <% end %>> <%= t('.envoyer_une_info_medicale') %>
         </label>
       </div>
     </div>
@@ -62,12 +60,12 @@
     <div class="form-check form-check-inline">
       <label class="form-check-label">
         <input class="form-check-input" type="radio" name="droit_image_photo" value="true" id='autorise_photo_de_classe'
-               <% if dossier_eleve.autorise_photo_de_classe %> checked <% end %>> <%= t('.j_accepte') %> </label>
+               <% if @dossier_eleve.autorise_photo_de_classe %> checked <% end %>> <%= t('.j_accepte') %> </label>
     </div>
     <div class="form-check form-check-inline">
       <label class="form-check-label">
         <input class="form-check-input" type="radio" name="droit_image_photo" value="false"
-               <% if !dossier_eleve.autorise_photo_de_classe %> checked <% end %>> <%= t('.j_accepte_pas') %> </label>
+               <% if !@dossier_eleve.autorise_photo_de_classe %> checked <% end %>> <%= t('.j_accepte_pas') %> </label>
     </div>
 
     <p><%= t('.enfant_photographie') %></p>

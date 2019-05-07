@@ -161,6 +161,8 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     resp_legal = Fabricate(:resp_legal)
     dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
     eleve = dossier_eleve.eleve
+    regime_sortie = Fabricate(:regime_sortie, etablissement: dossier_eleve.etablissement)
+    Fabricate(:regime_sortie, etablissement: dossier_eleve.etablissement)
 
     post "/identification", params: {
       identifiant: eleve.identifiant,
@@ -171,15 +173,15 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     get "/administration"
     post "/administration", params: {
       demi_pensionnaire: true,
-      autorise_sortie: true,
+      regime_sortie: regime_sortie.id,
       renseignements_medicaux: true,
       autorise_photo_de_classe: false
     }
     get "/administration"
 
-    parsed_body = response.parsed_body.gsub(/\s/, "")
+    parsed_body = response.body.gsub(/\s/, "")
     assert parsed_body.include? "id='demi_pensionnaire' checked".gsub(/\s/, "")
-    assert parsed_body.include? "id='autorise_sortie' checked".gsub(/\s/, "")
+    assert parsed_body.include? "id=\"regime_sortie_#{regime_sortie.id}\" checked".gsub(/\s/, "")
     assert parsed_body.include? "id='renseignements_medicaux' checked".gsub(/\s/, "")
     assert parsed_body.include? "id='autorise_photo_de_classe' checked".gsub(/\s/, "")
   end
@@ -254,6 +256,27 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
 
     expected = "L'inscription ne sera validée qu'à réception d'un email de confirmation"
     assert response.parsed_body.include?(expected)
+  end
+
+  test "une famille choisi un régime d'autorisation de sortie" do
+    eleve = Fabricate(:eleve)
+    etablissement = Fabricate(:etablissement)
+    dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement)
+    params_identification = {
+      identifiant: eleve.identifiant,
+      annee: eleve.annee_de_naissance,
+      mois: eleve.mois_de_naissance,
+      jour: eleve.jour_de_naissance
+    }
+    regime_sortie = Fabricate(:regime_sortie)
+    Fabricate(:regime_sortie)
+
+    params = { regime_sortie: regime_sortie.id }
+
+    post "/identification", params: params_identification
+    post "/administration", params: params
+
+    assert_equal regime_sortie, DossierEleve.find(dossier_eleve.id).regime_sortie
   end
 
 end

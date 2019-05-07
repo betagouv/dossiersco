@@ -16,7 +16,7 @@ class PdfConvocation
         pdf.move_down 20
 
         pdf.text_box "#{etablissement.ville}, le #{Time.now.strftime('%d/%m/%Y')}", at: [0, pdf.cursor],
-                     width: pdf.bounds.width, align: :right
+                                                                                    width: pdf.bounds.width, align: :right
 
         pdf.text "DossierSCO", size: 20
 
@@ -51,13 +51,13 @@ class PdfConvocation
         if etablissement.pieces_attendues.count > 7
           hauteur_debut_colonne = pdf.cursor
 
-          pdf.bounding_box([0, hauteur_debut_colonne],width: (pdf.bounds.width / 2)) do
+          pdf.bounding_box([0, hauteur_debut_colonne], width: (pdf.bounds.width / 2)) do
             etablissement.pieces_attendues[0...7].each do |piece|
               pdf.text "- #{piece.nom}", indent_paragraphs: 20
             end
           end
 
-          pdf.bounding_box([(pdf.bounds.width / 2), hauteur_debut_colonne],width: (pdf.bounds.width / 2), height: 115) do
+          pdf.bounding_box([(pdf.bounds.width / 2), hauteur_debut_colonne], width: (pdf.bounds.width / 2), height: 115) do
             etablissement.pieces_attendues[7...14].each do |piece|
               pdf.text "- #{piece.nom}", indent_paragraphs: 20
             end

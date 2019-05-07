@@ -69,6 +69,9 @@
           <li class="nav__item <%= 'active' if request.fullpath.include? '/agent' %>">
             <%= link_to 'Agents', configuration_agents_path, {class: 'nav-link'} %>
           </li>
+          <li class="nav__item <%= 'active' if request.fullpath.include? '/regime' %>">
+            <%= link_to 'Régimes de sortie', configuration_regimes_sortie_path, {class: 'nav-link'} %>
+          </li>
         </ul>
       </nav>
     </div>

@@ -133,9 +133,6 @@ fr:
       <<: *restauration
       engagement_demi_pension: "En validant cette étape j'accepte le réglement de demi-pension."
       autorisation_de_sortie: Autorisation de sortie
-      j_autorise: "J'autorise"
-      je_n_autorise_pas: "Je n'autorise pas"
-      mon_enfant_a_quitter_le_college: "mon enfant à quitter le collège après le dernier cours de l'après-midi (ou après le repas s'il n'a pas cours l'après-midi), en cas d'absence de professeur et sous mon entière responsabilité."
       renseignements_medicaux: "Renseignements médicaux"
       envoyer_une_info_medicale: "Je souhaite envoyer par écrit au secrétariat une information médicale (PAI, PPS, PAP)."
       photo_de_classe: "Photo de classe"
@@ -162,6 +159,19 @@ fr:
       certifie_sur_l_honneur: "En tant que responsable légal de %{prenom_eleve}, je certifie sur l'honneur l'exactitude des informations communiquées et m'engage à tenir le collège informé de tout changement de situation ou de coordonnées."
       valider_inscription: "Valider l'inscription"
   configuration:
+    regimes_sortie:
+      update:
+        mis_a_jour: Le régime d'autorisation de sortie a été mis à jour
+      edit:
+        titre: Modifer un régime de sortie
+      create:
+        erreur_creation: Veuillez renseigner un nom pour le régime de sortie
+      form:
+        valider: Valider
+      new:
+        titre: Nouveau régime de sortie
+      index:
+        ajouter_un_regime: Ajouter un régime de sortie
     options_pedagogiques:
       index:
         ajouter_option: "Ajouter l'option"

@@ -45,6 +45,7 @@ Rails.application.routes.draw do
         get "export-siecle", defaults: { format: "xml" }
       end
     end
+    resources :regimes_sortie
   end
 
   resources :pieces_jointes, only: %i[create update] do

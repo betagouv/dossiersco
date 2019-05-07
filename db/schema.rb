@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_190_429_093_041) do
+ActiveRecord::Schema.define(version: 2019_05_07_145009) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -59,9 +58,11 @@ ActiveRecord::Schema.define(version: 20_190_429_093_041) do
     t.bigint "mef_origine_id"
     t.bigint "mef_destination_id"
     t.json "options_origines", default: {}
+    t.bigint "regime_sortie_id"
     t.index ["eleve_id"], name: "index_dossier_eleves_on_eleve_id"
     t.index ["mef_destination_id"], name: "index_dossier_eleves_on_mef_destination_id"
     t.index ["mef_origine_id"], name: "index_dossier_eleves_on_mef_origine_id"
+    t.index ["regime_sortie_id"], name: "index_dossier_eleves_on_regime_sortie_id"
   end
 
   create_table "dossier_eleves_options_pedagogiques", force: :cascade do |t|
@@ -185,6 +186,13 @@ ActiveRecord::Schema.define(version: 20_190_429_093_041) do
     t.string "fichier"
   end
 
+  create_table "regimes_sortie", force: :cascade do |t|
+    t.string "nom"
+    t.string "description"
+    t.bigint "etablissement_id"
+    t.index ["etablissement_id"], name: "index_regimes_sortie_on_etablissement_id"
+  end
+
   create_table "resp_legals", force: :cascade do |t|
     t.integer "dossier_eleve_id"
     t.string "lien_de_parente"
@@ -227,8 +235,10 @@ ActiveRecord::Schema.define(version: 20_190_429_093_041) do
   add_foreign_key "dossier_eleves", "eleves", column: "eleve_id"
   add_foreign_key "dossier_eleves", "mef", column: "mef_destination_id"
   add_foreign_key "dossier_eleves", "mef", column: "mef_origine_id"
+  add_foreign_key "dossier_eleves", "regimes_sortie"
   add_foreign_key "dossier_eleves_options_pedagogiques", "dossier_eleves"
   add_foreign_key "dossier_eleves_options_pedagogiques", "options_pedagogiques"
   add_foreign_key "dossiers_affelnet", "etablissements"
   add_foreign_key "options_pedagogiques", "etablissements"
+  add_foreign_key "regimes_sortie", "etablissements"
 end

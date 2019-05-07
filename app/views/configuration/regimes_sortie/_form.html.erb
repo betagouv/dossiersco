@@ -1,0 +1,13 @@
+<%= form_for([:configuration, @regime]) do |f| %>
+  <div class="form__group">
+    <%= f.label :nom %>
+    <%= f.text_field :nom%>
+  </div>
+  <div class="form__group">
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </div>
+  <div class="form__group">
+    <%= f.submit t('.valider'), class: 'button' %>
+  </div>
+<% end %>
