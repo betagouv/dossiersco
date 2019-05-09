@@ -34,7 +34,7 @@ class GenerePdf
     ensure
       temp_file.close
       temp_file.unlink
-      FileUtils.rm_rf("#{Rails.root}/tmp/pdf")
+      FileUtils.rm_rf("#{Rails.root}/tmp/pdf/#{etablissement.nom}")
     end
     zip_data
   end

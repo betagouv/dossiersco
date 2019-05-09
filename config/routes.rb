@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     member do
       get "fiches_infirmeries", to: "fiches_infirmeries#fiches_infirmeries"
       get "convocations", to: "convocations#convocations"
+      get "generation_convocations", to: "convocations#generation_convocations"
     end
   end
 
