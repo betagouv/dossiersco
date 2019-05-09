@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :etablissement, only: [] do
     member do
       get "fiches_infirmeries", to: "fiches_infirmeries#fiches_infirmeries"
+      get "generation_fiches_infirmerie", to: "fiches_infirmeries#generation_fiches_infirmerie"
       get "convocations", to: "convocations#convocations"
       get "generation_convocations", to: "convocations#generation_convocations"
     end

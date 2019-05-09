@@ -6,18 +6,14 @@ class FichesInfirmeriesController < ApplicationController
 
   before_action :identification_agent
 
-  def fiches_infirmeries
-    respond_to do |format|
-      format.zip { build_zip }
-      format.html
-    end
-  end
+  def fiches_infirmeries; end
 
-  def build_zip
+  def generation_fiches_infirmerie
     etablissement = @agent_connecte.etablissement
-    pdf = GenerePdf.new
-    zip_data = pdf.generer_pdf_par_classes(etablissement, "PdfFicheInfirmerie")
-    send_data(zip_data, type: "application/zip", filename: "fiches-infirmerie.zip")
+    FicheInfirmerieJob.perform_later(etablissement, @agent_connecte)
+
+    flash[:notice] = t(".generation_fiche_infirmerie")
+    redirect_to convocations_etablissement_path
   end
 
 end

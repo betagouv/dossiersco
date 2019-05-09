@@ -9,9 +9,9 @@
   <p><%= t('.description_fiches_infirmerie') %></p>
 
   <%= link_to t('.telecharger_fiches_infirmeries'),
-    fiches_infirmeries_etablissement_path(@etablissement, format: 'zip'),
-    class: 'button mb-2',
-    id: 'telecharger_convocations'
+              generation_fiches_infirmerie_etablissement_path(@etablissement, format: 'zip'),
+              class: 'button mb-2',
+              id: 'telecharger_convocations'
   %>
 
 </section>

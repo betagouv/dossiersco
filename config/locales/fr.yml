@@ -263,6 +263,8 @@ fr:
       aucune_piece_attendue: Vous n'avez aucune pièce justificative attendue pour l'inscription
       ajouter_piece_justificative: Ajouter une pièce
   fiches_infirmeries:
+    generation_fiches_infirmerie:
+      generation_fiches_infirmerie: La génération des fiches infirmerie est en cours, un email va vous être envoyé avec celles-ci en pièce jointe
     fiches_infirmeries:
       description_fiches_infirmerie: Edition de fiches infirmerie préremplies. La génération peut prendre du temps.
       fiches_infirmerie: Fiches infirmerie
