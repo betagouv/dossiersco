@@ -51,4 +51,14 @@ class AgentMailer < ApplicationMailer
     end
   end
 
+  def export_options(agent, lignes)
+    @agent = agent
+    attachments["eleves-par-option.xlsx"] = { mime_type: "application/vnd.ms-excel", content: lignes }
+
+    mail(subject: "Elèves par option", to: @agent.email) do |format|
+      format.html
+      format.text
+    end
+  end
+
 end

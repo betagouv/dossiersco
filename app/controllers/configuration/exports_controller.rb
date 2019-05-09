@@ -6,10 +6,10 @@ module Configuration
     before_action :if_agent_is_admin
 
     def export_options
-      @lignes = faire_lignes
-      respond_to do |format|
-        format.xlsx
-      end
+      ExportOptionsJob.perform_later(@agent_connecte)
+
+      flash[:notice] = t('.export_des_options')
+      redirect_to new_tache_import_path
     end
 
     def export_siecle
@@ -17,25 +17,6 @@ module Configuration
       respond_to do |format|
         format.xml
       end
-    end
-
-    private
-
-    def faire_lignes
-      options_etablissement = @agent_connecte.etablissement.options_pedagogiques
-      entet_options = options_etablissement.map(&:nom)
-      @entete = ["classe actuelle", "MEF actuel", "prenom", "nom", "date naissance", "sexe"].concat(entet_options)
-      @lignes = []
-      DossierEleve.where(etablissement: @agent_connecte.etablissement).each do |dossier|
-        options_eleve = []
-        options_etablissement.each do |option|
-          options_eleve << (dossier.options_pedagogiques.include?(option) ? "X" : "")
-        end
-        mef_origin = dossier.mef_origine.present? ? dossier.mef_origine.libelle : ""
-        @lignes << [dossier.eleve.classe_ant, mef_origin, dossier.eleve.prenom, dossier.eleve.nom,
-                    dossier.eleve.date_naiss, dossier.eleve.sexe].concat(options_eleve)
-      end
-      @lignes
     end
 
   end
