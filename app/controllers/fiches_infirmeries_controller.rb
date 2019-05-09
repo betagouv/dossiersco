@@ -13,7 +13,7 @@ class FichesInfirmeriesController < ApplicationController
     FicheInfirmerieJob.perform_later(etablissement, @agent_connecte)
 
     flash[:notice] = t(".generation_fiche_infirmerie")
-    redirect_to convocations_etablissement_path
+    redirect_to fiches_infirmeries_etablissement_path
   end
 
 end

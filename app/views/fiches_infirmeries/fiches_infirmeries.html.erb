@@ -6,8 +6,6 @@
     <div class="message_echec"><%= message %></div>
   <% end %>
 
-  <p><%= t('.description_fiches_infirmerie') %></p>
-
   <%= link_to t('.telecharger_fiches_infirmeries'),
               generation_fiches_infirmerie_etablissement_path(@etablissement, format: 'zip'),
               class: 'button mb-2',
