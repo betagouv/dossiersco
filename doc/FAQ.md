@@ -5,7 +5,7 @@ Vous avez des questions qui ne figurent pas ci-dessous ? N'hésitez pas à [nous
 
 # Pouvez-vous m'indiquer la procédure d’inscription ?
 
-# "Comment donner l'information aux parents ?"**  
+# "Comment donner l'information aux parents ?"
 Télécharger les convocations.
 
 # Puis-je personnaliser le questionnaire pour les familles ?
