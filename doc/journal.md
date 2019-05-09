@@ -1,5 +1,36 @@
 # Journal
 
+
+## 17e semaine - du 6 mai avril au 9 mai
+
+**Stop ou encore ?**
+
+- Fin de la campagne de communication : certains ambassadeurs très moteurs pour contacter d'autres établissements
+- Pierre soulagé : « je vais pouvoir me reconcentrer sur l'application »
+- Madeleine, de la cité scolaire « La Fontaine » passe souvent voir Pierre, elle est très moteur et motivée; elle est d'une grande aide sur les discussions autour des options.
+- Épée de Damoclès au dessus de la tête : avenant toujours pas renouvellé, impact fort sur le sous-traitant. Les délais de paiement de l'Etat sont difficilement compatibles avec les petites structures et crée un risque opérationnel sur les projets.
+- Création d'une FAQ augmentant l'autonomie des établissements et des ambassadeurs
+- Il n'y a pas que les personnes qui font du développement qui utilise les outils de versionning (git) :-)
+- Pierre n'est plus seul à contacter des établissements
+- Début de travail en UX qui commence à porter ses fruits
+
+
+### Tickets
+
+- [Message d'erreur sur clic pour imprimer les fiches infirmeries](https://gitlab.com/dossiersco/dossiersco/issues/535)
+- [Coquilles et fautes d'orthographe](https://gitlab.com/dossiersco/dossiersco/issues/528)
+- [Wording](https://gitlab.com/dossiersco/dossiersco/issues/529)
+- [La purge élève affiche une erreur](https://gitlab.com/dossiersco/dossiersco/issues/544)
+- [Les textes se chevauchent sur le pdf de la convocation des parents](https://gitlab.com/dossiersco/dossiersco/issues/541)
+- [Les champs du responsable légal 2 sont bloquants, ce qui gêne l'inscription d'une famille monoparentale](https://gitlab.com/dossiersco/dossiersco/issues/547)
+- [Offrir plusieurs choix aux familles concernant les autorisations de sortie](https://gitlab.com/dossiersco/dossiersco/issues/498)
+- [Fluidifier la construction des convocations](https://gitlab.com/dossiersco/dossiersco/issues/536)
+- [Fluidifier l'export des fiches infirmeries](https://gitlab.com/dossiersco/dossiersco/issues/540)
+- [Fluidifier l'envoi du fichier des options-élèves](https://gitlab.com/dossiersco/dossiersco/issues/537)
+- [Message d'erreur après export des options choisies par les familles](https://gitlab.com/dossiersco/dossiersco/issues/548)
+
+---
+
 ## 16e semaine - du 29 avril au 3 mai
 
 *Décollage imminent* 
