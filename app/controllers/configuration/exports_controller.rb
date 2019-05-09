@@ -8,7 +8,7 @@ module Configuration
     def export_options
       ExportOptionsJob.perform_later(@agent_connecte)
 
-      flash[:notice] = t('.export_des_options')
+      flash[:notice] = t(".export_des_options")
       redirect_to new_tache_import_path
     end
 

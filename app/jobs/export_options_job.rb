@@ -1,4 +1,3 @@
-# enccoding: UTF-8
 # frozen_string_literal: true
 
 class ExportOptionsJob < ActiveJob::Base
@@ -7,7 +6,7 @@ class ExportOptionsJob < ActiveJob::Base
     @lignes = faire_lignes(agent)
 
     Axlsx::Package.new do |p|
-      p.workbook.add_worksheet(:name => "Export-options") do |sheet|
+      p.workbook.add_worksheet(name: "Export-options") do |sheet|
         sheet.add_row @entete
         @lignes.each { |ligne| sheet.add_row ligne }
       end

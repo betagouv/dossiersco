@@ -73,13 +73,4 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     assert_equal [], xsd.validate(xml)
   end
 
-  test "#export-options" do
-    admin = Fabricate(:admin)
-    identification_agent(admin)
-
-    get export_options_configuration_exports_path
-
-    assert_response :success
-  end
-
 end
