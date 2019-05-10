@@ -23,12 +23,24 @@ class EleveTest < ActiveSupport::TestCase
     assert_equal "27", eleve.jour_de_naissance
   end
 
-  test "#par_identifiant" do
+  test "#par_authentification" do
     eleve = Fabricate(:eleve)
-    assert_equal eleve, Eleve.par_identifiant(eleve.identifiant)
+    assert_equal eleve, Eleve.par_authentification(eleve.identifiant, eleve.jour_de_naissance, eleve.mois_de_naissance, eleve.annee_de_naissance)
 
     eleve = Fabricate(:eleve, identifiant: "TRUC")
-    assert_equal eleve, Eleve.par_identifiant("truc")
+    assert_equal eleve, Eleve.par_authentification("truc", eleve.jour_de_naissance, eleve.mois_de_naissance, eleve.annee_de_naissance)
+  end
+
+  test "#par_authentification avec des jour et mois sur 2 digits" do
+    Fabricate(:eleve)
+    eleve = Fabricate(:eleve, identifiant: "TRUC", date_naiss: "2006-12-23")
+    assert_equal eleve, Eleve.par_authentification("truc", "23", "12", "2006")
+  end
+
+  test "#par_authentification avec des jour et mois sur 1 digits" do
+    Fabricate(:eleve, identifiant: 'TRUC')
+    eleve = Fabricate(:eleve, identifiant: "TRUC", date_naiss: "2006-01-04")
+    assert_equal eleve, Eleve.par_authentification("truc", "4", "1", "2006")
   end
 
 end

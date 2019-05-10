@@ -8,9 +8,10 @@ class Eleve < ActiveRecord::Base
   belongs_to :montee, required: false
   delegate :email_resp_legal_1, to: :dossier_eleve
 
-  def self.par_identifiant(identifiant)
+  def self.par_authentification(identifiant, jour, mois, annee)
     identifiant = identifiant.gsub(/[^[:alnum:]]/, "").upcase
-    find_by(identifiant: identifiant)
+    date_naissance = "#{annee}-#{"%02d" % mois}-#{"%02d" % jour}"
+    find_by(identifiant: identifiant, date_naiss: date_naissance)
   end
 
   def self.creation_ou_retrouve_par(identifiant)

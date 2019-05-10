@@ -18,10 +18,9 @@ class AccueilController < ApplicationController
 
     Trace.create(identifiant: params[:identifiant], categorie: "famille", page_demandee: request.path_info, adresse_ip: request.ip)
 
-    date_saisie = "#{params[:annee]}-#{params[:mois]}-#{params[:jour]}"
-    dossier_eleve = DossierEleve.par_identifiant(params[:identifiant])
+    dossier_eleve = DossierEleve.par_authentification(params[:identifiant], params[:jour], params[:mois], params[:annee])
 
-    if dossier_eleve.present? && (dossier_eleve.eleve.date_naiss == date_saisie)
+    if dossier_eleve.present?
       dossier_eleve.update(etat: "connecté") if dossier_eleve.etat == "pas connecté"
       session[:identifiant] = params[:identifiant]
 

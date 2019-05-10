@@ -37,10 +37,9 @@ class DossierEleve < ActiveRecord::Base
     where("etat in (?)", [ETAT[:pas_connecte], ETAT[:connecte]])
   }
 
-  def self.par_identifiant(identifiant)
-    eleve = Eleve.par_identifiant(identifiant)
+  def self.par_authentification(identifiant, jour, mois, annee)
+    eleve = Eleve.par_authentification(identifiant, jour, mois, annee)
     return eleve.dossier_eleve if eleve.is_a?(Eleve)
-
     nil
   end
 
