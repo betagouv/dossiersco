@@ -10,7 +10,7 @@ class Eleve < ActiveRecord::Base
 
   def self.par_authentification(identifiant, jour, mois, annee)
     identifiant = identifiant.gsub(/[^[:alnum:]]/, "").upcase
-    date_naissance = "#{annee}-#{"%02d" % mois}-#{"%02d" % jour}"
+    date_naissance = "#{annee}-#{format('%02d', mois)}-#{format('%02d', jour)}"
     find_by(identifiant: identifiant, date_naiss: date_naissance)
   end
 

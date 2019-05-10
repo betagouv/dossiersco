@@ -38,7 +38,7 @@ class EleveTest < ActiveSupport::TestCase
   end
 
   test "#par_authentification avec des jour et mois sur 1 digits" do
-    Fabricate(:eleve, identifiant: 'TRUC')
+    Fabricate(:eleve, identifiant: "TRUC")
     eleve = Fabricate(:eleve, identifiant: "TRUC", date_naiss: "2006-01-04")
     assert_equal eleve, Eleve.par_authentification("truc", "4", "1", "2006")
   end

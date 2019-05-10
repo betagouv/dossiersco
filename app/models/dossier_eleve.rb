@@ -40,6 +40,7 @@ class DossierEleve < ActiveRecord::Base
   def self.par_authentification(identifiant, jour, mois, annee)
     eleve = Eleve.par_authentification(identifiant, jour, mois, annee)
     return eleve.dossier_eleve if eleve.is_a?(Eleve)
+
     nil
   end
 
