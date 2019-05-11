@@ -3,6 +3,9 @@
 DossierSCO est un outil en constante évolution.  
 Vous avez des questions qui ne figurent pas ci-dessous ? N'hésitez pas à [nous contacter](mailto:equipe@dossiersco.fr)
 
+# Ce service est-il gratuit ?
+Définitivment oui. DossierSCO a été créé par le Ministère de l'Education nationale et la Direction interministérielle du numérique (DINSIC)
+
 # Pouvez-vous m'indiquer la procédure d’inscription ?
 
 # "Comment donner l'information aux parents ?"
