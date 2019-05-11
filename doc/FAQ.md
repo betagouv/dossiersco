@@ -37,4 +37,4 @@ Oui, une bascule de  DossierSCO vers Siècle a déjà été réalisée l'an dern
 Non, la version actuelle du service ne fonctionne que pour les collèges.
 
 # Comment accompagner les familles qui ne sont pas équipées ou qui ont des difficultés d'usage d'Internet ?
-Pour les familles qui n'ont pas internet, certains établissements pilotes organisent des permanences à l'intendance durant lesquelles les familles pouvaient venir faire leur demande en ligne. 
+Pour les familles qui n'ont pas internet, certains établissements pilotes organisent des permanences durant lesquelles les familles pouvaient venir faire leur demande en ligne. 
