@@ -3,12 +3,15 @@
 Fabricator(:resp_legal) do
   dossier_eleve
   priorite 1
-  prenom { sequence(:prenom) { |i| "Henri_#{i}" } }
-  nom { sequence(:nom) { |i| "Ford_#{i}" } }
-  tel_personnel  { sequence(:tel) { |i| "012345670#{i}" } }
-  tel_portable   { sequence(:tel) { |i| "022345670#{i}" } }
+  prenom Faker::Name.first_name
+  nom Faker::Name.last_name
+  tel_personnel  Faker::PhoneNumber.phone_number
+  tel_portable   Faker::PhoneNumber.phone_number
   email "henri@laposte.net"
   profession "11"
   enfants_a_charge 1
   communique_info_parents_eleves false
+  adresse Faker::Address.street_address
+  code_postal Faker::Address.zip
+  ville Faker::Address.city
 end

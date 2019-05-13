@@ -63,4 +63,13 @@ class RespLegal < ActiveRecord::Base
        communique_info_parents_eleves lien_avec_eleve]
   end
 
+  def resp_legal_un_valid?
+    if tel_personnel.blank? && tel_portable.blank?
+      errors.add(:telephone, I18n.t(".activerecord.errors.models.resp_legal.pas_de_telephone"))
+      false
+    else
+      true
+    end
+  end
+
 end

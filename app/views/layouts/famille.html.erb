@@ -20,18 +20,6 @@
 
   <main role="main" class="container  mt-4">
 
-    <% content_for :messages do %>
-      <% if flash[:notice] %>
-        <div class="notification success mt-1">
-          <%= flash[:notice]  %>
-        </div>
-      <% elsif flash[:alert] %>
-        <div class="notification error mt-1">
-          <%= flash[:alert]  %>
-        </div>
-      <% end %>
-    <% end %>
-
     <%= yield %>
 
   </main>

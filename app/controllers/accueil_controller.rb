@@ -105,7 +105,12 @@ class AccueilController < ApplicationController
     resp_legal1.save!
     resp_legal2.save! if resp_legal2.present?
     contact_urgence.save!
-    sauve_et_redirect dossier_eleve, "administration"
+
+    if resp_legal1.resp_legal_un_valid?
+      sauve_et_redirect dossier_eleve, "administration"
+    else
+      redirect_to famille_path, alert: resp_legal1.errors.messages.first[1].join
+    end
   end
 
   def validation
