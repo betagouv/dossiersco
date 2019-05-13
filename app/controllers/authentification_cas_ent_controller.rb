@@ -17,22 +17,35 @@ class AuthentificationCasEntController < ApplicationController
 
   def retour_cas
     data = donnees_ent(params[:ticket])
-    dossier_eleve = retrouve_dossier_eleve(data)
-    redirect_to("/", error: I18n.t(".dossier_non_trouver")) && return unless dossier_eleve
 
-    if eleve_et_etablissement_correspondant?(dossier_eleve, data)
-      session[:identifiant] = dossier_eleve.eleve.identifiant
+    dossier_eleves = []
+    retrouve_liste_resp_legal(data).each do |resp_legal|
+      dossier_eleves << resp_legal.dossier_eleve
+    end
 
-      if dossier_eleve.derniere_etape.present?
-        redirect_to("/#{dossier_eleve.derniere_etape}")
-      elsif dossier_eleve.etape_la_plus_avancee.present?
-        redirect_to("/#{dossier_eleve.etape_la_plus_avancee}")
+    if dossier_eleves.empty?
+      flash[:error] = I18n.t(".dossier_non_trouver")
+      redirect_to("/") && return
+    elsif dossier_eleves.length == 1
+      dossier_eleve = dossier_eleves[0]
+
+      if eleve_et_etablissement_correspondant?(dossier_eleve, data)
+        session[:identifiant] = dossier_eleve.eleve.identifiant
+
+        if dossier_eleve.derniere_etape.present?
+          redirect_to("/#{dossier_eleve.derniere_etape}")
+        elsif dossier_eleve.etape_la_plus_avancee.present?
+          redirect_to("/#{dossier_eleve.etape_la_plus_avancee}")
+        else
+          redirect_to("accueil")
+        end
       else
-        redirect_to("accueil")
+        redirect_to("/", notice: "Nous n'avons pas pu retrouver votre dossier sur DossierSCO. Nous nous excusons pour ce soucis.")
       end
     else
-      redirect_to("/", notice: "Nous n'avons pas pu retrouver votre dossier sur DossierSCO. Nous nous excusons pour ce soucis.")
+      render :choix_dossier_eleve
     end
+
     nil
   end
 
@@ -46,26 +59,28 @@ class AuthentificationCasEntController < ApplicationController
     Hash.from_xml(res.body)
   end
 
+  def retrouve_dossier_eleve()
+  end
+
   def eleve_et_etablissement_correspondant?(dossier_eleve, data)
-    etablissement = retrouve_etablissement(data)
+    etablissements = retrouve_etablissements(data)
     enfants = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["children"]
     eleves = JSON.parse(enfants).map { |e| e["displayName"] }
     eleve_nom_complet = "#{dossier_eleve.eleve.nom.upcase} #{dossier_eleve.eleve.prenom}"
-    dossier_eleve.etablissement == etablissement && eleves.include?(eleve_nom_complet)
+    etablissements.include?(dossier_eleve.etablissement) && eleves.include?(eleve_nom_complet)
   end
 
-  def retrouve_etablissement(data)
-    premier_etablissement = JSON.parse(data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["structureNodes"])[0]
-    Etablissement.find_by(uai: premier_etablissement["UAI"])
+  def retrouve_etablissements(data)
+    etablissements = JSON.parse(data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["structureNodes"])
+    Etablissement.where("uai in (?)", etablissements.map{|e| e["UAI"]})
   end
 
-  def retrouve_dossier_eleve(data)
+  def retrouve_liste_resp_legal(data)
     email = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["email"]
     prenom = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["firstName"]
     nom = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["lastName"]
     adresse = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["address"]
-    resp_legal = RespLegal.find_by(email: email, prenom: prenom, nom: nom, adresse: adresse)
-    return resp_legal.dossier_eleve if resp_legal
+    RespLegal.where(email: email, prenom: prenom, nom: nom, adresse: adresse)
   end
 
   def appel_direct_ent
