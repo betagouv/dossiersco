@@ -15,7 +15,7 @@ class PrerempliEtablissement < ActiveJob::Base
 
     response = @scrappeur.get("https://opencartecomptable.herokuapp.com/api/etablissements?code_uai=#{uai}")
     res = JSON.parse(response.body)[0]
-    etablissement.update(nom: res["nom"], adresse: res["adresse"], code_postal: res["code_postal"].to_s, ville: res["commune"])
+    etablissement.update(nom: res["nom"].gsub('Collège ', ''), adresse: res["adresse"], code_postal: res["code_postal"].to_s, ville: res["commune"])
   end
 
 end

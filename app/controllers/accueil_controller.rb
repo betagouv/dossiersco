@@ -103,7 +103,7 @@ class AccueilController < ApplicationController
     end
 
     resp_legal1.save!
-    resp_legal2&.save!
+    resp_legal2.save!
     contact_urgence.save!
     sauve_et_redirect dossier_eleve, "administration"
   end
