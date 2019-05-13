@@ -16,6 +16,7 @@ fr:
             statut:
               inclusion: "%{model} %{attribute} = %{value}"
         resp_legal:
+          non_renseigne: "Le champ '%{champ}' du premier résponsable légal ne peut être vide"
           pas_de_telephone: Veuillez renseigner au moins un numéro de téléphone portable ou personnel pour le premier résponsable légal
           attributes:
             code_postal_ant:

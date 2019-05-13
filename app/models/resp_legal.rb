@@ -64,8 +64,18 @@ class RespLegal < ActiveRecord::Base
   end
 
   def resp_legal_un_valid?
+    champs_requis = { lien_de_parente: "lien de parenté", prenom: "prénom", nom: "nom", adresse: "adresse",
+                      code_postal: "code postal", ville: "ville", email: "email principal", profession: "profession",
+                      enfants_a_charge: "enfants à charge" }
+
+    champs_requis.each do |champ, label|
+      errors.add(champ, I18n.t(".activerecord.errors.models.resp_legal.non_renseigne", champ: label)) if send(champ).blank?
+    end
+
     if tel_personnel.blank? && tel_portable.blank?
       errors.add(:telephone, I18n.t(".activerecord.errors.models.resp_legal.pas_de_telephone"))
+      false
+    elsif errors.any?
       false
     else
       true
