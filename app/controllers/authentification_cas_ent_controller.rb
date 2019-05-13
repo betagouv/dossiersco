@@ -59,8 +59,7 @@ class AuthentificationCasEntController < ApplicationController
     Hash.from_xml(res.body)
   end
 
-  def retrouve_dossier_eleve()
-  end
+  def retrouve_dossier_eleve; end
 
   def eleve_et_etablissement_correspondant?(dossier_eleve, data)
     etablissements = retrouve_etablissements(data)
@@ -72,7 +71,7 @@ class AuthentificationCasEntController < ApplicationController
 
   def retrouve_etablissements(data)
     etablissements = JSON.parse(data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["structureNodes"])
-    Etablissement.where("uai in (?)", etablissements.map{|e| e["UAI"]})
+    Etablissement.where("uai in (?)", etablissements.map { |e| e["UAI"] })
   end
 
   def retrouve_liste_resp_legal(data)
