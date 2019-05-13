@@ -19,7 +19,7 @@ class GenerePdf
       noms_pdf << pdf.nom
     end
 
-    dossier = "#{Rails.root}/tmp/pdf/#{etablissement.nom}"
+    dossier = "tmp/#{etablissement.id}"
     nom_zip = "convocations.zip"
     temp_file = Tempfile.new(nom_zip)
 
@@ -34,7 +34,7 @@ class GenerePdf
     ensure
       temp_file.close
       temp_file.unlink
-      FileUtils.rm_rf("#{Rails.root}/tmp/pdf/#{etablissement.nom}")
+      FileUtils.rm_rf("tmp/#{etablissement.id}")
     end
     zip_data
   end

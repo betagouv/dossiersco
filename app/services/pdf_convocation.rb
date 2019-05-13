@@ -6,7 +6,7 @@ class PdfConvocation
 
   def initialize(etablissement, classe_des_eleves, dossiers_eleve)
     self.nom = "#{classe_des_eleves}.pdf"
-    dossier = "#{Rails.root}/tmp/pdf/#{etablissement.nom}"
+    dossier = "tmp/#{etablissement.id}"
     FileUtils.mkdir_p(dossier) unless File.directory?(dossier)
     Prawn::Document.generate("#{dossier}/#{nom}") do |pdf|
       nombre_de_dossier = 0
