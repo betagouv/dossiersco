@@ -23,6 +23,10 @@ class SuiviController < ApplicationController
     end
   end
 
+  def etablissements_experimentateurs
+    @etablissements = Etablissement.where.not("nom like ?", "%test").order(:nom)
+  end
+
 end
 
 class Suivi

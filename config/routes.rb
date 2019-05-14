@@ -59,6 +59,11 @@ Rails.application.routes.draw do
 
   resources :agent_pieces_jointes, only: %i[create update]
   resources :tache_imports, only: %i[new create]
+  resources :suivi, only: [:index] do
+    collection do
+      get 'etablissements_experimentateurs'
+    end
+  end
 
   namespace :api do
     resource :communes, only: :[] do
@@ -140,7 +145,6 @@ Rails.application.routes.draw do
   post "/agent/relance_sms", to: "inscriptions#relance_sms"
 
   get "/redirection_erreur", to: "pages#redirection_erreur"
-  get "/suivi", to: "suivi#index"
 
   mount LetterOpenerWeb::Engine, at: "/letter_opener" unless ENV["laisser_partir_les_emails"]
 end

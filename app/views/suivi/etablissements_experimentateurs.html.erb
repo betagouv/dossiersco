@@ -1,0 +1,23 @@
+<section class="section">
+  <h1><%= t('.etablissement_experimentateurs') %></h1>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Ville</th>
+      <th>Département</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @etablissements.each do |etablissement| %>
+      <tr>
+        <td><%= etablissement.nom %></td>
+        <td><%= etablissement.ville if etablissement.ville.present? %></td>
+        <td><%= etablissement.code_postal[0,2] if etablissement.code_postal.present? %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</section>

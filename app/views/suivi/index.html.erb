@@ -1,9 +1,8 @@
 <h1>Suivi de l'embarquement des établissement</h1>
 
-
 <section>
   <p>
-  <%= t('.pas_encore_connectes') %>
+    <%= t('.pas_encore_connectes') %> (<%= @suivi.pas_encore_connecte.count %>)
   </p>
 
   <ul>
@@ -15,7 +14,7 @@
 
 <section>
   <p>
-  <%= t('.eleves_importes') %>
+    <%= t('.eleves_importes') %> (<%= @suivi.eleves_importe.count %>)
   </p>
 
   <ul>
@@ -27,7 +26,7 @@
 
 <section>
   <p>
-  <%= t('.piece_attendue_configure') %>
+    <%= t('.piece_attendue_configure') %> (<%= @suivi.piece_attendue_configure.count %>)
   </p>
 
   <ul>
@@ -39,7 +38,7 @@
 
 <section>
   <p>
-  <%= t('.familles_connectes') %>
+    <%= t('.familles_connectes') %> (<%= @suivi.familles_connectes.count %>)
   </p>
 
   <ul>
@@ -48,8 +47,3 @@
     <% end %>
   </ul>
 </section>
-
-
-  </li>
-</ul>
-

@@ -323,6 +323,8 @@ fr:
       telecharger_xml: "Télécharger"
 
   suivi:
+    etablissements_experimentateurs:
+      etablissement_experimentateurs: Établissements expérimentateurs
     index:
       pas_encore_connectes: "Liste des établissements créés, mais dont aucun agent ne s'est connectés pour le moment"
       eleves_importes: "Liste des établissements qui ont déjà importé leurs élèves"
