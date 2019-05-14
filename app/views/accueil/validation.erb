@@ -33,15 +33,17 @@
           </a>
         </div>
 
-        <div class="row mt-1">
-          <div>
-            <%= t('.sortie') %>
-            <strong><%= @dossier_eleve.autorise_sortie ? t('.autorisee') : t('.non_autorisee') %></strong>
+        <% if @dossier_eleve.etablissement.regimes_sortie.count > 1 %>
+          <div class="row mt-1">
+            <div>
+              <%= t('.sortie') %>&nbsp:
+              <strong><%= @dossier_eleve.regime_sortie.nom %></strong>
+            </div>
+            <a href="/administration">
+              <div class="btn btn-outline-secondary btn-sm">Modifier</div>
+            </a>
           </div>
-          <a href="/administration">
-            <div class="btn btn-outline-secondary btn-sm">Modifier</div>
-          </a>
-        </div>
+        <% end %>
       </div>
     </div>
 

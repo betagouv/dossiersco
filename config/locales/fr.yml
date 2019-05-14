@@ -155,7 +155,7 @@ fr:
       abandon_option: "Souhait d'abandonner l'option"
       modifier: "Modifier"
       <<: *restauration
-      sortie: Sortie
+      sortie: Régime d'autorisation de sortie
       autorisee: autorisée
       non_autorisee: non autorisée
       certifie_sur_l_honneur: "En tant que responsable légal de %{prenom_eleve}, je certifie sur l'honneur l'exactitude des informations communiquées et m'engage à tenir le collège informé de tout changement de situation ou de coordonnées."
