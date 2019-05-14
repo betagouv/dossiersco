@@ -6,7 +6,7 @@ module Configuration
     before_action :if_agent_is_admin
 
     def export_options
-      ExportOptionsJob.perform_later(@agent_connecte)
+      ExportElevesXlsxJob.perform_later(@agent_connecte)
 
       flash[:notice] = t(".export_des_options")
       redirect_to new_tache_import_path

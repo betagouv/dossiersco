@@ -308,7 +308,7 @@ fr:
       message_prevention_purge: Attention ! Ceci supprimera tous les dossiers élèves
       titre_import: Importer un fichier
       titre_export: Exporter un fichier
-      export_classes: Fichier Excel comprenant les options choisies par les familles
+      export_classes: Fichier Excel comprenant les options choisies par les familles ainsi que les régimes d'autorisation de sortie
       telecharger: Télécharger le fichier
       selectionner_fichier: "Sélectionnez un fichier au format xls"
       importer_fichier: "Importer un fichier"
