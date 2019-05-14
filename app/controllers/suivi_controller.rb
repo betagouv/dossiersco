@@ -24,7 +24,7 @@ class SuiviController < ApplicationController
   end
 
   def etablissements_experimentateurs
-    @etablissements = Etablissement.where.not("nom like ?", "%test").order(:nom)
+    @etablissements = Etablissement.where.not("nom like ?", "%test").order(:code_postal)
   end
 
 end
