@@ -21,6 +21,8 @@ rubocop:
 rails:
   variables:
     DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/$POSTGRES_DB"
+    ENT_PARIS_URL: https://ent.parisclassenumerique.fr/cas
+    ENT_PARIS_URL_RETOUR: https://demo.dossiersco.fr/retour-ent
   script:
   - bundle exec rails db:migrate
   - bundle exec rails db:seed
