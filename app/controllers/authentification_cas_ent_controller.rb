@@ -18,16 +18,16 @@ class AuthentificationCasEntController < ApplicationController
   def retour_cas
     data = donnees_ent(params[:ticket])
 
-    dossier_eleves = []
+    @resp_legals = []
     retrouve_liste_resp_legal(data).each do |resp_legal|
-      dossier_eleves << resp_legal.dossier_eleve
+      @resp_legals << resp_legal
     end
 
-    if dossier_eleves.empty?
+    if @resp_legals.empty?
       flash[:error] = I18n.t(".dossier_non_trouver")
       redirect_to("/") && return
-    elsif dossier_eleves.length == 1
-      dossier_eleve = dossier_eleves[0]
+    elsif @resp_legals.length == 1 && @resp_legals[0].dossier_eleve
+      dossier_eleve = @resp_legals[0].dossier_eleve
 
       if eleve_et_etablissement_correspondant?(dossier_eleve, data)
         session[:identifiant] = dossier_eleve.eleve.identifiant
@@ -39,14 +39,36 @@ class AuthentificationCasEntController < ApplicationController
         else
           redirect_to("accueil")
         end
-      else
-        redirect_to("/", notice: "Nous n'avons pas pu retrouver votre dossier sur DossierSCO. Nous nous excusons pour ce soucis.")
       end
+    elsif @resp_legals.length > 1
+      render :choix_dossier_eleve, layout: "connexion"
     else
-      render :choix_dossier_eleve
+      flash[:notice] = "Nous n'avons pas pu retrouver votre dossier sur DossierSCO. Nous nous excusons pour ce soucis."
+      redirect_to "/"
     end
+  end
 
-    nil
+  def choix_dossier
+    resp_legal = RespLegal.find(params[:resp_legal])
+
+    dossier_eleve = resp_legal.dossier_eleve
+
+    if dossier_eleve.present?
+      dossier_eleve.update(etat: "connecté") if dossier_eleve.etat == "pas connecté"
+      session[:identifiant] = dossier_eleve.eleve.identifiant
+
+      if dossier_eleve.derniere_etape.present?
+        redirect_to "/#{dossier_eleve.derniere_etape}"
+      elsif dossier_eleve.etape_la_plus_avancee.present?
+        redirect_to "/#{dossier_eleve.etape_la_plus_avancee}"
+      else
+        redirect_to "accueil"
+      end
+
+    else
+      session[:message_erreur] = t("identification.erreurs.identifiants_inconnus")
+      redirect_to root_path
+    end
   end
 
   def donnees_ent(ticket)

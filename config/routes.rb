@@ -75,9 +75,8 @@ Rails.application.routes.draw do
 
   get "/retour-ent", to: "authentification_cas_ent#retour_cas"
   get "/from-ent", to: "authentification_cas_ent#appel_direct_ent"
+  get "/choix-dossier", to: "authentification_cas_ent#choix_dossier"
 
-  get "/retour-ent", to: "authentification_cas_ent#retour_cas"
-  get "/from-ent", to: "authentification_cas_ent#appel_direct_ent"
 
   post "/identification", to: "accueil#identification"
   get "/accueil", to: "accueil#accueil"

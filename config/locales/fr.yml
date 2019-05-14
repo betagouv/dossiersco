@@ -331,3 +331,6 @@ fr:
       piece_attendue_configure: "Liste des établissement qui ont ajouté des pièces attendues"
       familles_connectes: "Liste des établissement qui ont déjà des familles qui se sont connectés"
 
+  authentification_cas_ent:
+    choix_dossier_eleve:
+      choisir_ce_dossier: "Inscrire de ce dossier"
