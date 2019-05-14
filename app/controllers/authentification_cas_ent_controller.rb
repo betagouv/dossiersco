@@ -2,12 +2,8 @@
 
 require "net/http"
 
-URL_CAS = "https://ent.parisclassenumerique.fr/cas"
-URL_RETOUR = if Rails.env.production?
-               CGI.escape("https://dossiersco.scalingo.io/retour-ent")
-             else
-               CGI.escape("https://demo.dossiersco.fr/retour-ent")
-             end
+URL_CAS = ENV["ENT_PARIS_URL"]
+URL_RETOUR = ENV["ENT_PARIS_URL_RETOUR"]
 
 class AuthentificationCasEntController < ApplicationController
 

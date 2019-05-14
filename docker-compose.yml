@@ -20,6 +20,9 @@ services:
       RAILS_ENV: development
       SESSION_SECRET: notreallysecret
       SUPER_ADMIN: yaf@elsif.fr,pierre.de-maulmont@ac-paris.fr,mollard.lucien@gmail.com
+      ENT_PARIS_URL: https://ent.parisclassenumerique.fr/cas
+      ENT_PARIS_URL_RETOUR: https://demo.dossiersco.fr/retour-ent
+
     depends_on:
       - postgres
   test:
@@ -37,6 +40,8 @@ services:
       RUBYOPT: -KU
       RAILS_ENV: test
       SESSION_SECRET: notreallysecret
+      ENT_PARIS_URL: https://ent.parisclassenumerique.fr/cas
+      ENT_PARIS_URL_RETOUR: https://demo.dossiersco.fr/retour-ent
     depends_on:
       - postgres_test
   postgres:
