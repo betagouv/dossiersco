@@ -7,7 +7,7 @@
 
   <ul>
     <% @suivi.pas_encore_connecte.each do |etablissement| %>
-      <li><%= link_to(etablissement.uai, "http://www.opencartecomptable.fr/#/etablissements?code_uai=#{etablissement.uai}") %></li>
+      <li><%= link_to("#{etablissement.nom} #{etablissement.uai}", "http://www.opencartecomptable.fr/#/etablissements?code_uai=#{etablissement.uai}") %></li>
     <% end %>
   </ul>
 </section>
@@ -19,7 +19,7 @@
 
   <ul>
     <% @suivi.eleves_importe.each do |etablissement| %>
-      <li><%= link_to(etablissement.uai, "http://www.opencartecomptable.fr/#/etablissements?code_uai=#{etablissement.uai}") %></li>
+      <li><%= link_to("#{etablissement.nom} #{etablissement.uai}", "http://www.opencartecomptable.fr/#/etablissements?code_uai=#{etablissement.uai}") %></li>
     <% end %>
   </ul>
 </section>
@@ -31,7 +31,7 @@
 
   <ul>
     <% @suivi.piece_attendue_configure.each do |etablissement| %>
-      <li><%= link_to(etablissement.uai, "http://www.opencartecomptable.fr/#/etablissements?code_uai=#{etablissement.uai}") %></li>
+      <li><%= link_to("#{etablissement.nom} #{etablissement.uai}", "http://www.opencartecomptable.fr/#/etablissements?code_uai=#{etablissement.uai}") %></li>
     <% end %>
   </ul>
 </section>
@@ -43,7 +43,7 @@
 
   <ul>
     <% @suivi.familles_connectes.each do |etablissement| %>
-      <li><%= link_to(etablissement.uai, "http://www.opencartecomptable.fr/#/etablissements?code_uai=#{etablissement.uai}") %></li>
+      <li><%= link_to("#{etablissement.nom} #{etablissement.uai}", "http://www.opencartecomptable.fr/#/etablissements?code_uai=#{etablissement.uai}") %></li>
     <% end %>
   </ul>
 </section>
