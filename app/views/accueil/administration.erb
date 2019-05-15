@@ -12,12 +12,12 @@
 
     <div class="form__group" id="demi-pension" data-demi-pension="<%= @dossier_eleve.demi_pensionnaire %>">
       <label>
-        <input type="radio" name="demi_pensionnaire" value="true" id='demi_pensionnaire'
-               <% if @dossier_eleve.demi_pensionnaire %> checked <% end %>><%= t('.demi_pensionnaire') %>
+        <input type="radio" name="demi_pensionnaire" required value="true" id='demi_pensionnaire'
+        <% if @dossier_eleve.demi_pensionnaire %> checked <% end %>><%= t('.demi_pensionnaire') %>
       </label>
       <label>
-        <input type="radio" name="demi_pensionnaire" value="false" id='externe'
-               <% if ! @dossier_eleve.demi_pensionnaire %> checked <% end %>><%= t('.externe') %>
+        <input type="radio" name="demi_pensionnaire" required value="false" id='externe'
+        <% if ! @dossier_eleve.demi_pensionnaire %> checked <% end %>><%= t('.externe') %>
       </label>
     </div>
 
@@ -34,8 +34,8 @@
       <div>
         <% @dossier_eleve.etablissement.regimes_sortie.each do |regime| %>
           <label>
-            <input type="radio" name="regime_sortie" value="<%= regime.id %>" id="regime_sortie_<%= regime.id %>"
-                   <% if @dossier_eleve.regime_sortie == regime %> checked <% end %>>
+            <input type="radio" name="regime_sortie" value="<%= regime.id %>" required id="regime_sortie_<%= regime.id %>"
+            <% if @dossier_eleve.regime_sortie == regime %> checked <% end %>>
             <b><%= regime.nom %></b>
           </label>
           <p><%= regime.description %></p>
@@ -47,11 +47,11 @@
 
     <div class="row">
       <div class="form__group" data-renseignements-medicaux="<%= @dossier_eleve.renseignements_medicaux %>"
-           id="form-renseignements-medicaux">
-        <label class="">
-          <input type="checkbox" value='true' name="renseignements_medicaux"  id='renseignements_medicaux'
-                 <% if @dossier_eleve.renseignements_medicaux %> checked <% end %>> <%= t('.envoyer_une_info_medicale') %>
-        </label>
+                               id="form-renseignements-medicaux">
+                               <label class="">
+                                 <input type="checkbox" value='true' name="renseignements_medicaux"  id='renseignements_medicaux'
+                                 <% if @dossier_eleve.renseignements_medicaux %> checked <% end %>> <%= t('.envoyer_une_info_medicale') %>
+                               </label>
       </div>
     </div>
 
@@ -59,13 +59,13 @@
 
     <div class="form-check form-check-inline">
       <label class="form-check-label">
-        <input class="form-check-input" type="radio" name="droit_image_photo" value="true" id='autorise_photo_de_classe'
-               <% if @dossier_eleve.autorise_photo_de_classe %> checked <% end %>> <%= t('.j_accepte') %> </label>
+        <input class="form-check-input" type="radio" required name="droit_image_photo" value="true" id='autorise_photo_de_classe'
+        <% if @dossier_eleve.autorise_photo_de_classe %> checked <% end %>> <%= t('.j_accepte') %> </label>
     </div>
     <div class="form-check form-check-inline">
       <label class="form-check-label">
-        <input class="form-check-input" type="radio" name="droit_image_photo" value="false"
-               <% if !@dossier_eleve.autorise_photo_de_classe %> checked <% end %>> <%= t('.j_accepte_pas') %> </label>
+        <input class="form-check-input" type="radio" required name="droit_image_photo" value="false"
+        <% if !@dossier_eleve.autorise_photo_de_classe %> checked <% end %>> <%= t('.j_accepte_pas') %> </label>
     </div>
 
     <p><%= t('.enfant_photographie') %></p>
@@ -75,35 +75,35 @@
 </section>
 
 <script>
-  $(document).ready(function() {
-    document.getElementById("demi_pensionnaire").focus();
+$(document).ready(function() {
+  document.getElementById("demi_pensionnaire").focus();
 
-    if ($('#demi-pension').data('demi-pension')) {
-      $('#dp').css('display', 'block')
-    }
+  if ($('#demi-pension').data('demi-pension')) {
+    $('#dp').css('display', 'block')
+  }
 
-    $('form').change( function () {
-      console.log($('input[name=demi_pensionnaire]:checked').val())
+  $('form').change( function () {
+    console.log($('input[name=demi_pensionnaire]:checked').val())
       if ($('input[name=demi_pensionnaire]:checked').val() === 'true') {
         $('#dp').css('display', 'block')
-        console.log('oui')
+          console.log('oui')
       } else {
         console.log('non')
-        $('#dp').css('display', 'none')
+          $('#dp').css('display', 'none')
       }
-    })
+  })
 
-    if ($('#form-renseignements-medicaux').data('renseignements-medicaux')) {
+  if ($('#form-renseignements-medicaux').data('renseignements-medicaux')) {
+    $('#message-infirmerie').removeClass('d-none')
+  }
+
+  $('#renseignements_medicaux').click(function(event) {
+    if (event.target.checked) {
       $('#message-infirmerie').removeClass('d-none')
     }
-
-    $('#renseignements_medicaux').click(function(event) {
-      if (event.target.checked) {
-        $('#message-infirmerie').removeClass('d-none')
-      }
-      else {
-        $('#message-infirmerie').addClass('d-none')
-      }
-    })
+    else {
+      $('#message-infirmerie').addClass('d-none')
+    }
   })
+})
 </script>
