@@ -23,7 +23,7 @@
               <li class="nav__item">
                 <div class="dropdown">
                   <%= affiche_etablissement(@agent_connecte.etablissement) %>
-                  <div class="dropdown-content">
+                  <div class="dropdown-content dropdown-etablissements">
                     <% Etablissement.all.order(:nom).each do |etablissement| %>
                       <%= link_to "#{etablissement.nom} (#{etablissement.departement})", changer_etablissement_configuration_agent_path(@agent_connecte, etablissement: etablissement), {method: :post} %>
                     <% end %>
