@@ -232,6 +232,7 @@ fr:
         uai_existant: "Cet uai est déjà enregistré, veuillez contacter votre chef d'établissement"
         mail_envoye: "Un mail a été envoyé à %{mail_ce}"
       edit:
+        mot_accueil: "Mot présent sur la page d'accueil des familles"
         date_limite_inscription: "Date limite de la campagne d'inscription"
         signataire: "Signataire des courriers de l'établissement"
         activer_envoie: "Activer l'envoi des emails aux familles"

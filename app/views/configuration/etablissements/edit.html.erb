@@ -41,6 +41,10 @@
         <%= f.text_field :date_limite %>
       </div>
       <div class="form__group">
+        <%= f.label :mot_accueil, t('.mot_accueil')%>
+        <%= f.text_area :mot_accueil %>
+      </div>
+      <div class="form__group">
         <%= f.check_box :envoyer_aux_familles %>
         <%= f.label :envoyer_aux_familles, t('.activer_envoie'), class: 'label-inline' %>
       </div>

@@ -5,9 +5,11 @@
       <li>- Adresse : <%= @etablissement.adresse %></li>
       <li>- Code postal : <%= @etablissement.code_postal %></li>
       <li>- Ville : <%= @etablissement.ville %></li>
-      <li>- Date limite d'inscription : <%= @etablissement.date_limite %></li>
       <li>- Gère la demi pension : <%= @etablissement.gere_demi_pension ? 'Oui' : 'Non' %></li>
       <li>- Réglement demi-pension : <%= link_to 'fichier', @etablissement.reglement_demi_pension_url, target: "_blank" if @etablissement.reglement_demi_pension.present? %></li>
+      <li>- Signataire : <%= @etablissement.signataire %></li>
+      <li>- Date limite d'inscription : <%= @etablissement.date_limite %></li>
+      <li>- Mot d'accueil : <%= @etablissement.mot_accueil %></li>
       <li>
         <% if @etablissement.envoyer_aux_familles? %>
           - <strong><%= t('.attention_envoye_aux_familles') %></strong>
@@ -15,7 +17,6 @@
           - <%= t('.envoye_restreint', email: @agent_connecte.email) %>
         <% end %>
       </li>
-      <li>- Signataire : <%= @etablissement.signataire %></li>
     </ul>
 
     <%= link_to 'Modifier', edit_configuration_etablissement_path(@etablissement), {class: 'button-outline primary'} %>

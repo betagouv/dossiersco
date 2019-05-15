@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_07_145009) do
+ActiveRecord::Schema.define(version: 2019_05_15_134734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -125,6 +125,7 @@ ActiveRecord::Schema.define(version: 2019_05_07_145009) do
     t.string "uai"
     t.boolean "envoyer_aux_familles", default: false
     t.string "reglement_demi_pension"
+    t.string "mot_accueil"
   end
 
   create_table "mef", force: :cascade do |t|

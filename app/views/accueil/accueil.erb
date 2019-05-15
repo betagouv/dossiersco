@@ -22,6 +22,11 @@
       <% end %>
     </ul>
     <p>et mettre à jour vos coordonnées sur ce site avant le <strong id="date-limite"><%= @dossier_eleve.etablissement.date_limite %></strong>.</p>
+
+    <% if @dossier_eleve.etablissement.mot_accueil.present? %>
+      <p><%= @dossier_eleve.etablissement.mot_accueil %></p>
+    <% end %>
+
     <div class="text-center">
       <a id='commencer-inscription' href="/eleve">
         <button class="button mt-2">Commencer l’inscription</button>
