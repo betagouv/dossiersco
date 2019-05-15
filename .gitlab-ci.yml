@@ -28,10 +28,16 @@ rails:
   - bundle exec rails db:seed
   - bundle exec rails test
 
-deploy:
+deploy_demo:
   type: deploy
   environment: production
   script:
   - gem install dpl
   - dpl --provider=scalingo --api-token=$SCALINGO_PRODUCTION_KEY --remote=git@scalingo.com:dossiersco-demo.git --branch=HEAD:master
+
+deploy_production:
+  type: deploy
+  environment: production
+  script:
+  - gem install dpl
   - dpl --provider=scalingo --api-token=$SCALINGO_PRODUCTION_KEY --remote=git@scalingo.com:dossiersco-production.git --branch=HEAD:master
