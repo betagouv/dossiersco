@@ -16,6 +16,14 @@ class MessageLegalTest < ActiveSupport::TestCase
     assert_equal "erreur", message.etat
   end
 
+  test "#sms? renvoie true si categorie == SMS" do
+    assert Fabricate.build(:message, categorie: "sms").sms?
+  end
+
+  test "#sms? renvoie false si categorie != SMS" do
+    assert !Fabricate.build(:message, categorie: "mail").sms?
+  end
+
 end
 
 class FakeHttp

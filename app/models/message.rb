@@ -38,4 +38,8 @@ class Message < ActiveRecord::Base
     end
   end
 
+  def sms?
+    categorie == "sms"
+  end
+
 end

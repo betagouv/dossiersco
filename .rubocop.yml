@@ -67,6 +67,8 @@ Metrics/CyclomaticComplexity:
     - 'app/services/pdf_convocation.rb'
 
 Metrics/PerceivedComplexity:
-  Max: 15
   Exclude:
     - 'app/jobs/importer_siecle.rb'
+    - 'app/controllers/authentification_cas_ent_controller.rb'
+    - 'app/controllers/accueil_controller.rb'
+    - 'app/services/pdf_fiche_infirmerie.rb'

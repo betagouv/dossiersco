@@ -103,27 +103,17 @@ class InscriptionsController < ApplicationController
 
   def contacter_une_famille
     eleve = Eleve.find_by(identifiant: params[:identifiant])
-    dossier_eleve = eleve.dossier_eleve
-    emails_presents = false
-    resp_legaux = dossier_eleve.resp_legal
-    resp_legaux.each { |r| (emails_presents = true) if r.email.present? }
-    session[:message_info] = "Votre message ne peut être acheminé."
-    if emails_presents
-      mail = FamilleMailer.contacter_une_famille(eleve, @agent_connecte, params[:message])
-      part = mail.html_part || mail.text_part || mail
-      Message.create(categorie: "mail",
-                     contenu: part.body,
-                     etat: "envoyé",
-                     dossier_eleve: eleve.dossier_eleve)
-      mail.deliver_now
-      session[:message_info] = "Votre message a été envoyé."
-    elsif dossier_eleve.portable_rl1.present?
-      Message.create(categorie: "sms",
-                     contenu: params[:message],
-                     destinataire: params[:destinataire] || "rl1",
-                     etat: "en attente",
-                     dossier_eleve: eleve.dossier_eleve)
-      session[:message_info] = "Votre message est en attente d'expédition."
+
+    begin
+      contacter = ContacterFamille.new(eleve.dossier_eleve, @agent_connecte)
+      message = contacter.envoyer(params[:message])
+      flash[:notice] = if message.sms?
+                         "Votre message est en attente d'expédition."
+                       else
+                         "Votre message a été envoyé."
+                       end
+    rescue ErreurMoyenDeContactNonTrouve => e
+      flash[:error] = "Votre message ne peut être acheminé. #{e.message}"
     end
     redirect_to "/agent/liste_des_eleves"
   end
