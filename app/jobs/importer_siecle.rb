@@ -20,6 +20,8 @@ class ImporterSiecle < ApplicationJob
                tel_portable_resp_legal2: 123, lien_de_parente_resp_legal2: 122, adresse_resp_legal2: 127,
                ville_resp_legal2: 131, code_postal_resp_legal2: 132, email_resp_legal2: 125 }.freeze
 
+  COLONNES_DES_OPTIONS = [38, 42, 46, 50, 54, 58, 62, 66, 70, 74]
+
   def perform(tache_id, email)
     tache = TacheImport.find(tache_id)
     begin
@@ -36,6 +38,7 @@ class ImporterSiecle < ApplicationJob
 
   def import_xls(fichier, etablissement_id)
     import_mef(fichier, etablissement_id)
+    import_options(fichier, etablissement_id)
     import_dossiers_eleve(fichier, etablissement_id)
   end
 
@@ -93,6 +96,32 @@ class ImporterSiecle < ApplicationJob
     )
 
     raise mef.errors.full_messages.join(", ") unless mef.save
+  end
+
+  def import_options(fichier, etablissement_id)
+    xls_document = Roo::Spreadsheet.open fichier
+    lignes_siecle = (xls_document.first_row + 1..xls_document.last_row)
+    lignes_siecle.each do |row|
+      ligne_siecle = xls_document.row(row)
+      COLONNES_DES_OPTIONS.each do |colonne|
+        next unless ligne_siecle[colonne].present?
+
+        code = ligne_siecle[colonne - 1]
+        nom = ligne_siecle[colonne]
+
+        option = OptionPedagogique.find_or_create_by(
+          etablissement_id: etablissement_id,
+          nom: nom,
+          code_matiere: code
+        )
+        option.update(obligatoire: true) if ligne_siecle[colonne + 1] == "O"
+
+        if ligne_siecle[COLONNES[:code_mef]].present?
+          mef = Mef.find_by(code: ligne_siecle[COLONNES[:code_mef]], etablissement_id: etablissement_id)
+          option.mef << mef unless option.mef.include? mef
+        end
+      end
+    end
   end
 
   def import_ligne_adresse(_etablissement_id, ligne_siecle)
@@ -169,7 +198,7 @@ class ImporterSiecle < ApplicationJob
       raise dossier_eleve.errors.full_messages.join(", ")
     end
 
-    [38, 42, 46, 50, 54, 58, 62, 66, 70, 74].each do |colonne|
+    COLONNES_DES_OPTIONS.each do |colonne|
       next unless ligne_siecle[colonne].present?
 
       code = ligne_siecle[colonne - 1]
@@ -180,21 +209,19 @@ class ImporterSiecle < ApplicationJob
         nom: nom,
         code_matiere: code
       )
-      option.update(obligatoire: true) if ligne_siecle[colonne + 1] == "O"
 
-      if ligne_siecle[COLONNES[:code_mef]].present?
-        mef = Mef.find_by(code: ligne_siecle[COLONNES[:code_mef]], etablissement_id: etablissement_id)
-        option.mef << mef unless option.mef.include? mef
+      unless dossier_eleve.options_pedagogiques.include? option
+        dossier_eleve.options_pedagogiques << option
+        option_origine = {}
+        option_origine[:nom] = option.nom
+        option_origine[:groupe] = option.groupe
+
+        dossier_eleve.options_origines[option.id] = option_origine
       end
 
-      dossier_eleve.options_pedagogiques << option
-      option_origine = {}
-      option_origine[:nom] = option.nom
-      option_origine[:groupe] = option.groupe
-
-      dossier_eleve.options_origines[option.id] = option_origine
-      dossier_eleve.save!
     end
+
+    dossier_eleve.save!
 
     champs_resp_legal = %i[nom prenom tel_personnel tel_portable lien_de_parente
                            adresse code_postal ville email]
