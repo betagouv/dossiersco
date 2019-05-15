@@ -52,19 +52,34 @@ Metrics/ClassLength:
     - 'app/jobs/importer_siecle.rb'
 
 Metrics/AbcSize:
-  Max: 55
   Exclude:
     - 'test/**/*'
     - 'app/jobs/importer_siecle.rb'
     - 'app/services/pdf_fiche_infirmerie.rb'
     - 'app/services/pdf_convocation.rb'
+    - 'app/controllers/tache_imports_controller.rb'
+    - 'app/controllers/configurations_controller.rb'
+    - 'app/controllers/authentification_cas_ent_controller.rb'
+    - 'app/controllers/accueil_controller.rb'
+    - 'app/controllers/suivi_controller.rb'
+    - 'app/controllers/dossiers_affelnet_controller.rb'
+    - 'app/controllers/inscriptions_controller.rb'
+    - 'app/controllers/configuration/agents_controller.rb'
+    - 'app/controllers/configuration/mef_controller.rb'
+    - 'app/models/eleve.rb'
+    - 'app/models/etablissement.rb'
+    - 'app/models/message.rb'
+    - 'app/models/resp_legal.rb'
+    - 'app/jobs/importer_affelnet.rb'
+    - 'app/services/genere_pdf.rb'
 
 Metrics/CyclomaticComplexity:
-  Max: 10
   Exclude:
     - 'app/jobs/importer_siecle.rb'
     - 'app/services/pdf_fiche_infirmerie.rb'
     - 'app/services/pdf_convocation.rb'
+    - 'app/controllers/authentification_cas_ent_controller.rb'
+    - 'app/controllers/accueil_controller.rb'
 
 Metrics/PerceivedComplexity:
   Exclude:
