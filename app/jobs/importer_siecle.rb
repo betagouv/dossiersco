@@ -20,7 +20,7 @@ class ImporterSiecle < ApplicationJob
                tel_portable_resp_legal2: 123, lien_de_parente_resp_legal2: 122, adresse_resp_legal2: 127,
                ville_resp_legal2: 131, code_postal_resp_legal2: 132, email_resp_legal2: 125 }.freeze
 
-  COLONNES_DES_OPTIONS = [38, 42, 46, 50, 54, 58, 62, 66, 70, 74]
+  COLONNES_DES_OPTIONS = [38, 42, 46, 50, 54, 58, 62, 66, 70, 74].freeze
 
   def perform(tache_id, email)
     tache = TacheImport.find(tache_id)
@@ -210,15 +210,14 @@ class ImporterSiecle < ApplicationJob
         code_matiere: code
       )
 
-      unless dossier_eleve.options_pedagogiques.include? option
-        dossier_eleve.options_pedagogiques << option
-        option_origine = {}
-        option_origine[:nom] = option.nom
-        option_origine[:groupe] = option.groupe
+      next if dossier_eleve.options_pedagogiques.include? option
 
-        dossier_eleve.options_origines[option.id] = option_origine
-      end
+      dossier_eleve.options_pedagogiques << option
+      option_origine = {}
+      option_origine[:nom] = option.nom
+      option_origine[:groupe] = option.groupe
 
+      dossier_eleve.options_origines[option.id] = option_origine
     end
 
     dossier_eleve.save!
