@@ -14,11 +14,17 @@ before_script:
   # - apt-get update -q && apt-get install nodejs -yqq
   - bundle install -j $(nproc) --path vendor  # Install dependencies into ./vendor/ruby
 
+stages:
+  - test
+  - deploy
+
 rubocop:
+  stage: test
   script:
   - bundle exec rubocop
 
-rails:
+tests:
+  stage: test
   variables:
     DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/$POSTGRES_DB"
     ENT_PARIS_URL: https://ent.parisclassenumerique.fr/cas
@@ -29,15 +35,17 @@ rails:
   - bundle exec rails test
 
 deploy_demo:
-  type: deploy
-  environment: production
+  stage: deploy
+  environment:
+    name: production
   script:
   - gem install dpl
   - dpl --provider=scalingo --api-token=$SCALINGO_PRODUCTION_KEY --remote=git@scalingo.com:dossiersco-demo.git --branch=HEAD:master
 
 deploy_production:
-  type: deploy
-  environment: production
+  stage: deploy
+  environment:
+    name: production
   script:
   - gem install dpl
   - dpl --provider=scalingo --api-token=$SCALINGO_PRODUCTION_KEY --remote=git@scalingo.com:dossiersco-production.git --branch=HEAD:master
