@@ -33,7 +33,7 @@
           </a>
         </div>
 
-        <% if @dossier_eleve.etablissement.regimes_sortie.count > 1 %>
+        <% if @dossier_eleve.etablissement.regimes_sortie.count > 1 && @dossier_eleve.regime_sortie %>
           <div class="row mt-1">
             <div>
               <%= t('.sortie') %>&nbsp:
