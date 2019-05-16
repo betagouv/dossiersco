@@ -30,7 +30,6 @@ Style/Documentation:
   Enabled: false
 
 Metrics/BlockLength:
-  Max: 30
   Exclude:
     - 'test/**/*'
     - 'lib/**/*'
@@ -38,18 +37,37 @@ Metrics/BlockLength:
     - 'app/services/pdf_convocation.rb'
 
 Metrics/MethodLength:
-  Max: 35
   Exclude:
+    - 'test/controllers/accueil_controller_test.rb'
+    - 'test/integration/accueil_controller_test.rb'
+    - 'test/integration/inscriptions_controller_test.rb'
+    - 'app/controllers/tache_imports_controller.rb'
+    - 'app/controllers/configurations_controller.rb'
+    - 'app/controllers/authentification_cas_ent_controller.rb'
+    - 'app/controllers/accueil_controller.rb'
+    - 'app/controllers/dossiers_affelnet_controller.rb'
+    - 'app/controllers/application_controller.rb'
+    - 'app/controllers/inscriptions_controller.rb'
     - 'app/jobs/importer_siecle.rb'
+    - 'app/controllers/configuration/agents_controller.rb'
+    - 'app/models/eleve.rb'
+    - 'app/models/etablissement.rb'
+    - 'app/models/message.rb'
+    - 'app/models/resp_legal.rb'
+    - 'app/jobs/importer_affelnet.rb'
+    - 'app/services/genere_pdf.rb'
+    - 'app/services/contacter_famille.rb'
+    - 'lib/tasks/charger_donnees_exemple.rake'
     - 'app/services/pdf_fiche_infirmerie.rb'
     - 'app/services/pdf_convocation.rb'
 
 Metrics/ClassLength:
-  Max: 170
   Exclude:
     - 'test/**/*'
     - 'app/controllers/inscriptions_controller.rb'
     - 'app/jobs/importer_siecle.rb'
+    - 'app/controllers/accueil_controller.rb'
+    - 'app/models/eleve.rb'
 
 Metrics/AbcSize:
   Exclude:
