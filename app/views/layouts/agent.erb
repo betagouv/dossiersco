@@ -19,24 +19,9 @@
                 <%= link_to t('.configuration'), configuration_path, {class: 'nav-link'}%>
               </li>
             <% end %>
-            <% if super_admin?(@agent_connecte.email) %>
-              <li class="nav__item">
-                <div class="dropdown">
-                  <%= affiche_etablissement(@agent_connecte.etablissement) %>
-                  <div class="dropdown-content dropdown-etablissements">
-                    <% Etablissement.all.order(:nom).each do |etablissement| %>
-                      <%= link_to affiche_etablissement(etablissement),
-                                  changer_etablissement_configuration_agent_path(@agent_connecte, etablissement: etablissement),
-                                  {method: :post} %>
-                    <% end %>
-                  </div>
-                </div>
-              </li>
-            <% else %>
-              <li class="nav__item">
-                <%= affiche_etablissement(@agent_connecte.etablissement) %>
-              </li>
-            <% end %>
+            <li class="nav__item">
+              <%= affiche_etablissement(@agent_connecte.etablissement) %>
+            </li>
             <li class="nav__item">
               <div class="dropdown">
                 <%= @agent_connecte.email %>

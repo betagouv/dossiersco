@@ -30,7 +30,7 @@ Rails.application.routes.draw do
     end
     resources :mef
 
-    resources :etablissements, expect: %i[index destroy] do
+    resources :etablissements, expect: %i[destroy] do
       put "purge"
     end
 
