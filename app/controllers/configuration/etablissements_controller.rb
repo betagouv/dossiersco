@@ -9,7 +9,7 @@ module Configuration
     before_action :cherche_etablissement, only: %i[show edit update]
 
     def index
-      @etablissements = Etablissement.all
+      @etablissements = Etablissement.all.order(:nom)
       render layout: "connexion"
     end
 
