@@ -11,32 +11,50 @@ class AuthentificationCasEntController < ApplicationController
     render layout: false
   end
 
-  def retour_cas
-    data = donnees_ent(params[:ticket])
-
+  def retrouve_les_responsables_legaux_depuis(data)
     @resp_legals = []
     retrouve_liste_resp_legal(data).each do |resp_legal|
       @resp_legals << resp_legal
     end
+  end
 
-    if @resp_legals.empty?
+  def aucun_responsable_legal?
+    @resp_legals.empty?
+  end
+
+  def un_seul_responsable_legal?
+    @resp_legals.length == 1 && @resp_legals[0].dossier_eleve
+  end
+
+  def plusieurs_responsables_legaux?
+    @resp_legals.length > 1
+  end
+
+  def identifie_et_redirige(dossier_eleve)
+    session[:identifiant] = dossier_eleve.eleve.identifiant
+
+    if dossier_eleve.derniere_etape.present?
+      redirect_to("/#{dossier_eleve.derniere_etape}")
+    elsif dossier_eleve.etape_la_plus_avancee.present?
+      redirect_to("/#{dossier_eleve.etape_la_plus_avancee}")
+    else
+      redirect_to("accueil")
+    end
+  end
+
+  def retour_cas
+    data = donnees_ent(params[:ticket])
+
+    retrouve_les_responsables_legaux_depuis(data)
+
+    if aucun_responsable_legal?
       flash[:error] = I18n.t(".dossier_non_trouver")
       redirect_to("/") && return
-    elsif @resp_legals.length == 1 && @resp_legals[0].dossier_eleve
+    elsif un_seul_responsable_legal?
       dossier_eleve = @resp_legals[0].dossier_eleve
 
-      if eleve_et_etablissement_correspondant?(dossier_eleve, data)
-        session[:identifiant] = dossier_eleve.eleve.identifiant
-
-        if dossier_eleve.derniere_etape.present?
-          redirect_to("/#{dossier_eleve.derniere_etape}")
-        elsif dossier_eleve.etape_la_plus_avancee.present?
-          redirect_to("/#{dossier_eleve.etape_la_plus_avancee}")
-        else
-          redirect_to("accueil")
-        end
-      end
-    elsif @resp_legals.length > 1
+      identifie_et_redirige(dossier_eleve) if eleve_et_etablissement_correspondant?(dossier_eleve, data)
+    elsif plusieurs_responsables_legaux?
       render :choix_dossier_eleve, layout: "connexion"
     else
       flash[:notice] = "Nous n'avons pas pu retrouver votre dossier sur DossierSCO. Nous nous excusons pour ce soucis."

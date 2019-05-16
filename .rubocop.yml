@@ -96,7 +96,6 @@ Metrics/CyclomaticComplexity:
     - 'app/jobs/importer_siecle.rb'
     - 'app/services/pdf_fiche_infirmerie.rb'
     - 'app/services/pdf_convocation.rb'
-    - 'app/controllers/authentification_cas_ent_controller.rb'
     - 'app/controllers/accueil_controller.rb'
 
 Metrics/PerceivedComplexity:
