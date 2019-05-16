@@ -12,7 +12,7 @@ class ConfigurationsController < ApplicationController
     stats = Struct.new(:agents, :options, :mef, :dossiers, :date_fin, :uai, :nom_etablissement, :code_postal,
                        :pieces_attendues, :eleves_sans_mef)
     @stats = stats.new
-    @stats.agents = Agent.where(etablissement: etablissement).count
+    @stats.agents = Agent.pour_etablissement(agent_connecte.etablissement).count
     @stats.options = etablissement.options_pedagogiques.count
     @stats.mef = etablissement.mef.count
     @stats.eleves_sans_mef = etablissement.dossier_eleve.where(mef_origine: nil).count

@@ -55,4 +55,14 @@ class AgentTest < ActiveSupport::TestCase
                            jeton: "a-sha1-token").valid?
   end
 
+  test "#pour_etablissement renvoie les agents de l'établissement sans les super admin" do
+    etablissement = Fabricate(:etablissement)
+    agent = Fabricate(:agent, etablissement: etablissement)
+    Fabricate(:agent)
+    ENV['SUPER_ADMIN'] = 'toto@truc.net'
+    Fabricate(:agent, admin: true, email: 'toto@truc.net')
+
+    assert_equal [agent], Agent.pour_etablissement(etablissement)
+  end
+
 end

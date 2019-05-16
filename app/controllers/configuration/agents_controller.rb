@@ -27,8 +27,7 @@ module Configuration
     end
 
     def index
-      super_admins = ENV["SUPER_ADMIN"].present? ? ENV["SUPER_ADMIN"].delete(" ").split(",") : [""]
-      @agents = Agent.where(etablissement: agent_connecte.etablissement).where.not("email IN (?)", super_admins)
+      @agents = Agent.pour_etablissement(agent_connecte.etablissement)
     end
 
     def edit
