@@ -29,7 +29,13 @@ Retrospective :
 - Le ministère à resigné, et c'est vraiment bien, ça soulage
 - bonne expérience de support cette semaine
 - nous allons essayer une autre organisation de support, sans perdre les informations présentent aujourd'hui dans le tableau d'acquisition
-
+- [Suivie du changement d'adresse](https://gitlab.com/dossiersco/dossiersco/issues/566)
+- [Permettre au collège d'écrire un mot d'accueil et des consignes, sur la page d'accueil DossierSCO des familles](https://gitlab.com/dossiersco/dossiersco/issues/532)
+- [Faciliter le suivi individualisé](https://gitlab.com/dossiersco/dossiersco/issues/560)
+- [Récapituler le régime de sortie pour les familles](https://gitlab.com/dossiersco/dossiersco/issues/562)
+- [Vérifier coté serveur les informations des responsables légaux](https://gitlab.com/dossiersco/dossiersco/issues/552)
+- [Indiquer le régime de sortie dans l'export Excel](https://gitlab.com/dossiersco/dossiersco/issues/563)
+- [Afficher automatiquement les nom, commune et département des collèges inscrits à DossierSCO](https://gitlab.com/dossiersco/dossiersco/issues/561)
 
 ---
 
