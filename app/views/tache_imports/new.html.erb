@@ -20,7 +20,7 @@
           <div class="form__group">
             <%= form.file_field :fichier %>
           </div>
-          <% if Rails.env.demo? %>
+          <% if Rails.env.demo? && @agent_connecte.etablissement.uai == '0123456S' %>
             <div class="form__group">
               Pour sécuriser vos données, l'import de SIECLE est réservé aux collèges ayant créé un compte DossierSCO. Vous pouvez tester cette fonctionnalité après avoir créé votre compte sur <a href="https://dossiersco.fr/configuration/etablissements/new">https://dossiersco.fr/configuration/etablissements/new</a>
             </div>
