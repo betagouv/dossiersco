@@ -1,5 +1,38 @@
 # Journal
 
+## 18e semaine - du 10 mai avril au 16 mai
+
+
+**Du support, des inscrits et du crédit budgetaire !**
+
+### Changement des cérémonies de l'équipe
+
+Standup :
+
+- 2mn par personne
+- ce qu'on va faire, ce qui nous bloque
+- scribé
+
+Journal quotidien :
+
+- chacun écrit ce qu'il a fait
+- s'il le souhaite ce qu'il a ressenti
+
+Retrospective :
+
+- en fin de semaine (itération)
+
+
+### Et aussi
+
+- Nettoyage de la production pour les établissements de Malraux (Paris), Oeben, Tillion Beaumarchais
+- Le ministère à resigné, et c'est vraiment bien, ça soulage
+- bonne expérience de support cette semaine
+- nous allons essayer une autre organisation de support, sans perdre les informations présentent aujourd'hui dans le tableau d'acquisition
+
+
+---
+
 
 ## 17e semaine - du 6 mai avril au 9 mai
 
