@@ -63,19 +63,25 @@ class RespLegal < ActiveRecord::Base
        communique_info_parents_eleves lien_avec_eleve]
   end
 
-  def resp_legal_un_valid?
+  def resp_legal_valid?
+    champs_renseignes? && un_telephone_renseigne?
+  end
+
+  def champs_renseignes?
     champs_requis = { lien_de_parente: "lien de parenté", prenom: "prénom", nom: "nom", adresse: "adresse",
-                      code_postal: "code postal", ville: "ville", email: "email principal", profession: "profession",
-                      enfants_a_charge: "enfants à charge" }
+                      code_postal: "code postal", ville: "ville", profession: "profession" }
+    champs_requis[:enfants_a_charge] = "enfants à charge" if priorite == 1
 
     champs_requis.each do |champ, label|
-      errors.add(champ, I18n.t(".activerecord.errors.models.resp_legal.non_renseigne", champ: label)) if send(champ).blank?
+      message_erreur = I18n.t(".activerecord.errors.models.resp_legal.non_renseigne", champ: label, responsable: priorite)
+      errors.add(champ, message_erreur) if send(champ).blank?
     end
+    errors.empty?
+  end
 
-    if tel_personnel.blank? && tel_portable.blank?
-      errors.add(:telephone, I18n.t(".activerecord.errors.models.resp_legal.pas_de_telephone"))
-      false
-    elsif errors.any?
+  def un_telephone_renseigne?
+    if tel_personnel.blank? && tel_portable.blank? && tel_professionnel.blank?
+      errors.add(:telephone, I18n.t(".activerecord.errors.models.resp_legal.pas_de_telephone"), responsable: priorite)
       false
     else
       true

@@ -101,16 +101,31 @@ class AccueilController < ApplicationController
       resp_legal2[i] = params["#{i}_rl2"] if resp_legal2 && params.key?("#{i}_rl2")
       contact_urgence[i] = params["#{i}_urg"] if params.key?("#{i}_urg")
     end
-
     resp_legal1.save!
     resp_legal2.save! if resp_legal2.present?
     contact_urgence.save!
 
-    if resp_legal1.resp_legal_un_valid?
+    if responsables_valides?(resp_legal1, resp_legal2)
       sauve_et_redirect dossier_eleve, "administration"
     else
-      redirect_to famille_path, alert: resp_legal1.errors.messages.first[1].join
+      error = if resp_legal1.errors.messages.present?
+                resp_legal1.errors.messages.first[1].join
+              elsif resp_legal2.present? && resp_legal2.errors.messages.present?
+                resp_legal2.errors.messages.first[1].join
+              end
+      redirect_to famille_path, alert: error
     end
+  end
+
+  def responsables_valides?(resp_legal1, resp_legal2)
+    resp_legal2_valide = if params["prenom_rl2"].present? && resp_legal2.resp_legal_valid?
+                           true
+                         elsif !params["prenom_rl2"].present?
+                           true
+                         else
+                           false
+                         end
+    resp_legal1.resp_legal_valid? && resp_legal2_valide
   end
 
   def validation
