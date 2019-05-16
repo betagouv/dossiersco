@@ -3,7 +3,7 @@
 class Mef < ApplicationRecord
 
   belongs_to :etablissement
-  has_many :mef_options_pedagogiques
+  has_many :mef_options_pedagogiques, dependent: :destroy
   has_many :options_pedagogiques, through: :mef_options_pedagogiques
 
   validates :libelle, presence: true, uniqueness: { scope: :etablissement }
