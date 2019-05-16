@@ -59,8 +59,8 @@ class AgentTest < ActiveSupport::TestCase
     etablissement = Fabricate(:etablissement)
     agent = Fabricate(:agent, etablissement: etablissement)
     Fabricate(:agent)
-    ENV['SUPER_ADMIN'] = 'toto@truc.net'
-    Fabricate(:agent, admin: true, email: 'toto@truc.net')
+    ENV["SUPER_ADMIN"] = "toto@truc.net"
+    Fabricate(:agent, admin: true, email: "toto@truc.net")
 
     assert_equal [agent], Agent.pour_etablissement(etablissement)
   end
