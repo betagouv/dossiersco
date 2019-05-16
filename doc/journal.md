@@ -7,7 +7,7 @@
 
 ### Changement des cérémonies de l'équipe
 
-Standup :
+La matinale :
 
 - 2mn par personne
 - ce qu'on va faire, ce qui nous bloque
