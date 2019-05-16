@@ -74,11 +74,11 @@ puts "création d'élèves et de dossier associés"
     "prenom" => Faker::Name.first_name,
     "nom" => Faker::Name.last_name,
     "adresse" => "98 Passage de Caumartin",
-    "code_postal" => "80754",
+    "code_postal" => "75012",
     "ville" => "Test",
     "tel_personnel" => "03 45 83 62 91",
     "tel_portable" => "02 70 51 44 33",
-    "adresse_ant" => "15  rue des jardiniers",
+    "adresse_ant" => "15 rue des jardiniers",
     "ville_ant" => "Test",
     "code_postal_ant" => "75012"
   )
@@ -92,11 +92,11 @@ puts "création d'élèves et de dossier associés"
     "prenom" => Faker::Name.first_name,
     "nom" => Faker::Name.last_name,
     "adresse" => "98 Passage de Caumartin",
-    "code_postal" => "80754",
+    "code_postal" => "75012",
     "ville" => "Test",
     "tel_personnel" => "03 45 83 62 91",
     "tel_portable" => "02 70 51 44 33",
-    "adresse_ant" => "15  rue des jardiniers",
+    "adresse_ant" => "15 rue des jardiniers",
     "ville_ant" => "Test",
     "code_postal_ant" => "75012"
   )
