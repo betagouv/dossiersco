@@ -33,10 +33,10 @@
       <li><a href="https://blog.dossiersco.fr/a-propos/">A propos</a></li>
       <li><a href="https://blog.dossiersco.fr/">Lire le blog</a></li>
       <li><a href="https://blog.dossiersco.fr/lettre-infos/">S'abonner à la lettre d'infos</a></li>
+      <li><%= link_to 'Établissements expérimentateurs', etablissements_experimentateurs_suivi_index_path %></li>
     </ul>
 
     <ul class="footer__links">
-      <li><%= link_to 'Établissements expérimentateurs', etablissements_experimentateurs_suivi_index_path %></li>
       <% if @agent_connecte && super_admin?(@agent_connecte.email) %>
         <li><a href="/suivi">Suivi</a></li>
         <li><%= link_to "Changer d'etablissement", configuration_etablissements_path %></li>
