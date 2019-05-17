@@ -18,27 +18,6 @@ class Eleve < ActiveRecord::Base
     find_or_initialize_by(identifiant: identifiant.gsub(/[^[:alnum:]]/, "").upcase)
   end
 
-  def genere_demandes_possibles
-    return unless montee.present?
-
-    options_par_groupe = montee.demandabilite.map(&:option).group_by(&:groupe)
-    groupes_obligatoires = []
-    groupes_facultatives = []
-    groupes_obligatoires_sans_choix = []
-    options_par_groupe.each do |_, options|
-      if options.first.modalite == "obligatoire"
-        if options.size == 1
-          groupes_obligatoires_sans_choix << options
-        else
-          groupes_obligatoires << options
-        end
-      elsif options.first.modalite == "facultative"
-        groupes_facultatives << options
-      end
-    end
-    obligatoire(groupes_obligatoires) + facultative(groupes_facultatives) + obligatoire_sans_choix(groupes_obligatoires_sans_choix)
-  end
-
   def obligatoire(options_du_groupe)
     options_du_groupe.map do |options|
       noms_options_du_groupe = options.collect(&:nom)
@@ -96,33 +75,6 @@ class Eleve < ActiveRecord::Base
         type: "hidden"
       }
     end
-  end
-
-  def genere_abandons_possibles
-    return unless montee.present?
-
-    noms_options = option.map(&:nom)
-    options = montee.abandonnabilite.map(&:option).select { |o| noms_options.include? o.nom }
-    options.map do |option|
-      {
-        name: option.nom,
-        label: "Poursuivre l'option",
-        type: "check",
-        condition: !options_abandonnees.include?(option),
-        desc: option.nom_et_info
-      }
-    end
-  end
-
-  def options_apres_montee
-    options = []
-    options += option.map(&:nom).select { |o| o }
-    options += demande.map(&:option).map(&:nom)
-    (0...options.length).each do |i|
-      options[i] += " (-)" if abandon.map(&:option).map(&:nom).include? options[i]
-      options[i] += " (+)" if demande.map(&:option).map(&:nom).include? options[i]
-    end
-    options.uniq.sort
   end
 
 end

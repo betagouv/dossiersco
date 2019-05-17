@@ -85,7 +85,6 @@ Metrics/AbcSize:
     - 'app/controllers/inscriptions_controller.rb'
     - 'app/controllers/configuration/agents_controller.rb'
     - 'app/controllers/configuration/mef_controller.rb'
-    - 'app/models/eleve.rb'
     - 'app/models/etablissement.rb'
     - 'app/models/message.rb'
     - 'app/models/resp_legal.rb'
