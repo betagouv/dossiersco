@@ -41,6 +41,7 @@ demo:
   script:
   - gem install dpl
   - dpl --provider=scalingo --api-token=$SCALINGO_PRODUCTION_KEY --remote=git@scalingo.com:dossiersco-demo.git --branch=HEAD:master
+  - bundle exec rails db:migrate
 
 production:
   stage: deploy
@@ -49,3 +50,4 @@ production:
   script:
   - gem install dpl
   - dpl --provider=scalingo --api-token=$SCALINGO_PRODUCTION_KEY --remote=git@scalingo.com:dossiersco-production.git --branch=HEAD:master
+  - bundle exec rails db:migrate
