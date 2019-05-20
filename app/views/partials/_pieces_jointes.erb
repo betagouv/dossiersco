@@ -7,18 +7,18 @@
           <p><%= piece.explication %></p>
           <p class="etat-piece-jointe"><%= t(".document_#{piece.etat}") if piece.etat.present?  %></p>
           <div class="card-relat document">
-            <% if piece.fichier.url.present? %>
-              <div class="lien-piece-jointe" data-url="<%= piece.fichier.url %>" data-nom="<%= piece.nom %>">
-                <% if piece.fichier.content_type.start_with?("image/") %>
-                  <%= image_tag(piece.fichier.url, alt:"preview piece jointe") %>
+            <% if piece.fichiers[0].present? && piece.fichiers[0].url.present? %>
+              <div class="lien-piece-jointe" data-url="<%= piece.fichiers[0].url %>" data-nom="<%= piece.nom %>">
+                <% if piece.fichiers[0].content_type.start_with?("image/") %>
+                  <%= image_tag(piece.fichiers[0].url, alt:"preview piece jointe") %>
                 <% else %>
-                  <%= link_to t('.voir_piece_jointe'), piece.fichier.url %>
+                  <%= link_to t('.voir_piece_jointe'), piece.fichiers[0].url %>
                 <% end %>
               </div>
             <% end %>
             <%= form.hidden_field :piece_attendue_id %>
             <div class="form__group">
-              <%= form.file_field :fichier %>
+              <%= form.file_field :fichiers, multiple: true %>
             </div>
             <span id="fichier_<%= piece.code %>"></span>
             <br />

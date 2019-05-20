@@ -13,7 +13,7 @@ class AgentPiecesJointesControllerTest < ActionDispatch::IntegrationTest
     piece_jointe = fixture_file_upload("files/sample.png", "image/png")
     post agent_pieces_jointes_url, params: {
       piece_jointe: {
-        fichier: piece_jointe,
+        fichiers: [piece_jointe],
         piece_attendue_id: piece_attendue.id
       },
       eleve_id: eleve.identifiant

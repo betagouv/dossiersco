@@ -22,19 +22,21 @@
                 <h4><%= '*' if piece.obligatoire %> <%= piece.nom %></h4>
                 <div class="card-relat document">
                   <%= form_for [:agent, piece], multipart: true, html: { class: "forms" } do |form| %>
-                    <% if piece.fichier.url.present? %>
-                      <div class="lien-piece-jointe" data-url="<%= piece.fichier.url %>" data-nom="<%= piece.nom %>">
-                        <% if piece.fichier.content_type.present? && piece.fichier.content_type.start_with?("image/") %>
-                          <%= image_tag(piece.fichier.url, alt:"preview piece jointe") %>
-                        <% else %>
-                          <%= link_to t('.voir_piece_jointe'), piece.fichier.url %>
-                        <% end %>
-                      </div>
+                    <% if piece.fichiers[0].present? %>
+                      <% piece.fichiers.each do |fichier| %>
+                        <div class="lien-piece-jointe" data-url="<%= fichier.url %>" data-nom="<%= piece.nom %>">
+                          <% if fichier.content_type.present? && fichier.content_type.start_with?("image/") %>
+                            <%= image_tag(fichier.url, alt:"preview piece jointe") %>
+                          <% else %>
+                            <%= link_to t('.voir_piece_jointe'), fichier.url %>
+                          <% end %>
+                        </div>
+                      <% end %>
                     <% end %>
                     <%= form.hidden_field :piece_attendue_id %>
                     <%= hidden_field_tag :eleve_id, params[:identifiant] %>
                     <div class="form__group mb-2">
-                      <%= form.file_field :fichier, data: { btnClass: "button", text: "Parcourir"} %>
+                      <%= form.file_field :fichiers, multiple: true, data: { btnClass: "button", text: "Parcourir"} %>
                       <button class="soumettre hide" type="submit">Soumettre</button>
                     </div>
                   <% end %>

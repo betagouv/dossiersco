@@ -7,7 +7,7 @@ class PieceJointe < ActiveRecord::Base
 
   delegate :obligatoire, :code, :nom, :explication, to: :piece_attendue
 
-  mount_uploader :fichier, FichierUploader
+  mount_uploaders :fichiers, FichierUploader
 
   ETATS = { soumis: "soumis", valide: "valide", invalide: "invalide" }.freeze
 

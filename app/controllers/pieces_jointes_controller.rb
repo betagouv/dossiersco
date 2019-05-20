@@ -31,7 +31,7 @@ class PiecesJointesController < ApplicationController
   private
 
   def piece_jointe_params
-    params.require(:piece_jointe).permit(:fichier, :piece_attendue_id)
+    params.require(:piece_jointe).permit({ fichiers: [] }, :piece_attendue_id)
   end
 
   def retrouve_piece_jointe
