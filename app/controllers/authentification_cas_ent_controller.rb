@@ -89,7 +89,7 @@ class AuthentificationCasEntController < ApplicationController
 
   def donnees_ent(ticket)
     uri = URI("#{URL_CAS}/serviceValidate")
-    params = {service: URL_RETOUR, ticket: ticket}
+    params = { service: URL_RETOUR, ticket: ticket }
     uri.query = URI.encode_www_form(params)
     puts "uri : #{uri}"
     res = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|

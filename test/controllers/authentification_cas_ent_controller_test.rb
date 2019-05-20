@@ -22,7 +22,7 @@ class AuthentificationCasEntControllerTest < ActionDispatch::IntegrationTest
 
     stub_request(:get, request).to_return(body: body_response)
 
-    get retour_ent_url, params: { ticket: 'something' }
+    get retour_ent_url, params: { ticket: "something" }
 
     assert_redirected_to "/#{dossier_eleve.etape_la_plus_avancee}"
   end
@@ -33,7 +33,7 @@ class AuthentificationCasEntControllerTest < ActionDispatch::IntegrationTest
 
     stub_request(:get, request).to_return(body: body_response)
 
-    get retour_ent_url, params: { ticket: 'something' }
+    get retour_ent_url, params: { ticket: "something" }
 
     assert_redirected_to "/"
     assert_equal I18n.t(".dossier_non_trouver"), flash[:error]
@@ -57,7 +57,7 @@ class AuthentificationCasEntControllerTest < ActionDispatch::IntegrationTest
 
     stub_request(:get, request).to_return(body: body_response)
 
-    get retour_ent_url, params: { ticket: 'something' }
+    get retour_ent_url, params: { ticket: "something" }
 
     assert_redirected_to "/#{dossier_eleve.etape_la_plus_avancee}"
   end
@@ -92,7 +92,7 @@ class AuthentificationCasEntControllerTest < ActionDispatch::IntegrationTest
 
     stub_request(:get, request).to_return(body: body_response)
 
-    get retour_ent_url, params: {ticket: 'something'}
+    get retour_ent_url, params: { ticket: "something" }
 
     assert_response :success
     assert_template "authentification_cas_ent/choix_dossier_eleve", format: "html"
