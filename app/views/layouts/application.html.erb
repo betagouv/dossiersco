@@ -30,15 +30,19 @@
 <footer class="footer" role="contentinfo">
   <div class="container">
     <ul class="footer__links">
-      <a href="https://blog.dossiersco.fr/a-propos/">A propos</a>
-      <a href="https://blog.dossiersco.fr/" class="ml-1">Lire le blog</a>
-      <a href="https://blog.dossiersco.fr/lettre-infos/" class="ml-1">S'abonner à la lettre d'infos</a>
-      <%= link_to 'Établissements expérimentateurs', etablissements_experimentateurs_suivi_index_path, class: "ml-1" %>
+      <li><a href="https://blog.dossiersco.fr/a-propos/">A propos</a></li>
+      <li><a href="https://blog.dossiersco.fr/">Lire le blog</a></li>
+      <li><a href="https://blog.dossiersco.fr/lettre-infos/">S'abonner à la lettre d'infos</a></li>
+      <li><%= link_to 'Établissements expérimentateurs', etablissements_experimentateurs_suivi_index_path %></li>
+    </ul>
+
+    <ul class="footer__links">
       <% if @agent_connecte && super_admin?(@agent_connecte.email) %>
-        <a href="/suivi" class="ml-1">Suivi</a>
+        <li><a href="/suivi">Suivi</a></li>
+        <li><%= link_to "Changer d'etablissement", configuration_etablissements_path %></li>
       <% end %>
       <% unless Rails.env.production? %>
-        <a href="/letter_opener" class="ml-1">Emails envoyés</a>
+        <li><a href="/letter_opener">Emails envoyés</a></li>
       <% end %>
     </ul>
   </div>

@@ -8,6 +8,11 @@ module Configuration
     before_action :if_agent_is_admin, except: %i[new create]
     before_action :cherche_etablissement, only: %i[show edit update]
 
+    def index
+      @etablissements = Etablissement.all.order(:nom)
+      render layout: "connexion"
+    end
+
     def show; end
 
     def new
