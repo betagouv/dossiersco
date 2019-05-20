@@ -64,6 +64,7 @@ Metrics/MethodLength:
 Metrics/ClassLength:
   Exclude:
     - 'test/**/*'
+    - 'app/controllers/authentification_cas_ent_controller.rb'
     - 'app/controllers/inscriptions_controller.rb'
     - 'app/controllers/accueil_controller.rb'
     - 'app/jobs/importer_siecle.rb'

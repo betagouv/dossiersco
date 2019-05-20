@@ -44,22 +44,30 @@ class AuthentificationCasEntController < ApplicationController
 
   def retour_cas
     data = donnees_ent(params[:ticket])
+    puts "-" * 40
 
     retrouve_les_responsables_legaux_depuis(data)
+    puts "dans retours cas"
 
     if aucun_responsable_legal?
+      puts "aucun responsable legal ... "
       flash[:error] = I18n.t(".dossier_non_trouver")
       redirect_to("/") && return
     elsif un_seul_responsable_legal?
+      puts "un seul responsable legal ... "
       dossier_eleve = @resp_legals[0].dossier_eleve
 
+      puts "dossier_eleve #{dossier_eleve.inspect}"
       identifie_et_redirige(dossier_eleve) if eleve_et_etablissement_correspondant?(dossier_eleve, data)
     elsif plusieurs_responsables_legaux?
+      puts "plusieurs responsable legaux"
       render :choix_dossier_eleve, layout: "connexion"
     else
-      flash[:notice] = "Nous n'avons pas pu retrouver votre dossier sur DossierSCO. Nous nous excusons pour ce soucis."
+      puts "personne trouvé..."
+      flash[:erreur] = "Nous n'avons pas pu retrouver votre dossier sur DossierSCO. Nous nous excusons pour ce soucis."
       redirect_to "/"
     end
+    puts "-" * 40
   end
 
   def choix_dossier
