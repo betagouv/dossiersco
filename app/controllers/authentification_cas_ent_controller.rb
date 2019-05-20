@@ -111,6 +111,7 @@ class AuthentificationCasEntController < ApplicationController
   end
 
   def retrouve_liste_resp_legal(data)
+    puts "data : #{data.inspect}"
     email = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["email"]
     prenom = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["firstName"]
     nom = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["lastName"]
