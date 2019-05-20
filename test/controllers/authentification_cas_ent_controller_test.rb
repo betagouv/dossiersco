@@ -17,23 +17,23 @@ class AuthentificationCasEntControllerTest < ActionDispatch::IntegrationTest
                               resp_legal: [resp_legal],
                               eleve: eleve)
 
-    request = "https://ent.parisclassenumerique.fr/cas/serviceValidate?service=https%3A%2F%2Fdemo.dossiersco.fr%2Fretour-ent&ticket="
+    request = "https://ent.parisclassenumerique.fr/cas/serviceValidate?service=https://demo.dossiersco.fr/retour-ent&ticket=something"
     body_response = File.read(fixture_file_upload("files/retour_ent.xml"))
 
     stub_request(:get, request).to_return(body: body_response)
 
-    get retour_ent_url
+    get retour_ent_url, params: { ticket: 'something' }
 
     assert_redirected_to "/#{dossier_eleve.etape_la_plus_avancee}"
   end
 
   test "pas de dossier correspondant" do
-    request = "https://ent.parisclassenumerique.fr/cas/serviceValidate?service=https%3A%2F%2Fdemo.dossiersco.fr%2Fretour-ent&ticket="
+    request = "https://ent.parisclassenumerique.fr/cas/serviceValidate?service=https://demo.dossiersco.fr/retour-ent&ticket=something"
     body_response = File.read(fixture_file_upload("files/retour_ent.xml"))
 
     stub_request(:get, request).to_return(body: body_response)
 
-    get retour_ent_url
+    get retour_ent_url, params: { ticket: 'something' }
 
     assert_redirected_to "/"
     assert_equal I18n.t(".dossier_non_trouver"), flash[:error]
@@ -52,12 +52,12 @@ class AuthentificationCasEntControllerTest < ActionDispatch::IntegrationTest
                               resp_legal: [resp_legal],
                               eleve: eleve)
 
-    request = "https://ent.parisclassenumerique.fr/cas/serviceValidate?service=https%3A%2F%2Fdemo.dossiersco.fr%2Fretour-ent&ticket="
+    request = "https://ent.parisclassenumerique.fr/cas/serviceValidate?service=https://demo.dossiersco.fr/retour-ent&ticket=something"
     body_response = File.read(fixture_file_upload("files/retour_ent_plusieurs_etablissements.xml"))
 
     stub_request(:get, request).to_return(body: body_response)
 
-    get retour_ent_url
+    get retour_ent_url, params: { ticket: 'something' }
 
     assert_redirected_to "/#{dossier_eleve.etape_la_plus_avancee}"
   end
@@ -87,12 +87,12 @@ class AuthentificationCasEntControllerTest < ActionDispatch::IntegrationTest
                                     resp_legal: [resp_legal],
                                     eleve: autre_eleve)
 
-    request = "https://ent.parisclassenumerique.fr/cas/serviceValidate?service=https%3A%2F%2Fdemo.dossiersco.fr%2Fretour-ent&ticket="
+    request = "https://ent.parisclassenumerique.fr/cas/serviceValidate?service=https://demo.dossiersco.fr/retour-ent&ticket=something"
     body_response = File.read(fixture_file_upload("files/retour_ent_plusieurs_enfants.xml"))
 
     stub_request(:get, request).to_return(body: body_response)
 
-    get retour_ent_url
+    get retour_ent_url, params: {ticket: 'something'}
 
     assert_response :success
     assert_template "authentification_cas_ent/choix_dossier_eleve", format: "html"

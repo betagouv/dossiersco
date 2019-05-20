@@ -92,7 +92,7 @@ class AuthentificationCasEntController < ApplicationController
     params = {service: URL_RETOUR, ticket: ticket}
     uri.query = URI.encode_www_form(params)
     puts "uri : #{uri}"
-    res = Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
+    res = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
       req = Net::HTTP::Get.new(uri)
       http.request(req)
     end
