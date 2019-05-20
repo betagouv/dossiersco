@@ -67,6 +67,7 @@ class AuthentificationCasEntController < ApplicationController
 
     dossier_eleve = resp_legal.dossier_eleve
 
+    puts "dossier_eleve ?? : #{dossier_eleve.inspect}"
     if dossier_eleve.present?
       dossier_eleve.update(etat: "connecté") if dossier_eleve.etat == "pas connecté"
       puts "dossier_eleve identifiant: #{dossier_eleve.eleve.identifiant}"
@@ -91,7 +92,6 @@ class AuthentificationCasEntController < ApplicationController
     uri = URI("#{URL_CAS}/serviceValidate")
     params = { service: URL_RETOUR, ticket: ticket }
     uri.query = URI.encode_www_form(params)
-    puts "uri : #{uri}"
     res = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
       req = Net::HTTP::Get.new(uri)
       http.request(req)
@@ -115,7 +115,6 @@ class AuthentificationCasEntController < ApplicationController
   end
 
   def retrouve_liste_resp_legal(data)
-    puts "data : #{data.inspect}"
     email = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["email"]
     prenom = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["firstName"]
     nom = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["lastName"]
