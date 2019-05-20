@@ -64,7 +64,6 @@ Metrics/MethodLength:
 Metrics/ClassLength:
   Exclude:
     - 'test/**/*'
-    - 'app/controllers/authentification_cas_ent_controller.rb'
     - 'app/controllers/inscriptions_controller.rb'
     - 'app/controllers/accueil_controller.rb'
     - 'app/jobs/importer_siecle.rb'
@@ -79,7 +78,6 @@ Metrics/AbcSize:
     - 'app/services/pdf_convocation.rb'
     - 'app/controllers/tache_imports_controller.rb'
     - 'app/controllers/configurations_controller.rb'
-    - 'app/controllers/authentification_cas_ent_controller.rb'
     - 'app/controllers/accueil_controller.rb'
     - 'app/controllers/suivi_controller.rb'
     - 'app/controllers/dossiers_affelnet_controller.rb'
@@ -102,6 +100,5 @@ Metrics/CyclomaticComplexity:
 Metrics/PerceivedComplexity:
   Exclude:
     - 'app/jobs/importer_siecle.rb'
-    - 'app/controllers/authentification_cas_ent_controller.rb'
     - 'app/controllers/accueil_controller.rb'
     - 'app/services/pdf_fiche_infirmerie.rb'

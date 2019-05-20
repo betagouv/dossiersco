@@ -12,22 +12,11 @@ class AuthentificationCasEntController < ApplicationController
   end
 
   def retrouve_les_responsables_legaux_depuis(data)
-    @resp_legals = []
+    resp_legals = []
     retrouve_liste_resp_legal(data).each do |resp_legal|
-      @resp_legals << resp_legal
+      resp_legals << resp_legal
     end
-  end
-
-  def aucun_responsable_legal?
-    @resp_legals.empty?
-  end
-
-  def un_seul_responsable_legal?
-    @resp_legals.length == 1 && @resp_legals[0].dossier_eleve
-  end
-
-  def plusieurs_responsables_legaux?
-    @resp_legals.length > 1
+    resp_legals
   end
 
   def identifie_et_redirige(dossier_eleve)
@@ -44,21 +33,30 @@ class AuthentificationCasEntController < ApplicationController
 
   def retour_cas
     data = donnees_ent(params[:ticket])
+    responsables = retrouve_les_responsables_legaux_depuis(data)
 
-    retrouve_les_responsables_legaux_depuis(data)
-
-    if aucun_responsable_legal?
-      flash[:error] = I18n.t(".dossier_non_trouver")
-      redirect_to("/") && return
-    elsif un_seul_responsable_legal?
-      dossier_eleve = @resp_legals[0].dossier_eleve
-      identifie_et_redirige(dossier_eleve) if eleve_et_etablissement_correspondant?(dossier_eleve, data)
-    elsif plusieurs_responsables_legaux?
+    if un_seul_dossier_correspondant(responsables, data)
+      identifie_et_redirige(responsables.first.dossier_eleve)
+    elsif plusieurs_responsables_legaux?(responsables)
+      @resp_legals = responsables
       render :choix_dossier_eleve, layout: "connexion"
     else
-      flash[:erreur] = "Nous n'avons pas pu retrouver votre dossier sur DossierSCO. Nous nous excusons pour ce soucis."
+      flash[:error] = I18n.t(".dossier_non_trouve")
       redirect_to "/"
     end
+  end
+
+  def un_seul_dossier_correspondant(responsables, data)
+    un_seul_responsable_legal?(responsables) &&
+      eleve_et_etablissement_correspondant?(responsables.first.dossier_eleve, data)
+  end
+
+  def un_seul_responsable_legal?(resp_legals)
+    resp_legals.length == 1 && resp_legals[0].dossier_eleve
+  end
+
+  def plusieurs_responsables_legaux?(resp_legals)
+    resp_legals.length > 1
   end
 
   def choix_dossier
@@ -68,16 +66,7 @@ class AuthentificationCasEntController < ApplicationController
 
     if dossier_eleve.present?
       dossier_eleve.update(etat: "connecté") if dossier_eleve.etat == "pas connecté"
-      session[:identifiant] = dossier_eleve.eleve.identifiant
-
-      if dossier_eleve.derniere_etape.present?
-        redirect_to "/#{dossier_eleve.derniere_etape}"
-      elsif dossier_eleve.etape_la_plus_avancee.present?
-        redirect_to "/#{dossier_eleve.etape_la_plus_avancee}"
-      else
-        redirect_to "accueil"
-      end
-
+      identifie_et_redirige(dossier_eleve)
     else
       session[:message_erreur] = t("identification.erreurs.identifiants_inconnus")
       redirect_to root_path
@@ -95,14 +84,20 @@ class AuthentificationCasEntController < ApplicationController
     Hash.from_xml(res.body)
   end
 
-  def retrouve_dossier_eleve; end
-
   def eleve_et_etablissement_correspondant?(dossier_eleve, data)
+    etablissement_correspondant?(dossier_eleve, data) &&
+      eleve_correspondant?(dossier_eleve, data)
+  end
+
+  def etablissement_correspondant?(dossier_eleve, data)
     etablissements = retrouve_etablissements(data)
+    etablissements.include?(dossier_eleve.etablissement)
+  end
+
+  def eleve_correspondant?(dossier_eleve, data)
     enfants = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["children"]
     eleves = JSON.parse(enfants).map { |e| e["displayName"] }
-    eleve_nom_complet = "#{dossier_eleve.eleve.nom.upcase} #{dossier_eleve.eleve.prenom}"
-    etablissements.include?(dossier_eleve.etablissement) && eleves.include?(eleve_nom_complet)
+    eleves.include?("#{dossier_eleve.eleve.nom.upcase} #{dossier_eleve.eleve.prenom}")
   end
 
   def retrouve_etablissements(data)
@@ -111,10 +106,11 @@ class AuthentificationCasEntController < ApplicationController
   end
 
   def retrouve_liste_resp_legal(data)
-    email = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["email"]
-    prenom = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["firstName"]
-    nom = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["lastName"]
-    adresse = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["address"]
+    attributes = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]
+    email = attributes["email"]
+    prenom = attributes["firstName"]
+    nom = attributes["lastName"]
+    adresse = attributes["address"]
     RespLegal.where(email: email, prenom: prenom, nom: nom, adresse: adresse)
   end
 
