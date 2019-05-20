@@ -87,7 +87,9 @@ class AuthentificationCasEntController < ApplicationController
 
   def donnees_ent(ticket)
     url = "#{URL_CAS}/serviceValidate?service=#{URL_RETOUR}&ticket=#{ticket}"
+    puts "url : #{url}"
     url = URI.parse(url)
+    puts "url parse : #{url}"
     req = Net::HTTP::Get.new(url.to_s)
     res = Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
       http.request(req)
