@@ -43,7 +43,7 @@ demo:
   script:
   - gem install dpl
   - dpl --provider=scalingo --api-token=$SCALINGO_PRODUCTION_KEY --remote=git@scalingo.com:dossiersco-demo.git --branch=HEAD:master
-  - echo $DATABASE_URL
+  - echo $SCALINGO_POSTGRESQL_URL
   - bundle exec rails db:migrate
 
 production:
