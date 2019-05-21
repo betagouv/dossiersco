@@ -10,7 +10,7 @@ class PdfConvocation
     FileUtils.mkdir_p(dossier) unless File.directory?(dossier)
     Prawn::Document.generate("#{dossier}/#{nom}") do |pdf|
       nombre_de_dossier = 0
-      dossiers_eleve.sort_by{|d| d.eleve.nom}.each do |dossier_eleve|
+      dossiers_eleve.sort_by { |d| d.eleve.nom }.each do |dossier_eleve|
         nombre_de_dossier += 1
         pdf.default_leading 3
         pdf.move_down 20
