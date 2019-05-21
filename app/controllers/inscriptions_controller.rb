@@ -115,7 +115,7 @@ class InscriptionsController < ApplicationController
     rescue ErreurMoyenDeContactNonTrouve => e
       flash[:error] = "Votre message ne peut être acheminé. #{e.message}"
     end
-    redirect_to "/agent/liste_des_eleves"
+    redirect_to "/agent/eleve/#{eleve.identifiant}#echanges"
   end
 
   def relance_emails

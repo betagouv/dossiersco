@@ -329,6 +329,14 @@
 <script type="text/javascript" charset="utf-8">
   // Onglets
   $(document).ready(function() {
+    console.log(location.hash)
+    if (location.hash) {
+      $('.lien-section').removeClass('active')
+      $('.lien-section[data-target="' + location.hash + '"]').addClass('active')
+      $('.main').addClass('hide')
+      $(location.hash).removeClass('hide')
+    }
+
     $('.lien-section').click(function() {
       const target = $(this).data('target')
       $('.lien-section').removeClass('active')
