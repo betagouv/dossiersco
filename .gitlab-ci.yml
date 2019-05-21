@@ -35,22 +35,23 @@ tests:
   - bundle exec rails test
 
 demo:
-  variables:
-    DATABASE_URL: $SCALINGO_POSTGRESQL_URL
   stage: deploy
   environment:
     name: production
+  variables:
+    DATABASE_URL: $SCALINGO_POSTGRESQL_URL
   script:
   - gem install dpl
   - dpl --provider=scalingo --api-token=$SCALINGO_PRODUCTION_KEY --remote=git@scalingo.com:dossiersco-demo.git --branch=HEAD:master
+  - echo $DATABASE_URL
   - bundle exec rails db:migrate
 
 production:
-  variables:
-    DATABASE_URL: $SCALINGO_POSTGRESQL_URL
   stage: deploy
   environment:
     name: production
+  variables:
+    DATABASE_URL: $SCALINGO_POSTGRESQL_URL
   script:
   - gem install dpl
   - dpl --provider=scalingo --api-token=$SCALINGO_PRODUCTION_KEY --remote=git@scalingo.com:dossiersco-production.git --branch=HEAD:master
