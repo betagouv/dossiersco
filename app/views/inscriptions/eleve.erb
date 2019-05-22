@@ -22,7 +22,7 @@
                 <h4><%= '*' if piece.obligatoire %> <%= piece.nom %></h4>
                 <div class="card-relat document">
                   <%= form_for [:agent, piece], multipart: true, html: { class: "forms" } do |form| %>
-                    <% if piece.fichiers[0].present? %>
+                    <% if piece.fichiers.count > 0 %>
                       <% piece.fichiers.each do |fichier| %>
                         <div class="lien-piece-jointe" data-url="<%= fichier.url %>" data-nom="<%= piece.nom %>">
                           <% if fichier.content_type.present? && fichier.content_type.start_with?("image/") %>
