@@ -11,6 +11,7 @@ class Etablissement < ActiveRecord::Base
   has_many :mef, dependent: :destroy
   has_many :options_pedagogiques, dependent: :destroy
   has_many :regimes_sortie, dependent: :destroy
+  has_many :fichier_a_telechargers, dependent: :destroy
 
   mount_uploader :reglement_demi_pension, FichierEtablissementUploader
 
