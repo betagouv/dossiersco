@@ -80,8 +80,6 @@ class PdfConvocation
         pdf.text "Votre identifiant est : <b>#{dossier_eleve.eleve.identifiant}</b> ", inline_format: true
 
         pdf.move_down 10
-        pdf.text "En réalisant la démarche en ligne vous n’avez pas à nous remettre le dossier papier.", style: :bold,
-                                                                                                         indent_paragraphs: 20
         pdf.text "Cet outil numérique relève d’une démarche d’innovation ; nous sommes très intéressés par vos retours."
         pdf.text "Si vous ne souhaitez pas réaliser cette démarche par Internet, veuillez prendre contact avec le collège."
         pdf.draw_text etablissement.signataire, at: [250, 90]

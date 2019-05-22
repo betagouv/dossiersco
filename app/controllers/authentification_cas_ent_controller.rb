@@ -11,14 +11,6 @@ class AuthentificationCasEntController < ApplicationController
     render layout: false
   end
 
-  def retrouve_les_responsables_legaux_depuis(data)
-    resp_legals = []
-    retrouve_liste_resp_legal(data).each do |resp_legal|
-      resp_legals << resp_legal
-    end
-    resp_legals
-  end
-
   def identifie_et_redirige(dossier_eleve)
     session[:identifiant] = dossier_eleve.eleve.identifiant
 
@@ -44,6 +36,14 @@ class AuthentificationCasEntController < ApplicationController
       flash[:error] = I18n.t(".dossier_non_trouve")
       redirect_to "/"
     end
+  end
+
+  def retrouve_les_responsables_legaux_depuis(data)
+    resp_legals = []
+    retrouve_liste_resp_legal(data).each do |resp_legal|
+      resp_legals << resp_legal
+    end
+    resp_legals
   end
 
   def un_seul_dossier_correspondant(responsables, data)
