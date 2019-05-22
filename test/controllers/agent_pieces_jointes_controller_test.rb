@@ -19,7 +19,7 @@ class AgentPiecesJointesControllerTest < ActionDispatch::IntegrationTest
       eleve_id: eleve.identifiant
     }
 
-    assert_redirected_to "/agent/eleve/#{eleve.identifiant}#dossier"
+    assert_redirected_to "/agent/eleve/#{eleve.identifiant}"
   end
 
 end
