@@ -47,7 +47,6 @@ class AccueilController < ApplicationController
     @eleve.dossier_eleve.update derniere_etape: "eleve"
     @options_pedagogiques_selectionnees = @eleve.dossier_eleve.options_pedagogiques
     @options_pedagogiques = OptionPedagogique.filtre_par(@eleve.dossier_eleve.mef_destination)
-    @options_etablissement = OptionPedagogique.where(etablissement: @eleve.dossier_eleve.etablissement)
 
     @option_origines_ids = @eleve.dossier_eleve.options_origines.map { |k, _v| k.to_i }
     render "accueil/eleve"

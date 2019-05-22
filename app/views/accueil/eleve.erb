@@ -133,14 +133,6 @@
           <%= option.nom %>
         <% end %>
       <% end %>
-
-    <% else %>
-      <% @options_etablissement.each do |option| %>
-        <%= label_tag do %>
-          <%= check_box_tag option.nom, option.id %>
-          <%= option.nom %>
-        <% end %>
-      <% end %>
     <% end %>
 
     <%= render partial: 'partials/nouveau_precedent_suivant', :locals => { :precedent => "accueil"} %>

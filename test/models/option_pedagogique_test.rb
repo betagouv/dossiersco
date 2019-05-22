@@ -12,6 +12,11 @@ class OptionPedagogiqueTest < ActiveSupport::TestCase
     assert_equal [], OptionPedagogique.filtre_par(nil)
   end
 
+  test "#firlte_par avec mef sans option, renvoie un tableau vide" do
+    mef = Fabricate(:mef, options_pedagogiques: [])
+    assert_equal [], OptionPedagogique.filtre_par(mef)
+  end
+
   test "filtre_par renvoie les options de ce mef" do
     mef = Fabricate(:mef)
     autre_mef = Fabricate(:mef)
