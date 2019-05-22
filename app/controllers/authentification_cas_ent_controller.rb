@@ -106,11 +106,16 @@ class AuthentificationCasEntController < ApplicationController
   end
 
   def retrouve_liste_resp_legal(data)
+    puts "data : #{data.inspect}"
     attributes = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]
     email = attributes["email"]
+    puts "email : #{email.inspect}"
     prenom = attributes["firstName"]
+    puts "prenom : #{prenom.inspect}"
     nom = attributes["lastName"]
+    puts "nom : #{nom.inspect}"
     adresse = attributes["address"]
+    puts "adresse : #{adresse.inspect}"
     RespLegal.where(email: email, prenom: prenom, nom: nom, adresse: adresse)
   end
 
