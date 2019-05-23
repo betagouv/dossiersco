@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_23_092704) do
+ActiveRecord::Schema.define(version: 2019_05_23_142754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -178,6 +178,7 @@ ActiveRecord::Schema.define(version: 2019_05_23_092704) do
     t.datetime "updated_at", null: false
     t.bigint "etablissement_id"
     t.string "code_matiere"
+    t.string "libelle"
     t.index ["etablissement_id"], name: "index_options_pedagogiques_on_etablissement_id"
   end
 

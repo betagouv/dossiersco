@@ -30,7 +30,7 @@ class OptionsPedagogiquesControllerTest < ActionDispatch::IntegrationTest
     identification_agent(admin)
 
     assert_difference("OptionPedagogique.count") do
-      params = { option_pedagogique: { nom: "maçonnerie", code_matiere: '123' } }
+      params = { option_pedagogique: { nom: "maçonnerie", code_matiere: "123" } }
       post configuration_options_pedagogiques_url, params: params
     end
 

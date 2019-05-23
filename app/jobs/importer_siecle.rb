@@ -111,9 +111,10 @@ class ImporterSiecle < ApplicationJob
 
         option = OptionPedagogique.find_or_create_by(
           etablissement_id: etablissement_id,
-          nom: nom,
+          libelle: nom,
           code_matiere: code
         )
+        option.update(nom: nom) if option.nom.nil?
         option.update(obligatoire: true) if ligne_siecle[colonne + 1] == "O"
 
         if ligne_siecle[COLONNES[:code_mef]].present?
