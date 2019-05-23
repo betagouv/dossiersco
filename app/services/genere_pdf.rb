@@ -30,7 +30,9 @@ class GenerePdf
         end
       end
 
-      fichier_a_telecharger = FichierATelecharger.create!(contenu: temp_file, etablissement: etablissement)
+      fichier_a_telecharger = FichierATelecharger.create!(contenu: temp_file,
+                                                          etablissement: etablissement,
+                                                          nom: pdf_class)
 
     # ensure
       temp_file.close

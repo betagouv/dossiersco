@@ -31,9 +31,9 @@ class AgentMailer < ApplicationMailer
     end
   end
 
-  def convocation(agent, zip)
+  def convocation(agent, fichier)
     @agent = agent
-    @fichier = zip
+    @fichier = fichier
 
     mail(subject: "Convocations pour l'inscription sur DossierSCO", to: @agent.email) do |format|
       format.html
@@ -41,9 +41,9 @@ class AgentMailer < ApplicationMailer
     end
   end
 
-  def fiche_infirmerie(agent, zip)
+  def fiche_infirmerie(agent, fichier)
     @agent = agent
-    attachments["fiches-infirmerie.zip"] = { mime_type: "application/zip", content: zip }
+    @fichier = fichier
 
     mail(subject: "Fiches infirmerie DossierSCO", to: @agent.email) do |format|
       format.html

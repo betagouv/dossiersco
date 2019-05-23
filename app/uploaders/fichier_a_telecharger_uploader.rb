@@ -16,10 +16,8 @@ class FichierATelechargerUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    if original_filename
-      @name ||= Digest::MD5.hexdigest(File.dirname(current_path))
-      "#{@name}.#{file.extension}.zip"
-    end
+    @name = model.nom || Digest::MD5.hexdigest(File.dirname(current_path))
+    "#{@name}.zip"
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:

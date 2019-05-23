@@ -270,13 +270,13 @@ fr:
       ajouter_piece_justificative: Ajouter une pièce
   fiches_infirmeries:
     generation_fiches_infirmerie:
-      generation_fiche_infirmerie: La génération des fiches infirmerie est en cours, un email va vous être envoyé avec celles-ci en pièce jointe
+      generation_fiche_infirmerie: La génération des fiches infirmerie est en cours, un email va vous être envoyé avec un lien pour télécharger le dossier
     fiches_infirmeries:
       fiches_infirmerie: Fiches infirmerie
       telecharger_fiches_infirmeries: Télécharger les fiches infirmerie
   convocations:
     generation_convocations:
-      generation_convocation: La génération des convocations est en cours, un email va vous être envoyé avec celles-ci en pièce jointe
+      generation_convocation: La génération des convocations est en cours, un email va vous être envoyé avec un lien pour télécharger le dossier
     convocations:
       telecharger_convocations: "Télécharger les convocations pour l'inscription"
       telechargement_en_cours: "La génération des documents est en cours, cela peut prendre un peut de temps"
