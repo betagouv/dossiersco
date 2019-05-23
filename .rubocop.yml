@@ -89,6 +89,7 @@ Metrics/AbcSize:
     - 'app/models/resp_legal.rb'
     - 'app/jobs/importer_affelnet.rb'
     - 'app/services/genere_pdf.rb'
+    - 'app/controllers/authentification_cas_ent_controller.rb'
 
 Metrics/CyclomaticComplexity:
   Exclude:
