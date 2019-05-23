@@ -6,7 +6,11 @@ class FichesInfirmeriesController < ApplicationController
 
   before_action :identification_agent
 
-  def fiches_infirmeries; end
+  def fiches_infirmeries
+    @fichiers_infirmerie = FichierATelecharger
+                           .where(nom: "PdfFicheInfirmerie", etablissement: @agent_connecte.etablissement)
+                           .order("created_at DESC")
+  end
 
   def generation_fiches_infirmerie
     etablissement = @agent_connecte.etablissement

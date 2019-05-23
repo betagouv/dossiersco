@@ -40,6 +40,15 @@
       <h3><%= t('.titre_export') %></h3>
     </div>
     <p><%= t('.export_classes') %></p>
+
+    <% if @fichiers_a_telecharger.count > 0 %>
+      <p>Historique des fichiers :</p>
+      <ul>
+        <% @fichiers_a_telecharger.each do |fichier| %>
+          <li><%= link_to fichier.created_at.strftime('Le %e/%m/%Y à %Hh%M'), fichier.contenu.url %></li>
+        <% end %>
+      </ul>
+    <% end %>
     <%= link_to t('.telecharger'), export_options_configuration_exports_path, class: 'button' %>
   </div>
 

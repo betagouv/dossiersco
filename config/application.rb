@@ -12,6 +12,7 @@ module App
   class Application < Rails::Application
 
     # Initialize configuration defaults for originally generated Rails version.
+    config.time_zone = 'Paris'
     config.load_defaults 5.2
     I18n.config.available_locales = :fr
     config.i18n.default_locale = :fr

@@ -23,20 +23,23 @@ class GenerePdf
     nom_zip = "convocations.zip"
     temp_file = Tempfile.new(nom_zip)
 
-    begin
-      Zip::File.open(temp_file.path, Zip::File::CREATE) do |zipfile|
-        noms_pdf.each do |nom_fichier|
-          zipfile.add(nom_fichier, File.join(dossier, nom_fichier))
-        end
+    # begin
+    Zip::File.open(temp_file.path, Zip::File::CREATE) do |zipfile|
+      noms_pdf.each do |nom_fichier|
+        zipfile.add(nom_fichier, File.join(dossier, nom_fichier))
       end
-
-      zip_data = File.read(temp_file.path)
-    ensure
-      temp_file.close
-      temp_file.unlink
-      FileUtils.rm_rf("tmp/#{etablissement.id}")
     end
-    zip_data
+
+    fichier_a_telecharger = FichierATelecharger.create!(contenu: temp_file,
+                                                        etablissement: etablissement,
+                                                        nom: pdf_class)
+
+    # ensure
+    temp_file.close
+    temp_file.unlink
+    FileUtils.rm_rf("tmp/#{etablissement.id}")
+    # end
+    fichier_a_telecharger
   end
 
 end

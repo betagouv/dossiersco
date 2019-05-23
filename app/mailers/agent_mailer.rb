@@ -31,31 +31,11 @@ class AgentMailer < ApplicationMailer
     end
   end
 
-  def convocation(agent, zip)
+  def convocation(agent, fichier)
     @agent = agent
-    attachments["convocations.zip"] = { mime_type: "application/zip", content: zip }
+    @fichier = fichier
 
     mail(subject: "Convocations pour l'inscription sur DossierSCO", to: @agent.email) do |format|
-      format.html
-      format.text
-    end
-  end
-
-  def fiche_infirmerie(agent, zip)
-    @agent = agent
-    attachments["fiches-infirmerie.zip"] = { mime_type: "application/zip", content: zip }
-
-    mail(subject: "Fiches infirmerie DossierSCO", to: @agent.email) do |format|
-      format.html
-      format.text
-    end
-  end
-
-  def export_eleves_xlsx(agent, lignes)
-    @agent = agent
-    attachments["eleves.xlsx"] = { mime_type: "application/vnd.ms-excel", content: lignes }
-
-    mail(subject: "Elèves par option", to: @agent.email) do |format|
       format.html
       format.text
     end

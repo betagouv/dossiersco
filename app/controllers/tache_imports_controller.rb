@@ -8,6 +8,9 @@ class TacheImportsController < ApplicationController
   def new
     @tache = agent_connecte.etablissement.tache_import.last ||
              TacheImport.new(etablissement: agent_connecte.etablissement)
+    @fichiers_a_telecharger = FichierATelecharger
+                              .where(nom: "eleves", etablissement: agent_connecte.etablissement)
+                              .order("created_at DESC")
   end
 
   def create

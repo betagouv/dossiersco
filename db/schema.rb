@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_20_134320) do
+ActiveRecord::Schema.define(version: 2019_05_23_092704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,6 +128,15 @@ ActiveRecord::Schema.define(version: 2019_05_20_134320) do
     t.string "mot_accueil"
   end
 
+  create_table "fichier_a_telechargers", force: :cascade do |t|
+    t.bigint "etablissement_id"
+    t.string "contenu"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "nom"
+    t.index ["etablissement_id"], name: "index_fichier_a_telechargers_on_etablissement_id"
+  end
+
   create_table "mef", force: :cascade do |t|
     t.string "libelle"
     t.string "code"
@@ -240,6 +249,7 @@ ActiveRecord::Schema.define(version: 2019_05_20_134320) do
   add_foreign_key "dossier_eleves_options_pedagogiques", "dossier_eleves"
   add_foreign_key "dossier_eleves_options_pedagogiques", "options_pedagogiques"
   add_foreign_key "dossiers_affelnet", "etablissements"
+  add_foreign_key "fichier_a_telechargers", "etablissements"
   add_foreign_key "options_pedagogiques", "etablissements"
   add_foreign_key "regimes_sortie", "etablissements"
 end
