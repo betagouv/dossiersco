@@ -10,6 +10,7 @@ class ConvocationsController < ApplicationController
     etablissement = @agent_connecte.etablissement
     @eleves_non_inscrits = DossierEleve.pour(etablissement).a_convoquer
     @eleves_non_inscrits = @eleves_non_inscrits.paginate(page: params[:page], per_page: 10)
+    @fichiers_convocations = FichierATelecharger.where(nom: "PdfConvocation", etablissement: etablissement).order("created_at DESC")
   end
 
   def generation_convocations

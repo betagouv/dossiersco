@@ -65,8 +65,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :fichier_a_telechargers, only: [:show]
-
   namespace :api do
     resource :communes, only: :[] do
       collection do

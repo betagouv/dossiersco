@@ -41,24 +41,4 @@ class AgentMailer < ApplicationMailer
     end
   end
 
-  def fiche_infirmerie(agent, fichier)
-    @agent = agent
-    @fichier = fichier
-
-    mail(subject: "Fiches infirmerie DossierSCO", to: @agent.email) do |format|
-      format.html
-      format.text
-    end
-  end
-
-  def export_eleves_xlsx(agent, lignes)
-    @agent = agent
-    attachments["eleves.xlsx"] = { mime_type: "application/vnd.ms-excel", content: lignes }
-
-    mail(subject: "Elèves par option", to: @agent.email) do |format|
-      format.html
-      format.text
-    end
-  end
-
 end

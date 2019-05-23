@@ -7,6 +7,16 @@
               class: 'button mb-2',
               id: 'telecharger_convocations' %>
 
+  <% if @fichiers_convocations.count > 0 %>
+    <p><%= t('.historique') %></p>
+    <ul>
+      <% @fichiers_convocations.each do |fichier| %>
+        <li><%= link_to fichier.created_at.strftime('Le %e/%m/%Y à %Hh%M'), fichier.contenu.url %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+
   <table id="options" class="table table-striped table-bordered table-condensed table-hover">
     <thead>
       <tr>

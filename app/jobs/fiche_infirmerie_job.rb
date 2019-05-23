@@ -2,12 +2,9 @@
 
 class FicheInfirmerieJob < ActiveJob::Base
 
-  def perform(etablissement, agent)
+  def perform(etablissement, _agent)
     pdf = GenerePdf.new
-    fichier_a_telecharger = pdf.generer_pdf_par_classes(etablissement, "PdfFicheInfirmerie")
-
-    mailer = AgentMailer.fiche_infirmerie(agent, fichier_a_telecharger)
-    mailer.deliver_now
+    pdf.generer_pdf_par_classes(etablissement, "PdfFicheInfirmerie")
   end
 
 end

@@ -12,4 +12,14 @@
               id: 'telecharger_convocations'
   %>
 
+  <% if @fichiers_infirmerie.count > 0 %>
+    <p><%= t('.historique') %></p>
+    <ul>
+      <% @fichiers_infirmerie.each do |fichier| %>
+        <li><%= link_to fichier.created_at.strftime('Le %e/%m/%Y à %Hh%M'), fichier.contenu.url %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+
 </section>

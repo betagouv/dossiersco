@@ -8,8 +8,10 @@ class ExportElevesXlsxJob < ActiveJob::Base
 
     creer_fichier(lignes, entete, agent)
 
-    mailer = AgentMailer.export_eleves_xlsx(agent, File.read("tmp/eleves-#{agent.etablissement.id}.xlsx"))
-    mailer.deliver_now
+    temp_file = creer_zip(agent)
+
+    FichierATelecharger.create!(contenu: temp_file, etablissement: agent.etablissement, nom: "eleves")
+
     FileUtils.rm_rf("tmp/eleves-#{agent.etablissement.id}.xlsx")
   end
 
@@ -63,6 +65,19 @@ class ExportElevesXlsxJob < ActiveJob::Base
       end
       p.serialize("tmp/eleves-#{agent.etablissement.id}.xlsx")
     end
+  end
+
+  def creer_zip(agent)
+    dossier = "tmp"
+    nom_zip = "eleves.zip"
+    nom_fichier = "eleves-#{agent.etablissement.id}.xlsx"
+    temp_file = Tempfile.new(nom_zip)
+
+    Zip::File.open(temp_file.path, Zip::File::CREATE) do |zipfile|
+      zipfile.add(nom_fichier, File.join(dossier, nom_fichier))
+    end
+
+    temp_file
   end
 
 end

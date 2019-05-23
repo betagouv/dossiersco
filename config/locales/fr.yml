@@ -163,7 +163,7 @@ fr:
   configuration:
     exports:
       export_options:
-        export_des_options: La génération du fichier est en cours, il va vous être envoyé par email
+        export_des_options: "La génération du fichier est en cours, il sera disponible sur cette page dans la partie 'Exporter un fichier'. Rechargez la page pour le faire apparaitre"
     regimes_sortie:
       update:
         mis_a_jour: Le régime d'autorisation de sortie a été mis à jour
@@ -270,15 +270,17 @@ fr:
       ajouter_piece_justificative: Ajouter une pièce
   fiches_infirmeries:
     generation_fiches_infirmerie:
-      generation_fiche_infirmerie: La génération des fiches infirmerie est en cours, un email va vous être envoyé avec un lien pour télécharger le dossier
+      generation_fiche_infirmerie: "La génération du fichier est en cours, il sera disponible sur cette page. Rechargez la pour le faire apparaitre"
     fiches_infirmeries:
+      historique: "Historique des fichiers générés :"
       fiches_infirmerie: Fiches infirmerie
       telecharger_fiches_infirmeries: Télécharger les fiches infirmerie
   convocations:
     generation_convocations:
-      generation_convocation: La génération des convocations est en cours, un email va vous être envoyé avec un lien pour télécharger le dossier
+      generation_convocation: "La génération du fichier est en cours, il sera disponible sur cette page. Rechargez la pour le faire apparaitre"
     convocations:
-      telecharger_convocations: "Télécharger les convocations pour l'inscription"
+      historique: "Historique des fichiers générés :"
+      telecharger_convocations: "Générer les convocations pour l'inscription"
       telechargement_en_cours: "La génération des documents est en cours, cela peut prendre un peut de temps"
       eleve_non_inscrit: Elèves pas encore inscrits
   inscriptions:
@@ -310,7 +312,7 @@ fr:
       titre_import: Importer un fichier
       titre_export: Exporter un fichier
       export_classes: Fichier Excel comprenant les options choisies par les familles ainsi que les régimes d'autorisation de sortie
-      telecharger: Télécharger le fichier
+      telecharger: Générer le fichier
       selectionner_fichier: "Sélectionnez un fichier au format xls"
       importer_fichier: "Importer un fichier"
       fichier_siecle: "SIECLE"
