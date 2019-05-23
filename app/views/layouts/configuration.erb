@@ -44,7 +44,7 @@
           <li class="nav__item <%= 'active' if request.fullpath.include? '/tache_import' %>">
             <%= link_to t('.import_export'), new_tache_import_path, {class: 'nav-link'} %>
           </li>
-          <li class="nav__item <%= 'active' if request.fullpath == '/options_pedagogiques' %>">
+          <li class="nav__item <%= 'active' if request.fullpath.include? '/options_pedagogiques' %>">
             <%= link_to 'Carte des formations', configuration_options_pedagogiques_path, {class: 'nav-link'} %>
           </li>
           <li class="nav__item <%= 'active' if request.fullpath.include? '/pieces_attendues' %>">

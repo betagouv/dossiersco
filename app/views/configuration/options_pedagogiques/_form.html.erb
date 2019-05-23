@@ -15,12 +15,6 @@
     <%= form.text_field :nom %>
   </div>
 
-  <%= form.collection_check_boxes(:mef_ids, @agent_connecte.etablissement.mef, :id, :libelle) do |b| %>
-    <div class=form__group">
-      <%= b.label(class: "label-inline") { b.check_box + b.text } %>
-    </div>
-  <% end %>
-
   <div class=form__group">
     <%= form.submit 'valider', class: 'button mt-2'  %>
   </div>

@@ -1,0 +1,31 @@
+<section class="section">
+  <h1>Options pédagogiques</h1>
+
+  <div class="text-right">
+    <%= link_to t('.ajouter_une_option'), new_configuration_option_pedagogique_path, {class: 'button-outline primary'} %>
+  </div>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Obligatoire</th>
+      <th></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @options_pedagogiques.each do |option| %>
+      <tr>
+        <td><%= option.nom %></td>
+        <td><%= option.obligatoire ? 'oui' : 'non' %></td>
+        <td><%= link_to("Supprimer", configuration_option_pedagogique_path(option),
+                         method: :delete, data: { confirm: 'Voulez-vous vraiment supprimer cette option ?' })
+          %></td>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <%= link_to 'Retour', configuration_options_pedagogiques_path, class: 'button-outline small secondary mt-2'%>
+</section>

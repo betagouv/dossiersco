@@ -13,6 +13,10 @@ module Configuration
       @options_pedagogiques = OptionPedagogique.where(etablissement: @agent_connecte.etablissement)
     end
 
+    def liste
+      @options_pedagogiques = OptionPedagogique.where(etablissement: @agent_connecte.etablissement)
+    end
+
     def new
       @option_pedagogique = OptionPedagogique.new
       @mef = Mef.all
@@ -28,6 +32,9 @@ module Configuration
       if @option_pedagogique.save
         redirect_to configuration_options_pedagogiques_url, notice: t(".option_cree")
       else
+        @option_pedagogique.errors.full_messages.each do |message|
+          flash[:alert] = message
+        end
         render :new
       end
     end
@@ -42,29 +49,21 @@ module Configuration
 
     def destroy
       @option_pedagogique.destroy
-      redirect_to configuration_options_pedagogiques_url, notice: t(".option_supprimee")
+      redirect_to liste_configuration_options_pedagogiques_path, notice: t(".option_supprimee")
     end
 
     def ajoute_option_au_mef
-      @mef = Mef.find(params[:id])
-      @option = OptionPedagogique.find(params[:option])
-      if @mef.options_pedagogiques.include?(@option)
-        head :ok
-      else
-        @mef.options_pedagogiques << @option
-        respond_to do |format|
-          format.js { render layout: false }
-        end
-      end
+      option = OptionPedagogique.find(params[:option_pedagogique])
+      mef = Mef.find(params[:id])
+      mef_option = MefOptionPedagogique.find_or_create_by(option_pedagogique: option, mef: mef)
+      mef_option.abandonnable = params[:abandonnable]
+      mef_option.save
+      redirect_to configuration_options_pedagogiques_path
     end
 
     def enleve_option_au_mef
-      @mef = Mef.find(params[:mef])
-      @option = OptionPedagogique.find(params[:id])
-      @mef.options_pedagogiques.delete(@option)
-      respond_to do |format|
-        format.js { render layout: false }
-      end
+      MefOptionPedagogique.find(params[:id]).destroy
+      redirect_to configuration_options_pedagogiques_path
     end
 
     def definie_abandonnabilite
@@ -80,7 +79,7 @@ module Configuration
     end
 
     def option_pedagogique_params
-      params.require(:option_pedagogique).permit(:nom, :obligatoire, :groupe, mef_ids: [])
+      params.require(:option_pedagogique).permit(:code_matiere, :nom, :obligatoire, :groupe, mef_ids: [])
     end
 
   end

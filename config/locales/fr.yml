@@ -178,7 +178,10 @@ fr:
       index:
         ajouter_un_regime: Ajouter un régime de sortie
     options_pedagogiques:
+      liste:
+        ajouter_une_option: Ajouter une option
       index:
+        liste_options: Liste des options
         ajouter_option: "Ajouter l'option"
         nouveau_mef: 'Nouveau Mef'
         nouvelle_option_pedagogique: 'Nouvelle option pédagogique'

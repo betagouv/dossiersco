@@ -7,6 +7,9 @@ class OptionPedagogique < ApplicationRecord
   has_many :mef_options_pedagogiques, dependent: :destroy
   has_many :mef, through: :mef_options_pedagogiques
 
+  validates :code_matiere, presence: true, allow_blank: false
+  validates :nom, presence: true, allow_blank: false
+
   def self.filtre_par(mef)
     return [] unless mef
 

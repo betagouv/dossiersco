@@ -2,8 +2,22 @@
   <div class="container">
     <h1 class="mb-3">Nouvelle Option Pedagogique</h1>
 
-    <%= render 'form', option_pedagogique: @option_pedagogique, url: configuration_options_pedagogiques_path %>
+    <%= form_with(model: @option_pedagogique, url: configuration_options_pedagogiques_path, local: true) do |form| %>
 
-    <%= link_to 'Retour', configuration_options_pedagogiques_path, class: 'button-outline small secondary mt-2'%>
+      <div class="form__group">
+        <%= form.label :nom %>
+        <%= form.text_field :nom %>
+      </div>
+
+      <div class="form__group">
+        <%= form.label :code_matiere %>
+        <%= form.text_field :code_matiere %>
+      </div>
+
+      <div class=form__group">
+        <%= form.submit 'valider', class: 'button mt-2'  %>
+      </div>
+    <% end %>
+    <%= link_to 'Retour', liste_configuration_options_pedagogiques_path, class: 'button-outline small secondary mt-2'%>
   </div>
 </section>

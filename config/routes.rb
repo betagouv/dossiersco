@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       end
       collection do
         post "definie_abandonnabilite"
+        get "liste"
       end
     end
     resources :mef

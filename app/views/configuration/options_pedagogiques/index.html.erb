@@ -2,6 +2,7 @@
   <h1>Carte des formations</h1>
 
   <div class="text-right">
+    <%= link_to t('.liste_options'), liste_configuration_options_pedagogiques_path, {class: 'button-outline primary'} %>
     <%= link_to t('.nouveau_mef'), new_configuration_mef_path, {class: 'button-outline primary'} %>
   </div>
 
@@ -28,11 +29,17 @@
                   <td><%= "#{mef_option.option_pedagogique.nom} #{mef_option.option_pedagogique.groupe} " %></td>
                   <td><%= select_tag "abandonnable", options_for_select([['Abandonnable', true], ['Non abandonnable', false]], selected: mef_option.abandonnable ), data: {id: mef_option.id} %></td>
                   <td><%= link_to t('.modifier'), edit_configuration_option_pedagogique_path(mef_option.option_pedagogique) %></td>
-                  <td><%= link_to enleve_option_au_mef_configuration_option_pedagogique_path(id: mef_option.option_pedagogique.id, mef: mef.id), method: :delete, remote: true do %><i class='fas fa-times'></i><% end %></td>
+                  <td><%= link_to enleve_option_au_mef_configuration_option_pedagogique_path(mef_option), method: :delete, remote: true do %><i class='fas fa-times'></i><% end %></td>
                 </tr>
               <% end %>
               </tbody>
             </table>
+            <button class="button mt-1 ajouter-option" data-id="mef-<%= mef.id %>">Ajouter une option au MEF</button>
+            <%= form_tag ajoute_option_au_mef_configuration_option_pedagogique_path(mef), remote: true, class: 'mt-1 hide', id: "mef-#{mef.id}" do %>
+              <%= select_tag :option_pedagogique, options_from_collection_for_select(@options_pedagogiques, "id", "nom") %>
+              <%= select_tag :abandonnable, options_for_select([['Abandonnable', true], ['Non abandonnable', false]]) %>
+              <%= button_tag 'Ajouter', class: 'button' %>
+            <% end %>
           </div>
         </div>
       </div>
@@ -43,8 +50,13 @@
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
 
+    $('.ajouter-option').click( function() {
+      const id = $(this).data('id')
+      $(this).hide()
+      $('#' + id).removeClass('hide')
+    })
+
     $('select[name=abandonnable]').change( function() {
-      console.log(this.value)
       $.ajax({
         method: 'POST',
         url: '/configuration/options_pedagogiques/definie_abandonnabilite',

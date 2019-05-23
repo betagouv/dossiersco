@@ -30,7 +30,7 @@ class OptionsPedagogiquesControllerTest < ActionDispatch::IntegrationTest
     identification_agent(admin)
 
     assert_difference("OptionPedagogique.count") do
-      params = { option_pedagogique: { nom: "maçonnerie" } }
+      params = { option_pedagogique: { nom: "maçonnerie", code_matiere: '123' } }
       post configuration_options_pedagogiques_url, params: params
     end
 
@@ -62,7 +62,7 @@ class OptionsPedagogiquesControllerTest < ActionDispatch::IntegrationTest
       delete configuration_option_pedagogique_url(@option_pedagogique)
     end
 
-    assert_redirected_to configuration_options_pedagogiques_url
+    assert_redirected_to liste_configuration_options_pedagogiques_path
   end
 
   test "modifie une option en non abandonnable" do
