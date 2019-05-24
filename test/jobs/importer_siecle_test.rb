@@ -43,6 +43,30 @@ class ImporterSiecleTest < ActiveJob::TestCase
     assert_equal 2, DossierEleve.count
   end
 
+  test "importe pas un dossier élève si l'inscription à commencé" do
+    etablissement = Fabricate(:etablissement)
+    eleve = Fabricate(:eleve, nom: "Fordt")
+    mef = Fabricate(:mef, libelle: "4EME")
+    Fabricate(:dossier_eleve, etat: DossierEleve::ETAT[:en_attente], etablissement: etablissement, eleve: eleve, mef_origine: mef)
+
+    importer = ImporterSiecle.new
+
+    assert_equal 1, DossierEleve.count
+    assert_equal 1, Eleve.count
+
+    ligne = Array.new(34)
+    ligne[9] = "18/05/1991"
+    ligne[13] = nil
+    ligne[33] = "4EME"
+    ligne[11] = eleve.identifiant
+
+    importer.import_ligne(etablissement, ligne)[:result]
+
+    assert_equal 1, DossierEleve.count
+    assert_equal 1, Eleve.count
+    assert_equal "Fordt", Eleve.first.nom
+  end
+
   test "n'importe pas les élève en 3eme" do
     etablissement = Fabricate(:etablissement)
     importer = ImporterSiecle.new

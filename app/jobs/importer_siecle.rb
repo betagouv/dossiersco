@@ -165,9 +165,9 @@ class ImporterSiecle < ApplicationJob
       return resultat
     end
 
-    champs_eleve = %i[sexe nationalite date_naiss prenom prenom_2 prenom_3 nom
-                      identifiant pays_naiss commune_naiss ville_naiss_etrangere classe_ant
-                      niveau_classe_ant]
+    champs_eleve = %i[sexe nationalite date_naiss prenom prenom_2 prenom_3
+                      nom identifiant pays_naiss commune_naiss
+                      ville_naiss_etrangere classe_ant niveau_classe_ant]
 
     donnees_eleve = {}
     champs_eleve.each do |champ|
@@ -179,6 +179,8 @@ class ImporterSiecle < ApplicationJob
     eleve = Eleve.creation_ou_retrouve_par(donnees_eleve[:identifiant])
 
     return resultat if eleve.id.present? && donnees_eleve[:classe_ant] != eleve.classe_ant
+
+    return resultat if eleve.dossier_eleve&.deja_connecte?
 
     eleve.update_attributes!(donnees_eleve)
 

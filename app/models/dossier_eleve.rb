@@ -119,4 +119,8 @@ class DossierEleve < ActiveRecord::Base
     update(etat: ETAT[:valide])
   end
 
+  def deja_connecte?
+    etat != ETAT[:pas_connecte]
+  end
+
 end

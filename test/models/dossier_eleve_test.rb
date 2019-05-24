@@ -120,4 +120,22 @@ class DossierEleveTest < ActiveSupport::TestCase
     assert_equal dossier, DossierEleve.par_authentification("ine", "3", "2", "2006")
   end
 
+  test "#deja_connecte? true pour les etats autre que _pas connecté_" do
+    dossier = Fabricate(:dossier_eleve, etat: DossierEleve::ETAT[:connecte])
+    assert dossier.deja_connecte?
+    dossier = Fabricate(:dossier_eleve, etat: DossierEleve::ETAT[:en_attente])
+    assert dossier.deja_connecte?
+    dossier = Fabricate(:dossier_eleve, etat: DossierEleve::ETAT[:en_attente_de_validation])
+    assert dossier.deja_connecte?
+    dossier = Fabricate(:dossier_eleve, etat: DossierEleve::ETAT[:valide])
+    assert dossier.deja_connecte?
+    dossier = Fabricate(:dossier_eleve, etat: DossierEleve::ETAT[:sortant])
+    assert dossier.deja_connecte?
+  end
+
+  test "#deja_connecte? false pour les etats _pas connecté_" do
+    dossier = Fabricate(:dossier_eleve, etat: DossierEleve::ETAT[:pas_connecte])
+    assert !dossier.deja_connecte?
+  end
+
 end
