@@ -48,7 +48,7 @@
                       <%= link_to t('.refuser'), refuser_piece_jointe_path(piece, identifiant: params[:identifiant]),
                                   method: :put, class: "button warning" %>
                     </div>
-                  <% else %>
+                  <% elsif piece.id.present? %>
                     <div class="form__group">
                       <%= link_to t('.annuler_decision'), annuler_decision_piece_jointe_path(piece, identifiant: params[:identifiant]),
                                   method: :put, class: "secondary button-outline " %>
