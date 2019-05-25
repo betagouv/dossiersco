@@ -19,6 +19,7 @@ module ApplicationHelper
   end
 
   def markdown(text)
+    return '' if text.nil?
     options = {
       filter_html: true,
       hard_wrap: true,
