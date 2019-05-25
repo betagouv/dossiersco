@@ -18,7 +18,7 @@
     <% @regimes.each do |regime| %>
       <tr>
         <td><%= regime.nom %></td>
-        <td><%= regime.description %></td>
+        <td><%= markdown(regime.description) %></td>
         <td><%= link_to 'Modifier', edit_configuration_regime_sortie_path(regime) %></td>
         <td>
           <% if regime.dossier_eleves.any? %>
