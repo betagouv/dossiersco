@@ -24,7 +24,7 @@
     <p>et mettre à jour vos coordonnées sur ce site avant le <strong id="date-limite"><%= @dossier_eleve.etablissement.date_limite %></strong>.</p>
 
     <% if @dossier_eleve.etablissement.mot_accueil.present? %>
-      <p><%= @dossier_eleve.etablissement.mot_accueil %></p>
+      <section><%= markdown(@dossier_eleve.etablissement.mot_accueil) %></section>
     <% end %>
 
     <div class="text-center">

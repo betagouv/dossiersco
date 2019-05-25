@@ -38,6 +38,10 @@ footer {
     flex-shrink: 0;
 }
 
+dt {
+  font-weight: bolder;
+}
+
 .section {
     padding: 3em 0;
 }
