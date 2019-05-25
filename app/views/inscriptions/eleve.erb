@@ -17,6 +17,7 @@
         </div>
         <div class="cards">
           <% @pieces_jointes.each do |piece| %>
+
             <div class="card mb-2 <%= piece.etat if piece.present? %>">
               <div class="card__content">
                 <h4><%= '*' if piece.obligatoire %> <%= piece.nom %></h4>
@@ -40,12 +41,17 @@
                       <button class="soumettre hide" type="submit">Soumettre</button>
                     </div>
                   <% end %>
-                  <% if piece.id.present? %>
+                  <% if piece.id.present? && piece.soumise? %>
                     <div class="form__group">
                       <%= link_to t('.valider'), valider_piece_jointe_path(piece, identifiant: params[:identifiant]),
                                   method: :put, class: "button" %>
                       <%= link_to t('.refuser'), refuser_piece_jointe_path(piece, identifiant: params[:identifiant]),
                                   method: :put, class: "button warning" %>
+                    </div>
+                  <% else %>
+                    <div class="form__group">
+                      <%= link_to t('.annuler_decision'), annuler_decision_piece_jointe_path(piece, identifiant: params[:identifiant]),
+                                  method: :put, class: "secondary button-outline " %>
                     </div>
                   <% end %>
                 </div>

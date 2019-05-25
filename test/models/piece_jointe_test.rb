@@ -40,4 +40,11 @@ class PieceJointeTest < ActiveSupport::TestCase
     assert_equal PieceJointe::ETATS[:soumis], piece.etat
   end
 
+  test "#soumise? true si etat == soumis" do
+    piece = Fabricate.build(:piece_jointe, etat: PieceJointe::ETATS[:soumis])
+    assert piece.soumise?
+    piece = Fabricate.build(:piece_jointe, etat: PieceJointe::ETATS[:valide])
+    assert !piece.soumise?
+  end
+
 end

@@ -33,4 +33,8 @@ class PieceJointe < ActiveRecord::Base
     update!(etat: ETATS[:soumis])
   end
 
+  def soumise?
+    etat == ETATS[:soumis]
+  end
+
 end

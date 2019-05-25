@@ -4,7 +4,7 @@ class PiecesJointesController < ApplicationController
 
   before_action :retrouve_eleve_connecte, only: %i[create update]
   before_action :agent_connecte, only: %i[valider refuser]
-  before_action :retrouve_piece_jointe, only: %i[update valider refuser]
+  before_action :retrouve_piece_jointe, only: %i[update valider refuser annuler_decision]
 
   def create
     PieceJointe.create!(piece_jointe_params.merge(dossier_eleve: @eleve.dossier_eleve, etat: PieceJointe::ETATS[:soumis]))
@@ -25,6 +25,11 @@ class PiecesJointesController < ApplicationController
 
   def refuser
     @piece_jointe.invalide!
+    redirect_to "/agent/eleve/#{params[:identifiant]}"
+  end
+
+  def annuler_decision
+    @piece_jointe.soumet!
     redirect_to "/agent/eleve/#{params[:identifiant]}"
   end
 
