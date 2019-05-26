@@ -266,6 +266,7 @@
            type: "text",
            value: @contact_urgence.present? ? @contact_urgence.nom : nil,
            indication: "Nom",
+           required: 'required',
            disabled: false
        },
        {
@@ -325,10 +326,7 @@
       </div>
     <% end %>
 
-    <a href="#" id='ajouter_contact_urgence' class='<%= "d-none" if @contact_urgence.present? && !@contact_urgence.nom.empty? %> btn btn-outline-primary' >
-      <%= t('.ajouter_contact_urgence') %>
-    </a>
-    <div id='contact_urgence' class='<%= "d-none" unless @contact_urgence.present? && !@contact_urgence.nom.empty? %>' >
+    <div id='contact_urgence'>
       <h2 class="mt-5 separation"><%= t('.titre_contact_urgence') %></h2>
 
       <%= raw(construire form_contact_urgence) %>
@@ -360,24 +358,6 @@
     $("#code_postal_rl2").val($("#code_postal_rl1").val());
     let ville_rl1 = $("#ville_rl1").val()
     $("#ville_rl2").empty().append($("<option></option>").attr("value", ville_rl1).text(ville_rl1))
-  })
-  $('#ajouter_contact_urgence').click(function(e) {
-    if ($('#contact_urgence').hasClass('d-none')) {
-      $(this).html("Ne pas ajouter un contact en cas d'urgence");
-      $('#contact_urgence').removeClass('d-none');
-      $('#lien_avec_eleve_urg').focus();
-      e.preventDefault(); // Empêche un reload de la page
-    }
-    else {
-      $(this).html("Ajouter un contact en cas d'urgence");
-      $('#contact_urgence').addClass('d-none');
-      $('#lien_avec_eleve_urg').focus();
-      $("input[name='lien_avec_eleve_urg']").val('');
-      $("input[name='prenom_urg']").val('');
-      $("input[name='nom_urg']").val('');
-      $("input[name='tel_principal_urg']").val('');
-      $("input[name='tel_secondaire_urg']").val('');
-    }
   })
 
   $.each(['rl1', 'rl2'], function(key, value) {

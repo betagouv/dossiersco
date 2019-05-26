@@ -138,11 +138,11 @@ class ImporterSiecle < ApplicationJob
       end
 
       resp_legal = RespLegal.find_by(priorite: i.to_i, dossier_eleve_id: eleve.dossier_eleve.id)
-      resp_legal.update(
-        ville_ant: donnees_resp_legal[:ville],
-        adresse_ant: (concatener_adresse ligne_siecle, resp_legal.priorite),
-        code_postal_ant: donnees_resp_legal[:code_postal]
-      )
+      resp_legal.ville_ant = donnees_resp_legal[:ville]
+      resp_legal.adresse_ant = (concatener_adresse ligne_siecle, resp_legal.priorite)
+      resp_legal.code_postal_ant = donnees_resp_legal[:code_postal]
+
+      resp_legal.save(validate: false)
     end
   end
 
@@ -225,8 +225,7 @@ class ImporterSiecle < ApplicationJob
 
     dossier_eleve.save!
 
-    champs_resp_legal = %i[nom prenom tel_personnel tel_portable lien_de_parente
-                           adresse code_postal ville email]
+    champs_resp_legal = %i[nom prenom tel_personnel tel_portable lien_de_parente adresse code_postal ville email]
 
     donnees_resp_legal = {}
     %w[1 2].each do |i|
@@ -242,14 +241,16 @@ class ImporterSiecle < ApplicationJob
       donnees_resp_legal[:code_postal_ant] = donnees_resp_legal[:code_postal]
 
       resp_legal = RespLegal.find_or_initialize_by(dossier_eleve_id: dossier_eleve.id, priorite: i.to_i)
-      resp_legal.update_attributes!(donnees_resp_legal)
+      donnees_resp_legal.each do |k, v|
+        resp_legal.send("#{k}=", v)
+      end
+      resp_legal.save(validation: false)
 
       resultat[:portable] = true if resp_legal.tel_personnel =~ /^0[67]/ || resp_legal.tel_portable =~ /^0[67]/
       resultat[:email] = true if resp_legal.email =~ /@.*\./
     end
 
     resultat[:eleve_importe] = true
-
     resultat
   end
 
