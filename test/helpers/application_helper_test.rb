@@ -42,4 +42,9 @@ class ApplicationHelperTest < ActionDispatch::IntegrationTest
     assert_equal expected, affiche_etablissement(etablissement)
   end
 
+  test "transforme un texte en html" do
+    texte = "blabla"
+    assert_equal "<p>blabla</p>\n", markdown(texte)
+  end
+
 end

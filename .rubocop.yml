@@ -38,6 +38,7 @@ Metrics/BlockLength:
 
 Metrics/MethodLength:
   Exclude:
+    - 'app/helpers/application_helper.rb'
     - 'test/controllers/accueil_controller_test.rb'
     - 'test/integration/accueil_controller_test.rb'
     - 'test/integration/inscriptions_controller_test.rb'

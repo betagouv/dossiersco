@@ -55,6 +55,7 @@ Rails.application.routes.draw do
     member do
       put "valider"
       put "refuser"
+      put "annuler_decision"
     end
   end
 

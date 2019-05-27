@@ -176,6 +176,10 @@ fr:
       new:
         titre: Nouveau régime de sortie
       index:
+        dossier_eleve_utilisant_ce_regime:
+          zero:  "aucun dossier utilise ce régime de sortie"
+          one:   "un dossier utilise ce régime de sortie"
+          other: "%{count} dossiers utilise ce régime de sortie"
         ajouter_un_regime: Ajouter un régime de sortie
     options_pedagogiques:
       liste:
@@ -291,6 +295,7 @@ fr:
       changements_enregistres: "Les changements ont été enregistrés"
       changements_non_enregistres: "Une erreur est survenue, les changements n'ont pas été pris en compte"
     eleve:
+      annuler_decision: "annuler la décision"
       telephone_personnel: Personnel
       telephone_portable: Portable
       telephone_professionnel: Professionnel

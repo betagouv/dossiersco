@@ -18,12 +18,14 @@
     <% @regimes.each do |regime| %>
       <tr>
         <td><%= regime.nom %></td>
-        <td><%= regime.description %></td>
+        <td><%= markdown(regime.description) %></td>
         <td><%= link_to 'Modifier', edit_configuration_regime_sortie_path(regime) %></td>
         <td>
-          <%= link_to("Supprimer", [:configuration, regime],
-                         method: :delete, data: { confirm: 'Voulez-vous vraiment supprimer ce regime ?' })
-          %>
+          <% if regime.dossier_eleves.any? %>
+            <%= t('.dossier_eleve_utilisant_ce_regime', count: regime.dossier_eleves.count) %>
+          <% else %>
+            <%= link_to("Supprimer", [:configuration, regime], method: :delete, data: { confirm: 'Voulez-vous vraiment supprimer ce regime ?' }) %>
+          <% end %>
         </td>
       </tr>
     <% end %>

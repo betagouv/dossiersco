@@ -28,7 +28,7 @@ class PdfFicheInfirmerie
         pdf.text "<b>NOM</b> : #{dossier_eleve.eleve.nom},    <b>Prénom</b> : #{dossier_eleve.eleve.prenom}," \
                  "    <b>Classe</b> : #{champ_libre}", inline_format: true
         pdf.text "Date de naissance : #{dossier_eleve.eleve.date_naiss.to_date.strftime('%d/%m/%Y')}" \
-                 "  Scolarité antérieur :" \
+                 "  Scolarité antérieure :" \
                  " #{dossier_eleve.eleve.classe_ant.present? ? dossier_eleve.eleve.classe_ant : champ_libre}"
         pdf.move_down 8
 
@@ -51,10 +51,10 @@ class PdfFicheInfirmerie
           pdf.move_down 8
         end
 
-        pdf.text "Numéro de sécurité sociale du résponsable : #{champ_libre}"
+        pdf.text "Numéro de sécurité sociale du responsable : #{champ_libre}"
         pdf.move_down 8
 
-        pdf.text "Personne à prévenir en cas d'absence des résponsables légaux :"
+        pdf.text "Personne à prévenir en cas d'absence des responsables légaux :"
         if dossier_eleve.contact_urgence.nil?
           pdf.text "Nom : #{champ_libre}  Prénom : #{champ_libre}", inline_format: true
           pdf.text "Lien avec l'élève : #{champ_libre}"
@@ -73,7 +73,7 @@ class PdfFicheInfirmerie
 
         pdf.text "En cas d'urgence, un élève accidenté ou malade, est orienté et transporté, par les services de" \
                  " secours vers l'hôpital le plus proche. La famille est immédiatement avertie par nos soins." \
-                 " Un mineur ne peut sortir de l'hôpital qu'accompagné d'un résponsable légal, en cas de" \
+                 " Un mineur ne peut sortir de l'hôpital qu'accompagné d'un responsable légal, en cas de" \
                  " transport par ambulance privée, les frais sont pris en charges par l'assurance maladie de" \
                  " la famille", leading: 0, align: :justify, size: 10
         pdf.text "Observations particulières que vous jugez utiles de porter à connaissance du service médical" \

@@ -4,6 +4,22 @@ class RespLegal < ActiveRecord::Base
 
   belongs_to :dossier_eleve
 
+  validates :prenom, presence: true
+  validates :nom, presence: true
+  validates :profession, presence: true
+  validates :lien_de_parente, presence: true
+  validates :adresse, presence: true
+  validates :ville, presence: true
+  validates :code_postal, presence: true
+  validates :enfants_a_charge, presence: true, if: :representant_principal?
+  validates :tel_portable, presence: true, if: ->(resp) { resp.tel_professionnel.blank? && resp.tel_personnel.blank? }
+  validates :tel_professionnel, presence: true, if: ->(resp) { resp.tel_personnel.blank? && resp.tel_portable.blank? }
+  validates :tel_personnel, presence: true, if: ->(resp) { resp.tel_professionnel.blank? && resp.tel_portable.blank? }
+
+  def representant_principal?
+    priorite == 1
+  end
+
   def meme_adresse(autre_resp_legal)
     return false if autre_resp_legal.nil?
 
@@ -59,33 +75,7 @@ class RespLegal < ActiveRecord::Base
 
   def self.identites
     %w[lien_de_parente prenom nom adresse code_postal ville tel_personnel
-       tel_portable email profession enfants_a_charge
-       communique_info_parents_eleves lien_avec_eleve]
-  end
-
-  def resp_legal_valid?
-    champs_renseignes? && un_telephone_renseigne?
-  end
-
-  def champs_renseignes?
-    champs_requis = { lien_de_parente: "lien de parenté", prenom: "prénom", nom: "nom", adresse: "adresse",
-                      code_postal: "code postal", ville: "ville", profession: "profession" }
-    champs_requis[:enfants_a_charge] = "enfants à charge" if priorite == 1
-
-    champs_requis.each do |champ, label|
-      message_erreur = I18n.t(".activerecord.errors.models.resp_legal.non_renseigne", champ: label, responsable: priorite)
-      errors.add(champ, message_erreur) if send(champ).blank?
-    end
-    errors.empty?
-  end
-
-  def un_telephone_renseigne?
-    if tel_personnel.blank? && tel_portable.blank? && tel_professionnel.blank?
-      errors.add(:telephone, I18n.t(".activerecord.errors.models.resp_legal.pas_de_telephone"), responsable: priorite)
-      false
-    else
-      true
-    end
+       tel_portable tel_professionnel tel_principal tel_secondaire email profession enfants_a_charge communique_info_parents_eleves lien_avec_eleve]
   end
 
 end

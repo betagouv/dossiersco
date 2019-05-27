@@ -38,7 +38,7 @@
             <% if @dossier_eleve.regime_sortie == regime %> checked <% end %>>
             <b><%= regime.nom %></b>
           </label>
-          <p><%= regime.description %></p>
+          <p><%= markdown(regime.description) %></p>
         <% end %>
       </div>
     <% end %>

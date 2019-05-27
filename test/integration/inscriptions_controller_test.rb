@@ -203,7 +203,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     etablissement = Fabricate(:etablissement)
     e = Eleve.create! identifiant: "XXX"
     dossier_eleve = DossierEleve.create! eleve_id: e.id, etablissement_id: etablissement.id
-    RespLegal.create! dossier_eleve_id: dossier_eleve.id, email: "test@test.com", priorite: 1
+    Fabricate(:resp_legal, dossier_eleve: dossier_eleve, email: "test@test.com", priorite: 1)
 
     agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
     identification_agent(agent)
@@ -368,7 +368,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     etablissement = Fabricate(:etablissement)
     e = Eleve.create! identifiant: "XXX"
     d = DossierEleve.create! eleve_id: e.id, etablissement_id: etablissement.id, commentaire: "Commentaire de test"
-    RespLegal.create! dossier_eleve_id: d.id, tel_personnel: "0101010101", tel_portable: "0606060606", email: "test@test.com", priorite: 1
+    Fabricate(:resp_legal, dossier_eleve: d, tel_personnel: "0101010101", tel_portable: "0606060606", email: "test@test.com", priorite: 1)
 
     agent = Fabricate(:agent, etablissement: d.etablissement)
     identification_agent(agent)
