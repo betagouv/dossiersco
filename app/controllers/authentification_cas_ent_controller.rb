@@ -25,6 +25,7 @@ class AuthentificationCasEntController < ApplicationController
 
   def retour_cas
     data = donnees_ent(params[:ticket])
+    puts "data ? : #{data.inspect}"
     responsables = retrouve_les_responsables_legaux_depuis(data)
 
     if un_seul_dossier_correspondant(responsables, data)
@@ -43,6 +44,7 @@ class AuthentificationCasEntController < ApplicationController
     retrouve_liste_resp_legal(data).each do |resp_legal|
       resp_legals << resp_legal
     end
+    puts "resp_legals : #{resp_legals}"
     resp_legals
   end
 
