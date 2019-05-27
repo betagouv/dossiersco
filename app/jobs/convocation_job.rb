@@ -2,9 +2,9 @@
 
 class ConvocationJob < ActiveJob::Base
 
-  def perform(etablissement, agent)
+  def perform(etablissement, _agent)
     pdf = GenerePdf.new
-    fichier_a_telecharger = pdf.generer_pdf_par_classes(etablissement, "PdfConvocation")
+    pdf.generer_pdf_par_classes(etablissement, "PdfConvocation")
   end
 
 end
