@@ -21,6 +21,7 @@ LineLength:
     - 'app/models/dossier_eleve.rb'
     - 'app/services/pdf_fiche_infirmerie.rb'
     - 'app/services/pdf_convocation.rb'
+    - 'test/controllers/authentification_cas_ent_controller_test.rb'
 
 Style/StringLiterals:
   Enabled: true
@@ -70,6 +71,7 @@ Metrics/ClassLength:
     - 'app/jobs/importer_siecle.rb'
     - 'app/controllers/accueil_controller.rb'
     - 'app/models/eleve.rb'
+    - 'app/controllers/authentification_cas_ent_controller.rb'
 
 Metrics/AbcSize:
   Exclude:

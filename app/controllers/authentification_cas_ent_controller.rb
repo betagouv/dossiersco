@@ -7,6 +7,8 @@ URL_RETOUR = ENV["ENT_PARIS_URL_RETOUR"]
 
 class AuthentificationCasEntController < ApplicationController
 
+  before_action :identification_agent, only: "debug_ent"
+
   def new
     render layout: false
   end
@@ -25,7 +27,6 @@ class AuthentificationCasEntController < ApplicationController
 
   def retour_cas
     data = donnees_ent(params[:ticket])
-    puts "data ? : #{data.inspect}"
     responsables = retrouve_les_responsables_legaux_depuis(data)
 
     if un_seul_dossier_correspondant(responsables, data)
@@ -44,7 +45,6 @@ class AuthentificationCasEntController < ApplicationController
     retrouve_liste_resp_legal(data).each do |resp_legal|
       resp_legals << resp_legal
     end
-    puts "resp_legals : #{resp_legals}"
     resp_legals
   end
 
@@ -109,15 +109,24 @@ class AuthentificationCasEntController < ApplicationController
 
   def retrouve_liste_resp_legal(data)
     attributes = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]
+    query = RespLegal.where(prenom: attributes["firstName"])
+    query = query.where(nom: attributes["lastName"])
+    query = query.where(adresse: attributes["address"])
     email = attributes["email"]
-    prenom = attributes["firstName"]
-    nom = attributes["lastName"]
-    adresse = attributes["address"]
-    RespLegal.where(email: email, prenom: prenom, nom: nom, adresse: adresse)
+    query = query.where(email: email) if email != { "xmlns" => "" }
+    query
   end
 
   def appel_direct_ent
     redirect_to "#{URL_CAS}/login?service=#{URL_RETOUR}"
+  end
+
+  def debug_ent
+    if @agent_connecte.super_admin?
+      render xml: donnees_ent(params[:ticket])
+    else
+      render text: "aucun resultat sans le bon mot de passe"
+    end
   end
 
 end

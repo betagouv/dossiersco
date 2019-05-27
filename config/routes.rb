@@ -78,6 +78,7 @@ Rails.application.routes.draw do
   get "/retour-ent", to: "authentification_cas_ent#retour_cas"
   get "/from-ent", to: "authentification_cas_ent#appel_direct_ent"
   get "/choix-dossier", to: "authentification_cas_ent#choix_dossier"
+  get "/debug-ent", to:  "authentification_cas_ent#debug_ent"
 
 
   post "/identification", to: "accueil#identification"
@@ -148,4 +149,5 @@ Rails.application.routes.draw do
   get "/redirection_erreur", to: "pages#redirection_erreur"
 
   mount LetterOpenerWeb::Engine, at: "/letter_opener" unless ENV["laisser_partir_les_emails"]
+
 end
