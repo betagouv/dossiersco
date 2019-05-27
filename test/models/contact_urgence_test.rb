@@ -8,14 +8,9 @@ class ContactUrgenceTest < ActiveSupport::TestCase
     assert Fabricate.build(:contact_urgence).valid?
   end
 
-  test "invalide sans nom" do
-    assert Fabricate.build(:contact_urgence, nom: nil).invalid?
-  end
-
-  test "invalide sans au moins un telephone" do
-    assert Fabricate.build(:contact_urgence, tel_principal: nil, tel_secondaire: nil).invalid?
-    assert Fabricate.build(:contact_urgence, tel_principal: "0123456789", tel_secondaire: nil).valid?
-    assert Fabricate.build(:contact_urgence, tel_principal: nil, tel_secondaire: "0123456789").valid?
+  test "invalide sans nom si un tel est renseigner" do
+    assert Fabricate.build(:contact_urgence, nom: nil, tel_principal: "0123456789").invalid?
+    assert Fabricate.build(:contact_urgence, nom: nil, tel_secondaire: "0123456789").invalid?
   end
 
 end
