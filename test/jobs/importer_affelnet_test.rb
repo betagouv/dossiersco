@@ -5,7 +5,6 @@ require "test_helper"
 class ImporterAffelnetTest < ActionDispatch::IntegrationTest
 
   test "crée les dossiers élève attendus" do
-    skip
     fichier_affelnet = fixture_file_upload("files/test_import_affelnet.xlsm")
     tache = Fabricate(:tache_import, job_klass: "ImporterAffelnet", fichier: fichier_affelnet)
 

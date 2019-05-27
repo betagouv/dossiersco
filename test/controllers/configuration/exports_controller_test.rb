@@ -9,19 +9,37 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     identification_agent(admin)
 
     resp = Fabricate(:resp_legal, email: "")
-    Fabricate(:dossier_eleve,
-              etablissement: admin.etablissement,
-              resp_legal: [resp])
+    dossier_eleve = Fabricate(:dossier_eleve,
+                              etablissement: admin.etablissement,
+                              resp_legal: [resp])
 
     resp = Fabricate(:resp_legal, email: nil)
-    Fabricate(:dossier_eleve,
-              etablissement: admin.etablissement,
-              resp_legal: [resp])
+    dossier_eleve = Fabricate(:dossier_eleve,
+                              etablissement: admin.etablissement,
+                              resp_legal: [resp])
 
     resp = Fabricate(:resp_legal, communique_info_parents_eleves: nil)
-    Fabricate(:dossier_eleve,
-              etablissement: admin.etablissement,
-              resp_legal: [resp])
+    dossier_eleve = Fabricate(:dossier_eleve,
+                              etablissement: admin.etablissement,
+                              resp_legal: [resp])
+
+    resp = Fabricate(:resp_legal, profession: nil)
+    dossier_eleve = Fabricate(:dossier_eleve,
+                              etablissement: admin.etablissement,
+                              resp_legal: [resp])
+
+    resp = Fabricate(:resp_legal, nom: nil)
+    dossier_eleve = Fabricate(:dossier_eleve,
+                              etablissement: admin.etablissement,
+                              resp_legal: [resp])
+    3.times do
+      resp = Fabricate(:resp_legal, enfants_a_charge: nil)
+      dossier_eleve = Fabricate(:dossier_eleve,
+                                etablissement: admin.etablissement,
+                                resp_legal: [resp])
+      option = Fabricate(:option_pedagogique, nom: "un super nom d'option un peu long", obligatoire: "F", code_matiere: "ALGEV")
+      dossier_eleve.options_pedagogiques << option
+    end
 
     resp = Fabricate(:resp_legal, enfants_a_charge: 2)
     Fabricate(:dossier_eleve,

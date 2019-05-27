@@ -76,6 +76,7 @@ class AccueilController < ApplicationController
     resp_legal1 = dossier_eleve.resp_legal_1
     resp_legal2 = dossier_eleve.resp_legal_2
     contact_urgence = dossier_eleve.contact_urgence
+    contact_urgence = nil if contact_urgence.present? && !dossier_eleve.contact_urgence.nom.present?
     lien_de_parentes = ["MERE", "PERE", "AUTRE FAM.", "AUTRE LIEN", "TUTEUR", "ASE"]
 
     @resp_legal1 = resp_legal1
@@ -99,28 +100,31 @@ class AccueilController < ApplicationController
       resp_legal2[i] = params["#{i}_rl2"] if resp_legal2 && params.key?("#{i}_rl2")
       contact_urgence[i] = params["#{i}_urg"] if params.key?("#{i}_urg")
     end
+    resp_legal1.save!
+    resp_legal2.save! if resp_legal2.present?
+    contact_urgence.save!
 
-    resp_legal1_ok = resp_legal1.save
-    resp_legal2_ok = if resp_legal2.present?
-                       resp_legal2.save
-                     else
-                       true
-                     end
-    contact_urgence_ok = if contact_urgence.present?
-                           contact_urgence.save
-                         else
-                           true
-                         end
-
-    if resp_legal1_ok && resp_legal2_ok && contact_urgence_ok
+    if responsables_valides?(resp_legal1, resp_legal2)
       sauve_et_redirect dossier_eleve, "administration"
     else
-      error = []
-      error.concat(resp_legal1.errors.full_messages.map { |m| "Représentant légal 1 : #{m}" })
-      error.concat(resp_legal2.errors.full_messages.map { |m| "Représentant légal 2 : #{m}" }) if resp_legal2.present?
-      error.concat(contact_urgence.errors.full_messages.map { |m| "Contact urgence : #{m}" }) if contact_urgence.present?
-      redirect_to famille_path, alert: error.join(", ")
+      error = if resp_legal1.errors.messages.present?
+                resp_legal1.errors.messages.first[1].join
+              elsif resp_legal2.present? && resp_legal2.errors.messages.present?
+                resp_legal2.errors.messages.first[1].join
+              end
+      redirect_to famille_path, alert: error
     end
+  end
+
+  def responsables_valides?(resp_legal1, resp_legal2)
+    resp_legal2_valide = if params["prenom_rl2"].present? && resp_legal2.resp_legal_valid?
+                           true
+                         elsif !params["prenom_rl2"].present?
+                           true
+                         else
+                           false
+                         end
+    resp_legal1.resp_legal_valid? && resp_legal2_valide
   end
 
   def validation

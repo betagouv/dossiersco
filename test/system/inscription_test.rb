@@ -35,9 +35,6 @@ class InscriptionTest < ActionDispatch::IntegrationTest
     click_button("Enregistrer et continuer")
     assert_selector "h2", text: "Responsable légal 1"
 
-    fill_in "nom_urg", with: "Henri"
-    fill_in "tel_principal_urg", with: "0123456789"
-
     click_button("Enregistrer et continuer")
     assert_selector "h2", text: "Restauration scolaire"
 
