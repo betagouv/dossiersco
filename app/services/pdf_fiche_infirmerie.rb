@@ -71,11 +71,11 @@ class PdfFicheInfirmerie
 
         pdf.text "Assurance scolaire, nom de la compagnie #{champ_libre}, N° de police #{champ_libre}"
 
-        pdf.text "En cas d'urgence, un élève accidenté ou malade, est orienté et transporté, par les services de" \
-                 " secours vers l'hôpital le plus proche. La famille est immédiatement avertie par nos soins." \
-                 " Un mineur ne peut sortir de l'hôpital qu'accompagné d'un responsable légal, en cas de" \
-                 " transport par ambulance privée, les frais sont pris en charges par l'assurance maladie de" \
-                 " la famille", leading: 0, align: :justify, size: 10
+        pdf.text "En cas d'urgence, un élève accidenté ou malade est orienté et transporté, par les services de" \
+                 " secours, vers l'hôpital le plus proche. La famille est immédiatement avertie par nos soins." \
+                 " Un mineur ne peut sortir de l'hôpital qu'accompagné d'un responsable légal; En cas de" \
+                 " transport par ambulance privée, les frais sont pris en charge par l'assurance maladie de" \
+                 " la famille.", leading: 0, align: :justify, size: 10
         pdf.text "Observations particulières que vous jugez utiles de porter à connaissance du service médical" \
                  " (allergie, maladie chronique, traitement en cours, précautions" \
                  " particulières...)", leading: 0, size: 10
