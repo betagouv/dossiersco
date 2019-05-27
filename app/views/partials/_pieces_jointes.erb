@@ -9,7 +9,7 @@
           <div class="card-relat document">
             <% if piece.fichiers[0].present? && piece.fichiers[0].url.present? %>
               <div class="lien-piece-jointe" data-url="<%= piece.fichiers[0].url %>" data-nom="<%= piece.nom %>">
-                <% if piece.fichiers[0].content_type.start_with?("image/") %>
+                <% if piece.fichiers[0].content_type != false &&  piece.fichiers[0].content_type.start_with?("image/") %>
                   <%= image_tag(piece.fichiers[0].url, alt:"preview piece jointe") %>
                 <% else %>
                   <%= link_to t('.voir_piece_jointe'), piece.fichiers[0].url %>
