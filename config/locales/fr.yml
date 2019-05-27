@@ -148,6 +148,7 @@ fr:
       demi_pensionnaire: Demi-pensionnaire
       externe: Externe
     administration:
+      numero_caf: Numéro d'allocataire à la CAF pour le calcule du tarif de demi-pension
       lire_reglement_dp: Lire le réglement de demi-pension
       <<: *restauration
       engagement_demi_pension: "En validant cette étape j'accepte le réglement de demi-pension."

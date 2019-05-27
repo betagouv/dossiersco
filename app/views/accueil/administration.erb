@@ -20,6 +20,12 @@
     </div>
 
     <div id="dp" style="display: none;">
+      <% if @dossier_eleve.etablissement.demande_caf %>
+        <label class="mt-1">
+          <%= t('.numero_caf') %>
+          <input type="text" name="identifiant_caf" value="<%= @dossier_eleve.identifiant_caf %>">
+        </label>
+      <% end %>
       <p class="text-danger"><%= t('.engagement_demi_pension') %></p>
       <% if @dossier_eleve.etablissement.reglement_demi_pension.present? %>
         <%= link_to t('.lire_reglement_dp'), @dossier_eleve.etablissement.reglement_demi_pension_url, target:'_blank' %>
@@ -84,9 +90,7 @@ $(document).ready(function() {
     console.log($('input[name=demi_pensionnaire]:checked').val())
       if ($('input[name=demi_pensionnaire]:checked').val() === 'true') {
         $('#dp').css('display', 'block')
-          console.log('oui')
       } else {
-        console.log('non')
           $('#dp').css('display', 'none')
       }
   })

@@ -157,6 +157,7 @@ class AccueilController < ApplicationController
     dossier_eleve.regime_sortie = RegimeSortie.find(params["regime_sortie"].to_i) if params["regime_sortie"].present?
     dossier_eleve.renseignements_medicaux = params["renseignements_medicaux"]
     dossier_eleve.check_paiement_cantine = params["check_paiement_cantine"]
+    dossier_eleve.identifiant_caf = params["identifiant_caf"]
     dossier_eleve.save!
     sauve_et_redirect dossier_eleve, "pieces_a_joindre"
   end

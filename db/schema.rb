@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_23_142754) do
+ActiveRecord::Schema.define(version: 2019_05_27_124528) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 2019_05_23_142754) do
     t.bigint "mef_destination_id"
     t.json "options_origines", default: {}
     t.bigint "regime_sortie_id"
+    t.string "identifiant_caf"
     t.index ["eleve_id"], name: "index_dossier_eleves_on_eleve_id"
     t.index ["mef_destination_id"], name: "index_dossier_eleves_on_mef_destination_id"
     t.index ["mef_origine_id"], name: "index_dossier_eleves_on_mef_origine_id"
@@ -126,6 +127,7 @@ ActiveRecord::Schema.define(version: 2019_05_23_142754) do
     t.boolean "envoyer_aux_familles", default: false
     t.string "reglement_demi_pension"
     t.string "mot_accueil"
+    t.boolean "demande_caf", default: false
   end
 
   create_table "fichier_a_telechargers", force: :cascade do |t|
