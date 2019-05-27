@@ -51,6 +51,9 @@ Rails.application.routes.draw do
     resources :regimes_sortie
   end
 
+  get '/agent/mot_de_passe', to: "mot_de_passe_agent#new", as: 'new_mot_de_passe_agent'
+  post '/agent/mot_de_passe', to: "mot_de_passe_agent#update", as: 'mot_de_passe_agent'
+
   resources :pieces_jointes, only: %i[create update] do
     member do
       put "valider"

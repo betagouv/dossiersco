@@ -1,0 +1,21 @@
+
+<section class="section">
+  <div class="container">
+    <h1><%= t(".titre") %></h1>
+    <% if flash[:error] %>
+      <div class="alert alert-danger"><%= flash[:error] %></div>
+    <% end %>
+
+    <p><%= t('.explication') %></p>
+    <%= form_tag(mot_de_passe_agent_path) do %>
+      <div class="form__group">
+        <%= label_tag :email do %>
+        <%= email_field_tag :email%>
+      <% end %>
+      </div>
+      <div class="form__group">
+        <%= submit_tag t('.changer'), class: 'button' %>
+      </div>
+    <% end %>
+  </div>
+</section>

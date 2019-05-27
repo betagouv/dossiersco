@@ -22,7 +22,14 @@
     </div>
   </form>
   <div class="text-center">
-    <%= link_to t('.inscription'), new_configuration_etablissement_path %>
+    <ul>
+      <li>
+        <%= link_to t('.mot_de_passe_oublie'), new_mot_de_passe_agent_path %>
+      </li>
+      <li>
+        <%= link_to t('.inscription'), new_configuration_etablissement_path %>
+      </li>
+    </ul>
   </div>
   <% unless Rails.env.production? %>
     <div class="text-center">

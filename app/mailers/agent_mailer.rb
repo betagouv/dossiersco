@@ -41,4 +41,12 @@ class AgentMailer < ApplicationMailer
     end
   end
 
+  def change_mot_de_passe_agent(agent)
+    @agent = agent
+    mail(subject: "changer votre mot de passe sur DossierSCO", to: @agent.email) do |format|
+      format.html
+      format.text
+    end
+  end
+
 end

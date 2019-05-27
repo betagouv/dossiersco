@@ -61,6 +61,14 @@ fr:
       document_soumis: "Votre document est transmis à l'établissement."
       document_invalide: "Votre document ne peut pas être pris en compte par l'établissement pour cette inscription. Un courriel vient de vous être envoyé. Merci de prendre connaissance de ce message et nous fournir une nouvelle version de ce document."
       document_valide: "Votre document a été examiné et approuvé par l'établissement."
+  mot_de_passe_agent:
+    new:
+      titre: "Changement de mot de passe"
+      explication: "Pour changer votre mot de passe, nous allons remettre l'ancien à zéro, et vous envoyer un lien pour pouvoir en saisir un nouveau."
+      changer: "Changer"
+    update:
+      email_non_trouve: "email %{email} non trouvé"
+      change_mot_de_passe_envoyee: "Un email a été envoyé à l'adresse %{email} pour finaliser le changement de mot de passe"
   messages:
     probleme_identification: "Nous n'avons pas pu vous identifier"
     compte_cree: "Votre compte a bien été créé"
@@ -304,6 +312,7 @@ fr:
       refuser: "Refuser"
       aucune: Aucune
     identification:
+      mot_de_passe_oublie: "j'ai oublié mon mot de passe"
       inscription: "Inscrire mon établissement sur DossierSCO"
       email: "Email"
       mot_de_passe: "Mot de passe"

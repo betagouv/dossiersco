@@ -14,10 +14,10 @@ module Configuration
 
     def create
       @agent = Agent.new(agent_params)
-      @agent.email.downcase!
       @agent.etablissement = @agent_connecte.etablissement
-      @agent.jeton = SecureRandom.base58(26)
-      if @agent.save
+      service_agent = ServiceAgent.new(@agent)
+      if service_agent.reset_mot_de_passe!
+        @agent = service_agent.agent
         AgentMailer.invite_agent(@agent, @agent_connecte).deliver_now
         redirect_to configuration_agents_path, notice: t(".invitation_envoyee", email: @agent.email)
       else

@@ -76,6 +76,7 @@ Metrics/ClassLength:
 Metrics/AbcSize:
   Exclude:
     - 'test/**/*'
+    - 'app/controllers/mot_de_passe_agent_controller.rb'
     - 'app/jobs/importer_siecle.rb'
     - 'app/services/pdf_fiche_infirmerie.rb'
     - 'app/services/pdf_convocation.rb'
