@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
         dossiersco_id: @eleve.id
       )
     else
-      session[:message_erreur] = "Vous avez été déconnecté par mesure de sécurité. Merci de vous identifier avant de continuer."
+      flash[:erreur] = "Vous avez été déconnecté par mesure de sécurité. Merci de vous identifier avant de continuer."
       redirect_to "/"
     end
   end

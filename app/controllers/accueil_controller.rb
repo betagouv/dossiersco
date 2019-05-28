@@ -11,7 +11,7 @@ class AccueilController < ApplicationController
 
   def identification
     if params[:identifiant].empty? || params[:annee].empty? || params[:mois].empty? || params[:jour].empty?
-      session[:message_erreur] = t("identification.erreurs.identifiants_non_renseignes")
+      flash[:erreur] = t("identification.erreurs.identifiants_non_renseignes")
       redirect_to root_path
       return
     end
@@ -33,7 +33,7 @@ class AccueilController < ApplicationController
       end
 
     else
-      session[:message_erreur] = t("identification.erreurs.identifiants_inconnus")
+      flash[:erreur] = t("identification.erreurs.identifiants_inconnus")
       redirect_to root_path
     end
   end
@@ -73,8 +73,6 @@ class AccueilController < ApplicationController
   def famille
     @dossier_eleve = @eleve.dossier_eleve
     @dossier_eleve.update derniere_etape: "famille"
-    puts "dossier : #{@dossier_eleve.inspect}"
-    puts "resp leg 1 : #{@dossier_eleve.resp_legal_1}"
     @resp_legal1 = @dossier_eleve.resp_legal_1
     @resp_legal2 = @dossier_eleve.resp_legal_2
     @contact_urgence = @dossier_eleve.contact_urgence

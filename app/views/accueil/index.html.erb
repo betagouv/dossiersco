@@ -6,8 +6,8 @@
 
   <form action="/identification" method="post">
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-    <% if session[:message_erreur] %>
-      <p class="notification warning"><%= session[:message_erreur] %></p>
+    <% if flash[:erreur] %>
+      <p class="notification warning"><%= flash[:erreur] %></p>
     <% end %>
 
     <div class="form__group">
