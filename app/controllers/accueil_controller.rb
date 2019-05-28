@@ -71,21 +71,18 @@ class AccueilController < ApplicationController
   end
 
   def famille
-    dossier_eleve = @eleve.dossier_eleve
-    dossier_eleve.update derniere_etape: "famille"
-    resp_legal1 = dossier_eleve.resp_legal_1
-    resp_legal2 = dossier_eleve.resp_legal_2
-    contact_urgence = dossier_eleve.contact_urgence
-    contact_urgence = nil if contact_urgence.present? && !dossier_eleve.contact_urgence.nom.present?
-    lien_de_parentes = ["MERE", "PERE", "AUTRE FAM.", "AUTRE LIEN", "TUTEUR", "ASE"]
+    @dossier_eleve = @eleve.dossier_eleve
+    @dossier_eleve.update derniere_etape: "famille"
+    puts "dossier : #{@dossier_eleve.inspect}"
+    puts "resp leg 1 : #{@dossier_eleve.resp_legal_1}"
+    @resp_legal1 = @dossier_eleve.resp_legal_1
+    @resp_legal2 = @dossier_eleve.resp_legal_2
+    @contact_urgence = @dossier_eleve.contact_urgence
+    @contact_urgence = nil if @contact_urgence.present? && !@dossier_eleve.contact_urgence.nom.present?
+    @lien_de_parentes = ["MERE", "PERE", "AUTRE FAM.", "AUTRE LIEN", "TUTEUR", "ASE"]
 
-    @resp_legal1 = resp_legal1
-    @resp_legal2 = resp_legal2
-    @contact_urgence = contact_urgence
     @code_profession = RespLegal.codes_profession
     @code_situation = code_situation
-    @lien_de_parentes = lien_de_parentes
-    @dossier_eleve = @eleve.dossier_eleve
     render "accueil/famille"
   end
 

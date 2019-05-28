@@ -28,11 +28,11 @@
       <% end %>
     </div>
 
-    <% if @dossier_eleve.etablissement.regimes_sortie.order(:nom).count > 1 %>
+    <% if @dossier_eleve.etablissement.regimes_sortie.count > 1 %>
       <h2 class="separation mt-4"><%= t('.autorisation_de_sortie') %></h2>
 
       <div>
-        <% @dossier_eleve.etablissement.regimes_sortie.each do |regime| %>
+        <% @dossier_eleve.etablissement.regimes_sortie.order(:nom).each do |regime| %>
           <label>
             <input type="radio" name="regime_sortie" value="<%= regime.id %>" required id="regime_sortie_<%= regime.id %>"
             <% if @dossier_eleve.regime_sortie == regime %> checked <% end %>>
