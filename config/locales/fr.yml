@@ -65,9 +65,10 @@ fr:
     new:
       titre: "Changement de mot de passe"
       explication: "Pour changer votre mot de passe, nous allons remettre l'ancien à zéro, et vous envoyer un lien pour pouvoir en saisir un nouveau."
+      label_email: 'Votre email de connexion à dossiersco'
       changer: "Changer"
     update:
-      email_non_trouve: "email %{email} non trouvé"
+      email_non_trouve: "email non trouvé"
       change_mot_de_passe_envoyee: "Un email a été envoyé à l'adresse %{email} pour finaliser le changement de mot de passe"
   messages:
     probleme_identification: "Nous n'avons pas pu vous identifier"

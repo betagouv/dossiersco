@@ -9,9 +9,8 @@
     <p><%= t('.explication') %></p>
     <%= form_tag(mot_de_passe_agent_path) do %>
       <div class="form__group">
-        <%= label_tag :email do %>
-        <%= email_field_tag :email%>
-      <% end %>
+        <%= label_tag :email, t('.label_email') %>
+        <%= email_field_tag :email, '', placeholder: 'ce.123456x@ac-lune.fr' %>
       </div>
       <div class="form__group">
         <%= submit_tag t('.changer'), class: 'button' %>
