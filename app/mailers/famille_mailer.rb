@@ -21,8 +21,7 @@ class FamilleMailer < ApplicationMailer
 
   def envoyer_mail_confirmation(eleve)
     @eleve = eleve
-    etablissement = @eleve.dossier_eleve.etablissement
-    return unless etablissement.envoyer_aux_familles
+    return unless @eleve.dossier_eleve.etablissement.envoyer_aux_familles
 
     begin
       email = Famille.new.retrouve_un_email(@eleve.dossier_eleve)
