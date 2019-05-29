@@ -93,8 +93,12 @@ class AccueilController < ApplicationController
     RespLegal.identites.each do |i|
       resp_legal1[i] = params["#{i}_rl1"] if params.key?("#{i}_rl1")
       resp_legal2[i] = params["#{i}_rl2"] if resp_legal2 && params.key?("#{i}_rl2")
+    end
+
+    %w[lien_avec_eleve prenom nom tel_principal tel_secondaire].each do |i|
       contact_urgence[i] = params["#{i}_urg"] if params.key?("#{i}_urg")
     end
+
     resp_legal1.save!
     resp_legal2.save! if resp_legal2.present?
     contact_urgence.save!
