@@ -132,8 +132,7 @@ class AccueilController < ApplicationController
     dossier_eleve.date_signature = Time.now
     dossier_eleve.save
     if dossier_eleve.etat != "validé"
-      mail = FamilleMailer.envoyer_mail_confirmation(dossier_eleve.eleve)
-      mail.deliver_now
+      FamilleMailer.envoyer_mail_confirmation(dossier_eleve.eleve).deliver_now
       dossier_eleve.update(etat: "en attente de validation")
     end
     sauve_et_redirect dossier_eleve, "confirmation"
