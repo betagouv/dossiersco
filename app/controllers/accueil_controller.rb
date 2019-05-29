@@ -76,7 +76,6 @@ class AccueilController < ApplicationController
     @resp_legal1 = @dossier_eleve.resp_legal_1
     @resp_legal2 = @dossier_eleve.resp_legal_2
     @contact_urgence = @dossier_eleve.contact_urgence
-    @contact_urgence = nil if @contact_urgence.present? && !@dossier_eleve.contact_urgence.nom.present?
     @lien_de_parentes = ["MERE", "PERE", "AUTRE FAM.", "AUTRE LIEN", "TUTEUR", "ASE"]
 
     @code_profession = RespLegal.codes_profession
@@ -94,13 +93,12 @@ class AccueilController < ApplicationController
       resp_legal1[i] = params["#{i}_rl1"] if params.key?("#{i}_rl1")
       resp_legal2[i] = params["#{i}_rl2"] if resp_legal2 && params.key?("#{i}_rl2")
     end
+    resp_legal1.save!
+    resp_legal2.save! if resp_legal2.present?
 
     %w[lien_avec_eleve prenom nom tel_principal tel_secondaire].each do |i|
       contact_urgence[i] = params["#{i}_urg"] if params.key?("#{i}_urg")
     end
-
-    resp_legal1.save!
-    resp_legal2.save! if resp_legal2.present?
     contact_urgence.save!
 
     if responsables_valides?(resp_legal1, resp_legal2)
