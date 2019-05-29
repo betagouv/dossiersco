@@ -69,7 +69,7 @@ fr:
       changer: "Changer"
     update:
       email_non_trouve: "email non trouvé"
-      change_mot_de_passe_envoyee: "Un email a été envoyé à l'adresse %{email} pour finaliser le changement de mot de passe"
+      change_mot_de_passe_envoyee: "Nous allons envoyer un email à l'adresse que vous avez indiqué si nous la connaissons"
   messages:
     probleme_identification: "Nous n'avons pas pu vous identifier"
     compte_cree: "Votre compte a bien été créé"
