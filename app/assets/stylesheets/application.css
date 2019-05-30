@@ -83,16 +83,16 @@ img {
     clear: both;
     content: "";
     display: block;
-
     height: 0;
 }
+
 .arrow-steps .step {
     font-size: 14px;
     text-align: center;
     color: #666;
     margin: 3px;
     padding: 10px 10px 10px 30px;
-    min-width: 18%;
+    min-width: 16%;
     float: left;
     position: relative;
     background-color: #d9e3f7;

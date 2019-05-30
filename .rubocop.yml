@@ -30,6 +30,9 @@ Style/StringLiterals:
 Style/Documentation:
   Enabled: false
 
+Style/AsciiComments:
+  Enabled: false
+
 Metrics/BlockLength:
   Exclude:
     - 'test/**/*'

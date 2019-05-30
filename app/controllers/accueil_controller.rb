@@ -39,16 +39,21 @@ class AccueilController < ApplicationController
   end
 
   def accueil
-    @eleve.dossier_eleve.update derniere_etape: "accueil"
     @dossier_eleve = @eleve.dossier_eleve
+  end
+
+  def post_accueil
+    @eleve.dossier_eleve.update!(etape_la_plus_avancee: "eleve")
+    redirect_to "/eleve"
   end
 
   def eleve
     @eleve.dossier_eleve.update derniere_etape: "eleve"
-    @options_pedagogiques_selectionnees = @eleve.dossier_eleve.options_pedagogiques
-    @options_pedagogiques = OptionPedagogique.filtre_par(@eleve.dossier_eleve.mef_destination)
+    @dossier_eleve = @eleve.dossier_eleve
+    @options_pedagogiques_selectionnees = @dossier_eleve.options_pedagogiques
+    @options_pedagogiques = OptionPedagogique.filtre_par(@dossier_eleve.mef_destination)
 
-    @option_origines_ids = @eleve.dossier_eleve.options_origines.map { |k, _v| k.to_i }
+    @option_origines_ids = @dossier_eleve.options_origines.map { |k, _v| k.to_i }
     render "accueil/eleve"
   end
 
@@ -84,10 +89,10 @@ class AccueilController < ApplicationController
   end
 
   def post_famille
-    dossier_eleve = @eleve.dossier_eleve
-    resp_legal1 = dossier_eleve.resp_legal_1
-    resp_legal2 = dossier_eleve.resp_legal_2
-    contact_urgence = ContactUrgence.find_by(dossier_eleve_id: dossier_eleve.id) || ContactUrgence.new(dossier_eleve_id: dossier_eleve.id)
+    @dossier_eleve = @eleve.dossier_eleve
+    resp_legal1 = @dossier_eleve.resp_legal_1
+    resp_legal2 = @dossier_eleve.resp_legal_2
+    contact_urgence = ContactUrgence.find_by(dossier_eleve_id: @dossier_eleve.id) || ContactUrgence.new(dossier_eleve_id: @dossier_eleve.id)
 
     RespLegal.identites.each do |i|
       resp_legal1[i] = params["#{i}_rl1"] if params.key?("#{i}_rl1")
@@ -102,7 +107,7 @@ class AccueilController < ApplicationController
     contact_urgence.save!
 
     if responsables_valides?(resp_legal1, resp_legal2)
-      sauve_et_redirect dossier_eleve, "administration"
+      sauve_et_redirect @dossier_eleve, "administration"
     else
       error = if resp_legal1.errors.messages.present?
                 resp_legal1.errors.messages.first[1].join
@@ -129,15 +134,15 @@ class AccueilController < ApplicationController
   end
 
   def post_validation
-    dossier_eleve = @eleve.dossier_eleve
-    dossier_eleve.signature = params[:signature]
-    dossier_eleve.date_signature = Time.now
-    dossier_eleve.save
-    if dossier_eleve.etat != "validé"
-      FamilleMailer.envoyer_mail_confirmation(dossier_eleve.eleve).deliver_now
-      dossier_eleve.update(etat: "en attente de validation")
+    @dossier_eleve = @eleve.dossier_eleve
+    @dossier_eleve.signature = params[:signature]
+    @dossier_eleve.date_signature = Time.now
+    @dossier_eleve.save
+    if @dossier_eleve.etat != "validé"
+      FamilleMailer.envoyer_mail_confirmation(@dossier_eleve.eleve).deliver_now
+      @dossier_eleve.update(etat: "en attente de validation")
     end
-    sauve_et_redirect dossier_eleve, "confirmation"
+    sauve_et_redirect @dossier_eleve, "confirmation"
   end
 
   def administration
@@ -162,9 +167,9 @@ class AccueilController < ApplicationController
   end
 
   def confirmation
-    dossier_eleve = @eleve.dossier_eleve
-    dossier_eleve.update derniere_etape: "confirmation"
-    render "confirmation", locals: { eleve: @eleve, dossier_eleve: dossier_eleve }
+    @dossier_eleve = @eleve.dossier_eleve
+    @dossier_eleve.update derniere_etape: "confirmation"
+    render "confirmation"
   end
 
   def satisfaction
@@ -176,7 +181,8 @@ class AccueilController < ApplicationController
   def pieces_a_joindre
     @eleve.dossier_eleve.update derniere_etape: "pieces_a_joindre"
     @pieces_jointes = @eleve.dossier_eleve.pieces_jointes
-    render "pieces_a_joindre", locals: { dossier_eleve: @eleve.dossier_eleve }
+    @dossier_eleve = @eleve.dossier_eleve
+    render "pieces_a_joindre"
   end
 
   def code_situation
@@ -190,12 +196,13 @@ class AccueilController < ApplicationController
   end
 
   def post_pieces_a_joindre
-    dossier_eleve = @eleve.dossier_eleve
-    if dossier_eleve.pieces_manquantes?
-      @pieces_jointes = dossier_eleve.pieces_jointes
-      render :pieces_a_joindre, locals: { dossier_eleve: dossier_eleve, message: "Veuillez télécharger les pièces obligatoires" }
+    @dossier_eleve = @eleve.dossier_eleve
+    if @dossier_eleve.pieces_manquantes?
+      @pieces_jointes = @dossier_eleve.pieces_jointes
+      flash[:erreur] = "Veuillez télécharger les pièces obligatoires"
+      render :pieces_a_joindre
     else
-      sauve_et_redirect dossier_eleve, "validation"
+      sauve_et_redirect @dossier_eleve, "validation"
     end
   end
 
@@ -208,7 +215,7 @@ class AccueilController < ApplicationController
 
   def stats
     etablissements = Etablissement.all.sort_by { |e| e.dossier_eleve.count }.reverse
-    render :stats, locals: { etablissements: etablissements }
+    render :stats, locals: { etablissements: etablissements }, layout: "connexion"
   end
 
 end

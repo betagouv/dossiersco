@@ -40,4 +40,34 @@ module ApplicationHelper
 
     markdown.render(text).html_safe
   end
+
+  def entrees_de_menu
+    %w[accueil eleve famille administration pieces_a_joindre validation].freeze
+  end
+
+  def classe_pour_menu(etape, dossier)
+    index_etape = entrees_de_menu.index(etape)
+    index_etape ||= 0
+    index_dossier = entrees_de_menu.index(dossier.etape_la_plus_avancee)
+    index_dossier ||= 0
+    if index_dossier > index_etape
+      "step step-enabled current done"
+    elsif index_dossier == index_etape
+      "step step-enabled current"
+    else
+      "step step-disabled"
+    end
+  end
+
+  def lien_menu(etape, dossier)
+    index_etape = entrees_de_menu.index(etape)
+    index_etape ||= 0
+    index_dossier = entrees_de_menu.index(dossier.etape_la_plus_avancee)
+    index_dossier ||= 0
+    if index_dossier >= index_etape
+      "/#{etape}"
+    else
+      "#"
+    end
+  end
 end

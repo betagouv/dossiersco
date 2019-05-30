@@ -20,10 +20,32 @@
 
   <main role="main" class="container  mt-4">
 
-    <%= yield %>
+  <nav class="mt-1">
+    <div class="arrow-steps clearfix">
+
+      <% entrees_de_menu.each do |entree_de_menu| %>
+        <a class="step <%= classe_pour_menu(entree_de_menu, @dossier_eleve) %>" href='<%= lien_menu(entree_de_menu, @dossier_eleve) %>'>
+          <span><%= t(".menu_#{entree_de_menu}") %></span>
+        </a>
+      <% end %>
+
+    </div>
+  </nav>
+  <% if flash[:notice] %>
+    <div class="notification success mt-1">
+      <%= flash[:notice]  %>
+    </div>
+  <% elsif flash[:alert] %>
+    <div class="notification error mt-1">
+      <%= flash[:alert]  %>
+    </div>
+  <% end %>
+
+  <%= yield %>
 
   </main>
 
 <% end %>
 
 <%= render template: 'layouts/application' %>
+

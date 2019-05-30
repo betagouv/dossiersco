@@ -47,4 +47,34 @@ class ApplicationHelperTest < ActionDispatch::IntegrationTest
     assert_equal "<p>blabla</p>\n", markdown(texte)
   end
 
+  test "liste du menu famille" do
+    expected = %w[accueil eleve famille administration pieces_a_joindre validation]
+    assert_equal expected, entrees_de_menu
+  end
+
+  test "quand l'étape est déjà passée, renvoie step-enabled" do
+    dossier = Fabricate.build(:dossier_eleve, etape_la_plus_avancee: "administration")
+    assert_equal "step step-enabled current done", classe_pour_menu("famillle", dossier)
+  end
+
+  test "quand l'étape est pas encore passée, renvoie step-disabled" do
+    dossier = Fabricate.build(:dossier_eleve, etape_la_plus_avancee: "eleve")
+    assert_equal "step step-disabled", classe_pour_menu("famille", dossier)
+  end
+
+  test "quand l'étape est l'étape courante, renvoie step-enabled et current" do
+    dossier = Fabricate.build(:dossier_eleve, etape_la_plus_avancee: "famille")
+    assert_equal "step step-enabled current", classe_pour_menu("famille", dossier)
+  end
+
+  test "#lien_menu # si step-disabled" do
+    dossier = Fabricate.build(:dossier_eleve, etape_la_plus_avancee: "eleve")
+    assert_equal "#", lien_menu("famille", dossier)
+  end
+
+  test "#lien_menu url si la page à déjà été vue" do
+    dossier = Fabricate.build(:dossier_eleve, etape_la_plus_avancee: "administration")
+    assert_equal "/famille", lien_menu("famille", dossier)
+  end
+
 end

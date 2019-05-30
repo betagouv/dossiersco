@@ -1,7 +1,5 @@
 <% @section = 4 %>
 
-<%= render partial: 'partials/navigation', locals: { dossier_eleve: dossier_eleve } %>
-
 <section class="section">
   <div class="container">
 
@@ -9,16 +7,13 @@
 
     <div class="panel">
 
-      <% if defined? message  %>
-        <div class="message_echec"><%= message %></div>
-      <% end %>
       <div>
         <p><%= t('.pieces_obligatoires') %></p>
       </div>
       <%= t('.instructions_html') %>
     </div>
 
-    <%= render partial: 'partials/pieces_jointes', locals: { dossier_eleve: dossier_eleve, action: "/enregistre_piece_jointe" } %>
+    <%= render partial: 'partials/pieces_jointes', locals: { dossier_eleve: @dossier_eleve, action: "/enregistre_piece_jointe" } %>
     <form action="/pieces_a_joindre" method='POST'>
       <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
       <%= render partial: 'partials/nouveau_precedent_suivant', :locals => { :precedent => "administration"} %>

@@ -23,6 +23,8 @@ class DossierEleve < ActiveRecord::Base
   has_and_belongs_to_many :options_pedagogiques
 
   ETAT = { pas_connecte: "pas connecté", connecte: "connecté", en_attente: "en attente", en_attente_de_validation: "en attente de validation", valide: "validé", sortant: "sortant" }.freeze
+
+  # TODO: utiliser cette liste pour les différents étape d'avancement ?
   DERNIERE_ETAPE = { accueil: "accueil", eleve: "eleve", famille: "famille", administration: "administration", confirmation: "confirmation", pieces_a_joindre: "pieces_a_joindre" }.freeze
 
   validates :etat, inclusion: { in: ETAT.values }

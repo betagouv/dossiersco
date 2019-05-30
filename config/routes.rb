@@ -85,7 +85,9 @@ Rails.application.routes.draw do
 
 
   post "/identification", to: "accueil#identification"
+
   get "/accueil", to: "accueil#accueil"
+  post "/accueil", to: "accueil#post_accueil"
 
   get "/eleve", to: "accueil#eleve"
   post "/eleve", to: "accueil#post_eleve"

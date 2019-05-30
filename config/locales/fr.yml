@@ -49,6 +49,14 @@ fr:
       import_export: "Import/export des élèves"
       suivi_inscription: "Suivi des inscriptions"
       tableau_de_bord: "Tableau de bord"
+    famille:
+      menu_accueil: "Accueil"
+      menu_administration: "Administration"
+      menu_famille: "Famillle"
+      menu_eleve: "Élève"
+      menu_pieces_a_joindre: "Pièces à joindre"
+      menu_validation: "Validation"
+      menu_confirmation: "Confirmation"
   partials:
     navigation:
       eleve: Elève

@@ -28,9 +28,12 @@
     <% end %>
 
     <div class="text-center">
-      <a id='commencer-inscription' href="/eleve">
-        <button class="button mt-2">Commencer l’inscription</button>
-      </a>
+      <form action="/accueil"  method="post">
+
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <button type="submit" class="button boutton-enregistrer mt-2">Commencer l’inscription</button>
+      </form>
+
     </div>
   </div>
 </section>

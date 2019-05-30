@@ -13,5 +13,3 @@ class Famille
   end
 
 end
-
-class ExceptionAucunEmailRetrouve < RuntimeError; end

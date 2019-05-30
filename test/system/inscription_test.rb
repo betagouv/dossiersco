@@ -22,7 +22,7 @@ class InscriptionTest < ActionDispatch::IntegrationTest
 
     assert_selector "p", text: "Pour réinscrire votre enfant"
 
-    find("#commencer-inscription").click
+    click_button "Commencer l’inscription"
 
     assert_selector "h2", text: "Identité de l'élève"
 
