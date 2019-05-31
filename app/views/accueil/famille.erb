@@ -15,7 +15,7 @@
         label: t('.prenom'),
         type: "text",
         value: @resp_legal1.prenom,
-        indication: "Lauren",
+        indication: "Prénom",
         disabled: false,
         required: 'required'
     },
@@ -24,7 +24,7 @@
         label: t('.nom'),
         type: "text",
         value: @resp_legal1.nom,
-        indication: "Hill",
+        indication: "Nom",
         disabled: false,
         required: 'required'
     },
@@ -43,7 +43,7 @@
         label: t('.code_postal'),
         type: "text",
         value: @resp_legal1.code_postal,
-        indication: "18000",
+        indication: "Code postal",
         disabled: false,
         required: 'required'
     },
@@ -52,7 +52,7 @@
         label: t('.ville'),
         type: "dropdown",
         selected: ville_rl1,
-        indication: "Bourges",
+        indication: "Ville",
         disabled: false,
         required: 'required',
         options: [ville_rl1]
@@ -66,28 +66,28 @@
         label: t('.telephone_principal'),
         type: "tel",
         value: @resp_legal1.tel_personnel,
-        indication: "02 11 33 44 55",
+        indication: "Numéro de téléphone",
     },
     {
         name: "tel_portable_rl1",
         label: t('.telephone_secondaire'),
         type: "tel",
         value: @resp_legal1.tel_portable,
-        indication: "07 99 88 77 66",
+        indication: "Numéro de téléphone",
     },
     {
         name: "tel_professionnel_rl1",
         label: t('.telephone_professionnel'),
         type: "tel",
         value: @resp_legal1.tel_professionnel,
-        indication: "04 55 44 33 22",
+        indication: "Numéro de téléphone",
     },
     {
         name: "email_rl1",
         label: t('.email_principal'),
         type: "email",
         value: @resp_legal1.email,
-        indication: "lauren@example.com",
+        indication: "email",
     },
     {
         type: 'espace',
@@ -192,28 +192,28 @@
              label: t('.telephone_principal'),
              type: "tel",
              value: @resp_legal2.tel_personnel,
-             indication: "03 44 55 66 77"
+             indication: "Numéro de téléphone"
          },
          {
              name: "tel_portable_rl2",
              label: t('.telephone_secondaire'),
              type: "tel",
              value: @resp_legal2.tel_portable,
-             indication: "06 44 55 66 77"
+             indication: "Numéro de téléphone"
          },
          {
              name: "tel_professionnel_rl2",
              label: t('.telephone_professionnel'),
              type: "tel",
              value: @resp_legal2.tel_professionnel,
-             indication: "03 44 55 66 77"
+             indication: "Numéro de téléphone"
          },
          {
              name: "email_rl2",
              label: t('.email_principal'),
              type: "email",
              value: @resp_legal2.email,
-             indication: "jean.dupont@laposte.net"
+             indication: "email"
          },
          {
              type: 'espace',
@@ -257,7 +257,7 @@
            label: t('.prenom'),
            type: "text",
            value: @contact_urgence.present? ? @contact_urgence.prenom : nil,
-           indication: "Jules",
+           indication: "Prénom",
            disabled: false
        },
        {
@@ -265,7 +265,7 @@
            label: t('.nom'),
            type: "text",
            value: @contact_urgence.present? ? @contact_urgence.nom : nil,
-           indication: "Ceasar",
+           indication: "Nom",
            disabled: false
        },
        {
@@ -277,14 +277,14 @@
            label: t('.telephone_principal'),
            type: "tel",
            value: @contact_urgence.present? ? @contact_urgence.tel_principal : nil,
-           indication: "01 33 44 55 66 77"
+           indication: "Numéro de téléphone"
        },
        {
            name: "tel_secondaire_urg",
            label: t('.telephone_secondaire'),
            type: "tel",
            value: @contact_urgence.present? ? @contact_urgence.tel_secondaire : nil,
-           indication: "06 22 44 55 66 77"
+           indication: "Numéro de téléphone"
        },
    ]
 %>
