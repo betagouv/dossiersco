@@ -218,6 +218,7 @@ class ImporterSiecle < ApplicationJob
       dossier_eleve.options_pedagogiques << option
       option_origine = {}
       option_origine[:nom] = option.nom
+      option_origine[:code_matiere] = option.code_matiere
       option_origine[:groupe] = option.groupe
 
       dossier_eleve.options_origines[option.id] = option_origine
