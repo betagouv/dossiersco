@@ -39,7 +39,7 @@
     <div class="text-center">
       <p>Vous êtes sur un environnement de test. Les données existantes ici sont anonymisées. Vous pouvez donc vous connecter avec les comptes suivants : </p>
       <ul>
-        <% Eleve.all.sample(3).each do |eleve| %>
+        <% DossierEleve.where(etablissement_id: Etablissement.find_by(uai: '0123456S').id).sample(3).map(&:eleve).each do |eleve| %>
           <li><%= link_to "Élève #{eleve.prenom} #{eleve.nom}", "/identification?identifiant=#{eleve.identifiant}&annee=#{eleve.annee_de_naissance}&mois=#{eleve.mois_de_naissance}&jour=#{eleve.jour_de_naissance}", method: :post %></li>
         <% end %>
       </ul>
