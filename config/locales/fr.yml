@@ -126,7 +126,7 @@ fr:
       options_pedagogiques: Options pédagogiques
       explication_options_pedagogiques: "Voici les options ouvertes. Celles qui sont cochées correspondent à celles que votre enfant suit actuellement."
       options_pedagogiques_actuelles: "Options pédagogiques actuelles"
-      explication_options_pedagogiques_actuelles: "Ces options sont celles que votre enfants fait actuellement."
+      explication_options_pedagogiques_actuelles: "Ces options sont celles que votre enfant suit actuellement."
     famille:
       <<: *infos_nom
       titre_responsable_legal: "Responsable légal"
