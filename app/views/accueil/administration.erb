@@ -5,32 +5,32 @@
   <form action="/administration" method="POST">
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 
-    <h2 class="col separation"><%= t('.restauration_scolaire') %></h2>
-
-
-    <div class="form__group" id="demi-pension" data-demi-pension="<%= @dossier_eleve.demi_pensionnaire %>">
-      <label>
-        <input type="radio" name="demi_pensionnaire" required value="true" id='demi_pensionnaire'
-        <% if @dossier_eleve.demi_pensionnaire %> checked <% end %>><%= t('.demi_pensionnaire') %>
-      </label>
-      <label>
-        <input type="radio" name="demi_pensionnaire" required value="false" id='externe'
-        <% if ! @dossier_eleve.demi_pensionnaire %> checked <% end %>><%= t('.externe') %>
-      </label>
-    </div>
-
-    <div id="dp" style="display: none;">
-      <% if @dossier_eleve.etablissement.demande_caf? %>
-        <label class="mt-1">
-          <%= t('.numero_caf') %>
-          <input type="text" name="identifiant_caf" value="<%= @dossier_eleve.identifiant_caf %>">
+    <% if @dossier_eleve.etablissement.gere_demi_pension? %>
+      <h2 class="col separation"><%= t('.restauration_scolaire') %></h2>
+      <div class="form__group" id="demi-pension" data-demi-pension="<%= @dossier_eleve.demi_pensionnaire %>">
+        <label>
+          <input type="radio" name="demi_pensionnaire" required value="true" id='demi_pensionnaire'
+          <% if @dossier_eleve.demi_pensionnaire %> checked <% end %>><%= t('.demi_pensionnaire') %>
         </label>
-      <% end %>
-      <p class="text-danger"><%= t('.engagement_demi_pension') %></p>
-      <% if @dossier_eleve.etablissement.reglement_demi_pension.present? %>
-        <%= link_to t('.lire_reglement_dp'), @dossier_eleve.etablissement.reglement_demi_pension_url, target:'_blank' %>
-      <% end %>
-    </div>
+        <label>
+          <input type="radio" name="demi_pensionnaire" required value="false" id='externe'
+          <% if ! @dossier_eleve.demi_pensionnaire %> checked <% end %>><%= t('.externe') %>
+        </label>
+      </div>
+
+      <div id="dp" style="display: none;">
+        <% if @dossier_eleve.etablissement.demande_caf? %>
+          <label class="mt-1">
+            <%= t('.numero_caf') %>
+            <input type="text" name="identifiant_caf" value="<%= @dossier_eleve.identifiant_caf %>">
+          </label>
+        <% end %>
+        <p class="text-danger"><%= t('.engagement_demi_pension') %></p>
+        <% if @dossier_eleve.etablissement.reglement_demi_pension.present? %>
+          <%= link_to t('.lire_reglement_dp'), @dossier_eleve.etablissement.reglement_demi_pension_url, target:'_blank' %>
+        <% end %>
+      </div>
+    <% end %>
 
     <% if @dossier_eleve.etablissement.regimes_sortie.count > 1 %>
       <h2 class="separation mt-4"><%= t('.autorisation_de_sortie') %></h2>
@@ -91,7 +91,7 @@ $(document).ready(function() {
       if ($('input[name=demi_pensionnaire]:checked').val() === 'true') {
         $('#dp').css('display', 'block')
       } else {
-          $('#dp').css('display', 'none')
+        $('#dp').css('display', 'none')
       }
   })
 
