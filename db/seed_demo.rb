@@ -71,9 +71,11 @@ puts "création d'élèves et de dossier associés"
       code_matiere: option_origine.code_matiere,
       nom: option_origine.nom
     }
+    dossier_eleve.options_pedagogiques << option_origine
   end
 
   dossier_eleve.update!(options_origines: options_origines)
+
 
   parente = %w[MERE PERE]
   parente_index = Faker::Boolean.boolean ? 0 : 1

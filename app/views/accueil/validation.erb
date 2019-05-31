@@ -10,12 +10,34 @@
 
     <div class="card">
       <div class="panel">
-        <% @dossier_eleve.options_pedagogiques.each do |option| %>
+        <% @options_maintenues.each do |option| %>
           <div class="row mt-1">
             <div>
-              <%= t('.demande_option') %> <strong><%= option.nom %></strong>
+              <%= t('.options_maintenues') %> <strong><%= option.nom %></strong>
             </div>
-            <a id='modifier-<%= option.nom %>' href="/eleve">
+            <a id='modifier-<%= option.nom %>' href="/eleve#options-pedagogiques">
+              <div class="btn btn-outline-secondary btn-sm">Modifier</div>
+            </a>
+          </div>
+        <% end %>
+
+        <% @options_demandees.each do |option| %>
+          <div class="row mt-1">
+            <div>
+              <%= t('.options_demandees') %> <strong><%= option.nom %></strong>
+            </div>
+            <a id='modifier-<%= option.nom %>' href="/eleve#options-pedagogiques">
+              <div class="btn btn-outline-secondary btn-sm">Modifier</div>
+            </a>
+          </div>
+        <% end %>
+
+        <% @options_abandonnees.each do |option| %>
+          <div class="row mt-1">
+            <div>
+              <%= t('.options_abandonnees') %> <strong><%= option.nom %></strong>
+            </div>
+            <a id='modifier-<%= option.nom %>' href="/eleve#options-pedagogiques">
               <div class="btn btn-outline-secondary btn-sm">Modifier</div>
             </a>
           </div>

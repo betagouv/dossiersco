@@ -173,6 +173,9 @@ fr:
       verifier_informations: "Veuillez vérifier les informations ci-dessous, puis validez l'inscription."
       demande_option: "Demande d'inscription à l'option"
       abandon_option: "Souhait d'abandonner l'option"
+      options_demandees: "Options demandées"
+      options_abandonnees: "Options abandonnées"
+      options_maintenues: "Options maintenues"
       modifier: "Modifier"
       <<: *restauration
       sortie: Régime d'autorisation de sortie

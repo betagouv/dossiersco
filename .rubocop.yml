@@ -22,6 +22,7 @@ LineLength:
     - 'app/services/pdf_fiche_infirmerie.rb'
     - 'app/services/pdf_convocation.rb'
     - 'test/controllers/authentification_cas_ent_controller_test.rb'
+    - 'test/services/analyseur_option_test.rb'
 
 Style/StringLiterals:
   Enabled: true

@@ -3,5 +3,5 @@
 Fabricator(:option_pedagogique) do
   etablissement
   code_matiere Faker::Number.number(10)
-  nom Faker::Books::CultureSeries
+  nom Faker::Color.color_name
 end

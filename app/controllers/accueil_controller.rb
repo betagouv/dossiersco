@@ -39,6 +39,7 @@ class AccueilController < ApplicationController
   end
 
   def accueil
+    @eleve.dossier_eleve.update derniere_etape: "accueil"
     @dossier_eleve = @eleve.dossier_eleve
   end
 
@@ -130,7 +131,12 @@ class AccueilController < ApplicationController
   end
 
   def validation
+    @eleve.dossier_eleve.update derniere_etape: "validation"
     @dossier_eleve = @eleve.dossier_eleve
+    analyseur = AnalyseurOption.new(@dossier_eleve)
+    @options_maintenues = analyseur.option_maintenue
+    @options_demandees = analyseur.option_demandee
+    @options_abandonnees = analyseur.option_abandonnee
   end
 
   def post_validation
