@@ -20,7 +20,7 @@
     </div>
 
     <div id="dp" style="display: none;">
-      <% if @dossier_eleve.etablissement.demande_caf %>
+      <% if @dossier_eleve.etablissement.demande_caf? %>
         <label class="mt-1">
           <%= t('.numero_caf') %>
           <input type="text" name="identifiant_caf" value="<%= @dossier_eleve.identifiant_caf %>">

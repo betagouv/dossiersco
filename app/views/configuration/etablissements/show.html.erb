@@ -15,7 +15,18 @@
       <dd><%= @etablissement.gere_demi_pension ? 'Oui' : 'Non' %></dd>
 
       <dt>Réglement demi-pension</dt>
-      <dd><%= link_to 'fichier', @etablissement.reglement_demi_pension_url, target: "_blank" if @etablissement.reglement_demi_pension.present? %></dd>
+      <dd>
+      <% if @etablissement.reglement_demi_pension.present? %>
+        <%= link_to 'fichier', @etablissement.reglement_demi_pension_url, target: "_blank" if @etablissement.reglement_demi_pension.present? %>
+      <% else %>
+        Pas de fichier
+      <% end %>
+      </dd>
+
+      <dt>Demander l'identifiant CAF aux familles</dt>
+      <dd>
+      <%= @etablissement.demande_caf? ? 'Oui' : 'Non' %>
+      </dd>
 
       <dt>Signataire</dt>
       <dd><%= @etablissement.signataire %></dd>
@@ -28,11 +39,11 @@
 
       <dt>Envoyer aux familles</dt>
       <dd>
-        <% if @etablissement.envoyer_aux_familles? %>
-          - <strong><%= t('.attention_envoye_aux_familles') %></strong>
-        <% else %>
-          - <%= t('.envoye_restreint', email: @agent_connecte.email) %>
-        <% end %>
+      <% if @etablissement.envoyer_aux_familles? %>
+        <strong><%= t('.attention_envoye_aux_familles') %></strong>
+      <% else %>
+        <%= t('.envoye_restreint', email: @agent_connecte.email) %>
+      <% end %>
       </dd>
     </dl>
 

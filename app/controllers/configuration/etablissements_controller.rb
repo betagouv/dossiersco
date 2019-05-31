@@ -48,7 +48,8 @@ module Configuration
     def etablissement_params
       params.require(:etablissement).permit(:nom, :email, :adresse, :ville, :code_postal,
                                             :gere_demi_pension, :signataire, :date_limite, :uai,
-                                            :envoyer_aux_familles, :reglement_demi_pension, :mot_accueil)
+                                            :envoyer_aux_familles, :reglement_demi_pension, :mot_accueil,
+                                            :demande_caf)
     end
 
     def cherche_etablissement

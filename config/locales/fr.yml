@@ -259,6 +259,7 @@ fr:
       edit:
         mot_accueil: "Mot présent sur la page d'accueil des familles"
         date_limite_inscription: "Date limite de la campagne d'inscription"
+        demande_caf: "Demander l'identifiant CAF aux familles"
         signataire: "Signataire des courriers de l'établissement"
         activer_envoie: "Activer l'envoi des emails aux familles"
         gere_demi_pension: "Collège gérant la demi-pension"
