@@ -103,8 +103,6 @@ Rails.application.routes.draw do
 
   post "/deconnexion", to: "accueil#deconnexion"
 
-  get "/confirmation", to: "accueil#confirmation"
-
   post "/satisfaction", to: "accueil#satisfaction"
   post "/commentaire", to: "accueil#commentaire"
 

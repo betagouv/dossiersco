@@ -230,33 +230,6 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     assert response.parsed_body.include? html_escape("Identité de l'élève")
   end
 
-  test "ramene à l'etape confirmation pour la satisfaction" do
-    resp_legal = Fabricate(:resp_legal)
-    eleve = Fabricate(:eleve)
-    Fabricate(:dossier_eleve, eleve: eleve, resp_legal: [resp_legal])
-    params = {
-      identifiant: eleve.identifiant,
-      annee: eleve.annee_de_naissance,
-      mois: eleve.mois_de_naissance,
-      jour: eleve.jour_de_naissance
-    }
-    post "/identification", params: params
-    get "/confirmation"
-    post "/satisfaction"
-    post "/deconnexion"
-    params = {
-      identifiant: eleve.identifiant,
-      annee: eleve.annee_de_naissance,
-      mois: eleve.mois_de_naissance,
-      jour: eleve.jour_de_naissance
-    }
-    post "/identification", params: params
-    follow_redirect!
-
-    expected = "L'inscription ne sera validée qu'à réception d'un email de confirmation"
-    assert response.parsed_body.include?(expected)
-  end
-
   test "une famille choisi un régime d'autorisation de sortie" do
     eleve = Fabricate(:eleve)
     etablissement = Fabricate(:etablissement)

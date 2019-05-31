@@ -108,7 +108,9 @@ class AccueilController < ApplicationController
     contact_urgence.save!
 
     if responsables_valides?(resp_legal1, resp_legal2)
-      sauve_et_redirect @dossier_eleve, "administration"
+      @dossier_eleve.etape_la_plus_avancee = "administration"
+      @dossier_eleve.save!
+      redirect_to "/administration"
     else
       error = if resp_legal1.errors.messages.present?
                 resp_legal1.errors.messages.first[1].join
@@ -148,7 +150,7 @@ class AccueilController < ApplicationController
       FamilleMailer.envoyer_mail_confirmation(@dossier_eleve.eleve).deliver_now
       @dossier_eleve.update(etat: "en attente de validation")
     end
-    sauve_et_redirect @dossier_eleve, "confirmation"
+    redirect_to "/accueil"
   end
 
   def administration
@@ -165,18 +167,14 @@ class AccueilController < ApplicationController
     dossier_eleve.check_paiement_cantine = params["check_paiement_cantine"]
     dossier_eleve.identifiant_caf = params["identifiant_caf"]
     dossier_eleve.save!
-    sauve_et_redirect dossier_eleve, "pieces_a_joindre"
+    dossier_eleve.etape_la_plus_avancee = "pieces_a_joindre"
+    dossier_eleve.save!
+    redirect_to "/pieces_a_joindre"
   end
 
   def deconnexion
     reset_session
     redirect_to "/"
-  end
-
-  def confirmation
-    @dossier_eleve = @eleve.dossier_eleve
-    @dossier_eleve.update derniere_etape: "confirmation"
-    render "confirmation"
   end
 
   def satisfaction
@@ -196,12 +194,6 @@ class AccueilController < ApplicationController
     { '0': "", '1': "occupe un emploi", '2': "Au chômage", '3': "Pré retraité, retraité ou retiré", '4': "Personne sans activité professionnelle" }
   end
 
-  def sauve_et_redirect(dossier_eleve, etape_la_plus_avancee)
-    dossier_eleve.etape_la_plus_avancee = etape_la_plus_avancee
-    dossier_eleve.save!
-    redirect_to "/#{etape_la_plus_avancee}"
-  end
-
   def post_pieces_a_joindre
     @dossier_eleve = @eleve.dossier_eleve
     if @dossier_eleve.pieces_manquantes?
@@ -209,7 +201,9 @@ class AccueilController < ApplicationController
       flash[:erreur] = "Veuillez télécharger les pièces obligatoires"
       render :pieces_a_joindre
     else
-      sauve_et_redirect @dossier_eleve, "validation"
+      @dossier_eleve.etape_la_plus_avancee = "validation"
+      @dossier_eleve.save!
+      redirect_to "/validation"
     end
   end
 
