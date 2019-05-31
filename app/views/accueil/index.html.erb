@@ -35,7 +35,7 @@
     <% end %>
   </div>
 
-  <% unless Rails.env.production? %>
+  <% if !Rails.env.production? && Etablissement.exists?(uai: '0123456S') %>
     <div class="text-center">
       <p>Vous êtes sur un environnement de test. Les données existantes ici sont anonymisées. Vous pouvez donc vous connecter avec les comptes suivants : </p>
       <ul>
