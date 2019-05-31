@@ -88,6 +88,8 @@ class InscriptionsController < ApplicationController
     dossier_eleve = eleve.dossier_eleve
     dossier_eleve.valide!
     mail = FamilleMailer.mail_validation_inscription(eleve, @agent_connecte)
+    part = mail.html_part || mail.text_part || mail
+    Message.create(categorie: "mail", contenu: part.body, etat: "envoyé", dossier_eleve: @dossier)
     mail.deliver_now
 
     redirect_to "/agent/liste_des_eleves"
@@ -148,6 +150,8 @@ class InscriptionsController < ApplicationController
       dossier_eleve = DossierEleve.find(id)
       dossier_eleve.valide!
       mail = FamilleMailer.mail_validation_inscription(dossier_eleve.eleve, @agent_connecte)
+      part = mail.html_part || mail.text_part || mail
+      Message.create(categorie: "mail", contenu: part.body, etat: "envoyé", dossier_eleve: @dossier)
       mail.deliver_now
     end
     redirect_to "/agent/liste_des_eleves"

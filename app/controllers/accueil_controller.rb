@@ -147,7 +147,10 @@ class AccueilController < ApplicationController
     @dossier_eleve.date_signature = Time.now
     @dossier_eleve.save
     if @dossier_eleve.etat != "validé"
-      FamilleMailer.envoyer_mail_confirmation(@dossier_eleve.eleve).deliver_now
+      mail = FamilleMailer.envoyer_mail_confirmation(@dossier_eleve.eleve)
+      part = mail.html_part || mail.text_part || mail
+      Message.create(categorie: "mail", contenu: part.body, etat: "envoyé", dossier_eleve: @dossier)
+      mail.deliver_now
       @dossier_eleve.update(etat: "en attente de validation")
     end
     redirect_to "/accueil"
