@@ -113,6 +113,15 @@
 
     <%= raw(construire reste_identite) %>
 
+    <h3 class="separation"><%= t('.options_pedagogiques_actuelles') %></h3>
+    <p><%= t('.explication_options_pedagogiques_actuelles') %></p>
+
+    <ul>
+      <% @eleve.dossier_eleve.options_origines.each do |option_id, option| %>
+        <li><%= option["nom"] %></li>
+      <% end %>
+    </ul>
+
     <% if @options_pedagogiques.present? %>
       <h3 class="separation"><%= t('.options_pedagogiques') %></h3>
       <p><%= t('.explication_options_pedagogiques') %></p>
@@ -139,5 +148,5 @@
 </section>
 
 <script>
-  document.getElementById("prenom").focus();
+document.getElementById("prenom").focus();
 </script>

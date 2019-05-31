@@ -8,16 +8,16 @@ admin = Agent.create("prenom" => "Principale", "nom" => "Papillon", "etablisseme
 superAdmin = Agent.create("prenom" => "Pierre", "nom" => "De Maulmont", "etablissement" => etablissement, "admin" => true, "password_digest" => "$2a$10$.aMYRnJeqdQn/4pI61y81edPVMV0UvevcMGdk7VgCwu9YfFgVXnnG", "email" => "pierre.de-maulmont@ac-paris.fr")
 
 puts "loading OptionPedagogique"
-anglais_lv1 = OptionPedagogique.create("nom" => "ANGLAIS LV1", "obligatoire" => true, "etablissement" => etablissement)
-espagnol_lv2_nd = OptionPedagogique.create("nom" => "ESPAGNOL LV2 ND", "obligatoire" => true, "etablissement" => etablissement)
-espagnol_lv2 = OptionPedagogique.create("nom" => "ESPAGNOL LV2", "obligatoire" => true, "etablissement" => etablissement)
-allemand_lv2_nd = OptionPedagogique.create("nom" => "ALLEMAND LV2 ND", "obligatoire" => true, "etablissement" => etablissement)
-allemand_lv2 = OptionPedagogique.create("nom" => "ALLEMAND LV2", "obligatoire" => true, "etablissement" => etablissement)
-latin = OptionPedagogique.create("nom" => "LCA LATIN", "etablissement" => etablissement)
-italien_lv2 = OptionPedagogique.create("nom" => "ITALIEN LV2", "obligatoire" => true, "etablissement" => etablissement)
+anglais_lv1 = OptionPedagogique.create("nom" => "ANGLAIS LV1", "obligatoire" => true, "etablissement" => etablissement, "code_matiere" => "AGL1")
+espagnol_lv2_nd = OptionPedagogique.create("nom" => "ESPAGNOL LV2 ND", "obligatoire" => true, "etablissement" => etablissement, "code_matiere" => "ESP2ND")
+espagnol_lv2 = OptionPedagogique.create("nom" => "ESPAGNOL LV2", "obligatoire" => true, "etablissement" => etablissement, "code_matiere" => "EPS2")
+allemand_lv2_nd = OptionPedagogique.create("nom" => "ALLEMAND LV2 ND", "obligatoire" => true, "etablissement" => etablissement, "code_matiere" => "ALL2ND")
+allemand_lv2 = OptionPedagogique.create("nom" => "ALLEMAND LV2", "obligatoire" => true, "etablissement" => etablissement, "code_matiere" => "ALL2")
+latin = OptionPedagogique.create("nom" => "LCA LATIN", "etablissement" => etablissement, "code_matiere" => "LAT")
+italien_lv2 = OptionPedagogique.create("nom" => "ITALIEN LV2", "obligatoire" => true, "etablissement" => etablissement, "code_matiere" => "ITA2")
 
 puts "loading Mef"
-Mef.create("libelle" => "3EME", "code" => "10310019110", "etablissement" => etablissement)
+Mef.create("libelle" => "3EME", "code" => "10310019110", "etablissement" => etablissement,  "options_pedagogiques" => [anglais_lv1, espagnol_lv2_nd, espagnol_lv2, allemand_lv2_nd, latin, allemand_lv2, italien_lv2])
 Mef.create("libelle" => "3EME SEGPA RENOV. : VENTE DISTRIB.MAGAS", "code" => "1671000C11A", "etablissement" => etablissement)
 Mef.create("libelle" => "3EME SEGPA RENOV. : HYGIENE ALIMENT.SERV", "code" => "1671000D11A", "etablissement" => etablissement)
 Mef.create("libelle" => "4EME SEGPA", "code" => "16610002110", "etablissement" => etablissement, "options_pedagogiques" => [anglais_lv1])
@@ -60,6 +60,20 @@ puts "création d'élèves et de dossier associés"
     "mef_origine" => mef_origine,
     "mef_destination" => mef_destination
   )
+
+  taille_min = 2 % mef_origine.options_pedagogiques.length
+  taille_max = mef_origine.options_pedagogiques.length - 1
+  taille_du_sample = rand(taille_min..taille_max)
+
+  options_origines = {}
+  mef_origine.options_pedagogiques.sample(taille_du_sample).each do |option_origine|
+    options_origines[option_origine.id] = {
+      code_matiere: option_origine.code_matiere,
+      nom: option_origine.nom
+    }
+  end
+
+  dossier_eleve.update!(options_origines: options_origines)
 
   parente = %w[MERE PERE]
   parente_index = Faker::Boolean.boolean ? 0 : 1
