@@ -180,7 +180,6 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     get "/administration"
 
     parsed_body = response.body.gsub(/\s/, "")
-    assert parsed_body.include? "id='demi_pensionnaire' checked".gsub(/\s/, "")
     assert parsed_body.include? "id=\"regime_sortie_#{regime_sortie.id}\" checked".gsub(/\s/, "")
     assert parsed_body.include? "id='renseignements_medicaux' checked".gsub(/\s/, "")
     assert parsed_body.include? "id='autorise_photo_de_classe' checked".gsub(/\s/, "")
