@@ -383,6 +383,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
 
     agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
+    dossier_eleve.etablissement.update!(envoyer_aux_familles: true)
+
     identification_agent(agent)
     post "/agent/contacter_une_famille", params: { identifiant: dossier_eleve.eleve.identifiant, message: "Message 1" }
     post "/agent/contacter_une_famille", params: { identifiant: dossier_eleve.eleve.identifiant, message: "Message 2" }

@@ -67,6 +67,7 @@ Metrics/MethodLength:
     - 'lib/tasks/charger_donnees_exemple.rake'
     - 'app/services/pdf_fiche_infirmerie.rb'
     - 'app/services/pdf_convocation.rb'
+    - 'app/mailers/famille_mailer.rb'
 
 Metrics/ClassLength:
   Exclude:
