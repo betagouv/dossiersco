@@ -5,9 +5,12 @@ require "test_helper"
 class PresenterOptionsPedagogiquesTest < ActiveSupport::TestCase
 
   test "on recupere un tableau vide si il n'y a pas d'options" do
-    dossier_eleve = Fabricate(:dossier_eleve)
+    mef = Fabricate(:mef, options_pedagogiques: [])
+    assert_equal [], PresenterOptionsPedagogiques.new(mef).options
+  end
 
-    assert_equal [], PresenterOptionsPedagogiques.new(dossier_eleve).options
+  test "avec un mef nil, renvoie un tableau vide" do
+    assert_equal [], PresenterOptionsPedagogiques.new(nil).options
   end
 
   test "on récupere une option ouverte à l'inscription" do
