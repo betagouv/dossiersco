@@ -54,6 +54,7 @@ Metrics/MethodLength:
     - 'app/controllers/dossiers_affelnet_controller.rb'
     - 'app/controllers/application_controller.rb'
     - 'app/controllers/inscriptions_controller.rb'
+    - 'app/controllers/suivi_controller.rb'
     - 'app/jobs/importer_siecle.rb'
     - 'app/controllers/configuration/agents_controller.rb'
     - 'app/models/eleve.rb'

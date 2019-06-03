@@ -19,8 +19,8 @@ class SuiviController < ApplicationController
 
       @suivi.piece_attendue_configure << etablissement if etablissement.pieces_attendues.count.positive?
 
-      nb_familles_connectees = etablissement.dossier_eleve.select{|d| d.etat == "connecté" }.length
-      if nb_familles_connectees > 0
+      nb_familles_connectees = etablissement.dossier_eleve.select { |d| d.etat == "connecté" }.length
+      if nb_familles_connectees.positive?
         @suivi.familles_connectes << { etablissement: etablissement, nb_familles_connectees: nb_familles_connectees }
       end
     end

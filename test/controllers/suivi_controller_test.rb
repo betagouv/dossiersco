@@ -49,7 +49,8 @@ class SuiviControllerTest < ActionDispatch::IntegrationTest
     Fabricate(:etablissement)
 
     get suivi_index_url
-    assert_equal [etablissement], assigns(:suivi).familles_connectes
+    suivi_familles_connectees = [{ etablissement: etablissement, nb_familles_connectees: 1 }]
+    assert_equal suivi_familles_connectees, assigns(:suivi).familles_connectes
   end
 
 end
