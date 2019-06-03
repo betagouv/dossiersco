@@ -207,6 +207,7 @@ fr:
     options_pedagogiques:
       liste:
         ajouter_une_option: Ajouter une option
+        modifier: 'Modifier'
       index:
         liste_options: Liste des options
         ajouter_option: "Ajouter l'option"

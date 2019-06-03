@@ -15,6 +15,11 @@
     <%= form.text_field :nom %>
   </div>
 
+  <div class="form__group">
+    <%= form.label :explication %>
+    <%= form.text_area :explication %>
+  </div>
+
   <div class=form__group">
     <%= form.submit 'valider', class: 'button mt-2'  %>
   </div>

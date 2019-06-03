@@ -19,6 +19,7 @@
       <tr>
         <td><%= option.nom %></td>
         <td><%= option.obligatoire ? 'oui' : 'non' %></td>
+        <td><%= link_to( t(".modifier"), edit_configuration_option_pedagogique_path(option)) %></td>
         <td><%= link_to("Supprimer", configuration_option_pedagogique_path(option),
                          method: :delete, data: { confirm: 'Voulez-vous vraiment supprimer cette option ?' })
           %></td>
