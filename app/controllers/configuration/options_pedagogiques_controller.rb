@@ -72,6 +72,12 @@ module Configuration
       head :ok
     end
 
+    def definie_ouverte_inscription
+      mef_option = MefOptionPedagogique.find(params[:mef_option_pedagogique_id])
+      mef_option.update(ouverte_inscription: params[:ouverte_inscription])
+      head :ok
+    end
+
     private
 
     def set_option_pedagogique

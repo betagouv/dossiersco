@@ -23,10 +23,12 @@
           <div class="cards">
             <table class="table">
               <tbody data-mef-id="<%= mef.id %>">
-              <% mef.mef_options_pedagogiques.each do |mef_option| %>
+              <% liste = mef.mef_options_pedagogiques.sort_by { |mef_option| mef_option.option_pedagogique.nom } %>
+              <% liste.each do |mef_option| %>
                 <tr class="small-line" data-option-id="<%= mef_option.option_pedagogique.id %>">
                   <td><%= "#{mef_option.option_pedagogique.nom} #{mef_option.option_pedagogique.groupe} " %></td>
                   <td><%= select_tag "abandonnable", options_for_select([['Abandonnable', true], ['Non abandonnable', false]], selected: mef_option.abandonnable ), data: {id: mef_option.id} %></td>
+                  <td><%= select_tag "ouverte_inscription", options_for_select([["Ouverte à l'inscription", true], ["Fermée à l'inscription", false]], selected: mef_option.ouverte_inscription ), data: {id: mef_option.id} %></td>
                   <td><%= link_to t('.modifier'), edit_configuration_option_pedagogique_path(mef_option.option_pedagogique) %></td>
                   <td><%= link_to enleve_option_au_mef_configuration_option_pedagogique_path(mef_option), method: :delete, remote: true do %><i class='fas fa-times'></i><% end %></td>
                 </tr>
@@ -61,6 +63,16 @@
         url: '/configuration/options_pedagogiques/definie_abandonnabilite',
         data: {
           abandonnable: this.value,
+          mef_option_pedagogique_id: $(this).data('id')}
+      })
+    })
+
+    $('select[name=ouverte_inscription]').change( function() {
+      $.ajax({
+        method: 'POST',
+        url: '/configuration/options_pedagogiques/definie_ouverte_inscription',
+        data: {
+          ouverte_inscription: this.value,
           mef_option_pedagogique_id: $(this).data('id')}
       })
     })

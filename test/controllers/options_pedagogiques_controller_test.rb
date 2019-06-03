@@ -70,9 +70,21 @@ class OptionsPedagogiquesControllerTest < ActionDispatch::IntegrationTest
     identification_agent(admin)
     mef_option = Fabricate(:mef_option_pedagogique)
 
-    post definie_abandonnabilite_configuration_options_pedagogiques_path, params: { abandonnable: false, mef_option_pedagogique_id: mef_option.id }
+    params = { abandonnable: false, mef_option_pedagogique_id: mef_option.id }
+    post definie_abandonnabilite_configuration_options_pedagogiques_path, params: params
 
     assert_equal false, MefOptionPedagogique.find(mef_option.id).abandonnable
+  end
+
+  test "modifie une option en non ouverte à l'inscription" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+    mef_option = Fabricate(:mef_option_pedagogique)
+
+    params = { ouverte_inscription: false, mef_option_pedagogique_id: mef_option.id }
+    post definie_ouverte_inscription_configuration_options_pedagogiques_path, params: params
+
+    assert_equal false, MefOptionPedagogique.find(mef_option.id).ouverte_inscription
   end
 
 end

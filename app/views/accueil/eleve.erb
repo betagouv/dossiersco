@@ -128,14 +128,12 @@
 
       <% @options_pedagogiques.each do |option| %>
         <%= label_tag do %>
-          <% if @options_pedagogiques_selectionnees.include?(option) %>
-            <% if !option.abandonnable?(@eleve.dossier_eleve.mef_destination) && @option_origines_ids.include?(option.id)%>
-              <%= check_box_tag option.nom, option.id, :checked, disabled: 'disabled', class: 'disabled' %>
-              <%= hidden_field_tag option.nom, option.id %>
-            <% else %>
-              <%= check_box_tag option.nom, option.id, :checked %>
-            <% end %>
-          <% else %>
+          <% if non_abandonnable?(@dossier_eleve, option) %>
+            <%= check_box_tag option.nom, option.id, :checked, disabled: 'disabled', class: 'disabled' %>
+            <%= hidden_field_tag option.nom, option.id %>
+          <% elsif abandonnable?(@dossier_eleve, option) %>
+            <%= check_box_tag option.nom, option.id, :checked %>
+          <% elsif ouverte?(@dossier_eleve, option) %>
             <%= check_box_tag option.nom, option.id %>
           <% end %>
           <%= option.nom %>
@@ -149,5 +147,5 @@
 </section>
 
 <script>
-document.getElementById("prenom").focus();
+  document.getElementById("prenom").focus();
 </script>

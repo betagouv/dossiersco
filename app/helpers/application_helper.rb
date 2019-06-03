@@ -70,4 +70,16 @@ module ApplicationHelper
       "#"
     end
   end
+
+  def non_abandonnable?(dossier, option)
+    !option.abandonnable?(dossier.mef_destination) && dossier.options_origines[option.id.to_s].present?
+  end
+
+  def abandonnable?(dossier, option)
+    option.abandonnable?(dossier.mef_destination) && dossier.options_origines[option.id.to_s].present?
+  end
+
+  def ouverte?(dossier, option)
+    option.ouverte_inscription?(dossier.mef_destination)
+  end
 end

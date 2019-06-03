@@ -77,4 +77,27 @@ class ApplicationHelperTest < ActionDispatch::IntegrationTest
     assert_equal "/famille", lien_menu("famille", dossier)
   end
 
+  test "si l'option est ouverte et non suivi checkbox vierge" do
+    mef_option = Fabricate(:mef_option_pedagogique, abandonnable: true)
+    dossier_eleve = Fabricate(:dossier_eleve, mef_destination: mef_option.mef)
+
+    assert ouverte?(dossier_eleve, mef_option.option_pedagogique)
+  end
+
+  test "si l'option est suivi et abandonnable checkbox cochée" do
+    mef_option = Fabricate(:mef_option_pedagogique, abandonnable: true)
+    dossier_eleve = Fabricate(:dossier_eleve, mef_destination: mef_option.mef)
+    dossier_eleve.options_origines = { mef_option.option_pedagogique.id.to_s => { "nom" => mef_option.option_pedagogique.nom } }
+
+    assert abandonnable?(dossier_eleve, mef_option.option_pedagogique)
+  end
+
+  test "si l'option est suivi et non abandonnable checkbox cochée et désactivé" do
+    mef_option = Fabricate(:mef_option_pedagogique, abandonnable: false)
+    dossier_eleve = Fabricate(:dossier_eleve, mef_destination: mef_option.mef)
+    dossier_eleve.options_origines = { mef_option.option_pedagogique.id.to_s => { "nom" => mef_option.option_pedagogique.nom } }
+
+    assert non_abandonnable?(dossier_eleve, mef_option.option_pedagogique)
+  end
+
 end

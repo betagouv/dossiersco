@@ -152,6 +152,7 @@ ActiveRecord::Schema.define(version: 2019_06_03_132906) do
     t.bigint "mef_id"
     t.bigint "option_pedagogique_id"
     t.boolean "abandonnable", default: true
+    t.boolean "ouverte_inscription", default: true
     t.index ["mef_id"], name: "index_mef_options_pedagogiques_on_mef_id"
     t.index ["option_pedagogique_id"], name: "index_mef_options_pedagogiques_on_option_pedagogique_id"
   end

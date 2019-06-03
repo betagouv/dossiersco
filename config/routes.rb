@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       end
       collection do
         post "definie_abandonnabilite"
+        post "definie_ouverte_inscription"
         get "liste"
       end
     end
