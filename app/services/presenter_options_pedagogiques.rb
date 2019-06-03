@@ -6,11 +6,10 @@ class PresenterOptionsPedagogiques
 
   def initialize(mef_destination)
     @options = []
-
-    if mef_destination.present?
-      mef_destination.options_pedagogiques.each do |option|
-        @options << option if option.ouverte_inscription?(mef_destination)
-      end
+    options = mef_destination.options_pedagogiques
+    options ||= []
+    options.each do |option|
+      @options << option if option.ouverte_inscription?(mef_destination)
     end
   end
 
