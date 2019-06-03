@@ -42,8 +42,8 @@
   </p>
 
   <ul>
-    <% @suivi.familles_connectes.each do |etablissement| %>
-      <li><%= link_to("#{etablissement.nom} #{etablissement.uai}", "http://www.opencartecomptable.fr/#/etablissements?code_uai=#{etablissement.uai}") %></li>
+    <% @suivi.familles_connectes.each do |suivi| %>
+      <li><%= link_to("#{suivi[:etablissement].nom} #{suivi[:etablissement].uai} (#{suivi[:nb_familles_connectees]})", "http://www.opencartecomptable.fr/#/etablissements?code_uai=#{suivi[:etablissement].uai}") %></li>
     <% end %>
   </ul>
 </section>
