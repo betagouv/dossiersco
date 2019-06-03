@@ -88,6 +88,7 @@ Rails.application.routes.draw do
 
   get "/accueil", to: "accueil#accueil"
   post "/accueil", to: "accueil#post_accueil"
+  get "/confirmation", to: "accueil#accueil"
 
   get "/eleve", to: "accueil#eleve"
   post "/eleve", to: "accueil#post_eleve"
