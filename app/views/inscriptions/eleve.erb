@@ -67,15 +67,26 @@
 
       <div class="panel" id="options">
         <div class="panel__header">
-          <h3>Options pédagogiques</h3>
+          <h3>Options pédagogiques actuelles</h3>
+        </div>
+        <ul class="mb-5">
+          <% @dossier_eleve.options_origines.each do |option_id, option| %>
+            <li><%= option["nom"] %></li>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="panel" id="options">
+        <div class="panel__header">
+          <h3>Options pédagogiques choisies à l'inscription</h3>
         </div>
         <ul class="mb-5">
           <% @dossier_eleve.options_pedagogiques.each do |option| %>
             <li><%= option.nom %></li>
           <% end %>
         </ul>
-
       </div>
+
       <div class="panel">
         <div class="panel__header">
           <h3>MEF</h3>
@@ -122,23 +133,23 @@
             <% if resp_legal.tel_personnel.present? %>
               <li>
                 <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_personnel') %> : <%= resp_legal.tel_personnel %>
-              </li>
-            <% end %>
-            <% if resp_legal.tel_portable.present? %>
-              <li>
-                <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_portable') %> : <%= resp_legal.tel_portable %>
-              </li>
-            <% end %>
-            <% if resp_legal.tel_professionnel.present? %>
-              <li>
-                <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_professionnel') %> : <%= resp_legal.tel_professionnel %>
-              </li>
-            <% end %>
-            <% if resp_legal.respond_to?(:email) && resp_legal.email.present? %>
-              <li>
-                <i class="fas fa-envelope mr-1"></i><%= resp_legal.email %>
-              </li>
-            <% end %>
+            </li>
+          <% end %>
+          <% if resp_legal.tel_portable.present? %>
+            <li>
+              <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_portable') %> : <%= resp_legal.tel_portable %>
+          </li>
+        <% end %>
+        <% if resp_legal.tel_professionnel.present? %>
+          <li>
+            <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_professionnel') %> : <%= resp_legal.tel_professionnel %>
+        </li>
+      <% end %>
+      <% if resp_legal.respond_to?(:email) && resp_legal.email.present? %>
+        <li>
+          <i class="fas fa-envelope mr-1"></i><%= resp_legal.email %>
+      </li>
+    <% end %>
           </ul>
         <% end %>
 
@@ -229,11 +240,11 @@
         <div>
           <% if @emails_presents %>
             <p>Ce formulaire envoie un message à la famille de l'élève. Précisez par exemple si les pièces
-              justificatives ne sont pas conformes, et ce que la famille doit transmettre.</p>
+            justificatives ne sont pas conformes, et ce que la famille doit transmettre.</p>
           <% elsif @dossier_eleve.portable_present %>
             <p>Cette famille n'a pas déclaré d'adresse mail. Le formulaire ci-dessous vous permet
-              d'envoyer un texto. <strong>Soyez bref</strong> (moins de 140 caractères si possible).
-              L'émission des textos se fait en différé.</p>
+            d'envoyer un texto. <strong>Soyez bref</strong> (moins de 140 caractères si possible).
+            L'émission des textos se fait en différé.</p>
           <% else %>
             <p>Cette famille n'a pas déclaré d'adresse mail, ni de téléphone portable.</p>
           <% end %>
@@ -244,10 +255,10 @@
             <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
             <% if !@modeles.empty? %>
               Modèles: <select id="modeles">
-            <% @modeles.each do |modele| %>
-              <option value=<%= modele.id %>><%= modele.nom %></option>
-            <% end %>
-          </select>
+                <% @modeles.each do |modele| %>
+                  <option value=<%= modele.id %>><%= modele.nom %></option>
+                <% end %>
+              </select>
               <button id="inserer">Insérer</button>
             <% end %>
             <% if !@emails_presents %>
@@ -275,7 +286,7 @@
             <% @dossier_eleve.message.each do |message| %>
               <div class="message">
                 <p>
-                  <%= message.categorie %> du <%= message.created_at %> (cliquez pour afficher/cacher)
+                <%= message.categorie %> du <%= message.created_at %> (cliquez pour afficher/cacher)
                 </p>
                 <div class="contenu-message d-none">
                   <% if message.categorie == "mail" %>
@@ -321,7 +332,7 @@
             <div class="form__group">
               <button class="button <%= 'disabled' if @dossier_eleve.etat == 'sortant'%>"
                       id="bouton-eleve-sortant" type='submit'  <%= 'disabled' if @dossier_eleve.etat == 'sortant'%>>
-                Cet élève est sorti·e de l'établissement</button>
+                      Cet élève est sorti·e de l'établissement</button>
             </div>
           </form>
         </div>
@@ -333,44 +344,44 @@
 <%= render partial: 'partials/image_box' %>
 
 <script type="text/javascript" charset="utf-8">
-  // Onglets
-  $(document).ready(function() {
-    console.log(location.hash)
+// Onglets
+$(document).ready(function() {
+  console.log(location.hash)
     if (location.hash) {
       $('.lien-section').removeClass('active')
-      $('.lien-section[data-target="' + location.hash + '"]').addClass('active')
-      $('.main').addClass('hide')
-      $(location.hash).removeClass('hide')
+        $('.lien-section[data-target="' + location.hash + '"]').addClass('active')
+        $('.main').addClass('hide')
+        $(location.hash).removeClass('hide')
     }
 
-    $('.lien-section').click(function() {
-      const target = $(this).data('target')
+  $('.lien-section').click(function() {
+    const target = $(this).data('target')
       $('.lien-section').removeClass('active')
       $(this).addClass('active')
       $('.main').addClass('hide')
       $(target).removeClass('hide')
-    })
-
-    // Historique
-    $("#historique .message").on('click',function(e) {
-      $(this).find(".contenu-message").toggleClass('d-none');
-    })
-    // Modèles
-    $('#inserer').click(function() {
-      $.ajax({
-        method: "GET",
-        url: "/agent/fusionne_modele/"+$("#modeles").val()+"/eleve/<%= @dossier_eleve.eleve.identifiant %>"
-      }).done(function(data) {
-        $("#message").val($("#message").val()+(data ? "\n"+data : ""));
-      })
-      return false;
-    })
-
-    $('input[type=file]')[0].focus();
-
-    $('.forms').change(function() {
-      $(this).find( ".soumettre" ).click()
-      $("button[type='submit']").attr("disabled", "disabled").addClass('disabled')
-    })
   })
+
+  // Historique
+  $("#historique .message").on('click',function(e) {
+    $(this).find(".contenu-message").toggleClass('d-none');
+  })
+  // Modèles
+  $('#inserer').click(function() {
+    $.ajax({
+      method: "GET",
+      url: "/agent/fusionne_modele/"+$("#modeles").val()+"/eleve/<%= @dossier_eleve.eleve.identifiant %>"
+    }).done(function(data) {
+      $("#message").val($("#message").val()+(data ? "\n"+data : ""));
+    })
+    return false;
+  })
+
+  $('input[type=file]')[0].focus();
+
+  $('.forms').change(function() {
+    $(this).find( ".soumettre" ).click()
+      $("button[type='submit']").attr("disabled", "disabled").addClass('disabled')
+  })
+})
 </script>
