@@ -10,7 +10,7 @@ module Configuration
     before_action :find_regime, only: %i[edit update destroy]
 
     def index
-      @regimes = RegimeSortie.where(etablissement: @agent_connecte.etablissement).order(:nom)
+      @regimes = RegimeSortie.where(etablissement: @agent_connecte.etablissement).order(:created_at).order(:nom)
     end
 
     def new
