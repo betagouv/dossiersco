@@ -1,13 +1,14 @@
 <section class="section">
   <h1>Élève <%= @dossier_eleve.eleve.prenom %> <%= @dossier_eleve.eleve.nom %></h1>
+
   <div id="dashboard" class="dashboard">
     <aside class="side-menu" role="navigation">
       <ul>
-        <li><a class="active lien-section" data-target="#pieces-jointes">Pieces jointes</a></li>
-        <li><a class="lien-section" data-target="#options">Mef / options</a></li>
-        <li><a class="lien-section" data-target="#contact">Contact</a></li>
-        <li><a class="lien-section" data-target="#echanges">Échanges</a></li>
-        <li><a class="lien-section" data-target="#dossier">Dossier</a></li>
+        <li><a class="active lien-section" href="#pieces-jointes" data-target="#pieces-jointes">Pieces jointes</a></li>
+        <li><a class="lien-section" href="#options" data-target="#options">Mef / options</a></li>
+        <li><a class="lien-section" href="#contact" data-target="#contact">Contact</a></li>
+        <li><a class="lien-section" href="#echanges" data-target="#echanges">Échanges</a></li>
+        <li><a class="lien-section" href="#dossier" data-target="#dossier">Dossier</a></li>
       </ul>
     </aside>
     <div class="main" id="pieces-jointes">
@@ -346,20 +347,25 @@
 <script type="text/javascript" charset="utf-8">
 // Onglets
 $(document).ready(function() {
-  console.log(location.hash)
-    if (location.hash) {
-      $('.lien-section').removeClass('active')
-        $('.lien-section[data-target="' + location.hash + '"]').addClass('active')
-        $('.main').addClass('hide')
-        $(location.hash).removeClass('hide')
-    }
+  console.log(location.hash);
+  if (location.hash) {
+    $('.lien-section').removeClass('active');
+    $('.lien-section[data-target="' + location.hash + '"]').addClass('active');
+    $('.main').addClass('hide');
+    $(location.hash).removeClass('hide');
+  }
 
-  $('.lien-section').click(function() {
-    const target = $(this).data('target')
-      $('.lien-section').removeClass('active')
-      $(this).addClass('active')
-      $('.main').addClass('hide')
-      $(target).removeClass('hide')
+  $('.lien-section').click(function(e) {
+    e.preventDefault();
+    const target = $(this).data('target');
+
+    let base = window.location.toString().split('#')[0];
+    window.location = base + target;
+
+    $('.lien-section').removeClass('active');
+    $(this).addClass('active');
+    $('.main').addClass('hide');
+    $(target).removeClass('hide');
   })
 
   // Historique
