@@ -163,6 +163,7 @@ fr:
     pieces_a_joindre:
       pieces_a_joindre: "Pièces à joindre"
       pieces_obligatoires: "Les pièces précédées d'un * sont obligatoires."
+      images_multiple_html: "Vous pouvez, si nécessaire, <b>transmettre plusieurs images pour une même pièce</b>. Pour cela il vous fait maintenir enfoncé la touche CTRL de votre clavier (en bas à gauche et à droite également), puis de sélectionner les fichiers que vous voulez transmettre"
       instructions_html: "<p>Avec un <b>scanner</b>, vous pouvez nous transmettre des documents au format <b>PDF</b> ou <b>image</b>.</p>
       <p>Vous pouvez aussi utiliser un appareil <b>mobile</b> connecté à Internet (smartphone, tablette) pour prendre la <b>photo</b> d'un document. Attention&nbsp;: le document doit être pris <b>en entier</b>, <b>à plat</b>, et avec un <b>éclairage</b> suffisant pour que nous puissions le relire.</p>
       <p>Dans ce cas, connectez-vous sur dossiersco.fr, vous serez automatiquement redirigé sur cette page. Pensez à rafraîchir cette page pour visualiser les documents avant de continuer</p>"
