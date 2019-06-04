@@ -41,6 +41,9 @@ demo:
   script:
   - gem install dpl
   - dpl --provider=scalingo --api-token=$SCALINGO_PRODUCTION_KEY --remote=git@scalingo.com:dossiersco-demo.git --branch=HEAD:master
+  - curl -O https://cli-dl.scalingo.io/install && bash install
+  - scalingo login --api-token $SCALINGO_PRODUCTION_KEY
+  - scalingo -a dossiersco-demo run rails db:migrate
 
 production:
   stage: deploy
