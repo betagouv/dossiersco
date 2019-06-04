@@ -30,10 +30,10 @@ class PdfConvocation
         pdf.text "Madame, Monsieur,"
 
         pdf.move_down 10
-        pdf.text "Votre enfant <b>#{dossier_eleve.eleve.prenom} #{dossier_eleve.eleve.nom}</b> est actuellement " \
-          "inscrit au Collège #{etablissement.nom}, #{etablissement.ville}.", inline_format: true,
+        pdf.text "Votre enfant <b>#{dossier_eleve.eleve.prenom} #{dossier_eleve.eleve.nom}</b> est affecté au " \
+          " Collège #{etablissement.nom}, #{etablissement.ville}.", inline_format: true,
                                                                               indent_paragraphs: 20
-        pdf.text "Pour compléter et valider sa réinscription pour la prochaine année scolaire, nous vous invitons à " \
+        pdf.text "Pour procéder et valider son inscription pour la prochaine année scolaire, nous vous invitons à " \
           "vous connecter, sur un ordinateur de bureau, ordinateur portable, tablette connectée ou " \
           "téléphone connecté, à l’adresse ci-dessous :", inline_format: true
 
