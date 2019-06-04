@@ -38,7 +38,6 @@ demo:
   stage: deploy
   environment:
     name: production
-    DATABASE_URL: $SCALINGO_DEMO_POSTGRESQL_URL
   script:
   - gem install dpl
   - dpl --provider=scalingo --api-token=$SCALINGO_PRODUCTION_KEY --remote=git@scalingo.com:dossiersco-demo.git --branch=HEAD:master
@@ -48,7 +47,6 @@ production:
   stage: deploy
   environment:
     name: production
-    DATABASE_URL: $SCALINGO_PRODUCTION_POSTGRESQL_URL
   script:
   - gem install dpl
   - dpl --provider=scalingo --api-token=$SCALINGO_PRODUCTION_KEY --remote=git@scalingo.com:dossiersco-production.git --branch=HEAD:master
