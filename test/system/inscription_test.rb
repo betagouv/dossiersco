@@ -33,7 +33,7 @@ class InscriptionTest < ActionDispatch::IntegrationTest
     fill_in "nationalite", with: "belge"
 
     click_button("Enregistrer et continuer")
-    assert_selector "h2", text: "Responsable légal 1"
+    assert_selector "h2", text: "Responsable légal"
 
     click_button("Enregistrer et continuer")
     assert_selector "h2", text: "Renseignements médicaux"
