@@ -12,7 +12,7 @@ class RegimesSortieControllerTest < ActionDispatch::IntegrationTest
     admin = Fabricate(:admin)
     identification_agent(admin)
 
-    get configuration_regimes_sortie_path
+    get configuration_campagnes_path
     assert_response :success
   end
 
@@ -34,7 +34,7 @@ class RegimesSortieControllerTest < ActionDispatch::IntegrationTest
       post configuration_regimes_sortie_path, params: params
     end
 
-    assert_redirected_to configuration_regimes_sortie_path
+    assert_redirected_to configuration_campagnes_path
   end
 
   test "should get edit" do
@@ -50,7 +50,7 @@ class RegimesSortieControllerTest < ActionDispatch::IntegrationTest
     identification_agent(admin)
 
     patch configuration_regime_sortie_url(@regime), params: { regime_sortie: { nom: @regime.nom, description: @regime.description } }
-    assert_redirected_to configuration_regimes_sortie_path
+    assert_redirected_to configuration_campagnes_path
   end
 
   test "should destroy regime_sortie" do
@@ -61,7 +61,7 @@ class RegimesSortieControllerTest < ActionDispatch::IntegrationTest
       delete configuration_regime_sortie_url(@regime)
     end
 
-    assert_redirected_to configuration_regimes_sortie_path
+    assert_redirected_to configuration_campagnes_path
   end
 
 end

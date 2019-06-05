@@ -11,40 +11,8 @@
       <dt>Ville</dt>
       <dd><%= @etablissement.ville %></dd>
 
-      <dt>Gère la demi pension</dt>
-      <dd><%= @etablissement.gere_demi_pension ? 'Oui' : 'Non' %></dd>
-
-      <dt>Réglement demi-pension</dt>
-      <dd>
-      <% if @etablissement.reglement_demi_pension.present? %>
-        <%= link_to 'fichier', @etablissement.reglement_demi_pension_url, target: "_blank" if @etablissement.reglement_demi_pension.present? %>
-      <% else %>
-        Pas de fichier
-      <% end %>
-      </dd>
-
-      <dt>Demander l'identifiant CAF aux familles</dt>
-      <dd>
-      <%= @etablissement.demande_caf? ? 'Oui' : 'Non' %>
-      </dd>
-
       <dt>Signataire</dt>
       <dd><%= @etablissement.signataire %></dd>
-
-      <dt>Date limite d'inscription</dt>
-      <dd><%= @etablissement.date_limite %></dd>
-
-      <dt>Mot d'accueil</dt>
-      <dd><%= markdown(@etablissement.mot_accueil) %></dd>
-
-      <dt>Envoyer aux familles</dt>
-      <dd>
-      <% if @etablissement.envoyer_aux_familles? %>
-        <strong><%= t('.attention_envoye_aux_familles') %></strong>
-      <% else %>
-        <%= t('.envoye_restreint', email: @agent_connecte.email) %>
-      <% end %>
-      </dd>
     </dl>
 
     <%= link_to 'Modifier', edit_configuration_etablissement_path(@etablissement), {class: 'button-outline primary'} %>

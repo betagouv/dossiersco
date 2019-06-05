@@ -10,3 +10,9 @@
   height:500px;
   overflow-y: scroll;
 }
+
+.entete-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

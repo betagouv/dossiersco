@@ -1,0 +1,113 @@
+<section class="section">
+  <h1>Configuration de la campagne</h1>
+
+  <div class="panel">
+    <div class="panel__header">
+      <div class="entete-panel">
+        <h3><%= t('.accueil') %></h3>
+        <%= link_to t('.modifier'), edit_accueil_configuration_campagnes_path, {class: 'button-outline primary'} %>
+      </div>
+    </div>
+    <div class="cards">
+      <ul class="list-unstyled">
+        <li><b>- Date limite d'inscription</b> : <%= @etablissement.date_limite %></li>
+        <li><b>- Mot d'accueil</b> : <%= markdown(@etablissement.mot_accueil) %></li>
+        <li><b>- Envoyer aux familles</b> : <% if @etablissement.envoyer_aux_familles? %>
+            <strong><%= t('.attention_envoye_aux_familles') %></strong>
+          <% else %>
+            <%= t('.envoye_restreint', email: @agent_connecte.email) %>
+          <% end %></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel__header">
+      <div class="entete-panel">
+        <h3><%= t('.demi-pension') %></h3>
+        <%= link_to t('.modifier'), edit_accueil_configuration_campagnes_path, {class: 'button-outline primary'} %>
+      </div>
+    </div>
+    <div class="cards">
+      <ul class="list-unstyled">
+        <li><b>- Gère la demi pension</b> : <%= @etablissement.gere_demi_pension ? 'Oui' : 'Non' %></li>
+        <li><b>- Réglement demi-pension</b> : <% if @etablissement.reglement_demi_pension.present? %>
+            <%= link_to 'fichier', @etablissement.reglement_demi_pension_url, target: "_blank" if @etablissement.reglement_demi_pension.present? %>
+          <% else %>
+            Pas de fichier
+          <% end %></li>
+        <li><b>- Demander l'identifiant CAF aux familles</b> : <%= @etablissement.demande_caf? ? 'Oui' : 'Non' %></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel__header">
+      <div class="entete-panel">
+        <h3><%= t('.pieces_attendues') %></h3>
+        <%= link_to link_to t('.ajouter_piece'), new_configuration_piece_attendue_path, {class: 'button-outline primary'} %>
+      </div>
+    </div>
+    <div class="cards">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>nom</th>
+          <th>Explication</th>
+          <th>Obligatoire</th>
+          <th colspan="2"></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @pieces_attendues.each do |piece| %>
+          <tr>
+            <td><%= piece.nom %></td>
+            <td><%= piece.explication %></td>
+            <td><%= piece.obligatoire ? 'Oui' : 'Non' %></td>
+            <td><%= link_to 'Modifier', edit_configuration_piece_attendue_path(piece) %></td>
+            <td><%= link_to 'Supprimer', [:configuration, piece], method: :delete, data: { confirm: 'Etes vous sûr ?' } %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel__header">
+      <div class="entete-panel">
+        <h3><%= t('.regimes_sortie') %></h3>
+        <%= link_to t('.ajouter_un_regime'), new_configuration_regime_sortie_path, {class: 'button-outline primary'} %>
+      </div>
+    </div>
+    <div class="cards">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Description</th>
+          <th colspan="2"></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @regimes.each do |regime| %>
+          <tr>
+            <td><%= regime.nom %></td>
+            <td class="mw-35"><%= markdown(regime.description.truncate(180, omission: '...', separator: ' ')) %></td>
+            <td><%= link_to 'Modifier', edit_configuration_regime_sortie_path(regime) %></td>
+            <td>
+              <% if regime.dossier_eleves.any? %>
+                <%= t('.dossier_eleve_utilisant_ce_regime', count: regime.dossier_eleves.count) %>
+              <% else %>
+                <%= link_to("Supprimer", [:configuration, regime], method: :delete, data: { confirm: 'Voulez-vous vraiment supprimer ce regime ?' }) %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

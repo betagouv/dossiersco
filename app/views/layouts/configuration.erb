@@ -44,20 +44,17 @@
           <li class="nav__item <%= 'active' if request.fullpath.include? '/tache_import' %>">
             <%= link_to t('.import_export'), new_tache_import_path, {class: 'nav-link'} %>
           </li>
+          <li class="nav__item <%= 'active' if request.fullpath.include? '/campagne' %>">
+            <%= link_to 'Configuration de la campagne', configuration_campagnes_path, {class: 'nav-link'} %>
+          </li>
           <li class="nav__item <%= 'active' if request.fullpath.include? '/options_pedagogiques' %>">
             <%= link_to 'Carte des formations', configuration_options_pedagogiques_path, {class: 'nav-link'} %>
-          </li>
-          <li class="nav__item <%= 'active' if request.fullpath.include? '/pieces_attendues' %>">
-            <%= link_to 'Pièces attendues', configuration_pieces_attendues_path, {class: 'nav-link'} %>
           </li>
           <li class="nav__item <%= 'active' if request.fullpath.include? '/etablissement' %>">
             <%= link_to 'Etablissement', configuration_etablissement_path(@agent_connecte.etablissement), {class: 'nav-link'} %>
           </li>
           <li class="nav__item <%= 'active' if request.fullpath.include? '/agent' %>">
             <%= link_to 'Agents', configuration_agents_path, {class: 'nav-link'} %>
-          </li>
-          <li class="nav__item <%= 'active' if request.fullpath.include? '/regime' %>">
-            <%= link_to 'Régimes de sortie', configuration_regimes_sortie_path, {class: 'nav-link'} %>
           </li>
         </ul>
       </nav>

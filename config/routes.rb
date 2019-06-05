@@ -42,14 +42,20 @@ Rails.application.routes.draw do
       end
       get "activation"
     end
-    resources :pieces_attendues, expect: [:show]
+    resources :pieces_attendues, expect: [:show, :index]
     resource :exports, only: :[] do
       collection do
         get "export-options", defaults: { format: "xlsx" }
         get "export-siecle", defaults: { format: "xml" }
       end
     end
-    resources :regimes_sortie
+    resources :regimes_sortie, expect: [:index]
+    resources :campagnes, only: [:index] do
+      collection do
+        get 'edit_accueil'
+        patch 'update_campagne'
+      end
+    end
   end
 
   get '/agent/mot_de_passe', to: "mot_de_passe_agent#new", as: 'new_mot_de_passe_agent'

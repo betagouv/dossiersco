@@ -8,10 +8,6 @@ module Configuration
     before_action :identification_agent
     before_action :set_piece_attendue, only: %i[edit update destroy]
 
-    def index
-      @pieces_attendues = PieceAttendue.where(etablissement: agent_connecte.etablissement)
-    end
-
     def new
       @piece_attendue = PieceAttendue.new
     end
@@ -23,7 +19,7 @@ module Configuration
       @piece_attendue.etablissement = agent_connecte.etablissement
 
       if @piece_attendue.save
-        redirect_to configuration_pieces_attendues_path, notice: t(".piece_cree")
+        redirect_to configuration_campagnes_path, notice: t(".piece_cree")
       else
         render :new
       end
@@ -31,7 +27,7 @@ module Configuration
 
     def update
       if @piece_attendue.update(piece_attendue_params)
-        redirect_to configuration_pieces_attendues_path, notice: t(".piece_mise_a_jour")
+        redirect_to configuration_campagnes_path, notice: t(".piece_mise_a_jour")
       else
         render :edit
       end
@@ -39,7 +35,7 @@ module Configuration
 
     def destroy
       @piece_attendue.destroy
-      redirect_to configuration_pieces_attendues_path, notice: t(".piece_mise_a_jour")
+      redirect_to configuration_campagnes_path, notice: t(".piece_mise_a_jour")
     end
 
     private

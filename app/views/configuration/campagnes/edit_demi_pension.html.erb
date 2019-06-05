@@ -1,0 +1,24 @@
+<section class="section">
+  <div class="container">
+    <h1><%= t(".titre") %></h1>
+
+    <%= form_for( @etablissement, url: update_campagne_configuration_campagnes_path) do |f| %>
+
+      <div class="form__group">
+        <%= f.check_box :gere_demi_pension %>
+        <%= f.label :gere_demi_pension, t('.gere_demi_pension'), class: 'label-inline' %>
+      </div>
+      <div class="form__group">
+        <%= f.label :reglement_demi_pension, t('.reglement_demi_pension') %>
+        <%= f.file_field :reglement_demi_pension %>
+      </div>
+      <div class="form__group">
+        <%= f.check_box :demande_caf %>
+        <%= f.label :demande_caf, t('.demande_caf'), class: 'label-inline' %>
+      </div>
+      <div class="form__group">
+        <%= f.submit 'valider', class: 'button' %>
+      </div>
+    <% end %>
+  </div>
+</section>
