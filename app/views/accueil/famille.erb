@@ -296,13 +296,13 @@
   <form action="/famille" method="POST">
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 
-    <h2 class="separation"><%= t('.titre_responsable_legal') %><%= " 1" if @resp_legal2.present?%></h2>
+    <h2 class="separation"><%= t('.titre_responsable_legal') %></h2>
 
     <%= raw(construire form_resp_legal1) %>
 
     <% if @resp_legal2 %>
       <div id='resp_legal2' class='<%= "d-none" unless @resp_legal2.present? %>' >
-        <h2 class="mt-5 separation"><%= t('.titre_responsable_legal') %> 2</h2>
+        <h2 class="mt-5 separation"><%= t('.titre_responsable_legal') %></h2>
 
         <%= raw(construire form_resp_legal2) %>
 
