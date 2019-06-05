@@ -41,15 +41,17 @@
           </div>
         <% end %>
 
-        <div class="row mt-1">
-          <div>
-            <%= t('.restauration_scolaire') %>&nbsp;:
-            <strong><%= @dossier_eleve.demi_pensionnaire ? 'demi-pensionnaire' : 'externe' %></strong>
+        <% if @dossier_eleve.etablissement.gere_demi_pension? %>
+          <div class="row mt-1">
+            <div>
+              <%= t('.restauration_scolaire') %>&nbsp;:
+              <strong><%= @dossier_eleve.demi_pensionnaire ? 'demi-pensionnaire' : 'externe' %></strong>
+            </div>
+            <a id='demi-pensionnaire' href="/administration">
+              <div class="btn btn-outline-secondary btn-sm"><%= t('.modifier') %></div>
+            </a>
           </div>
-          <a id='demi-pensionnaire' href="/administration">
-            <div class="btn btn-outline-secondary btn-sm"><%= t('.modifier') %></div>
-          </a>
-        </div>
+        <% end %>
 
         <% if @dossier_eleve.etablissement.regimes_sortie.count > 1 && @dossier_eleve.regime_sortie %>
           <div class="row mt-1">
@@ -70,9 +72,9 @@
       <%= render partial:'partials/champ_check', locals: { desc: t('.certifie_sur_l_honneur', prenom_eleve: @eleve.prenom),
                                                            name: 'signature', condition: @dossier_eleve.signature, required: 'required' }%>
 
-      <div class="text-center mt-2">
-        <button type='submit' class="button"><%= t('.valider_inscription') %></button>
-      </div>
+                                                         <div class="text-center mt-2">
+                                                           <button type='submit' class="button"><%= t('.valider_inscription') %></button>
+                                                         </div>
     </form>
   </div>
 </section>
