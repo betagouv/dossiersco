@@ -4,7 +4,7 @@
       <div class="card mb-2 <%= piece.etat if piece.present? %>">
         <h4><%= '*' if piece.obligatoire %> <%= piece.nom %></h4>
         <div>
-          <p><%= piece.explication %></p>
+          <p><%= markdown(piece.explication) %></p>
           <p class="etat-piece-jointe"><%= t(".document_#{piece.etat}") if piece.etat.present?  %></p>
           <div class="card-relat document">
             <% if piece.fichiers[0].present? && piece.fichiers[0].url.present? %>
