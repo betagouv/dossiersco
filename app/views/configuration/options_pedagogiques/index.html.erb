@@ -2,6 +2,7 @@
   <h1>Carte des formations</h1>
 
   <div class="text-right">
+    <%= link_to t('.carte_mef'), configuration_mef_index_path, {class: 'button-outline primary'} %>
     <%= link_to t('.liste_options'), liste_configuration_options_pedagogiques_path, {class: 'button-outline primary'} %>
     <%= link_to t('.nouveau_mef'), new_configuration_mef_path, {class: 'button-outline primary'} %>
   </div>

@@ -233,6 +233,7 @@ fr:
         ajouter_une_option: Ajouter une option
         modifier: 'Modifier'
       index:
+        carte_mef: "Carte des MEF"
         liste_options: Liste des options
         ajouter_option: "Ajouter l'option"
         nouveau_mef: 'Nouveau Mef'
@@ -260,6 +261,8 @@ fr:
       create:
         erreur_create_mef: "%{champs} %{erreur}"
         mef_cree: Le MEF a bien été créé
+      index:
+        appliquer: "Appliquer"
     agents:
       index:
         ajouter_un_agent: "Ajouter un agent"

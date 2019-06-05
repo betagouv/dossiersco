@@ -7,22 +7,34 @@
 
   <table class="table">
     <thead>
-    <tr>
-      <th>Libelle</th>
-      <th>Code</th>
-      <th colspan="2"></th>
-    </tr>
+      <tr>
+        <th>Mef d'origine</th>
+        <th>Mef de destination</th>
+      </tr>
     </thead>
 
     <tbody>
-    <% @mef.each do |mef| %>
-      <tr>
-        <td><%= mef.libelle %></td>
-        <td><%= mef.code %></td>
-        <td><%= link_to 'Modifier', edit_configuration_mef_path(mef) %></td>
-        <td><%= link_to 'Supprimer', [:configuration, mef], method: :delete, data: { confirm: 'Etes vous sûr ?' } %></td>
-      </tr>
-    <% end %>
+      <% @mef.each do |mef| %>
+        <tr>
+          <td><%= mef.libelle %></td>
+          <td>
+            <%= form_tag(changer_mef_destination_configuration_dossiers_eleve_index_path, method: :put) do |f| %>
+              <%= hidden_field_tag "mef_origine", mef.id, id: "mef_origine_#{mef.id}" %>
+              <%= select_tag("nouveau_mef_destination", options_for_select(@mef.map{|m| [m.libelle, m.id]}, @mef_service.mef_destination(mef)&.id), { include_blank: true, id: mef.id}) %>
+            <button type="submit" class="button-outline primary" style="display:none"><%= t('.appliquer') %></button>
+          <% end %>
+          </td>
+        </tr>
+      <% end %>
     </tbody>
   </table>
 </section>
+
+
+<script>
+$(document).ready(function () {
+  $("select").change(function (e) {
+    $(this).next().css("display", "inline")
+  })
+})
+</script>

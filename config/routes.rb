@@ -19,6 +19,12 @@ Rails.application.routes.draw do
   end
 
   namespace :configuration do
+    resources :dossiers_eleve, only: [] do
+      collection do
+        put :changer_mef_destination
+      end
+    end
+
     resources :options_pedagogiques, except: [:show] do
       member do
         post "ajoute_option_au_mef"
