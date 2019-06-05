@@ -64,10 +64,16 @@ class AccueilController < ApplicationController
       @eleve[info] = params[info] if params.key?(info)
     end
 
-    @eleve.dossier_eleve.options_pedagogiques = []
-    @options_pedagogiques = OptionPedagogique.where(etablissement: @eleve.dossier_eleve.etablissement)
+    dossier_eleve = @eleve.dossier_eleve
+    dossier_eleve.options_pedagogiques = []
+    @options_pedagogiques = OptionPedagogique.where(etablissement: dossier_eleve.etablissement)
     @options_pedagogiques.each do |option|
-      @eleve.dossier_eleve.options_pedagogiques << option if params[option.nom].present?
+      dossier_eleve.options_pedagogiques << option if params[option.nom].present?
+    end
+
+    options_origines = dossier_eleve.options_origines.keys.map{|o| OptionPedagogique.find(o)}
+    options_origines.each do |option|
+      dossier_eleve.options_pedagogiques << option if !option.abandonnable?(dossier_eleve.mef_destination) && !dossier_eleve.options_pedagogiques.include?(option)
     end
 
     @eleve.save!
