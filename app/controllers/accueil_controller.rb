@@ -71,7 +71,7 @@ class AccueilController < ApplicationController
       dossier_eleve.options_pedagogiques << option if params[option.nom].present?
     end
 
-    options_origines = dossier_eleve.options_origines.keys.map{|o| OptionPedagogique.find(o)}
+    options_origines = dossier_eleve.options_origines.keys.map { |o| OptionPedagogique.find(o) }
     options_origines.each do |option|
       dossier_eleve.options_pedagogiques << option if !option.abandonnable?(dossier_eleve.mef_destination) && !dossier_eleve.options_pedagogiques.include?(option)
     end
