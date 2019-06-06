@@ -227,7 +227,9 @@ class AccueilController < ApplicationController
     @eleve.dossier_eleve.update!(derniere_etape: page_destination)
 
     index_entree_menu = @entrees_de_menu.index(page_destination)
+    index_entree_menu ||= 0
     index_etape_la_plus_avancee = @entrees_de_menu.index(@eleve.dossier_eleve.etape_la_plus_avancee)
+    index_etape_la_plus_avancee ||= 0
 
     @eleve.dossier_eleve.update!(etape_la_plus_avancee: page_destination) if index_entree_menu > index_etape_la_plus_avancee
 
