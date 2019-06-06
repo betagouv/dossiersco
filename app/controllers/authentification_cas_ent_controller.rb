@@ -111,13 +111,13 @@ class AuthentificationCasEntController < ApplicationController
 
     email = attributes["email"]
     if email != { "xmlns" => "" }
-      query = RespLegal.where(email: email)
+      query = RespLegal.where("lower(email) = ?", email.downcase)
     else
       query = RespLegal.where(prenom: attributes["firstName"])
       nom = attributes["lastName"]
-      query = query.where(nom: nom) if nom != { "xmlns" => "" }
+      query = query.where("lower(nom) = ?", nom.downcase) if nom != { "xmlns" => "" }
       adresse = attributes["address"]
-      query = query.where(adresse: adresse) if adresse != { "xmlns" => "" }
+      query = query.where("lower(adresse) = ?", adresse.downcase) if adresse != { "xmlns" => "" }
     end
     query
   end
