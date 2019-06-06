@@ -110,14 +110,16 @@ class AuthentificationCasEntController < ApplicationController
   def retrouve_liste_resp_legal(data)
     attributes = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]
 
-    query = RespLegal.where(prenom: attributes["firstName"])
-
-    nom = attributes["lastName"]
-    query = query.where(nom: nom) if nom != { "xmlns" => "" }
-    adresse = attributes["address"]
-    query = query.where(adresse: adresse) if adresse != { "xmlns" => "" }
     email = attributes["email"]
-    query = query.where(email: email) if email != { "xmlns" => "" }
+    if email != { "xmlns" => "" }
+      query = RespLegal.where(email: email)
+    else
+      query = RespLegal.where(prenom: attributes["firstName"])
+      nom = attributes["lastName"]
+      query = query.where(nom: nom) if nom != { "xmlns" => "" }
+      adresse = attributes["address"]
+      query = query.where(adresse: adresse) if adresse != { "xmlns" => "" }
+    end
     query
   end
 
