@@ -8,14 +8,17 @@ module Configuration
 
     def changer_mef_destination
       dossiers = DossierEleve.where(etablissement: @agent_connecte.etablissement, mef_origine: params[:mef_origine])
-
-      puts dossiers.inspect
-
       dossiers.update_all(mef_destination_id: params[:nouveau_mef_destination])
 
-      dossiers = DossierEleve.where(etablissement: @agent_connecte.etablissement, mef_origine: params[:mef_origine])
+      dossiers.each do |dossier_eleve|
+        mef_destination = dossier_eleve.mef_destination
+        dossier_eleve.options_pedagogiques &= mef_destination.options_pedagogiques
 
-      puts dossiers.inspect
+        options_origines = dossier_eleve.options_origines.keys.map { |o| OptionPedagogique.find(o) }
+        options_origines.each do |option|
+          dossier_eleve.options_pedagogiques << option if !option.abandonnable?(dossier_eleve.mef_destination) && !dossier_eleve.options_pedagogiques.include?(option) && mef_destination.options_pedagogiques.include?(option)
+        end
+      end
 
       redirect_to configuration_mef_index_path
     end

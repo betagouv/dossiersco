@@ -1,9 +1,9 @@
 ## Test Makefile
 
-test: ## Run the tests
+test_only: ## Run the tests
 	docker-compose run --rm test bash -c  "rails test && rails test:system"
 
-full_test: ## Run the tests and rubocop
+test: ## Run the tests and rubocop
 	docker-compose run --rm test bash -c  "rails test && rails test:system && bundle exec rubocop -a"
 
 build: ## Install or update dependencies

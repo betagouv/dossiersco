@@ -16,11 +16,11 @@ class OptionPedagogique < ApplicationRecord
   end
 
   def abandonnable?(mef)
-    mef_options_pedagogiques.find_by(mef: mef).abandonnable
+    mef_options_pedagogiques.find_by(mef: mef)&.abandonnable
   end
 
   def ouverte_inscription?(mef)
-    mef_options_pedagogiques.find_by(mef: mef).ouverte_inscription
+    mef_options_pedagogiques.find_by(mef: mef)&.ouverte_inscription
   end
 
 end

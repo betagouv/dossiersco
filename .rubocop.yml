@@ -35,6 +35,7 @@ Metrics/LineLength:
     - 'app/services/pdf_convocation.rb'
     - 'test/controllers/authentification_cas_ent_controller_test.rb'
     - 'test/services/analyseur_option_test.rb'
+    - 'app/controllers/configuration/dossiers_eleve_controller.rb'
 
 Metrics/BlockLength:
   Exclude:
@@ -49,6 +50,7 @@ Metrics/MethodLength:
     - 'test/controllers/accueil_controller_test.rb'
     - 'test/integration/accueil_controller_test.rb'
     - 'test/integration/inscriptions_controller_test.rb'
+    - 'app/controllers/configuration/dossiers_eleve_controller.rb'
     - 'app/controllers/tache_imports_controller.rb'
     - 'app/controllers/configurations_controller.rb'
     - 'app/controllers/authentification_cas_ent_controller.rb'
