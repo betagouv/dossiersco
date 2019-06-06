@@ -14,11 +14,9 @@ module Configuration
       @pieces_attendues = PieceAttendue.where(etablissement: agent_connecte.etablissement)
     end
 
-    def edit_accueil
-    end
+    def edit_accueil; end
 
-    def edit_demi_pension
-    end
+    def edit_demi_pension; end
 
     def update_campagne
       if @etablissement.update(info_generales_params)
