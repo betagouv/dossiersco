@@ -186,14 +186,16 @@ fr:
       valider_inscription: "Valider l'inscription"
   configuration:
     campagnes:
+      edit_demi_pension:
+        titre: Demi-pension
+        gere_demi_pension: "Collège gérant la demi-pension"
+        reglement_demi_pension: "Règlement demi-pension"
+        demande_caf: "Demander l'identifiant CAF aux familles"
       edit_accueil:
         titre: Éditer les informations générales
         mot_accueil: "Mot présent sur la page d'accueil des familles"
         date_limite_inscription: "Date limite de la campagne d'inscription"
-        demande_caf: "Demander l'identifiant CAF aux familles"
         activer_envoie: "Activer l'envoi des emails aux familles"
-        gere_demi_pension: "Collège gérant la demi-pension"
-        reglement_demi_pension: "Règlement demi-pension"
       index:
         dossier_eleve_utilisant_ce_regime:
           zero:  "aucun dossier utilise ce régime de sortie"

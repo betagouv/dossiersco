@@ -15,7 +15,9 @@ module Configuration
     end
 
     def edit_accueil
-      @etablissement = agent_connecte.etablissement
+    end
+
+    def edit_demi_pension
     end
 
     def update_campagne

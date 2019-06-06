@@ -59,6 +59,7 @@ Rails.application.routes.draw do
     resources :campagnes, only: [:index] do
       collection do
         get 'edit_accueil'
+        get 'edit_demi_pension'
         patch 'update_campagne'
       end
     end
