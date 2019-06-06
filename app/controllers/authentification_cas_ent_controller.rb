@@ -36,7 +36,7 @@ class AuthentificationCasEntController < ApplicationController
       render :choix_dossier_eleve, layout: "connexion"
     else
       Raven.extra_context data: data
-      Raven.capture_exception(Exception.new('Dossier ENT non trouvé'))
+      Raven.capture_exception(Exception.new("Dossier ENT non trouvé"))
       flash[:alert] = I18n.t(".dossier_non_trouve")
       redirect_to "/"
     end

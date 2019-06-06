@@ -36,7 +36,7 @@ class AuthentificationCasEntControllerTest < ActionDispatch::IntegrationTest
     get retour_ent_url, params: { ticket: "something" }
 
     assert_redirected_to "/"
-    assert_equal I18n.t(".dossier_non_trouve"), flash[:error]
+    assert_equal I18n.t(".dossier_non_trouve"), flash[:alert]
   end
 
   test "avec plusieurs établissements correspondant" do
