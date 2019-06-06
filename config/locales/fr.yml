@@ -130,6 +130,7 @@ fr:
       options_pedagogiques_actuelles: "Options pédagogiques actuelles"
       explication_options_pedagogiques_actuelles: "Ces options sont celles que votre enfant suit actuellement."
     famille:
+      pays: Pays
       <<: *infos_nom
       titre_responsable_legal: "Responsable légal"
       titre_contact_urgence: "Autre personne à contacter en cas d'urgence"
