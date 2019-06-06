@@ -1,311 +1,8 @@
 <%
-  ville_rl1 = @resp_legal1.ville ? @resp_legal1.ville.upcase : ''
-  form_resp_legal1 = [
-      {
-          name: "lien_de_parente_rl1",
-          label: t('.lien_de_parente'),
-          type: "dropdown",
-          selected: @resp_legal1.lien_de_parente,
-          disabledw: false,
-          options: @lien_de_parentes,
-          required: 'required'
-      },
-      {
-          name: "prenom_rl1",
-          label: t('.prenom'),
-          type: "text",
-          value: @resp_legal1.prenom,
-          indication: "Prénom",
-          disabled: false,
-          required: 'required'
-      },
-      {
-          name: "nom_rl1",
-          label: t('.nom'),
-          type: "text",
-          value: @resp_legal1.nom,
-          indication: "Nom",
-          disabled: false,
-          required: 'required'
-      },
-      {
-          name: "adresse_rl1",
-          label: t('.adresse'),
-          type: "libre",
-          value: @resp_legal1.adresse,
-          indication: "Numéro et nom de voie",
-          disabled: false,
-          required: 'required',
-          lines: 3
-      },
-      {
-          name: "code_postal_rl1",
-          label: t('.code_postal'),
-          type: "text",
-          value: @resp_legal1.code_postal,
-          indication: "Code postal",
-          disabled: false,
-          required: 'required'
-      },
-      {
-          name: "ville_rl1",
-          label: t('.ville'),
-          type: "dropdown",
-          selected: ville_rl1,
-          indication: "Ville",
-          disabled: false,
-          required: 'required',
-          options: [ville_rl1]
-      },
-      {
-          name: "pays_rl1",
-          label: t('.pays'),
-          type: "dropdown",
-          options: @liste_pays,
-          selected: @resp_legal1.pays,
-          required: 'required'
-      },
-      {
-          type: 'espace',
-          hauteur: '30'
-      },
-      {
-          name: "tel_personnel_rl1",
-          label: t('.telephone_principal'),
-          type: "tel",
-          value: @resp_legal1.tel_personnel,
-          indication: "Numéro de téléphone",
-      },
-      {
-          name: "tel_portable_rl1",
-          label: t('.telephone_secondaire'),
-          type: "tel",
-          value: @resp_legal1.tel_portable,
-          indication: "Numéro de téléphone",
-      },
-      {
-          name: "tel_professionnel_rl1",
-          label: t('.telephone_professionnel'),
-          type: "tel",
-          value: @resp_legal1.tel_professionnel,
-          indication: "Numéro de téléphone",
-      },
-      {
-          name: "email_rl1",
-          label: t('.email_principal'),
-          type: "email",
-          value: @resp_legal1.email,
-          indication: "email",
-      },
-      {
-          type: 'espace',
-          hauteur: '30'
-      },
-      {
-          name: "profession_rl1",
-          label: t('.profession'),
-          type: "dropdown",
-          options: @code_profession.map{ |k, v| v },
-          selected: @resp_legal1.profession,
-          required: 'required'
-      },
-      {
-          type: 'espace',
-          hauteur: '30'
-      },
-      {
-          name: "enfants_a_charge_rl1",
-          label: t('.nb_total_enfants_a_charge'),
-          type: "text_custom",
-          value: @resp_legal1.enfants_a_charge,
-          longueur_label: 7,
-          longueur_input: 2,
-          indication: '',
-          required: 'required'
-      },
-      {
-          type: 'espace',
-          hauteur: '30'
-      },
-      {
-          label: t('.coordonnees_communiquees'),
-          name: 'communique_info_parents_eleves_rl1',
-          type: 'radio_inverse',
-          options: {t('.j_accepte') => true, t('.j_accepte_pas') => false},
-          checked: @resp_legal1.communique_info_parents_eleves || false
-      }]
-
-  if @resp_legal2
-    ville_rl2 = @resp_legal2.ville ? @resp_legal2.ville.upcase : ''
-    form_resp_legal2 = [
-        {
-            name: "lien_de_parente_rl2",
-            label: t('.lien_de_parente'),
-            type: "dropdown",
-            selected: @resp_legal2.lien_de_parente,
-            disabled: false,
-            options: @lien_de_parentes
-        },
-        {
-            name: "prenom_rl2",
-            label: t('.prenom'),
-            type: "text",
-            value: @resp_legal2.prenom,
-            indication: "Prénom",
-            disabled: false
-        },
-        {
-            name: "nom_rl2",
-            label: t('.nom'),
-            type: "text",
-            value: @resp_legal2.nom,
-            indication: "Nom",
-            disabled: false
-        }
-    ]
-
-    fin_form_resp_legal_2 = [
-        {
-            name: "adresse_rl2",
-            label: t('.adresse'),
-            type: "libre",
-            value: @resp_legal2.adresse,
-            indication: "Numéro et nom de voie",
-            disabled: false,
-            lines: 3
-        },
-        {
-            name: "code_postal_rl2",
-            label: t('.code_postal'),
-            type: "text",
-            value: @resp_legal2.code_postal,
-            indication: "Code postal",
-            disabled: false
-        },
-        {
-            name: "ville_rl2",
-            label: t('.ville'),
-            type: "dropdown",
-            selected: ville_rl2,
-            indication: "Ville",
-            disabled: false,
-            options: [ville_rl2]
-        },
-        {
-            name: "pays_rl2",
-            label: t('.pays'),
-            type: "dropdown",
-            options: @liste_pays,
-            selected: @resp_legal2.pays,
-            required: 'required'
-        },
-        {
-            type: 'espace',
-            hauteur: '30'
-        },
-        {
-            name: "tel_personnel_rl2",
-            label: t('.telephone_principal'),
-            type: "tel",
-            value: @resp_legal2.tel_personnel,
-            indication: "Numéro de téléphone"
-        },
-        {
-            name: "tel_portable_rl2",
-            label: t('.telephone_secondaire'),
-            type: "tel",
-            value: @resp_legal2.tel_portable,
-            indication: "Numéro de téléphone"
-        },
-        {
-            name: "tel_professionnel_rl2",
-            label: t('.telephone_professionnel'),
-            type: "tel",
-            value: @resp_legal2.tel_professionnel,
-            indication: "Numéro de téléphone"
-        },
-        {
-            name: "email_rl2",
-            label: t('.email_principal'),
-            type: "email",
-            value: @resp_legal2.email,
-            indication: "email"
-        },
-        {
-            type: 'espace',
-            hauteur: '30'
-        },
-        {
-            name: "profession_rl2",
-            label: t('.profession'),
-            type: "dropdown",
-            options: @code_profession.map{ |k, v| v },
-            selected: @resp_legal2.profession
-        },
-        {
-            type: 'espace',
-            hauteur: '30'
-        },
-        {
-            type: 'espace',
-            hauteur: '30'
-        },
-        {
-            label: t('.coordonnees_communiquees'),
-            name: 'communique_info_parents_eleves_rl2',
-            type: 'radio_inverse',
-            options: {t('.j_accepte') => true, t('.j_accepte_pas') => false},
-            checked: @resp_legal2.communique_info_parents_eleves || false
-        }]
-  end
-
-  form_contact_urgence = [
-      {
-          name: "lien_avec_eleve_urg",
-          label: t('.lien_avec_eleve'),
-          type: "text",
-          value: @contact_urgence.present? ? @contact_urgence.lien_avec_eleve : nil,
-          indication: "Lien avec l'élève",
-          disabled: false
-      },
-      {
-          name: "prenom_urg",
-          label: t('.prenom'),
-          type: "text",
-          value: @contact_urgence.present? ? @contact_urgence.prenom : nil,
-          indication: "Prénom",
-          disabled: false
-      },
-      {
-          name: "nom_urg",
-          label: t('.nom'),
-          type: "text",
-          value: @contact_urgence.present? ? @contact_urgence.nom : nil,
-          indication: "Nom",
-          disabled: false
-      },
-      {
-          type: 'espace',
-          hauteur: '30'
-      },
-      {
-          name: "tel_principal_urg",
-          label: t('.telephone_principal'),
-          type: "tel",
-          value: @contact_urgence.present? ? @contact_urgence.tel_principal : nil,
-          indication: "Numéro de téléphone"
-      },
-      {
-          name: "tel_secondaire_urg",
-          label: t('.telephone_secondaire'),
-          type: "tel",
-          value: @contact_urgence.present? ? @contact_urgence.tel_secondaire : nil,
-          indication: "Numéro de téléphone"
-      },
-  ]
+    if @resp_legal2
+      ville_rl2 = @resp_legal2.ville ? @resp_legal2.ville.upcase : ''
+end
 %>
-
-<% @section = 2 %>
 
 <section class="section">
 
@@ -314,13 +11,134 @@
 
     <h2 class="separation"><%= t('.titre_responsable_legal') %></h2>
 
-    <%= raw(construire form_resp_legal1) %>
+    <div class="form__group">
+      <label for="lien_de_parente_rl1"><%= t('.lien_de_parente') %></label>
+      <select id="lien_de_parente_rl1" name="lien_de_parente_rl1" required>
+        <% @lien_de_parentes.each do |option| %>
+          <option <% if option == @resp_legal1.lien_de_parente %> selected <% end %>><%= option %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="form__group">
+      <label for="prenom_rl1"><%= t('.prenom') %></label>
+      <input id="prenom_rl1" name="prenom_rl1" type="text" value="<%= @resp_legal1.prenom %>" placeholder="Prénom" required >
+    </div>
+
+    <div class="form__group">
+      <label for="nom_rl1"><%= t('.nom') %></label>
+      <input id="nom_rl1" name="nom_rl1" type="text" value="<%= @resp_legal1.nom %>" placeholder="Nom" required >
+    </div>
+
+    <div class="form__group">
+      <label for="adresse_rl1"><%= t('.adresse') %></label>
+      <textarea id="adresse_rl1" name="adresse_rl1" type="text" placeholder="Numéro et nom de voie" rows="3" required><%= @resp_legal1.adresse %></textarea>
+    </div>
+
+    <div class="form__group">
+      <label for="code_postal_rl1"><%= t('.code_postal') %></label>
+      <input id="code_postal_rl1" name="code_postal_rl1" type="text" value="<%= @resp_legal1.code_postal %>" placeholder="Code postal" required >
+    </div>
+
+    <div class="form__group">
+      <% ville_rl1 = @resp_legal1.ville ? @resp_legal1.ville.upcase : '' %>
+      <label for="ville_rl1"><%= t('.ville') %></label>
+      <select id="ville_rl1" name="ville_rl1" required >
+        <% [ville_rl1].each do |option| %>
+          <option <% if option == ville_rl1 %> selected <% end %>><%= option %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="form__group">
+      <label for="pays_rl1"><%= t(".pays") %></label>
+      <select id="pays_rl1" name="pays_rl1" required >
+        <% @liste_pays.each do |option| %>
+          <option <% if option == @resp_legal1.pays %> selected <% end %>><%= option %></option>
+        <% end %>
+      </select>
+    </div>
+
+
+    <div class="form__group">
+      <label for="tel_personnel_rl1"><%= t('.telephone_principal') %></label>
+      <div class="col-sm-5">
+        <input type="tel" id="tel_personnel_rl1" value="<%= @resp_legal1.tel_personnel %>" placeholder="Numéro de téléphone" name="tel_personnel_rl1" >
+      </div>
+    </div>
+
+    <div class="form__group">
+      <label for="tel_portable_rl1"><%= t('.telephone_secondaire') %></label>
+      <div class="col-sm-5">
+        <input type="tel" id="tel_portable_rl1" value="<%= @resp_legal1.tel_portable %>" placeholder="Numéro de téléphone" name="tel_portable_rl1" >
+      </div>
+    </div>
+
+    <div class="form__group">
+      <label for="tel_professionnel_rl1"><%= t('.telephone_professionnel') %></label>
+      <div class="col-sm-5">
+        <input type="tel" id="tel_professionnel_rl1" value="<%= @resp_legal1.tel_professionnel %>" placeholder="Numéro de téléphone" name="tel_professionnel_rl1">
+      </div>
+    </div>
+
+    <div class="form__group">
+      <label for="email_rl1"><%= t('.email_principal') %></label>
+      <div class="col-sm-5">
+        <input type="email" id="email_rl1" value="<%= @resp_legal1.email %>" placeholder="email" name="email_rl1" >
+      </div>
+    </div>
+
+    <div class="form__group">
+      <label for="profession_rl1"><%= t('.profession') %></label>
+      <select id="profession_rl1" name="profession_rl1" required>
+        <% @code_profession.map{ |k, v| v }.each do |option| %>
+          <option <% if option == @resp_legal1.profession %> selected <% end %>><%= option %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="form__group">
+      <label for="enfants_a_charge_rl1"><%= t('.nb_total_enfants_a_charge') %></label>
+      <input type="text" id="<%=  t('.nb_total_enfants_a_charge') %>" value="<%= @resp_legal1.enfants_a_charge %>" name="enfants_a_charge_rl1" required>
+    </div>
+
+
+    <p><%= t('.coordonnees_communiquees') %></p>
+
+
+    <% {t('.j_accepte') => true, t('.j_accepte_pas') => false}.each do |nom_option, valeur_option| %>
+      <div class="form__group">
+        <label>
+          <input id="communique_info_parents_eleves_rl1" type="radio" name="communique_info_parens_eleves_rl1" value="<%= valeur_option %>" <% if @resp_legal1.communique_info_parents_eleves == valeur_option %> checked <% end %>> <%= nom_option %>
+      </label>
+      </div>
+    <% end %>
+
+
+
 
     <% if @resp_legal2 %>
       <div id='resp_legal2' class='<%= "d-none" unless @resp_legal2.present? %>' >
         <h2 class="mt-5 separation"><%= t('.titre_responsable_legal') %></h2>
 
-        <%= raw(construire form_resp_legal2) %>
+        <div class="form__group">
+          <label for="lien_de_parente_rl2"><%= t('.lien_de_parente') %></label>
+          <select id="lien_de_parente_rl2" name="lien_de_parente_rl2">
+            <% @lien_de_parentes.each do |option| %>
+              <option <% if option == @resp_legal2.lien_de_parente %> selected <% end %>><%= option %></option>
+            <% end %>
+          </select>
+        </div>
+
+        <div class="form__group">
+          <label for="prenom_rl2"><%= t('.prenom') %></label>
+          <input id="prenom_rl2" name="prenom_rl2" type="text" value="<%= @resp_legal2.prenom %>" placeholder="Prénom">
+        </div>
+
+        <div class="form__group">
+          <label for="nom_rl2"><%= t('.nom') %></label>
+          <input id="nom_rl2" name="nom_rl2" type="text" value="<%= @resp_legal2.nom %>" placeholder="Nom">
+        </div>
 
         <div class="row">
           <div class="col-sm-4"></div>
@@ -335,7 +153,90 @@
 
         <span style="display:block; height: 5px;"></span>
 
-        <%= raw(construire fin_form_resp_legal_2) %>
+        <div class="form__group">
+          <label for="adresse_rl2"><%= t('.adresse') %></label>
+          <textarea id="adresse_rl2" name="adresse_rl2" type="libre" placeholder="Numéro et nom de voie" rows="3" ><%= @resp_legal2.adresse %></textarea>
+        </div>
+
+        <div class="form__group">
+          <label for="code_postal_rl2"><%= t('.code_postal') %></label>
+          <input id="code_postal_rl2" name="code_postal_rl2" type="text" value="<%= @resp_legal2.code_postal %>" placeholder="Code postal">
+        </div>
+
+        <div class="form__group">
+      <% ville_rl2 = @resp_legal2.ville ? @resp_legal2.ville.upcase : '' %>
+          <label for="ville_rl2"><%= t('.ville') %></label>
+          <select id="ville_rl2" name="ville_rl2">
+            <% [ville_rl2].each do |option| %>
+              <option <% if option == ville_rl2 %> selected <% end %>><%= option %></option>
+            <% end %>
+          </select>
+        </div>
+
+        <div class="form__group">
+          <label for="pays_rl2"><%= t('.pays') %></label>
+          <select id="pays_rl2" name="pays_rl2" required>
+            <% @liste_pays.each do |option| %>
+              <option <% if option == @resp_legal2.pays %> selected <% end %>><%= option %></option>
+            <% end %>
+          </select>
+        </div>
+
+        <div class="form__group">
+          <label for="tel_personnel_rl2"><%= t('.telephone_principal') %></label>
+          <div class="col-sm-5">
+            <input type="tel" id="tel_personnel_rl2" value="<%= @resp_legal2.tel_personnel %>" placeholder="Numéro de téléphone" name="tel_personnel_rl2">
+          </div>
+        </div>
+
+        <div class="form__group">
+          <label for="tel_portable_rl2"><%= t('.telephone_secondaire') %></label>
+          <div class="col-sm-5">
+            <input type="tel" id="tel_portable_rl2" value="<%= @resp_legal2.tel_portable %>" placeholder="Numéro de téléphone" name="tel_portable_rl2">
+          </div>
+        </div>
+
+
+        <div class="form__group">
+          <label for="tel_professionnel_rl2"><%= t('.telephone_professionnel') %></label>
+          <div class="col-sm-5">
+            <input type="tel" id="tel_professionnel_rl2" value="<%= @resp_legal2.tel_professionnel %>" placeholder="Numéro de téléphone" name="tel_professionnel_rl2">
+          </div>
+        </div>
+
+
+        <div class="form__group">
+          <label for="email_rl2"><%= t('.email_principal') %></label>
+          <div class="col-sm-5">
+            <input type="email" id="email_rl2" value="<%= @resp_legal2.email %>" placeholder="Email" name="email_rl2">
+          </div>
+        </div>
+
+        <div class="form__group">
+          <label for="profession_rl2"><%= t('.profession') %>
+          <select id="profession_rl2" name="profession_rl2">
+            <% @code_profession.map{ |k, v| v }.each do |option| %>
+              <option <% if option == @resp_legal2.profession %> selected <% end %>><%= option %></option>
+            <% end %>
+          </select>
+          </label>
+        </div>
+
+
+        <div class="form__group">
+          <label>
+            <input id="communique_info_parents_eleves_rl2" type="radio_inverse" name="communique_info_parents_eleves_rl2" value="true" <% if @resp_legal2.communique_info_parents_eleves?  %> checked <% end %>>
+            <%= t('.j_accepte') %>
+          </label>
+
+          <label>
+            <input id="communique_info_parents_eleves_rl2" type="radio_inverse" name="communique_info_parents_eleves_rl2" value="false" <% unless @resp_legal2.communique_info_parents_eleves? %> checked <% end %>>
+            <%= t('.j_accepte_pas') %>
+          </label>
+        </div>
+        <p><%= t('.coordonnees_communiquees') %></p>
+
+
 
       </div>
     <% end %>
@@ -343,61 +244,85 @@
     <div id='contact_urgence'>
       <h2 class="mt-5 separation"><%= t('.titre_contact_urgence') %></h2>
 
-      <%= raw(construire form_contact_urgence) %>
+      <div class="form__group">
+        <label for="lien_avec_eleve_urg"><%= t('.lien_avec_eleve') %></label>
+        <input id="lien_avec_eleve_urg" name="lien_avec_eleve_urg" type="text" value="<%= @contact_urgence&.lien_avec_eleve %>" placeholder="Lien avec l'élève">
+      </div>
+
+      <div class="form__group">
+        <label for="prenom_urg"><%= t('.prenom') %></label>
+        <input id="prenom_urg" name="prenom_urg" type="text" value="<%= @contact_urgence&.prenom %>" placeholder="Prénom">
+      </div>
+
+      <div class="form__group">
+        <label for="nom_urg"><%= t('.nom') %></label>
+        <input id="nom_urg" name="nom_urg" type="text" value="<%= @contact_urgence&.nom %>" placeholder="Nom">
+      </div>
+
+      <div class="form__group">
+        <label for="tel_principal_urg"><%= t('.telephone_principal') %></label>
+        <input id="tel_principal_urg" name="tel_principal_urg" type="tel" value="<%= @contact_urgence&.tel_principal %>" placeholder="Numéro de téléphone">
+      </div>
+
+      <div class="form__group">
+        <label for="tel_secondaire_urg"><%= t('.telephone_secondaire') %></label>
+        <input id="tel_secondaire_urg" name="tel_secondaire_urg" type="tel" value="<%= @contact_urgence&.tel_secondaire %>" placeholder="Numéro de téléphone">
+      </div>
+
     </div>
     <%= render partial: 'partials/nouveau_precedent_suivant', :locals => { :precedent => "eleve"} %>
   </form>
 </section>
 
 <script>
-  $(document).ready(function() {
+$(document).ready(function() {
 
-    var input_email_rl1 = $('input[name=email_rl1]')
+  var input_email_rl1 = $('input[name=email_rl1]')
     var input_email_rl2 = $('input[name=email_rl2]')
     var span_email = "<span class='span-email' style='font-size: 12px'>Merci de renseigner votre adresse mail, si vous en avez une. L'établissement peut alors vous contacter plus rapidement s'il y a quelque chose à vous signaler concernant votre inscription.</span>"
 
     if (!input_email_rl1.val() != '' && !input_email_rl2.val() != '') {
       input_email_rl1.css('border', '1px solid orange')
-      input_email_rl1.parent().append(span_email)
-      input_email_rl2.css('border', '1px solid orange')
-      input_email_rl2.parent().append(span_email)
+        input_email_rl1.parent().append(span_email)
+        input_email_rl2.css('border', '1px solid orange')
+        input_email_rl2.parent().append(span_email)
     }
 
-    $('input[type=email]').change( function() {
-      input_email_rl1.css('border', '1px solid rgba(0,0,0,.15)')
+  $('input[type=email]').change( function() {
+    input_email_rl1.css('border', '1px solid rgba(0,0,0,.15)')
       input_email_rl2.css('border', '1px solid rgba(0,0,0,.15)')
       $('.span-email').remove()
-    })
+  })
 
-    $('#meme_adresse_que_rl1').click(function() {
-      $("#adresse_rl2").val($("#adresse_rl1").val());
-      $("#code_postal_rl2").val($("#code_postal_rl1").val());
-      let ville_rl1 = $("#ville_rl1").val()
+  $('#meme_adresse_que_rl1').click(function() {
+    $("#adresse_rl2").val($("#adresse_rl1").val());
+    $("#code_postal_rl2").val($("#code_postal_rl1").val());
+    let ville_rl1 = $("#ville_rl1").val()
       $("#ville_rl2").empty().append($("<option></option>").attr("value", ville_rl1).text(ville_rl1))
-    })
+  })
 
-    $.each(['rl1', 'rl2'], function(key, value) {
-      $input = $('#code_postal_' + value)
+  $.each(['rl1', 'rl2'], function(key, value) {
+    $input = $('#code_postal_' + value)
       $input.on('input', function() {
         let inputValue = $(this).val()
-        if (inputValue.length === 5) {
-          $.ajax({
-            method: "GET",
-            url: '/api/communes/deduire_commune',
-            data: { code_postal: inputValue, authenticity_token: "<%= form_authenticity_token %>" },
-            success : function(response) {
-              let $champ_input = $('#ville_' + value)
-              $champ_input.empty()
-              $.each(response, function (key, value) {
-                $champ_input.append($("<option></option>")
-                  .attr("value", value).text(value))
-              })
-            }
-          })
-        }
+          if (inputValue.length === 5) {
+            $.ajax({
+              method: "GET",
+              url: '/api/communes/deduire_commune',
+              data: { code_postal: inputValue, authenticity_token: "<%= form_authenticity_token %>" },
+              success : function(response) {
+                let $champ_input = $('#ville_' + value)
+                  $champ_input.empty()
+                  $.each(response, function (key, value) {
+                    $champ_input.append($("<option></option>")
+                        .attr("value", value).text(value))
+                  })
+              }
+            })
+          }
       })
-    })
-
-    $()
   })
+
+  $()
+})
 </script>
