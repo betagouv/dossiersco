@@ -23,8 +23,8 @@
   <nav class="mt-1">
     <div class="arrow-steps clearfix">
 
-      <% entrees_de_menu.each do |entree_de_menu| %>
-        <a class="step <%= classe_pour_menu(entree_de_menu, @dossier_eleve) %>" href='<%= lien_menu(entree_de_menu, @dossier_eleve) %>'>
+      <% @entrees_de_menu.each do |entree_de_menu| %>
+        <a class="step <%= classe_pour_menu(entree_de_menu, @dossier_eleve, @entrees_de_menu) %>" href='<%= lien_menu(entree_de_menu, @dossier_eleve, @entrees_de_menu) %>'>
           <span><%= t(".menu_#{entree_de_menu}") %></span>
         </a>
       <% end %>

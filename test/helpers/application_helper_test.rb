@@ -47,34 +47,34 @@ class ApplicationHelperTest < ActionDispatch::IntegrationTest
     assert_equal "<p>blabla</p>\n", markdown(texte)
   end
 
-  test "liste du menu famille" do
-    expected = %w[accueil eleve famille administration pieces_a_joindre validation]
-    assert_equal expected, entrees_de_menu
-  end
-
   test "quand l'étape est déjà passée, renvoie step-enabled" do
+    entrees_de_menu = %w[accueil eleve famille administration pieces_a_joindre validation].freeze
     dossier = Fabricate.build(:dossier_eleve, etape_la_plus_avancee: "administration")
-    assert_equal "step step-enabled current done", classe_pour_menu("famillle", dossier)
+    assert_equal "step step-enabled current done", classe_pour_menu("famillle", dossier, entrees_de_menu)
   end
 
   test "quand l'étape est pas encore passée, renvoie step-disabled" do
+    entrees_de_menu = %w[accueil eleve famille administration pieces_a_joindre validation].freeze
     dossier = Fabricate.build(:dossier_eleve, etape_la_plus_avancee: "eleve")
-    assert_equal "step step-disabled", classe_pour_menu("famille", dossier)
+    assert_equal "step step-disabled", classe_pour_menu("famille", dossier, entrees_de_menu)
   end
 
   test "quand l'étape est l'étape courante, renvoie step-enabled et current" do
+    entrees_de_menu = %w[accueil eleve famille administration pieces_a_joindre validation].freeze
     dossier = Fabricate.build(:dossier_eleve, etape_la_plus_avancee: "famille")
-    assert_equal "step step-enabled current", classe_pour_menu("famille", dossier)
+    assert_equal "step step-enabled current", classe_pour_menu("famille", dossier, entrees_de_menu)
   end
 
   test "#lien_menu # si step-disabled" do
+    entrees_de_menu = %w[accueil eleve famille administration pieces_a_joindre validation].freeze
     dossier = Fabricate.build(:dossier_eleve, etape_la_plus_avancee: "eleve")
-    assert_equal "#", lien_menu("famille", dossier)
+    assert_equal "#", lien_menu("famille", dossier, entrees_de_menu)
   end
 
   test "#lien_menu url si la page à déjà été vue" do
+    entrees_de_menu = %w[accueil eleve famille administration pieces_a_joindre validation].freeze
     dossier = Fabricate.build(:dossier_eleve, etape_la_plus_avancee: "administration")
-    assert_equal "/famille", lien_menu("famille", dossier)
+    assert_equal "/famille", lien_menu("famille", dossier, entrees_de_menu)
   end
 
   test "si l'option est ouverte et non suivi checkbox vierge" do
@@ -98,6 +98,13 @@ class ApplicationHelperTest < ActionDispatch::IntegrationTest
     dossier_eleve.options_origines = { mef_option.option_pedagogique.id.to_s => { "nom" => mef_option.option_pedagogique.nom } }
 
     assert non_abandonnable?(dossier_eleve, mef_option.option_pedagogique)
+  end
+
+  test "true si l'option est déjà selectionnée" do
+    mef_option = Fabricate(:mef_option_pedagogique, abandonnable: false)
+    dossier = Fabricate(:dossier_eleve, mef_destination: mef_option.mef, options_origines: {}, options_pedagogiques: [mef_option.option_pedagogique])
+
+    assert selectionnee?(dossier, mef_option.option_pedagogique)
   end
 
 end

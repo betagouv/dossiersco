@@ -3,6 +3,8 @@
 class AccueilController < ApplicationController
 
   before_action :retrouve_eleve_connecte, except: %i[index identification stats]
+  before_action :entrees_de_menu
+
   layout "famille"
 
   def index
@@ -44,8 +46,7 @@ class AccueilController < ApplicationController
   end
 
   def post_accueil
-    @eleve.dossier_eleve.update!(etape_la_plus_avancee: "eleve")
-    redirect_to "/eleve"
+    note_avancement_et_redirige_vers("eleve")
   end
 
   def eleve
@@ -78,8 +79,7 @@ class AccueilController < ApplicationController
 
     @eleve.save!
 
-    @eleve.dossier_eleve.update!(etape_la_plus_avancee: "famille")
-    redirect_to "/famille"
+    note_avancement_et_redirige_vers("famille")
   end
 
   def famille
@@ -114,9 +114,7 @@ class AccueilController < ApplicationController
     contact_urgence.save!
 
     if responsables_valides?(resp_legal1, resp_legal2)
-      @dossier_eleve.etape_la_plus_avancee = "administration"
-      @dossier_eleve.save!
-      redirect_to "/administration"
+      note_avancement_et_redirige_vers("administration")
     else
       error = if resp_legal1.errors.messages.present?
                 resp_legal1.errors.messages.first[1].join
@@ -176,9 +174,8 @@ class AccueilController < ApplicationController
     dossier_eleve.check_paiement_cantine = params["check_paiement_cantine"]
     dossier_eleve.identifiant_caf = params["identifiant_caf"]
     dossier_eleve.save!
-    dossier_eleve.etape_la_plus_avancee = "pieces_a_joindre"
-    dossier_eleve.save!
-    redirect_to "/pieces_a_joindre"
+
+    note_avancement_et_redirige_vers("pieces_a_joindre")
   end
 
   def deconnexion
@@ -210,9 +207,7 @@ class AccueilController < ApplicationController
       flash[:erreur] = "Veuillez télécharger les pièces obligatoires"
       render :pieces_a_joindre
     else
-      @dossier_eleve.etape_la_plus_avancee = "validation"
-      @dossier_eleve.save!
-      redirect_to "/validation"
+      note_avancement_et_redirige_vers("validation")
     end
   end
 
@@ -226,6 +221,21 @@ class AccueilController < ApplicationController
   def stats
     etablissements = Etablissement.all.sort_by { |e| e.dossier_eleve.count }.reverse
     render :stats, locals: { etablissements: etablissements }, layout: "connexion"
+  end
+
+  def note_avancement_et_redirige_vers(page_destination)
+    @eleve.dossier_eleve.update!(derniere_etape: page_destination)
+
+    index_entree_menu = @entrees_de_menu.index(page_destination)
+    index_etape_la_plus_avancee = @entrees_de_menu.index(@eleve.dossier_eleve.etape_la_plus_avancee)
+
+    @eleve.dossier_eleve.update!(etape_la_plus_avancee: page_destination) if index_entree_menu > index_etape_la_plus_avancee
+
+    redirect_to "/#{page_destination}"
+  end
+
+  def entrees_de_menu
+    @entrees_de_menu = %w[accueil eleve famille administration pieces_a_joindre validation].freeze
   end
 
 end

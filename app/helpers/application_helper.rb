@@ -41,11 +41,7 @@ module ApplicationHelper
     markdown.render(text).html_safe
   end
 
-  def entrees_de_menu
-    %w[accueil eleve famille administration pieces_a_joindre validation].freeze
-  end
-
-  def classe_pour_menu(etape, dossier)
+  def classe_pour_menu(etape, dossier, entrees_de_menu)
     index_etape = entrees_de_menu.index(etape)
     index_etape ||= 0
     index_dossier = entrees_de_menu.index(dossier.etape_la_plus_avancee)
@@ -59,7 +55,7 @@ module ApplicationHelper
     end
   end
 
-  def lien_menu(etape, dossier)
+  def lien_menu(etape, dossier, entrees_de_menu)
     index_etape = entrees_de_menu.index(etape)
     index_etape ||= 0
     index_dossier = entrees_de_menu.index(dossier.etape_la_plus_avancee)
@@ -81,5 +77,9 @@ module ApplicationHelper
 
   def ouverte?(dossier, option)
     option.ouverte_inscription?(dossier.mef_destination)
+  end
+
+  def selectionnee?(dossier, option)
+    dossier.options_pedagogiques.include?(option)
   end
 end

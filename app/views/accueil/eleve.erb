@@ -126,14 +126,16 @@
       <h3 id="options-pedagogiques" class="separation"><%= t('.options_pedagogiques') %></h3>
       <p><%= t('.explication_options_pedagogiques') %></p>
 
-      <% @options_pedagogiques.each do |option| %>
+      <% @options_pedagogiques.sort_by(&:nom).each do |option| %>
         <%= label_tag do %>
           <% if non_abandonnable?(@dossier_eleve, option) %>
             <%= check_box_tag option.nom, option.id, :checked, disabled: 'disabled', class: 'disabled' %>
             <%= hidden_field_tag option.nom, option.id %>
           <% elsif abandonnable?(@dossier_eleve, option) %>
             <%= check_box_tag option.nom, option.id, :checked %>
-          <% elsif ouverte?(@dossier_eleve, option) %>
+          <% elsif ouverte?(@dossier_eleve, option) && selectionnee?(@dossier_eleve, option) %>
+            <%= check_box_tag option.nom, option.id, :cheched %>
+          <% elsif ouverte?(@dossier_eleve, option)%>
             <%= check_box_tag option.nom, option.id %>
           <% end %>
           <%= option.nom %>
