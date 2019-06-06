@@ -34,6 +34,35 @@
   </table>
 </section>
 
+<section class="section">
+  <h1><%= t('.dossiers_sans_mef') %></h1>
+
+  <% unless @dossiers_sans_mef.empty? %>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Prenon</th>
+        <th>MEF d'origine</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @dossiers_sans_mef.each do |dossier| %>
+        <tr>
+          <td><%= dossier.eleve.nom %></td>
+          <td><%= dossier.eleve.prenom %></td>
+          <td><%= dossier.mef_origine.libelle %></td>
+        </tr>
+      <% end %>
+      <%= t('.aucun_dossier') if @dossiers_sans_mef.empty? %>
+      </tbody>
+    </table>
+  <% else %>
+    <b><%= t('.aucun_dossier') %></b>
+  <% end %>
+</section>
+
 
 <script>
 $(document).ready(function () {

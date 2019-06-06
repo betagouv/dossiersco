@@ -264,6 +264,8 @@ fr:
         erreur_create_mef: "%{champs} %{erreur}"
         mef_cree: Le MEF a bien été créé
       index:
+        aucun_dossier: Tous vos élèves ont un MEF de destination
+        dossiers_sans_mef: Dossiers sans MEF
         appliquer: "Appliquer"
     agents:
       index:

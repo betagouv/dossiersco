@@ -9,8 +9,10 @@ module Configuration
     before_action :set_mef, only: %i[show edit update destroy]
 
     def index
-      @mef_service = MefDestination.new(@agent_connecte.etablissement)
-      @mef = Mef.where(etablissement: @agent_connecte.etablissement).order(:libelle)
+      etablissement = @agent_connecte.etablissement
+      @mef_service = MefDestination.new(etablissement)
+      @mef = Mef.where(etablissement: etablissement).order(:libelle)
+      @dossiers_sans_mef = DossierEleve.where(etablissement: etablissement, mef_destination: nil)
     end
 
     def new
