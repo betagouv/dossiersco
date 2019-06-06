@@ -2,9 +2,6 @@
 
 require "net/http"
 
-URL_CAS = ENV["ENT_PARIS_URL"]
-URL_RETOUR = ENV["ENT_PARIS_URL_RETOUR"]
-
 class AuthentificationCasEntController < ApplicationController
 
   before_action :identification_agent, only: "debug_ent"
@@ -78,8 +75,8 @@ class AuthentificationCasEntController < ApplicationController
   end
 
   def donnees_ent(ticket)
-    uri = URI("#{URL_CAS}/serviceValidate")
-    params = { service: URL_RETOUR, ticket: ticket }
+    uri = URI("#{ENV['ENT_PARIS_URL']}/serviceValidate")
+    params = { service: ENV["ENT_PARIS_URL_RETOUR"], ticket: ticket }
     uri.query = URI.encode_www_form(params)
     res = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
       req = Net::HTTP::Get.new(uri)
@@ -126,7 +123,7 @@ class AuthentificationCasEntController < ApplicationController
   end
 
   def appel_direct_ent
-    redirect_to "#{URL_CAS}/login?service=#{URL_RETOUR}"
+    redirect_to "#{ENV['ENT_PARIS_URL']}/login?service=#{ENV['ENT_PARIS_URL_RETOUR']}"
   end
 
   def debug_ent
