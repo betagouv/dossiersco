@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "csv"
 
 class AccueilController < ApplicationController
@@ -93,9 +94,9 @@ class AccueilController < ApplicationController
     @code_profession = RespLegal.codes_profession
     @code_situation = code_situation
     @liste_pays = []
-    filename = File.join(Rails.root,'app/views/accueil/liste-pays.csv')
-    CSV.foreach(filename, {:col_sep => ";"}) do |row|
-      @liste_pays << row[0].upcase
+    filename = File.join(Rails.root, "app/views/accueil/liste-pays.csv")
+    CSV.foreach(filename, col_sep: ";") do |row|
+      @liste_pays << [row[0].upcase, row[1].upcase]
     end
     render "accueil/famille"
   end

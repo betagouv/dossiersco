@@ -51,10 +51,11 @@ end
     </div>
 
     <div class="form__group">
+      <% selected = @resp_legal1.pays || "FRA" %>
       <label for="pays_rl1"><%= t(".pays") %></label>
       <select id="pays_rl1" name="pays_rl1" required >
-        <% @liste_pays.each do |option| %>
-          <option <% if option == @resp_legal1.pays %> selected <% end %>><%= option %></option>
+        <% @liste_pays.each do |pays| %>
+          <option id="<%= pays[1] %>" <% if pays[1] == selected %> selected <% end %>><%= pays[0] %></option>
         <% end %>
       </select>
     </div>
