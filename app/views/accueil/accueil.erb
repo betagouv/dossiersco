@@ -61,7 +61,7 @@
       <% @dossier_eleve.etablissement.pieces_attendues.each do |piece| %>
         <li><strong><%= piece.nom %></strong></li>
         <% if piece.explication.present? %>
-          <p><%= piece.explication %></p>
+          <p><%= markdown(piece.explication) %></p>
         <% end %>
       <% end %>
     </ul>
