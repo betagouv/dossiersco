@@ -42,7 +42,7 @@ demo:
     name: production
   script:
   - gem install dpl
-  - dpl --provider=scalingo --api-token=$SCALINGO_PRODUCTION_KEY --remote=git@scalingo.com:dossiersco-demo.git --branch=master:master
+  - dpl --provider=scalingo --api-token=$SCALINGO_PRODUCTION_KEY --remote=git@scalingo.com:dossiersco-demo.git --branch=HEAD:master
 
 production:
   only:
@@ -52,4 +52,4 @@ production:
     name: production
   script:
   - gem install dpl
-  - dpl --provider=scalingo --api-token=$SCALINGO_PRODUCTION_KEY --remote=git@scalingo.com:dossiersco-production.git --branch=master:master
+  - dpl --provider=scalingo --api-token=$SCALINGO_PRODUCTION_KEY --remote=git@scalingo.com:dossiersco-production.git --branch=HEAD:master
