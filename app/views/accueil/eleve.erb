@@ -1,101 +1,3 @@
-<%
-  premier_prenom = [
-      {
-          name: "prenom",
-          label: t('.prenom'),
-          type: "text",
-          value: @eleve.prenom,
-          indication: "Prénom",
-          disabled: false,
-          required: 'required'
-      }]
-
-  autres_prenoms = [
-      {
-          name: "prenom_2",
-          label: t('.prenom_2'),
-          type: "text",
-          value: @eleve.prenom_2,
-          indication: "Deuxième prénom (optionnel)",
-          disabled: false
-      },
-      {
-          name: "prenom_3",
-          label: t('.prenom_3'),
-          type: "text",
-          value: @eleve.prenom_3,
-          indication: "Troisième prénom (optionnel)",
-          disabled: false
-      }]
-
-  reste_identite = [
-      {
-          name: "nom",
-          label: t('.nom'),
-          type: "text",
-          value: @eleve.nom,
-          indication: "Nom",
-          disabled: false,
-          required: 'required'
-      },
-      {
-          name: "sexe",
-          label: t('.sexe'),
-          type: "radio",
-          options: [t('.feminin'), t('.masculin')],
-          checked: @eleve.sexe
-      },
-      {
-          type: "espace",
-          hauteur: 20,
-      },
-      {
-          name: "ville_naiss",
-          label: t('.ville_de_naissance'),
-          type: "text",
-          value: @eleve.ville_naiss,
-          indication: "Ville de naissance",
-          disabled: false,
-          required: 'required'
-      },
-      {
-          name: "pays_naiss",
-          label: t('.pays_de_naissance'),
-          type: "text",
-          value: @eleve.pays_naiss,
-          indication: "Pays de naissance",
-          disabled: false,
-          required: 'required'
-      },
-      {
-          type: "espace",
-          hauteur: 20,
-      },
-      {
-          name: "nationalite",
-          label: t('.pays_de_nationalite'),
-          type: "text",
-          value: @eleve.nationalite,
-          indication: "Pays de nationalité",
-          disabled: false,
-          required: 'required'
-      },
-      {
-          type: "espace",
-          hauteur: 10,
-      }]
-
-  enseignement_facultatif = [
-      {
-          name: "latin",
-          label: t('.lv2'),
-          type: "checkbox",
-      }
-  ]
-%>
-
-<% @section = 1 %>
-
 <section class="section">
 
   <form action="/eleve"  method="post">
@@ -105,13 +7,61 @@
 
     <h2 class="separation"><%= t('.titre') %></h2>
 
-    <%= raw(construire premier_prenom) %>
+    <div class="form__group">
+      <label for="prenom"><%= t('.prenom') %></label>
+      <input id="prenom" name="prenom" type="text" value="<%= @eleve.prenom %>" placeholder="Prénom" required >
+    </div>
 
     <% if @eleve.niveau_classe_ant !~ /5EME/ and @eleve.niveau_classe_ant !~ /6EME/ %>
-      <%= raw(construire autres_prenoms) %>
+      <div class="form__group">
+        <label for="prenom_2"><%= t('.prenom_2') %></label>
+        <input id="prenom_2" name="prenom_2" type="text" value="<%= @eleve.prenom_2 %>" placeholder="Deuxième prénom (optionnel)" >
+      </div>
+
+      <div class="form__group">
+        <label for="prenom_3"><%= t('.prenom_3') %></label>
+        <input id="prenom_3" name="prenom_3" type="text" value="<%= @eleve.prenom_3 %>" placeholder="Troisième prénom (optionnel)" >
+      </div>
+
     <% end %>
 
-    <%= raw(construire reste_identite) %>
+    <div class="form__group">
+      <label for="nom"><%= t('.nom') %></label>
+      <input id="nom" name="nom" type="text" value="<%= @eleve.nom %>" placeholder="Nom" required >
+    </div>
+
+    <div class="form__group">
+      <label><%= t('.sexe') %></label>
+      <% [t('.feminin'), t('.masculin')].each do |option|%>
+        <label>
+          <input
+         name="sexe"
+         value="<%= option %>"
+         type="radio"
+         <% if option == @eleve.sexe %>
+           checked
+         <% end %>
+         > <%= option %>
+      </label>
+    <% end %>
+    </div>
+
+
+
+    <div class="form__group">
+      <label for="ville_naiss"><%= t('.ville_de_naissance') %></label>
+      <input id="ville_naiss" name="ville_naiss" type="text" value="<%= @eleve.ville_naiss %>" placeholder="Ville de naissance" required >
+    </div>
+
+    <div class="form__group">
+      <label for="pays_naiss"><%= t('.pays_de_naissance') %></label>
+      <input id="pays_naiss" name="pays_naiss" type="text" value="<%= @eleve.pays_naiss %>" placeholder="Pays de naissance" required >
+    </div>
+
+    <div class="form__group">
+      <label for="pays_de_nationalite"><%= t('.pays_de_nationalite') %></label>
+      <input id="pays_de_nationalite" name="pays_de_nationalite" type="text" value="<%= @eleve.nationalite %>" placeholder="Pays de nationalité" required >
+    </div>
 
     <% if @options_pedagogiques.present? %>
       <h3 id="options-pedagogiques" class="separation"><%= t('.options_pedagogiques') %></h3>
