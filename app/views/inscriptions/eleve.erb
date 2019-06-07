@@ -325,12 +325,12 @@
             <h3>Historique des messages</h3>
           </div>
           <div id="historique">
-            <% @dossier_eleve.message.each do |message| %>
+            <% @dossier_eleve.message.limit(5).sort.reverse.each do |message| %>
               <div class="message">
                 <p>
-                <%= message.categorie %> du <%= message.created_at %> (cliquez pour afficher/cacher)
+                <%= message.categorie %> du <%= l(message.created_at) %>
                 </p>
-                <div class="contenu-message d-none">
+                <div class="contenu-message">
                   <% if message.categorie == "mail" %>
                     <%= raw message.contenu.gsub(/\n/,"<br/>") %>
                   <% else %>
