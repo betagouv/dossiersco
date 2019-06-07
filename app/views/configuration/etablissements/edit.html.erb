@@ -25,33 +25,8 @@
         <%= f.text_field :ville %>
       </div>
       <div class="form__group">
-        <%= f.check_box :gere_demi_pension %>
-        <%= f.label :gere_demi_pension, t('.gere_demi_pension'), class: 'label-inline' %>
-      </div>
-      <div class="form__group">
-        <%= f.label :reglement_demi_pension, t('.reglement_demi_pension') %>
-        <%= f.file_field :reglement_demi_pension %>
-      </div>
-      <div class="form__group">
-        <%= f.check_box :demande_caf %>
-        <%= f.label :demande_caf, t('.demande_caf'), class: 'label-inline' %>
-      </div>
-      <div class="form__group">
         <%= f.label :signataire, t('.signataire') %>
         <%= f.text_field :signataire, placeholder: "Ex : Yasmina MARTIN, principale du collège" %>
-      </div>
-      <div class="form__group">
-        <%= f.label :date_limite, t('.date_limite_inscription')%>
-        <%= f.text_field :date_limite %>
-      </div>
-      <div class="form__group">
-        <%= f.label :mot_accueil, t('.mot_accueil')%>
-        <%= f.text_area :mot_accueil %>
-        <p>Vous pouvez écrire en utilisant la syntaxe <a href="https://fr.wikipedia.org/wiki/Markdown">markdown</a> si vous voulez, et <a href="https://developer.mozilla.org/fr/docs/Apprendre/HTML/Introduction_%C3%A0_HTML/Getting_started">HTML</a> également</p>
-      </div>
-      <div class="form__group">
-        <%= f.check_box :envoyer_aux_familles %>
-        <%= f.label :envoyer_aux_familles, t('.activer_envoie'), class: 'label-inline' %>
       </div>
       <div class="form__group">
         <%= f.submit 'valider', class: 'button' %>

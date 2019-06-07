@@ -46,16 +46,16 @@
                   <% if piece.id.present? && piece.soumise? %>
                     <div class="form__group">
                       <%= link_to t('.valider'), valider_piece_jointe_path(piece, identifiant: params[:identifiant]),
-                                  method: :put, class: "button" %>
+                        method: :put, class: "button" %>
                       <%= link_to t('.refuser'), refuser_piece_jointe_path(piece, identifiant: params[:identifiant]),
-                                  method: :put, class: "button warning" %>
-                    </div>
-                  <% elsif piece.id.present? %>
-                    <div class="form__group">
-                      <%= link_to t('.annuler_decision'), annuler_decision_piece_jointe_path(piece, identifiant: params[:identifiant]),
-                                  method: :put, class: "secondary button-outline " %>
-                    </div>
-                  <% end %>
+                        method: :put, class: "button warning" %>
+                  </div>
+                <% elsif piece.id.present? %>
+                  <div class="form__group">
+                    <%= link_to t('.annuler_decision'), annuler_decision_piece_jointe_path(piece, identifiant: params[:identifiant]),
+                      method: :put, class: "secondary button-outline " %>
+                </div>
+              <% end %>
                 </div>
               </div>
             </div>
@@ -125,13 +125,13 @@
         </div>
 
         <% if @dossier_eleve.renseignements_medicaux %>
-        <div class="form__group">
-          <p>
-          <%= t('.envoyer_une_info_medicale') %>
-          <%= @dossier_eleve.renseignements_medicaux %>
-          </p>
-        </div>
-          <% end %>
+          <div class="form__group">
+            <p>
+            <%= t('.envoyer_une_info_medicale') %>
+            <%= @dossier_eleve.renseignements_medicaux %>
+            </p>
+          </div>
+        <% end %>
 
         <div class="form__group">
           <p>
@@ -145,20 +145,20 @@
         </div>
 
         <% if @dossier_eleve.regime_sortie.present? %>
-        <div class="form__group">
-          <p>
-          Régime choisi : <%= @dossier_eleve.regime_sortie.nom %>
-        </p>
-        </div>
-      <% end %>
+          <div class="form__group">
+            <p>
+            Régime choisi : <%= @dossier_eleve.regime_sortie.nom %>
+          </p>
+          </div>
+        <% end %>
 
-      <% if @dossier_eleve.identifiant_caf.present? %>
-        <div class="form__group">
-          <p>
-          Identifiant CAF : <%= @dossier_eleve.identifiant_caf %>
-        </p>
-        </div>
-      <% end %>
+        <% if @dossier_eleve.identifiant_caf.present? %>
+          <div class="form__group">
+            <p>
+            Identifiant CAF : <%= @dossier_eleve.identifiant_caf %>
+          </p>
+          </div>
+        <% end %>
       </div>
     </div>
 
@@ -292,44 +292,32 @@
           <h3>Envoyer un message</h3>
         </div>
         <div>
-          <% if @emails_presents %>
-            <p>Ce formulaire envoie un message à la famille de l'élève. Précisez par exemple si les pièces
-            justificatives ne sont pas conformes, et ce que la famille doit transmettre.</p>
-          <% elsif @dossier_eleve.portable_present %>
-            <p>Cette famille n'a pas déclaré d'adresse mail. Le formulaire ci-dessous vous permet
-            d'envoyer un texto. <strong>Soyez bref</strong> (moins de 140 caractères si possible).
-            L'émission des textos se fait en différé.</p>
+          <% if @dossier_eleve.moyens_de_communication_electronique.any? %>
+            <form action="/agent/contacter_une_famille" method="POST" class="text-center">
+              <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+              <input type="hidden" name="identifiant" value="<%= @dossier_eleve.eleve.identifiant %>" />
+              <dl style="text-align:left">
+                <% @dossier_eleve.moyens_de_communication_electronique.each do |nom, moyens_de_communication|%>
+                  <dt>
+                  <%= nom %>
+                  </dt>
+                  <% moyens_de_communication.each do |moyen_de_communication| %>
+                    <dd>
+                    <%= radio_button_tag 'moyen_de_communication', moyen_de_communication %>
+                    <%= moyen_de_communication %>
+                    </dd>
+                  <% end %>
+                <% end %>
+              </dl>
+
+              <p style="text-align:left">Si vous optez pour l'envoie d'un texto, <strong>Soyez bref</strong> (moins de 140 caractères si possible).</p>
+              <textarea id="message" name='message' rows="6"></textarea>
+              <input id='envoyer-commentaire' value='Envoyer' type='submit' class='button'/>
+            </form>
           <% else %>
-            <p>Cette famille n'a pas déclaré d'adresse mail, ni de téléphone portable.</p>
+            <p>Aucun moyen de communication électronique renseignés</p>
           <% end %>
         </div>
-
-        <% if @emails_presents || @dossier_eleve.portable_present %>
-          <form action="/agent/contacter_une_famille" method="POST" class="text-center">
-            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-            <% if !@modeles.empty? %>
-              Modèles: <select id="modeles">
-                <% @modeles.each do |modele| %>
-                  <option value=<%= modele.id %>><%= modele.nom %></option>
-                <% end %>
-              </select>
-              <button id="inserer">Insérer</button>
-            <% end %>
-            <% if !@emails_presents %>
-              <select name="Destinataire">
-                <option value="rl1">Responsable Légal 1: <%= @dossier_eleve.portable_rl1 %></option>
-                <option value="rl2">Responsable Légal 2: <%= @dossier_eleve.portable_rl2 %></option>
-              </select>
-            <% end %>
-            <input type="hidden" name="identifiant" value="<%= @dossier_eleve.eleve.identifiant %>" />
-            <div class="form__group">
-              <textarea id="message" name='message' rows="6"></textarea>
-            </div>
-            <div class="form__group">
-              <input id='envoyer-commentaire' value='Envoyer' type='submit' class='button'/>
-            </div>
-          </form>
-        <% end %>
       </div>
       <% if @dossier_eleve.message.count > 0 %>
         <div class="panel">

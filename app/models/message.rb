@@ -42,4 +42,9 @@ class Message < ActiveRecord::Base
     categorie == "sms"
   end
 
+  def mail?
+    categorie == "mail"
+  end
+
+
 end

@@ -125,4 +125,19 @@ class DossierEleve < ActiveRecord::Base
     etat != ETAT[:pas_connecte]
   end
 
+  def moyens_de_communication_electronique
+    moyens = {}
+    resp_legal.each do |representant|
+      moyens[representant.nom_complet] = representant.moyens_de_communication.select do |moyen|
+        moyen.gsub(/ /, '')[0..1] != '+3' &&
+          moyen.gsub(/ /, '')[0..1] != '01' &&
+          moyen.gsub(/ /, '')[0..1] != '02' &&
+          moyen.gsub(/ /, '')[0..1] != '03' &&
+          moyen.gsub(/ /, '')[0..1] != '04' &&
+          moyen.gsub(/ /, '')[0..1] != '05' &&
+          moyen.gsub(/ /, '')[0..1] != '09'
+      end
+    end
+    moyens
+  end
 end

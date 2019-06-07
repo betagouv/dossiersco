@@ -91,4 +91,29 @@ class RespLegalTest < ActiveSupport::TestCase
     assert_equal "45", RespLegal.code_profession_from("Profession intermédiaire administrative de la fonction publique")
   end
 
+  test "renvoie un tableau vide si aucun moyen de communication renseigné" do
+    representant = Fabricate.build(:resp_legal, email: nil, tel_personnel: nil, tel_portable: nil, tel_professionnel: nil)
+    assert_equal [], representant.moyens_de_communication
+  end
+
+  test "renvoie l'email si renseigné" do
+    representant = Fabricate.build(:resp_legal, email: "toto@example.com", tel_personnel: nil, tel_portable: nil, tel_professionnel: nil)
+    assert_equal ["toto@example.com"], representant.moyens_de_communication
+  end
+
+  test "renvoie tel_professionnel si renseigné" do
+    representant = Fabricate.build(:resp_legal, email: nil, tel_personnel: nil, tel_portable: nil, tel_professionnel: "0123456789")
+    assert_equal ["0123456789"], representant.moyens_de_communication
+  end
+
+  test "renvoie tous les moyens de communication si tous renseignés" do
+    representant = Fabricate.build(:resp_legal, email: "toto@example.com", tel_personnel: "01111111111", tel_portable: "06666666666", tel_professionnel: "0123456789")
+    assert_equal ["toto@example.com", "01111111111", "0123456789", "06666666666"].sort, representant.moyens_de_communication.sort
+  end
+
+  test "nom_complet renvoie prénom et nom" do
+    representant = Fabricate(:resp_legal, nom: "Marley", prenom: "Bob")
+    assert_equal "Bob Marley", representant.nom_complet
+  end
+
 end

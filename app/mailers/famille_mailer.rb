@@ -4,6 +4,15 @@ class FamilleMailer < ApplicationMailer
 
   default from: "equipe@dossiersco.fr"
 
+  def contacter_directement_une_famille(email, message)
+    @message = message
+
+    subject = "Réinscription de votre enfant au collège"
+
+    mail(subject: subject, to: email, &:text)
+  end
+
+
   def contacter_une_famille(eleve, agent, message)
     @eleve = eleve
     @message = message
