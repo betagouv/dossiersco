@@ -2,6 +2,9 @@
   <div class="container">
     <h1>Nouvelle pièce attendue</h1>
 
+    <p>
+      <em>Ne demandez pas via DossierSCO une pièce à caractère médical (données sensibles)</em>
+    </p>
     <%= render 'form', piece_attendue: @piece_attendue %>
 
     <%= link_to 'Retour', configuration_pieces_attendues_path, class: 'button-outline small secondary mt-2' %>
