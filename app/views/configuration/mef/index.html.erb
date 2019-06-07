@@ -44,6 +44,7 @@
         <th>Nom</th>
         <th>Prenon</th>
         <th>MEF d'origine</th>
+        <th>Etat</th>
       </tr>
       </thead>
 
@@ -53,6 +54,7 @@
           <td><%= dossier.eleve.nom %></td>
           <td><%= dossier.eleve.prenom %></td>
           <td><%= dossier.mef_origine.libelle %></td>
+          <td><%= dossier.etat %></td>
         </tr>
       <% end %>
       <%= t('.aucun_dossier') if @dossiers_sans_mef.empty? %>
