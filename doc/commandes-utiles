@@ -200,3 +200,4 @@ etablissement = Etablissement.find(227)
 p etablissement.dossier_eleve.where(etat: "validé").count
 File.open('malraux.xml', 'w') { |file| file.write(export_xml_tous_les_champs(etablissement, 'export_xml_robot'))}
 
+docker-compose run --rm test rails test test/helpers/application_helper_test.rb

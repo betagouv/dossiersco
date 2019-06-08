@@ -67,12 +67,8 @@ module ApplicationHelper
     end
   end
 
-  def non_abandonnable?(dossier, option)
-    !option.abandonnable?(dossier.mef_destination) && dossier.options_origines[option.id.to_s].present?
-  end
-
   def abandonnable?(dossier, option)
-    option.abandonnable?(dossier.mef_destination) && dossier.options_origines[option.id.to_s].present?
+    option.abandonnable?(dossier.mef_destination)
   end
 
   def ouverte?(dossier, option)
@@ -81,5 +77,9 @@ module ApplicationHelper
 
   def selectionnee?(dossier, option)
     dossier.options_pedagogiques.include?(option)
+  end
+
+  def pratiquee?(dossier, option)
+    dossier.options_origines[option.id.to_s].present?
   end
 end

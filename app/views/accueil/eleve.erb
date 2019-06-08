@@ -113,33 +113,26 @@
 
     <%= raw(construire reste_identite) %>
 
-    <h3 class="separation"><%= t('.options_pedagogiques_actuelles') %></h3>
-    <p><%= t('.explication_options_pedagogiques_actuelles') %></p>
-
-    <ul>
-      <% @eleve.dossier_eleve.options_origines.each do |option_id, option| %>
-        <li><%= option["nom"] %></li>
-      <% end %>
-    </ul>
-
     <% if @options_pedagogiques.present? %>
       <h3 id="options-pedagogiques" class="separation"><%= t('.options_pedagogiques') %></h3>
       <p><%= t('.explication_options_pedagogiques') %></p>
 
       <% @options_pedagogiques.sort_by(&:nom).each do |option| %>
         <%= label_tag do %>
-          <% if non_abandonnable?(@dossier_eleve, option) %>
-            <%= check_box_tag option.nom, option.id, :checked, disabled: 'disabled', class: 'disabled' %>
+          <% if !abandonnable?(@dossier_eleve, option) && pratiquee?(@dossier_eleve, option) %>
             <%= hidden_field_tag option.nom, option.id %>
-          <% elsif abandonnable?(@dossier_eleve, option) %>
+            <span style="margin-left:2.3em;"></span>
+          <% elsif abandonnable?(@dossier_eleve, option) && pratiquee?(@dossier_eleve, option) %>
             <%= check_box_tag option.nom, option.id, :checked %>
           <% elsif ouverte?(@dossier_eleve, option) && selectionnee?(@dossier_eleve, option) %>
             <%= check_box_tag option.nom, option.id, :cheched %>
-          <% elsif ouverte?(@dossier_eleve, option)%>
+          <% elsif ouverte?(@dossier_eleve, option) %>
             <%= check_box_tag option.nom, option.id %>
           <% end %>
-          <%= option.nom %>
-          <%= option.explication %>
+          <% if ouverte?(@dossier_eleve, option) || pratiquee?(@dossier_eleve, option) %>
+            <%= option.nom %>
+            <%= option.explication %>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>
@@ -149,5 +142,5 @@
 </section>
 
 <script>
-  document.getElementById("prenom").focus();
+document.getElementById("prenom").focus();
 </script>

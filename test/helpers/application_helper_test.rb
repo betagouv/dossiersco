@@ -87,17 +87,8 @@ class ApplicationHelperTest < ActionDispatch::IntegrationTest
   test "si l'option est suivi et abandonnable checkbox cochée" do
     mef_option = Fabricate(:mef_option_pedagogique, abandonnable: true)
     dossier_eleve = Fabricate(:dossier_eleve, mef_destination: mef_option.mef)
-    dossier_eleve.options_origines = { mef_option.option_pedagogique.id.to_s => { "nom" => mef_option.option_pedagogique.nom } }
 
     assert abandonnable?(dossier_eleve, mef_option.option_pedagogique)
-  end
-
-  test "si l'option est suivi et non abandonnable checkbox cochée et désactivé" do
-    mef_option = Fabricate(:mef_option_pedagogique, abandonnable: false)
-    dossier_eleve = Fabricate(:dossier_eleve, mef_destination: mef_option.mef)
-    dossier_eleve.options_origines = { mef_option.option_pedagogique.id.to_s => { "nom" => mef_option.option_pedagogique.nom } }
-
-    assert non_abandonnable?(dossier_eleve, mef_option.option_pedagogique)
   end
 
   test "true si l'option est déjà selectionnée" do
@@ -106,5 +97,21 @@ class ApplicationHelperTest < ActionDispatch::IntegrationTest
 
     assert selectionnee?(dossier, mef_option.option_pedagogique)
   end
+
+  test "vrai quand l'option est pas pratiquée" do
+    option_pedagogique = Fabricate(:option_pedagogique)
+    dossier = Fabricate(:dossier_eleve, options_origines: {})
+    dossier.options_origines = { option_pedagogique.id.to_s => { "nom" => option_pedagogique.nom } }
+
+    assert pratiquee?(dossier, option_pedagogique)
+  end
+
+  test "faux quand l'option n'est pas pratiquée" do
+    option_pedagogique = Fabricate(:option_pedagogique)
+    dossier = Fabricate(:dossier_eleve, options_origines: {})
+
+    assert !pratiquee?(dossier, option_pedagogique)
+  end
+
 
 end

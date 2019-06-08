@@ -52,8 +52,7 @@ class AccueilController < ApplicationController
   def eleve
     @eleve.dossier_eleve.update derniere_etape: "eleve"
     @dossier_eleve = @eleve.dossier_eleve
-    @options_pedagogiques_selectionnees = @dossier_eleve.options_pedagogiques
-    @options_pedagogiques = PresenterOptionsPedagogiques.new(@dossier_eleve.mef_destination).options
+    @options_pedagogiques = @dossier_eleve.mef_destination&.options_pedagogiques
 
     @option_origines_ids = @dossier_eleve.options_origines.map { |k, _v| k.to_i }
     render "accueil/eleve"

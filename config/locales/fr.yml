@@ -123,8 +123,8 @@ fr:
       pays_de_naissance: Pays de naissance
       pays_de_nationalite: Pays de nationalité
       lv2: "Langue Vivante 2"
-      options_pedagogiques: Options pédagogiques
-      explication_options_pedagogiques: "Voici les options ouvertes. Celles qui sont cochées correspondent à celles que votre enfant suit actuellement."
+      options_pedagogiques: "Options pédagogiques"
+      explication_options_pedagogiques: "Cocher ou décocher en fonction de ce que votre enfant souhaite faire l'année prochaine"
       options_pedagogiques_actuelles: "Options pédagogiques actuelles"
       explication_options_pedagogiques_actuelles: "Ces options sont celles que votre enfant suit actuellement."
     famille:
