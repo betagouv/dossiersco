@@ -298,6 +298,7 @@
               <input type="hidden" name="identifiant" value="<%= @dossier_eleve.eleve.identifiant %>" />
               <dl style="text-align:left">
                 <% @dossier_eleve.moyens_de_communication_electronique.each do |nom, moyens_de_communication|%>
+                  <% next if moyens_de_communication.empty? %>
                   <dt>
                   <%= nom %>
                   </dt>
@@ -319,13 +320,13 @@
           <% end %>
         </div>
       </div>
-      <% if @dossier_eleve.message.count > 0 %>
+      <% if @dossier_eleve.message.any? %>
         <div class="panel">
           <div class="panel__header">
             <h3>Historique des messages</h3>
           </div>
           <div id="historique">
-            <% @dossier_eleve.message.limit(5).sort.reverse.each do |message| %>
+            <% @dossier_eleve.message.limit(5).order('created_at desc').each do |message| %>
               <div class="message">
                 <p>
                 <%= message.categorie %> du <%= l(message.created_at) %>

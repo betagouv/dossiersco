@@ -90,14 +90,14 @@ class RespLegal < ActiveRecord::Base
 
   def moyens_de_communication
     moyens = []
-    [:email, :tel_personnel, :tel_professionnel, :tel_portable].each do |moyen|
-      moyens << self.send(moyen) if self.send(moyen).present?
+    %i[email tel_personnel tel_professionnel tel_portable].each do |moyen|
+      moyens << send(moyen) if send(moyen).present?
     end
     moyens
   end
 
   def nom_complet
-    "#{self.prenom} #{self.nom}"
+    "#{prenom} #{nom}"
   end
 
 end

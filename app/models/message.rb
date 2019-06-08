@@ -46,5 +46,4 @@ class Message < ActiveRecord::Base
     categorie == "mail"
   end
 
-
 end

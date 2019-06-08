@@ -18,19 +18,18 @@ class ContacterFamille
     mail = FamilleMailer.contacter_directement_une_famille(moyen, message)
     part = mail.html_part || mail.text_part || mail
     mail.deliver_now
-    msg = Message.create(categorie: "mail", contenu: part.body, etat: "envoyé", dossier_eleve: @dossier)
+    Message.create(categorie: "mail", contenu: part.body, etat: "envoyé", dossier_eleve: @dossier)
   end
 
-  def envoyer_sms(message, moyen)
-    msg = Message.create(categorie: "sms", contenu: message, destinataire: "rl1", etat: "en attente", dossier_eleve: @dossier)
+  def envoyer_sms(message, _moyen)
+    Message.create(categorie: "sms", contenu: message, destinataire: "rl1", etat: "en attente", dossier_eleve: @dossier)
   end
 
   def email?(contact)
-    begin
-      Integer(contact)
-      false
-    rescue
-      true
-    end
+    Integer(contact)
+    false
+  rescue StandardError
+    true
   end
+
 end

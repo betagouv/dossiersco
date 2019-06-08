@@ -32,6 +32,9 @@ Metrics/LineLength:
     - 'app/services/mef_destination.rb'
     - 'app/models/dossier_eleve.rb'
     - 'app/services/pdf_fiche_infirmerie.rb'
+    - 'test/models/dossier_eleve_test.rb'
+    - 'test/models/resp_legal_test.rb'
+    - 'test/integration/inscriptions_controller_test.rb'
     - 'app/services/pdf_convocation.rb'
     - 'test/controllers/authentification_cas_ent_controller_test.rb'
     - 'test/services/analyseur_option_test.rb'
@@ -47,6 +50,7 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Exclude:
     - 'app/helpers/application_helper.rb'
+    - 'app/models/dossier_eleve.rb'
     - 'test/controllers/accueil_controller_test.rb'
     - 'test/integration/accueil_controller_test.rb'
     - 'test/integration/inscriptions_controller_test.rb'
@@ -77,6 +81,7 @@ Metrics/ClassLength:
   Exclude:
     - 'test/**/*'
     - 'app/controllers/inscriptions_controller.rb'
+    - 'app/models/dossier_eleve.rb'
     - 'app/controllers/accueil_controller.rb'
     - 'app/jobs/importer_siecle.rb'
     - 'app/controllers/accueil_controller.rb'
@@ -105,10 +110,12 @@ Metrics/AbcSize:
     - 'app/jobs/importer_affelnet.rb'
     - 'app/services/genere_pdf.rb'
     - 'app/controllers/authentification_cas_ent_controller.rb'
+    - 'app/models/dossier_eleve.rb'
 
 Metrics/CyclomaticComplexity:
   Exclude:
     - 'app/jobs/importer_siecle.rb'
+    - 'app/models/dossier_eleve.rb'
     - 'app/services/pdf_fiche_infirmerie.rb'
     - 'app/services/pdf_convocation.rb'
     - 'app/controllers/accueil_controller.rb'
@@ -116,5 +123,6 @@ Metrics/CyclomaticComplexity:
 Metrics/PerceivedComplexity:
   Exclude:
     - 'app/jobs/importer_siecle.rb'
+    - 'app/models/dossier_eleve.rb'
     - 'app/controllers/accueil_controller.rb'
     - 'app/services/pdf_fiche_infirmerie.rb'

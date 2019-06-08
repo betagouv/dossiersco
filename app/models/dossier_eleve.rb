@@ -129,15 +129,18 @@ class DossierEleve < ActiveRecord::Base
     moyens = {}
     resp_legal.each do |representant|
       moyens[representant.nom_complet] = representant.moyens_de_communication.select do |moyen|
-        moyen.gsub(/ /, '')[0..1] != '+3' &&
-          moyen.gsub(/ /, '')[0..1] != '01' &&
-          moyen.gsub(/ /, '')[0..1] != '02' &&
-          moyen.gsub(/ /, '')[0..1] != '03' &&
-          moyen.gsub(/ /, '')[0..1] != '04' &&
-          moyen.gsub(/ /, '')[0..1] != '05' &&
-          moyen.gsub(/ /, '')[0..1] != '09'
+        moyen.delete(" ")[0..1] != "+3" &&
+          moyen.delete(" ")[0..1] != "01" &&
+          moyen.delete(" ")[0..1] != "02" &&
+          moyen.delete(" ")[0..1] != "03" &&
+          moyen.delete(" ")[0..1] != "04" &&
+          moyen.delete(" ")[0..1] != "05" &&
+          moyen.delete(" ")[0..1] != "06" &&
+          moyen.delete(" ")[0..1] != "07" &&
+          moyen.delete(" ")[0..1] != "09"
       end
     end
     moyens
   end
+
 end

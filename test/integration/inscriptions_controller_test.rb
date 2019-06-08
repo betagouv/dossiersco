@@ -199,17 +199,18 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert response.body.include? "✓"
   end
 
-  def test_affiche_lenvoi_de_message_uniquement_si_un_des_resp_legal_a_un_mail
+  test "affiche l'email du resp_legal" do
     etablissement = Fabricate(:etablissement)
-    e = Eleve.create! identifiant: "XXX"
-    dossier_eleve = DossierEleve.create! eleve_id: e.id, etablissement_id: etablissement.id
-    RespLegal.create! dossier_eleve_id: dossier_eleve.id, email: "test@test.com", priorite: 1
+    eleve = Fabricate(:eleve, identifiant: "XXX")
+    dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement)
+    Fabricate(:resp_legal, dossier_eleve: dossier_eleve, email: "test@test.com", priorite: 1)
 
     agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
     identification_agent(agent)
+
     get "/agent/eleve/XXX"
 
-    assert response.body.include? "Ce formulaire envoie un message à la famille de l'élève."
+    assert response.body.include? "test@test.com"
   end
 
   def test_affiche_contacts
@@ -244,15 +245,20 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert response.body.include? "far fa-envelope"
   end
 
-  def test_affiche_decompte_historique_message_envoyes
+  test "crée un message pour garder une trace" do
+    etablissement = Fabricate(:etablissement, envoyer_aux_familles: true)
     resp_legal = Fabricate(:resp_legal, priorite: 1)
-    dossier = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
-    agent = Fabricate(:agent, etablissement: dossier.etablissement)
+    dossier = Fabricate(:dossier_eleve, resp_legal: [resp_legal], etablissement: etablissement)
+    agent = Fabricate(:agent, etablissement: etablissement)
     identification_agent(agent)
-    post "/agent/contacter_une_famille", params: { identifiant: dossier.eleve.identifiant, message: "Message de test" }
+
+    post "/agent/contacter_une_famille", params: { identifiant: dossier.eleve.identifiant, message: "Message de test", moyen_de_communication: resp_legal.email }
+
     get "/agent/liste_des_eleves"
 
-    assert response.body.include? "(1)"
+    assert_equal 1, Message.count
+    assert_equal "Message de test\n\n", Message.first.contenu
+    assert_equal "mail", Message.first.categorie
   end
 
   def test_changement_statut_famille_connecte
@@ -292,29 +298,30 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "en attente de validation", dossier.etat
   end
 
-  def test_envoie_par_sms_les_messages_aux_familles_sans_email
-    resp_legal = Fabricate(:resp_legal, email: nil)
+  test "n'envoie rien si aucun moyen de communication fourni" do
+    resp_legal = Fabricate(:resp_legal, email: "phill@collins.uk")
     dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
-
-    assert_equal 0, Message.where(categorie: "sms").count
 
     agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
     identification_agent(agent)
+
     post "/agent/contacter_une_famille", params: { identifiant: dossier_eleve.eleve.identifiant, message: "Message de test" }
 
+    assert_equal "Aucun moyen de communication choisi", flash[:alert]
     assert_equal 0, ActionMailer::Base.deliveries.count
-    assert_equal 1, Message.where(categorie: "sms").count
+    assert_equal 0, Message.where(categorie: "sms").count
   end
 
-  def test_trace_messages_envoyes
+  test "trace messages envoyes" do
     assert_equal 0, Message.count
-    eleve = Fabricate(:eleve)
-    resp_legal = Fabricate(:resp_legal)
-    dossier = Fabricate(:dossier_eleve, eleve: eleve, resp_legal: [resp_legal])
 
-    agent = Fabricate(:agent, etablissement: dossier.etablissement)
+    etablissement = Fabricate(:etablissement, envoyer_aux_familles: true)
+    resp_legal = Fabricate(:resp_legal)
+    dossier = Fabricate(:dossier_eleve, etablissement: etablissement, resp_legal: [resp_legal])
+    agent = Fabricate(:agent, etablissement: etablissement)
+
     identification_agent(agent)
-    post "/agent/contacter_une_famille", params: { identifiant: eleve.identifiant, message: "Message de test" }
+    post "/agent/contacter_une_famille", params: { identifiant: dossier.eleve.identifiant, message: "Message de test", moyen_de_communication: "truc@example.com" }
 
     assert_equal 1, Message.count
     message = Message.first
@@ -376,52 +383,6 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     doc = Nokogiri::HTML(response.body)
     assert_equal "#{d.satisfaction} : Commentaire de test", doc.css("div#commentaire").first.text
-  end
-
-  def test_historique_messages_envoyes
-    resp_legal = Fabricate(:resp_legal)
-    dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
-
-    agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
-    dossier_eleve.etablissement.update!(envoyer_aux_familles: true)
-
-    identification_agent(agent)
-    post "/agent/contacter_une_famille", params: { identifiant: dossier_eleve.eleve.identifiant, message: "Message 1" }
-    post "/agent/contacter_une_famille", params: { identifiant: dossier_eleve.eleve.identifiant, message: "Message 2" }
-    get "/agent/eleve/#{dossier_eleve.eleve.identifiant}"
-    doc = Nokogiri::HTML(response.body)
-    assert_equal 2, doc.css("#historique div.message").count
-    assert doc.css("#historique > div > div").text.strip.include? "Message 1"
-    assert doc.css("#historique > div > div").text.strip.include? "Message 2"
-  end
-
-  def test_propose_modeles_messages
-    etablissement = Fabricate(:etablissement)
-    modele = Modele.create(nom: "Cantine")
-
-    resp_legal = Fabricate(:resp_legal, priorite: 1)
-    dossier = Fabricate(:dossier_eleve, etablissement: etablissement, resp_legal: [resp_legal])
-    agent = Fabricate(:agent, etablissement: etablissement)
-    agent.etablissement.modele << modele
-    identification_agent(agent)
-
-    get "/agent/eleve/#{dossier.eleve.identifiant}"
-
-    doc = Nokogiri::HTML(response.body)
-    assert_equal "Cantine", doc.css("select#modeles option").text
-    assert_equal modele.id.to_s, doc.css("select#modeles option").attr("value").text
-  end
-
-  def test_rendu_modele
-    skip("manipulation des templates / render dans le controller à revoir")
-    modele = Modele.create(nom: "Cantine", contenu: "Salut <%= eleve.prenom %>")
-
-    agent = Fabricate(:agent)
-    agent.etablissement.modele << modele
-    identification_agent(agent)
-
-    get "/agent/fusionne_modele/#{modele.id}/eleve/4"
-    assert_equal "Salut Pierre", response.body
   end
 
 end

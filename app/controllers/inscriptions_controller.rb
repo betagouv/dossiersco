@@ -107,12 +107,12 @@ class InscriptionsController < ApplicationController
     eleve = Eleve.find_by(identifiant: params[:identifiant])
 
     unless params[:message].present?
-      flash[:alert] = "Aucune texte à envoyer"
+      flash[:alert] = "Aucun texte à envoyer"
       redirect_to "/agent/eleve/#{eleve.identifiant}#echanges"
       return
     end
     unless params[:moyen_de_communication].present?
-      flash[:alert] = "Aucune moyen de communication choisi"
+      flash[:alert] = "Aucun moyen de communication choisi"
       redirect_to "/agent/eleve/#{eleve.identifiant}#echanges"
       return
     end
@@ -126,10 +126,10 @@ class InscriptionsController < ApplicationController
     message = contacter.envoyer(params[:message], params[:moyen_de_communication])
 
     flash[:notice] = if message.mail?
-                         "Votre message a été envoyé."
-                       else
-                         "Votre message est en attente d'expédition."
-                       end
+                       "Votre message a été envoyé."
+                     else
+                       "Votre message est en attente d'expédition."
+                     end
     redirect_to "/agent/eleve/#{eleve.identifiant}#echanges"
   end
 
@@ -179,14 +179,14 @@ class InscriptionsController < ApplicationController
     total_dossiers = agent_connecte.etablissement.dossier_eleve.count
     etats, notes, moyenne, dossiers_avec_commentaires = agent_connecte.etablissement.stats
     render :tableau_de_bord,
-      locals: {
-      agent: agent_connecte,
-      total_dossiers: total_dossiers,
-      etats: etats,
-      notes: notes,
-      moyenne: moyenne,
-      dossiers_avec_commentaires: dossiers_avec_commentaires.sort_by(&:date_signature).reverse
-    }
+           locals: {
+             agent: agent_connecte,
+             total_dossiers: total_dossiers,
+             etats: etats,
+             notes: notes,
+             moyenne: moyenne,
+             dossiers_avec_commentaires: dossiers_avec_commentaires.sort_by(&:date_signature).reverse
+           }
   end
 
   def pieces_jointes_eleve
@@ -227,7 +227,7 @@ class InscriptionsController < ApplicationController
     end
 
     render :relance,
-      locals: { ids: ids, emails: emails, telephones: telephones }
+           locals: { ids: ids, emails: emails, telephones: telephones }
   end
 
   def relance_sms

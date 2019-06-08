@@ -12,7 +12,6 @@ class FamilleMailer < ApplicationMailer
     mail(subject: subject, to: email, &:text)
   end
 
-
   def contacter_une_famille(eleve, agent, message)
     @eleve = eleve
     @message = message
