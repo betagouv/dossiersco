@@ -117,7 +117,7 @@ class InscriptionsController < ApplicationController
       return
     end
     unless @agent_connecte.etablissement.envoyer_aux_familles
-      flash[:alert] = "Votre établissement est configuré pour ne pas envoyer d'emails aux familles"
+      flash[:alert] = "Votre établissement est configuré pour ne pas envoyer d'emails aux familles. Pour changer la configuration, rendez-vous dans le module de configuration, dans le menu « configuration de campagne » dans le bloc « accueil »."
       redirect_to "/agent/eleve/#{eleve.identifiant}#echanges"
       return
     end
