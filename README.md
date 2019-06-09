@@ -115,7 +115,7 @@ Pour lancer les tests :
 
 Pour lancer un test en particulier :
 
-```bash docker-composer run --rm test rails test <mon fichier ex: test/models/agent_test.rb> ```
+```bash docker-compose run --rm test rails test <mon fichier ex: test/models/agent_test.rb> ```
 
 
 Pour accéder à la console rails :
