@@ -313,6 +313,7 @@
 
               <p style="text-align:left">Si vous optez pour l'envoie d'un texto, <strong>Soyez bref</strong> (moins de 140 caractères si possible).</p>
               <textarea id="message" name='message' rows="6"></textarea>
+              <p>Ce message sera envoyé tel quel. Nous ajoutons la phrase indiquant le nom de l'élève et le nom de l'établissement en fin de message.</p>
               <input id='envoyer-commentaire' value='Envoyer' type='submit' class='button'/>
             </form>
           <% else %>
@@ -323,7 +324,7 @@
       <% if @dossier_eleve.message.any? %>
         <div class="panel">
           <div class="panel__header">
-            <h3>Historique des messages</h3>
+            <h3>Historique des 5 derniers messages</h3>
           </div>
           <div id="historique">
             <% @dossier_eleve.message.limit(5).order('created_at desc').each do |message| %>
