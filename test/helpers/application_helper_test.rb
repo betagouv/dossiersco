@@ -113,5 +113,4 @@ class ApplicationHelperTest < ActionDispatch::IntegrationTest
     assert !pratiquee?(dossier, option_pedagogique)
   end
 
-
 end

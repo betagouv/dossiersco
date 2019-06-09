@@ -1,5 +1,10 @@
 <section class="section">
   <h1 class="separation">Eleves en cours de traitement</h1>
+
+  <div class="text-right">
+    <%= link_to link_to 'Envoyer une relance', new_contact_par_etat_path, {class: 'button-outline primary'} %>
+  </div>
+
   <div class="my-2">
     Collège <%= agent.etablissement.nom %> : <span id="total_dossiers" class="badge badge-danger"><%= lignes_eleves.count('*') %></span> dossiers.
   </div>
@@ -112,15 +117,6 @@
         selector: 'td:first-child'
       },
     "buttons": [
-      <% if agent.admin %>
-        {
-          text: 'Envoyer une relance',
-          action: function () {
-            ids = collecter_ids()
-            document.location.href = "/agent/relance?ids=" + ids;
-          }
-        },
-        <% end %>
         {
           text: 'Valider les dossiers',
           action: function () {

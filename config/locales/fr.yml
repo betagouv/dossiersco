@@ -1,5 +1,7 @@
 fr:
   dossier_non_trouve: "Nous n'avons pas pu retrouver votre dossier sur DossierSCO. Nous nous excusons pour ce soucis."
+  nombre_de_mail_envoye: "%{email_envoye} dossier(s) avec un email. %{dossier_sans_email} dossier(s) sans email n'ont pas pu être contacté(s)"
+  alert_pas_config_envoyer_email: "Votre établissement est configuré pour ne pas envoyer d'emails aux familles. Pour changer la configuration, rendez-vous dans le module de configuration, dans le menu « configuration de campagne » dans le bloc « accueil »."
   activerecord:
     attributes:
       etablissement:
@@ -390,6 +392,12 @@ fr:
       titre_export_xml: "Export d'un XML pour SIECLE"
       explication_export_xml: "Télécharger un export XML pour importer les modifications sur les dossiers élèves dans SIECLE. Pour l'import dans SIECLE, vous devez passer par l'interface d'import d'application privée"
       telecharger_xml: "Télécharger"
+
+  contact_par_etats:
+    new:
+      contacter_élèves: "Contacter les élèves massivement"
+      etats_possible: "Envoyer aux "
+      message: "Message"
 
   suivi:
     etablissements_experimentateurs:

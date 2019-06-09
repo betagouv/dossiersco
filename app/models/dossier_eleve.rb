@@ -65,6 +65,8 @@ class DossierEleve < ActiveRecord::Base
     resp_legal_1&.email
   end
 
+  def email; end
+
   def allocataire
     enfants = resp_legal.first.enfants_a_charge || 0
     enfants > 1

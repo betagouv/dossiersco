@@ -257,7 +257,6 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     get "/agent/liste_des_eleves"
 
     assert_equal 1, Message.count
-    assert_equal "Message de test\n\n", Message.first.contenu
     assert_equal "mail", Message.first.categorie
   end
 

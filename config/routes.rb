@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   resource  :configuration, only: [:show]
 
+  resource :contact_par_etat, only: [:new, :create]
+
   resources :etablissement, only: [] do
     member do
       get "fiches_infirmeries", to: "fiches_infirmeries#fiches_infirmeries"

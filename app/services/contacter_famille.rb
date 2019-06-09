@@ -15,7 +15,7 @@ class ContacterFamille
   end
 
   def envoyer_email(message, moyen)
-    mail = FamilleMailer.contacter_directement_une_famille(moyen, message)
+    mail = FamilleMailer.contacter_directement_une_famille(moyen, message, @dossier.eleve)
     part = mail.html_part || mail.text_part || mail
     mail.deliver_now
     Message.create(categorie: "mail", contenu: part.body, etat: "envoyé", dossier_eleve: @dossier)

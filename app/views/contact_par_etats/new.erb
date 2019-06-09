@@ -1,0 +1,27 @@
+
+<section class="section">
+
+  <h1 class="separation"><%= t('.contacter_élèves') %></h1>
+
+  <%= form_tag contact_par_etat_url do %>
+
+      <div class="form__group">
+        <label>
+          <%= t(".message") %>
+          <%= text_area_tag :message %>
+        </label>
+      </div>
+
+      <div class="form__group">
+        <label>
+          <%= t(".etats_possible") %>
+          <%= select_tag :etat, options_for_select(@etats_et_emails_quantite) %>
+        </label>
+      </div>
+
+      <em>Nous ajouterons une phase à ce message : « Ce message concerne [eleve.prenom] [@eleve.nom] du collège [nom de l'établissement. » </em>
+
+    <button type="submit">Envoyer</button>
+  <% end %>
+
+</section>

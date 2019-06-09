@@ -29,6 +29,7 @@ Metrics/LineLength:
   Exclude:
     - 'app/views/**/*erb*'
     - 'app/controllers/accueil_controller.rb'
+    - 'app/controllers/contact_par_etats_controller.rb'
     - 'app/services/mef_destination.rb'
     - 'app/models/dossier_eleve.rb'
     - 'app/services/pdf_fiche_infirmerie.rb'
@@ -47,8 +48,11 @@ Metrics/BlockLength:
     - 'app/services/pdf_fiche_infirmerie.rb'
     - 'app/services/pdf_convocation.rb'
 
+
 Metrics/MethodLength:
   Exclude:
+    - 'app/controllers/contact_par_etats_controller.rb'
+    - 'app/services/relancer_dossier.rb'
     - 'app/helpers/application_helper.rb'
     - 'app/models/dossier_eleve.rb'
     - 'test/controllers/accueil_controller_test.rb'
@@ -91,6 +95,8 @@ Metrics/ClassLength:
 Metrics/AbcSize:
   Exclude:
     - 'test/**/*'
+    - 'app/services/relancer_dossier.rb'
+    - 'app/controllers/contact_par_etats_controller.rb'
     - 'app/controllers/mot_de_passe_agent_controller.rb'
     - 'app/controllers/configuration/dossiers_eleve_controller.rb'
     - 'app/jobs/importer_siecle.rb'
