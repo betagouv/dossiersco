@@ -156,7 +156,12 @@ class AccueilController < ApplicationController
       mail.deliver_now
       @dossier_eleve.update(etat: "en attente de validation")
     end
-    redirect_to "/accueil"
+    redirect_to "/confirmation"
+  end
+
+  def confirmation
+    @dossier_eleve = @eleve.dossier_eleve
+    render "confirmation"
   end
 
   def administration
