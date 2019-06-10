@@ -14,6 +14,26 @@
 
     <p>A bientôt au collège <%= @dossier_eleve.etablissement.nom %> !</p>
 
+    <% if @dossier_eleve.continuer_dossiersco == nil %>
+      <form action="/confirmation" method="POST" class="mt-2 mb-2">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <p>L'année prochaine préféreriez-vous&nbsp;:</p>
+        <div class="form-check form-check-inline">
+          <label class="form-check-label">
+            <input class="form-check-input continuer_dossiersco" type="radio" name="continuer_dossiersco" value="true" id='autorise_photo_de_classe'
+            <% if @dossier_eleve.continuer_dossiersco %> checked <% end %>> <%= t('.continuer_dossiersco') %> </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <label class="form-check-label">
+            <input class="form-check-input continuer_dossiersco" type="radio" name="continuer_dossiersco" value="false"
+            <% if @dossier_eleve.continuer_dossiersco == false %> checked <% end %>> <%= t('.revenir_au_papier') %> </label>
+        </div>
+        <div class="mt-1">
+          <button id='envoyer-continuer_dossiersco' type='submit' class='button'/>Envoyer</button>
+        </div>
+      </form>
+    <% end %>
+
     <div id='question-satisfaction' class="text-center mb-2">
       <p class="mb-1"><small>Qu'avez-vous pensé de cette nouvelle plateforme ?</small></p>
 

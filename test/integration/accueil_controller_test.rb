@@ -251,4 +251,25 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     assert_equal regime_sortie, DossierEleve.find(dossier_eleve.id).regime_sortie
   end
 
+  test "une famille préfère continuer à utiliser DossierSCO l'année prochaine" do
+    eleve = Fabricate(:eleve)
+    etablissement = Fabricate(:etablissement)
+    dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement)
+    params_identification = {
+      identifiant: eleve.identifiant,
+      annee: eleve.annee_de_naissance,
+      mois: eleve.mois_de_naissance,
+      jour: eleve.jour_de_naissance
+    }
+
+    params = { continuer_dossiersco: true }
+
+    assert_nil DossierEleve.find(dossier_eleve.id).continuer_dossiersco
+
+    post "/identification", params: params_identification
+    post "/confirmation", params: params
+
+    assert_equal true, DossierEleve.find(dossier_eleve.id).continuer_dossiersco
+  end
+
 end

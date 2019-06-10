@@ -195,6 +195,13 @@ class AccueilController < ApplicationController
     note_avancement_et_redirige_vers("pieces_a_joindre")
   end
 
+  def post_confirmation
+    @dossier_eleve = @eleve.dossier_eleve
+    @dossier_eleve.continuer_dossiersco = params[:continuer_dossiersco]
+    @dossier_eleve.save!
+    redirect_to "/confirmation"
+  end
+
   def deconnexion
     reset_session
     redirect_to "/"

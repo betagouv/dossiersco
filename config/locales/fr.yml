@@ -188,6 +188,9 @@ fr:
       non_autorisee: non autorisée
       certifie_sur_l_honneur: "En tant que responsable légal de %{prenom_eleve}, je certifie sur l'honneur l'exactitude des informations communiquées et m'engage à tenir le collège informé de tout changement de situation ou de coordonnées."
       valider_inscription: "Valider l'inscription"
+    confirmation:
+      continuer_dossiersco: Continuer à utiliser cette nouvelle plateforme
+      revenir_au_papier: Revenir au papier
   configuration:
     campagnes:
       edit_demi_pension:
