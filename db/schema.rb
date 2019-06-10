@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_10_082100) do
+ActiveRecord::Schema.define(version: 2019_06_10_094752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,6 +129,7 @@ ActiveRecord::Schema.define(version: 2019_06_10_082100) do
     t.string "mot_accueil"
     t.boolean "demande_caf", default: false
     t.string "email_reponse"
+    t.date "date_debut"
   end
 
   create_table "fichier_a_telechargers", force: :cascade do |t|

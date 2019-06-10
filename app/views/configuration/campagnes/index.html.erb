@@ -10,6 +10,7 @@
     </div>
     <div class="cards">
       <ul class="list-unstyled">
+        <li><b>- Date de début d'inscription</b> : <%= @etablissement.date_debut&.strftime("%d/%m/%Y") %></li>
         <li><b>- Date limite d'inscription</b> : <%= @etablissement.date_limite %></li>
         <li><b>- Mot d'accueil</b> : <%= markdown(@etablissement.mot_accueil) %></li>
         <li><b>- Email de réponse</b> : <%= @etablissement.email_reponse %></li>

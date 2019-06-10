@@ -5,6 +5,10 @@
     <%= form_for( @etablissement, url: update_campagne_configuration_campagnes_path) do |f| %>
 
       <div class="form__group">
+        <%= f.label :date_debut, t('.date_debut_inscription')%>
+        <%= f.date_field :date_debut, placeholder: 'JJ/MM/AAAA' %>
+      </div>
+      <div class="form__group">
         <%= f.label :date_limite, t('.date_limite_inscription')%>
         <%= f.text_field :date_limite %>
       </div>

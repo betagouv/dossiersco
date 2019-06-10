@@ -24,7 +24,13 @@ class AccueilController < ApplicationController
 
     dossier_eleve = DossierEleve.par_authentification(params[:identifiant], params[:jour], params[:mois], params[:annee])
 
-    if dossier_eleve.present?
+    if dossier_eleve.present? &&
+       dossier_eleve.etablissement.date_debut.present? &&
+       dossier_eleve.etablissement.date_debut > Time.now
+      flash[:erreur] = t("identification.erreurs.avant_date_debut",
+                         date: dossier_eleve.etablissement.date_debut.strftime("%d/%m/%Y"))
+      redirect_to root_path
+    elsif dossier_eleve.present?
       dossier_eleve.update(etat: "connecté") if dossier_eleve.etat == "pas connecté"
       session[:identifiant] = params[:identifiant]
 

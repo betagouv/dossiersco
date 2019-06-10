@@ -101,6 +101,7 @@ fr:
     connexion: Connexion
     agent_ple?: "Vous êtes agent en EPLE ?"
     erreurs:
+      avant_date_debut: "Les inscriptions sont fermées pour le moment, elles débutent le %{date}"
       identifiants_non_renseignes: "Veuillez renseigner l'identifiant et la date de naissance de l'élève."
       identifiants_inconnus: "Nous n'avons pas reconnu ces identifiants, merci de les vérifier."
   accueil:
@@ -195,6 +196,7 @@ fr:
         reglement_demi_pension: "Règlement demi-pension"
         demande_caf: "Demander l'identifiant CAF aux familles"
       edit_accueil:
+        date_debut_inscription: Date de début d'inscription
         email_reponse: Email de réponse
         explications_email_reponse: Adresse à laquelle seront envoyés les messages des familles lorsqu'elles répondent aux emails provenant de DossierSCO
         titre: Éditer les informations générales
