@@ -15,7 +15,15 @@ class AuthentificationCasEntController < ApplicationController
   end
 
   def retour_cas
-    data = donnees_ent(params[:ticket])["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]
+    begin
+      data = donnees_ent(params[:ticket])["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]
+    rescue
+      Raven.extra_context params: params
+      Raven.extra_context donnee: donnees_ent(params[:ticket])
+      Raven.capture_exception(Exception.new("Problème d'extraction de donnée"))
+      flash[:alert] = I18n.t(".dossier_non_trouve")
+      redirect_to "/"
+    end
 
     responsables = []
     retrouve_liste_resp_legal(data).each do |resp_legal|
