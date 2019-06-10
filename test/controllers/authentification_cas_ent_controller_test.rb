@@ -129,45 +129,4 @@ class AuthentificationCasEntControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to "/confirmation"
   end
 
-  test "un cas qui pose problème" do
-    etablissement = Fabricate(:etablissement, uai: "0751703U")
-    resp_legal = Fabricate(:resp_legal,
-                           nom: "DECLIC",
-                           prenom: "Droit",
-                           adresse: "20 RUE DU PARC")
-
-    eleve = Fabricate(:eleve, prenom: "Gauche", nom: "DECLIC")
-    Fabricate(:dossier_eleve,
-              etablissement: etablissement,
-              resp_legal: [resp_legal],
-              derniere_etape: "confirmation",
-              eleve: eleve)
-
-    h = { "serviceResponse" => {
-      "authenticationSuccess" => {
-        "attributes" => {
-          "userAttributes" => {
-            "lastName" => "DECLIC",
-            "country" => "FRANCE",
-            "zipCode" => "75017",
-            "city" => "PARIS",
-            "displayName" => "DECLIC Droit",
-            "children" => "[{\"displayName\":\"DECLIC Gauche\",\"externalId\":\"2992225\",\"id\":\"fe2AAAA0-e5e3-4fce-a8e4-e8fc572f0a47\"}]",
-            "surname" => "DECLIC",
-            "email" => { "xmlns" => "" },
-            "address" => "20 RUE DU PARC",
-            "mobile" => { "xmlns" => "" },
-            "structureNodes" => "[{\"area\":\"01000$BASSIN PARIS\",\"zipCode\":\"75017\",\"address\":\"5 BIS RUE SAINT-FERDINAND\",\"city\":\"PARIS\",\"created\":\"2017-07-26T10:32:00.355+02:00\",\"contract\":\"PU\",\"externalId\":\"1814\",\"source\":\"AAF\",\"joinKey\":[\"1814\"],\"type\":\"COLLEGE\",\"phone\":\"+33 1 45 74 49 15\",\"name\":\"CLG-ANDRE MALRAUX-PARIS\",\"checksum\":\"34f00569fc359d4d52928e83e064b8141e48966d\",\"modified\":\"2019-05-09T03:45:00.932+02:00\",\"id\":\"61f1ea70-28c5-463b-8f91-9652d6b519a2\",\"UAI\":\"0752387M\",\"email\":\"ce.0752387M@ac-paris.fr\",\"ministry\":\"MINISTERE DE L'EDUCATION NATIONALE\",\"academy\":\"PARIS\",\"SIRET\":\"19752387100014\"}]",
-            "firstName" => "Droit",
-            "mobilePhone" => "[\"0635021768\"]"
-          }
-        }
-      }
-    } }
-
-    cas = AuthentificationCasEntController.new
-    responsables = cas.retrouve_les_responsables_legaux_depuis(h)
-    assert_equal [resp_legal], responsables
-  end
-
 end

@@ -10,59 +10,29 @@ class AuthentificationCasEntController < ApplicationController
     render layout: false
   end
 
-  def identifie_et_redirige(dossier_eleve)
-    session[:identifiant] = dossier_eleve.eleve.identifiant
-
-    if dossier_eleve.derniere_etape.present?
-      redirect_to("/#{dossier_eleve.derniere_etape}")
-    elsif dossier_eleve.etape_la_plus_avancee.present?
-      redirect_to("/#{dossier_eleve.etape_la_plus_avancee}")
-    else
-      redirect_to("accueil")
-    end
+  def appel_direct_ent
+    redirect_to "#{ENV['ENT_PARIS_URL']}/login?service=#{ENV['ENT_PARIS_URL_RETOUR']}"
   end
 
   def retour_cas
-    data = donnees_ent(params[:ticket])
-    responsables = retrouve_les_responsables_legaux_depuis(data)
+    data = donnees_ent(params[:ticket])["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]
 
-    if un_seul_dossier_correspondant(responsables, data)
+    responsables = []
+    retrouve_liste_resp_legal(data).each do |resp_legal|
+      responsables << resp_legal
+    end
+
+    if responsables.count == 1
       identifie_et_redirige(responsables.first.dossier_eleve)
-    elsif plusieurs_responsables_legaux?(responsables)
+    elsif responsables.count > 1
       @resp_legals = responsables
       render :choix_dossier_eleve, layout: "connexion"
-    elsif responsables.empty?
+    else
       Raven.extra_context data: data
       Raven.capture_exception(Exception.new("Pas de responsable legal trouvé"))
       flash[:alert] = I18n.t(".dossier_non_trouve")
       redirect_to "/"
-    else
-      Raven.extra_context data: data
-      Raven.capture_exception(Exception.new("Dossier ENT non trouvé"))
-      flash[:alert] = I18n.t(".dossier_non_trouve")
-      redirect_to "/"
     end
-  end
-
-  def retrouve_les_responsables_legaux_depuis(data)
-    resp_legals = []
-    retrouve_liste_resp_legal(data).each do |resp_legal|
-      resp_legals << resp_legal
-    end
-    resp_legals
-  end
-
-  def un_seul_dossier_correspondant(responsables, data)
-    un_seul_responsable_legal?(responsables) &&
-      eleve_et_etablissement_correspondant?(responsables.first.dossier_eleve, data)
-  end
-
-  def un_seul_responsable_legal?(resp_legals)
-    resp_legals.length == 1 && resp_legals[0].dossier_eleve
-  end
-
-  def plusieurs_responsables_legaux?(resp_legals)
-    resp_legals.length > 1
   end
 
   def choix_dossier
@@ -90,50 +60,35 @@ class AuthentificationCasEntController < ApplicationController
     Hash.from_xml(res.body)
   end
 
-  def eleve_et_etablissement_correspondant?(dossier_eleve, data)
-    etablissement_correspondant?(dossier_eleve, data) &&
-      eleve_correspondant?(dossier_eleve, data)
-  end
+  def identifie_et_redirige(dossier_eleve)
+    session[:identifiant] = dossier_eleve.eleve.identifiant
 
-  def etablissement_correspondant?(dossier_eleve, data)
-    etablissements = retrouve_etablissements(data)
-    etablissements.include?(dossier_eleve.etablissement)
-  end
-
-  def eleve_correspondant?(dossier_eleve, data)
-    enfants = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["children"]
-    eleves = JSON.parse(enfants).map { |e| e["displayName"] }
-    eleves.include?("#{dossier_eleve.eleve.nom.upcase} #{dossier_eleve.eleve.prenom}")
-  end
-
-  def retrouve_etablissements(data)
-    etablissements = JSON.parse(data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]["structureNodes"])
-    Etablissement.where("uai in (?)", etablissements.map { |e| e["UAI"] })
+    if dossier_eleve.derniere_etape.present?
+      redirect_to("/#{dossier_eleve.derniere_etape}")
+    elsif dossier_eleve.etape_la_plus_avancee.present?
+      redirect_to("/#{dossier_eleve.etape_la_plus_avancee}")
+    else
+      redirect_to("accueil")
+    end
   end
 
   def retrouve_liste_resp_legal(data)
-    attributes = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]
-
-    email = attributes["email"]
-
-    query = RespLegal.where(id_ent: attributes["externalId"])
+    query = RespLegal.where(id_ent: data["externalId"])
     return query if query.count == 1
 
+    email = data["email"]
     if email != { "xmlns" => "" }
       query = RespLegal.where("lower(email) = ?", email.downcase)
     else
-      query = RespLegal.where(prenom: attributes["firstName"])
-      nom = attributes["lastName"]
+      query = RespLegal.where(prenom: data["firstName"])
+      nom = data["lastName"]
       query = query.where("lower(nom) = ?", nom.downcase) if nom != { "xmlns" => "" }
-      adresse = attributes["address"]
+      adresse = data["address"]
       query = query.where("lower(adresse) = ?", adresse.downcase) if adresse != { "xmlns" => "" }
-    end
-    query.first.update(id_ent: attributes["externalId"]) if query.count == 1
-    query
-  end
 
-  def appel_direct_ent
-    redirect_to "#{ENV['ENT_PARIS_URL']}/login?service=#{ENV['ENT_PARIS_URL_RETOUR']}"
+    end
+    query.first.update(id_ent: data["externalId"]) if query.count == 1
+    query
   end
 
   def debug_ent
