@@ -17,7 +17,7 @@ class AuthentificationCasEntController < ApplicationController
   def retour_cas
     begin
       data = donnees_ent(params[:ticket])["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]
-    rescue
+    rescue StandardError
       Raven.extra_context params: params
       Raven.extra_context donnee: donnees_ent(params[:ticket])
       Raven.capture_exception(Exception.new("Problème d'extraction de donnée"))
