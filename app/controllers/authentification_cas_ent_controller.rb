@@ -41,7 +41,13 @@ class AuthentificationCasEntController < ApplicationController
 
   def retrouve_les_responsables_legaux_depuis(data)
     resp_legals = []
-    retrouve_liste_resp_legal(data).each do |resp_legal|
+    query = retrouve_liste_resp_legal(data)
+    query.each do |resp_legal|
+      if resp_legals.empty?
+        Raven.extra_context data: data
+        Raven.extra_context query: query.to_sql
+        Raven.capture_exception(Exception.new("Pas de responsable legal trouvé"))
+      end
       resp_legals << resp_legal
     end
     resp_legals
@@ -110,6 +116,10 @@ class AuthentificationCasEntController < ApplicationController
     attributes = data["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]
 
     email = attributes["email"]
+
+    query = RespLegal.where(id_ent: attributes["externalId"])
+    return query if query.count == 1
+
     if email != { "xmlns" => "" }
       query = RespLegal.where("lower(email) = ?", email.downcase)
     else
@@ -119,6 +129,7 @@ class AuthentificationCasEntController < ApplicationController
       adresse = attributes["address"]
       query = query.where("lower(adresse) = ?", adresse.downcase) if adresse != { "xmlns" => "" }
     end
+    query.first.update(id_ent: attributes["externalId"]) if query.count == 1
     query
   end
 
