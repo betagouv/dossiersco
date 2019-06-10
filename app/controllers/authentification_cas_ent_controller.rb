@@ -31,6 +31,11 @@ class AuthentificationCasEntController < ApplicationController
     elsif plusieurs_responsables_legaux?(responsables)
       @resp_legals = responsables
       render :choix_dossier_eleve, layout: "connexion"
+    elsif responsables.empty?
+      Raven.extra_context data: data
+      Raven.capture_exception(Exception.new("Pas de responsable legal trouvé"))
+      flash[:alert] = I18n.t(".dossier_non_trouve")
+      redirect_to "/"
     else
       Raven.extra_context data: data
       Raven.capture_exception(Exception.new("Dossier ENT non trouvé"))
@@ -41,13 +46,7 @@ class AuthentificationCasEntController < ApplicationController
 
   def retrouve_les_responsables_legaux_depuis(data)
     resp_legals = []
-    query = retrouve_liste_resp_legal(data)
-    query.each do |resp_legal|
-      if resp_legals.empty?
-        Raven.extra_context data: data
-        Raven.extra_context query: query.to_sql
-        Raven.capture_exception(Exception.new("Pas de responsable legal trouvé"))
-      end
+    retrouve_liste_resp_legal(data).each do |resp_legal|
       resp_legals << resp_legal
     end
     resp_legals
