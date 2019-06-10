@@ -39,7 +39,7 @@ class ImporterSiecleTest < ActiveJob::TestCase
     etablissement = Fabricate(:etablissement)
     fichier_xls = fixture_file_upload("files/test_import_siecle.xls")
     importer = ImporterSiecle.new
-    importer.import_dossiers_eleve(fichier_xls, etablissement.id)
+    importer.import_dossiers_eleve(fichier_xls, etablissement.id, "reinscription")
     assert_equal 2, DossierEleve.count
   end
 
@@ -60,7 +60,7 @@ class ImporterSiecleTest < ActiveJob::TestCase
     ligne[33] = "4EME"
     ligne[11] = eleve.identifiant
 
-    importer.import_ligne(etablissement, ligne)[:result]
+    importer.import_ligne(etablissement, ligne, "reinscription")[:result]
 
     assert_equal 1, DossierEleve.count
     assert_equal 1, Eleve.count
@@ -75,7 +75,7 @@ class ImporterSiecleTest < ActiveJob::TestCase
     ligne[9] = "18/05/1991"
     ligne[32] = mef.code
     ligne[33] = mef.libelle
-    importer.import_ligne(etablissement.id, ligne)
+    importer.import_ligne(etablissement.id, ligne, "reinscription")
     assert_empty DossierEleve.where(mef_origine: mef)
   end
 

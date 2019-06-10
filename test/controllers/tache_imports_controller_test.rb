@@ -20,14 +20,12 @@ class TacheImportsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "Import d'un fichier inscription" do
-    skip
     admin = Fabricate(:admin)
     identification_agent(admin)
 
-    # TODO: revoir le fichier
-    # fichier_xls = fixture_file_upload("files/test_import_affelnet.xlsm")
+    fichier_xls = fixture_file_upload("files/test_import_6eme.xls")
 
-    assert_enqueued_with(job: ImporterAffelnet) do
+    assert_enqueued_with(job: ImporterSiecle) do
       params = { tache_import: { fichier: fichier_xls, type_fichier: "inscription" } }
       post tache_imports_path, params: params
       assert_equal "inscription", TacheImport.last.type_fichier

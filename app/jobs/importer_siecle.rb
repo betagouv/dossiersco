@@ -26,7 +26,11 @@ class ImporterSiecle < ApplicationJob
     tache = TacheImport.find(tache_id)
     begin
       tache.update(statut: TacheImport::STATUTS[:en_traitement])
-      statistiques = import_xls tache.fichier.path, tache.etablissement_id
+      statistiques = if tache.type_fichier == "inscription"
+                       import_xls_6 tache.fichier.path, tache.etablissement_id
+                     else
+                       import_xls tache.fichier.path, tache.etablissement_id
+                     end
       mail = AgentMailer.succes_import(email, statistiques)
       tache.update(statut: TacheImport::STATUTS[:terminee])
       mail.deliver_now
@@ -39,10 +43,14 @@ class ImporterSiecle < ApplicationJob
   def import_xls(fichier, etablissement_id)
     import_mef(fichier, etablissement_id)
     import_options(fichier, etablissement_id)
-    import_dossiers_eleve(fichier, etablissement_id)
+    import_dossiers_eleve(fichier, etablissement_id, "reinscription")
   end
 
-  def import_dossiers_eleve(fichier, etablissement_id)
+  def import_xls_6(fichier, etablissement_id)
+    import_dossiers_eleve(fichier, etablissement_id, "inscription")
+  end
+
+  def import_dossiers_eleve(fichier, etablissement_id, type)
     xls_document = Roo::Spreadsheet.open fichier
     lignes_siecle = (xls_document.first_row + 1..xls_document.last_row)
 
@@ -54,7 +62,7 @@ class ImporterSiecle < ApplicationJob
     lignes_siecle.each do |row|
       ligne_siecle = xls_document.row(row)
 
-      resultat = import_ligne(etablissement_id, ligne_siecle)
+      resultat = import_ligne(etablissement_id, ligne_siecle, type)
 
       portables += 1 if resultat[:portable]
       emails += 1 if resultat[:email]
@@ -155,7 +163,7 @@ class ImporterSiecle < ApplicationJob
     adresse
   end
 
-  def import_ligne(etablissement_id, ligne_siecle)
+  def import_ligne(etablissement_id, ligne_siecle, type)
     resultat = { portable: false, email: false, eleve_importe: false }
     return resultat if ligne_siecle[COLONNES[:niveau_classe_ant]] =~ /^3.*$/
     return resultat if ligne_siecle[COLONNES[:niveau_classe_ant]].nil? || !ligne_siecle[COLONNES[:date_sortie]].nil?
@@ -171,7 +179,10 @@ class ImporterSiecle < ApplicationJob
 
     donnees_eleve = {}
     champs_eleve.each do |champ|
-      donnees_eleve[champ] = ligne_siecle[COLONNES[champ]]
+      valeur = ligne_siecle[COLONNES[champ]]
+      valeur = "CM2" if champ == :classe_ant && type == "inscription"
+      valeur = "CM2" if champ == :niveau_classe_ant && type == "inscription"
+      donnees_eleve[champ] = valeur
     end
 
     donnees_eleve = traiter_donnees_eleve donnees_eleve
@@ -184,15 +195,35 @@ class ImporterSiecle < ApplicationJob
 
     eleve.update_attributes!(donnees_eleve)
 
-    mef_origine = Mef.find_by(
-      etablissement_id: etablissement_id,
-      code: ligne_siecle[COLONNES[:code_mef]],
-      libelle: ligne_siecle[COLONNES[:niveau_classe_ant]]
-    )
-    mef_destination = Mef.niveau_superieur(mef_origine) if mef_origine.present?
-
     dossier_eleve = DossierEleve.find_by(eleve_id: eleve.id, etablissement_id: etablissement_id)
     dossier_eleve ||= DossierEleve.new(eleve_id: eleve.id, etablissement_id: etablissement_id)
+
+    if type == "inscription"
+      mef_origine = Mef.find_by(
+        etablissement_id: etablissement_id,
+        code: "made_in_dossiersco",
+        libelle: "CM2"
+      )
+      mef_origine ||= Mef.new(
+        etablissement_id: etablissement_id,
+        code: "made_in_dossiersco",
+        libelle: "CM2"
+      )
+      mef_destination = Mef.find_by(
+        etablissement_id: etablissement_id,
+        code: ligne_siecle[COLONNES[:code_mef]],
+        libelle: ligne_siecle[COLONNES[:niveau_classe_ant]]
+      )
+
+    else
+      mef_origine = Mef.find_by(
+        etablissement_id: etablissement_id,
+        code: ligne_siecle[COLONNES[:code_mef]],
+        libelle: ligne_siecle[COLONNES[:niveau_classe_ant]]
+      )
+      mef_destination = Mef.niveau_superieur(mef_origine) if mef_origine.present?
+    end
+
     dossier_eleve.mef_origine = mef_origine
     dossier_eleve.mef_destination = mef_destination
 
