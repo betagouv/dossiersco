@@ -122,6 +122,10 @@ Pour accéder à la console rails :
 
 ```bash make console ```
 
+Pour peupler l'application en local :
+
+```bash rake db:vide db:seed:demo```
+
 
 ## Outils
 
