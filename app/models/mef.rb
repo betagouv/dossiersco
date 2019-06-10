@@ -11,7 +11,12 @@ class Mef < ApplicationRecord
   def self.niveau_superieur(mef_origine)
     libelle_caracteres = mef_origine.libelle.split("")
     libelle_caracteres[0] = libelle_caracteres[0].to_i - 1
-    find_by(libelle: libelle_caracteres.join, etablissement: mef_origine.etablissement)
+    mef_destination = Mef.find_by(libelle: libelle_caracteres.join, etablissement: mef_origine.etablissement)
+    if mef_destination.nil?
+      libelle_destination = libelle_caracteres.join.split(" ").first
+      mef_destination = Mef.find_by(libelle: libelle_destination, etablissement: mef_origine.etablissement)
+    end
+    mef_destination
   end
 
 end

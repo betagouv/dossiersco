@@ -18,4 +18,12 @@ class MefTest < ActiveSupport::TestCase
     assert_equal(mef5, Mef.niveau_superieur(mef6))
   end
 
+  test "si le mef de destination n'existe pas renvoie un mef général" do
+    mef5 = Fabricate(:mef, libelle: "5EME")
+    Fabricate(:mef, libelle: "6EME", etablissement: mef5.etablissement)
+    mef6s = Fabricate(:mef, libelle: "6EME SEGPA", etablissement: mef5.etablissement)
+
+    assert_equal(mef5, Mef.niveau_superieur(mef6s))
+  end
+
 end
