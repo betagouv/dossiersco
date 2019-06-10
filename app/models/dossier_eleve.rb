@@ -137,8 +137,6 @@ class DossierEleve < ActiveRecord::Base
           moyen.delete(" ")[0..1] != "03" &&
           moyen.delete(" ")[0..1] != "04" &&
           moyen.delete(" ")[0..1] != "05" &&
-          moyen.delete(" ")[0..1] != "06" &&
-          moyen.delete(" ")[0..1] != "07" &&
           moyen.delete(" ")[0..1] != "09"
       end
     end

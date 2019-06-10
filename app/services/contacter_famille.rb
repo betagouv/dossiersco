@@ -7,29 +7,40 @@ class ContacterFamille
   end
 
   def envoyer(message, moyen)
+    moyen = moyen.delete(" ")
+
     if email?(moyen)
-      envoyer_email(message, moyen)
+      msg = envoyer_email(message, moyen)
     else
-      envoyer_sms(message, moyen)
+      moyen = ajoute_code_pays(moyen)
+      msg = envoyer_sms(message, moyen)
     end
+    msg
   end
 
   def envoyer_email(message, moyen)
     mail = FamilleMailer.contacter_directement_une_famille(moyen, message, @dossier.eleve)
     part = mail.html_part || mail.text_part || mail
     mail.deliver_now
-    Message.create(categorie: "mail", contenu: part.body, etat: "envoyé", dossier_eleve: @dossier)
+    Message.create(categorie: "mail", contenu: part.body, destinataire: moyen, etat: "envoyé", dossier_eleve: @dossier)
   end
 
-  def envoyer_sms(message, _moyen)
-    Message.create(categorie: "sms", contenu: message, destinataire: "rl1", etat: "en attente", dossier_eleve: @dossier)
+  def envoyer_sms(message, moyen)
+    textoer = FamilleTextoer.new
+    textoer.envoyer_message(moyen, message)
+    Message.create(categorie: "sms", contenu: message, destinataire: moyen, etat: "envoyé", dossier_eleve: @dossier)
   end
 
   def email?(contact)
-    Integer(contact)
-    false
-  rescue StandardError
-    true
+    contact.index("@").present?
+  end
+
+  def ajoute_code_pays(numero)
+    if numero.length == 11 && numero[0..1] == "33"
+      numero
+    else
+      "33" + numero[1..]
+    end
   end
 
 end

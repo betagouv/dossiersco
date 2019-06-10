@@ -304,8 +304,10 @@
                   </dt>
                   <% moyens_de_communication.each do |moyen_de_communication| %>
                     <dd>
-                    <%= radio_button_tag 'moyen_de_communication', moyen_de_communication %>
-                    <%= moyen_de_communication %>
+                    <label style="cursor: pointer">
+                      <%= radio_button_tag 'moyen_de_communication', moyen_de_communication %>
+                      <%= moyen_de_communication %>
+                    </label>
                     </dd>
                   <% end %>
                 <% end %>

@@ -123,13 +123,9 @@ class InscriptionsController < ApplicationController
     end
 
     contacter = ContacterFamille.new(eleve)
-    message = contacter.envoyer(params[:message], params[:moyen_de_communication])
+    contacter.envoyer(params[:message], params[:moyen_de_communication])
 
-    flash[:notice] = if message.mail?
-                       "Votre message a été envoyé."
-                     else
-                       "Votre message est en attente d'expédition."
-                     end
+    flash[:notice] = "Votre message a été envoyé."
     redirect_to "/agent/eleve/#{eleve.identifiant}#echanges"
   end
 
