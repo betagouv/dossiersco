@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_04_121640) do
+ActiveRecord::Schema.define(version: 2019_06_10_072648) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -230,6 +230,7 @@ ActiveRecord::Schema.define(version: 2019_06_04_121640) do
     t.string "tel_personnel"
     t.string "tel_portable"
     t.string "tel_professionnel"
+    t.string "pays", default: "FRA"
   end
 
   create_table "tache_imports", force: :cascade do |t|
@@ -238,7 +239,7 @@ ActiveRecord::Schema.define(version: 2019_06_04_121640) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "fichier"
-    t.string "job_klass"
+    t.string "type_fichier"
   end
 
   create_table "traces", force: :cascade do |t|

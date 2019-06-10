@@ -6,7 +6,7 @@ class ImporterAffelnetTest < ActionDispatch::IntegrationTest
 
   test "crée les dossiers élève attendus" do
     fichier_affelnet = fixture_file_upload("files/test_import_affelnet.xlsm")
-    tache = Fabricate(:tache_import, job_klass: "ImporterAffelnet", fichier: fichier_affelnet)
+    tache = Fabricate(:tache_import, type_fichier: "inscription", fichier: fichier_affelnet)
 
     assert_equal 0, DossierEleve.count
 

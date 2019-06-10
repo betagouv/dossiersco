@@ -19,7 +19,7 @@ class ConfigurationTest < ActionDispatch::IntegrationTest
     click_link "Import/export des élèves"
     within(".siecle") do
       assert_selector "h3", text: "Importer un fichier"
-      choose "SIECLE"
+      choose "Réinscriptions (SIECLE 2018/19)"
       attach_file("tache_import_fichier", Rails.root + "test/fixtures/files/test_import_siecle.xls")
     end
 

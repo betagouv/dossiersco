@@ -8,12 +8,12 @@
         <p><i class="fas fa-info-circle blue"></i> <%= t('.aide_siecle') %></p>
           <div class="form__group">
             <label>
-              <%= form.radio_button :job_klass, 'ImporterSiecle', {checked: true} %>
+              <%= form.radio_button :type_fichier, 'reinscription', {checked: true} %>
               <%= t('.fichier_siecle') %>
             </label>
             <label>
-              <%= form.radio_button :job_klass, 'ImporterAffelnet' %>
-              <%= t('.fichier_affelnet') %>
+              <%= form.radio_button :type_fichier, 'inscription' %>
+              <%= t('.fichier_6') %>
             </label>
           </div>
           <p class="card-text"><%= t('.selectionner_fichier') %></p>
