@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_10_072648) do
+ActiveRecord::Schema.define(version: 2019_06_10_082100) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(version: 2019_06_10_072648) do
     t.string "reglement_demi_pension"
     t.string "mot_accueil"
     t.boolean "demande_caf", default: false
+    t.string "email_reponse"
   end
 
   create_table "fichier_a_telechargers", force: :cascade do |t|
@@ -230,7 +231,7 @@ ActiveRecord::Schema.define(version: 2019_06_10_072648) do
     t.string "tel_personnel"
     t.string "tel_portable"
     t.string "tel_professionnel"
-    t.string "pays", default: "FRA"
+    t.string "pays", default: "FRANCE"
   end
 
   create_table "tache_imports", force: :cascade do |t|

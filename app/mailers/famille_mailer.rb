@@ -7,10 +7,15 @@ class FamilleMailer < ApplicationMailer
   def contacter_directement_une_famille(email, message, eleve)
     @message = message
     @eleve = eleve
-
+    email_reponse = @eleve.dossier_eleve.etablissement.email_reponse
+    reply_to = if email_reponse.present?
+                 email_reponse
+               else
+                 "equipe@dossiersco.fr"
+               end
     subject = "Réinscription de votre enfant au collège"
 
-    mail(subject: subject, to: email, &:text)
+    mail(subject: subject, reply_to: reply_to, to: email, &:text)
   end
 
   def contacter_une_famille(eleve, agent, message)
@@ -41,7 +46,12 @@ class FamilleMailer < ApplicationMailer
     end
 
     subject = "Réinscription de votre enfant au collège"
-    reply_to = @eleve.dossier_eleve.etablissement.email_chef
+    email_reponse = @eleve.dossier_eleve.etablissement.email_reponse
+    reply_to = if email_reponse.present?
+                 email_reponse
+               else
+                 "equipe@dossiersco.fr"
+               end
     mail(subject: subject, reply_to: reply_to, to: email, &:text)
   end
 

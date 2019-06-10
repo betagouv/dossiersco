@@ -30,7 +30,8 @@ module Configuration
 
     def info_generales_params
       params.require(:etablissement).permit(:gere_demi_pension, :demande_caf, :date_limite,
-                                            :mot_accueil, :envoyer_aux_familles, :reglement_demi_pension)
+                                            :mot_accueil, :envoyer_aux_familles, :reglement_demi_pension,
+                                            :email_reponse)
     end
 
     def trouve_etablissement

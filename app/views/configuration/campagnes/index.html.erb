@@ -12,6 +12,7 @@
       <ul class="list-unstyled">
         <li><b>- Date limite d'inscription</b> : <%= @etablissement.date_limite %></li>
         <li><b>- Mot d'accueil</b> : <%= markdown(@etablissement.mot_accueil) %></li>
+        <li><b>- Email de réponse</b> : <%= @etablissement.email_reponse %></li>
         <li><b>- Envoyer aux familles</b> : <% if @etablissement.envoyer_aux_familles? %>
             <strong><%= t('.attention_envoye_aux_familles') %></strong>
           <% else %>

@@ -14,6 +14,11 @@
         <p>Vous pouvez écrire en utilisant la syntaxe <a href="https://fr.wikipedia.org/wiki/Markdown">markdown</a> si vous voulez, et <a href="https://developer.mozilla.org/fr/docs/Apprendre/HTML/Introduction_%C3%A0_HTML/Getting_started">HTML</a> également</p>
       </div>
       <div class="form__group">
+        <%= f.label :email_reponse, t('.email_reponse')%>
+        <%= f.email_field :email_reponse %>
+        <p><%= t('.explications_email_reponse') %></p>
+      </div>
+      <div class="form__group">
         <%= f.check_box :envoyer_aux_familles %>
         <%= f.label :envoyer_aux_familles, t('.activer_envoie'), class: 'label-inline' %>
       </div>
