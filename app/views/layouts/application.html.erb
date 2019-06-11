@@ -38,6 +38,10 @@
       <li><%= link_to 'Établissements expérimentateurs', etablissements_experimentateurs_suivi_index_path %></li>
     </ul>
 
+<!--    <ul class="footer__links">-->
+<!--      <li><%#= link_to 'Changelog', changelog_path %></li>-->
+<!--    </ul>-->
+
     <ul class="footer__links">
       <% if @agent_connecte && super_admin?(@agent_connecte.email) %>
         <li><a href="/suivi">Suivi</a></li>

@@ -168,6 +168,7 @@ Rails.application.routes.draw do
   post "/agent/relance_sms", to: "inscriptions#relance_sms"
 
   get "/redirection_erreur", to: "pages#redirection_erreur"
+  get "/changelog", to: "pages#changelog"
 
   mount LetterOpenerWeb::Engine, at: "/letter_opener" unless ENV["laisser_partir_les_emails"]
 

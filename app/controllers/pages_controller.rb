@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require "redcarpet"
+require "redcarpet/render_strip"
+
 class PagesController < ApplicationController
 
   def redirection_erreur
@@ -14,6 +17,16 @@ class PagesController < ApplicationController
 
   def eleve
     @eleve ||= Eleve.find_by(identifiant: session[:identifiant])
+  end
+
+  def changelog
+    fichier = File.join(Rails.root, "doc/changelog.md")
+    renderer = Redcarpet::Render::HTML.new(no_links: true, hard_wrap: true)
+    markdown = Redcarpet::Markdown.new(renderer, {})
+
+    contenue = markdown.render(File.read(fichier)).to_s
+
+    render html: contenue.html_safe, layout: "connexion"
   end
 
 end
