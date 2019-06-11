@@ -11,7 +11,7 @@ class FamilleMailer < ApplicationMailer
     reply_to = if email_reponse.present?
                  email_reponse
                else
-                 "equipe@dossiersco.fr"
+                 eleve.dossier_eleve.etablissement.email_chef
                end
     subject = "Réinscription de votre enfant au collège"
 
@@ -50,7 +50,7 @@ class FamilleMailer < ApplicationMailer
     reply_to = if email_reponse.present?
                  email_reponse
                else
-                 "equipe@dossiersco.fr"
+                 eleve.dossier_eleve.etablissement.email_chef
                end
     mail(subject: subject, reply_to: reply_to, to: email, &:text)
   end
