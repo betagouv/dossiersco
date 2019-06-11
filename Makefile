@@ -27,4 +27,7 @@ routes: ## Run rails routes
 rubocop: ## Run Rubocop
 	docker-compose run --rm app bundle exec rubocop -a
 
+migrate: ## Execute the database migrations
+	docker-compose run --rm app rails db:migrate
+
 .PHONY: build run test clean stop rubocop
