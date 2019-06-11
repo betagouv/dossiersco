@@ -117,6 +117,7 @@ class AccueilController < ApplicationController
       resp_legal1[i] = params["#{i}_rl1"] if params.key?("#{i}_rl1")
       resp_legal2[i] = params["#{i}_rl2"] if resp_legal2 && params.key?("#{i}_rl2")
     end
+    defini_ville(@dossier_eleve.resp_legal)
     resp_legal1.save!
     resp_legal2.save! if resp_legal2.present?
 
@@ -134,6 +135,17 @@ class AccueilController < ApplicationController
                 resp_legal2.errors.messages.first[1].join
               end
       redirect_to famille_path, alert: error
+    end
+  end
+
+  def defini_ville(responsables)
+    responsables.each do |responsable|
+      ville_etrangere = params["ville_etrangere_rl#{responsable.priorite}"]
+      responsable.ville = if !ville_etrangere.blank?
+                            ville_etrangere
+                          else
+                            params["ville_rl#{responsable.priorite}"]
+                          end
     end
   end
 
