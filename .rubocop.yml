@@ -115,6 +115,7 @@ Metrics/AbcSize:
     - 'app/jobs/importer_affelnet.rb'
     - 'app/services/genere_pdf.rb'
     - 'app/models/dossier_eleve.rb'
+    - 'app/mailers/famille_mailer.rb'
 
 Metrics/CyclomaticComplexity:
   Exclude:
