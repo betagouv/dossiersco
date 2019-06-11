@@ -105,7 +105,7 @@
     <% {t('.j_accepte') => true, t('.j_accepte_pas') => false}.each do |nom_option, valeur_option| %>
       <div class="form__group">
         <label>
-          <input id="communique_info_parents_eleves_rl1" type="radio" name="communique_info_parens_eleves_rl1" value="<%= valeur_option %>" <% if @resp_legal1.communique_info_parents_eleves == valeur_option %> checked <% end %>> <%= nom_option %>
+          <input id="communique_info_parents_eleves_rl1" type="radio" name="communique_info_parens_eleves_rl1" value="<%= valeur_option %>" <% if @resp_legal1.communique_info_parents_eleves == valeur_option || valeur_option == false %> checked <% end %>> <%= nom_option %>
       </label>
       </div>
     <% end %>
@@ -222,19 +222,16 @@
         </div>
 
 
-        <div class="form__group">
-          <label>
-            <input id="communique_info_parents_eleves_rl2" type="radio_inverse" name="communique_info_parents_eleves_rl2" value="true" <% if @resp_legal2.communique_info_parents_eleves?  %> checked <% end %>>
-            <%= t('.j_accepte') %>
-          </label>
-
-          <label>
-            <input id="communique_info_parents_eleves_rl2" type="radio_inverse" name="communique_info_parents_eleves_rl2" value="false" <% unless @resp_legal2.communique_info_parents_eleves? %> checked <% end %>>
-            <%= t('.j_accepte_pas') %>
-          </label>
-        </div>
         <p><%= t('.coordonnees_communiquees') %></p>
 
+
+        <% {t('.j_accepte') => true, t('.j_accepte_pas') => false}.each do |nom_option, valeur_option| %>
+          <div class="form__group">
+            <label>
+              <input id="communique_info_parents_eleves_rl2" type="radio" name="communique_info_parens_eleves_rl2" value="<%= valeur_option %>" <% if @resp_legal2.communique_info_parents_eleves == valeur_option || valeur_option == false %> checked <% end %>> <%= nom_option %>
+          </label>
+          </div>
+        <% end %>
 
 
       </div>
