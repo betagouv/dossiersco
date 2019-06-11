@@ -267,7 +267,7 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     assert_nil DossierEleve.find(dossier_eleve.id).continuer_dossiersco
 
     post "/identification", params: params_identification
-    post "/confirmation", params: params
+    post "/continuer_dossiersco", params: params
 
     assert_equal true, DossierEleve.find(dossier_eleve.id).continuer_dossiersco
   end
