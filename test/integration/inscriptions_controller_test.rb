@@ -298,6 +298,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "n'envoie rien si aucun moyen de communication fourni" do
+    ActionMailer::Base.deliveries = []
     resp_legal = Fabricate(:resp_legal, email: "phill@collins.uk")
     dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
 

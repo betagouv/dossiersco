@@ -19,6 +19,7 @@ class  ContactParEtatsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "envoie un mail pour chaque élèves dont l'état du dossier correspond à celui choisi" do
+    ActionMailer::Base.deliveries = []
     etablissement = Fabricate(:etablissement, envoyer_aux_familles: true)
     admin = Fabricate(:admin, etablissement: etablissement)
     identification_agent(admin)
