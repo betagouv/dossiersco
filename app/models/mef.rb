@@ -19,4 +19,17 @@ class Mef < ApplicationRecord
     mef_destination
   end
 
+  def self.niveau_precedent(mef_destination)
+    first_caractere = mef_destination.libelle[0]
+    if first_caractere == "6"
+      Mef.find_by(libelle: "CM2", etablissement: mef_destination.etablissement)
+    else
+      niveau_precedent = first_caractere.to_i + 1
+      Mef.find_by(
+        libelle: "#{niveau_precedent}#{mef_destination.libelle[1..mef_destination.libelle.length]}",
+        etablissement: mef_destination.etablissement
+      )
+    end
+  end
+
 end

@@ -26,4 +26,16 @@ class MefTest < ActiveSupport::TestCase
     assert_equal(mef5, Mef.niveau_superieur(mef6s))
   end
 
+  test "#niveau_precedent de la 5eme est la 6eme" do
+    mef5 = Fabricate(:mef, libelle: "5EME")
+    mef6 = Fabricate(:mef, libelle: "6EME", etablissement: mef5.etablissement)
+    assert_equal(mef6, Mef.niveau_precedent(mef5))
+  end
+
+  test "#niveau_precedent la 6eme est le CM2" do
+    mef6 = Fabricate(:mef, libelle: "6EME")
+    mef_cm2 = Fabricate(:mef, libelle: "CM2", etablissement: mef6.etablissement)
+    assert_equal(mef_cm2, Mef.niveau_precedent(mef6))
+  end
+
 end

@@ -31,7 +31,18 @@ class ImporterSiecleTest < ActiveJob::TestCase
     importer = ImporterSiecle.new
     importer.import_mef(fichier_xls, etablissement.id)
 
-    assert_equal 1, Mef.count
+    assert_equal 2, Mef.count
+  end
+
+  test "importer les mefs crée le MEF CM2 s'il n'existe pas déjà" do
+    assert_equal 0, Mef.count
+    etablissement = Fabricate(:etablissement)
+    fichier_xls = fixture_file_upload("files/test_import_siecle.xls")
+    importer = ImporterSiecle.new
+    importer.import_mef(fichier_xls, etablissement.id)
+
+    assert_equal 2, Mef.count
+    assert Mef.all.map(&:libelle).include?("CM2")
   end
 
   test "importer dossiers élève" do

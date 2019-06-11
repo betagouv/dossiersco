@@ -26,11 +26,7 @@ class ImporterSiecle < ApplicationJob
     tache = TacheImport.find(tache_id)
     begin
       tache.update(statut: TacheImport::STATUTS[:en_traitement])
-      statistiques = if tache.type_fichier == "inscription"
-                       import_xls_6 tache.fichier.path, tache.etablissement_id
-                     else
-                       import_xls tache.fichier.path, tache.etablissement_id
-                     end
+      statistiques = import_xls(tache)
       mail = AgentMailer.succes_import(email, statistiques)
       tache.update(statut: TacheImport::STATUTS[:terminee])
       mail.deliver_now
@@ -40,37 +36,10 @@ class ImporterSiecle < ApplicationJob
     end
   end
 
-  def import_xls(fichier, etablissement_id)
-    import_mef(fichier, etablissement_id)
-    import_options(fichier, etablissement_id)
-    import_dossiers_eleve(fichier, etablissement_id, "reinscription")
-  end
-
-  def import_xls_6(fichier, etablissement_id)
-    import_dossiers_eleve(fichier, etablissement_id, "inscription")
-  end
-
-  def import_dossiers_eleve(fichier, etablissement_id, type)
-    xls_document = Roo::Spreadsheet.open fichier
-    lignes_siecle = (xls_document.first_row + 1..xls_document.last_row)
-
-    portables = 0
-    emails = 0
-    nb_eleves_importes = 0
-    @eleves_non_importes = []
-
-    lignes_siecle.each do |row|
-      ligne_siecle = xls_document.row(row)
-
-      resultat = import_ligne(etablissement_id, ligne_siecle, type)
-
-      portables += 1 if resultat[:portable]
-      emails += 1 if resultat[:email]
-      nb_eleves_importes += 1 if resultat[:eleve_importe]
-    end
-
-    { portable: (portables * 100) / nb_eleves_importes, email: (emails * 100) / nb_eleves_importes,
-      eleves: nb_eleves_importes, eleves_non_importes: @eleves_non_importes }
+  def import_xls(tache)
+    import_mef(tache.fichier, tache.etablissement_id)
+    import_options(tache.fichier, tache.etablissement_id)
+    import_dossiers_eleve(tache.fichier, tache.etablissement_id, tache.type_fichier)
   end
 
   def import_mef(fichier, etablissement_id)
@@ -81,6 +50,12 @@ class ImporterSiecle < ApplicationJob
       ligne_siecle = xls_document.row(row)
       import_ligne_mef(etablissement_id, ligne_siecle)
     end
+
+    Mef.find_or_create_by(
+      etablissement_id: etablissement_id,
+      code: "made_in_dossiersco",
+      libelle: "CM2"
+    )
   end
 
   def import_ligne_mef(etablissement_id, ligne_siecle)
@@ -133,34 +108,27 @@ class ImporterSiecle < ApplicationJob
     end
   end
 
-  def import_ligne_adresse(_etablissement_id, ligne_siecle)
-    eleve = Eleve.find_by(identifiant: ligne_siecle[COLONNES[:identifiant]])
-    return unless eleve.present?
+  def import_dossiers_eleve(fichier, etablissement_id, type)
+    xls_document = Roo::Spreadsheet.open fichier
+    lignes_siecle = (xls_document.first_row + 1..xls_document.last_row)
 
-    champs_resp_legal = %i[code_postal ville]
+    portables = 0
+    emails = 0
+    nb_eleves_importes = 0
+    @eleves_non_importes = []
 
-    %w[1 2].each do |i|
-      donnees_resp_legal = {}
-      champs_resp_legal.each do |champ|
-        donnees_resp_legal[champ] = ligne_siecle[COLONNES["#{champ}_resp_legal#{i}".to_sym]]
-      end
+    lignes_siecle.each do |row|
+      ligne_siecle = xls_document.row(row)
 
-      resp_legal = RespLegal.find_by(priorite: i.to_i, dossier_eleve_id: eleve.dossier_eleve.id)
-      resp_legal.update(
-        ville_ant: donnees_resp_legal[:ville],
-        adresse_ant: (concatener_adresse ligne_siecle, resp_legal.priorite),
-        code_postal_ant: donnees_resp_legal[:code_postal]
-      )
+      resultat = import_ligne(etablissement_id, ligne_siecle, type)
+
+      portables += 1 if resultat[:portable]
+      emails += 1 if resultat[:email]
+      nb_eleves_importes += 1 if resultat[:eleve_importe]
     end
-  end
 
-  def concatener_adresse(ligne_siecle, priorite)
-    colonnes_adresse = { "resp_legal1" => [108, 109, 110, 111], "resp_legal2" => [127, 128, 129, 130] }
-    adresse = ""
-    colonnes_adresse["resp_legal#{priorite}"].each do |colonne|
-      adresse << "#{ligne_siecle[colonne]} \n " unless ligne_siecle[colonne].nil?
-    end
-    adresse
+    { portable: (portables * 100) / nb_eleves_importes, email: (emails * 100) / nb_eleves_importes,
+      eleves: nb_eleves_importes, eleves_non_importes: @eleves_non_importes }
   end
 
   def import_ligne(etablissement_id, ligne_siecle, type)
@@ -180,8 +148,7 @@ class ImporterSiecle < ApplicationJob
     donnees_eleve = {}
     champs_eleve.each do |champ|
       valeur = ligne_siecle[COLONNES[champ]]
-      valeur = "CM2" if champ == :classe_ant && type == "inscription"
-      valeur = "CM2" if champ == :niveau_classe_ant && type == "inscription"
+      valeur = Mef.niveau_precedent(Mef.find_by(libelle: valeur)).libelle if type == "inscription" && %i[classe_ant niveau_classe_ant].include?(champ)
       donnees_eleve[champ] = valeur
     end
 
@@ -199,22 +166,13 @@ class ImporterSiecle < ApplicationJob
     dossier_eleve ||= DossierEleve.new(eleve_id: eleve.id, etablissement_id: etablissement_id)
 
     if type == "inscription"
-      mef_origine = Mef.find_by(
-        etablissement_id: etablissement_id,
-        code: "made_in_dossiersco",
-        libelle: "CM2"
-      )
-      mef_origine ||= Mef.new(
-        etablissement_id: etablissement_id,
-        code: "made_in_dossiersco",
-        libelle: "CM2"
-      )
       mef_destination = Mef.find_by(
         etablissement_id: etablissement_id,
         code: ligne_siecle[COLONNES[:code_mef]],
         libelle: ligne_siecle[COLONNES[:niveau_classe_ant]]
       )
 
+      mef_origine = Mef.niveau_precedent(mef_destination) if mef_destination.present?
     else
       mef_origine = Mef.find_by(
         etablissement_id: etablissement_id,
