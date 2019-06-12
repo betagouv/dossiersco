@@ -72,9 +72,8 @@ class PdfConvocation
         end
 
         pdf.move_down 10
-        pdf.text "Pour le bon déroulement de l’inscription en ligne, merci de vous connecter et de vérifier les informations vous concernant avant le : #{etablissement.date_limite}",
-                 inline_format: true,
-                 indent_paragraphs: 20
+        pdf.text "Pour le bon déroulement de l’inscription en ligne, merci de vous connecter "\
+          "et de vérifier les informations vous concernant avant le : #{etablissement.date_limite}", inline_format: true, indent_paragraphs: 20
 
         pdf.move_down 10
         pdf.text "Votre identifiant est : <b>#{dossier_eleve.eleve.identifiant}</b> ", inline_format: true

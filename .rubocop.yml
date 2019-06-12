@@ -32,8 +32,6 @@ Metrics/LineLength:
     - 'test/models/dossier_eleve_test.rb'
     - 'test/models/resp_legal_test.rb'
     - 'test/integration/inscriptions_controller_test.rb'
-    - 'app/services/pdf_convocation.rb'
-    - 'test/services/analyseur_option_test.rb'
 
 Metrics/BlockLength:
   Exclude:

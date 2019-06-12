@@ -18,7 +18,11 @@ class AnalyseurOptionTest < ActiveSupport::TestCase
     options_origines = {}
     options_origines[option.id] = { nom: option.nom, code_matiere: option.code_matiere }
 
-    dossier = Fabricate(:dossier_eleve, mef_destination: mef, etablissement: etablissement, options_origines: options_origines, options_pedagogiques: [option])
+    dossier = Fabricate(:dossier_eleve,
+                        mef_destination: mef,
+                        etablissement: etablissement,
+                        options_origines: options_origines,
+                        options_pedagogiques: [option])
 
     analyseur = AnalyseurOption.new(dossier)
     assert_equal [option], analyseur.option_maintenue
@@ -37,7 +41,11 @@ class AnalyseurOptionTest < ActiveSupport::TestCase
 
     nouvelle_option = Fabricate(:option_pedagogique, etablissement: etablissement, mef: [mef])
 
-    dossier = Fabricate(:dossier_eleve, mef_destination: mef, etablissement: etablissement, options_origines: options_origines, options_pedagogiques: [option, nouvelle_option])
+    dossier = Fabricate(:dossier_eleve,
+                        mef_destination: mef,
+                        etablissement: etablissement,
+                        options_origines: options_origines,
+                        options_pedagogiques: [option, nouvelle_option])
 
     analyseur = AnalyseurOption.new(dossier)
     assert_equal [option], analyseur.option_maintenue
@@ -70,7 +78,11 @@ class AnalyseurOptionTest < ActiveSupport::TestCase
     options_origines = {}
     options_origines[option.id] = { nom: option.nom, code_matiere: option.code_matiere }
 
-    dossier = Fabricate(:dossier_eleve, etablissement: etablissement, mef_destination: mef, options_pedagogiques: [nouvelle_option, option], options_origines: options_origines)
+    dossier = Fabricate(:dossier_eleve,
+                        etablissement: etablissement,
+                        mef_destination: mef,
+                        options_pedagogiques: [nouvelle_option, option],
+                        options_origines: options_origines)
 
     analyseur = AnalyseurOption.new(dossier)
     assert_equal [nouvelle_option], analyseur.option_demandee
@@ -92,7 +104,11 @@ class AnalyseurOptionTest < ActiveSupport::TestCase
     options_origines = {}
     options_origines[option.id] = { nom: option.nom, code_matiere: option.code_matiere }
 
-    dossier = Fabricate(:dossier_eleve, etablissement: etablissement, mef_destination: mef, options_pedagogiques: [], options_origines: options_origines)
+    dossier = Fabricate(:dossier_eleve,
+                        etablissement: etablissement,
+                        mef_destination: mef,
+                        options_pedagogiques: [],
+                        options_origines: options_origines)
 
     analyseur = AnalyseurOption.new(dossier)
     assert_equal [option], analyseur.option_abandonnee
