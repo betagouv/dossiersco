@@ -10,10 +10,6 @@ Layout/EmptyLinesAroundClassBody:
   Enabled: true
   EnforcedStyle: empty_lines
 
-Layout/AlignParameters:
-  Exclude:
-    - 'app/services/pdf_convocation.rb'
-
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: double_quotes
@@ -38,7 +34,6 @@ Metrics/LineLength:
     - 'test/integration/inscriptions_controller_test.rb'
     - 'app/services/pdf_convocation.rb'
     - 'test/services/analyseur_option_test.rb'
-    - 'app/controllers/configuration/dossiers_eleve_controller.rb'
 
 Metrics/BlockLength:
   Exclude:
