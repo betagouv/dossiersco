@@ -81,8 +81,7 @@ class AuthentificationCasEntController < ApplicationController
   end
 
   def retrouve_liste_resp_legal(data)
-    query = RespLegal.where(id_ent: data["externalId"])
-    return query if query.count == 1
+    return [] unless data.is_a?(Hash)
 
     email = data["email"]
     if email != { "xmlns" => "" }
@@ -96,7 +95,6 @@ class AuthentificationCasEntController < ApplicationController
         query = query.where("lower(adresse) = ?", adresse.downcase) if adresse != { "xmlns" => "" }
       end
     end
-    query.first.update(id_ent: data["externalId"]) if query.count == 1
     query
   end
 
