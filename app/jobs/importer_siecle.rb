@@ -133,7 +133,7 @@ class ImporterSiecle < ApplicationJob
 
   def import_ligne(etablissement_id, ligne_siecle, type)
     resultat = { portable: false, email: false, eleve_importe: false }
-    return resultat if ligne_siecle[COLONNES[:niveau_classe_ant]] =~ /^3.*$/
+    return resultat if ligne_siecle[COLONNES[:niveau_classe_ant]] =~ /^3.*$/ && type == "reinscription"
     return resultat if ligne_siecle[COLONNES[:niveau_classe_ant]].nil? || !ligne_siecle[COLONNES[:date_sortie]].nil?
 
     if ligne_siecle[COLONNES[:identifiant]].nil?
@@ -148,7 +148,11 @@ class ImporterSiecle < ApplicationJob
     donnees_eleve = {}
     champs_eleve.each do |champ|
       valeur = ligne_siecle[COLONNES[champ]]
-      valeur = Mef.niveau_precedent(Mef.find_by(libelle: valeur)).libelle if type == "inscription" && %i[classe_ant niveau_classe_ant].include?(champ)
+
+      if %i[classe_ant niveau_classe_ant].include?(champ) && valeur.present? && type == "inscription"
+        mef_courant = Mef.find_by(libelle: valeur, etablissement_id: etablissement_id)
+        valeur = Mef.niveau_precedent(mef_courant)&.libelle
+      end
       donnees_eleve[champ] = valeur
     end
 
