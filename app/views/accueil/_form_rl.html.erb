@@ -1,0 +1,145 @@
+<h2 class="separation"><%= t('.titre_responsable_legal') %></h2>
+
+<div class="informations-rl mb-2" data-rl-id="<%= responsable.id %>">
+  <ul class="list-unstyled">
+    <li><b><%= t('.lien_de_parente') %></b> : <%= responsable.lien_de_parente %></li>
+    <li><b><%= t('.prenom') %></b> : <%= responsable.prenom %></li>
+    <li><b><%= t('.nom') %></b> : <%= responsable.nom %></li>
+    <li><b><%= t('.adresse') %></b> : <%= responsable.adresse %></li>
+    <li><b><%= t('.code_postal') %></b> : <%= responsable.code_postal %></li>
+    <li><b><%= t('.ville') %></b> : <%= responsable.ville&.upcase %></li>
+    <li><b><%= t('.pays') %></b> :
+      <% selected = responsable.pays || "FRA" %>
+      <% @liste_pays.each do |option| %>
+          <%= option[0] if option[1] == selected %>
+      <% end %></li>
+    <li><b><%= t('.telephone_principal') %></b> : <%= responsable.tel_personnel %></li>
+    <li><b><%= t('.telephone_secondaire') %></b> : <%= responsable.tel_portable %></li>
+    <li><b><%= t('.telephone_professionnel') %></b> : <%= responsable.tel_professionnel %></li>
+    <li><b><%= t('.email_principal') %></b> : <%= responsable.email %></li>
+  </ul>
+  <a class="modifier-informations-rl button-outline primary" data-rl-id="<%= responsable.id %>">
+    <%= t('.modifier_informations') %>
+  </a>
+</div>
+
+<div class="formulaire-rl mb-2" data-rl-id="<%= responsable.id %>" style="display: none;">
+  <div class="form__group">
+    <label for="lien_de_parente_<%= rl %>"><%= t('.lien_de_parente') %></label>
+    <select id="lien_de_parente_<%= rl %>" name="lien_de_parente_<%= rl %>" required>
+      <% @lien_de_parentes.each do |option| %>
+        <option <% if option == responsable.lien_de_parente %> selected <% end %>><%= option %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <div class="form__group">
+    <label for="prenom_<%= rl %>"><%= t('.prenom') %></label>
+    <input id="prenom_<%= rl %>" name="prenom_<%= rl %>" type="text" value="<%= responsable.prenom %>" placeholder="Prénom" required >
+  </div>
+
+  <div class="form__group">
+    <label for="nom_<%= rl %>"><%= t('.nom') %></label>
+    <input id="nom_<%= rl %>" name="nom_<%= rl %>" type="text" value="<%= responsable.nom %>" placeholder="Nom" required >
+  </div>
+
+  <div class="form__group">
+    <label for="adresse_<%= rl %>"><%= t('.adresse') %></label>
+    <textarea id="adresse_<%= rl %>" name="adresse_<%= rl %>" type="text" placeholder="Numéro et nom de voie" rows="3" required><%= responsable.adresse %></textarea>
+  </div>
+
+  <div class="form__group" id="champs-code-postal-<%= rl %>">
+    <label for="code_postal_<%= rl %>"><%= t('.code_postal') %></label>
+    <input id="code_postal_<%= rl %>" name="code_postal_<%= rl %>" type="text" value="<%= responsable.code_postal %>" placeholder="Code postal" required >
+  </div>
+
+  <div class="form__group" id="champs-select-ville-<%= rl %>">
+    <% ville_rl = responsable.ville ? responsable.ville.upcase : '' %>
+    <label for="ville_<%= rl %>"><%= t('.ville') %></label>
+    <select id="ville_<%= rl %>" name="ville_<%= rl %>" required >
+      <% [ville_rl].each do |option| %>
+        <option <% if option == ville_rl %> selected <% end %>><%= option %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <div class="form__group" id="champs-text-ville-<%= rl %>" style="display: none;">
+    <label for="ville_etrangere_<%= rl %>"><%= t('.ville') %></label>
+    <input id="ville_etrangere_<%= rl %>" name="ville_etrangere_<%= rl %>" type="text" value="<%= responsable.ville ? responsable.ville.upcase : '' %>" placeholder="Ville" required >
+  </div>
+
+  <div class="form__group">
+    <label for="pays_<%= rl %>"><%= t('.pays') %></label>
+    <select id="pays_<%= rl %>" name="pays_<%= rl %>" required class="pays" data-resp-legal="1">
+      <% selected = responsable.pays || "FRA" %>
+      <% @liste_pays.each do |option| %>
+        <option value="<%= option[1] %>" <% if option[1] == selected %> selected <% end %>><%= option[0] %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <div class="form__group">
+    <label for="tel_personnel_<%= rl %>"><%= t('.telephone_principal') %></label>
+    <div class="col-sm-5">
+      <input type="tel" id="tel_personnel_<%= rl %>" value="<%= responsable.tel_personnel %>" placeholder="Numéro de téléphone" name="tel_personnel_<%= rl %>" >
+    </div>
+  </div>
+
+  <div class="form__group">
+    <label for="tel_portable_<%= rl %>"><%= t('.telephone_secondaire') %></label>
+    <div class="col-sm-5">
+      <input type="tel" id="tel_portable_<%= rl %>" value="<%= responsable.tel_portable %>" placeholder="Numéro de téléphone" name="tel_portable_<%= rl %>" >
+    </div>
+  </div>
+
+  <div class="form__group">
+    <label for="tel_professionnel_<%= rl %>"><%= t('.telephone_professionnel') %></label>
+    <div class="col-sm-5">
+      <input type="tel" id="tel_professionnel_<%= rl %>" value="<%= responsable.tel_professionnel %>" placeholder="Numéro de téléphone" name="tel_professionnel_<%= rl %>">
+    </div>
+  </div>
+
+  <div class="form__group">
+    <label for="email_<%= rl %>"><%= t('.email_principal') %></label>
+    <div class="col-sm-5">
+      <input type="email" id="email_<%= rl %>" value="<%= responsable.email %>" placeholder="email" name="email_<%= rl %>" >
+    </div>
+  </div>
+</div>
+
+<div class="form__group">
+  <label for="profession_<%= rl %>"><%= t('.profession') %></label>
+  <select id="profession_<%= rl %>" name="profession_<%= rl %>" required>
+    <% @code_profession.map{ |k, v| v }.each do |option| %>
+      <option <% if option == responsable.profession %> selected <% end %>><%= option %></option>
+    <% end %>
+  </select>
+</div>
+
+<div class="form__group">
+  <label for="enfants_a_charge_<%= rl %>"><%= t('.nb_total_enfants_a_charge') %></label>
+  <input type="text" id="<%=  t('.nb_total_enfants_a_charge') %>" value="<%= responsable.enfants_a_charge %>" name="enfants_a_charge_<%= rl %>" required>
+</div>
+
+
+<p><%= t('.coordonnees_communiquees') %></p>
+
+
+<% {t('.j_accepte') => true, t('.j_accepte_pas') => false}.each do |nom_option, valeur_option| %>
+  <div class="form__group">
+    <label>
+      <input id="communique_info_parents_eleves_<%= rl %>" type="radio" name="communique_info_parens_eleves_<%= rl %>" value="<%= valeur_option %>" <% if responsable.communique_info_parents_eleves == valeur_option || valeur_option == false %> checked <% end %>> <%= nom_option %>
+    </label>
+  </div>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function () {
+  $('.modifier-informations-rl').click(function () {
+    let responsable_id = $(this).data('rl-id')
+    console.log($(".informations-rl[data-rl-id='" + responsable_id +"']"))
+    $(".informations-rl[data-rl-id='" + responsable_id +"']").hide()
+    $(".formulaire-rl[data-rl-id='" + responsable_id +"']").show()
+  })
+})
+</script>

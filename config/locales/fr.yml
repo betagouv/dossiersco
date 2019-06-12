@@ -111,6 +111,24 @@ fr:
     acceptation: &acceptation
       j_accepte: "J'accepte"
       j_accepte_pas: "Je n'accepte pas"
+    form_rl:
+      modifier_informations: Modifier les informations
+      <<: *infos_nom
+      <<: *acceptation
+      pays: Pays
+      titre_responsable_legal: Responsable légal
+      adresse: Adresse
+      code_postal: Code postal
+      ville: Ville
+      telephone_principal: Téléphone personnel
+      telephone_secondaire: Téléphone portable
+      telephone_professionnel: Téléphone professionnel
+      email_principal: Email principal
+      profession: Profession
+      nb_total_enfants_a_charge: "Nombre total d'enfants à charge"
+      coordonnees_communiquees: "que ces coordonnées soient communiquées aux fédérations de parents d'élèves."
+      lien_avec_eleve: "Lien avec l'élève"
+      lien_de_parente: "Lien de parenté"
     eleve:
       <<: *infos_nom
       conseil_corriger_les_informations: "Veuillez corriger les informations incorrectes ou manquantes :"
