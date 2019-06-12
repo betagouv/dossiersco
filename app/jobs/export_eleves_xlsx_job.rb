@@ -21,6 +21,9 @@ class ExportElevesXlsxJob < ActiveJob::Base
       options_eleve = cellules_options_eleve(dossier)
       ligne = cellules_infos_base(dossier).concat(options_eleve)
       ligne.concat(cellules_regime_sortie(dossier)) if agent.etablissement.regimes_sortie.count > 1
+      ligne << (dossier.autorise_photo_de_classe ? "X" : "")
+      ligne << (dossier.renseignements_medicaux ? "X" : "")
+      ligne.concat(cellules_pieces_jointes(dossier))
       lignes << ligne
     end
     lignes
@@ -29,9 +32,11 @@ class ExportElevesXlsxJob < ActiveJob::Base
   def cellules_entete(agent)
     options_etablissement = agent.etablissement.options_pedagogiques
     entete_options = options_etablissement.map(&:nom)
-    entete = ["classe actuelle", "MEF actuel", "prenom", "nom", "date naissance", "sexe"].concat(entete_options)
+    entete = ["Classe actuelle", "MEF actuel", "Prenom", "Nom", "Date naissance", "Sexe"].concat(entete_options)
 
     entete.concat(agent.etablissement.regimes_sortie.map(&:nom)) if agent.etablissement.regimes_sortie.count > 1
+    entete.concat(["Autorise photo de classe", "Information médicale"])
+    entete.concat(agent.etablissement.pieces_attendues.map(&:nom))
     entete
   end
 
@@ -55,6 +60,15 @@ class ExportElevesXlsxJob < ActiveJob::Base
       regime_sortie << (dossier.regime_sortie == regime ? "X" : "")
     end
     regime_sortie
+  end
+
+  def cellules_pieces_jointes(dossier)
+    pieces_jointes = []
+    dossier.etablissement.pieces_attendues.each do |piece|
+      piece_jointe = dossier.pieces_jointes.select { |x| x.piece_attendue_id == piece.id && !x.fichiers.empty?}
+      pieces_jointes << (piece_jointe.count > 0 ? "X" : "")
+    end
+    pieces_jointes
   end
 
   def creer_fichier(lignes, entete, agent)
