@@ -135,7 +135,7 @@
 
         <div class="form__group">
           <p>
-          <% if @dossier_eleve.autorise_photo_de_classe %> 
+          <% if @dossier_eleve.autorise_photo_de_classe %>
             <%= t('.j_accepte') %>
           <% else %>
             <%= t('.j_accepte_pas') %>
@@ -392,7 +392,6 @@
 <script type="text/javascript" charset="utf-8">
 // Onglets
 $(document).ready(function() {
-  console.log(location.hash);
   if (location.hash) {
     $('.lien-section').removeClass('active');
     $('.lien-section[data-target="' + location.hash + '"]').addClass('active');

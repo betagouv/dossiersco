@@ -87,7 +87,6 @@ $(document).ready(function() {
   }
 
   $('form').change( function () {
-    console.log($('input[name=demi_pensionnaire]:checked').val())
       if ($('input[name=demi_pensionnaire]:checked').val() === 'true') {
         $('#dp').css('display', 'block')
       } else {
