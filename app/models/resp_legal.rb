@@ -69,9 +69,9 @@ class RespLegal < ActiveRecord::Base
 
   def champs_renseignes?
     champs_requis = { lien_de_parente: "lien de parenté", prenom: "prénom", nom: "nom", adresse: "adresse",
-                      code_postal: "code postal", ville: "ville", profession: "profession" }
+                      ville: "ville", profession: "profession" }
     champs_requis[:enfants_a_charge] = "enfants à charge" if priorite == 1
-
+    champs_requis[:code_postal] = "code postal" if pays == "FRA"
     champs_requis.each do |champ, label|
       message_erreur = I18n.t(".activerecord.errors.models.resp_legal.non_renseigne", champ: label, responsable: priorite)
       errors.add(champ, message_erreur) if send(champ).blank?
