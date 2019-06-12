@@ -119,6 +119,7 @@ Metrics/AbcSize:
 
 Metrics/CyclomaticComplexity:
   Exclude:
+    - 'app/controllers/authentification_cas_ent_controller.rb'
     - 'app/jobs/importer_siecle.rb'
     - 'app/models/dossier_eleve.rb'
     - 'app/services/pdf_fiche_infirmerie.rb'
@@ -127,6 +128,7 @@ Metrics/CyclomaticComplexity:
 
 Metrics/PerceivedComplexity:
   Exclude:
+    - 'app/controllers/authentification_cas_ent_controller.rb'
     - 'app/jobs/importer_siecle.rb'
     - 'app/models/dossier_eleve.rb'
     - 'app/controllers/accueil_controller.rb'
