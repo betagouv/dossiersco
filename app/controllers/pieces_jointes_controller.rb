@@ -20,17 +20,17 @@ class PiecesJointesController < ApplicationController
 
   def valider
     @piece_jointe.valide!
-    redirect_to "/agent/eleve/#{params[:identifiant]}"
+    redirect_to "/agent/eleve/#{params[:identifiant]}#pieces-jointes"
   end
 
   def refuser
     @piece_jointe.invalide!
-    redirect_to "/agent/eleve/#{params[:identifiant]}"
+    redirect_to "/agent/eleve/#{params[:identifiant]}#pieces-jointes"
   end
 
   def annuler_decision
     @piece_jointe.soumet!
-    redirect_to "/agent/eleve/#{params[:identifiant]}"
+    redirect_to "/agent/eleve/#{params[:identifiant]}#pieces-jointes"
   end
 
   private
