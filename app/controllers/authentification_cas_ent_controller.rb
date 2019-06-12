@@ -88,12 +88,13 @@ class AuthentificationCasEntController < ApplicationController
     if email != { "xmlns" => "" }
       query = RespLegal.where("lower(email) = ?", email.downcase)
     else
-      query = RespLegal.where(prenom: data["firstName"])
+      query = RespLegal.where("lower(prenom) = ?", data["firstName"].downcase)
       nom = data["lastName"]
       query = query.where("lower(nom) = ?", nom.downcase) if nom != { "xmlns" => "" }
-      adresse = data["address"]
-      query = query.where("lower(adresse) = ?", adresse.downcase) if adresse != { "xmlns" => "" }
-
+      if query.count > 1
+        adresse = data["address"]
+        query = query.where("lower(adresse) = ?", adresse.downcase) if adresse != { "xmlns" => "" }
+      end
     end
     query.first.update(id_ent: data["externalId"]) if query.count == 1
     query
