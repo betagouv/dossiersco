@@ -175,14 +175,15 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
       demi_pensionnaire: true,
       regime_sortie: regime_sortie.id,
       renseignements_medicaux: true,
-      autorise_photo_de_classe: false
+      droit_image_photo: false
     }
     get "/administration"
 
+    dossier = DossierEleve.find(dossier_eleve.id)
     parsed_body = response.body.gsub(/\s/, "")
     assert parsed_body.include? "id=\"regime_sortie_#{regime_sortie.id}\" checked".gsub(/\s/, "")
     assert parsed_body.include? "id='renseignements_medicaux' checked".gsub(/\s/, "")
-    assert parsed_body.include? "id='autorise_photo_de_classe' checked".gsub(/\s/, "")
+    assert_equal false, dossier.autorise_photo_de_classe
   end
 
   # le masquage du formulaire de contact se fait en javascript
