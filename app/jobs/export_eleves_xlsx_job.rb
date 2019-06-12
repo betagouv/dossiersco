@@ -65,8 +65,8 @@ class ExportElevesXlsxJob < ActiveJob::Base
   def cellules_pieces_jointes(dossier)
     pieces_jointes = []
     dossier.etablissement.pieces_attendues.each do |piece|
-      piece_jointe = dossier.pieces_jointes.select { |x| x.piece_attendue_id == piece.id && !x.fichiers.empty?}
-      pieces_jointes << (piece_jointe.count > 0 ? "X" : "")
+      piece_jointe = dossier.pieces_jointes.select { |x| x.piece_attendue_id == piece.id && !x.fichiers.empty? }
+      pieces_jointes << (piece_jointe.count.positive? ? "X" : "")
     end
     pieces_jointes
   end

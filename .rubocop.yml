@@ -79,6 +79,7 @@ Metrics/MethodLength:
     - 'app/services/pdf_fiche_infirmerie.rb'
     - 'app/services/pdf_convocation.rb'
     - 'app/mailers/famille_mailer.rb'
+    - 'app/jobs/export_eleves_xlsx_job.rb'
 
 Metrics/ClassLength:
   Exclude:
@@ -116,6 +117,7 @@ Metrics/AbcSize:
     - 'app/services/genere_pdf.rb'
     - 'app/models/dossier_eleve.rb'
     - 'app/mailers/famille_mailer.rb'
+    - 'app/jobs/export_eleves_xlsx_job.rb'
 
 Metrics/CyclomaticComplexity:
   Exclude:
