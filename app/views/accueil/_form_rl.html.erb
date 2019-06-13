@@ -1,5 +1,6 @@
 <h2 class="separation"><%= t('.titre_responsable_legal') %></h2>
 
+
 <div class="informations-rl mb-2" data-rl-id="<%= responsable&.id %>">
   <ul class="list-unstyled">
     <li><b><%= t('.lien_de_parente') %></b> : <%= responsable&.lien_de_parente %></li>
@@ -24,110 +25,95 @@
 
 <div class="formulaire-rl mb-2" data-rl-id="<%= responsable&.id %>" style="display: none;">
   <div class="form__group">
-    <label for="lien_de_parente_<%= rl %>"><%= t('.lien_de_parente') %></label>
-    <select id="lien_de_parente_<%= rl %>" name="lien_de_parente_<%= rl %>" >
-      <% @lien_de_parentes.each do |option| %>
-        <option <% if option == responsable&.lien_de_parente %> selected <% end %>><%= option %></option>
-      <% end %>
-    </select>
+    <%= f.label :lien_de_parente, t('.lien_de_parente') %>
+    <%= f.select :lien_de_parente, options_for_select(@lien_de_parentes, :lien_de_parente) %>
   </div>
 
   <div class="form__group">
-    <label for="prenom_<%= rl %>"><%= t('.prenom') %></label>
-    <input id="prenom_<%= rl %>" name="prenom_<%= rl %>" type="text" value="<%= responsable&.prenom %>" placeholder="Prénom" >
+    <%= f.label :prenom, t('.prenom') %>
+    <%= f.text_field :prenom, placeholder: "Prénom" %>
   </div>
 
   <div class="form__group">
-    <label for="nom_<%= rl %>"><%= t('.nom') %></label>
-    <input id="nom_<%= rl %>" name="nom_<%= rl %>" type="text" value="<%= responsable&.nom %>" placeholder="Nom" >
+    <%= f.label :nom, t('.nom') %>
+    <%= f.text_field :nom, placeholder: "Nom" %>
   </div>
 
   <div class="form__group">
-    <label for="adresse_<%= rl %>"><%= t('.adresse') %></label>
-    <textarea id="adresse_<%= rl %>" name="adresse_<%= rl %>" type="text" placeholder="Numéro et nom de voie" rows="3" ><%= responsable&.adresse %></textarea>
+    <%= f.label :adresse, t('.adresse') %>
+    <%= f.text_area :adresse, placeholder: "Numéro et nom de voie", rows: "3" %>
   </div>
 
   <div class="form__group" id="champs-code-postal-<%= rl %>">
-    <label for="code_postal_<%= rl %>"><%= t('.code_postal') %></label>
-    <input id="code_postal_<%= rl %>" name="code_postal_<%= rl %>" type="text" value="<%= responsable&.code_postal %>" placeholder="Code postal" >
+    <%= f.label :code_postal, t('.code_postal') %>
+    <%= f.number_field :code_postal, placeholder: t('.code_postal') %>
   </div>
 
   <div class="form__group" id="champs-select-ville-<%= rl %>">
     <% ville_rl = responsable&.ville ? responsable&.ville.upcase : '' %>
-    <label for="ville_<%= rl %>"><%= t('.ville') %></label>
-    <select id="ville_<%= rl %>" name="ville_<%= rl %>" >
-      <% [ville_rl].each do |option| %>
-        <option <% if option == ville_rl %> selected <% end %>><%= option %></option>
-      <% end %>
-    </select>
+    <%= f.label :ville, t('.ville') %>
+    <%= f.select :ville, options_for_select([ville_rl], :ville)%>
   </div>
 
   <div class="form__group" id="champs-text-ville-<%= rl %>" style="display: none;">
-    <label for="ville_etrangere_<%= rl %>"><%= t('.ville') %></label>
-    <input id="ville_etrangere_<%= rl %>" name="ville_etrangere_<%= rl %>" type="text" value="<%= responsable&.ville ? responsable&.ville.upcase : '' %>" placeholder="Ville" >
+    <%= f.label :ville_etranger, t('.ville') %>
+    <%= f.text_field :ville_etranger, placeholder: "Nom" %>
   </div>
 
   <div class="form__group">
-    <label for="pays_<%= rl %>"><%= t('.pays') %></label>
-    <select id="pays_<%= rl %>" name="pays_<%= rl %>" class="pays" data-resp-legal="1">
-      <% selected = responsable&.pays || "FRA" %>
-      <% @liste_pays.each do |option| %>
-        <option value="<%= option[1] %>" <% if option[1] == selected %> selected <% end %>><%= option[0] %></option>
-      <% end %>
-    </select>
+    <%= f.label :pays, t('.pays') %>
+    <%= f.select :pays, options_from_collection_for_select(@liste_pays, :last, :first, responsable.pays), data: {"resp-legal" => responsable.priorite}%>
+    <!--    <label for="pays_<%#= rl %>"><%#= t('.pays') %></label>-->
+    <!--    <select id="pays_<%#= rl %>" name="pays_<%#= rl %>" class="pays" data-resp-legal="1">-->
+    <%# selected = responsable&.pays || "FRA" %>
+    <%# @liste_pays.each do |option| %>
+    <!--        <option value="<%#= option[1] %>" <%# if option[1] == selected %> selected <%# end %>><%#= option[0] %></option>-->
+    <%# end %>
+    <!--    </select>-->
   </div>
 
   <div class="form__group">
-    <label for="tel_personnel_<%= rl %>"><%= t('.telephone_principal') %></label>
-    <div class="col-sm-5">
-      <input type="tel" id="tel_personnel_<%= rl %>" value="<%= responsable&.tel_personnel %>" placeholder="Numéro de téléphone" name="tel_personnel_<%= rl %>" >
-    </div>
+    <%= f.label :tel_personnel, t('.telephone_principal') %>
+    <%= f.telephone_field :tel_personnel, placeholder: "Numéro de téléphone" %>
   </div>
 
   <div class="form__group">
-    <label for="tel_portable_<%= rl %>"><%= t('.telephone_secondaire') %></label>
-    <div class="col-sm-5">
-      <input type="tel" id="tel_portable_<%= rl %>" value="<%= responsable&.tel_portable %>" placeholder="Numéro de téléphone" name="tel_portable_<%= rl %>" >
-    </div>
+    <%= f.label :tel_portable, t('.telephone_secondaire') %>
+    <%= f.telephone_field :tel_portable, placeholder: "Numéro de téléphone" %>
   </div>
 
   <div class="form__group">
-    <label for="tel_professionnel_<%= rl %>"><%= t('.telephone_professionnel') %></label>
-    <div class="col-sm-5">
-      <input type="tel" id="tel_professionnel_<%= rl %>" value="<%= responsable&.tel_professionnel %>" placeholder="Numéro de téléphone" name="tel_professionnel_<%= rl %>">
-    </div>
+    <%= f.label :tel_professionnel, t('.telephone_professionnel') %>
+    <%= f.telephone_field :tel_professionnel, placeholder: "Numéro de téléphone" %>
   </div>
 
   <div class="form__group">
-    <label for="email_<%= rl %>"><%= t('.email_principal') %></label>
-    <div class="col-sm-5">
-      <input type="email" id="email_<%= rl %>" value="<%= responsable&.email %>" placeholder="email" name="email_<%= rl %>" >
-    </div>
+    <%= f.label :email, t('.email_principal') %>
+    <%= f.email_field :email, placeholder: "Numéro de téléphone" %>
   </div>
 </div>
 
 <div class="form__group">
-  <label for="profession_<%= rl %>"><%= t('.profession') %></label>
-  <select id="profession_<%= rl %>" name="profession_<%= rl %>" >
-    <% @code_profession.map{ |k, v| v }.each do |option| %>
-      <option <% if option == responsable&.profession %> selected <% end %>><%= option %></option>
-    <% end %>
-  </select>
+  <% professions = @code_profession.map{ |k, v| v } %>
+  <%= f.label :profession, t('.profession') %>
+  <%= f.select :profession, options_for_select(professions, :profession) %>
 </div>
 
 <div class="form__group">
-  <label for="enfants_a_charge_<%= rl %>"><%= t('.nb_total_enfants_a_charge') %></label>
-  <input type="text" id="<%=  t('.nb_total_enfants_a_charge') %>" value="<%= responsable&.enfants_a_charge %>" name="enfants_a_charge_<%= rl %>" >
+  <%= f.label :enfants_a_charge, t('.nb_total_enfants_a_charge') %>
+  <%= f.number_field :enfants_a_charge %>
 </div>
 
 <div class="form__group">
-  <% {t('.j_accepte') => true, t('.j_accepte_pas') => false}.each do |nom_option, valeur_option| %>
-    <label>
-      <%= nom_option %>
-      <input id="communique_info_parents_eleves_<%= rl %>" type="radio" name="communique_info_parens_eleves_<%= rl %>" value="<%= valeur_option %>" <% if responsable&.communique_info_parents_eleves == valeur_option || valeur_option == false %> checked <% end %>>
-    </label>
+  <%= label_tag do %>
+    <%= t('.j_accepte') %>
+    <%= f.radio_button :communique_info_parents_eleves, true %>
   <% end %>
-  <p><%= t('.coordonnees_communiquees') %></p>
+  <%= label_tag do %>
+    <%= t('.j_accepte_pas') %>
+    <%= f.radio_button :communique_info_parents_eleves, false %>
+  <% end %>
+  <%= f.label :communique_info_parents_eleves, t('.coordonnees_communiquees') %>
 </div>
 
 <script type="text/javascript" charset="utf-8">
@@ -148,5 +134,24 @@
       $(".formulaire-rl[data-rl-id='" + responsable_id +"']").show()
       $("#lien_de_parente_" + numero_responsable + "").focus()
     }
+
+    $('#dossier_eleve_resp_legal_code_postal').on('input', function() {
+      let inputValue = $(this).val();
+      if (inputValue.length === 5) {
+        $.ajax({
+          method: "GET",
+          url: '/api/communes/deduire_commune',
+          data: { code_postal: inputValue, authenticity_token: "<%= form_authenticity_token %>" },
+          success : function(response) {
+            let $champ_input = $('#dossier_eleve_resp_legal_ville')
+            $champ_input.empty()
+            $.each(response, function (key, value) {
+              $champ_input.append($("<option></option>")
+                .attr("value", value).text(value))
+            })
+          }
+        })
+      }
+    })
   })
 </script>

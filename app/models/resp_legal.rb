@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class RespLegal < ActiveRecord::Base
+  attr_accessor :ville_etranger
 
   belongs_to :dossier_eleve
 

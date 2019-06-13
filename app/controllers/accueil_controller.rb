@@ -94,7 +94,7 @@ class AccueilController < ApplicationController
     @dossier_eleve = @eleve.dossier_eleve
     @dossier_eleve.update derniere_etape: "famille"
     @resp_legal1 = @dossier_eleve.resp_legal_1
-    @resp_legal2 = @dossier_eleve.resp_legal_2
+    @resp_legal2 = @dossier_eleve.resp_legal_2 || RespLegal.new(dossier_eleve: @dossier_eleve)
     @contact_urgence = @dossier_eleve.contact_urgence
     @lien_de_parentes = ["MERE", "PERE", "AUTRE FAM.", "AUTRE LIEN", "TUTEUR", "ASE"]
 
@@ -110,6 +110,12 @@ class AccueilController < ApplicationController
 
   def post_famille
     @dossier_eleve = @eleve.dossier_eleve
+
+    params.require(:dossier_eleve).permit(resp_legal_attributes: [:lien_de_parente, :prenom, :nom, :code_postal,
+                                                                         :adresse, :ville, :ville_etranger, :pays,
+                                                                         :tel_personnel, :tel_portable,
+                                                                         :tel_professionnel, :email, :profession,
+                                                                         :enfants_a_charge])
 
     resp_legal1 = @dossier_eleve.resp_legal_1
     resp_legal2 = @dossier_eleve.resp_legal_2
