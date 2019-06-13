@@ -109,22 +109,21 @@ class AccueilController < ApplicationController
 
   def post_famille
     @dossier_eleve = @eleve.dossier_eleve
+
     resp_legal1 = @dossier_eleve.resp_legal_1
     resp_legal2 = @dossier_eleve.resp_legal_2
-    contact_urgence = ContactUrgence.find_by(dossier_eleve_id: @dossier_eleve.id) || ContactUrgence.new(dossier_eleve_id: @dossier_eleve.id)
 
     RespLegal.identites.each do |i|
       resp_legal1[i] = params["#{i}_rl1"] if params.key?("#{i}_rl1")
       resp_legal2[i] = params["#{i}_rl2"] if resp_legal2 && params.key?("#{i}_rl2")
     end
+
     defini_ville(@dossier_eleve.resp_legal)
     resp_legal1.save!
     resp_legal2.save! if resp_legal2.present?
 
-    %w[lien_avec_eleve prenom nom tel_principal tel_secondaire].each do |i|
-      contact_urgence[i] = params["#{i}_urg"] if params.key?("#{i}_urg")
-    end
-    contact_urgence.save!
+    change = ChangeContactUrgence.new(@dossier_eleve)
+    change.applique(params)
 
     if responsables_valides?(resp_legal1, resp_legal2)
       note_avancement_et_redirige_vers("administration")

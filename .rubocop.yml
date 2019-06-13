@@ -82,7 +82,7 @@ Metrics/AbcSize:
     - 'app/controllers/contact_par_etats_controller.rb'
     - 'app/controllers/mot_de_passe_agent_controller.rb'
     - 'app/controllers/configuration/dossiers_eleve_controller.rb'
-    - 'app/jobs/importer_siecle.rb'
+    - 'app/jobs/impcs/PerceivedComplexityorter_siecle.rb'
     - 'app/services/pdf_fiche_infirmerie.rb'
     - 'app/services/pdf_convocation.rb'
     - 'app/controllers/tache_imports_controller.rb'
@@ -101,20 +101,15 @@ Metrics/AbcSize:
     - 'app/models/dossier_eleve.rb'
     - 'app/mailers/famille_mailer.rb'
     - 'app/jobs/export_eleves_xlsx_job.rb'
+    - 'app/jobs/importer_siecle.rb'
 
 Metrics/CyclomaticComplexity:
   Exclude:
-    - 'app/controllers/authentification_cas_ent_controller.rb'
-    - 'app/jobs/importer_siecle.rb'
-    - 'app/models/dossier_eleve.rb'
-    - 'app/services/pdf_fiche_infirmerie.rb'
-    - 'app/services/pdf_convocation.rb'
     - 'app/controllers/accueil_controller.rb'
+    - 'app/jobs/importer_siecle.rb'
 
 Metrics/PerceivedComplexity:
   Exclude:
-    - 'app/controllers/authentification_cas_ent_controller.rb'
-    - 'app/jobs/importer_siecle.rb'
-    - 'app/models/dossier_eleve.rb'
     - 'app/controllers/accueil_controller.rb'
-    - 'app/services/pdf_fiche_infirmerie.rb'
+    - 'app/jobs/importer_siecle.rb'
+
