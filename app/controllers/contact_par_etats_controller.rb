@@ -24,7 +24,11 @@ class ContactParEtatsController < ApplicationController
     end
 
     unless @agent_connecte.etablissement.envoyer_aux_familles
-      flash[:alert] = "Votre établissement est configuré pour ne pas envoyer d'emails aux familles. Pour changer la configuration, rendez-vous dans le module de configuration, dans le menu « configuration de campagne » dans le bloc « accueil »."
+      flash[:alert] = "Votre établissement est configuré pour ne pas envoyer"\
+        " d'emails aux familles. Pour changer la configuration, rendez-vous"\
+        " dans le module de configuration, dans le menu « configuration de"\
+        " campagne » dans le bloc « accueil »."
+
       redirect_to new_contact_par_etat_path
       return
     end
@@ -41,7 +45,12 @@ class ContactParEtatsController < ApplicationController
       dossiers_sans_email << dossier
     end
 
-    flash[:notice] = I18n.t(".nombre_de_mail_envoye", email_envoye: (dossiers.count - dossiers_sans_email.count), dossier_sans_email: dossiers_sans_email.count) if dossiers_sans_email.any?
+    nombre_de_mail_envoye = I18n.t(".nombre_de_mail_envoye",
+                                   email_envoye: (dossiers.count - dossiers_sans_email.count),
+                                   dossier_sans_email: dossiers_sans_email.count)
+
+    flash[:notice] = nombre_de_mail_envoye if dossiers_sans_email.any?
+
     redirect_to "/agent/liste_des_eleves"
   end
 

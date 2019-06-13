@@ -223,7 +223,11 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     agent = Fabricate(:agent, etablissement: etablissement)
     identification_agent(agent)
 
-    post "/agent/contacter_une_famille", params: { identifiant: dossier.eleve.identifiant, message: "Message de test", moyen_de_communication: resp_legal.email }
+    post "/agent/contacter_une_famille", params: {
+      identifiant: dossier.eleve.identifiant,
+      message: "Message de test",
+      moyen_de_communication: resp_legal.email
+    }
 
     get "/agent/liste_des_eleves"
 
@@ -288,11 +292,17 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     etablissement = Fabricate(:etablissement, envoyer_aux_familles: true)
     resp_legal = Fabricate(:resp_legal)
-    dossier = Fabricate(:dossier_eleve, etablissement: etablissement, resp_legal: [resp_legal])
+    dossier = Fabricate(:dossier_eleve,
+                        etablissement: etablissement,
+                        resp_legal: [resp_legal])
     agent = Fabricate(:agent, etablissement: etablissement)
 
     identification_agent(agent)
-    post "/agent/contacter_une_famille", params: { identifiant: dossier.eleve.identifiant, message: "Message de test", moyen_de_communication: "truc@example.com" }
+    post "/agent/contacter_une_famille", params: {
+      identifiant: dossier.eleve.identifiant,
+      message: "Message de test",
+      moyen_de_communication: "truc@example.com"
+    }
 
     assert_equal 1, Message.count
     message = Message.first

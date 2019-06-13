@@ -24,14 +24,6 @@ Metrics/LineLength:
   Max: 150
   Exclude:
     - 'app/views/**/*erb*'
-    - 'app/controllers/accueil_controller.rb'
-    - 'app/controllers/contact_par_etats_controller.rb'
-    - 'app/services/mef_destination.rb'
-    - 'app/models/dossier_eleve.rb'
-    - 'app/services/pdf_fiche_infirmerie.rb'
-    - 'test/models/dossier_eleve_test.rb'
-    - 'test/models/resp_legal_test.rb'
-    - 'test/integration/inscriptions_controller_test.rb'
 
 Metrics/BlockLength:
   Exclude:

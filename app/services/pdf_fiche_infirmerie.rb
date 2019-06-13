@@ -37,7 +37,7 @@ class PdfFicheInfirmerie
                    "  Nom : #{responsable.nom}  Prénom : #{responsable.prenom}", inline_format: true
           pdf.text "Lien avec l'élève : #{responsable.lien_de_parente}"
           pdf.text "Adresse : #{responsable.adresse}, #{responsable.code_postal} #{responsable.ville}"
-          pdf.text "Tel. Personnel : #{responsable.tel_personnel.present? ? responsable.tel_personnel : champ_libre}," \
+          pdf.text "Tel. Personnel : #{telelephone(:personnel)} ," \
                    "    Portable : #{responsable.tel_portable.present? ? responsable.tel_portable : champ_libre}," \
                    "     Pro : #{responsable.tel_professionnel.present? ? responsable.tel_professionnel : champ_libre}"
         end
@@ -63,9 +63,11 @@ class PdfFicheInfirmerie
           pdf.text "Nom : #{dossier_eleve.contact_urgence.nom}" \
                    "  Prénom : #{dossier_eleve.contact_urgence.prenom}", inline_format: true
           pdf.text "Lien avec l'élève : #{dossier_eleve.contact_urgence.lien_avec_eleve}"
+
           pdf.text "Tel. Principal :" \
-                   " #{dossier_eleve.contact_urgence.tel_principal.present? ? dossier_eleve.contact_urgence.tel_principal : champ_libre}," \
-                   "     Secondaire : #{dossier_eleve.contact_urgence.tel_secondaire.present? ? dossier_eleve.contact_urgence.tel_secondaire : champ_libre}"
+                   " #{telephone(:principal)}," \
+                   "     Secondaire : "\
+                   " #{telephone(:secondaire)}"
         end
         pdf.move_down 8
 
@@ -97,6 +99,14 @@ class PdfFicheInfirmerie
 
         pdf.start_new_page if nombre_de_dossier < dossiers_eleve.length
       end
+    end
+  end
+
+  def telephone(type)
+    if responsable.send("tel_#{type}").present?
+      responsable.send("tel_#{type}")
+    else
+      champ_libre
     end
   end
 

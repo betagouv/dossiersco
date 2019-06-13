@@ -22,10 +22,24 @@ class DossierEleve < ActiveRecord::Base
 
   has_and_belongs_to_many :options_pedagogiques
 
-  ETAT = { pas_connecte: "pas connecté", connecte: "connecté", en_attente: "en attente", en_attente_de_validation: "en attente de validation", valide: "validé", sortant: "sortant" }.freeze
+  ETAT = {
+    pas_connecte: "pas connecté",
+    connecte: "connecté",
+    en_attente: "en attente",
+    en_attente_de_validation: "en attente de validation",
+    valide: "validé",
+    sortant: "sortant"
+  }.freeze
 
   # TODO: utiliser cette liste pour les différents étape d'avancement ?
-  DERNIERE_ETAPE = { accueil: "accueil", eleve: "eleve", famille: "famille", administration: "administration", confirmation: "confirmation", pieces_a_joindre: "pieces_a_joindre" }.freeze
+  DERNIERE_ETAPE = {
+    accueil: "accueil",
+    eleve: "eleve",
+    famille: "famille",
+    administration: "administration",
+    confirmation: "confirmation",
+    pieces_a_joindre: "pieces_a_joindre"
+  }.freeze
 
   validates :etat, inclusion: { in: ETAT.values }
 
@@ -72,7 +86,10 @@ class DossierEleve < ActiveRecord::Base
     enfants > 1
   end
 
-  DEFAULT_TEMPLATE = "<%= eleve.dossier_eleve.etablissement.nom %>: attention, derniers jours pour réinscrire votre enfant <%= eleve.prenom %> sur https://dossiersco.fr avec vos identifiants: <%= eleve.identifiant %> et la date de naissance de l'enfant."
+  DEFAULT_TEMPLATE = "<%= eleve.dossier_eleve.etablissement.nom %>: attention,"\
+    " derniers jours pour réinscrire votre enfant <%= eleve.prenom %> "\
+    " sur https://dossiersco.fr avec vos identifiants: <%= eleve.identifiant %>"\
+    " et la date de naissance de l'enfant."
 
   def relance_sms(template = DEFAULT_TEMPLATE)
     # Construction du message

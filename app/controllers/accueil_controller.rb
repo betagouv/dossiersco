@@ -81,7 +81,7 @@ class AccueilController < ApplicationController
 
     options_origines = dossier_eleve.options_origines.keys.map { |o| OptionPedagogique.find(o) }
     options_origines.each do |option|
-      dossier_eleve.options_pedagogiques << option if !option.abandonnable?(dossier_eleve.mef_destination) && !dossier_eleve.options_pedagogiques.include?(option)
+      dossier_eleve.options_pedagogiques << option if abandonnable?(dossier_eleve, option)
     end
 
     @eleve.save!
@@ -274,6 +274,11 @@ class AccueilController < ApplicationController
 
   def entrees_de_menu
     @entrees_de_menu = %w[accueil eleve famille administration pieces_a_joindre validation].freeze
+  end
+
+  def abandonnable?(dossier, option)
+    !option.abandonnable?(dossier.mef_destination) &&
+      !dossier.options_pedagogiques.include?(option)
   end
 
 end

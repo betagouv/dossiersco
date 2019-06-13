@@ -139,12 +139,26 @@ class DossierEleveTest < ActiveSupport::TestCase
   end
 
   test "moyens_de_communication_electronique renvoie les emails et numéro de portable des resp légaux" do
-    premier_representant = Fabricate(:resp_legal, email: "truc@example.com", tel_professionnel: "0788888888", tel_personnel: "0123456789", tel_portable: nil, priorite: 1, nom: "un")
-    deuxieme_representant = Fabricate(:resp_legal, tel_professionnel: "0699999999", tel_portable: "0723456789", email: nil, tel_personnel: nil, nom: "deux")
+    premier_representant = Fabricate(:resp_legal,
+                                     email: "truc@example.com",
+                                     tel_professionnel: "0788888888",
+                                     tel_personnel: "0123456789",
+                                     tel_portable: nil,
+                                     priorite: 1,
+                                     nom: "un")
+    deuxieme_representant = Fabricate(:resp_legal,
+                                      tel_professionnel: "0699999999",
+                                      tel_portable: "0723456789",
+                                      email: nil,
+                                      tel_personnel: nil,
+                                      nom: "deux")
 
     dossier = Fabricate(:dossier_eleve, resp_legal: [premier_representant, deuxieme_representant])
 
-    expected = { premier_representant.nom_complet => ["truc@example.com", "0788888888"], deuxieme_representant.nom_complet => %w[0699999999 0723456789] }
+    expected = {
+      premier_representant.nom_complet => ["truc@example.com", "0788888888"],
+      deuxieme_representant.nom_complet => %w[0699999999 0723456789]
+    }
     assert_equal expected, dossier.moyens_de_communication_electronique
   end
 

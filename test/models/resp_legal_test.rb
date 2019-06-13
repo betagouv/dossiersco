@@ -107,7 +107,11 @@ class RespLegalTest < ActiveSupport::TestCase
   end
 
   test "renvoie tous les moyens de communication si tous renseignés" do
-    representant = Fabricate.build(:resp_legal, email: "toto@example.com", tel_personnel: "01111111111", tel_portable: "06666666666", tel_professionnel: "0123456789")
+    representant = Fabricate.build(:resp_legal,
+                                   email: "toto@example.com",
+                                   tel_personnel: "01111111111",
+                                   tel_portable: "06666666666",
+                                   tel_professionnel: "0123456789")
     assert_equal ["toto@example.com", "01111111111", "0123456789", "06666666666"].sort, representant.moyens_de_communication.sort
   end
 
