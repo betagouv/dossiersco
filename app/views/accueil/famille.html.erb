@@ -3,9 +3,9 @@
   <form action="/famille" method="POST">
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 
-    <%= render partial: 'form_rl', locals: {responsable: @resp_legal1, rl: 'rl1'} %>
+    <%= render partial: 'form_rl', locals: {responsable: @resp_legal1, rl: 'rl1' } %>
 
-    <%= render partial: 'form_rl', locals: {responsable: @resp_legal2, rl: 'rl2'} %>
+    <%= render partial: 'form_rl', locals: {responsable: @resp_legal2, rl: 'rl2' } %>
 
     <div id='contact_urgence'>
       <h2 class="mt-5 separation"><%= t('.titre_contact_urgence') %></h2>
