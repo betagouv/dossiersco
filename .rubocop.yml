@@ -29,9 +29,6 @@ Metrics/BlockLength:
   Exclude:
     - 'test/**/*'
     - 'lib/**/*'
-    - 'app/services/pdf_fiche_infirmerie.rb'
-    - 'app/services/pdf_convocation.rb'
-
 
 Metrics/MethodLength:
   Exclude:
@@ -69,6 +66,7 @@ Metrics/MethodLength:
 Metrics/ClassLength:
   Exclude:
     - 'test/**/*'
+    - 'app/services/pdf_fiche_infirmerie.rb'
     - 'app/controllers/inscriptions_controller.rb'
     - 'app/models/dossier_eleve.rb'
     - 'app/controllers/accueil_controller.rb'
