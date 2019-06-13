@@ -112,7 +112,7 @@ fr:
       j_accepte: "J'accepte"
       j_accepte_pas: "Je n'accepte pas"
     form_rl:
-      modifier_informations: Modifier les informations
+      modifier_informations: Modifier les informations ci-dessus
       <<: *infos_nom
       <<: *acceptation
       pays: Pays
