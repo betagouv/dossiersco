@@ -1,11 +1,10 @@
 <section class="section">
 
-  <form action="/famille" method="POST">
-    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-
-    <%= render partial: 'form_rl', locals: {responsable: @resp_legal1, rl: 'rl1' } %>
-
-    <%= render partial: 'form_rl', locals: {responsable: @resp_legal2, rl: 'rl2' } %>
+    <%= form_for @dossier_eleve, url: famille_path, method: "post" do |f| %>
+      <%= f.fields_for :resp_legal do |resp| %>
+        <%= render 'form_rl', f: resp, responsable: @dossier_eleve.resp_legal_1, rl: 'rl1' %>
+        <%= render 'form_rl', f: resp, responsable: @resp_legal2, rl: 'rl2' %>
+      <% end %>
 
     <div id='contact_urgence'>
       <h2 class="mt-5 separation"><%= t('.titre_contact_urgence') %></h2>
@@ -37,94 +36,73 @@
 
     </div>
     <%= render partial: 'partials/nouveau_precedent_suivant', :locals => { :precedent => "eleve"} %>
-  </form>
+    <% end %>
 </section>
 
 <script>
-$(document).ready(function() {
+  $(document).ready(function() {
 
-  $.each($(".pays"), function() {
-    affiche_les_bons_champs($(this))
-  })
+    $.each($(".pays"), function() {
+      affiche_les_bons_champs($(this))
+    })
 
-  $(".pays").change(function () {
-    affiche_les_bons_champs($(this))
-  })
+    $(".pays").change(function () {
+      affiche_les_bons_champs($(this))
+    })
 
-  function affiche_les_bons_champs($this) {
-    let resp_legal = $this.data('resp-legal')
-    let id_champs_cp = '#champs-code-postal-rl' + resp_legal
-    let input_champs_cp = $(id_champs_cp + ' :input')
-    let id_champs_select_ville = '#champs-select-ville-rl' + resp_legal
-    let input_champs_select_ville = $(id_champs_select_ville + ' :input')
-    let id_champs_text_ville = '#champs-text-ville-rl' + resp_legal
-    let input_champs_text_ville = $(id_champs_text_ville + ' :input')
-    if ($this.val() !== 'FRA') {
-      input_champs_cp.val('')
-      $(id_champs_cp).hide()
-      input_champs_cp.removeAttr('required')
-      $(id_champs_select_ville).hide()
-      input_champs_select_ville.removeAttr('required')
-      $(id_champs_text_ville).show()
-      input_champs_text_ville.attr('required',true)
-    } else {
-      $(id_champs_cp).show()
-      input_champs_cp.attr('required',true)
-      $(id_champs_select_ville).show()
-      input_champs_select_ville.attr('required',true)
-      input_champs_text_ville.val('')
-      $(id_champs_text_ville).hide()
-      input_champs_text_ville.removeAttr('required')
+    function affiche_les_bons_champs($this) {
+      let resp_legal = $this.data('resp-legal')
+      let id_champs_cp = '#champs-code-postal-rl' + resp_legal
+      let input_champs_cp = $(id_champs_cp + ' :input')
+      let id_champs_select_ville = '#champs-select-ville-rl' + resp_legal
+      let input_champs_select_ville = $(id_champs_select_ville + ' :input')
+      let id_champs_text_ville = '#champs-text-ville-rl' + resp_legal
+      let input_champs_text_ville = $(id_champs_text_ville + ' :input')
+      if ($this.val() !== 'FRA') {
+        input_champs_cp.val('')
+        $(id_champs_cp).hide()
+        input_champs_cp.removeAttr('required')
+        $(id_champs_select_ville).hide()
+        input_champs_select_ville.removeAttr('required')
+        $(id_champs_text_ville).show()
+        input_champs_text_ville.attr('required',true)
+      } else {
+        $(id_champs_cp).show()
+        input_champs_cp.attr('required',true)
+        $(id_champs_select_ville).show()
+        input_champs_select_ville.attr('required',true)
+        input_champs_text_ville.val('')
+        $(id_champs_text_ville).hide()
+        input_champs_text_ville.removeAttr('required')
+      }
     }
-  }
 
-  var input_email_rl1 = $('input[name=email_rl1]')
+    var input_email_rl1 = $('input[name=email_rl1]')
     var input_email_rl2 = $('input[name=email_rl2]')
     var span_email = "<span class='span-email' style='font-size: 12px'>Merci de renseigner votre adresse mail, si vous en avez une. L'établissement peut alors vous contacter plus rapidement s'il y a quelque chose à vous signaler concernant votre inscription.</span>"
 
     if (!input_email_rl1.val() != '' && !input_email_rl2.val() != '') {
       input_email_rl1.css('border', '1px solid orange')
-        input_email_rl1.parent().append(span_email)
-        input_email_rl2.css('border', '1px solid orange')
-        input_email_rl2.parent().append(span_email)
+      input_email_rl1.parent().append(span_email)
+      input_email_rl2.css('border', '1px solid orange')
+      input_email_rl2.parent().append(span_email)
     }
 
-  $('input[type=email]').change( function() {
-    input_email_rl1.css('border', '1px solid rgba(0,0,0,.15)')
+    $('input[type=email]').change( function() {
+      input_email_rl1.css('border', '1px solid rgba(0,0,0,.15)')
       input_email_rl2.css('border', '1px solid rgba(0,0,0,.15)')
       $('.span-email').remove()
-  })
-
-  $('#meme_adresse_que_rl1').click(function() {
-    $("#pays_rl2").val($("#pays_rl1").val());
-    $("#adresse_rl2").val($("#adresse_rl1").val());
-    $("#code_postal_rl2").val($("#code_postal_rl1").val());
-    affiche_les_bons_champs($('#pays_rl2'))
-    let ville_rl1 = $("#ville_rl1").val()
-      $("#ville_rl2").empty().append($("<option></option>").attr("value", ville_rl1).text(ville_rl1))
-  })
-
-  $.each(['rl1', 'rl2'], function(key, value) {
-    $input = $('#code_postal_' + value);
-    $input.on('input', function() {
-      let inputValue = $(this).val();
-      if (inputValue.length === 5) {
-        $.ajax({
-          method: "GET",
-          url: '/api/communes/deduire_commune',
-          data: { code_postal: inputValue, authenticity_token: "<%= form_authenticity_token %>" },
-          success : function(response) {
-            let $champ_input = $('#ville_' + value)
-              $champ_input.empty()
-              $.each(response, function (key, value) {
-                $champ_input.append($("<option></option>")
-                    .attr("value", value).text(value))
-              })
-          }
-        })
-      }
     })
+
+    $('#meme_adresse_que_rl1').click(function() {
+      $("#pays_rl2").val($("#pays_rl1").val());
+      $("#adresse_rl2").val($("#adresse_rl1").val());
+      $("#code_postal_rl2").val($("#code_postal_rl1").val());
+      affiche_les_bons_champs($('#pays_rl2'))
+      let ville_rl1 = $("#ville_rl1").val()
+      $("#ville_rl2").empty().append($("<option></option>").attr("value", ville_rl1).text(ville_rl1))
+    })
+
   })
-})
 
 </script>
