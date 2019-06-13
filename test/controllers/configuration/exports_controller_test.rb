@@ -63,14 +63,4 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     File.delete(fixture_file)
   end
 
-  test "#export-siecle lycée arago" do
-    skip
-    fixture_file = "#{Rails.root}/test/fixtures/files/export-siecle-arago-lycee.xml"
-
-    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
-    xsd = Nokogiri::XML::Schema(File.read(schema))
-    xml = Nokogiri::XML(File.read(fixture_file))
-    assert_equal [], xsd.validate(xml)
-  end
-
 end

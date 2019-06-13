@@ -18,4 +18,8 @@ class Agent < ActiveRecord::Base
     nom_complet.present? ? nom_complet : email
   end
 
+  def admin?
+    admin
+  end
+
 end

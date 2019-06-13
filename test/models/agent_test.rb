@@ -65,4 +65,12 @@ class AgentTest < ActiveSupport::TestCase
     assert_equal [agent], Agent.pour_etablissement(etablissement)
   end
 
+  test "admin? true si agent admin" do
+    assert Fabricate(:agent, admin: true).admin?
+  end
+
+  test "admin? false si agent pas admin" do
+    assert !Fabricate(:agent, admin: false).admin?
+  end
+
 end

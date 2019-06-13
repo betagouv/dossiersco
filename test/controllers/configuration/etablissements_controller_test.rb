@@ -23,9 +23,4 @@ class EtablissementsControllerTest < ActionDispatch::IntegrationTest
     assert_equal expected, flash[:notice]
   end
 
-  test "Une personne inconnue souhaite créer un établissement existant" do
-    skip
-    assert_equal "Cet etablissement a déjà rejoint DossierSco", flash[:notice]
-  end
-
 end

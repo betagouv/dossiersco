@@ -14,9 +14,13 @@ class InscriptionsController < ApplicationController
 
     if mon_agent&.authenticate(params[:mot_de_passe])
       session[:agent_email] = mon_agent.email
-      redirect_to agent_liste_des_eleves_path
+      if !mon_agent.admin? || mon_agent.etablissement.dossier_eleve.count.positive?
+        redirect_to agent_liste_des_eleves_path
+      else
+        redirect_to configuration_path
+      end
     else
-      session[:erreur_login] = "Ces informations ne correspondent pas à un agent enregistré"
+      flash[:alert] = "Ces informations ne correspondent pas à un agent enregistré"
       redirect_to agent_path
     end
   end

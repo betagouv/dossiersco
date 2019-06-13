@@ -4,35 +4,6 @@ require "test_helper"
 
 class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
-  def test_entree_succes_agent
-    agent = Fabricate(:agent)
-    post "/agent", params: { email: agent.email, mot_de_passe: agent.password }
-    follow_redirect!
-    assert response.body.include? agent.email
-  end
-
-  test "La casse en saisi n'est pas un soucis pour se connecter" do
-    agent = Fabricate(:agent, email: "ubber@laposte.net")
-    post "/agent", params: { email: "uBbeR@lApOsTe.nEt", mot_de_passe: agent.password }
-    follow_redirect!
-
-    assert response.body.include? agent.email
-  end
-
-  def test_entree_mauvais_mdp_agent
-    agent = Fabricate(:admin)
-    post "/agent", params: { email: agent.email, mot_de_passe: "mauvais mot de passe" }
-    follow_redirect!
-    assert response.body.include? "Ces informations ne correspondent pas à un agent enregistré"
-  end
-
-  def test_entree_mauvais_identifiant_agent
-    Fabricate(:admin)
-    post "/agent", params: { email: "jacques@laposte.net", mot_de_passe: "pierre" }
-    follow_redirect!
-    assert response.body.include? "Ces informations ne correspondent pas à un agent enregistré"
-  end
-
   def test_nombre_dossiers_total
     agent = Fabricate(:agent)
     5.times { Fabricate(:dossier_eleve, etablissement: agent.etablissement, resp_legal: [Fabricate(:resp_legal)]) }
