@@ -48,7 +48,7 @@ class PdfFicheInfirmerie
         "  Nom : #{responsable.nom}  Prénom : #{responsable.prenom}", inline_format: true
       pdf.text "Lien avec l'élève : #{responsable.lien_de_parente}"
       pdf.text "Adresse : #{responsable.adresse}, #{responsable.code_postal} #{responsable.ville}"
-      pdf.text "Tel. Personnel : #{telelephone(:personnel)} ," \
+      pdf.text "Tel. Personnel : #{telephone(:personnel)} ," \
         "    Portable : #{responsable.tel_portable.present? ? responsable.tel_portable : CHAMP_LIBRE}," \
         "     Pro : #{responsable.tel_professionnel.present? ? responsable.tel_professionnel : CHAMP_LIBRE}"
     end
