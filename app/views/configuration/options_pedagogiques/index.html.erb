@@ -27,7 +27,7 @@
               <% liste = mef.mef_options_pedagogiques.sort_by { |mef_option| mef_option.option_pedagogique.nom } %>
               <% liste.each do |mef_option| %>
                 <tr class="small-line" data-option-id="<%= mef_option.option_pedagogique.id %>">
-                  <td><%= "#{mef_option.option_pedagogique.nom} #{mef_option.option_pedagogique.groupe} " %></td>
+                  <td><%= "#{mef_option.option_pedagogique&.nom} #{mef_option.option_pedagogique&.groupe} " %></td>
                   <td><%= select_tag "abandonnable", options_for_select([['Abandonnable', true], ['Non abandonnable', false]], selected: mef_option.abandonnable ), data: {id: mef_option.id} %></td>
                   <td><%= select_tag "ouverte_inscription", options_for_select([["Ouverte à l'inscription", true], ["Fermée à l'inscription", false]], selected: mef_option.ouverte_inscription ), data: {id: mef_option.id} %></td>
                   <td><%= link_to t('.modifier'), edit_configuration_option_pedagogique_path(mef_option.option_pedagogique) %></td>
