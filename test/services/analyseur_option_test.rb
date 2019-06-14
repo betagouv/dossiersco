@@ -114,4 +114,25 @@ class AnalyseurOptionTest < ActiveSupport::TestCase
     assert_equal [option], analyseur.option_abandonnee
   end
 
+  test "continue de fonctionner quand l'option pédagogique d'origine n'existe plus" do
+    etablissement = Fabricate(:etablissement)
+    mef = Fabricate(:mef)
+
+    option = Fabricate(:option_pedagogique, etablissement: etablissement, mef: [mef])
+    id_option = option.id
+    options_origines = {}
+    options_origines[id_option] = { nom: option.nom, code_matiere: option.code_matiere }
+    option.destroy
+
+    dossier = Fabricate(:dossier_eleve,
+                        mef_destination: mef,
+                        etablissement: etablissement,
+                        options_origines: options_origines,
+                        options_pedagogiques: [])
+
+    assert !OptionPedagogique.exists?(id_option)
+    analyseur = AnalyseurOption.new(dossier)
+    assert_equal [], analyseur.option_maintenue
+  end
+
 end

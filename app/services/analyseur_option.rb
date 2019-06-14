@@ -18,6 +18,8 @@ class AnalyseurOption
   def option_abandonnee
     options = []
     @dossier.options_origines.each do |id_option, _option|
+      next unless OptionPedagogique.exists?(id_option)
+
       if @dossier.options_pedagogiques.select { |o| o.id == id_option.to_i }.empty?
         option_pedagogique = OptionPedagogique.find(id_option)
         options << option_pedagogique
