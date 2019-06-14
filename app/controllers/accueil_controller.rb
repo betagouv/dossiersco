@@ -79,7 +79,7 @@ class AccueilController < ApplicationController
       dossier_eleve.options_pedagogiques << option if params[option.nom].present?
     end
 
-    options_origines = dossier_eleve.options_origines.keys.map { |o| OptionPedagogique.find_b(id: o) }.compact
+    options_origines = dossier_eleve.options_origines.keys.map { |o| OptionPedagogique.find_by(id: o) }.compact
 
     options_origines.each do |option|
       dossier_eleve.options_pedagogiques << option if abandonnable?(dossier_eleve, option)
