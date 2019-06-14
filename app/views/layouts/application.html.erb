@@ -38,9 +38,9 @@
       <li><%= link_to 'Établissements expérimentateurs', etablissements_experimentateurs_suivi_index_path %></li>
     </ul>
 
-<!--    <ul class="footer__links">-->
-<!--      <li><%#= link_to 'Changelog', changelog_path %></li>-->
-<!--    </ul>-->
+    <ul class="footer__links">
+      <li><%= link_to 'Changelog', changelog_path %></li>
+    </ul>
 
     <ul class="footer__links">
       <% if @agent_connecte && super_admin?(@agent_connecte.email) %>
@@ -55,17 +55,17 @@
 </footer>
 <!-- Piwik -->
 <script type="text/javascript">
-  var _paq = _paq || [];
-  _paq.push(["setDomains", ["*.www.dossiersco.fr","*.dossiersco.beta.gouv.fr","*.dossiersco.fr"]]);
-  _paq.push(['trackPageView']);
-  _paq.push(['enableLinkTracking']);
-  (function() {
-    var u="//stats.data.gouv.fr/";
-    _paq.push(['setTrackerUrl', u+'piwik.php']);
-    _paq.push(['setSiteId', '54']);
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-  })();
+var _paq = _paq || [];
+_paq.push(["setDomains", ["*.www.dossiersco.fr","*.dossiersco.beta.gouv.fr","*.dossiersco.fr"]]);
+_paq.push(['trackPageView']);
+_paq.push(['enableLinkTracking']);
+(function() {
+  var u="//stats.data.gouv.fr/";
+  _paq.push(['setTrackerUrl', u+'piwik.php']);
+  _paq.push(['setSiteId', '54']);
+  var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+  g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+})();
 </script>
 
 <noscript><p><img src="//stats.data.gouv.fr/piwik.php?idsite=54" style="border:0;" alt="" /></p></noscript>

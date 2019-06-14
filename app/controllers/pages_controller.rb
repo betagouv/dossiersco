@@ -21,7 +21,7 @@ class PagesController < ApplicationController
 
   def changelog
     fichier = File.join(Rails.root, "doc/changelog.md")
-    renderer = Redcarpet::Render::HTML.new(no_links: true, hard_wrap: true)
+    renderer = Redcarpet::Render::HTML.new(hard_wrap: true)
     markdown = Redcarpet::Markdown.new(renderer, {})
 
     contenue = markdown.render(File.read(fichier)).to_s
