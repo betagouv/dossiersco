@@ -5,8 +5,8 @@ module Configuration
 
     layout "configuration"
 
-    before_action :if_agent_is_admin, except: %i[new create]
-    before_action :cherche_etablissement, only: %i[show edit update]
+    before_action :if_agent_is_admin, except: %i[new create relance_invitation_agent]
+    before_action :cherche_etablissement, only: %i[show edit update relance_invitation_agent]
 
     def index
       @etablissements = Etablissement.all.order(:nom)
@@ -16,6 +16,7 @@ module Configuration
     def show; end
 
     def new
+      @etablissement = Etablissement.find_by(uai: params[:uai])
       render layout: "connexion"
     end
 
@@ -25,7 +26,7 @@ module Configuration
       redirect_to new_configuration_etablissement_path, notice: t(".mail_envoye", mail_ce: agent.email)
     rescue StandardError => error
       flash[:error] = t(".#{error}")
-      render :new, layout: "connexion"
+      redirect_to new_configuration_etablissement_path(uai: etablissement_params[:uai])
     end
 
     def edit; end
@@ -43,6 +44,12 @@ module Configuration
       redirect_to new_tache_import_path, notice: t(".purge_succes")
     end
 
+    def relance_invitation_agent
+      agent = @etablissement.agent.first
+      AgentMailer.invite_premier_agent(agent).deliver_now
+      redirect_to new_configuration_etablissement_path, notice: t(".mail_envoye", mail_ce: agent.email)
+    end
+
     private
 
     def etablissement_params
@@ -53,7 +60,11 @@ module Configuration
     end
 
     def cherche_etablissement
-      @etablissement = Etablissement.find(params[:id])
+      @etablissement = if params[:id].present?
+                         Etablissement.find(params[:id])
+                       elsif params[:etablissement_id].present?
+                         Etablissement.find(params[:etablissement_id])
+                       end
     end
 
   end

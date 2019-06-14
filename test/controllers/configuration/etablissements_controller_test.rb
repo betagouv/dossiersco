@@ -23,4 +23,15 @@ class EtablissementsControllerTest < ActionDispatch::IntegrationTest
     assert_equal expected, flash[:notice]
   end
 
+  test "relance un email de finalisation d'inscription agent" do
+    ActionMailer::Base.deliveries = []
+
+    etablissement = Fabricate(:etablissement)
+    Fabricate(:agent, etablissement: etablissement, password: nil, jeton: "something")
+    post configuration_etablissement_relance_invitation_agent_path(etablissement.id)
+
+    assert_equal 1, ActionMailer::Base.deliveries.count
+    ActionMailer::Base.deliveries = []
+  end
+
 end

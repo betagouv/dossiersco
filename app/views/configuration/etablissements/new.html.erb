@@ -2,7 +2,12 @@
   <div class="container">
     <h1><%= t(".titre") %></h1>
     <% if flash[:error] %>
-      <div class="alert alert-danger"><%= flash[:error] %></div>
+      <div class="notification error">
+        <%= flash[:error] %><br/>
+        <% if @etablissement.present? %>
+          Vous pouvez également <%= link_to "relancer l'email de confirmation", configuration_etablissement_relance_invitation_agent_path(@etablissement.id), method: :post %>.
+        <% end %>
+      </div>
     <% end %>
 
     <p><%= t('.explication') %></p>
@@ -15,5 +20,7 @@
         <%= f.submit t('.inscrire'), class: 'button' %>
       </div>
     <% end %>
+
+    <p class="notification warning">Il arrive parfois que nos emails soient bloqué dans l'anti-virus académique, ou bien arrive comme spam. Nous faisons actuellement des recherches et développements pour améliorer cette partie.</p>
   </div>
 </section>

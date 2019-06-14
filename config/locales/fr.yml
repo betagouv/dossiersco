@@ -301,7 +301,7 @@ fr:
         inscrire: "Envoyer la demande d'inscription"
       create:
         uai_invalide: "Nous n'avons pas reconnu l'uai que vous avez renseigné"
-        uai_existant: "Cet uai est déjà enregistré, veuillez contacter votre chef d'établissement"
+        uai_existant: "Cet uai est déjà enregistré, veuillez contacter votre chef d'établissement."
         mail_envoye: "Un mail a été envoyé à %{mail_ce}"
       edit:
         mot_accueil: "Mot présent sur la page d'accueil des familles"
@@ -313,6 +313,8 @@ fr:
         reglement_demi_pension: "Règlement demi-pension"
         titre: "Modifier un établissement"
       purge_succes:  "L'établissement a bien été purgé"
+      relance_invitation_agent:
+        mail_envoye: "Un mail a été envoyé à %{mail_ce}"
   configurations:
     show:
       liste_des_eleves: Voir la liste des élèves

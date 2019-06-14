@@ -42,6 +42,7 @@ Rails.application.routes.draw do
 
     resources :etablissements, expect: %i[destroy] do
       put "purge"
+      post "relance_invitation_agent"
     end
 
     resources :agents do
