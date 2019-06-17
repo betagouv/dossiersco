@@ -24,6 +24,7 @@ class ExportElevesXlsxJob < ActiveJob::Base
       ligne << (dossier.autorise_photo_de_classe ? "X" : "")
       ligne << (dossier.renseignements_medicaux ? "X" : "")
       ligne.concat(cellules_pieces_jointes(dossier))
+      ligne << dossier.etat
       lignes << ligne
     end
     lignes
@@ -37,6 +38,7 @@ class ExportElevesXlsxJob < ActiveJob::Base
     entete.concat(agent.etablissement.regimes_sortie.map(&:nom)) if agent.etablissement.regimes_sortie.count > 1
     entete.concat(["Autorise photo de classe", "Information médicale"])
     entete.concat(agent.etablissement.pieces_attendues.map(&:nom))
+    entete.concat(["Status du dossier"])
     entete
   end
 
