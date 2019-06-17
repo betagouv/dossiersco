@@ -1,3 +1,11 @@
+## lundi 17 juin
+
+### Rendre visible le statut d'un dossier dans l'export excel
+
+rendre visible le satut d'un dossier dans l'export excel. Il y a maintenant une colonne statut.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/648)
+
 ## vendredi 14 juin
 
 ### En tant qu'agent, je peux créer un compte quand mon collège s'est inscrit sans créer d'agent
@@ -27,6 +35,54 @@ Certains parents vive à l'étranger. Nous avons fait en sorte que ce soit faisa
 
 [ticket](https://gitlab.com/dossiersco/dossiersco/issues/614)
 
+### Export excel incomplet
+
+En tant qu'agent, quand je fais un export Excel, je peux maintenant retrouver les infos suivantes dans l'export :
+
+- la famille accepte t-elle que l'enfant soit photographié pour la photo de classe ?
+- est-ce que la famille souhaite envoyer par écrit au secrétariat une information médicale ?
+- quelles pieces jointes ont été fournies (une croix indiquant si la pièce a été fournie) ?
+
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/642)
+
+## Mardi 11 juin
+
+### Configurer le reply-to des emails envoyés aux familles
+
+Afin de permettre aux établissement de recevoir directement les messages des familles, nous avons changer le `reply-to` par une adresse configuré dans la « configuration de la campagne ». Par défaut on y place ce.XXX@ac-YYY.fr̀ et c'est un champ email obligatoire.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/594)
+
+### Enregistre le tel professionnel
+
+Si une personne représentante légale saisi un numéro de téléphone professionnel, il est maintenant enregistré.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/633)
+
+### afficher un changelog dans l'application
+
+Pour permettre de partager notre avancement avec les personnes utilisatrices, nous avons ajouté un fichier changelog dans le répo (doc/changelog.md) ainsi qu'un lien dans le footer de l'application.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/626)
+
+
+## lundi 10 juin
+
+### A l'import quand pas de MEF cible, chercher une MEF générale
+
+Dans le cas où aucune MEF de montée n'est trouvée, nous cherchons le MEF la plus générale correspondante (5EME pour l'exemple d'une 6EME BILANGUE) et l'affecter.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/623)
+
+## 4 juin
+
+### Le texte des lettres de convocation concerne la réinscription, pas l'inscription en 6ème
+
+Changement du texte des convocations pour faire en sorte que ce texte soit valable également pour l'inscription en 6eme.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/598)
+
 
 
 ## 3 juin
@@ -36,6 +92,21 @@ Certains parents vive à l'étranger. Nous avons fait en sorte que ce soit faisa
 Ajout d'une zone d'explication sur chaque option. Configuration à partir de la carte des formations. Affichage dans la partie famille, sur la page élève, à coté des options.
 
 [ticket](https://gitlab.com/dossiersco/dossiersco/issues/486)
+
+
+### Rendre une option d'un MEF, non accessible aux élèves qui ne la suivaient pas l'année précédente dans la base élèves
+
+Nous pouvons maintenant configurer une option dans un mef pour précisier si cette option est ouverte à l'inscription ou non.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/542)
+
+
+### Le caractère obligatoire d'une option a été remplacé par le caractère abandonnable
+
+Nous pouvons maintenant configurer une option dans un mef pour préciser si cette option est abandonnable ou non.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/493)
+
 
 ## 31 Mai
 
@@ -52,6 +123,13 @@ En tant qu'admin d'établissement, je peux demander ou ne pas demander l'identif
 
 
 [ticket](https://gitlab.com/dossiersco/dossiersco/issues/590)
+
+### Faire la distinction entre les options demandables ou abandonnables
+
+Afficher les options de l'élève de l'an dernier, différemment des options à choisir pour l'année à venir.
+
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/591)
 
 
 ## 30 Mai
