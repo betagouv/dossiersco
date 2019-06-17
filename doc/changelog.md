@@ -75,7 +75,35 @@ Dans le cas où aucune MEF de montée n'est trouvée, nous cherchons le MEF la p
 
 [ticket](https://gitlab.com/dossiersco/dossiersco/issues/623)
 
-## 4 juin
+
+### Permettre l'import des élèves de 6èmes depuis SIECLE dans DossierSCO
+
+Pour permettre l'import des 6eme depuis SIECLE, nous avons ajouté une selection sur le type de fichier qui va être importé afin de pouvoir le traiter en fonction de la source.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/622)
+
+### Permettre au collège de déclencher le début de la campagne
+
+L'établissement peut maintenant configurer le début de campagne.
+
+Tant que la date n'est pas arrivée, les familles ne peuvent pas arriver sur les pages d'inscription.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/624)
+
+### Préciser si l'envoi d'un message se fera par mail ou SMS
+
+Afin de savoir par quel chemin le message va partir à une famille, afficher les moyens de communication possible (numéro de téléphone et donc SMS, mail)
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/555)
+
+## samedi 8 juin
+
+### Ne plus envoyer de copie à l'agent connecté
+
+Nous n'envoyons plus de copie des messages envoyé aux famillles aux agents.
+
+
+## mardi 4 juin
 
 ### Le texte des lettres de convocation concerne la réinscription, pas l'inscription en 6ème
 
@@ -85,7 +113,7 @@ Changement du texte des convocations pour faire en sorte que ce texte soit valab
 
 
 
-## 3 juin
+## lundi 3 juin
 
 ### Informer la famille des implications du choix d'une option pédagogique
 
@@ -108,7 +136,7 @@ Nous pouvons maintenant configurer une option dans un mef pour préciser si cett
 [ticket](https://gitlab.com/dossiersco/dossiersco/issues/493)
 
 
-## 31 Mai
+## vendredi 31 Mai
 
 ### Configurer si l'établissement souhaite calculer automatiquement les tarifs de cantine
 
