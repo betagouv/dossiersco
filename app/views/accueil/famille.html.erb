@@ -2,8 +2,7 @@
 
     <%= form_for @dossier_eleve, url: famille_path, method: "post" do |f| %>
       <%= f.fields_for :resp_legal do |resp| %>
-        <%= render 'form_rl', f: resp, responsable: @dossier_eleve.resp_legal_1, rl: 'rl1' %>
-        <%= render 'form_rl', f: resp, responsable: @resp_legal2, rl: 'rl2' %>
+        <%= render 'form_rl', f: resp, responsable: resp, rl: 'rl1' %>
       <% end %>
 
     <div id='contact_urgence'>
