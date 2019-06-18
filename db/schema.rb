@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_10_144238) do
+ActiveRecord::Schema.define(version: 2019_06_18_101413) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 2019_06_10_144238) do
     t.boolean "demi_pensionnaire", default: false
     t.boolean "autorise_sortie", default: false
     t.boolean "renseignements_medicaux", default: false
-    t.boolean "autorise_photo_de_classe", default: true
+    t.boolean "autorise_photo_de_classe", default: false
     t.boolean "check_paiement_cantine", default: false
     t.string "etape_la_plus_avancee", default: "accueil"
     t.text "commentaire"
