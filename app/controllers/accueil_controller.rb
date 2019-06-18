@@ -93,8 +93,9 @@ class AccueilController < ApplicationController
   def famille
     @dossier_eleve = @eleve.dossier_eleve
     @dossier_eleve.update derniere_etape: "famille"
-    @resp_legal1 = @dossier_eleve.resp_legal_1
-    @resp_legal2 = @dossier_eleve.resp_legal_2 || RespLegal.new(dossier_eleve: @dossier_eleve)
+    if @dossier_eleve.resp_legal.count < 2
+      @dossier_eleve.resp_legal << RespLegal.new
+    end
     @contact_urgence = @dossier_eleve.contact_urgence
     @lien_de_parentes = ["MERE", "PERE", "AUTRE FAM.", "AUTRE LIEN", "TUTEUR", "ASE"]
 
@@ -116,6 +117,7 @@ class AccueilController < ApplicationController
                                                                          :tel_personnel, :tel_portable,
                                                                          :tel_professionnel, :email, :profession,
                                                                          :enfants_a_charge])
+    raise params.inspect
 
     resp_legal1 = @dossier_eleve.resp_legal_1
     resp_legal2 = @dossier_eleve.resp_legal_2
