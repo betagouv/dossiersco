@@ -51,16 +51,10 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
 
-    fixture_file = "#{Rails.root}/test/fixtures/export_siecle.xml"
-    File.open(fixture_file, "a+") do |f|
-      f.puts(response.body)
-    end
-
     schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
     xsd = Nokogiri::XML::Schema(File.read(schema))
     xml = Nokogiri::XML(response.body)
     assert_equal [], xsd.validate(xml)
-    File.delete(fixture_file)
   end
 
 end
