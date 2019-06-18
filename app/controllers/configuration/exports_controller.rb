@@ -16,10 +16,10 @@ module Configuration
       @etablissement = @agent_connecte.etablissement
 
       xml_string = render_to_string layout: false
-      file = Tempfile.new(['export_pour_siecle','.xml'])
+      file = Tempfile.new(["export_pour_siecle", ".xml"])
       file.write(xml_string)
       file.close
-      send_file file.path, :x_sendfile => true, :type => 'text/xml'
+      send_file file.path, x_sendfile: true, type: "text/xml"
     end
 
   end
