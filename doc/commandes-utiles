@@ -201,3 +201,18 @@ p etablissement.dossier_eleve.where(etat: "validé").count
 File.open('malraux.xml', 'w') { |file| file.write(export_xml_tous_les_champs(etablissement, 'export_xml_robot'))}
 
 docker-compose run --rm test rails test test/helpers/application_helper_test.rb
+
+# Pour investiguer des problèmes d'import
+
+Dans app/jobs/importer_siecle.rb, commenter le discard_on puis le begin rescue :
+
+  #discard_on(StandardError) do |_job, error|
+  #  ExceptionNotifier.caught(error)
+  #end
+...
+    #begin
+...
+    #rescue StandardError
+    #  tache.update(statut: TacheImport::STATUTS[:en_erreur])
+    #  AgentMailer.erreur_import(email).deliver_now
+    #end
