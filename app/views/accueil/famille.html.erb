@@ -2,7 +2,7 @@
 
     <%= form_for @dossier_eleve, url: famille_path, method: "post" do |f| %>
       <%= f.fields_for :resp_legal do |resp| %>
-        <%= render 'form_rl', f: resp, responsable: resp, rl: 'rl1' %>
+        <%= render 'form_rl', f: resp, responsable: resp.object, rl: resp.object.priorite %>
       <% end %>
 
     <div id='contact_urgence'>
@@ -41,11 +41,51 @@
 <script>
   $(document).ready(function() {
 
-    $.each($(".pays"), function() {
+    const $button_rl = $('.modifier-informations-rl')
+    $button_rl.click(function () {
+      affiche_formulaire($(this))
+    })
+    $button_rl.on('keypress',function(e) {
+      if(e.which === 13) {
+        affiche_formulaire($(this))
+      }
+    });
+    function affiche_formulaire($this) {
+      let responsable_id = $this.data('rl-id')
+      let numero_responsable = $this.data('rl')
+      $(".informations-rl[data-rl-id='" + responsable_id +"']").hide()
+      $(".formulaire-rl[data-rl-id='" + responsable_id +"']").show()
+      $(".lien_de_parente_" + numero_responsable + "").focus()
+    }
+
+    $('.input-code-postal').on('input', function() {
+      let inputValue = $(this).val()
+      let rl = $(this).data('rl')
+      if (inputValue.length === 5) {
+        $.ajax({
+          method: "GET",
+          url: '/api/communes/deduire_commune',
+          data: { code_postal: inputValue, authenticity_token: "<%= form_authenticity_token %>" },
+          success : function(response) {
+            let $champ_input = $(".input-ville[data-rl='" + rl + "']")
+            console.log($champ_input)
+            $champ_input.empty()
+            $.each(response, function (key, value) {
+              $champ_input.append($("<option></option>")
+                .attr("value", value).text(value))
+            })
+          }
+        })
+      }
+    })
+
+    const $pays = $(".pays")
+
+    $.each($pays, function() {
       affiche_les_bons_champs($(this))
     })
 
-    $(".pays").change(function () {
+    $pays.change(function () {
       affiche_les_bons_champs($(this))
     })
 
@@ -76,9 +116,9 @@
       }
     }
 
-    var input_email_rl1 = $('input[name=email_rl1]')
-    var input_email_rl2 = $('input[name=email_rl2]')
-    var span_email = "<span class='span-email' style='font-size: 12px'>Merci de renseigner votre adresse mail, si vous en avez une. L'établissement peut alors vous contacter plus rapidement s'il y a quelque chose à vous signaler concernant votre inscription.</span>"
+    let input_email_rl1 = $('input[name=email_rl1]')
+    let input_email_rl2 = $('input[name=email_rl2]')
+    let span_email = "<span class='span-email' style='font-size: 12px'>Merci de renseigner votre adresse mail, si vous en avez une. L'établissement peut alors vous contacter plus rapidement s'il y a quelque chose à vous signaler concernant votre inscription.</span>"
 
     if (!input_email_rl1.val() != '' && !input_email_rl2.val() != '') {
       input_email_rl1.css('border', '1px solid orange')
