@@ -93,10 +93,13 @@ class AccueilController < ApplicationController
   def famille
     @dossier_eleve = @eleve.dossier_eleve
     @dossier_eleve.update derniere_etape: "famille"
-    if @dossier_eleve.resp_legal.count < 2
-      @dossier_eleve.resp_legal << RespLegal.new
-    end
+    @dossier_eleve.resp_legal << RespLegal.new(priorite: 2) if @dossier_eleve.resp_legal.count < 2
     @contact_urgence = @dossier_eleve.contact_urgence
+    variables_famille
+    render "accueil/famille"
+  end
+
+  def variables_famille
     @lien_de_parentes = ["MERE", "PERE", "AUTRE FAM.", "AUTRE LIEN", "TUTEUR", "ASE"]
 
     @code_profession = RespLegal.codes_profession
@@ -106,44 +109,38 @@ class AccueilController < ApplicationController
     CSV.foreach(filename, col_sep: ";") do |row|
       @liste_pays << [row[0].upcase, row[1].upcase]
     end
-    render "accueil/famille"
   end
 
   def post_famille
     @dossier_eleve = @eleve.dossier_eleve
 
-    params.require(:dossier_eleve).permit(resp_legal_attributes: [:lien_de_parente, :prenom, :nom, :code_postal,
-                                                                         :adresse, :ville, :ville_etranger, :pays,
-                                                                         :tel_personnel, :tel_portable,
-                                                                         :tel_professionnel, :email, :profession,
-                                                                         :enfants_a_charge])
-    raise params.inspect
-
-    resp_legal1 = @dossier_eleve.resp_legal_1
-    resp_legal2 = @dossier_eleve.resp_legal_2
-
-    RespLegal.identites.each do |i|
-      resp_legal1[i] = params["#{i}_rl1"] if params.key?("#{i}_rl1")
-      resp_legal2[i] = params["#{i}_rl2"] if resp_legal2 && params.key?("#{i}_rl2")
-    end
+    @dossier_eleve.update(params_resp_legal)
+    @contact_urgence = ContactUrgence.find_by(dossier_eleve_id: @dossier_eleve.id) || ContactUrgence.new(dossier_eleve_id: @dossier_eleve.id)
 
     defini_ville(@dossier_eleve.resp_legal)
-    resp_legal1.save!
-    resp_legal2.save! if resp_legal2.present?
 
     change = ChangeContactUrgence.new(@dossier_eleve)
     change.applique(params)
 
-    if responsables_valides?(resp_legal1, resp_legal2)
+    if @dossier_eleve.update(params_resp_legal)
       note_avancement_et_redirige_vers("administration")
     else
-      error = if resp_legal1.errors.messages.present?
-                resp_legal1.errors.messages.first[1].join
-              elsif resp_legal2.present? && resp_legal2.errors.messages.present?
-                resp_legal2.errors.messages.first[1].join
-              end
-      redirect_to famille_path, alert: error
+      # error = if resp_legal1.errors.messages.present?
+      #           resp_legal1.errors.messages.first[1].join
+      #         elsif resp_legal2.present? && resp_legal2.errors.messages.present?
+      #           resp_legal2.errors.messages.first[1].join
+      #         end
+      variables_famille
+      render :famille, alert: error
     end
+  end
+
+  def params_resp_legal
+    params.require(:dossier_eleve).permit(resp_legal_attributes: %i[lien_de_parente prenom nom code_postal
+                                                                    adresse ville ville_etranger pays
+                                                                    tel_personnel tel_portable
+                                                                    tel_professionnel email profession
+                                                                    enfants_a_charge id])
   end
 
   def defini_ville(responsables)
@@ -151,9 +148,8 @@ class AccueilController < ApplicationController
       ville_etrangere = params["ville_etrangere_rl#{responsable.priorite}"]
       responsable.ville = if !ville_etrangere.blank?
                             ville_etrangere
-                          else
-                            params["ville_rl#{responsable.priorite}"]
                           end
+      responsable.save
     end
   end
 

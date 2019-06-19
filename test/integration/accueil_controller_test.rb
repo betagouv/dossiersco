@@ -217,7 +217,7 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
       jour: eleve.jour_de_naissance
     }
     post "/identification", params: params
-    post "/famille"
+    post "/famille", params: dossier_eleve
     get "/eleve"
     post "/deconnexion"
     params = {

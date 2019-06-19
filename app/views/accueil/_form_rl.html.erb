@@ -1,32 +1,34 @@
 <h2 class="separation"><%= t('.titre_responsable_legal') %></h2>
 
 
-<div class="informations-rl mb-2" data-rl-id="<%= responsable&.id %>">
+<div class="informations-rl mb-2" data-rl-id="<%= responsable.id %>">
   <ul class="list-unstyled">
-    <li><b><%= t('.lien_de_parente') %></b> : <%= responsable&.lien_de_parente %></li>
-    <li><b><%= t('.prenom') %></b> : <%= responsable&.prenom %></li>
-    <li><b><%= t('.nom') %></b> : <%= responsable&.nom %></li>
-    <li><b><%= t('.adresse') %></b> : <%= responsable&.adresse %></li>
-    <li><b><%= t('.code_postal') %></b> : <%= responsable&.code_postal %></li>
-    <li><b><%= t('.ville') %></b> : <%= responsable&.ville&.upcase %></li>
+    <li><b><%= t('.lien_de_parente') %></b> : <%= responsable.lien_de_parente %></li>
+    <li><b><%= t('.prenom') %></b> : <%= responsable.prenom %></li>
+    <li><b><%= t('.nom') %></b> : <%= responsable.nom %></li>
+    <li><b><%= t('.adresse') %></b> : <%= responsable.adresse %></li>
+    <li><b><%= t('.code_postal') %></b> : <%= responsable.code_postal %></li>
+    <li><b><%= t('.ville') %></b> : <%= responsable.ville&.upcase %></li>
     <li><b><%= t('.pays') %></b> :
       <% @liste_pays.each do |option| %>
-        <%= option[0] if option[1] == responsable&.pays %>
+        <%= option[0] if option[1] == responsable.pays %>
       <% end %></li>
-    <li><b><%= t('.telephone_principal') %></b> : <%= responsable&.tel_personnel %></li>
-    <li><b><%= t('.telephone_secondaire') %></b> : <%= responsable&.tel_portable %></li>
-    <li><b><%= t('.telephone_professionnel') %></b> : <%= responsable&.tel_professionnel %></li>
-    <li><b><%= t('.email_principal') %></b> : <%= responsable&.email %></li>
+    <li><b><%= t('.telephone_principal') %></b> : <%= responsable.tel_personnel %></li>
+    <li><b><%= t('.telephone_secondaire') %></b> : <%= responsable.tel_portable %></li>
+    <li><b><%= t('.telephone_professionnel') %></b> : <%= responsable.tel_professionnel %></li>
+    <li><b><%= t('.email_principal') %></b> : <%= responsable.email %></li>
   </ul>
-  <a class="modifier-informations-rl button-outline primary" tabindex="0" data-rl-id="<%= responsable&.id %>" data-rl="<%= rl %>">
+  <a class="modifier-informations-rl button-outline primary" tabindex="0" data-rl-id="<%= responsable.id %>" data-rl="<%= rl %>">
     <%= t('.modifier_informations') %>
   </a>
 </div>
 
-<div class="formulaire-rl mb-2" data-rl-id="<%= responsable&.id %>" style="display: none;">
+<%= hidden_field_tag :id, responsable.id %>
+
+<div class="formulaire-rl mb-2" data-rl-id="<%= responsable.id %>" style="display: none;">
   <div class="form__group">
     <%= f.label :lien_de_parente, t('.lien_de_parente') %>
-    <%= f.select :lien_de_parente, options_for_select(@lien_de_parentes, :lien_de_parente) %>
+    <%= f.select :lien_de_parente, options_for_select(@lien_de_parentes, :lien_de_parente), {}, { class: "lien_de_parente_#{rl}" } %>
   </div>
 
   <div class="form__group">
@@ -46,13 +48,13 @@
 
   <div class="form__group" id="champs-code-postal-<%= rl %>">
     <%= f.label :code_postal, t('.code_postal') %>
-    <%= f.number_field :code_postal, placeholder: t('.code_postal') %>
+    <%= f.number_field :code_postal, placeholder: t('.code_postal'), class: 'input-code-postal', data: { rl: rl } %>
   </div>
 
   <div class="form__group" id="champs-select-ville-<%= rl %>">
-    <% ville_rl = responsable&.ville ? responsable&.ville.upcase : '' %>
+    <% ville_rl = responsable.ville ? responsable.ville.upcase : '' %>
     <%= f.label :ville, t('.ville') %>
-    <%= f.select :ville, options_for_select([ville_rl], :ville)%>
+    <%= f.select :ville, options_for_select([ville_rl], :ville), {}, { class: 'input-ville', "data-rl" => rl } %>
   </div>
 
   <div class="form__group" id="champs-text-ville-<%= rl %>" style="display: none;">
@@ -62,14 +64,7 @@
 
   <div class="form__group">
     <%= f.label :pays, t('.pays') %>
-    <%= f.select :pays, options_from_collection_for_select(@liste_pays, :last, :first, responsable.pays), data: {"resp-legal" => responsable.priorite}%>
-    <!--    <label for="pays_<%#= rl %>"><%#= t('.pays') %></label>-->
-    <!--    <select id="pays_<%#= rl %>" name="pays_<%#= rl %>" class="pays" data-resp-legal="1">-->
-    <%# selected = responsable&.pays || "FRA" %>
-    <%# @liste_pays.each do |option| %>
-    <!--        <option value="<%#= option[1] %>" <%# if option[1] == selected %> selected <%# end %>><%#= option[0] %></option>-->
-    <%# end %>
-    <!--    </select>-->
+    <%= f.select :pays, options_from_collection_for_select(@liste_pays, :last, :first, responsable.pays), include_blank: true, data: {"resp-legal" => responsable.priorite} %>
   </div>
 
   <div class="form__group">
@@ -115,43 +110,3 @@
   <% end %>
   <%= f.label :communique_info_parents_eleves, t('.coordonnees_communiquees') %>
 </div>
-
-<script type="text/javascript" charset="utf-8">
-  $(document).ready(function () {
-    const $button_rl = $('.modifier-informations-rl')
-    $button_rl.click(function () {
-      affiche_formulaire($(this))
-    })
-    $button_rl.on('keypress',function(e) {
-      if(e.which === 13) {
-        affiche_formulaire($(this))
-      }
-    });
-    function affiche_formulaire($this) {
-      let responsable_id = $this.data('rl-id')
-      let numero_responsable = $this.data('rl')
-      $(".informations-rl[data-rl-id='" + responsable_id +"']").hide()
-      $(".formulaire-rl[data-rl-id='" + responsable_id +"']").show()
-      $("#lien_de_parente_" + numero_responsable + "").focus()
-    }
-
-    $('#dossier_eleve_resp_legal_code_postal').on('input', function() {
-      let inputValue = $(this).val();
-      if (inputValue.length === 5) {
-        $.ajax({
-          method: "GET",
-          url: '/api/communes/deduire_commune',
-          data: { code_postal: inputValue, authenticity_token: "<%= form_authenticity_token %>" },
-          success : function(response) {
-            let $champ_input = $('#dossier_eleve_resp_legal_ville')
-            $champ_input.empty()
-            $.each(response, function (key, value) {
-              $champ_input.append($("<option></option>")
-                .attr("value", value).text(value))
-            })
-          }
-        })
-      }
-    })
-  })
-</script>

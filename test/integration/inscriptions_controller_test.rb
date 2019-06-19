@@ -355,7 +355,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     etablissement = Fabricate(:etablissement)
     e = Eleve.create! identifiant: "XXX"
     d = DossierEleve.create! eleve_id: e.id, etablissement_id: etablissement.id, commentaire: "Commentaire de test"
-    RespLegal.create! dossier_eleve_id: d.id, tel_personnel: "0101010101", tel_portable: "0606060606", email: "test@test.com", priorite: 1
+    RespLegal.create! dossier_eleve_id: d.id, nom: 'test', tel_personnel: "0101010101",
+                      tel_portable: "0606060606", email: "test@test.com", priorite: 1
 
     agent = Fabricate(:agent, etablissement: d.etablissement)
     identification_agent(agent)
