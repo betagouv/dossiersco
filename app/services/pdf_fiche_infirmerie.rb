@@ -34,7 +34,7 @@ class PdfFicheInfirmerie
     end
   end
 
-  def telephone(type)
+  def telephone(responsabe, type)
     if responsable.send("tel_#{type}").present?
       responsable.send("tel_#{type}")
     else
@@ -48,7 +48,7 @@ class PdfFicheInfirmerie
         "  Nom : #{responsable.nom}  Prénom : #{responsable.prenom}", inline_format: true
       pdf.text "Lien avec l'élève : #{responsable.lien_de_parente}"
       pdf.text "Adresse : #{responsable.adresse}, #{responsable.code_postal} #{responsable.ville}"
-      pdf.text "Tel. Personnel : #{telephone(:personnel)} ," \
+      pdf.text "Tel. Personnel : #{telephone(responsable, :personnel)} ," \
         "    Portable : #{responsable.tel_portable.present? ? responsable.tel_portable : CHAMP_LIBRE}," \
         "     Pro : #{responsable.tel_professionnel.present? ? responsable.tel_professionnel : CHAMP_LIBRE}"
     end
@@ -85,9 +85,9 @@ class PdfFicheInfirmerie
       pdf.text "Lien avec l'élève : #{contact_urgence.lien_avec_eleve}"
 
       pdf.text "Tel. Principal :" \
-        " #{telephone(:principal)}," \
+        " #{telephone(contact_urgence, :principal)}," \
         "     Secondaire : "\
-        " #{telephone(:secondaire)}"
+        " #{telephone(contact_urgence, :secondaire)}"
     end
   end
 
