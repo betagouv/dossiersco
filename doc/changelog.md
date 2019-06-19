@@ -1,3 +1,9 @@
+## mercredi 19 juin
+
+### Indique comment envoyer un fichier d'import en erreur
+
+Un fichier en erreur peut être déposé sur https://send.firefox.com et le lien ainsi généré envoyé à l'équipe.
+
 ## lundi 17 juin
 
 ### Rendre visible le statut d'un dossier dans l'export excel
