@@ -107,10 +107,12 @@ Metrics/AbcSize:
 Metrics/CyclomaticComplexity:
   Exclude:
     - 'app/controllers/accueil_controller.rb'
+    - 'app/controllers/authentification_cas_ent_controller.rb'
     - 'app/jobs/importer_siecle.rb'
 
 Metrics/PerceivedComplexity:
   Exclude:
+    - 'app/controllers/authentification_cas_ent_controller.rb'
     - 'app/controllers/accueil_controller.rb'
     - 'app/jobs/importer_siecle.rb'
 

@@ -84,7 +84,7 @@ class AuthentificationCasEntController < ApplicationController
     return [] unless data.is_a?(Hash)
 
     email = data["email"]
-    if email != { "xmlns" => "" }
+    if email && email != { "xmlns" => "" }
       query = RespLegal.where("lower(email) = ?", email.downcase)
     else
       query = RespLegal.where("lower(prenom) = ?", data["firstName"].downcase)
