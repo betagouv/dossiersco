@@ -34,7 +34,7 @@ class PdfFicheInfirmerie
     end
   end
 
-  def telephone(responsabe, type)
+  def telephone(responsable, type)
     if responsable.send("tel_#{type}").present?
       responsable.send("tel_#{type}")
     else
