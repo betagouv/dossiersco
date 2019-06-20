@@ -126,7 +126,7 @@ fr:
       email_principal: Email principal
       profession: Profession
       nb_total_enfants_a_charge: "Nombre total d'enfants à charge"
-      coordonnees_communiquees: "que ces coordonnées soient communiquées aux fédérations de parents d'élèves."
+      coordonnees_communiquees: "J'accepte que ces coordonnées soient communiquées aux fédérations de parents d'élèves."
       lien_avec_eleve: "Lien avec l'élève"
       lien_de_parente: "Lien de parenté"
     eleve:

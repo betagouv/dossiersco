@@ -5,8 +5,9 @@ class RespLegal < ActiveRecord::Base
   belongs_to :dossier_eleve
 
   before_validation :defini_ville_residence
+  before_save :vide_ville_etrangere
   validate :un_telephone_renseigne?
-  validates_presence_of :nom, :prenom, :lien_de_parente, :adresse
+  validates_presence_of :nom, :prenom, :lien_de_parente, :adresse, :ville, :pays
   validates :code_postal, presence: true, if: :pays_fra?
   validates :enfants_a_charge, presence: true, if: :priorite_1?
 
@@ -100,6 +101,10 @@ class RespLegal < ActiveRecord::Base
 
   def defini_ville_residence
     self.ville = ville_etrangere unless ville_etrangere.blank?
+  end
+
+  def vide_ville_etrangere
+    self.ville_etrangere = ''
   end
 
 end

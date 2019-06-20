@@ -1,6 +1,13 @@
 <section class="section">
 
-    <%= form_for @dossier_eleve, url: famille_path, method: "post" do |f| %>
+    <%= simple_form_for @dossier_eleve, url: famille_path, method: "post" do |f| %>
+    <% if @dossier_eleve.errors.any? %>
+      <ul>
+        <% @dossier_eleve.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    <% end %>
       <%= f.fields_for :resp_legal do |resp| %>
         <%= render 'form_rl', f: resp, responsable: resp.object, rl: resp.object.priorite %>
       <% end %>
@@ -68,7 +75,6 @@
           data: { code_postal: inputValue, authenticity_token: "<%= form_authenticity_token %>" },
           success : function(response) {
             let $champ_input = $(".input-ville[data-rl='" + rl + "']")
-            console.log($champ_input)
             $champ_input.empty()
             $.each(response, function (key, value) {
               $champ_input.append($("<option></option>")
