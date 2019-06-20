@@ -107,7 +107,7 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
 
     post famille_path, params: params
 
-    responsable = RespLegal.find(dossier_eleve.resp_legal.first.id)
+    responsable = RespLegal.find_by(email: "shehrazed31@hotmail.fr")
 
     assert_equal "Elsinki", responsable.ville
     assert_equal "FIN", responsable.pays
@@ -118,12 +118,25 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
 
     dossier_eleve.resp_legal << Fabricate(:resp_legal)
 
-    params = { "dossier_eleve[resp_legal_attributes][0][tel_personnel]": "",
-               "dossier_eleve[resp_legal_attributes][0][tel_portable]": "" }
+    params = { "dossier_eleve[resp_legal_attributes][0][lien_de_parente]": "MERE",
+               "dossier_eleve[resp_legal_attributes][0][prenom]": "Chahrazed",
+               "dossier_eleve[resp_legal_attributes][0][nom]": "BELAMEIRI",
+               "dossier_eleve[resp_legal_attributes][0][adresse]": "37 avenue de la République",
+               "dossier_eleve[resp_legal_attributes][0][code_postal]": "",
+               "dossier_eleve[resp_legal_attributes][0][ville]": "",
+               "dossier_eleve[resp_legal_attributes][0][tel_personnel]": "",
+               "dossier_eleve[resp_legal_attributes][0][tel_portable]": "",
+               "dossier_eleve[resp_legal_attributes][0][pays]": "FIN",
+               "dossier_eleve[resp_legal_attributes][0][tel_professionnel]": "",
+               "dossier_eleve[resp_legal_attributes][0][email]": "shehrazed31@hotmail.fr",
+               "dossier_eleve[resp_legal_attributes][0][profession]": "artisan",
+               "dossier_eleve[resp_legal_attributes][0][enfants_a_charge]": "2",
+               "dossier_eleve[resp_legal_attributes][0][communique_info_parents_eleves]": false,
+               "dossier_eleve[resp_legal_attributes][0][ville_etrangere]": "Elsinki" }
 
     post famille_path, params: params
 
-    assert_redirected_to famille_path
+    assert_response :success
   end
 
   test "Ne sauvegarde pas un résponsable légal 2 sans téléphone" do
@@ -148,7 +161,7 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
 
     post famille_path, params: params
 
-    assert_redirected_to famille_path
+    assert_response :success
   end
 
   test "Ne sauvegarde pas un résponsable légal 1 sans nom et prenom" do
@@ -158,11 +171,12 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     dossier_eleve.resp_legal << resp_legal
 
     params = { "dossier_eleve[resp_legal_attributes][0][nom]": "",
+               "dossier_eleve[resp_legal_attributes][0][id]": resp_legal.id,
                "dossier_eleve[resp_legal_attributes][0][prenom]": "" }
 
     post famille_path, params: params
 
-    assert_redirected_to famille_path
+    assert_response :success
   end
 
 end

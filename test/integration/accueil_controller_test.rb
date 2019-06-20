@@ -216,8 +216,11 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
       mois: eleve.mois_de_naissance,
       jour: eleve.jour_de_naissance
     }
+    params_famille = { "dossier_eleve[resp_legal_attributes][0][nom]": "test",
+                       "dossier_eleve[resp_legal_attributes][0][id]": resp_legal.id }
+
     post "/identification", params: params
-    post "/famille", params: dossier_eleve
+    post "/famille", params: params_famille
     get "/eleve"
     post "/deconnexion"
     params = {

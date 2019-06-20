@@ -1,9 +1,22 @@
 # frozen_string_literal: true
 
 class RespLegal < ActiveRecord::Base
-  attr_accessor :ville_etranger
 
   belongs_to :dossier_eleve
+
+  before_validation :defini_ville_residence
+  validate :un_telephone_renseigne?
+  validates_presence_of :nom, :prenom, :lien_de_parente, :adresse
+  validates :code_postal, presence: true, if: :pays_fra?
+  validates :enfants_a_charge, presence: true, if: :priorite_1?
+
+  def pays_fra?
+    pays == "FRA"
+  end
+
+  def priorite_1?
+    priorite == 1
+  end
 
   def meme_adresse(autre_resp_legal)
     return false if autre_resp_legal.nil?
@@ -64,22 +77,6 @@ class RespLegal < ActiveRecord::Base
        communique_info_parents_eleves lien_avec_eleve]
   end
 
-  def resp_legal_valid?
-    champs_renseignes? && un_telephone_renseigne?
-  end
-
-  def champs_renseignes?
-    champs_requis = { lien_de_parente: "lien de parenté", prenom: "prénom", nom: "nom", adresse: "adresse",
-                      ville: "ville", profession: "profession" }
-    champs_requis[:enfants_a_charge] = "enfants à charge" if priorite == 1
-    champs_requis[:code_postal] = "code postal" if pays == "FRA"
-    champs_requis.each do |champ, label|
-      message_erreur = I18n.t(".activerecord.errors.models.resp_legal.non_renseigne", champ: label, responsable: priorite)
-      errors.add(champ, message_erreur) if send(champ).blank?
-    end
-    errors.empty?
-  end
-
   def un_telephone_renseigne?
     if tel_personnel.blank? && tel_portable.blank? && tel_professionnel.blank?
       errors.add(:telephone, I18n.t(".activerecord.errors.models.resp_legal.pas_de_telephone"), responsable: priorite)
@@ -99,6 +96,10 @@ class RespLegal < ActiveRecord::Base
 
   def nom_complet
     "#{prenom} #{nom}"
+  end
+
+  def defini_ville_residence
+    self.ville = ville_etrangere unless ville_etrangere.blank?
   end
 
 end

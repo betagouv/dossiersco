@@ -30,4 +30,6 @@ rubocop: ## Run Rubocop
 migrate: ## Execute the database migrations
 	docker-compose run --rm app rails db:migrate
 
+test_file:	## Test a file only
+	docker-compose run --rm test rails test ${file}
 .PHONY: build run test clean stop rubocop

@@ -114,7 +114,6 @@ class AccueilController < ApplicationController
   def post_famille
     @dossier_eleve = @eleve.dossier_eleve
 
-    @dossier_eleve.update(params_resp_legal)
     @contact_urgence = ContactUrgence.find_by(dossier_eleve_id: @dossier_eleve.id) || ContactUrgence.new(dossier_eleve_id: @dossier_eleve.id)
 
     defini_ville(@dossier_eleve.resp_legal)
@@ -125,32 +124,17 @@ class AccueilController < ApplicationController
     if @dossier_eleve.update(params_resp_legal)
       note_avancement_et_redirige_vers("administration")
     else
-      # error = if resp_legal1.errors.messages.present?
-      #           resp_legal1.errors.messages.first[1].join
-      #         elsif resp_legal2.present? && resp_legal2.errors.messages.present?
-      #           resp_legal2.errors.messages.first[1].join
-      #         end
       variables_famille
-      render :famille, alert: error
+      render :famille
     end
   end
 
   def params_resp_legal
     params.require(:dossier_eleve).permit(resp_legal_attributes: %i[lien_de_parente prenom nom code_postal
-                                                                    adresse ville ville_etranger pays
+                                                                    adresse ville ville_etrangere pays
                                                                     tel_personnel tel_portable
                                                                     tel_professionnel email profession
                                                                     enfants_a_charge id])
-  end
-
-  def defini_ville(responsables)
-    responsables.each do |responsable|
-      ville_etrangere = params["ville_etrangere_rl#{responsable.priorite}"]
-      responsable.ville = if !ville_etrangere.blank?
-                            ville_etrangere
-                          end
-      responsable.save
-    end
   end
 
   def responsables_valides?(resp_legal1, resp_legal2)
