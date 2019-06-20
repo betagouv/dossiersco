@@ -242,7 +242,11 @@ class ImporterSiecle < ApplicationJob
       donnees_resp_legal[:code_postal_ant] = donnees_resp_legal[:code_postal]
 
       resp_legal = RespLegal.find_or_initialize_by(dossier_eleve_id: dossier_eleve.id, priorite: i.to_i)
-      resp_legal.update_attributes(donnees_resp_legal)
+
+      donnees_resp_legal.each do |key, value|
+        resp_legal[key] = value
+      end
+      resp_legal.save(validate: false)
 
       resultat[:portable] = true if resp_legal.tel_personnel =~ /^0[67]/ || resp_legal.tel_portable =~ /^0[67]/
       resultat[:email] = true if resp_legal.email =~ /@.*\./

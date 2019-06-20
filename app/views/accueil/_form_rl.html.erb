@@ -7,7 +7,9 @@
     <li><b><%= t('.prenom') %></b> : <%= responsable.prenom %></li>
     <li><b><%= t('.nom') %></b> : <%= responsable.nom %></li>
     <li><b><%= t('.adresse') %></b> : <%= responsable.adresse %></li>
-    <li><b><%= t('.code_postal') %></b> : <%= responsable.code_postal %></li>
+    <% if responsable.pays =='FRA' %>
+      <li><b><%= t('.code_postal') %></b> : <%= responsable.code_postal %></li>
+    <% end %>
     <li><b><%= t('.ville') %></b> : <%= responsable.ville&.upcase %></li>
     <li><b><%= t('.pays') %></b> :
       <% @liste_pays.each do |option| %>
@@ -27,78 +29,67 @@
 
 <div class="formulaire-rl mb-2" data-rl-id="<%= responsable.id %>" style="display: none;">
   <div class="form__group">
-    <%= f.label :lien_de_parente, t('.lien_de_parente') %>
-    <%= f.select :lien_de_parente, options_for_select(@lien_de_parentes, :lien_de_parente), {}, { class: "lien_de_parente_#{rl}" } %>
+    <%= f.input :lien_de_parente, collection: @lien_de_parentes, selected: :lien_de_parente, input_html: { class: "lien_de_parente_#{rl}" } %>
   </div>
 
   <div class="form__group">
-    <%= f.label :prenom, t('.prenom') %>
-    <%= f.text_field :prenom, placeholder: "Prénom" %>
+    <%= f.input :prenom, placeholder: "Prénom" %>
   </div>
 
   <div class="form__group">
-    <%= f.label :nom, t('.nom') %>
-    <%= f.text_field :nom, placeholder: "Nom" %>
+    <%= f.input :nom, placeholder: "Nom" %>
   </div>
 
   <div class="form__group">
-    <%= f.label :adresse, t('.adresse') %>
-    <%= f.text_area :adresse, placeholder: "Numéro et nom de voie", rows: "3" %>
+    <%= f.input :adresse, as: :text, placeholder: "Numéro et nom de voie", rows: "3" %>
   </div>
 
   <div class="form__group" id="champs-code-postal-rl<%= rl %>">
-    <%= f.label :code_postal, t('.code_postal') %>
-    <%= f.number_field :code_postal, placeholder: t('.code_postal'), class: 'input-code-postal', data: { rl: rl } %>
+    <%= f.input :code_postal, as: :integer, placeholder: t('.code_postal'), input_html: { class: 'input-code-postal', data: { rl: rl } } %>
   </div>
 
   <div class="form__group" id="champs-select-ville-rl<%= rl %>">
     <% ville_rl = responsable.ville ? responsable.ville.upcase : '' %>
-    <%= f.label :ville, t('.ville') %>
-    <%= f.select :ville, options_for_select([ville_rl], :ville), {}, { class: 'input-ville', "data-rl" => rl } %>
+    <%= f.input :ville, collection: [ville_rl], selected: :ville, input_html: { class: 'input-ville', "data-rl" => rl } %>
   </div>
 
   <div class="form__group" id="champs-text-ville-rl<%= rl %>" style="display: none;">
-    <%= f.label :ville_etrangere, t('.ville') %>
-    <%= f.text_field :ville_etrangere, placeholder: "Nom", value: responsable.ville %>
+    <%= f.input :ville_etrangere, placeholder: "Nom", label: t('.ville') %>
   </div>
 
   <div class="form__group">
-    <%= f.label :pays, t('.pays') %>
-    <%= f.select :pays, options_from_collection_for_select(@liste_pays, :last, :first, responsable.pays), {include_blank: true}, { class: 'pays', data: {"resp-legal" => responsable.priorite}}  %>
+    <%= f.input :pays, collection: @liste_pays, selected: responsable.pays, input_html: { class: 'pays', data: {"resp-legal" => responsable.priorite}}, include_blank: true %>
   </div>
 
   <div class="form__group">
-    <%= f.label :tel_personnel, t('.telephone_principal') %>
-    <%= f.telephone_field :tel_personnel, placeholder: "Numéro de téléphone" %>
+    <%= f.input :tel_personnel, as: :tel, placeholder: "Numéro de téléphone", label: t('.telephone_principal') %>
   </div>
 
   <div class="form__group">
-    <%= f.label :tel_portable, t('.telephone_secondaire') %>
-    <%= f.telephone_field :tel_portable, placeholder: "Numéro de téléphone" %>
+    <%= f.input :tel_portable, as: :tel, placeholder: "Numéro de téléphone", label: t('.telephone_secondaire') %>
   </div>
 
   <div class="form__group">
-    <%= f.label :tel_professionnel, t('.telephone_professionnel') %>
-    <%= f.telephone_field :tel_professionnel, placeholder: "Numéro de téléphone" %>
+    <%= f.input :tel_professionnel, as: :tel, placeholder: "Numéro de téléphone", label: t('.telephone_professionnel') %>
   </div>
 
   <div class="form__group">
-    <%= f.label :email, t('.email_principal') %>
-    <%= f.email_field :email, placeholder: "Numéro de téléphone" %>
+    <%= f.input :email, as: :email, label: t('.email_principal') %>
   </div>
 </div>
 
 <div class="form__group">
   <% professions = @code_profession.map{ |k, v| v } %>
-  <%= f.label :profession, t('.profession') %>
-  <%= f.select :profession, options_for_select(professions, :profession) %>
+  <%= f.input :profession, as: :select, collection: professions, selected:  :profession %>
 </div>
 
 <div class="form__group">
-  <%= f.label :enfants_a_charge, t('.nb_total_enfants_a_charge') %>
-  <%= f.number_field :enfants_a_charge %>
+  <%= f.input :enfants_a_charge, as: :integer, label: t('.nb_total_enfants_a_charge') %>
 </div>
 
+<div class="form__group">
+  <%= f.input :communique_info_parents_eleves, as: :radio_buttons, label: t('.coordonnees_communiquees') %>
+</div>
 <div class="form__group">
   <%= label_tag do %>
     <%= t('.j_accepte') %>
