@@ -312,16 +312,15 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_stats
-    3.times { Fabricate(:etablissement) }
+    etablissement_un = Fabricate(:etablissement)
+    etablissement_deux = Fabricate(:etablissement)
+    Fabricate(:agent, etablissement: etablissement_un, jeton: "jeton_de_test")
+    Fabricate(:agent, etablissement: etablissement_deux, jeton: "jeton_de_test")
+
     get "/stats"
-    doc = Nokogiri::HTML(response.body)
-    # Etablissements
-    assert_equal Etablissement.count, doc.css(".etablissement").count
-    names = doc.css(".etablissement > .row > .nom").collect(&:text).collect(&:strip)
-    assert names.include? Etablissement.first.nom
-    names = doc.css(".etablissement .classe > .row > .nom").collect(&:text).collect(&:strip)
-    assert_equal 0, doc.css(".etablissement .classe").count
-    assert_equal 0, (names.select { |x| x == "3EME 1" }).count
+
+    crees_mais_non_connectes = Nokogiri::HTML(response.body).xpath("/html/body/main/section[1]/p/text()").to_s
+    assert_match "établissements créés, mais dont aucun agent ne s'est connectés pour le moment (#{Etablissement.count})", crees_mais_non_connectes
   end
 
   def test_page_eleve_agent_affiche_changement_adresse

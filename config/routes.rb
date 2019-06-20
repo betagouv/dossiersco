@@ -130,7 +130,7 @@ Rails.application.routes.draw do
 
   get "/deconnexion", to: "accueil#deconnexion"
 
-  get "/stats", to: "accueil#stats"
+  get "/stats", to: "suivi#index"
 
   get "/agent", to: "inscriptions#agent"
   post "/agent", to: "inscriptions#post_agent"
