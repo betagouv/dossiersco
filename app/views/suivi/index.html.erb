@@ -1,9 +1,7 @@
 <h1>Suivi de l'embarquement des établissement</h1>
 
 <section>
-  <p>
-    <%= t('.pas_encore_connectes') %> (<%= @suivi.pas_encore_connecte.count %>)
-  </p>
+  <h2><%= t('.pas_encore_connectes', count: @suivi.pas_encore_connecte.count ) %></h2>
 
   <ul>
     <% @suivi.pas_encore_connecte.each do |etablissement| %>
@@ -13,9 +11,7 @@
 </section>
 
 <section>
-  <p>
-    <%= t('.eleves_importes') %> (<%= @suivi.eleves_importe.count %>)
-  </p>
+  <h2><%= t('.eleves_importes', count: @suivi.eleves_importe.count ) %></h2>
 
   <ul>
     <% @suivi.eleves_importe.each do |etablissement| %>
@@ -25,21 +21,7 @@
 </section>
 
 <section>
-  <p>
-    <%= t('.piece_attendue_configure') %> (<%= @suivi.piece_attendue_configure.count %>)
-  </p>
-
-  <ul>
-    <% @suivi.piece_attendue_configure.each do |etablissement| %>
-      <li><%= link_to("#{etablissement.nom} #{etablissement.uai}", "http://www.opencartecomptable.fr/#/etablissements?code_uai=#{etablissement.uai}") %></li>
-    <% end %>
-  </ul>
-</section>
-
-<section>
-  <p>
-    <%= t('.familles_connectes') %> (<%= @suivi.familles_connectes.count %>)
-  </p>
+  <h2><%= t('.familles_connectes', count: @suivi.familles_connectes.count ) %></h2>
 
   <ul>
     <% @suivi.familles_connectes.each do |suivi| %>

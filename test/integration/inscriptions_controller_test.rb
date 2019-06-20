@@ -319,8 +319,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     get "/stats"
 
-    crees_mais_non_connectes = Nokogiri::HTML(response.body).xpath("/html/body/main/section[1]/p/text()").to_s
-    assert_match "établissements créés, mais dont aucun agent ne s'est connectés pour le moment (#{Etablissement.count})", crees_mais_non_connectes
+    crees_mais_non_connectes = Nokogiri::HTML(response.body).xpath("/html/body/main/section[1]/h2/text()").to_s
+    assert_match "Établissements inscrits (#{Etablissement.count})", crees_mais_non_connectes
   end
 
   def test_page_eleve_agent_affiche_changement_adresse

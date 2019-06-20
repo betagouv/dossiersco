@@ -413,10 +413,10 @@ fr:
     etablissements_experimentateurs:
       etablissement_experimentateurs: "Établissements expérimentateurs (%{count})"
     index:
-      pas_encore_connectes: "Liste des établissements créés, mais dont aucun agent ne s'est connectés pour le moment"
-      eleves_importes: "Liste des établissements qui ont déjà importé leurs élèves"
+      pas_encore_connectes: "Établissements inscrits (%{count})"
+      eleves_importes: "Etablissements expérimentateurs : DossierSCO paramétré ; Elèves importés (%{count})"
       piece_attendue_configure: "Liste des établissement qui ont ajouté des pièces attendues"
-      familles_connectes: "Liste des établissement qui ont déjà des familles qui se sont connectés"
+      familles_connectes: "Etablissements utilisateurs : ayant ouvert DossierSCO aux familles (%{count})"
 
   authentification_cas_ent:
     choix_dossier_eleve:

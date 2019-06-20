@@ -9,19 +9,14 @@ class SuiviController < ApplicationController
   def index
     @suivi = Suivi.new
 
-    Etablissement.all.each do |etablissement|
-      if etablissement.agent.count == 1 &&
-         etablissement.agent.first.jeton.present?
-        @suivi.pas_encore_connecte << etablissement
-      end
-
-      @suivi.eleves_importe << etablissement if etablissement.dossier_eleve.count.positive?
-
-      @suivi.piece_attendue_configure << etablissement if etablissement.pieces_attendues.count.positive?
-
+    Etablissement.where.not("nom like ?", "%test").each do |etablissement|
       nb_familles_connectees = etablissement.dossier_eleve.reject { |d| d.etat == "pas connecté" }.length
       if nb_familles_connectees.positive?
         @suivi.familles_connectes << { etablissement: etablissement, nb_familles_connectees: nb_familles_connectees }
+      elsif etablissement.dossier_eleve.count.positive?
+        @suivi.eleves_importe << etablissement
+      else
+        @suivi.pas_encore_connecte << etablissement
       end
     end
   end
