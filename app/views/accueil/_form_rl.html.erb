@@ -46,25 +46,25 @@
     <%= f.text_area :adresse, placeholder: "Numéro et nom de voie", rows: "3" %>
   </div>
 
-  <div class="form__group" id="champs-code-postal-<%= rl %>">
+  <div class="form__group" id="champs-code-postal-rl<%= rl %>">
     <%= f.label :code_postal, t('.code_postal') %>
     <%= f.number_field :code_postal, placeholder: t('.code_postal'), class: 'input-code-postal', data: { rl: rl } %>
   </div>
 
-  <div class="form__group" id="champs-select-ville-<%= rl %>">
+  <div class="form__group" id="champs-select-ville-rl<%= rl %>">
     <% ville_rl = responsable.ville ? responsable.ville.upcase : '' %>
     <%= f.label :ville, t('.ville') %>
     <%= f.select :ville, options_for_select([ville_rl], :ville), {}, { class: 'input-ville', "data-rl" => rl } %>
   </div>
 
-  <div class="form__group" id="champs-text-ville-<%= rl %>" style="display: none;">
-    <%= f.label :ville_etranger, t('.ville') %>
-    <%= f.text_field :ville_etranger, placeholder: "Nom" %>
+  <div class="form__group" id="champs-text-ville-rl<%= rl %>" style="display: none;">
+    <%= f.label :ville_etrangere, t('.ville') %>
+    <%= f.text_field :ville_etrangere, placeholder: "Nom", value: responsable.ville %>
   </div>
 
   <div class="form__group">
     <%= f.label :pays, t('.pays') %>
-    <%= f.select :pays, options_from_collection_for_select(@liste_pays, :last, :first, responsable.pays), include_blank: true, data: {"resp-legal" => responsable.priorite} %>
+    <%= f.select :pays, options_from_collection_for_select(@liste_pays, :last, :first, responsable.pays), {include_blank: true}, { class: 'pays', data: {"resp-legal" => responsable.priorite}}  %>
   </div>
 
   <div class="form__group">

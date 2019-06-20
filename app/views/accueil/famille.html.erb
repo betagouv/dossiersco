@@ -92,11 +92,13 @@
     function affiche_les_bons_champs($this) {
       let resp_legal = $this.data('resp-legal')
       let id_champs_cp = '#champs-code-postal-rl' + resp_legal
-      let input_champs_cp = $(id_champs_cp + ' :input')
+      let input_champs_cp = $(id_champs_cp + ':input')
       let id_champs_select_ville = '#champs-select-ville-rl' + resp_legal
-      let input_champs_select_ville = $(id_champs_select_ville + ' :input')
+      let input_champs_select_ville = $(id_champs_select_ville + ':input')
       let id_champs_text_ville = '#champs-text-ville-rl' + resp_legal
-      let input_champs_text_ville = $(id_champs_text_ville + ' :input')
+      let input_champs_text_ville = $(id_champs_text_ville + ':input')
+      console.log(id_champs_cp)
+      console.log(input_champs_cp)
       if ($this.val() !== 'FRA') {
         input_champs_cp.val('')
         $(id_champs_cp).hide()

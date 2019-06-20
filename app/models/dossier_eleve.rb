@@ -23,6 +23,7 @@ class DossierEleve < ActiveRecord::Base
   has_and_belongs_to_many :options_pedagogiques
 
   accepts_nested_attributes_for :resp_legal
+
   ETAT = {
     pas_connecte: "pas connecté",
     connecte: "connecté",
