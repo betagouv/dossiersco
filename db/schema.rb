@@ -234,7 +234,7 @@ ActiveRecord::Schema.define(version: 2019_06_26_134611) do
     t.string "tel_personnel"
     t.string "tel_portable"
     t.string "tel_professionnel"
-    t.string "pays", default: "FRA"
+    t.string "pays", default: "FRANCE"
     t.integer "id_ent"
     t.string "ville_etrangere"
   end
