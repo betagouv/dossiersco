@@ -23,7 +23,10 @@ class DossierEleve < ActiveRecord::Base
   has_and_belongs_to_many :options_pedagogiques
 
   accepts_nested_attributes_for :resp_legal
+<<<<<<< HEAD
   accepts_nested_attributes_for :contact_urgence
+=======
+>>>>>>> ajoute des validations pour les responsables legaux
 
   ETAT = {
     pas_connecte: "pas connecté",

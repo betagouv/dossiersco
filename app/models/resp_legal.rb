@@ -5,6 +5,7 @@ class RespLegal < ActiveRecord::Base
   belongs_to :dossier_eleve
 
   before_validation :defini_ville_residence
+<<<<<<< HEAD
   before_save :vide_ville_etrangere
   validates :enfants_a_charge, presence: true, if: :priorite_1?
 
@@ -18,16 +19,28 @@ class RespLegal < ActiveRecord::Base
 
   def pays_fra?
     pays == "FRA" && resp_present?
+=======
+  validate :un_telephone_renseigne?
+  validates_presence_of :nom, :prenom, :lien_de_parente, :adresse
+  validates :code_postal, presence: true, if: :pays_fra?
+  validates :enfants_a_charge, presence: true, if: :priorite_1?
+
+  def pays_fra?
+    pays == "FRA"
+>>>>>>> ajoute des validations pour les responsables legaux
   end
 
   def priorite_1?
     priorite == 1
   end
 
+<<<<<<< HEAD
   def resp_present?
     !(nom.blank? && prenom.blank? && priorite == 2) || priorite_1?
   end
 
+=======
+>>>>>>> ajoute des validations pour les responsables legaux
   def meme_adresse(autre_resp_legal)
     return false if autre_resp_legal.nil?
 
@@ -112,8 +125,11 @@ class RespLegal < ActiveRecord::Base
     self.ville = ville_etrangere unless ville_etrangere.blank?
   end
 
+<<<<<<< HEAD
   def vide_ville_etrangere
     self.ville_etrangere = ""
   end
 
+=======
+>>>>>>> ajoute des validations pour les responsables legaux
 end
