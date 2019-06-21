@@ -71,7 +71,7 @@ Rails.application.routes.draw do
   get '/agent/mot_de_passe', to: "mot_de_passe_agent#new", as: 'new_mot_de_passe_agent'
   post '/agent/mot_de_passe', to: "mot_de_passe_agent#update", as: 'mot_de_passe_agent'
 
-  resources :pieces_jointes, only: %i[create update] do
+  resources :pieces_jointes, only: %i[create update show] do
     member do
       put "valider"
       put "refuser"

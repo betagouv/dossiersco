@@ -4,7 +4,7 @@ class PiecesJointesController < ApplicationController
 
   before_action :retrouve_eleve_connecte, only: %i[create update]
   before_action :agent_connecte, only: %i[valider refuser]
-  before_action :retrouve_piece_jointe, only: %i[update valider refuser annuler_decision]
+  before_action :retrouve_piece_jointe, only: %i[update valider refuser annuler_decision, show]
 
   def create
     PieceJointe.create!(piece_jointe_params.merge(dossier_eleve: @eleve.dossier_eleve, etat: PieceJointe::ETATS[:soumis]))
@@ -16,6 +16,24 @@ class PiecesJointesController < ApplicationController
     piece_jointe.update!(piece_jointe_params.merge(dossier_eleve: @eleve.dossier_eleve))
     piece_jointe.soumet!
     redirect_to "/pieces_a_joindre"
+  end
+
+  def show
+    puts @piece_jointe.inspect
+    if @piece_jointe.fichiers.length == 1
+      if Rails.env.development?
+        redirect_to @piece_jointe.fichiers.first.url
+      else
+        render :text => proc { |response, output|
+          AWS::S3::S3Object.stream(path, bucket) do |segment|
+            output.write segment
+            output.flush # not sure if this is needed
+          end
+        }
+      end
+    else
+      render text: "trop de fichiers à montrer"
+    end
   end
 
   def valider
