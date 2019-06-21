@@ -18,6 +18,14 @@
             <CODE_CIVILITE>1</CODE_CIVILITE>
             <NOM_DE_FAMILLE><%= resp_legal.nom %></NOM_DE_FAMILLE>
             <PRENOM><%= resp_legal.prenom %></PRENOM>
+            <% if resp_legal.adresse.present? && resp_legal.code_postal.present? && resp_legal.ville.present? && resp_legal.pays.present? %>
+              <ADRESSE>
+                <LIGNE1_ADRESSE><%= resp_legal.adresse %></LIGNE1_ADRESSE>
+                <CODE_POSTAL><%= resp_legal.code_postal %></CODE_POSTAL>
+                <LL_POSTAL><%= resp_legal.ville %></LL_POSTAL>
+                <CODE_PAYS><%= resp_legal.pays %></CODE_PAYS>
+              </ADRESSE>
+            <% end %>
             <COMMUNICATION_ADRESSE><%= resp_legal.communique_info_parents_eleves? ? true : false %></COMMUNICATION_ADRESSE>
 
             <CODE_PROFESSION><%= RespLegal.code_profession_from(resp_legal.profession) %></CODE_PROFESSION>
