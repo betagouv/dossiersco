@@ -71,9 +71,9 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
               resp_legal: [resp])
     %i[adresse code_postal ville pays].each do |partie_du_tag_adresse|
       resp_incomplet = Fabricate(:resp_legal,
-                                 adresse: "adresse à ne pas afficher",
+                                 adresse: "adresse a ne pas afficher",
                                  code_postal: "75001",
-                                 ville: "Ville à ne pas afficher",
+                                 ville: "Ville a ne pas afficher",
                                  pays: "XXX")
       resp_incomplet[partie_du_tag_adresse] = nil
       Fabricate(:dossier_eleve,
@@ -93,9 +93,9 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     assert_match "75000", response.body
     assert_match "Ville de test", response.body
     assert_match "FRA", response.body
-    assert_no_match "adresse à ne pas afficher", response.body
+    assert_no_match "adresse a ne pas afficher", response.body
     assert_no_match "75001", response.body
-    assert_no_match "Ville à ne pas afficher", response.body
+    assert_no_match "Ville a ne pas afficher", response.body
     assert_no_match "XXX", response.body
   end
 
