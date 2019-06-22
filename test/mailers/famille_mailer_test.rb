@@ -16,7 +16,7 @@ class FamilleMailerTest < ActionMailer::TestCase
       email.deliver_now
     end
 
-    assert_equal ["equipe@dossiersco.fr"], email.from
+    assert_equal [agent.email], email.from
     assert_equal [resp_legal.email, agent.email], email.to.sort
     assert_equal [agent.email].sort, email.reply_to.sort
 
@@ -28,7 +28,7 @@ class FamilleMailerTest < ActionMailer::TestCase
   end
 
   test "envoyer mail confirmation" do
-    etablissement = Fabricate(:etablissement, envoyer_aux_familles: true, email_reponse: "ce.1000135X@ac-.fr")
+    etablissement = Fabricate(:etablissement, envoyer_aux_familles: true, email_reponse: "ce.1000135X@ac-truc.fr")
     eleve = Fabricate(:eleve)
     resp_legal = Fabricate(:resp_legal, email: "henri@ford.com")
     Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement, resp_legal: [resp_legal])
@@ -39,9 +39,9 @@ class FamilleMailerTest < ActionMailer::TestCase
       email.deliver_now
     end
 
-    assert_equal ["equipe@dossiersco.fr"], email.from
+    assert_equal ["ce.1000135X@ac-truc.fr"], email.from
     assert_equal [resp_legal.email], email.to.sort
-    assert_equal ["ce.1000135X@ac-.fr"].sort, email.reply_to.sort
+    assert_equal ["ce.1000135X@ac-truc.fr"].sort, email.reply_to.sort
 
     assert_equal "Réinscription de votre enfant au collège", email.subject
 
@@ -65,7 +65,7 @@ class FamilleMailerTest < ActionMailer::TestCase
       email.deliver_now
     end
 
-    assert_equal ["equipe@dossiersco.fr"], email.from
+    assert_equal [agent.email], email.from
     assert_equal [resp_legal.email], email.to.sort
     assert_equal [agent.email].sort, email.reply_to.sort
 
