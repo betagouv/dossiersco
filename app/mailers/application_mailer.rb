@@ -2,6 +2,7 @@
 
 class ApplicationMailer < ActionMailer::Base
 
+  default from: "equipe@dossiersco.fr"
   layout "mailer"
 
 end
