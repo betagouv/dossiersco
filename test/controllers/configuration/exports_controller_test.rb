@@ -77,8 +77,8 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
                                  pays: "XXX")
       resp_incomplet[partie_du_tag_adresse] = nil
       Fabricate.build(:dossier_eleve,
-                etablissement: admin.etablissement,
-                resp_legal: [resp_incomplet])
+                      etablissement: admin.etablissement,
+                      resp_legal: [resp_incomplet])
     end
 
     get export_siecle_configuration_exports_path
