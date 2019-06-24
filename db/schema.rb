@@ -225,7 +225,7 @@ ActiveRecord::Schema.define(version: 2019_06_26_134611) do
     t.string "email"
     t.string "profession"
     t.integer "enfants_a_charge"
-    t.boolean "communique_info_parents_eleves"
+    t.boolean "communique_info_parents_eleves", default: false
     t.integer "priorite"
     t.datetime "updated_at"
     t.string "adresse_ant"

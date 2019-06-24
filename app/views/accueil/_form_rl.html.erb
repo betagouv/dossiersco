@@ -90,14 +90,3 @@
 <div class="form__group">
   <%= f.input :communique_info_parents_eleves, as: :radio_buttons, label: t('.coordonnees_communiquees') %>
 </div>
-<div class="form__group">
-  <%= label_tag do %>
-    <%= t('.j_accepte') %>
-    <%= f.radio_button :communique_info_parents_eleves, true %>
-  <% end %>
-  <%= label_tag do %>
-    <%= t('.j_accepte_pas') %>
-    <%= f.radio_button :communique_info_parents_eleves, false %>
-  <% end %>
-  <%= f.label :communique_info_parents_eleves, t('.coordonnees_communiquees') %>
-</div>

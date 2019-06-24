@@ -29,12 +29,12 @@ gem "rubycas-client"
 gem "rubyzip", ">= 1.2.1"
 gem "sass-rails", "~> 5.0"
 gem "sentry-raven"
+gem "simple_form"
 gem "therubyracer"
 gem "turbolinks", "~> 5"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "uglifier", ">= 1.3.0"
 gem "will_paginate"
-gem 'simple_form'
 
 group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]

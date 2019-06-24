@@ -18,10 +18,10 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
                               etablissement: admin.etablissement,
                               resp_legal: [resp])
 
-    resp = Fabricate(:resp_legal, communique_info_parents_eleves: nil)
-    dossier_eleve = Fabricate(:dossier_eleve,
-                              etablissement: admin.etablissement,
-                              resp_legal: [resp])
+    # resp = Fabricate(:resp_legal, communique_info_parents_eleves: nil)
+    # dossier_eleve = Fabricate(:dossier_eleve,
+    #                           etablissement: admin.etablissement,
+    #                           resp_legal: [resp])
 
     resp = Fabricate(:resp_legal, profession: nil)
     dossier_eleve = Fabricate(:dossier_eleve,

@@ -2,11 +2,13 @@
 
     <%= simple_form_for @dossier_eleve, url: famille_path, method: "post" do |f| %>
     <% if @dossier_eleve.errors.any? %>
-      <ul>
-        <% @dossier_eleve.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
+      <div class="list-errors notification warning">
+        <ul>
+          <% @dossier_eleve.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
     <% end %>
       <%= f.fields_for :resp_legal do |resp| %>
         <%= render 'form_rl', f: resp, responsable: resp.object, rl: resp.object.priorite %>
@@ -47,6 +49,17 @@
 
 <script>
   $(document).ready(function() {
+
+    <% if defined? @affiche_formulaire %>
+      console.log(<%= @affiche_formulaire %>)
+      let $error = $('.error')
+      $.each($error, function() {
+        $(this).parent().find('input').addClass('input-error')
+      })
+      $(".informations-rl").hide()
+      $(".formulaire-rl").show()
+      $error.first().parent().find('input').focus()
+    <% end %>
 
     const $button_rl = $('.modifier-informations-rl')
     $button_rl.click(function () {
@@ -103,8 +116,6 @@
       let input_champs_select_ville = $(id_champs_select_ville + ':input')
       let id_champs_text_ville = '#champs-text-ville-rl' + resp_legal
       let input_champs_text_ville = $(id_champs_text_ville + ':input')
-      console.log(id_champs_cp)
-      console.log(input_champs_cp)
       if ($this.val() !== 'FRA') {
         input_champs_cp.val('')
         $(id_champs_cp).hide()

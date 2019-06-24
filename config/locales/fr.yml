@@ -6,6 +6,18 @@ fr:
     attributes:
       etablissement:
         uai: "UAI"
+      resp_legal:
+        enfants_a_charge: "Enfants à charge"
+        telephone: "Téléphone : "
+        prenom: Prénom
+        nom: Nom
+        adresse: Adresse
+        code_postal: Code postal
+        vill: Ville
+        pays: Pays
+        email: Email principal
+        profession: Profession
+        communique_info_parents_eleves: Communique
     errors:
       messages:
         record_invalid: "%{errors}"
@@ -19,7 +31,7 @@ fr:
               inclusion: "%{model} %{attribute} = %{value}"
         resp_legal:
           non_renseigne: "Le champ '%{champ}' du résponsable légal %{responsable} ne peut être vide"
-          pas_de_telephone: "Veuillez renseigner au moins un numéro de téléphone portable ou personnel pour le résponsable légal %{responsable}"
+          pas_de_telephone: "veuillez renseigner au moins un numéro de téléphone portable ou personnel"
           attributes:
             code_postal_ant:
               blank: "ne peut être vide"
@@ -31,7 +43,6 @@ fr:
     previous_label: "&#8592; Précédent"
     next_label: "Suivant &#8594;"
     page_gap: "&hellip;"
-
     page_entries_info:
       single_page:
         zero:  "No %{model} found"
