@@ -12,7 +12,6 @@ cache:
 before_script:
   - ruby -v # Print out ruby version for debugging
   # - apt-get update -q && apt-get install nodejs -yqq
-  - rm -rf vendor/ruby
   - bundle install -j $(nproc) --path vendor  # Install dependencies into ./vendor/ruby
 
 stages:
