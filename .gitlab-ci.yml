@@ -21,8 +21,6 @@ stages:
 rubocop:
   stage: test
   script:
-  - "echo 'Cleaning up'"
-  - "rm -rf '%CACHE_PATH%/%CI_PIPELINE_ID%'"
   - bundle exec rubocop
 
 tests:
