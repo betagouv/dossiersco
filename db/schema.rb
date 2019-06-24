@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_20_090311) do
+ActiveRecord::Schema.define(version: 2019_06_24_092640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -224,7 +224,7 @@ ActiveRecord::Schema.define(version: 2019_06_20_090311) do
     t.string "email"
     t.string "profession"
     t.integer "enfants_a_charge"
-    t.boolean "communique_info_parents_eleves"
+    t.boolean "communique_info_parents_eleves", default: false
     t.integer "priorite"
     t.datetime "updated_at"
     t.string "adresse_ant"

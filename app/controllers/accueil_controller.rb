@@ -116,15 +116,16 @@ class AccueilController < ApplicationController
 
     @contact_urgence = ContactUrgence.find_by(dossier_eleve_id: @dossier_eleve.id) || ContactUrgence.new(dossier_eleve_id: @dossier_eleve.id)
 
-    defini_ville(@dossier_eleve.resp_legal)
-
     change = ChangeContactUrgence.new(@dossier_eleve)
     change.applique(params)
 
-    if @dossier_eleve.update(params_resp_legal)
+    valide = true
+    @dossier_eleve.resp_legal.each { |resp| valide = false unless resp.valid? }
+    if valide && @dossier_eleve.update(params_resp_legal)
       note_avancement_et_redirige_vers("administration")
     else
       variables_famille
+      @affiche_formulaire = true
       render :famille
     end
   end
@@ -134,7 +135,8 @@ class AccueilController < ApplicationController
                                                                     adresse ville ville_etrangere pays
                                                                     tel_personnel tel_portable
                                                                     tel_professionnel email profession
-                                                                    enfants_a_charge id])
+                                                                    communique_info_parents_eleves
+                                                                    enfants_a_charge id ])
   end
 
   def responsables_valides?(resp_legal1, resp_legal2)

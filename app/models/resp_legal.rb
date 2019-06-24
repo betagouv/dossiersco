@@ -8,6 +8,7 @@ class RespLegal < ActiveRecord::Base
   before_save :vide_ville_etrangere
   validate :un_telephone_renseigne?
   validates_presence_of :nom, :prenom, :lien_de_parente, :adresse, :ville, :pays
+  validates :communique_info_parents_eleves, inclusion: { in: [true, false] }
   validates :code_postal, presence: true, if: :pays_fra?
   validates :enfants_a_charge, presence: true, if: :priorite_1?
 
@@ -104,7 +105,7 @@ class RespLegal < ActiveRecord::Base
   end
 
   def vide_ville_etrangere
-    self.ville_etrangere = ''
+    self.ville_etrangere = ""
   end
 
 end
