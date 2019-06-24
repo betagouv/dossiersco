@@ -76,7 +76,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
                                  ville: "Ville a ne pas afficher",
                                  pays: "XXX")
       resp_incomplet[partie_du_tag_adresse] = nil
-      Fabricate(:dossier_eleve,
+      Fabricate.build(:dossier_eleve,
                 etablissement: admin.etablissement,
                 resp_legal: [resp_incomplet])
     end
