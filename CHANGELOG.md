@@ -1,11 +1,4 @@
----
-## 21 juin
-
-- **Valider les adresse emails saisies**
-
-Pour s'assurer que les emails sont bien saisie, nous avons ajouter des validations sur le format des emails.
-
-[ticket](https://gitlab.com/dossiersco/dossiersco/issues/653)
+## Mardi 25 juin
 
 - **Totaliser le total des collèges en haut de la page suivi**
 
@@ -13,6 +6,25 @@ Afficher la somme total des établissements dans la page de suivi de dossiersco
 
 [ticket](https://gitlab.com/dossiersco/dossiersco/issues/659)
 
+---
+## Vendredi 21 juin
+
+- **Valider les adresse emails saisies**
+
+Pour s'assurer que les emails sont bien saisie, nous avons ajouter des validations sur le format des emails.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/653)
+
+
+- **Amélioration de la page de suivi**
+
+Changements proposés : Avoir des listes exclusives (un collège saute de l'une à l'autre, sans doublon) Afficher un total général des collèges expérimentateurs (inscrits + expérimentateur + utilisateur) fusion des listes 2 et 3 ; modification du wording de toutes
+
+- "Etablissements inscrits (x)"
+- "Etablissements expérimentateurs : DossierSCO paramétré ; Elèves importés (y) "
+- "Etablissements utilisateurs : ayant ouvert DossierSCO aux familles (Z)" : détail des établissements (z)
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/652)
 
 ---
 ## Mercredi 19 juin
@@ -22,6 +34,17 @@ Afficher la somme total des établissements dans la page de suivi de dossiersco
 Un fichier en erreur peut être déposé sur https://send.firefox.com et le lien ainsi généré envoyé à l'équipe.
 
 ---
+## Mardi 18 juin
+
+- **Révision du message de convocation**
+
+En tant que parent d'élève entrant en 6ème, je reçois un email ne correspondant pas à ma situation (manuels)
+
+Le message de confirmation de connexion subordonne l'inscription à la restitution des manuels scolaires prêtés et au fait d'être en règle avec la caisse du collège. Ce message convient aux réinscriptions, pas aux 6èmes. Solution proposée = rajouter "(pour les élèves déja inscrits au collège l'an passé)"
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/649)
+
+---
 ## Lundi 17 juin
 
 - **Rendre visible le statut d'un dossier dans l'export excel**
@@ -29,6 +52,12 @@ Un fichier en erreur peut être déposé sur https://send.firefox.com et le lien
 rendre visible le satut d'un dossier dans l'export excel. Il y a maintenant une colonne statut.
 
 [ticket](https://gitlab.com/dossiersco/dossiersco/issues/648)
+
+- **Informer l'agent après import comment la carte des formations a été construite**
+
+Dans le message de fin d'import élève, préciser que la carte des formations à été déduite du fichier mais qu'il serait préférable d'aller vérifier.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/593)
 
 ---
 ## Vendredi 14 juin
@@ -133,6 +162,50 @@ Afin de savoir par quel chemin le message va partir à une famille, afficher les
 
 Nous n'envoyons plus de copie des messages envoyé aux famillles aux agents.
 
+---
+## Jeudi 7 juin
+
+- **Lien non interprété dans la page d'accueil**
+
+Dans la page d'accueil, il est demandé aux parents de se munir des pièces.
+Si l'explication de la pièce attendue est en markdown, le markdown doit maintenant être interprété correctement, de la même manière que du HTML directement.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/613)
+
+
+---
+## Mercredi 5 juin
+
+- **Configuration de campagne**
+
+Pour éclaircir l'organisation, en tant qu'admin, j'aimerais pouvoir accéder à tous les éléments de configuration de notre campagne au même endroit
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/603)
+
+
+- **Rendre visible dans le module agent les informations générales**
+
+Afficher les informations administrative dans le dossier élève : 
+
+- régime de sortie
+- souhait de communiquer des informations médicales
+- authorisation photo de classe
+- demi-pension
+- numéro caf
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/602)
+
+- **faire un feedback sur le nombre de documents importés**
+
+Afficher toutes les images téléversé en pièces jointes (quand il y en a plusieurs).
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/255)
+
+- **Ne pas afficher 1 et 2 sur les représentants légaux**
+
+Les représentants légaux n'ont pas à être placé, numéroté.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/605)
 
 ---
 ## mardi 4 juin
@@ -143,7 +216,17 @@ Changement du texte des convocations pour faire en sorte que ce texte soit valab
 
 [ticket](https://gitlab.com/dossiersco/dossiersco/issues/598)
 
+- **rendre compréhensible la liste des élèves**
 
+En tant qu'agent, je souhaite comprendre la signification des colonnes avec l'icone "camion" et l'icone "fourchette couteau" dans la page qui liste les élèves
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/584)
+
+- **Afficher les régimes de sortie dans l'ordre chrono de création**
+
+En tant que famille, j'aimerai voir afficher les différents régimes de sortie dans l'ordre chronologique de crzation (comme pour les agents)
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/582)
 
 ---
 ## lundi 3 juin
