@@ -1,4 +1,6 @@
-require 'nokogiri'
+# frozen_string_literal: true
+
+require "nokogiri"
 
 fichier = ARGV[0]
 puts fichier
