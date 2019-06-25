@@ -367,9 +367,13 @@
             <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
             <input type="hidden" name="identifiant" value="<%= @dossier_eleve.eleve.identifiant %>" />
             <div class="form__group mb-2">
-              <button class="button  <%= 'disabled' if @dossier_eleve.etat == 'validé'%>"
-                      id="bouton-validation-inscription" type='submit'
-                      <%= 'disabled' if @dossier_eleve.etat == 'validé'%>>Valider l'inscription</button>
+              <% unless [DossierEleve::ETAT[:pas_connecte], DossierEleve::ETAT[:connecte], DossierEleve::ETAT[:en_attente]].include? @dossier_eleve.etat %>
+                <button class="button  <%= 'disabled' if @dossier_eleve.etat == 'validé'%>"
+                        id="bouton-validation-inscription" type='submit'
+                        <%= 'disabled' if @dossier_eleve.etat == 'validé'%>><%= t('.valider_inscription') %></button>
+              <% else %>
+                <%= t('.impossible_valider', etat: @dossier_eleve.etat) %>
+              <% end %>
             </div>
           </form>
           <form action='/agent/eleve_sortant' method='POST'>

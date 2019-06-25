@@ -389,6 +389,8 @@ fr:
       changements_enregistres: "Les changements ont été enregistrés"
       changements_non_enregistres: "Une erreur est survenue, les changements n'ont pas été pris en compte"
     eleve:
+      valider_inscription: Valider l'inscription
+      impossible_valider: "La validation n'est pas possible, la famille n'a pas fini son inscription. Le dossier est actuellement dans l'état '%{etat}'."
       j_accepte: "J'accepte"
       j_accepte_pas: "Je n'accepte pas"
       enfant_photographie: "que mon enfant soit photographié à l'occasion de la photo de classe."
