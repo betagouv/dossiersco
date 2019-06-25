@@ -17,7 +17,7 @@ fr:
         pays: Pays
         email: Email principal
         profession: Profession
-        communique_info_parents_eleves: Communique
+        communique_info_parents_eleves: Communiquer les informations aux associations de parents d'élèves
     errors:
       messages:
         record_invalid: "%{errors}"

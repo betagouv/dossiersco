@@ -121,7 +121,7 @@ class AccueilController < ApplicationController
 
     valide = true
     @dossier_eleve.resp_legal.each { |resp| valide = false unless resp.valid? }
-    if valide && @dossier_eleve.update(params_resp_legal)
+    if @dossier_eleve.update(params_resp_legal) && valide
       note_avancement_et_redirige_vers("administration")
     else
       variables_famille
