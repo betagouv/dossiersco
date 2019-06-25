@@ -113,4 +113,12 @@ class ApplicationHelperTest < ActionDispatch::IntegrationTest
     assert !pratiquee?(dossier, option_pedagogique)
   end
 
+  test "somme les établissements des divers catégories de suivies" do
+    suivi = Struct.new(:pas_encore_connecte, :eleves_importe, :familles_connectes).new
+    suivi.pas_encore_connecte = [Fabricate(:etablissement), Fabricate(:etablissement), Fabricate(:etablissement)]
+    suivi.eleves_importe = [Fabricate(:etablissement), Fabricate(:etablissement)]
+    suivi.familles_connectes = [Fabricate(:etablissement)]
+    assert_equal 6, somme_suivi(suivi)
+  end
+
 end
