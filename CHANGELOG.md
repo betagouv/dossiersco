@@ -156,14 +156,14 @@ Afin de savoir par quel chemin le message va partir à une famille, afficher les
 [ticket](https://gitlab.com/dossiersco/dossiersco/issues/555)
 
 ---
-## samedi 8 juin
+## Samedi 8 juin
 
 - **Ne plus envoyer de copie à l'agent connecté**
 
 Nous n'envoyons plus de copie des messages envoyé aux famillles aux agents.
 
 ---
-## Jeudi 7 juin
+## Vendredi 7 juin
 
 - **Lien non interprété dans la page d'accueil**
 
@@ -172,6 +172,40 @@ Si l'explication de la pièce attendue est en markdown, le markdown doit mainten
 
 [ticket](https://gitlab.com/dossiersco/dossiersco/issues/613)
 
+
+---
+
+## Jeudi 6 juin
+
+- **enchainement de MEF**
+
+J'aimerais pouvoir vérifier mes enchainements de MEF (quel MEF va dans quel MEF) et pouvoir faire des changements si besoin. DossierSCO ne trouvant pas toujours le MEF destination qui conviens, cette écrans pourrait également informer du nombre d'élèves sans MEF (ça devrait correspondre au fait de ne pas avoir de MEF destination pour certain mef)
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/606)
+
+- **Afficher correctement les options maintenues**
+
+Correction d'un bug qui affichait les options comme abandonnées alors qu'elles devraient apparaitre comme maintenues.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/609)
+
+- **Alléger les contraintes de matching ENT**
+
+Afin d'augmenter les chances de trouver le responsable légal provenant de l'ENT, nous allons chercher uniquement avec l'email s'il y en a un, et sinon, utiliser le nom, prénom et adresse.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/608)
+
+- **Avoir une trace des problèmes d'ENT**
+
+Afin de savoir qu'il y a un problème, lorsqu'on ne trouve pas de responsable légal et/ou de dossier avec les informations de l'ENT, nous envoyons une alerte dans SENTRY.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/607)
+
+- **Bug sur le lien de La modification de la Demi-pension**
+
+Bug sur le lien de La modification de la Demi-pension, dans configuration de la campagne, ne renvoie pas vers la bonne page
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/611)
 
 ---
 ## Mercredi 5 juin
@@ -206,6 +240,12 @@ Afficher toutes les images téléversé en pièces jointes (quand il y en a plus
 Les représentants légaux n'ont pas à être placé, numéroté.
 
 [ticket](https://gitlab.com/dossiersco/dossiersco/issues/605)
+
+- **Accepter les liens dans le corps du texte**
+
+En tant qu'agent d'un établissement, je souhaite ajouter un lien dans le corps du texte de l'explication pour une pièce attendue
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/559)
 
 ---
 ## mardi 4 juin
