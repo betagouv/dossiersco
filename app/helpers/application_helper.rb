@@ -82,4 +82,10 @@ module ApplicationHelper
   def pratiquee?(dossier, option)
     dossier.options_origines[option.id.to_s].present?
   end
+
+  def somme_suivi(suivi)
+    suivi.pas_encore_connecte.count +
+      suivi.eleves_importe.count +
+      suivi.familles_connectes.count
+  end
 end
