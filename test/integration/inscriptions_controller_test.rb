@@ -365,4 +365,34 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "#{d.satisfaction} : Commentaire de test", doc.css("div#commentaire").first.text
   end
 
+  test "un agent ne peut pas valider un dossier si la famille n'a pas fini l'inscription" do
+    e = Fabricate(:eleve, identifiant: "XXX")
+    d = Fabricate(:dossier_eleve, etat: "connecté", eleve: e)
+    Fabricate(:resp_legal, dossier_eleve: d)
+
+    agent = Fabricate(:agent, etablissement: d.etablissement)
+    identification_agent(agent)
+    get "/agent/eleve/XXX"
+
+    doc = Nokogiri::HTML(response.body)
+
+    assert_equal I18n.t("inscriptions.eleve.impossible_valider", etat: d.etat), doc.xpath("//*[@id='dossier']/div/div[2]/form[1]/div").text.strip!
+    assert_not_equal I18n.t("inscriptions.eleve.valider_inscription"), doc.xpath("//*[@id='bouton-validation-inscription']").children.text
+  end
+
+  test "un agent  peut valider un dossier si la famille a fini l'inscription" do
+    e = Fabricate(:eleve, identifiant: "XXX")
+    d = Fabricate(:dossier_eleve, etat: "en attente de validation", eleve: e)
+    Fabricate(:resp_legal, dossier_eleve: d)
+
+    agent = Fabricate(:agent, etablissement: d.etablissement)
+    identification_agent(agent)
+    get "/agent/eleve/XXX"
+
+    doc = Nokogiri::HTML(response.body)
+
+    assert_not_equal I18n.t("inscriptions.eleve.impossible_valider", etat: d.etat), doc.xpath("//*[@id='dossier']/div/div[2]/form[1]/div").text.strip!
+    assert_equal I18n.t("inscriptions.eleve.valider_inscription"), doc.xpath('//*[@id="bouton-validation-inscription"]').children.text
+  end
+
 end
