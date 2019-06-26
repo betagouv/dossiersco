@@ -92,7 +92,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     assert_match "3 rue de test", response.body
     assert_match "75000", response.body
     assert_match "Ville de test", response.body
-    assert_match "FRA", response.body
+    assert_match "100", response.body
     assert_no_match "adresse a ne pas afficher", response.body
     assert_no_match "75001", response.body
     assert_no_match "Ville a ne pas afficher", response.body
