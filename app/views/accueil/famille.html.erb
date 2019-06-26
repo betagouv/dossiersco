@@ -1,7 +1,8 @@
 <section class="section">
 
     <%= simple_form_for @dossier_eleve, url: famille_path, method: "post" do |f| %>
-    <% if @dossier_eleve.resp_legal_1.errors.any? || (@dossier_eleve.resp_legal_2 && @dossier_eleve.resp_legal_2.errors.any?) %>
+    <% if @dossier_eleve.resp_legal_1.errors.any? ||
+        (@dossier_eleve.resp_legal_2 && @dossier_eleve.resp_legal_2.errors.any?) %>
       <div class="list-errors notification warning">
         <ul>
           <% @dossier_eleve.resp_legal_1.errors.full_messages.each do |msg| %>
@@ -19,35 +20,32 @@
         <%= render 'form_rl', f: resp, responsable: resp.object, rl: resp.object.priorite %>
       <% end %>
 
-    <div id='contact_urgence'>
-      <h2 class="mt-5 separation"><%= t('.titre_contact_urgence') %></h2>
+      <%= f.fields_for :contact_urgence do |c| %>
+        <div id='contact_urgence'>
+          <h2 class="mt-5 separation"><%= t('.titre_contact_urgence') %></h2>
 
-      <div class="form__group">
-        <label for="lien_avec_eleve_urg"><%= t('.lien_avec_eleve') %></label>
-        <input id="lien_avec_eleve_urg" name="lien_avec_eleve_urg" type="text" value="<%= @contact_urgence&.lien_avec_eleve %>" placeholder="Lien avec l'élève">
-      </div>
+          <div class="form__group">
+            <%= c.input :lien_avec_eleve, placeholder: t('.lien_avec_eleve'), label: t('.lien_avec_eleve') %>
+          </div>
 
-      <div class="form__group">
-        <label for="prenom_urg"><%= t('.prenom') %></label>
-        <input id="prenom_urg" name="prenom_urg" type="text" value="<%= @contact_urgence&.prenom %>" placeholder="Prénom">
-      </div>
+          <div class="form__group">
+            <%= c.input :prenom, placeholder: "Prénom" %>
+          </div>
 
-      <div class="form__group">
-        <label for="nom_urg"><%= t('.nom') %></label>
-        <input id="nom_urg" name="nom_urg" type="text" value="<%= @contact_urgence&.nom %>" placeholder="Nom">
-      </div>
+          <div class="form__group">
+            <%= c.input :nom, placeholder: "Nom" %>
+          </div>
 
-      <div class="form__group">
-        <label for="tel_principal_urg"><%= t('.telephone_principal') %></label>
-        <input id="tel_principal_urg" name="tel_principal_urg" type="tel" value="<%= @contact_urgence&.tel_principal %>" placeholder="Numéro de téléphone">
-      </div>
+          <div class="form__group">
+            <%= c.input :tel_principal, as: :tel, placeholder: "Numéro de téléphone", label: t('.telephone_principal') %>
+          </div>
 
-      <div class="form__group">
-        <label for="tel_secondaire_urg"><%= t('.telephone_secondaire') %></label>
-        <input id="tel_secondaire_urg" name="tel_secondaire_urg" type="tel" value="<%= @contact_urgence&.tel_secondaire %>" placeholder="Numéro de téléphone">
-      </div>
+          <div class="form__group">
+            <%= c.input :tel_secondaire, as: :tel, placeholder: "Numéro de téléphone", label: t('.telephone_secondaire') %>
+          </div>
+        </div>
 
-    </div>
+      <% end %>
     <%= render partial: 'partials/nouveau_precedent_suivant', :locals => { :precedent => "eleve"} %>
     <% end %>
 </section>

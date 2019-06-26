@@ -186,25 +186,6 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     assert_equal false, dossier.autorise_photo_de_classe
   end
 
-  # le masquage du formulaire de contact se fait en javascript
-  test "html du contact present dans page quand pas encore de contact" do
-    resp_legal = Fabricate(:resp_legal)
-    dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
-    eleve = dossier_eleve.eleve
-
-    params = {
-      identifiant: eleve.identifiant,
-      annee: eleve.annee_de_naissance,
-      mois: eleve.mois_de_naissance,
-      jour: eleve.jour_de_naissance
-    }
-    post "/identification", params: params
-    get "/famille"
-
-    doc = Nokogiri::HTML(response.parsed_body)
-    assert_not_nil doc.css("input#tel_principal_urg").first
-  end
-
   test "ramene à la dernire etape visitée plutot que l'etape la plus avancée" do
     resp_legal = Fabricate(:resp_legal)
     dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
