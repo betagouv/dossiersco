@@ -1,14 +1,16 @@
 <section class="section">
 
     <%= simple_form_for @dossier_eleve, url: famille_path, method: "post" do |f| %>
-    <% if @dossier_eleve.resp_legal_1.errors.any? || @dossier_eleve.resp_legal_2.errors.any? %>
+    <% if @dossier_eleve.resp_legal_1.errors.any? || (@dossier_eleve.resp_legal_2 && @dossier_eleve.resp_legal_2.errors.any?) %>
       <div class="list-errors notification warning">
         <ul>
           <% @dossier_eleve.resp_legal_1.errors.full_messages.each do |msg| %>
             <li>Premier responsable : <%= msg %></li>
           <% end %>
-          <% @dossier_eleve.resp_legal_2&.errors.full_messages.each do |msg| %>
-            <li>Deuxième responsable : <%= msg %></li>
+          <% if @dossier_eleve.resp_legal_2 && @dossier_eleve.resp_legal_2.errors.any? %>
+            <% @dossier_eleve.resp_legal_2&.errors.full_messages.each do |msg| %>
+              <li>Deuxième responsable : <%= msg %></li>
+            <% end %>
           <% end %>
         </ul>
       </div>
@@ -54,7 +56,6 @@
   $(document).ready(function() {
 
     <% if defined? @affiche_formulaire %>
-      console.log(<%= @affiche_formulaire %>)
       let $error = $('.error')
       $.each($error, function() {
         $(this).parent().find('input').addClass('input-error')
