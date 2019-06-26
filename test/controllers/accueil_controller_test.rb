@@ -143,9 +143,11 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     dossier_eleve = cree_dossier_eleve_et_identification
 
     dossier_eleve.resp_legal << Fabricate(:resp_legal)
-    dossier_eleve.resp_legal << Fabricate(:resp_legal, priorite: 2)
+    resp = Fabricate(:resp_legal, priorite: 2)
+    dossier_eleve.resp_legal << resp
 
     params = { "dossier_eleve[resp_legal_attributes][1][lien_de_parente]": "MERE",
+               "dossier_eleve[resp_legal_attributes][1][id]": resp.id,
                "dossier_eleve[resp_legal_attributes][1][prenom]": "Chahrazed",
                "dossier_eleve[resp_legal_attributes][1][nom]": "BELAMEIRI",
                "dossier_eleve[resp_legal_attributes][1][adresse]": "37 avenue de la République",

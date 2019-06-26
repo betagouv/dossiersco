@@ -102,7 +102,6 @@ class AccueilController < ApplicationController
   def variables_famille
     @lien_de_parentes = ["MERE", "PERE", "AUTRE FAM.", "AUTRE LIEN", "TUTEUR", "ASE"]
 
-    @code_profession = RespLegal.codes_profession
     @code_situation = code_situation
     @liste_pays = []
     filename = File.join(Rails.root, "app/views/accueil/liste-pays.csv")
@@ -120,8 +119,9 @@ class AccueilController < ApplicationController
     change.applique(params)
 
     valide = true
+    save_dossier = @dossier_eleve.update(params_resp_legal)
     @dossier_eleve.resp_legal.each { |resp| valide = false unless resp.valid? }
-    if @dossier_eleve.update(params_resp_legal) && valide
+    if save_dossier && valide
       note_avancement_et_redirige_vers("administration")
     else
       variables_famille

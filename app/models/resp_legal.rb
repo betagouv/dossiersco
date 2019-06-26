@@ -6,18 +6,26 @@ class RespLegal < ActiveRecord::Base
 
   before_validation :defini_ville_residence
   before_save :vide_ville_etrangere
-  validate :un_telephone_renseigne?
-  validates_presence_of :nom, :prenom, :lien_de_parente, :adresse, :ville, :pays, :profession
-  validates :communique_info_parents_eleves, inclusion: { in: [true, false] }
-  validates :code_postal, presence: true, if: :pays_fra?
   validates :enfants_a_charge, presence: true, if: :priorite_1?
 
+  with_options if: :resp_present? do |resp|
+    resp.validate :un_telephone_renseigne?
+    resp.validates_presence_of :nom, :prenom, :lien_de_parente, :ville, :pays, :profession
+    resp.validates :adresse, presence: true
+    resp.validates :code_postal, presence: true, if: :pays_fra?
+    resp.validates :communique_info_parents_eleves, inclusion: { in: [true, false] }
+  end
+
   def pays_fra?
-    pays == "FRA"
+    pays == "FRA" && resp_present?
   end
 
   def priorite_1?
     priorite == 1
+  end
+
+  def resp_present?
+    !(nom.blank? && prenom.blank? && priorite == 2) || priorite_1?
   end
 
   def meme_adresse(autre_resp_legal)

@@ -79,8 +79,8 @@
 </div>
 
 <div class="form__group">
-  <% professions = @code_profession.map{ |k, v| v } %>
-  <%= f.input :profession, as: :select, collection: professions, selected:  :profession %>
+  <% professions = RespLegal.codes_profession.map{ |k, v| v } %>
+  <%= f.input :profession, collection: professions, selected:  responsable.profession %>
 </div>
 
 <div class="form__group">

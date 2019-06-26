@@ -35,6 +35,8 @@ fr:
           attributes:
             code_postal_ant:
               blank: "ne peut être vide"
+            communique_info_parents_eleves:
+              inclusion: "doit être coché"
         dossier_eleve:
           attributes:
             etat:
