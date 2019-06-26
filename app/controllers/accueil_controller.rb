@@ -113,13 +113,10 @@ class AccueilController < ApplicationController
   def post_famille
     @dossier_eleve = @eleve.dossier_eleve
 
-    @contact_urgence = ContactUrgence.find_by(dossier_eleve_id: @dossier_eleve.id) || ContactUrgence.new(dossier_eleve_id: @dossier_eleve.id)
-
-    change = ChangeContactUrgence.new(@dossier_eleve)
-    change.applique(params)
+    @dossier_eleve.contact_urgence = @dossier_eleve.contact_urgence || ContactUrgence.new
 
     valide = true
-    save_dossier = @dossier_eleve.update(params_resp_legal)
+    save_dossier = @dossier_eleve.update(params_dossier_famille)
     @dossier_eleve.resp_legal.each { |resp| valide = false unless resp.valid? }
     if save_dossier && valide
       note_avancement_et_redirige_vers("administration")
@@ -130,13 +127,15 @@ class AccueilController < ApplicationController
     end
   end
 
-  def params_resp_legal
+  def params_dossier_famille
     params.require(:dossier_eleve).permit(resp_legal_attributes: %i[lien_de_parente prenom nom code_postal
                                                                     adresse ville ville_etrangere pays
                                                                     tel_personnel tel_portable
                                                                     tel_professionnel email profession
                                                                     communique_info_parents_eleves
-                                                                    enfants_a_charge id ])
+                                                                    enfants_a_charge id ],
+                                          contact_urgence_attributes: %i[lien_avec_eleve prenom nom tel_principal
+                                                                         tel_secondaire])
   end
 
   def responsables_valides?(resp_legal1, resp_legal2)
