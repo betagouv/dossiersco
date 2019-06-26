@@ -118,12 +118,6 @@ class DossierEleve < ActiveRecord::Base
     responsable_legal.tel_personnel
   end
 
-  def date_signature_gmt_plus_2
-    return "" unless date_signature
-
-    date_signature.localtime("+02:00").strftime "%d/%m à %H:%M"
-  end
-
   def pieces_manquantes
     result = []
     PieceAttendue.where(etablissement: etablissement, obligatoire: true).each do |piece_attendue|
@@ -137,7 +131,9 @@ class DossierEleve < ActiveRecord::Base
   end
 
   def valide!
-    update(etat: ETAT[:valide])
+    self.date_validation_agent = self.date_validation_agent ||= Time.now
+    self.etat = ETAT[:valide]
+    save
   end
 
   def deja_connecte?

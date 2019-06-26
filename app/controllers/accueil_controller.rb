@@ -172,7 +172,7 @@ class AccueilController < ApplicationController
   def post_validation
     @dossier_eleve = @eleve.dossier_eleve
     @dossier_eleve.signature = params[:signature]
-    @dossier_eleve.date_signature = Time.now
+    @dossier_eleve.date_validation_famille = @dossier_eleve.date_validation_famille ||= Time.now
     @dossier_eleve.save
     if @dossier_eleve.etat != "validé"
       mail = FamilleMailer.envoyer_mail_confirmation(@dossier_eleve.eleve)

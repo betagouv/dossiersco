@@ -185,7 +185,7 @@ class InscriptionsController < ApplicationController
              etats: etats,
              notes: notes,
              moyenne: moyenne,
-             dossiers_avec_commentaires: dossiers_avec_commentaires.sort_by(&:date_signature).reverse
+             dossiers_avec_commentaires: dossiers_avec_commentaires.sort_by(&:date_validation_famille).reverse
            }
   end
 

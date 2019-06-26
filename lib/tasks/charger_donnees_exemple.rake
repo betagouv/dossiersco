@@ -106,7 +106,7 @@ namespace :db do
     cree_dossier_eleve eleves[5], tillion, "validé"
 
     d5 = Eleve.find_by(identifiant: eleves[5][:identifiant]).dossier_eleve
-    d5.update(commentaire: "Pas mal", satisfaction: 4, date_signature: Time.now)
+    d5.update(commentaire: "Pas mal", satisfaction: 4, date_validation_famille: Time.now)
 
     Agent.create!(password: "$2a$10$e1UQDDv5tAjurM3H6VecRe5pwt3lOTqHg7PQoTHKsfhffqeYWbkQe",
                   nom: "De Maulmont", prenom: "Pierre", etablissement_id: tillion.id,
@@ -122,7 +122,7 @@ def cree_dossier_eleve(eleve, etablissement, etat = "en attente de validation")
     satisfaction: e.identifiant || 0 % 5,
     etat: etat
   )
-  dossier_eleve.update commentaire: "Très bien", date_signature: Time.now if etat == "en attente de validation"
+  dossier_eleve.update commentaire: "Très bien", date_validation_famille: Time.now if etat == "en attente de validation"
   RespLegal.create! dossier_eleve_id: dossier_eleve.id,
                     lien_de_parente: "Père", prenom: "Jean", nom: "Blayo",
                     adresse: "42 rue du départ", code_postal: "75018", ville: "Paris",

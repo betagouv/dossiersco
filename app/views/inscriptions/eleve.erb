@@ -363,6 +363,8 @@
           <h3>Instruction du dossier</h3>
         </div>
         <div class="text-center">
+          <%= t('.date_validation_famille_html', date: l(@dossier_eleve.date_validation_famille, :format => :phrase)) if @dossier_eleve.date_validation_famille %>
+          <%= t('.date_validation_agent_html', date: l(@dossier_eleve.date_validation_agent, :format => :phrase)) if @dossier_eleve.date_validation_agent %>
           <form action='/agent/valider_inscription' method='POST'>
             <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
             <input type="hidden" name="identifiant" value="<%= @dossier_eleve.eleve.identifiant %>" />

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_18_101413) do
+ActiveRecord::Schema.define(version: 2019_06_26_134611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 2019_06_18_101413) do
     t.string "etape_la_plus_avancee", default: "accueil"
     t.text "commentaire"
     t.boolean "signature", default: false
-    t.datetime "date_signature"
+    t.datetime "date_validation_famille"
     t.string "derniere_etape"
     t.bigint "mef_origine_id"
     t.bigint "mef_destination_id"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 2019_06_18_101413) do
     t.bigint "regime_sortie_id"
     t.string "identifiant_caf"
     t.boolean "continuer_dossiersco"
+    t.datetime "date_validation_agent"
     t.index ["eleve_id"], name: "index_dossier_eleves_on_eleve_id"
     t.index ["mef_destination_id"], name: "index_dossier_eleves_on_mef_destination_id"
     t.index ["mef_origine_id"], name: "index_dossier_eleves_on_mef_origine_id"
@@ -224,7 +225,7 @@ ActiveRecord::Schema.define(version: 2019_06_18_101413) do
     t.string "email"
     t.string "profession"
     t.integer "enfants_a_charge"
-    t.boolean "communique_info_parents_eleves"
+    t.boolean "communique_info_parents_eleves", default: false
     t.integer "priorite"
     t.datetime "updated_at"
     t.string "adresse_ant"
@@ -235,6 +236,7 @@ ActiveRecord::Schema.define(version: 2019_06_18_101413) do
     t.string "tel_professionnel"
     t.string "pays", default: "FRA"
     t.integer "id_ent"
+    t.string "ville_etrangere"
   end
 
   create_table "tache_imports", force: :cascade do |t|
