@@ -116,27 +116,46 @@
       let id_champs_cp = '#champs-code-postal-rl' + resp_legal
       let input_champs_cp = $(id_champs_cp + ':input')
       let id_champs_select_ville = '#champs-select-ville-rl' + resp_legal
-      let input_champs_select_ville = $(id_champs_select_ville + ':input')
       let id_champs_text_ville = '#champs-text-ville-rl' + resp_legal
       let input_champs_text_ville = $(id_champs_text_ville + ':input')
       if ($this.val() !== 'FRA') {
         input_champs_cp.val('')
         $(id_champs_cp).hide()
-        input_champs_cp.removeAttr('required')
         $(id_champs_select_ville).hide()
-        input_champs_select_ville.removeAttr('required')
         $(id_champs_text_ville).show()
-        input_champs_text_ville.attr('required',true)
       } else {
         $(id_champs_cp).show()
-        input_champs_cp.attr('required',true)
         $(id_champs_select_ville).show()
-        input_champs_select_ville.attr('required',true)
         input_champs_text_ville.val('')
         $(id_champs_text_ville).hide()
-        input_champs_text_ville.removeAttr('required')
       }
     }
+
+    $("#copier-adresse").click(function () {
+      let pays = $('#dossier_eleve_resp_legal_attributes_0_pays').val()
+      let adresse = $('#dossier_eleve_resp_legal_attributes_0_adresse').val()
+      $('#dossier_eleve_resp_legal_attributes_1_adresse').val(adresse)
+
+      if (pays === 'FRA') {
+        let code_postal = $('#dossier_eleve_resp_legal_attributes_0_code_postal').val()
+        $('#dossier_eleve_resp_legal_attributes_1_code_postal').val(code_postal)
+        let ville = $('#dossier_eleve_resp_legal_attributes_0_ville').val()
+        $("#dossier_eleve_resp_legal_attributes_1_ville").empty().append($("<option></option>").attr("value", ville).text(ville))
+        console.log(code_postal)
+        console.log(ville)
+      } else {
+        let id_champs_cp = '#champs-code-postal-rl2'
+        let $input_champs_cp = $(id_champs_cp + ':input')
+        let ville = $('#dossier_eleve_resp_legal_attributes_0_ville_etrangere').val()
+        $('#dossier_eleve_resp_legal_attributes_1_pays').val(pays)
+        $('#dossier_eleve_resp_legal_attributes_1_ville_etrangere').val(ville)
+        $input_champs_cp.val('')
+        $(id_champs_cp).hide()
+        $('#champs-select-ville-rl2').hide()
+        $('#champs-text-ville-rl2').show()
+      }
+
+    })
 
     $('#meme_adresse_que_rl1').click(function() {
       $("#pays_rl2").val($("#pays_rl1").val());

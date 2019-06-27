@@ -125,6 +125,7 @@ fr:
       j_accepte: "J'accepte"
       j_accepte_pas: "Je n'accepte pas"
     form_rl:
+      meme_adresse: "Copier l'adresse du premier résponsable légal"
       modifier_informations: Modifier les informations ci-dessus
       <<: *infos_nom
       <<: *acceptation

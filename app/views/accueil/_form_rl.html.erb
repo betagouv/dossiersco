@@ -40,6 +40,12 @@
     <%= f.input :nom, placeholder: "Nom" %>
   </div>
 
+  <% unless responsable.priorite_1? %>
+    <a class="button-outline small secondary mt-1" tabindex="0" id="copier-adresse">
+      <%= t('.meme_adresse') %>
+    </a>
+  <% end %>
+
   <div class="form__group">
     <%= f.input :adresse, as: :text, placeholder: "Numéro et nom de voie", rows: "3" %>
   </div>
