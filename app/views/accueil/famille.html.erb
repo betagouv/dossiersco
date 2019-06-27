@@ -138,23 +138,6 @@
       }
     }
 
-    let input_email_rl1 = $('input[name=email_rl1]')
-    let input_email_rl2 = $('input[name=email_rl2]')
-    let span_email = "<span class='span-email' style='font-size: 12px'>Merci de renseigner votre adresse mail, si vous en avez une. L'établissement peut alors vous contacter plus rapidement s'il y a quelque chose à vous signaler concernant votre inscription.</span>"
-
-    if (!input_email_rl1.val() != '' && !input_email_rl2.val() != '') {
-      input_email_rl1.css('border', '1px solid orange')
-      input_email_rl1.parent().append(span_email)
-      input_email_rl2.css('border', '1px solid orange')
-      input_email_rl2.parent().append(span_email)
-    }
-
-    $('input[type=email]').change( function() {
-      input_email_rl1.css('border', '1px solid rgba(0,0,0,.15)')
-      input_email_rl2.css('border', '1px solid rgba(0,0,0,.15)')
-      $('.span-email').remove()
-    })
-
     $('#meme_adresse_que_rl1').click(function() {
       $("#pays_rl2").val($("#pays_rl1").val());
       $("#adresse_rl2").val($("#adresse_rl1").val());
@@ -163,7 +146,5 @@
       let ville_rl1 = $("#ville_rl1").val()
       $("#ville_rl2").empty().append($("<option></option>").attr("value", ville_rl1).text(ville_rl1))
     })
-
   })
-
 </script>

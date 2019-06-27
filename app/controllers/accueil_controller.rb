@@ -94,6 +94,7 @@ class AccueilController < ApplicationController
     @dossier_eleve = @eleve.dossier_eleve
     @dossier_eleve.update derniere_etape: "famille"
     @dossier_eleve.resp_legal << RespLegal.new(priorite: 2) if @dossier_eleve.resp_legal.count < 2
+    @dossier_eleve.contact_urgence = @dossier_eleve.contact_urgence || ContactUrgence.new
     @contact_urgence = @dossier_eleve.contact_urgence
     variables_famille
     render "accueil/famille"
@@ -112,8 +113,6 @@ class AccueilController < ApplicationController
 
   def post_famille
     @dossier_eleve = @eleve.dossier_eleve
-
-    @dossier_eleve.contact_urgence = @dossier_eleve.contact_urgence || ContactUrgence.new
 
     valide = true
     save_dossier = @dossier_eleve.update(params_dossier_famille)
