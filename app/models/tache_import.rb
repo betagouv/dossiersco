@@ -10,4 +10,8 @@ class TacheImport < ActiveRecord::Base
 
   validates :statut, inclusion: { in: STATUTS.values }
 
+  def import_nomenclature?
+    type_fichier == "nomenclature"
+  end
+
 end

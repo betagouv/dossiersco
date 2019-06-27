@@ -10,6 +10,10 @@ class AgentMailer < ApplicationMailer
     mail(subject: "Import de votre base élève dans DossierSCO", to: email, &:text)
   end
 
+  def succes_import_nomenclature(email)
+    mail(subject: "Import de votre nomenclature dans DossierSCO", to: email, &:text)
+  end
+
   def erreur_import(email)
     mail(subject: "L'import de votre base élève a échoué", to: email, &:text)
   end

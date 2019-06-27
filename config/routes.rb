@@ -66,6 +66,8 @@ Rails.application.routes.draw do
         patch 'update_campagne'
       end
     end
+
+    resource :import_nomenclature, only: %i[new create]
   end
 
   get '/agent/mot_de_passe', to: "mot_de_passe_agent#new", as: 'new_mot_de_passe_agent'

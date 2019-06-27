@@ -406,6 +406,10 @@ fr:
       titre_export_xml: "Export d'un XML pour SIECLE"
       explication_export_xml: "Télécharger un export XML pour importer les modifications sur les dossiers élèves dans SIECLE. Pour l'import dans SIECLE, vous devez passer par l'interface d'import d'application privée"
       telecharger_xml: "Télécharger"
+      titre_import_nomenclature: "Importer le fichier de nomenclature"
+      importer_fichier_nomenclature: "Importer le fichier"
+      aide_siecle_nomenclature: ""
+      selectionner_fichier_nomenclature: "Sélectionnez votre fichier de nomenclature au format XML"
 
   contact_par_etats:
     new:

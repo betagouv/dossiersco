@@ -24,16 +24,22 @@ class ImporterSiecle < ApplicationJob
 
   def perform(tache_id, email)
     tache = TacheImport.find(tache_id)
-    begin
-      tache.update(statut: TacheImport::STATUTS[:en_traitement])
+    tache.update(statut: TacheImport::STATUTS[:en_traitement])
+
+    if tache.import_nomenclature?
+      ImportNomenclature.new.perform(tache)
+      mail = AgentMailer.succes_import_nomenclature(email)
+    else
       statistiques = import_xls(tache)
       mail = AgentMailer.succes_import(email, statistiques)
-      tache.update(statut: TacheImport::STATUTS[:terminee])
-      mail.deliver_now
-    rescue StandardError
-      tache.update(statut: TacheImport::STATUTS[:en_erreur])
-      AgentMailer.erreur_import(email).deliver_now
     end
+
+    mail.deliver_now
+
+    tache.update(statut: TacheImport::STATUTS[:terminee])
+  rescue StandardError
+    tache.update(statut: TacheImport::STATUTS[:en_erreur])
+    AgentMailer.erreur_import(email).deliver_now
   end
 
   def import_xls(tache)
