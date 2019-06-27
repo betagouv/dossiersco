@@ -70,7 +70,24 @@ class InscriptionsController < ApplicationController
   end
 
   def update_eleve
+    @dossier_eleve = DossierEleve.find(params[:dossier_id])
+    @dossier_eleve.attributes = params_dossier_eleve
+    if @dossier_eleve.save(validate: false)
+      redirect_to "/agent/eleve/#{@dossier_eleve.eleve.identifiant}#contact"
+    else
+      raise @dossier_eleve.resp_legal_1.errors.inspect
+      redirect_to "/agent/eleve/#{@dossier_eleve.eleve.identifiant}#contact"
+    end
+  end
 
+  def params_dossier_eleve
+    params.require(:dossier_eleve).permit(eleve_attributes: %i[prenom nom sexe date_naiss id],
+                                          resp_legal_attributes: %i[lien_de_parente prenom nom code_postal
+                                                                    adresse ville ville_etrangere pays
+                                                                    tel_personnel tel_portable
+                                                                    tel_professionnel email profession
+                                                                    communique_info_parents_eleves
+                                                                    enfants_a_charge id ])
   end
 
   def modifier_mef_eleve

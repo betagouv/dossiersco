@@ -141,7 +141,7 @@ Rails.application.routes.draw do
 
   get "/agent/eleve/:identifiant", to: "inscriptions#eleve"
 
-  patch "/agent/eleve", to: "inscriptions#update_eleve", as: "agent_update_eleve"
+  patch "/agent/eleve/:dossier_id", to: "inscriptions#update_eleve", as: "agent_update_eleve"
 
   patch "/agent/eleve/:dossier_eleve_id/modifier-mef-eleve", to: "inscriptions#modifier_mef_eleve", as: "modifier_mef_eleve"
 

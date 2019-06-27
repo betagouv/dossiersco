@@ -58,6 +58,10 @@ class RespLegal < ActiveRecord::Base
     "99"
   end
 
+  def self.liens_de_parente
+    ["MERE", "PERE", "AUTRE FAM.", "AUTRE LIEN", "TUTEUR", "ASE"]
+  end
+
   def self.codes_profession
     { '99': "", '10': "agriculteur exploitant", '21': "artisan", '22': "commerçant et assimilé",
       '23': "chef d'entreprise de 10 salariés et+", '31': "profession libérale", '33': "cadre de la fonction publique",

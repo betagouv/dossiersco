@@ -1,59 +1,130 @@
 <div class="panel">
   <div id="infos-eleve">
     <ul class="list-unstyled">
-      <li><b>Nom : </b><%= @dossier_eleve.eleve.nom %></li>
-      <li><b>Prénom : </b><%= @dossier_eleve.eleve.prenom %></li>
-      <li><b>Sexe : </b><%= @dossier_eleve.eleve.sexe %></li>
-      <li><b>Date de naissance : </b><%= l(@dossier_eleve.eleve.date_naiss.to_date) %></li>
+      <li><b><%= t('.prenom') %> : </b><%= @dossier_eleve.eleve.prenom %></li>
+      <li><b><%= t('.nom') %> : </b><%= @dossier_eleve.eleve.nom %></li>
+      <li><b><%= t('.sexe') %> : </b><%= @dossier_eleve.eleve.sexe %></li>
+      <li><b><%= t('.date_naissance') %> : </b><%= l(@dossier_eleve.eleve.date_naiss.to_date) %></li>
     </ul>
     <div class="text-right">
       <button class="button-outline small secondary modifier" data-target="infos-eleve">Modifier</button>
     </div>
   </div>
-  <%= simple_form_for @dossier_eleve, url: agent_update_eleve_path, method: :patch,
-                      html: { id: "form-infos-eleve", class: "d-none"} do %>
-    <div class="form__group">
-      <label>Sexe</label>
-      <input type="text" value="<%= @dossier_eleve.eleve.sexe %>" disabled >
-    </div>
-    <div class="form__group">
-      <label>Date de naissance</label>
-      <input type="date" value="<%= @dossier_eleve.eleve.date_naiss %>" disabled >
-    </div>
+  <%= simple_form_for @dossier_eleve, url: agent_update_eleve_path(@dossier_eleve), method: :patch,
+                      html: { id: "form-infos-eleve", class: "d-none"} do |f| %>
+    <% if @dossier_eleve.eleve.errors.any? %>
+      <div class="list-errors notification warning">
+        <ul>
+          <% @dossier_eleve.eleve.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= f.fields_for :eleve do |e| %>
+      <div class="form__group">
+        <%= e.input :prenom, label: t('.prenom') %>
+      </div>
+      <div class="form__group">
+        <%= e.input :nom, label: t('.nom') %>
+      </div>
+      <div class="form__group">
+        <%= e.input :sexe, label: t('.sexe'), collection: ['Masculin', 'Féminin'], selected: @dossier_eleve.eleve.sexe %>
+      </div>
+      <div class="form__group">
+        <%= e.input :date_naiss, label: t('.date_naissance') %>
+      </div>
+    <% end %>
+    <%= f.button :submit, 'Enregistrer', class: 'button mt-1' %>
   <% end %>
 </div>
 <div class="panel">
   <div class="panel__header">
     <h3><%= @dossier_eleve.resp_legal.count > 1 ? 'Résponsables légaux' : 'Responsable légal' %></h3>
   </div>
-  <% @dossier_eleve.resp_legal.each do |resp_legal| %>
-    <h4>
-      <%= resp_legal.respond_to?(:lien_de_parente) ? resp_legal.lien_de_parente : 'Contact' %>
-      <%= resp_legal.prenom %> <%= resp_legal.nom %>
-    </h4>
-    <ul class="list-unstyled">
-      <% if resp_legal.tel_personnel.present? %>
-        <li>
-          <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_personnel') %> : <%= resp_legal.tel_personnel %>
-        </li>
+  <div id="infos-contact">
+    <% @dossier_eleve.resp_legal.each do |resp_legal| %>
+      <h4>
+        <%= resp_legal.respond_to?(:lien_de_parente) ? resp_legal.lien_de_parente : 'Contact' %>
+        <%= resp_legal.prenom %> <%= resp_legal.nom %>
+      </h4>
+      <ul class="list-unstyled">
+        <% if resp_legal.tel_personnel.present? %>
+          <li>
+            <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_personnel') %> : <%= resp_legal.tel_personnel %>
+          </li>
+        <% end %>
+        <% if resp_legal.tel_portable.present? %>
+          <li>
+            <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_portable') %> : <%= resp_legal.tel_portable %>
+          </li>
+        <% end %>
+        <% if resp_legal.tel_professionnel.present? %>
+          <li>
+            <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_professionnel') %> : <%= resp_legal.tel_professionnel %>
+          </li>
+        <% end %>
+        <% if resp_legal.respond_to?(:email) && resp_legal.email.present? %>
+          <li>
+            <i class="fas fa-envelope mr-1"></i><%= resp_legal.email %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+  <%= simple_form_for @dossier_eleve, url: agent_update_eleve_path(@dossier_eleve), method: :patch,
+                      html: { id: "form-infos-contact", class: "d-none"} do |f| %>
+    <% if @dossier_eleve.resp_legal_1.errors.any? ||
+        (@dossier_eleve.resp_legal_2 && @dossier_eleve.resp_legal_2.errors.any?) %>
+      <div class="list-errors notification warning">
+        <ul>
+          <% @dossier_eleve.resp_legal_1.errors.full_messages.each do |msg| %>
+            <li>Premier responsable : <%= msg %></li>
+          <% end %>
+          <% if @dossier_eleve.resp_legal_2 && @dossier_eleve.resp_legal_2.errors.any? %>
+            <% @dossier_eleve.resp_legal_2&.errors.full_messages.each do |msg| %>
+              <li>Deuxième responsable : <%= msg %></li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= f.fields_for :resp_legal do |r| %>
+      <% if @dossier_eleve.resp_legal.count > 1 %>
+        <h4>Responsable <%= r.object.priorite %></h4>
       <% end %>
-      <% if resp_legal.tel_portable.present? %>
-        <li>
-          <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_portable') %> : <%= resp_legal.tel_portable %>
-        </li>
-      <% end %>
-      <% if resp_legal.tel_professionnel.present? %>
-        <li>
-          <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_professionnel') %> : <%= resp_legal.tel_professionnel %>
-        </li>
-      <% end %>
-      <% if resp_legal.respond_to?(:email) && resp_legal.email.present? %>
-        <li>
-          <i class="fas fa-envelope mr-1"></i><%= resp_legal.email %>
-        </li>
-      <% end %>
-    </ul>
+      <div class="form__group mt-1">
+        <%= r.input :lien_de_parente, collection: RespLegal.liens_de_parente, selected: r.object.lien_de_parente %>
+      </div>
+
+      <div class="form__group">
+        <%= r.input :prenom, placeholder: "Prénom" %>
+      </div>
+
+      <div class="form__group">
+        <%= r.input :nom, placeholder: "Nom" %>
+      </div>
+      <div class="form__group">
+        <%= r.input :tel_personnel, as: :tel, placeholder: "Numéro de téléphone", label: t('.telephone_personnel') %>
+      </div>
+
+      <div class="form__group">
+        <%= r.input :tel_portable, as: :tel, placeholder: "Numéro de téléphone", label: t('.telephone_portable') %>
+      </div>
+
+      <div class="form__group">
+        <%= r.input :tel_professionnel, as: :tel, placeholder: "Numéro de téléphone", label: t('.telephone_professionnel') %>
+      </div>
+
+      <div class="form__group">
+        <%= r.input :email, as: :email, label: t('.email_principal') %>
+      </div>
+    <% end %>
+    <%= f.button :submit, 'Enregistrer', class: 'button mt-1' %>
   <% end %>
+
 
   <% if @dossier_eleve.resp_legal_2.present? %>
     <p>Ces responsables légaux <strong>habitent à
@@ -65,7 +136,11 @@
     </strong>
     </p>
   <% end %>
+  <div class="text-right">
+    <button class="button-outline small secondary modifier" data-target="infos-contact">Modifier</button>
+  </div>
 </div>
+
 <div class="panel">
   <div class="panel__header">
     <h3>Habite chez <%=@dossier_eleve.resp_legal_1.prenom %> <%=@dossier_eleve.resp_legal_1.nom %></h3>
@@ -138,6 +213,8 @@
     $('.modifier').click(function () {
       let list_target = "#" + $(this).data('target')
       let form_target = "#form-" + $(this).data('target')
+      console.log(list_target)
+      console.log(form_target)
       $(list_target).hide()
       $(form_target).show()
     })

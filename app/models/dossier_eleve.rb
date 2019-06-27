@@ -24,6 +24,7 @@ class DossierEleve < ActiveRecord::Base
 
   accepts_nested_attributes_for :resp_legal
   accepts_nested_attributes_for :contact_urgence
+  accepts_nested_attributes_for :eleve
 
   ETAT = {
     pas_connecte: "pas connecté",
