@@ -1,0 +1,145 @@
+<div class="panel">
+  <div id="infos-eleve">
+    <ul class="list-unstyled">
+      <li><b>Nom : </b><%= @dossier_eleve.eleve.nom %></li>
+      <li><b>Prénom : </b><%= @dossier_eleve.eleve.prenom %></li>
+      <li><b>Sexe : </b><%= @dossier_eleve.eleve.sexe %></li>
+      <li><b>Date de naissance : </b><%= l(@dossier_eleve.eleve.date_naiss.to_date) %></li>
+    </ul>
+    <div class="text-right">
+      <button class="button-outline small secondary modifier" data-target="infos-eleve">Modifier</button>
+    </div>
+  </div>
+  <%= simple_form_for @dossier_eleve, url: agent_update_eleve_path, method: :patch,
+                      html: { id: "form-infos-eleve", class: "d-none"} do %>
+    <div class="form__group">
+      <label>Sexe</label>
+      <input type="text" value="<%= @dossier_eleve.eleve.sexe %>" disabled >
+    </div>
+    <div class="form__group">
+      <label>Date de naissance</label>
+      <input type="date" value="<%= @dossier_eleve.eleve.date_naiss %>" disabled >
+    </div>
+  <% end %>
+</div>
+<div class="panel">
+  <div class="panel__header">
+    <h3><%= @dossier_eleve.resp_legal.count > 1 ? 'Résponsables légaux' : 'Responsable légal' %></h3>
+  </div>
+  <% @dossier_eleve.resp_legal.each do |resp_legal| %>
+    <h4>
+      <%= resp_legal.respond_to?(:lien_de_parente) ? resp_legal.lien_de_parente : 'Contact' %>
+      <%= resp_legal.prenom %> <%= resp_legal.nom %>
+    </h4>
+    <ul class="list-unstyled">
+      <% if resp_legal.tel_personnel.present? %>
+        <li>
+          <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_personnel') %> : <%= resp_legal.tel_personnel %>
+        </li>
+      <% end %>
+      <% if resp_legal.tel_portable.present? %>
+        <li>
+          <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_portable') %> : <%= resp_legal.tel_portable %>
+        </li>
+      <% end %>
+      <% if resp_legal.tel_professionnel.present? %>
+        <li>
+          <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_professionnel') %> : <%= resp_legal.tel_professionnel %>
+        </li>
+      <% end %>
+      <% if resp_legal.respond_to?(:email) && resp_legal.email.present? %>
+        <li>
+          <i class="fas fa-envelope mr-1"></i><%= resp_legal.email %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <% if @dossier_eleve.resp_legal_2.present? %>
+    <p>Ces responsables légaux <strong>habitent à
+      <% if @meme_adresse %>
+        la même adresse
+      <% else %>
+        des adresses différentes
+      <% end %>
+    </strong>
+    </p>
+  <% end %>
+</div>
+<div class="panel">
+  <div class="panel__header">
+    <h3>Habite chez <%=@dossier_eleve.resp_legal_1.prenom %> <%=@dossier_eleve.resp_legal_1.nom %></h3>
+  </div>
+
+  <div class="form__group">
+    <label>Lien de parenté</label>
+    <input type="text" value="<%= @dossier_eleve.resp_legal_1.lien_de_parente %>" disabled >
+  </div>
+  <div class="form__group">
+    <label>Adresse</label>
+    <textarea disabled ><%= @dossier_eleve.resp_legal_1.adresse %></textarea>
+  </div>
+  <div class="form__group">
+    <label>Code postal</label>
+    <input type="text" value="<%= @dossier_eleve.resp_legal_1.code_postal %>" disabled >
+  </div>
+  <div class="form__group">
+    <label>Ville</label>
+    <input type="text" value="<%= @dossier_eleve.resp_legal_1.ville %>" disabled >
+  </div>
+  <% unless @dossier_eleve.resp_legal_1.adresse_inchangee %>
+    <div id="ancienne_adresse">
+      <hr/>
+      <div class="form__group">
+        <label>Adresse</label>
+        <textarea disabled ><%= @dossier_eleve.resp_legal_1.adresse_ant %></textarea>
+      </div>
+      <div class="form__group">
+        <label>Code postal</label>
+        <input type="text" value="<%= @dossier_eleve.resp_legal_1.code_postal_ant %>" disabled >
+      </div>
+      <div class="form__group">
+        <label>Ville</label>
+        <input type="text" value="<%= @dossier_eleve.resp_legal_1.ville_ant %>" disabled >
+      </div>
+    </div>
+  <% end %>
+</div>
+<% if @dossier_eleve.contact_urgence.present? %>
+  <div class="panel">
+    <div class="panel__header">
+      <h3>Contact en cas d'urgence</h3>
+    </div>
+    <div class="form__group">
+      <label>Lien avec l'élève</label>
+      <input type="text" value="<%= @dossier_eleve.contact_urgence.lien_avec_eleve %>" disabled >
+    </div>
+    <div class="form__group">
+      <label>Prénom</label>
+      <input value="<%= @dossier_eleve.contact_urgence.prenom %>" disabled >
+    </div>
+    <div class="form__group">
+      <label>nom</label>
+      <input type="text" value="<%= @dossier_eleve.contact_urgence.nom %>" disabled >
+    </div>
+    <div class="form__group">
+      <label>Téléphone principal</label>
+      <input type="text" value="<%= @dossier_eleve.contact_urgence.tel_principal %>" disabled >
+    </div>
+    <div class="form__group">
+      <label>Téléphone secondaire</label>
+      <input type="text" value="<%= @dossier_eleve.contact_urgence.tel_secondaire %>" disabled >
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function () {
+    $('.modifier').click(function () {
+      let list_target = "#" + $(this).data('target')
+      let form_target = "#form-" + $(this).data('target')
+      $(list_target).hide()
+      $(form_target).show()
+    })
+  })
+</script>

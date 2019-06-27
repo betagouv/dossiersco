@@ -391,6 +391,10 @@ fr:
     modifier_mef_eleve:
       changements_enregistres: "Les changements ont été enregistrés"
       changements_non_enregistres: "Une erreur est survenue, les changements n'ont pas été pris en compte"
+    panel_contact:
+      telephone_personnel: Personnel
+      telephone_portable: Portable
+      telephone_professionnel: Professionnel
     eleve:
       date_validation_famille_html: "<p>La famille a terminé l'inscription le %{date}</p>"
       date_validation_agent_html: "<p>Le dossier a été validé le %{date}</p>"
@@ -401,9 +405,6 @@ fr:
       enfant_photographie: "que mon enfant soit photographié à l'occasion de la photo de classe."
       envoyer_une_info_medicale: "Je souhaite envoyer par écrit au secrétariat une information médicale (PAI, PPS, PAP)."
       annuler_decision: "annuler la décision"
-      telephone_personnel: Personnel
-      telephone_portable: Portable
-      telephone_professionnel: Professionnel
       <<: *pieces_jointes
       valider: "Valider"
       refuser: "Refuser"

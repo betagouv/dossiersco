@@ -69,6 +69,10 @@ class InscriptionsController < ApplicationController
     render :eleve
   end
 
+  def update_eleve
+
+  end
+
   def modifier_mef_eleve
     @dossier_eleve = DossierEleve.find(params[:dossier_eleve_id])
     params_mef = params.require(:dossier_eleve).permit(:mef_destination_id, :mef_origine_id)
