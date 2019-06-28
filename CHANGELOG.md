@@ -1,3 +1,8 @@
+## Vendredi 28 juin
+
+- Ajouter l'adresse dans l'import xml vers siecle
+- Crée un xsd qui évite l'erreur silencieuse du CODE_PARENTE sur un seul chiffre
+
 ## Mardi 25 juin
 
 - **Totaliser le total des collèges en haut de la page suivi**
