@@ -98,7 +98,7 @@
 
     <div class="form__group">
       <label for="enfants_a_charge_rl1"><%= t('.nb_total_enfants_a_charge') %></label>
-      <input type="text" id="<%=  t('.nb_total_enfants_a_charge') %>" value="<%= @resp_legal1.enfants_a_charge %>" name="enfants_a_charge_rl1" required>
+      <input type="number" id="<%=  t('.nb_total_enfants_a_charge') %>" value="<%= @resp_legal1.enfants_a_charge || 1 %>" min="1" name="enfants_a_charge_rl1" required>
     </div>
 
 
