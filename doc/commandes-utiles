@@ -216,3 +216,8 @@ Dans app/jobs/importer_siecle.rb, commenter le discard_on puis le begin rescue :
     #  tache.update(statut: TacheImport::STATUTS[:en_erreur])
     #  AgentMailer.erreur_import(email).deliver_now
     #end
+
+# Faire du ménage dans docker
+
+docker volume prune
+docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
