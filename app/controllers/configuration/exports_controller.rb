@@ -15,6 +15,12 @@ module Configuration
     def export_siecle
       @etablissement = @agent_connecte.etablissement
 
+      @dossiers = if params[:limite]
+                    @etablissement.dossier_eleve.joins(:eleve).where("eleves.identifiant in (?)", params[:liste_ine].split(","))
+                  else
+                    @etablissement.dossier_eleve
+                  end
+
       xml_string = render_to_string layout: false
       file = Tempfile.new(["export_pour_siecle", ".xml"])
       file.write(xml_string)

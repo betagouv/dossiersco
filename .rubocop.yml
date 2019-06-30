@@ -32,6 +32,7 @@ Metrics/BlockLength:
 
 Metrics/MethodLength:
   Exclude:
+    - 'app/controllers/configuration/exports_controller.rb'
     - 'app/controllers/pieces_jointes_controller.rb'
     - 'app/controllers/authentification_cas_ent_controller.rb'
     - 'app/controllers/contact_par_etats_controller.rb'
@@ -78,6 +79,7 @@ Metrics/ClassLength:
 Metrics/AbcSize:
   Exclude:
     - 'test/**/*'
+    - 'app/controllers/configuration/exports_controller.rb'
     - 'app/controllers/pieces_jointes_controller.rb'
     - 'app/controllers/configuration/etablissements_controller.rb'
     - 'app/controllers/authentification_cas_ent_controller.rb'

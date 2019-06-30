@@ -35,7 +35,7 @@
       <% end %>
   </div>
 
-  <div class="panel nomenblature">
+  <div class="panel nomenclature">
     <div class="panel__header">
       <h3><%= t('.titre_import_nomenclature') %></h3>
     </div>
@@ -85,7 +85,15 @@
       <h3><%= t('.titre_export_xml') %></h3>
     </div>
     <p><%= t('.explication_export_xml_html') %></p>
-    <%= link_to t('.telecharger_xml'), export_siecle_configuration_exports_path, class: 'button' %>
+
+    <%= form_tag  export_siecle_configuration_exports_path, method: :get do |f| %>
+      <div>
+        <label><%= check_box_tag :limite %>Je souhaite limité l'export aux INE suivant (liste d'INE séparé par une virgule) :</label>
+        <%= text_field_tag :liste_ine %>
+      </div>
+
+      <button type="submit" class="button"><%= t('.telecharger_xml') %></button>
+    <% end %>
   </div>
 
   <div class="panel">
@@ -97,7 +105,7 @@
                 configuration_etablissement_purge_path(@agent_connecte.etablissement),
                 method: :put, data: {confirm: t('.confirmer_purge') },
                 id: 'bouton-purge', class: 'button warning') %>
-  </div>
+</div>
 </section>
 
 <div class="modal__backdrop" id="modal-chargement">
@@ -113,12 +121,12 @@
 </div>
 
 <script type="text/javascript" charset="utf-8">
-  $(document).ready(function() {
-    $('#soumettre-fichier').click(function () {
-      $('#modal-chargement').css('display', 'block')
-    })
-    $('#bouton-purge').click(function () {
-      $('#modal-purge').css('display', 'block')
-    })
+$(document).ready(function() {
+  $('#soumettre-fichier').click(function () {
+    $('#modal-chargement').css('display', 'block')
   })
+  $('#bouton-purge').click(function () {
+    $('#modal-purge').css('display', 'block')
+  })
+})
 </script>

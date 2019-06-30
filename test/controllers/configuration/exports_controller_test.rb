@@ -99,4 +99,36 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     assert_no_match "XXX", response.body
   end
 
+  test "export uniquement pour l'INE saisi" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+
+    resp = Fabricate(:resp_legal,
+                     adresse: "3 rue de test",
+                     code_postal: "75000",
+                     ville: "Ville de test",
+                     pays: "FRA")
+    autre_resp = Fabricate(:resp_legal,
+                           adresse: "8 rue de test",
+                           code_postal: "75000",
+                           ville: "Ville de test",
+                           pays: "FRA")
+    dossier = Fabricate(:dossier_eleve,
+                        etablissement: admin.etablissement,
+                        resp_legal: [resp])
+    Fabricate(:dossier_eleve,
+              etablissement: admin.etablissement,
+              resp_legal: [autre_resp])
+
+    get export_siecle_configuration_exports_path, params: { limite: true, liste_ine: dossier.eleve.identifiant }
+
+    assert_response :success
+
+    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    Nokogiri::XML::Schema(File.read(schema))
+    xml = Nokogiri::XML(response.body)
+
+    assert_equal 1, xml.xpath("//ELEVE").count
+  end
+
 end

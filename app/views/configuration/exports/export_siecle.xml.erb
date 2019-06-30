@@ -8,10 +8,10 @@
     <NUM_ENVOI>1</NUM_ENVOI>
     <LOGICIEL>DOSSIERSCO</LOGICIEL>
   </PARAMETRES>
-  <% if @etablissement.dossier_eleve.any? %>
+  <% if @dossiers.any? %>
     <DONNEES>
       <PERSONNES>
-        <% @etablissement.dossier_eleve.map(&:resp_legal).flatten.each do |resp_legal| %>
+        <% @dossiers.map(&:resp_legal).flatten.each do |resp_legal| %>
           <% next unless resp_legal.nom %>
           <PERSONNE>
             <ID_PRV_PER><%= resp_legal.id %></ID_PRV_PER>
@@ -47,7 +47,7 @@
         <% end %>
       </PERSONNES>
       <ELEVES>
-        <% @etablissement.dossier_eleve.where("mef_destination_id is not null").each do |dossier_eleve| %>
+        <% @dossiers.where("mef_destination_id is not null").each do |dossier_eleve| %>
           <ELEVE>
             <ID_PRV_ELE><%= dossier_eleve.id %></ID_PRV_ELE>
             <NOM_DE_FAMILLE><%= dossier_eleve.eleve.nom %></NOM_DE_FAMILLE>
