@@ -91,7 +91,7 @@
 
 <% if responsable.priorite_1? %>
   <div class="form__group">
-    <%= f.input :enfants_a_charge, as: :integer, label: t('.nb_total_enfants_a_charge'), value: (responsable.enfants_a_charge || 1)  %>
+    <%= f.input :enfants_a_charge, as: :integer, label: t('.nb_total_enfants_a_charge'), input_html: {value: (responsable.enfants_a_charge || 1)}  %>
   </div>
 <% end %>
 
