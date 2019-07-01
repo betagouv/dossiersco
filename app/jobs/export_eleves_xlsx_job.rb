@@ -25,6 +25,7 @@ class ExportElevesXlsxJob < ActiveJob::Base
       ligne << (dossier.renseignements_medicaux ? "X" : "")
       ligne.concat(cellules_pieces_jointes(dossier))
       ligne << dossier.etat
+      ligne << (dossier.demi_pensionnaire? ? "X" : "")
       lignes << ligne
     end
     lignes
@@ -39,6 +40,7 @@ class ExportElevesXlsxJob < ActiveJob::Base
     entete.concat(["Autorise photo de classe", "Information médicale"])
     entete.concat(agent.etablissement.pieces_attendues.map(&:nom))
     entete.concat(["Status du dossier"])
+    entete.concat(["Demi-pensionnaire"])
     entete
   end
 
