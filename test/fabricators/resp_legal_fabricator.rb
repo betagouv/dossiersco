@@ -16,5 +16,5 @@ Fabricator(:resp_legal) do
   ville Faker::Address.city
   communique_info_parents_eleves true
   lien_de_parente %w[PERE MERE].sample
-  pays 'FRA'
+  pays "FRA"
 end
