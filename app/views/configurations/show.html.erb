@@ -65,7 +65,7 @@
         <h3><%= t('.pieces_attendues') %></h3>
         <% if @stats.pieces_attendues.size  == 0  %>
           <p class="card-text"><%= t('.aucune_piece_attendue') %></p>
-          <%= link_to t('.ajouter_piece_justificative'), configuration_pieces_attendues_path %>
+          <%= link_to t('.ajouter_piece_justificative'), configuration_campagnes_path %>
         <% else %>
           <ul>
             <% @stats.pieces_attendues.each do |piece| %>
