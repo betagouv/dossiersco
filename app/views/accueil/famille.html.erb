@@ -117,7 +117,7 @@
       let input_champs_cp = $(id_champs_cp + ':input')
       let id_champs_select_ville = '#champs-select-ville-rl' + resp_legal
       let id_champs_text_ville = '#champs-text-ville-rl' + resp_legal
-      let input_champs_text_ville = $(id_champs_text_ville + ':input')
+      let input_champs_text_ville = $(id_champs_text_ville).children().find('input')
       if ($this.val() !== 'FRA') {
         input_champs_cp.val('')
         $(id_champs_cp).hide()
