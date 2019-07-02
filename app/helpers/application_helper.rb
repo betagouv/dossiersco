@@ -7,11 +7,12 @@ module ApplicationHelper
     end.join
   end
 
-  def super_admin?(identifiant)
+  def super_admin?(agent)
+    return false unless agent
+
     env_super_admin = ENV["SUPER_ADMIN"]
     env_super_admin ||= ""
-    identifiant ||= ""
-    env_super_admin.upcase.split(",").map(&:strip).include?(identifiant.upcase)
+    env_super_admin.upcase.split(",").map(&:strip).include?(agent.email.upcase)
   end
 
   def affiche_etablissement(etablissement)

@@ -96,7 +96,7 @@ class AuthentificationCasEntController < ApplicationController
   end
 
   def debug_ent
-    if @agent_connecte.super_admin?
+    if super_admin?(@agent_connectes)
       render xml: donnees_ent(params[:ticket])
     else
       render text: "aucun resultat sans le bon mot de passe"

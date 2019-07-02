@@ -8,32 +8,37 @@ class ApplicationHelperTest < ActionDispatch::IntegrationTest
 
   test "super_admin? fonctionne, même sans avoir créé la variable d'environnement SUPER_ADMIN" do
     ENV["SUPER_ADMIN"] = nil
-    assert !super_admin?("Henri")
+    agent = Fabricate.build(:agent, email: "henri@ford.com")
+    assert !super_admin?(agent)
   end
 
   test "super_admin? fonctionne, avec nil en paramètre" do
-    ENV["SUPER_ADMIN"] = "Henri"
+    ENV["SUPER_ADMIN"] = "Henri@ford.com"
     assert !super_admin?(nil)
   end
 
   test "super_admin? renvoie true quand l'identifiant est dans la variable d'environnement SUPER_ADMIN" do
-    ENV["SUPER_ADMIN"] = "Henri"
-    assert super_admin?("Henri")
+    ENV["SUPER_ADMIN"] = "henri@ford.com"
+    agent = Fabricate.build(:agent, email: "henri@ford.com")
+    assert super_admin?(agent)
   end
 
   test "super_admin? renvoie true peut importe la casse quand l'identifiant est dans la variable d'environnement SUPER_ADMIN" do
-    ENV["SUPER_ADMIN"] = "henri"
-    assert super_admin?("Henri")
+    ENV["SUPER_ADMIN"] = "HENRI@FORD.COM"
+    agent = Fabricate.build(:agent, email: "henri@ford.com")
+    assert super_admin?(agent)
   end
 
   test "super_admin? renvoie false quand l'identifiant n'est dans la variable d'environnement SUPER_ADMIN" do
-    ENV["SUPER_ADMIN"] = "Henri"
-    assert !super_admin?("Pascal")
+    ENV["SUPER_ADMIN"] = "henri@ford.com"
+    agent = Fabricate.build(:agent, email: "bob@marley.ja")
+    assert !super_admin?(agent)
   end
 
   test "super_admin? renvoie true sur un deuxième super admin" do
-    ENV["SUPER_ADMIN"] = "Henri, Lucien"
-    assert super_admin?("Lucien")
+    ENV["SUPER_ADMIN"] = "Henri@ford.com, Lucien@ruby.org"
+    agent = Fabricate.build(:agent, email: "lucien@ruby.org")
+    assert super_admin?(agent)
   end
 
   test "#affiche_etablissement(etablissement) sans UAI, affiche le nom et le département quand ils sont renseigné)" do

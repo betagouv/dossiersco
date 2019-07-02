@@ -43,7 +43,7 @@
     </ul>
 
     <ul class="footer__links">
-      <% if @agent_connecte && super_admin?(@agent_connecte.email) %>
+      <% if @agent_connecte && super_admin?(@agent_connecte) %>
         <li><a href="/suivi">Suivi</a></li>
         <li><%= link_to "Changer d'etablissement", configuration_etablissements_path %></li>
       <% end %>
