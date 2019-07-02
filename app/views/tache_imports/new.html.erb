@@ -86,13 +86,16 @@
     </div>
     <p><%= t('.explication_export_xml_html') %></p>
 
-    <%= form_tag  export_siecle_configuration_exports_path, method: :get do |f| %>
-      <div>
-        <label><%= check_box_tag :limite %>Je souhaite limité l'export aux INE suivant (liste d'INE séparé par une virgule) :</label>
-        <%= text_field_tag :liste_ine %>
-      </div>
-
-      <button type="submit" class="button"><%= t('.telecharger_xml') %></button>
+    <% if Rails.env.production? && !super_admin?(@agent_connecte) %>
+      <p>Nous sommes en train de faire les derniers réglages pour nous assurer que le fichier généré est bien conforme aux spécification de la base élève. Vous devriez bientôt avoir ici un bouton pour télécharger le fichier SIECLE.</p>
+    <% else %>
+      <%= form_tag  export_siecle_configuration_exports_path, method: :get do |f| %>
+        <div>
+          <label><%= check_box_tag :limite %>Je souhaite limité l'export aux INE suivant (liste d'INE séparé par une virgule) :</label>
+          <%= text_field_tag :liste_ine %>
+        </div>
+        <button type="submit" class="button"><%= t('.telecharger_xml') %></button>
+      <% end %>
     <% end %>
   </div>
 
