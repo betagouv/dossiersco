@@ -51,11 +51,10 @@
         des adresses différentes. </strong></p>
         <p>Habite chez <%=@dossier_eleve.resp_legal_1.prenom %> <%=@dossier_eleve.resp_legal_1.nom %>
       <% end %>
-
-    </p>
+      </p>
   <% end %>
   <div id="infos-contact">
-    <% @dossier_eleve.resp_legal.each do |resp_legal| %>
+    <% @dossier_eleve.resp_legal.sort_by(&:priorite).each do |resp_legal| %>
       <h4>
         <%= resp_legal.respond_to?(:lien_de_parente) ? resp_legal.lien_de_parente : 'Contact' %>
         <%= resp_legal.prenom %> <%= resp_legal.nom %>
@@ -90,6 +89,15 @@
           <% @liste_pays.each do |option| %>
             <%= option[0] if option[1] == resp_legal.pays %>
           <% end %></li>
+        <% unless resp_legal.adresse_inchangee %>
+          <div id="ancienne_adresse">
+            <hr/>
+            <p><strong><%= t('.ancienne_adresse') %></strong></p>
+            <li><b><%= t('accueil.form_rl.adresse') %> : </b><%= resp_legal.adresse_ant %></li>
+            <li><b><%= t('accueil.form_rl.code_postal') %> : </b><%= resp_legal.code_postal_ant %></li>
+            <li><b><%= t('accueil.form_rl.ville') %> : </b><%= resp_legal.ville_ant %></li>
+          </div>
+        <% end %>
       </ul>
     <% end %>
     <div class="text-right">
@@ -162,39 +170,59 @@
 
 </div>
 
-<% if @dossier_eleve.contact_urgence.present? %>
-  <div class="panel">
-    <div class="panel__header">
-      <h3>Contact en cas d'urgence</h3>
-    </div>
-    <div class="form__group">
-      <label>Lien avec l'élève</label>
-      <input type="text" value="<%= @dossier_eleve.contact_urgence.lien_avec_eleve %>" disabled >
-    </div>
-    <div class="form__group">
-      <label>Prénom</label>
-      <input value="<%= @dossier_eleve.contact_urgence.prenom %>" disabled >
-    </div>
-    <div class="form__group">
-      <label>nom</label>
-      <input type="text" value="<%= @dossier_eleve.contact_urgence.nom %>" disabled >
-    </div>
-    <div class="form__group">
-      <label>Téléphone principal</label>
-      <input type="text" value="<%= @dossier_eleve.contact_urgence.tel_principal %>" disabled >
-    </div>
-    <div class="form__group">
-      <label>Téléphone secondaire</label>
-      <input type="text" value="<%= @dossier_eleve.contact_urgence.tel_secondaire %>" disabled >
+<div class="panel">
+  <div class="panel__header">
+    <h3>Contact en cas d'urgence</h3>
+  </div>
+  <%= simple_form_for @dossier_eleve, url: agent_update_eleve_path(@dossier_eleve), method: :patch,
+                      html: { id: "form-infos-contact-urgence", class: "d-none"} do |f| %>
+    <%= f.fields_for :contact_urgence do |c|  %>
+      <div class="form__group">
+        <%= c.input :lien_avec_eleve %>
+      </div>
+      <div class="form__group">
+        <%= c.input :prenom, placeholder: "Prénom" %>
+      </div>
+      <div class="form__group">
+        <%= c.input :nom, placeholder: "Nom" %>
+      </div>
+      <div class="form__group">
+        <%= c.input :tel_principal, as: :tel, placeholder: "Numéro de téléphone", label: t('.telephone_personnel') %>
+      </div>
+      <div class="form__group">
+        <%= c.input :tel_secondaire, as: :tel, placeholder: "Numéro de téléphone", label: t('.telephone_portable') %>
+      </div>
+    <% end %>
+    <%= f.button :submit, 'Enregistrer', class: 'button mt-1' %>
+  <% end %>
+  <div id="infos-contact-urgence">
+    <ul class="list-unstyled">
+      <li><b><%= t('.lien_avec_eleve') %> : </b><%= @dossier_eleve.contact_urgence.lien_avec_eleve %></li>
+      <li><b><%= t('.prenom') %> : </b><%= @dossier_eleve.contact_urgence.prenom %></li>
+      <li><b><%= t('.nom') %> : </b><%= @dossier_eleve.contact_urgence.nom %></li>
+      <% if @dossier_eleve.contact_urgence.tel_principal.present? %>
+        <li>
+          <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_personnel') %> : <%= @dossier_eleve.contact_urgence.tel_principal %>
+        </li>
+      <% end %>
+      <% if @dossier_eleve.contact_urgence.tel_secondaire.present? %>
+        <li>
+          <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_portable') %> : <%= @dossier_eleve.contact_urgence.tel_secondaire %>
+        </li>
+      <% end %>
+    </ul>
+    <div class="text-right">
+      <button class="button-outline small secondary modifier" data-target="infos-contact-urgence">Modifier</button>
     </div>
   </div>
-<% end %>
+</div>
 
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function () {
     $('.modifier').click(function () {
       let list_target = "#" + $(this).data('target')
       let form_target = "#form-" + $(this).data('target')
+      console.log(form_target)
       $(list_target).hide()
       $(form_target).show()
     })

@@ -392,6 +392,9 @@ fr:
       changements_enregistres: "Les changements ont été enregistrés"
       changements_non_enregistres: "Une erreur est survenue, les changements n'ont pas été pris en compte"
     panel_contact:
+      ancienne_adresse: Ancienne adresse
+      lien_avec_eleve: "Lien avec l'élève"
+      pas_de_contact: "Aucun contact en cas d'urgence"
       <<: *infos_nom
       sexe: Sexe
       date_naissance: Date de naissance

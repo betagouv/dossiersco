@@ -353,7 +353,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
   def test_un_agent_voit_un_commentaire_parent_dans_vue_eleve
     etablissement = Fabricate(:etablissement)
-    e = Eleve.create! identifiant: "XXX"
+    e = Fabricate(:eleve, identifiant: "XXX")
     d = DossierEleve.create! eleve_id: e.id, etablissement_id: etablissement.id, commentaire: "Commentaire de test"
     Fabricate(:resp_legal, dossier_eleve: d)
 
