@@ -86,7 +86,7 @@
     </div>
     <p><%= t('.explication_export_xml_html') %></p>
 
-    <% if Rails.env.production? && !super_admin?(@agent_connecte.identifiant) %>
+    <% if Rails.env.production? && !super_admin?(@agent_connecte) %>
       <p>Nous sommes en train de faire les derniers réglages pour nous assurer que le fichier généré est bien conforme aux spécification de la base élève. Vous devriez bientôt avoir ici un bouton pour télécharger le fichier SIECLE.</p>
     <% else %>
       <%= form_tag  export_siecle_configuration_exports_path, method: :get do |f| %>
