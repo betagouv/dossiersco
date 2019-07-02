@@ -22,6 +22,9 @@ class DossierEleve < ActiveRecord::Base
 
   has_and_belongs_to_many :options_pedagogiques
 
+  accepts_nested_attributes_for :resp_legal
+  accepts_nested_attributes_for :contact_urgence
+
   ETAT = {
     pas_connecte: "pas connecté",
     connecte: "connecté",
@@ -78,8 +81,6 @@ class DossierEleve < ActiveRecord::Base
   def email_resp_legal_1
     resp_legal_1&.email
   end
-
-  def email; end
 
   def allocataire
     enfants = resp_legal.first.enfants_a_charge || 0

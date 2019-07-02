@@ -18,22 +18,22 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
                               etablissement: admin.etablissement,
                               resp_legal: [resp])
 
-    resp = Fabricate(:resp_legal, communique_info_parents_eleves: nil)
-    dossier_eleve = Fabricate(:dossier_eleve,
-                              etablissement: admin.etablissement,
-                              resp_legal: [resp])
+    # resp = Fabricate(:resp_legal, communique_info_parents_eleves: nil)
+    # dossier_eleve = Fabricate(:dossier_eleve,
+    #                           etablissement: admin.etablissement,
+    #                           resp_legal: [resp])
 
-    resp = Fabricate(:resp_legal, profession: nil)
-    dossier_eleve = Fabricate(:dossier_eleve,
-                              etablissement: admin.etablissement,
-                              resp_legal: [resp])
+    # resp = Fabricate(:resp_legal, profession: nil)
+    # dossier_eleve = Fabricate(:dossier_eleve,
+    #                           etablissement: admin.etablissement,
+    #                           resp_legal: [resp])
 
-    resp = Fabricate(:resp_legal, nom: nil)
+    resp = Fabricate(:resp_legal)
     dossier_eleve = Fabricate(:dossier_eleve,
                               etablissement: admin.etablissement,
                               resp_legal: [resp])
     3.times do
-      resp = Fabricate(:resp_legal, enfants_a_charge: nil)
+      resp = Fabricate(:resp_legal)
       dossier_eleve = Fabricate(:dossier_eleve,
                                 etablissement: admin.etablissement,
                                 resp_legal: [resp])
@@ -76,9 +76,9 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
                                  ville: "Ville a ne pas afficher",
                                  pays: "XXX")
       resp_incomplet[partie_du_tag_adresse] = nil
-      Fabricate(:dossier_eleve,
-                etablissement: admin.etablissement,
-                resp_legal: [resp_incomplet])
+      Fabricate.build(:dossier_eleve,
+                      etablissement: admin.etablissement,
+                      resp_legal: [resp_incomplet])
     end
 
     get export_siecle_configuration_exports_path

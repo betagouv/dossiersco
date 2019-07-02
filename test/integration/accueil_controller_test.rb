@@ -154,7 +154,7 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     follow_redirect!
 
     doc = Nokogiri::HTML(response.parsed_body)
-    assert_equal "Responsable légal", doc.css("body > main > section > form > h2").text
+    assert_equal "Responsable légal", doc.xpath("/html/body/main/section/form/h2[1]").text
   end
 
   test "une famille remplit l'etape administration" do
@@ -186,25 +186,6 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     assert_equal false, dossier.autorise_photo_de_classe
   end
 
-  # le masquage du formulaire de contact se fait en javascript
-  test "html du contact present dans page quand pas encore de contact" do
-    resp_legal = Fabricate(:resp_legal)
-    dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
-    eleve = dossier_eleve.eleve
-
-    params = {
-      identifiant: eleve.identifiant,
-      annee: eleve.annee_de_naissance,
-      mois: eleve.mois_de_naissance,
-      jour: eleve.jour_de_naissance
-    }
-    post "/identification", params: params
-    get "/famille"
-
-    doc = Nokogiri::HTML(response.parsed_body)
-    assert_not_nil doc.css("input#tel_principal_urg").first
-  end
-
   test "ramene à la dernire etape visitée plutot que l'etape la plus avancée" do
     resp_legal = Fabricate(:resp_legal)
     dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
@@ -216,8 +197,11 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
       mois: eleve.mois_de_naissance,
       jour: eleve.jour_de_naissance
     }
+    params_famille = { "dossier_eleve[resp_legal_attributes][0][nom]": "test",
+                       "dossier_eleve[resp_legal_attributes][0][id]": resp_legal.id }
+
     post "/identification", params: params
-    post "/famille"
+    post "/famille", params: params_famille
     get "/eleve"
     post "/deconnexion"
     params = {

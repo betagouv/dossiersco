@@ -6,6 +6,18 @@ fr:
     attributes:
       etablissement:
         uai: "UAI"
+      resp_legal:
+        enfants_a_charge: "Enfants à charge"
+        telephone: "Téléphone : "
+        prenom: Prénom
+        nom: Nom
+        adresse: Adresse
+        code_postal: Code postal
+        vill: Ville
+        pays: Pays
+        email: Email principal
+        profession: Profession
+        communique_info_parents_eleves: Communiquer les informations aux associations de parents d'élèves
     errors:
       messages:
         record_invalid: "%{errors}"
@@ -19,10 +31,12 @@ fr:
               inclusion: "%{model} %{attribute} = %{value}"
         resp_legal:
           non_renseigne: "Le champ '%{champ}' du résponsable légal %{responsable} ne peut être vide"
-          pas_de_telephone: "Veuillez renseigner au moins un numéro de téléphone portable ou personnel pour le résponsable légal %{responsable}"
+          pas_de_telephone: "veuillez renseigner au moins un numéro de téléphone portable ou personnel"
           attributes:
             code_postal_ant:
               blank: "ne peut être vide"
+            communique_info_parents_eleves:
+              inclusion: "doit être coché"
         dossier_eleve:
           attributes:
             etat:
@@ -31,7 +45,6 @@ fr:
     previous_label: "&#8592; Précédent"
     next_label: "Suivant &#8594;"
     page_gap: "&hellip;"
-
     page_entries_info:
       single_page:
         zero:  "No %{model} found"
@@ -111,6 +124,25 @@ fr:
     acceptation: &acceptation
       j_accepte: "J'accepte"
       j_accepte_pas: "Je n'accepte pas"
+    form_rl:
+      meme_adresse: "Copier l'adresse du premier résponsable légal"
+      modifier_informations: Modifier les informations ci-dessus
+      <<: *infos_nom
+      <<: *acceptation
+      pays: Pays
+      titre_responsable_legal: Responsable légal
+      adresse: Adresse
+      code_postal: Code postal
+      ville: Ville
+      telephone_principal: Téléphone personnel
+      telephone_secondaire: Téléphone portable
+      telephone_professionnel: Téléphone professionnel
+      email_principal: Email principal
+      profession: Profession
+      nb_total_enfants_a_charge: "Nombre total d'enfants à charge"
+      coordonnees_communiquees: "J'accepte que ces coordonnées soient communiquées aux fédérations de parents d'élèves."
+      lien_avec_eleve: "Lien avec l'élève"
+      lien_de_parente: "Lien de parenté"
     eleve:
       <<: *infos_nom
       conseil_corriger_les_informations: "Veuillez corriger les informations incorrectes ou manquantes :"

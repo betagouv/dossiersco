@@ -29,6 +29,7 @@ gem "rubycas-client"
 gem "rubyzip", ">= 1.2.1"
 gem "sass-rails", "~> 5.0"
 gem "sentry-raven"
+gem "simple_form"
 gem "therubyracer"
 gem "turbolinks", "~> 5"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]

@@ -9,3 +9,11 @@ select {
   background-position: top 0.5em right -2.5em;
   padding-right: 32px;
 }
+
+.input .error {
+  color: red;
+}
+
+.input-error {
+  border: solid red 2px;
+}

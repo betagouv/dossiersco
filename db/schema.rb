@@ -225,7 +225,7 @@ ActiveRecord::Schema.define(version: 2019_06_26_134611) do
     t.string "email"
     t.string "profession"
     t.integer "enfants_a_charge"
-    t.boolean "communique_info_parents_eleves"
+    t.boolean "communique_info_parents_eleves", default: false
     t.integer "priorite"
     t.datetime "updated_at"
     t.string "adresse_ant"
@@ -234,8 +234,9 @@ ActiveRecord::Schema.define(version: 2019_06_26_134611) do
     t.string "tel_personnel"
     t.string "tel_portable"
     t.string "tel_professionnel"
-    t.string "pays", default: "FRA"
+    t.string "pays", default: "FRANCE"
     t.integer "id_ent"
+    t.string "ville_etrangere"
   end
 
   create_table "tache_imports", force: :cascade do |t|

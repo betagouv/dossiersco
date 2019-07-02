@@ -1,0 +1,100 @@
+<h2 class="separation"><%= t('.titre_responsable_legal') %></h2>
+
+
+<div class="informations-rl mb-2" data-rl-id="<%= responsable.id %>">
+  <ul class="list-unstyled">
+    <li><b><%= t('.lien_de_parente') %></b> : <%= responsable.lien_de_parente %></li>
+    <li><b><%= t('.prenom') %></b> : <%= responsable.prenom %></li>
+    <li><b><%= t('.nom') %></b> : <%= responsable.nom %></li>
+    <li><b><%= t('.adresse') %></b> : <%= responsable.adresse %></li>
+    <% if responsable.pays =='FRA' %>
+      <li><b><%= t('.code_postal') %></b> : <%= responsable.code_postal %></li>
+    <% end %>
+    <li><b><%= t('.ville') %></b> : <%= responsable.ville&.upcase %></li>
+    <li><b><%= t('.pays') %></b> :
+      <% @liste_pays.each do |option| %>
+        <%= option[0] if option[1] == responsable.pays %>
+      <% end %></li>
+    <li><b><%= t('.telephone_principal') %></b> : <%= responsable.tel_personnel %></li>
+    <li><b><%= t('.telephone_secondaire') %></b> : <%= responsable.tel_portable %></li>
+    <li><b><%= t('.telephone_professionnel') %></b> : <%= responsable.tel_professionnel %></li>
+    <li><b><%= t('.email_principal') %></b> : <%= responsable.email %></li>
+  </ul>
+  <a class="modifier-informations-rl button-outline primary" tabindex="0" data-rl-id="<%= responsable.id %>" data-rl="<%= rl %>">
+    <%= t('.modifier_informations') %>
+  </a>
+</div>
+
+<%= hidden_field_tag :id, responsable.id %>
+
+<div class="formulaire-rl mb-2" data-rl-id="<%= responsable.id %>" style="display: none;">
+  <div class="form__group">
+    <%= f.input :lien_de_parente, collection: @lien_de_parentes, selected: :lien_de_parente, input_html: { class: "lien_de_parente_#{rl}" } %>
+  </div>
+
+  <div class="form__group">
+    <%= f.input :prenom, placeholder: "Prénom" %>
+  </div>
+
+  <div class="form__group">
+    <%= f.input :nom, placeholder: "Nom" %>
+  </div>
+
+  <% unless responsable.priorite_1? %>
+    <a class="button-outline small secondary mt-1" tabindex="0" id="copier-adresse">
+      <%= t('.meme_adresse') %>
+    </a>
+  <% end %>
+
+  <div class="form__group">
+    <%= f.input :adresse, as: :text, placeholder: "Numéro et nom de voie", rows: "3" %>
+  </div>
+
+  <div class="form__group" id="champs-code-postal-rl<%= rl %>">
+    <%= f.input :code_postal, as: :integer, placeholder: t('.code_postal'), input_html: { class: 'input-code-postal', data: { rl: rl } } %>
+  </div>
+
+  <div class="form__group" id="champs-select-ville-rl<%= rl %>">
+    <% ville_rl = responsable.ville ? responsable.ville.upcase : '' %>
+    <%= f.input :ville, collection: [ville_rl], selected: :ville, input_html: { class: 'input-ville', "data-rl" => rl } %>
+  </div>
+
+  <div class="form__group" id="champs-text-ville-rl<%= rl %>" style="display: none;">
+    <%= f.input :ville_etrangere, label: t('.ville') %>
+  </div>
+
+  <div class="form__group">
+    <%= f.input :pays, collection: @liste_pays, selected: responsable.pays, input_html: { class: 'pays', data: {"resp-legal" => responsable.priorite}}, include_blank: true %>
+  </div>
+
+  <div class="form__group">
+    <%= f.input :tel_personnel, as: :tel, placeholder: "Numéro de téléphone", label: t('.telephone_principal') %>
+  </div>
+
+  <div class="form__group">
+    <%= f.input :tel_portable, as: :tel, placeholder: "Numéro de téléphone", label: t('.telephone_secondaire') %>
+  </div>
+
+  <div class="form__group">
+    <%= f.input :tel_professionnel, as: :tel, placeholder: "Numéro de téléphone", label: t('.telephone_professionnel') %>
+  </div>
+
+  <div class="form__group">
+    <%= f.input :email, as: :email, label: t('.email_principal') %>
+  </div>
+</div>
+
+<div class="form__group">
+  <% professions = RespLegal.codes_profession.map{ |k, v| v } %>
+  <%= f.input :profession, collection: professions, selected:  responsable.profession %>
+</div>
+
+<% if responsable.priorite_1? %>
+  <div class="form__group">
+    <%= f.input :enfants_a_charge, as: :integer, label: t('.nb_total_enfants_a_charge'), input_html: {value: (responsable.enfants_a_charge || 1)}  %>
+  </div>
+<% end %>
+
+<div class="form__group">
+  <%= f.input :communique_info_parents_eleves, as: :radio_buttons, label: t('.coordonnees_communiquees'), value: responsable.communique_info_parents_eleves || false %>
+</div>
