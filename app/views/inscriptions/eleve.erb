@@ -20,7 +20,7 @@
         <div class="cards">
           <% @pieces_jointes.each do |piece| %>
 
-            <div class="card mb-2 <%= piece.etat if piece.present? %>">
+            <div class="card mb-2 <%= piece.etat if piece.present? %>" id="piece_<%= piece.id %>">
               <div class="card__content">
                 <h4><%= '*' if piece.obligatoire %> <%= piece.nom %></h4>
                 <div class="card-relat document">
@@ -279,24 +279,39 @@
 <script type="text/javascript" charset="utf-8">
 // Onglets
 $(document).ready(function() {
-  if (location.hash) {
-    $('.lien-section').removeClass('active');
-    $('.lien-section[data-target="' + location.hash + '"]').addClass('active');
-    $('.main').addClass('hide');
-    $(location.hash).removeClass('hide');
+
+  $.urlParam = function(name){
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results==null) {
+      return null;
+    }
+    return decodeURI(results[1]) || 0;
+  }
+
+  let onglet = $.urlParam('onglet')
+  let piece = $.urlParam('piece')
+
+  if (onglet) {
+    $('.lien-section').removeClass('active')
+    $('.lien-section[data-target="#' + onglet + '"]').addClass('active')
+    $('.main').addClass('hide')
+    $("#" + onglet).removeClass('hide')
+  }
+
+  if (piece) {
+    $([document.documentElement, document.body]).animate({
+      scrollTop: $("#piece_" + piece).offset().top
+    })
   }
 
   $('.lien-section').click(function(e) {
     e.preventDefault();
-    const target = $(this).data('target');
+    const target = $(this).data('target')
 
-    let base = window.location.toString().split('#')[0];
-    window.location = base + target;
-
-    $('.lien-section').removeClass('active');
-    $(this).addClass('active');
-    $('.main').addClass('hide');
-    $(target).removeClass('hide');
+    $('.lien-section').removeClass('active')
+    $(this).addClass('active')
+    $('.main').addClass('hide')
+    $(target).removeClass('hide')
   })
 
   // Historique

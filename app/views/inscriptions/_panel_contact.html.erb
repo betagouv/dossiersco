@@ -222,7 +222,6 @@
     $('.modifier').click(function () {
       let list_target = "#" + $(this).data('target')
       let form_target = "#form-" + $(this).data('target')
-      console.log(form_target)
       $(list_target).hide()
       $(form_target).show()
     })
@@ -272,8 +271,6 @@
         $(id_champs_text_ville).show()
         $(id_champs_text_ville).val(ville)
       } else {
-        console.log(id_champs_text_ville)
-        console.log(input_champs_text_ville)
         $(id_champs_cp).show()
         $(id_champs_select_ville).show()
         input_champs_text_ville.val('')
