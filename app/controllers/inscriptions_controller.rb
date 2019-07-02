@@ -64,9 +64,35 @@ class InscriptionsController < ApplicationController
     @pieces_jointes = @dossier_eleve.pieces_jointes
     @emails_presents = false
     @dossier_eleve.resp_legal.each { |r| (@emails_presents = true) if r.email.present? }
+    @dossier_eleve.contact_urgence = @dossier_eleve.contact_urgence || ContactUrgence.new(dossier_eleve: @dossier_eleve)
     @meme_adresse = @dossier_eleve.resp_legal.first.meme_adresse @dossier_eleve.resp_legal.second
     @modeles = agent_connecte.etablissement.modele
+    @liste_pays = []
+    filename = File.join(Rails.root, "app/views/accueil/liste-pays.csv")
+    CSV.foreach(filename, col_sep: ";") do |row|
+      @liste_pays << [row[0].upcase, row[1].upcase]
+    end
     render :eleve
+  end
+
+  def update_eleve
+    @dossier_eleve = DossierEleve.find(params[:dossier_id])
+    @dossier_eleve.attributes = params_dossier_eleve
+    @dossier_eleve.resp_legal.map(&:defini_ville_residence)
+    @dossier_eleve.save(validate: false)
+    redirect_to "/agent/eleve/#{@dossier_eleve.eleve.identifiant}#contact"
+  end
+
+  def params_dossier_eleve
+    params.require(:dossier_eleve).permit(eleve_attributes: %i[prenom nom sexe date_naiss id],
+                                          resp_legal_attributes: %i[lien_de_parente prenom nom code_postal
+                                                                    adresse ville ville_etrangere pays
+                                                                    tel_personnel tel_portable
+                                                                    tel_professionnel email profession
+                                                                    communique_info_parents_eleves
+                                                                    enfants_a_charge id ],
+                                          contact_urgence_attributes: %i[lien_avec_eleve prenom nom tel_principal
+                                                                         tel_secondaire id])
   end
 
   def modifier_mef_eleve

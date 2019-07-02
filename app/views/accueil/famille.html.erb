@@ -154,16 +154,6 @@
         $('#champs-select-ville-rl2').hide()
         $('#champs-text-ville-rl2').show()
       }
-
-    })
-
-    $('#meme_adresse_que_rl1').click(function() {
-      $("#pays_rl2").val($("#pays_rl1").val());
-      $("#adresse_rl2").val($("#adresse_rl1").val());
-      $("#code_postal_rl2").val($("#code_postal_rl1").val());
-      affiche_les_bons_champs($('#pays_rl2'))
-      let ville_rl1 = $("#ville_rl1").val()
-      $("#ville_rl2").empty().append($("<option></option>").attr("value", ville_rl1).text(ville_rl1))
     })
   })
 </script>

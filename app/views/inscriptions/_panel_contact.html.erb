@@ -1,0 +1,284 @@
+<div class="panel">
+  <div id="infos-eleve">
+    <ul class="list-unstyled">
+      <li><b><%= t('.prenom') %> : </b><%= @dossier_eleve.eleve.prenom %></li>
+      <li><b><%= t('.nom') %> : </b><%= @dossier_eleve.eleve.nom %></li>
+      <li><b><%= t('.sexe') %> : </b><%= @dossier_eleve.eleve.sexe %></li>
+      <li><b><%= t('.date_naissance') %> : </b><%= l(@dossier_eleve.eleve.date_naiss.to_date) %></li>
+    </ul>
+    <div class="text-right">
+      <button class="button-outline small secondary modifier" data-target="infos-eleve">Modifier</button>
+    </div>
+  </div>
+  <%= simple_form_for @dossier_eleve, url: agent_update_eleve_path(@dossier_eleve), method: :patch,
+                      html: { id: "form-infos-eleve", class: "d-none"} do |f| %>
+    <% if @dossier_eleve.eleve.errors.any? %>
+      <div class="list-errors notification warning">
+        <ul>
+          <% @dossier_eleve.eleve.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= f.fields_for :eleve do |e| %>
+      <div class="form__group">
+        <%= e.input :prenom, label: t('.prenom') %>
+      </div>
+      <div class="form__group">
+        <%= e.input :nom, label: t('.nom') %>
+      </div>
+      <div class="form__group">
+        <%= e.input :sexe, label: t('.sexe'), collection: ['Masculin', 'Féminin'], selected: @dossier_eleve.eleve.sexe %>
+      </div>
+      <div class="form__group">
+        <%= e.input :date_naiss, label: t('.date_naissance') %>
+      </div>
+    <% end %>
+    <%= f.button :submit, 'Enregistrer', class: 'button mt-1' %>
+  <% end %>
+</div>
+<div class="panel">
+  <div class="panel__header">
+    <h3><%= @dossier_eleve.resp_legal.count > 1 ? 'Résponsables légaux' : 'Responsable légal' %></h3>
+  </div>
+  <% if @dossier_eleve.resp_legal_2.present? %>
+    <p>Ces responsables légaux <strong>habitent à
+      <% if @meme_adresse %>
+        la même adresse</strong>
+      <% else %>
+        des adresses différentes. </strong></p>
+        <p>Habite chez <%=@dossier_eleve.resp_legal_1.prenom %> <%=@dossier_eleve.resp_legal_1.nom %>
+      <% end %>
+      </p>
+  <% end %>
+  <div id="infos-contact">
+    <% @dossier_eleve.resp_legal.sort_by(&:priorite).each do |resp_legal| %>
+      <h4>
+        <%= resp_legal.respond_to?(:lien_de_parente) ? resp_legal.lien_de_parente : 'Contact' %>
+        <%= resp_legal.prenom %> <%= resp_legal.nom %>
+      </h4>
+      <ul class="list-unstyled">
+        <% if resp_legal.tel_personnel.present? %>
+          <li>
+            <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_personnel') %> : <%= resp_legal.tel_personnel %>
+          </li>
+        <% end %>
+        <% if resp_legal.tel_portable.present? %>
+          <li>
+            <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_portable') %> : <%= resp_legal.tel_portable %>
+          </li>
+        <% end %>
+        <% if resp_legal.tel_professionnel.present? %>
+          <li>
+            <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_professionnel') %> : <%= resp_legal.tel_professionnel %>
+          </li>
+        <% end %>
+        <% if resp_legal.respond_to?(:email) && resp_legal.email.present? %>
+          <li>
+            <i class="fas fa-envelope mr-1"></i><%= resp_legal.email %>
+          </li>
+        <% end %>
+        <li><b><%= t('accueil.form_rl.adresse') %> : </b><%= resp_legal.adresse %></li>
+        <% if resp_legal.pays === 'FRA' %>
+          <li><b><%= t('accueil.form_rl.code_postal') %> : </b><%= resp_legal.code_postal %></li>
+        <% end %>
+        <li><b><%= t('accueil.form_rl.ville') %> : </b><%= resp_legal.ville %></li>
+        <li><b><%= t('accueil.form_rl.pays') %></b> :
+          <% @liste_pays.each do |option| %>
+            <%= option[0] if option[1] == resp_legal.pays %>
+          <% end %></li>
+        <% unless resp_legal.adresse_inchangee %>
+          <div id="ancienne_adresse">
+            <hr/>
+            <p><strong><%= t('.ancienne_adresse') %></strong></p>
+            <li><b><%= t('accueil.form_rl.adresse') %> : </b><%= resp_legal.adresse_ant %></li>
+            <li><b><%= t('accueil.form_rl.code_postal') %> : </b><%= resp_legal.code_postal_ant %></li>
+            <li><b><%= t('accueil.form_rl.ville') %> : </b><%= resp_legal.ville_ant %></li>
+          </div>
+        <% end %>
+      </ul>
+    <% end %>
+    <div class="text-right">
+      <button class="button-outline small secondary modifier" data-target="infos-contact">Modifier</button>
+    </div>
+  </div>
+  <%= simple_form_for @dossier_eleve, url: agent_update_eleve_path(@dossier_eleve), method: :patch,
+                      html: { id: "form-infos-contact", class: "d-none"} do |f| %>
+    <% if @dossier_eleve.resp_legal_1.errors.any? ||
+        (@dossier_eleve.resp_legal_2 && @dossier_eleve.resp_legal_2.errors.any?) %>
+      <div class="list-errors notification warning">
+        <ul>
+          <% @dossier_eleve.resp_legal_1.errors.full_messages.each do |msg| %>
+            <li>Premier responsable : <%= msg %></li>
+          <% end %>
+          <% if @dossier_eleve.resp_legal_2 && @dossier_eleve.resp_legal_2.errors.any? %>
+            <% @dossier_eleve.resp_legal_2&.errors.full_messages.each do |msg| %>
+              <li>Deuxième responsable : <%= msg %></li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= f.fields_for :resp_legal do |r| %>
+      <% if @dossier_eleve.resp_legal.count > 1 %>
+        <h4>Responsable <%= r.object.priorite %></h4>
+      <% end %>
+      <div class="form__group mt-1">
+        <%= r.input :lien_de_parente, collection: RespLegal.liens_de_parente, selected: r.object.lien_de_parente %>
+      </div>
+      <div class="form__group">
+        <%= r.input :prenom, placeholder: "Prénom" %>
+      </div>
+      <div class="form__group">
+        <%= r.input :nom, placeholder: "Nom" %>
+      </div>
+      <div class="form__group">
+        <%= r.input :tel_personnel, as: :tel, placeholder: "Numéro de téléphone", label: t('.telephone_personnel') %>
+      </div>
+      <div class="form__group">
+        <%= r.input :tel_portable, as: :tel, placeholder: "Numéro de téléphone", label: t('.telephone_portable') %>
+      </div>
+      <div class="form__group">
+        <%= r.input :tel_professionnel, as: :tel, placeholder: "Numéro de téléphone", label: t('.telephone_professionnel') %>
+      </div>
+      <div class="form__group">
+        <%= r.input :email, as: :email, label: t('.email_principal') %>
+      </div>
+      <div class="form__group">
+        <%= r.input :adresse, as: :text, placeholder: "Numéro et nom de voie", rows: "3" %>
+      </div>
+      <div class="form__group" id="champs-code-postal-rl<%= r.object.priorite %>">
+        <%= r.input :code_postal, as: :integer, placeholder: t('accueil.form_rl.code_postal'), input_html: { class: 'input-code-postal', data: { rl: r.object.priorite } } %>
+      </div>
+      <div class="form__group" id="champs-select-ville-rl<%= r.object.priorite %>">
+        <% ville_rl = r.object.ville ? r.object.ville.upcase : '' %>
+        <%= r.input :ville, collection: [ville_rl], selected: :ville, input_html: { class: 'input-ville', "data-rl" => r.object.priorite } %>
+      </div>
+      <div class="form__group" id="champs-text-ville-rl<%= r.object.priorite %>" style="display: none;" data-ville="<%= r.object.ville&.upcase %>">
+        <% ville_etrangere = ville_rl if r.object.ville != 'FRA' %>
+        <%= r.input :ville_etrangere, label: t('accueil.form_rl.ville'), input_html: {value: ville_etrangere} %>
+      </div>
+      <div class="form__group">
+        <%= r.input :pays, collection: @liste_pays, selected: r.object.pays, input_html: { class: 'pays', data: {"resp-legal" => r.object.priorite}}, include_blank: true %>
+      </div>
+    <% end %>
+    <%= f.button :submit, 'Enregistrer', class: 'button mt-1' %>
+  <% end %>
+
+</div>
+
+<div class="panel">
+  <div class="panel__header">
+    <h3>Contact en cas d'urgence</h3>
+  </div>
+  <%= simple_form_for @dossier_eleve, url: agent_update_eleve_path(@dossier_eleve), method: :patch,
+                      html: { id: "form-infos-contact-urgence", class: "d-none"} do |f| %>
+    <%= f.fields_for :contact_urgence do |c|  %>
+      <div class="form__group">
+        <%= c.input :lien_avec_eleve %>
+      </div>
+      <div class="form__group">
+        <%= c.input :prenom, placeholder: "Prénom" %>
+      </div>
+      <div class="form__group">
+        <%= c.input :nom, placeholder: "Nom" %>
+      </div>
+      <div class="form__group">
+        <%= c.input :tel_principal, as: :tel, placeholder: "Numéro de téléphone", label: t('.telephone_personnel') %>
+      </div>
+      <div class="form__group">
+        <%= c.input :tel_secondaire, as: :tel, placeholder: "Numéro de téléphone", label: t('.telephone_portable') %>
+      </div>
+    <% end %>
+    <%= f.button :submit, 'Enregistrer', class: 'button mt-1' %>
+  <% end %>
+  <div id="infos-contact-urgence">
+    <ul class="list-unstyled">
+      <li><b><%= t('.lien_avec_eleve') %> : </b><%= @dossier_eleve.contact_urgence.lien_avec_eleve %></li>
+      <li><b><%= t('.prenom') %> : </b><%= @dossier_eleve.contact_urgence.prenom %></li>
+      <li><b><%= t('.nom') %> : </b><%= @dossier_eleve.contact_urgence.nom %></li>
+      <% if @dossier_eleve.contact_urgence.tel_principal.present? %>
+        <li>
+          <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_personnel') %> : <%= @dossier_eleve.contact_urgence.tel_principal %>
+        </li>
+      <% end %>
+      <% if @dossier_eleve.contact_urgence.tel_secondaire.present? %>
+        <li>
+          <i class="fas fa-phone-square mr-1"></i><%= t('.telephone_portable') %> : <%= @dossier_eleve.contact_urgence.tel_secondaire %>
+        </li>
+      <% end %>
+    </ul>
+    <div class="text-right">
+      <button class="button-outline small secondary modifier" data-target="infos-contact-urgence">Modifier</button>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function () {
+    $('.modifier').click(function () {
+      let list_target = "#" + $(this).data('target')
+      let form_target = "#form-" + $(this).data('target')
+      console.log(form_target)
+      $(list_target).hide()
+      $(form_target).show()
+    })
+
+    $('.input-code-postal').on('input', function() {
+      let inputValue = $(this).val()
+      let rl = $(this).data('rl')
+      if (inputValue.length === 5) {
+        $.ajax({
+          method: "GET",
+          url: '/api/communes/deduire_commune',
+          data: { code_postal: inputValue, authenticity_token: "<%= form_authenticity_token %>" },
+          success : function(response) {
+            let $champ_input = $(".input-ville[data-rl='" + rl + "']")
+            $champ_input.empty()
+            $.each(response, function (key, value) {
+              $champ_input.append($("<option></option>")
+                .attr("value", value).text(value))
+            })
+          }
+        })
+      }
+    })
+
+    const $pays = $(".pays")
+
+    $.each($pays, function() {
+      affiche_les_bons_champs($(this))
+    })
+
+    $pays.change(function () {
+      affiche_les_bons_champs($(this))
+    })
+
+    function affiche_les_bons_champs($this) {
+      let resp_legal = $this.data('resp-legal')
+      let id_champs_cp = '#champs-code-postal-rl' + resp_legal
+      let input_champs_cp = $(id_champs_cp + ':input')
+      let id_champs_select_ville = '#champs-select-ville-rl' + resp_legal
+      let id_champs_text_ville = '#champs-text-ville-rl' + resp_legal
+      let input_champs_text_ville = $(id_champs_text_ville).children().find('input')
+      let ville = $(id_champs_text_ville).data('ville')
+      if ($this.val() !== 'FRA') {
+        input_champs_cp.val('')
+        $(id_champs_cp).hide()
+        $(id_champs_select_ville).hide()
+        $(id_champs_text_ville).show()
+        $(id_champs_text_ville).val(ville)
+      } else {
+        console.log(id_champs_text_ville)
+        console.log(input_champs_text_ville)
+        $(id_champs_cp).show()
+        $(id_champs_select_ville).show()
+        input_champs_text_ville.val('')
+        $(id_champs_text_ville).hide()
+      }
+    }
+  })
+</script>

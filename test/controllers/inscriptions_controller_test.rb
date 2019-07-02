@@ -86,4 +86,45 @@ class InscriptionControllerTest < ActionDispatch::IntegrationTest
     assert_equal agent.email, session[:agent_email]
   end
 
+  test "Un agent modifie un résponsable légal" do
+    etablissement = Fabricate(:etablissement)
+    dossier = Fabricate(:dossier_eleve, etablissement: etablissement)
+    agent = Fabricate(:agent, etablissement: etablissement)
+    resp_legal = Fabricate(:resp_legal, dossier_eleve: dossier)
+    post "/agent", params: { email: agent.email, mot_de_passe: agent.password }
+    params = { "dossier_eleve" => { "resp_legal_attributes" =>
+                                    { "0" => { "lien_de_parente" => "MERE", "prenom" => "Aline", "nom" => "Test",
+                                               "tel_personnel" => "", "tel_portable" => "0101010101", "tel_professionnel" => "",
+                                               "email" => "test@hotmail.fr", "adresse" => "19 RUE DU COLONEL MOUTARDE",
+                                               "code_postal" => "75017", "ville" => "PARIS", "ville_etrangere" => "",
+                                               "pays" => "FRA", "id" => resp_legal.id } },
+                                    "dossier_id" => dossier.id } }
+
+    patch agent_update_eleve_path(dossier), params: params
+    resp_legal.reload
+    assert_equal "MERE", resp_legal.lien_de_parente
+    assert_equal "Aline", resp_legal.prenom
+    assert_equal "19 RUE DU COLONEL MOUTARDE", resp_legal.adresse
+    assert_equal "0101010101", resp_legal.tel_portable
+  end
+
+  test "Un agent modifie un contact en cas d'urgence" do
+    etablissement = Fabricate(:etablissement)
+    dossier = Fabricate(:dossier_eleve, etablissement: etablissement)
+    agent = Fabricate(:agent, etablissement: etablissement)
+    contact_urgence = Fabricate(:contact_urgence, dossier_eleve: dossier)
+    post "/agent", params: { email: agent.email, mot_de_passe: agent.password }
+    params = { "dossier_eleve" => { "contact_urgence_attributes" =>
+                                    { "lien_avec_eleve" => "voisin", "prenom" => "Dupont", "nom" => "Dupond",
+                                      "tel_principal" => "010101", "tel_secondaire" => "020202",
+                                      "id" => contact_urgence.id },
+                                    "dossier_id" => dossier.id } }
+
+    patch agent_update_eleve_path(dossier), params: params
+    contact_urgence.reload
+    assert_equal "voisin", contact_urgence.lien_avec_eleve
+    assert_equal "Dupont", contact_urgence.prenom
+    assert_equal "010101", contact_urgence.tel_principal
+  end
+
 end
