@@ -43,6 +43,17 @@
   <div class="panel__header">
     <h3><%= @dossier_eleve.resp_legal.count > 1 ? 'Résponsables légaux' : 'Responsable légal' %></h3>
   </div>
+  <% if @dossier_eleve.resp_legal_2.present? %>
+    <p>Ces responsables légaux <strong>habitent à
+      <% if @meme_adresse %>
+        la même adresse</strong>
+      <% else %>
+        des adresses différentes. </strong></p>
+        <p>Habite chez <%=@dossier_eleve.resp_legal_1.prenom %> <%=@dossier_eleve.resp_legal_1.nom %>
+      <% end %>
+
+    </p>
+  <% end %>
   <div id="infos-contact">
     <% @dossier_eleve.resp_legal.each do |resp_legal| %>
       <h4>
@@ -70,8 +81,20 @@
             <i class="fas fa-envelope mr-1"></i><%= resp_legal.email %>
           </li>
         <% end %>
+        <li><b><%= t('accueil.form_rl.adresse') %> : </b><%= resp_legal.adresse %></li>
+        <% if resp_legal.pays === 'FRA' %>
+          <li><b><%= t('accueil.form_rl.code_postal') %> : </b><%= resp_legal.code_postal %></li>
+        <% end %>
+        <li><b><%= t('accueil.form_rl.ville') %> : </b><%= resp_legal.ville %></li>
+        <li><b><%= t('accueil.form_rl.pays') %></b> :
+          <% @liste_pays.each do |option| %>
+            <%= option[0] if option[1] == resp_legal.pays %>
+          <% end %></li>
       </ul>
     <% end %>
+    <div class="text-right">
+      <button class="button-outline small secondary modifier" data-target="infos-contact">Modifier</button>
+    </div>
   </div>
   <%= simple_form_for @dossier_eleve, url: agent_update_eleve_path(@dossier_eleve), method: :patch,
                       html: { id: "form-infos-contact", class: "d-none"} do |f| %>
@@ -98,88 +121,47 @@
       <div class="form__group mt-1">
         <%= r.input :lien_de_parente, collection: RespLegal.liens_de_parente, selected: r.object.lien_de_parente %>
       </div>
-
       <div class="form__group">
         <%= r.input :prenom, placeholder: "Prénom" %>
       </div>
-
       <div class="form__group">
         <%= r.input :nom, placeholder: "Nom" %>
       </div>
       <div class="form__group">
         <%= r.input :tel_personnel, as: :tel, placeholder: "Numéro de téléphone", label: t('.telephone_personnel') %>
       </div>
-
       <div class="form__group">
         <%= r.input :tel_portable, as: :tel, placeholder: "Numéro de téléphone", label: t('.telephone_portable') %>
       </div>
-
       <div class="form__group">
         <%= r.input :tel_professionnel, as: :tel, placeholder: "Numéro de téléphone", label: t('.telephone_professionnel') %>
       </div>
-
       <div class="form__group">
         <%= r.input :email, as: :email, label: t('.email_principal') %>
+      </div>
+      <div class="form__group">
+        <%= r.input :adresse, as: :text, placeholder: "Numéro et nom de voie", rows: "3" %>
+      </div>
+      <div class="form__group" id="champs-code-postal-rl<%= r.object.priorite %>">
+        <%= r.input :code_postal, as: :integer, placeholder: t('accueil.form_rl.code_postal'), input_html: { class: 'input-code-postal', data: { rl: r.object.priorite } } %>
+      </div>
+      <div class="form__group" id="champs-select-ville-rl<%= r.object.priorite %>">
+        <% ville_rl = r.object.ville ? r.object.ville.upcase : '' %>
+        <%= r.input :ville, collection: [ville_rl], selected: :ville, input_html: { class: 'input-ville', "data-rl" => r.object.priorite } %>
+      </div>
+      <div class="form__group" id="champs-text-ville-rl<%= r.object.priorite %>" style="display: none;" data-ville="<%= r.object.ville&.upcase %>">
+        <% ville_etrangere = ville_rl if r.object.ville != 'FRA' %>
+        <%= r.input :ville_etrangere, label: t('accueil.form_rl.ville'), input_html: {value: ville_etrangere} %>
+      </div>
+      <div class="form__group">
+        <%= r.input :pays, collection: @liste_pays, selected: r.object.pays, input_html: { class: 'pays', data: {"resp-legal" => r.object.priorite}}, include_blank: true %>
       </div>
     <% end %>
     <%= f.button :submit, 'Enregistrer', class: 'button mt-1' %>
   <% end %>
 
-
-  <% if @dossier_eleve.resp_legal_2.present? %>
-    <p>Ces responsables légaux <strong>habitent à
-      <% if @meme_adresse %>
-        la même adresse
-      <% else %>
-        des adresses différentes
-      <% end %>
-    </strong>
-    </p>
-  <% end %>
-  <div class="text-right">
-    <button class="button-outline small secondary modifier" data-target="infos-contact">Modifier</button>
-  </div>
 </div>
 
-<div class="panel">
-  <div class="panel__header">
-    <h3>Habite chez <%=@dossier_eleve.resp_legal_1.prenom %> <%=@dossier_eleve.resp_legal_1.nom %></h3>
-  </div>
-
-  <div class="form__group">
-    <label>Lien de parenté</label>
-    <input type="text" value="<%= @dossier_eleve.resp_legal_1.lien_de_parente %>" disabled >
-  </div>
-  <div class="form__group">
-    <label>Adresse</label>
-    <textarea disabled ><%= @dossier_eleve.resp_legal_1.adresse %></textarea>
-  </div>
-  <div class="form__group">
-    <label>Code postal</label>
-    <input type="text" value="<%= @dossier_eleve.resp_legal_1.code_postal %>" disabled >
-  </div>
-  <div class="form__group">
-    <label>Ville</label>
-    <input type="text" value="<%= @dossier_eleve.resp_legal_1.ville %>" disabled >
-  </div>
-  <% unless @dossier_eleve.resp_legal_1.adresse_inchangee %>
-    <div id="ancienne_adresse">
-      <hr/>
-      <div class="form__group">
-        <label>Adresse</label>
-        <textarea disabled ><%= @dossier_eleve.resp_legal_1.adresse_ant %></textarea>
-      </div>
-      <div class="form__group">
-        <label>Code postal</label>
-        <input type="text" value="<%= @dossier_eleve.resp_legal_1.code_postal_ant %>" disabled >
-      </div>
-      <div class="form__group">
-        <label>Ville</label>
-        <input type="text" value="<%= @dossier_eleve.resp_legal_1.ville_ant %>" disabled >
-      </div>
-    </div>
-  <% end %>
-</div>
 <% if @dossier_eleve.contact_urgence.present? %>
   <div class="panel">
     <div class="panel__header">
@@ -213,10 +195,62 @@
     $('.modifier').click(function () {
       let list_target = "#" + $(this).data('target')
       let form_target = "#form-" + $(this).data('target')
-      console.log(list_target)
-      console.log(form_target)
       $(list_target).hide()
       $(form_target).show()
     })
+
+    $('.input-code-postal').on('input', function() {
+      let inputValue = $(this).val()
+      let rl = $(this).data('rl')
+      if (inputValue.length === 5) {
+        $.ajax({
+          method: "GET",
+          url: '/api/communes/deduire_commune',
+          data: { code_postal: inputValue, authenticity_token: "<%= form_authenticity_token %>" },
+          success : function(response) {
+            let $champ_input = $(".input-ville[data-rl='" + rl + "']")
+            $champ_input.empty()
+            $.each(response, function (key, value) {
+              $champ_input.append($("<option></option>")
+                .attr("value", value).text(value))
+            })
+          }
+        })
+      }
+    })
+
+    const $pays = $(".pays")
+
+    $.each($pays, function() {
+      affiche_les_bons_champs($(this))
+    })
+
+    $pays.change(function () {
+      affiche_les_bons_champs($(this))
+    })
+
+    function affiche_les_bons_champs($this) {
+      let resp_legal = $this.data('resp-legal')
+      let id_champs_cp = '#champs-code-postal-rl' + resp_legal
+      let input_champs_cp = $(id_champs_cp + ':input')
+      let id_champs_select_ville = '#champs-select-ville-rl' + resp_legal
+      let id_champs_text_ville = '#champs-text-ville-rl' + resp_legal
+      let input_champs_text_ville = $(id_champs_text_ville).children().find('input')
+      let ville = $(id_champs_text_ville).data('ville')
+      if ($this.val() !== 'FRA') {
+        input_champs_cp.val('')
+        $(id_champs_cp).hide()
+        $(id_champs_select_ville).hide()
+        $(id_champs_text_ville).show()
+        $(id_champs_text_ville).val(ville)
+      } else {
+        console.log(id_champs_text_ville)
+        console.log(input_champs_text_ville)
+        $(id_champs_cp).show()
+        $(id_champs_select_ville).show()
+        input_champs_text_ville.val('')
+        $(id_champs_text_ville).hide()
+      }
+    }
   })
 </script>

@@ -66,12 +66,18 @@ class InscriptionsController < ApplicationController
     @dossier_eleve.resp_legal.each { |r| (@emails_presents = true) if r.email.present? }
     @meme_adresse = @dossier_eleve.resp_legal.first.meme_adresse @dossier_eleve.resp_legal.second
     @modeles = agent_connecte.etablissement.modele
+    @liste_pays = []
+    filename = File.join(Rails.root, "app/views/accueil/liste-pays.csv")
+    CSV.foreach(filename, col_sep: ";") do |row|
+      @liste_pays << [row[0].upcase, row[1].upcase]
+    end
     render :eleve
   end
 
   def update_eleve
     @dossier_eleve = DossierEleve.find(params[:dossier_id])
     @dossier_eleve.attributes = params_dossier_eleve
+    @dossier_eleve.resp_legal.map(&:defini_ville_residence)
     if @dossier_eleve.save(validate: false)
       redirect_to "/agent/eleve/#{@dossier_eleve.eleve.identifiant}#contact"
     else

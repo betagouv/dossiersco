@@ -395,9 +395,9 @@ fr:
       <<: *infos_nom
       sexe: Sexe
       date_naissance: Date de naissance
-      telephone_personnel: Personnel
-      telephone_portable: Portable
-      telephone_professionnel: Professionnel
+      telephone_personnel: Téléphone personnel
+      telephone_portable: Téléphone portable
+      telephone_professionnel: Téléphone professionnel
       email_principal: Email
     eleve:
       date_validation_famille_html: "<p>La famille a terminé l'inscription le %{date}</p>"
