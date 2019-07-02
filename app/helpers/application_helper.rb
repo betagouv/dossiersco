@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  def construire(champs)
-    champs.map do |champ|
-      render partial: "partials/champ", locals: champ
-    end.join
-  end
-
   def super_admin?(agent)
     return false unless agent
 
