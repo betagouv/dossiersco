@@ -28,7 +28,7 @@ class ExportPiecesJointesJob < ActiveJob::Base
               begin
                 zipfile.add(
                   "#{mef.libelle}/#{eleve_folder}/#{fichier.model.piece_attendue.nom}-#{index}.#{format}",
-                  "#{Rails.root.join('public')}#{fichier.url.gsub('%20', ' ').gsub('%C3%A9', 'é').gsub('%C3%89', 'É')}"
+                  File.join("#{Rails.root.join('public')}#{fichier.url.gsub('%20', ' ').gsub('%C3%A9', 'é').gsub('%C3%89', 'É')}")
                 )
               rescue StandardError
                 next
