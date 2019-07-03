@@ -20,7 +20,7 @@ class ExportPiecesJointesJob < ActiveJob::Base
 
           dossier_eleve.pieces_jointes.each do |piece|
             piece.fichiers.each_with_index do |fichier, index|
-              format = fichier.file.file.split(".").last
+              format = fichier.url.split(".").last
               eleve_folder = "#{eleve.prenom}-#{eleve.nom}-#{eleve.identifiant}"
               begin
                 zipfile.add(
