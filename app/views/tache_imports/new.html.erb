@@ -69,7 +69,7 @@
     </div>
     <p><%= t('.export_classes') %></p>
 
-    <% if @fichiers_a_telecharger.count > 0 %>
+    <% unless @fichiers_a_telecharger.empty? %>
       <p>Historique des fichiers :</p>
       <ul>
         <% @fichiers_a_telecharger.each do |fichier| %>
@@ -78,6 +78,28 @@
       </ul>
     <% end %>
     <%= link_to t('.telecharger'), export_options_configuration_exports_path, class: 'button' %>
+  </div>
+
+  <div class="panel">
+    <div class="panel__header">
+      <h3><%= t('.titre_export_pieces_jointes') %></h3>
+    </div>
+    <p><%= t('.export_pieces_jointes') %></p>
+
+    <% unless @pieces_a_telecharger.empty? %>
+      <p>Historique des dossiers :</p>
+      <ul>
+        <% @pieces_a_telecharger.each do |fichier| %>
+          <li><%= link_to fichier.created_at.strftime('Le %e/%m/%Y à %Hh%M'), fichier.contenu.url %></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <%= form_tag export_pieces_jointes_configuration_exports_path do %>
+      <div class="input__group">
+        <%= select_tag "mef", options_from_collection_for_select(@mef, "id", "libelle", "0"), include_blank: "Tous les MEF" %>
+        <%= submit_tag t('.telecharger'), class: "button p-5 ml-1" %>
+      </div>
+    <% end %>
   </div>
 
   <div class="panel">

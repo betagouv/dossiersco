@@ -253,6 +253,8 @@ fr:
         envoye_restreint: "La case 'Activer l'envoi des emails aux familles' n'est pas cochée ; les envois de messages que vous déclencherez seront envoyés à l'adresse %{email}"
         attention_envoye_aux_familles: "Attention, des messages partirons directement aux famillles. Vous n'êtes plus dans une configuration de test"
     exports:
+      export_pieces_jointes:
+        export_des_pieces_jointes: "La génération du dossier est en cours, il sera disponible sur cette page dans la partie 'Exporter les pièces jointes'. Rechargez la page pour le faire apparaitre"
       export_options:
         export_des_options: "La génération du fichier est en cours, il sera disponible sur cette page dans la partie 'Exporter un fichier'. Rechargez la page pour le faire apparaitre"
     regimes_sortie:
@@ -434,6 +436,8 @@ fr:
       titre_import: Importer un fichier
       titre_export: Exporter un fichier
       export_classes: Fichier Excel comprenant les options choisies par les familles ainsi que les régimes d'autorisation de sortie
+      titre_export_pieces_jointes: Exporter les pièces jointes
+      export_pieces_jointes: Dossier comprenant les pièces jointes fournies par les familles
       telecharger: Générer le fichier
       selectionner_fichier: "Sélectionnez un fichier au format xls"
       importer_fichier: "Importer un fichier"
