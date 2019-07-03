@@ -11,6 +11,10 @@ class TacheImportsController < ApplicationController
     @fichiers_a_telecharger = FichierATelecharger
                               .where(nom: "eleves", etablissement: agent_connecte.etablissement)
                               .order("created_at DESC")
+    @pieces_a_telecharger = FichierATelecharger
+                            .where(nom: "pieces-jointes", etablissement: agent_connecte.etablissement)
+                            .order("created_at DESC")
+    @mef = agent_connecte.etablissement.mef
   end
 
   def create

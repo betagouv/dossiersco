@@ -34,6 +34,10 @@
   max-width: 35rem;
 }
 
+.p-5 {
+  padding: 0rem !important;
+}
+
 @media (max-width: 999px) {
   .hide-on-mobile {
     display: none !important;

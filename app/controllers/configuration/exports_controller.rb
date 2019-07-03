@@ -28,5 +28,12 @@ module Configuration
       send_file file.path, x_sendfile: true, type: "text/xml"
     end
 
+    def export_pieces_jointes
+      ExportPiecesJointesJob.perform_later(@agent_connecte, params[:mef])
+
+      flash[:notice] = t(".export_des_pieces_jointes")
+      redirect_to new_tache_import_path
+    end
+
   end
 end
