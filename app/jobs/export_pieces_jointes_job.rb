@@ -22,9 +22,6 @@ class ExportPiecesJointesJob < ActiveJob::Base
             piece.fichiers.each_with_index do |fichier, index|
               format = fichier.url.split(".").last
               eleve_folder = "#{eleve.prenom}-#{eleve.nom}-#{eleve.identifiant}"
-              p '--------------------------------------------'
-              p "#{Rails.root.join('public')}#{fichier.url.gsub('%20', ' ').gsub('%C3%A9', 'é').gsub('%C3%89', 'É')}"
-              p fichier.file.file
               begin
                 zipfile.add(
                   "#{mef.libelle}/#{eleve_folder}/#{fichier.model.piece_attendue.nom}-#{index}.#{format}",
