@@ -25,7 +25,7 @@ class ExportPiecesJointesJob < ActiveJob::Base
               begin
                 zipfile.add(
                   "#{mef.libelle}/#{eleve_folder}/#{fichier.model.piece_attendue.nom}-#{index}.#{format}",
-                  File.join(fichier.file.file)
+                  File.join(fichier.url)
                 )
               rescue StandardError
                 next
