@@ -5,7 +5,6 @@ class ExportPiecesJointesJob < ActiveJob::Base
   def perform(agent, mef_id)
     nom_zip = "pieces-jointes.zip"
     temp_file = Tempfile.new(nom_zip)
-
     mef_selectionnes = if mef_id.blank?
                          Mef.where(etablissement: agent.etablissement)
                        else
@@ -19,13 +18,15 @@ class ExportPiecesJointesJob < ActiveJob::Base
           next if eleve.identifiant.nil? || dossier_eleve.pieces_jointes.empty?
 
           dossier_eleve.pieces_jointes.each do |piece|
+            uploader = FichierUploader.new(piece)
             piece.fichiers.each_with_index do |fichier, index|
+              uploader.retrieve_from_store!(fichier.url.split("/").last)
               format = fichier.url.split(".").last
               eleve_folder = "#{eleve.prenom}-#{eleve.nom}-#{eleve.identifiant}"
               begin
                 zipfile.add(
                   "#{mef.libelle}/#{eleve_folder}/#{fichier.model.piece_attendue.nom}-#{index}.#{format}",
-                  File.join(fichier.current_path)
+                  File.join(uploader.current_path)
                 )
               rescue StandardError
                 next
