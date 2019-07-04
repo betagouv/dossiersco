@@ -11,26 +11,35 @@ class PdfFicheInfirmerie
     dossier = "tmp/#{etablissement.id}"
     FileUtils.mkdir_p(dossier) unless File.directory?(dossier)
     Prawn::Document.generate("#{dossier}/#{nom}") do |pdf|
-      nombre_de_dossier = 0
-      dossiers_eleve.each do |dossier_eleve|
-        nombre_de_dossier += 1
-        pdf.default_leading 7
-        pdf.move_down 20
+      pdf.font_families.update("LiberationSans" => {
+          :normal => Rails.root.join("public/fonts/liberation_sans/LiberationSans-Regular.ttf"),
+          :italic => Rails.root.join("public/fonts/liberation_sans/LiberationSans-Italic.ttf"),
+          :bold => Rails.root.join("public/fonts/liberation_sans/LiberationSans-Bold.ttf"),
+          :bold_italic => Rails.root.join("app/assets/fonts/LiberationSans-BoldItalic.ttf")
+      })
+      pdf.font "LiberationSans" do
+        nombre_de_dossier = 0
+        dossiers_eleve.each do |dossier_eleve|
+          nombre_de_dossier += 1
+          pdf.default_leading 7
+          pdf.move_down 20
 
-        affiche_etablissement(pdf, etablissement)
-        affiche_entete(pdf)
-        pdf.move_down 15
+          affiche_etablissement(pdf, etablissement)
+          affiche_entete(pdf)
+          pdf.move_down 15
 
-        affiche_eleve(pdf, dossier_eleve.eleve)
-        pdf.move_down 8
+          affiche_eleve(pdf, dossier_eleve.eleve)
+          pdf.move_down 8
 
-        affiche_les_respresentant_legaux(pdf, dossier_eleve.resp_legal)
-        affiche_la_personne_en_cas_urgence(pdf, dossier_eleve.contact_urgence)
-        pdf.move_down 8
+          affiche_les_respresentant_legaux(pdf, dossier_eleve.resp_legal)
+          affiche_la_personne_en_cas_urgence(pdf, dossier_eleve.contact_urgence)
+          pdf.move_down 8
 
-        affiche_bas_de_page(pdf)
-        pdf.start_new_page if nombre_de_dossier < dossiers_eleve.length
+          affiche_bas_de_page(pdf)
+          pdf.start_new_page if nombre_de_dossier < dossiers_eleve.length
+        end
       end
+      pdf
     end
   end
 
