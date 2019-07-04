@@ -21,14 +21,14 @@ class ExportPiecesJointesJob < ActiveJob::Base
             piece.fichiers.each_with_index do |fichier, index|
               format = fichier.url.split(".").last
               eleve_folder = "#{eleve.prenom}-#{eleve.nom}-#{eleve.identifiant}"
-              # begin
+              begin
                 zipfile.add(
                   "#{mef.libelle}/#{eleve_folder}/#{fichier.model.piece_attendue.nom}-#{index}.#{format}",
-                  File.join("#{fichier.current_path}")
+                  File.open(fichier.current_path)
                 )
-              # rescue StandardError
-              #   next
-              # end
+              rescue StandardError
+                next
+              end
             end
           end
         end
