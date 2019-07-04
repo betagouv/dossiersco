@@ -29,7 +29,7 @@ module Configuration
     end
 
     def export_pieces_jointes
-      ExportPiecesJointesJob.perform_later(@agent_connecte, params[:mef])
+      ExportPiecesJointesJob.perform_now(@agent_connecte, params[:mef])
 
       flash[:notice] = t(".export_des_pieces_jointes")
       redirect_to new_tache_import_path

@@ -18,19 +18,17 @@ class ExportPiecesJointesJob < ActiveJob::Base
           next if eleve.identifiant.nil? || dossier_eleve.pieces_jointes.empty?
 
           dossier_eleve.pieces_jointes.each do |piece|
-            uploader = FichierUploader.new(piece)
             piece.fichiers.each_with_index do |fichier, index|
-              uploader.retrieve_from_store!(fichier.url.split("/").last)
               format = fichier.url.split(".").last
               eleve_folder = "#{eleve.prenom}-#{eleve.nom}-#{eleve.identifiant}"
-              begin
+              # begin
                 zipfile.add(
                   "#{mef.libelle}/#{eleve_folder}/#{fichier.model.piece_attendue.nom}-#{index}.#{format}",
-                  File.join(uploader.current_path)
+                  File.join("#{fichier.current_path}")
                 )
-              rescue StandardError
-                next
-              end
+              # rescue StandardError
+              #   next
+              # end
             end
           end
         end
