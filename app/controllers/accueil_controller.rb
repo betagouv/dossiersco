@@ -120,9 +120,9 @@ class AccueilController < ApplicationController
 
     @code_situation = code_situation
     @liste_pays = []
-    filename = File.join(Rails.root, "app/views/accueil/liste-pays.csv")
-    CSV.foreach(filename, col_sep: ";") do |row|
-      @liste_pays << [row[0].upcase, row[1].upcase]
+    pays = YAML.safe_load(File.read(File.join(Rails.root, "/app/jobs/code_pays.yml")))
+    pays.each do |code_pays, libelle_pays|
+      @liste_pays << [libelle_pays, code_pays]
     end
   end
 
@@ -148,8 +148,8 @@ class AccueilController < ApplicationController
                                                                     tel_professionnel email profession
                                                                     communique_info_parents_eleves
                                                                     enfants_a_charge id ],
-                                                                      contact_urgence_attributes: %i[lien_avec_eleve prenom nom tel_principal
-                                                                                                     tel_secondaire])
+                                          contact_urgence_attributes: %i[lien_avec_eleve prenom nom tel_principal
+                                                                         tel_secondaire])
   end
 
   def responsables_valides?(resp_legal1, resp_legal2)
