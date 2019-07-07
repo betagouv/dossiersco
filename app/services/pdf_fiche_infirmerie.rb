@@ -12,11 +12,11 @@ class PdfFicheInfirmerie
     FileUtils.mkdir_p(dossier) unless File.directory?(dossier)
     Prawn::Document.generate("#{dossier}/#{nom}") do |pdf|
       pdf.font_families.update("LiberationSans" => {
-          :normal => Rails.root.join("public/fonts/liberation_sans/LiberationSans-Regular.ttf"),
-          :italic => Rails.root.join("public/fonts/liberation_sans/LiberationSans-Italic.ttf"),
-          :bold => Rails.root.join("public/fonts/liberation_sans/LiberationSans-Bold.ttf"),
-          :bold_italic => Rails.root.join("app/assets/fonts/LiberationSans-BoldItalic.ttf")
-      })
+                                 normal: Rails.root.join("public/fonts/liberation_sans/LiberationSans-Regular.ttf"),
+                                 italic: Rails.root.join("public/fonts/liberation_sans/LiberationSans-Italic.ttf"),
+                                 bold: Rails.root.join("public/fonts/liberation_sans/LiberationSans-Bold.ttf"),
+                                 bold_italic: Rails.root.join("app/assets/fonts/LiberationSans-BoldItalic.ttf")
+                               })
       pdf.font "LiberationSans" do
         nombre_de_dossier = 0
         dossiers_eleve.each do |dossier_eleve|

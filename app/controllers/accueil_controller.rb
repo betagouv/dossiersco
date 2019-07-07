@@ -63,31 +63,45 @@ class AccueilController < ApplicationController
     @options_pedagogiques = @dossier_eleve.mef_destination&.options_pedagogiques
 
     @option_origines_ids = @dossier_eleve.options_origines.map { |k, _v| k.to_i }
+
+    @liste_pays = []
+    pays = YAML.safe_load(File.read(File.join(Rails.root, "/app/jobs/code_pays.yml")))
+    pays.each do |code_pays, libelle_pays|
+      @liste_pays << [libelle_pays, code_pays]
+    end
+
+    @liste_nationalite = []
+    pays = YAML.safe_load(File.read(File.join(Rails.root, "/app/jobs/code_nationalite.yml")))
+    pays.each do |code_pays, libelle_pays|
+      @liste_nationalite << [libelle_pays, code_pays]
+    end
+
     render "accueil/eleve"
   end
 
   def post_eleve
-    identite_eleve = %w[prenom prenom_2 prenom_3 nom sexe ville_naiss pays_naiss nationalite classe_ant ets_ant]
-    identite_eleve.each do |info|
-      @eleve[info] = params[info] if params.key?(info)
+    if @eleve.update(params_eleve)
+      dossier_eleve = @eleve.dossier_eleve
+      dossier_eleve.options_pedagogiques = []
+      @options_pedagogiques = OptionPedagogique.where(etablissement: dossier_eleve.etablissement)
+      @options_pedagogiques.each do |option|
+        dossier_eleve.options_pedagogiques << option if params[option.nom].present?
+      end
+
+      options_origines = dossier_eleve.options_origines.keys.map { |o| OptionPedagogique.find_by(id: o) }.compact
+
+      options_origines.each do |option|
+        dossier_eleve.options_pedagogiques << option if abandonnable?(dossier_eleve, option)
+      end
+
+      note_avancement_et_redirige_vers("famille")
+    else
+      render :eleve
     end
+  end
 
-    dossier_eleve = @eleve.dossier_eleve
-    dossier_eleve.options_pedagogiques = []
-    @options_pedagogiques = OptionPedagogique.where(etablissement: dossier_eleve.etablissement)
-    @options_pedagogiques.each do |option|
-      dossier_eleve.options_pedagogiques << option if params[option.nom].present?
-    end
-
-    options_origines = dossier_eleve.options_origines.keys.map { |o| OptionPedagogique.find_by(id: o) }.compact
-
-    options_origines.each do |option|
-      dossier_eleve.options_pedagogiques << option if abandonnable?(dossier_eleve, option)
-    end
-
-    @eleve.save!
-
-    note_avancement_et_redirige_vers("famille")
+  def params_eleve
+    params.require(:eleve).permit!
   end
 
   def famille
@@ -134,8 +148,8 @@ class AccueilController < ApplicationController
                                                                     tel_professionnel email profession
                                                                     communique_info_parents_eleves
                                                                     enfants_a_charge id ],
-                                          contact_urgence_attributes: %i[lien_avec_eleve prenom nom tel_principal
-                                                                         tel_secondaire])
+                                                                      contact_urgence_attributes: %i[lien_avec_eleve prenom nom tel_principal
+                                                                                                     tel_secondaire])
   end
 
   def responsables_valides?(resp_legal1, resp_legal2)
