@@ -1,7 +1,109 @@
+## Lundi 8 juillet
+
+- **Nettoyer les données sur les pays**
+
+Les zones de saisies des pays sont en texte libre. Pour avoir une cohérence avec SIECLE, nous avons modifié ces zones pour que ce soit un choix dans une liste de pays.
+
+SIECLE enregistre un code sur 3 chiffres, nous faisons de même maintenant, avec un fichier de correspondance entre un pays et un code. Sont concerné le pays de résidence d'un representant légal, le pays de naisssance d'un élève et la nationalité d'un élève.
+
+Toutes les données de la base de production ont été nettoyé pour correspondre au nouveau format (un code au lieu d'un texte libre). Il y a un document qui retrace les cas particulier que nous avons eu à gérer sur [dossiersco/doc/nettoyage_des_pays_et_nationalite.md](https://gitlab.com/dossiersco/dossiersco/blob/master/doc/nettoyage_des_code_pays_et_nationalite.md)
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/673)
+
+- **Retour SIECLE, prendre en compte les code pays et nationalite**
+
+Dans l'export SIECLE, on peut maintenant prendre en compte les code pays des représentant légaux et des élèves.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/679)
+
+---
+## Mardi 2 juillet
+
+- **En tant que secrétaire, je reste au même endroit après validation d'une pièce jointe**
+
+Quand on valide les pièces jointes, la page reste au même endroit, sur la pièce jointe qui viens d'être validée.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/643)
+
+
+- **Conditionner le formulaire de famille**
+
+En tant que famille, en général, je n'ai pas besoin de changer mes informations personnels. J'aimerais avoir une page plus compact pour parcourir mes informations d'un coup d'oeil.
+
+Affiche les informations des représentant légaux en texte avec un bouton pour demander à changer, ce qui affiche un formulaire pour changer les coordonnées d'un des responsables légaux.
+
+Resterais, dans la situation actuelle, à saisir la profession et le nombre d'enfants à charge.
+
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/616)
+
+---
+## lundi 1er juillet
+
+- **afficher le régime de demi-pension dans l'export excel des dossiers**
+
+Affiche le régime de demi-pension dans l'export excel des dossiers
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/668)
+
+---
+
+## dimanche 30 juin
+
+- **Importer la nomenclature**
+
+Afin de pouvoir disposer du code_mef (nécessaire dans le fichier xml de retour de données dans SIECLE), nous avons besoin d'importer le fichier XML de nomenclature.
+
+L'objectif, dans un premier temps, sera de parcourir se fichier, et, pour chaque MEF que nous avons déjà, récupérer le code qui correspond.
+
+⚠ le code mef est millésimé, il faudra donc avoir un fichier de nomenclature de l'année en préparation. Ça sera peut-être à préciser dans le bloc permettant l'import.
+💡 trouver une ou deux personnes qui sont prête à faire des tests avec leurs fichiers (peut-être Boris Vian ?)
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/663)
+
+- **Exporter une petite liste d'élèves dans le fichier siecle**
+
+Exporter une liste de un à plusieurs élèves à partir de leur INE.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/666)
+
+---
+
 ## Vendredi 28 juin
 
 - Ajouter l'adresse dans l'import xml vers siecle
 - Crée un xsd qui évite l'erreur silencieuse du CODE_PARENTE sur un seul chiffre
+
+---
+
+## Jeudi 26 juin
+
+- **Afficher les dates de validation**
+
+Afin de tracer les informations et les grandes étapes d'un dossier,
+
+Affiche dans le dossier la date de validation de la familles,
+Affiche dans le dossier la date de validation de l'agent.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/657)
+
+- **Modifier les données de dossiers coté agent**
+
+Les agents peuvent maintenant modifier les données d'adresse et certaines autres d'un dossier, directement dans leur interface.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/661)
+
+---
+
+## Mercredi 26 juin
+
+- **Limiter la possibilité de valider**
+
+Affiche le bouton de validation coté agent, uniquement quand les familles on validé.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/658)
+
+---
 
 ## Mardi 25 juin
 
@@ -160,12 +262,31 @@ Afin de savoir par quel chemin le message va partir à une famille, afficher les
 
 [ticket](https://gitlab.com/dossiersco/dossiersco/issues/555)
 
+- **Rétablir les relances par SMS**
+
+Activité technique pour branché dossiersco sur un outil pour envoyer des SMS. L'application peut maintenant envoyer des SMS aux familles.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/577)
+
+---
+
+## Dimanche 9 juin
+
+- **Orthographe à corriger dans la convocation des familles**
+
+Correction de fautes d'orthographe et reprise de certaines formulations dans la convocation des familles.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/625)
+
+
 ---
 ## Samedi 8 juin
 
 - **Ne plus envoyer de copie à l'agent connecté**
 
 Nous n'envoyons plus de copie des messages envoyé aux famillles aux agents.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/621)
 
 ---
 ## Vendredi 7 juin
@@ -211,6 +332,12 @@ Afin de savoir qu'il y a un problème, lorsqu'on ne trouve pas de responsable l�
 Bug sur le lien de La modification de la Demi-pension, dans configuration de la campagne, ne renvoie pas vers la bonne page
 
 [ticket](https://gitlab.com/dossiersco/dossiersco/issues/611)
+
+- **Afficher la liste des élèves sans MEF**
+
+A partir de l'écran de la carte des formations, nous pouvons accéder maintenant à la liste des élèves qui n'ont pas de mef destination.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/610)
 
 ---
 ## Mercredi 5 juin
