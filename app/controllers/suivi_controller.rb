@@ -9,7 +9,7 @@ class SuiviController < ApplicationController
   def index
     @suivi = Suivi.new
 
-    Etablissement.where.not("nom like ?", "%test").each do |etablissement|
+    Etablissement.where.not("nom like ?", "%test%").each do |etablissement|
       nb_familles_connectees = etablissement.dossier_eleve.reject { |d| d.etat == "pas connecté" }.length
       if nb_familles_connectees.positive?
         @suivi.familles_connectes << { etablissement: etablissement, nb_familles_connectees: nb_familles_connectees }
@@ -19,10 +19,11 @@ class SuiviController < ApplicationController
         @suivi.pas_encore_connecte << etablissement
       end
     end
+    @suivi.familles_connectes.sort_by! { |obj| obj[:nb_familles_connectees] }.reverse!
   end
 
   def etablissements_experimentateurs
-    @etablissements = Etablissement.where.not("nom like ?", "%test").order(:code_postal)
+    @etablissements = Etablissement.where.not("nom like ?", "%test%").order(:code_postal)
   end
 
 end
