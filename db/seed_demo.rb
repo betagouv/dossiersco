@@ -32,12 +32,13 @@ Mef.create("libelle" => "6EME SEGPA", "code" => "16410002110", "etablissement" =
 puts "création d'élèves et de dossier associés"
 
 300.times do
+
   niveau = Faker::Educator.niveau
 
   mef_origine = Mef.find_by(libelle: niveau[0])
   mef_destination = Mef.niveau_superieur(mef_origine)
 
-  eleve = Eleve.create(
+  eleve = Eleve.create!(
     "identifiant" => Faker::Alphanumeric.alpha(10).upcase,
     "prenom" => Faker::Name.first_name,
     "nom" => Faker::Name.last_name,
@@ -50,7 +51,7 @@ puts "création d'élèves et de dossier associés"
     "niveau_classe_ant" => niveau[0]
   )
 
-  dossier_eleve = DossierEleve.create(
+  dossier_eleve = DossierEleve.create!(
     "eleve" => eleve,
     "etablissement" => etablissement,
     "etat" => "pas connecté",
@@ -80,7 +81,7 @@ puts "création d'élèves et de dossier associés"
   parente = %w[MERE PERE]
   parente_index = Faker::Boolean.boolean ? 0 : 1
 
-  RespLegal.create(
+  RespLegal.create!(
     "dossier_eleve" => dossier_eleve,
     "lien_de_parente" => parente[parente_index],
     "priorite" => 1,
@@ -93,12 +94,16 @@ puts "création d'élèves et de dossier associés"
     "tel_portable" => "02 70 51 44 33",
     "adresse_ant" => "15 rue des jardiniers",
     "ville_ant" => "Test",
-    "code_postal_ant" => "75012"
+    "code_postal_ant" => "75012",
+    "pays" => "100",
+    "enfants_a_charge" => 1,
+    "profession" => "professeur, profession scientifique",
+    "communique_info_parents_eleves" => false
   )
 
   next unless Faker::Boolean.boolean
 
-  RespLegal.create(
+  RespLegal.create!(
     "dossier_eleve" => dossier_eleve,
     "lien_de_parente" => parente[(parente_index + 1) % 1],
     "priorite" => 2,
@@ -111,6 +116,9 @@ puts "création d'élèves et de dossier associés"
     "tel_portable" => "02 70 51 44 33",
     "adresse_ant" => "15 rue des jardiniers",
     "ville_ant" => "Test",
-    "code_postal_ant" => "75012"
+    "code_postal_ant" => "75012",
+    "pays" => "100",
+    "profession" => "professeur, profession scientifique",
+    "communique_info_parents_eleves" => false
   )
 end

@@ -1,67 +1,46 @@
 <section class="section">
 
-  <form action="/eleve"  method="post">
-    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <%= simple_form_for @eleve, url: eleve_path, method: :post do |f| %>
 
     <p><em><%= t('.conseil_corriger_les_informations') %></em></p>
 
     <h2 class="separation"><%= t('.titre') %></h2>
 
     <div class="form__group">
-      <label for="prenom"><%= t('.prenom') %></label>
-      <input id="prenom" name="prenom" type="text" value="<%= @eleve.prenom %>" placeholder="Prénom" required >
+      <%= f.input :prenom, placeholder: 'Prénom', required: true %>
     </div>
 
     <% if @eleve.niveau_classe_ant !~ /5EME/ and @eleve.niveau_classe_ant !~ /6EME/ %>
       <div class="form__group">
-        <label for="prenom_2"><%= t('.prenom_2') %></label>
-        <input id="prenom_2" name="prenom_2" type="text" value="<%= @eleve.prenom_2 %>" placeholder="Deuxième prénom (optionnel)" >
+        <%= f.input :prenom_2, placeholder: 'Deuxième prénom (optionnel)' %>
       </div>
 
       <div class="form__group">
-        <label for="prenom_3"><%= t('.prenom_3') %></label>
-        <input id="prenom_3" name="prenom_3" type="text" value="<%= @eleve.prenom_3 %>" placeholder="Troisième prénom (optionnel)" >
+        <%= f.input :prenom_3, placeholder: 'Troisième prénom (optionnel)' %>
       </div>
 
     <% end %>
 
     <div class="form__group">
-      <label for="nom"><%= t('.nom') %></label>
-      <input id="nom" name="nom" type="text" value="<%= @eleve.nom %>" placeholder="Nom" required >
+      <%= f.input :nom, placeholder: 'Nom', required: true %>
     </div>
 
     <div class="form__group">
-      <label><%= t('.sexe') %></label>
-      <% [t('.feminin'), t('.masculin')].each do |option|%>
-        <label>
-          <input
-         name="sexe"
-         value="<%= option %>"
-         type="radio"
-         <% if option == @eleve.sexe %>
-           checked
-         <% end %>
-         > <%= option %>
-      </label>
-    <% end %>
-    </div>
-
-
-
-    <div class="form__group">
-      <label for="ville_naiss"><%= t('.ville_de_naissance') %></label>
-      <input id="ville_naiss" name="ville_naiss" type="text" value="<%= @eleve.ville_naiss %>" placeholder="Ville de naissance" required >
+      <%= f.input :sexe, collection:  [t('.feminin'), t('.masculin')], required: true, checked: @eleve.sexe, as: :radio_buttons %>
     </div>
 
     <div class="form__group">
-      <label for="pays_naiss"><%= t('.pays_de_naissance') %></label>
-      <input id="pays_naiss" name="pays_naiss" type="text" value="<%= @eleve.pays_naiss %>" placeholder="Pays de naissance" required >
+      <%= f.input :ville_naiss, placeholder: 'Ville de naissance', required: true, label: t('.ville_de_naissance') %>
     </div>
 
     <div class="form__group">
-      <label for="pays_de_nationalite"><%= t('.pays_de_nationalite') %></label>
-      <input id="pays_de_nationalite" name="pays_de_nationalite" type="text" value="<%= @eleve.nationalite %>" placeholder="Pays de nationalité" required >
+      <%= f.input :pays_naiss, collection: @liste_pays, required: true, checked: @eleve.pays_naiss, as: :select, label: t('.pays_de_naissance') %>
     </div>
+
+    <div class="form__group">
+      <%= f.input :nationalite, collection: @liste_nationalite, required: true, checked: @eleve.nationalite, as: :select, label: t('.pays_de_nationalite') %>
+    </div>
+
 
     <% if @options_pedagogiques.present? %>
       <h3 id="options-pedagogiques" class="separation"><%= t('.options_pedagogiques') %></h3>
@@ -88,7 +67,9 @@
     <% end %>
 
     <%= render partial: 'partials/nouveau_precedent_suivant', :locals => { :precedent => "accueil"} %>
-  </form>
+
+  <% end %>
+
 </section>
 
 <script>

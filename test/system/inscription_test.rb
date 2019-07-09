@@ -26,11 +26,11 @@ class InscriptionTest < ActionDispatch::IntegrationTest
 
     assert_selector "h2", text: "Identité de l'élève"
 
-    fill_in "prenom", with: "Blanche"
-    fill_in "nom", with: "Mousse"
-    fill_in "ville_naiss", with: "Liege"
-    fill_in "pays_naiss", with: "belgique"
-    # fill_in "nationalite", with: "belge"
+    fill_in "eleve[prenom]", with: "Blanche"
+    fill_in "eleve[nom]", with: "Mousse"
+    fill_in "eleve[ville_naiss]", with: "Liege"
+    select "BELGIQUE", from: "eleve_pays_naiss"
+    select "BELGE", from: "eleve[nationalite]"
 
     click_button("Enregistrer et continuer")
     assert_selector "h2", text: "Responsable légal"

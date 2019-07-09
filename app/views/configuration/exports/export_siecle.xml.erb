@@ -23,7 +23,7 @@
                 <LIGNE1_ADRESSE><%= resp_legal.adresse %></LIGNE1_ADRESSE>
                 <CODE_POSTAL><%= resp_legal.code_postal %></CODE_POSTAL>
                 <LL_POSTAL><%= resp_legal.ville %></LL_POSTAL>
-                <CODE_PAYS>100</CODE_PAYS>
+                <CODE_PAYS><%= resp_legal.pays ? resp_legal.pays : 995 %></CODE_PAYS>
               </ADRESSE>
             <% end %>
             <COMMUNICATION_ADRESSE><%= resp_legal.communique_info_parents_eleves? ? true : false %></COMMUNICATION_ADRESSE>
@@ -52,10 +52,10 @@
             <ID_PRV_ELE><%= dossier_eleve.id %></ID_PRV_ELE>
             <NOM_DE_FAMILLE><%= dossier_eleve.eleve.nom %></NOM_DE_FAMILLE>
             <PRENOM><%= dossier_eleve.eleve.prenom %></PRENOM>
-            <CODE_PAYS_NAT>100</CODE_PAYS_NAT>
+            <CODE_PAYS_NAT><%= dossier_eleve.eleve.nationalite ? dossier_eleve.eleve.nationalite : 995 %></CODE_PAYS_NAT>
             <DATE_NAISS><%= dossier_eleve.eleve.date_naiss %></DATE_NAISS>
             <CODE_SEXE><%= dossier_eleve.eleve.sexe == 'Masculin' ? '1' : '2' %></CODE_SEXE>
-            <CODE_PAYS>100</CODE_PAYS>
+            <CODE_PAYS><%= dossier_eleve.eleve.pays_naiss ? dossier_eleve.eleve.pays_naiss : 995 %></CODE_PAYS>
             <CODE_COMMUNE_INSEE_NAISS>75012</CODE_COMMUNE_INSEE_NAISS>
             <ADHESION_TRANSPORT>false</ADHESION_TRANSPORT>
             <CODE_REGIME>3</CODE_REGIME>

@@ -102,7 +102,7 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     eleve = dossier_eleve.eleve
     identification(eleve)
 
-    post "/eleve", params: { ville_naiss: "Beziers", prenom: "Edith" }
+    post "/eleve", params: { eleve: { ville_naiss: "Beziers", prenom: "Edith" } }
     get "/eleve"
     assert response.parsed_body.include? "Edith"
     assert response.parsed_body.include? "Beziers"
@@ -120,7 +120,7 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
       jour: eleve.jour_de_naissance
     }
     post "/identification", params: params
-    post "/eleve", params: { prenom: "Edith" }
+    post "/eleve", params: { eleve: { prenom: "Edith" } }
     get "/eleve"
     assert response.parsed_body.include? "Edith"
   end
@@ -142,7 +142,7 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
       mois: eleve.mois_de_naissance,
       jour: eleve.jour_de_naissance
     }
-    post "/eleve", params: { Espagnol: true, Latin: true }
+    post "/eleve", params: { eleve: { prenom: eleve.prenom }, Espagnol: true, Latin: true }
     get "/famille"
 
     post "/identification", params: {

@@ -13,7 +13,7 @@
     <li><b><%= t('.ville') %></b> : <%= responsable.ville&.upcase %></li>
     <li><b><%= t('.pays') %></b> :
       <% @liste_pays.each do |option| %>
-        <%= option[0] if option[1] == responsable.pays %>
+        <%= option[0] if option[1].to_s == responsable.pays %>
       <% end %></li>
     <li><b><%= t('.telephone_principal') %></b> : <%= responsable.tel_personnel %></li>
     <li><b><%= t('.telephone_secondaire') %></b> : <%= responsable.tel_portable %></li>
