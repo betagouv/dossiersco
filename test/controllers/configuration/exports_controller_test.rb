@@ -5,7 +5,6 @@ require "test_helper"
 class ExportsControllerTest < ActionDispatch::IntegrationTest
 
   test "#export-siecle" do
-    skip
     admin = Fabricate(:admin)
     identification_agent(admin)
 
@@ -48,7 +47,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
               etablissement: admin.etablissement,
               resp_legal: [resp])
 
-    get export_siecle_configuration_exports_path
+    get export_siecle_configuration_exports_path(xml_only: true)
 
     assert_response :success
 
@@ -59,7 +58,6 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "L'adresse est renseignée dans l'export siècle" do
-    skip
     admin = Fabricate(:admin)
     identification_agent(admin)
 
@@ -83,7 +81,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
                       resp_legal: [resp_incomplet])
     end
 
-    get export_siecle_configuration_exports_path
+    get export_siecle_configuration_exports_path(xml_only: true)
 
     assert_response :success
 
@@ -102,7 +100,6 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "export uniquement pour l'INE saisi" do
-    skip
     admin = Fabricate(:admin)
     identification_agent(admin)
 
@@ -123,7 +120,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
               etablissement: admin.etablissement,
               resp_legal: [autre_resp])
 
-    get export_siecle_configuration_exports_path, params: { limite: true, liste_ine: dossier.eleve.identifiant }
+    get export_siecle_configuration_exports_path(xml_only: true), params: { limite: true, liste_ine: dossier.eleve.identifiant }
 
     assert_response :success
 

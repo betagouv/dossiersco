@@ -30,11 +30,15 @@ module Configuration
       nom_zip = "#{nom_fichier}.zip"
       temp_file = Tempfile.new(nom_zip)
 
-      Zip::File.open(temp_file.path, Zip::File::CREATE) do |zipfile|
-        zipfile.add("#{nom_fichier}.xml", file)
+      if params[:xml_only]
+        send_file file.path, x_sendfile: true, type: "text/xml"
+      else
+        Zip::File.open(temp_file.path, Zip::File::CREATE) do |zipfile|
+          zipfile.add("#{nom_fichier}.xml", file)
+        end
+        zip_data = File.read(temp_file.path)
+        send_data(zip_data, type: "application/zip", filename: nom_zip)
       end
-      zip_data = File.read(temp_file.path)
-      send_data(zip_data, type: "application/zip", filename: nom_zip)
     end
 
     def construit_xml(nom_fichier)
