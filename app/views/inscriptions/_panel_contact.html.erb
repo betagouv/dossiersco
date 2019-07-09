@@ -127,7 +127,7 @@
         <h4>Responsable <%= r.object.priorite %></h4>
       <% end %>
       <div class="form__group mt-1">
-        <%= r.input :lien_de_parente, collection: RespLegal.liens_de_parente, selected: r.object.lien_de_parente %>
+        <%= r.input :lien_de_parente, collection: RespLegal::CODE_PARENTE.map{ |v, k| v}, selected: r.object.lien_de_parente %>
       </div>
       <div class="form__group">
         <%= r.input :prenom, placeholder: "Prénom" %>

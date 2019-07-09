@@ -29,7 +29,7 @@
 
 <div class="formulaire-rl mb-2" data-rl-id="<%= responsable.id %>" style="display: none;">
   <div class="form__group">
-    <%= f.input :lien_de_parente, collection: RespLegal.liens_de_parente, selected: :lien_de_parente, input_html: { class: "lien_de_parente_#{rl}" } %>
+    <%= f.input :lien_de_parente, collection: RespLegal::CODE_PARENTE.map{ |v, k| v}, selected: responsable.lien_de_parente, input_html: { class: "lien_de_parente_#{rl}" } %>
   </div>
 
   <div class="form__group">
