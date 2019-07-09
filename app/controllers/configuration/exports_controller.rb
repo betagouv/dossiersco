@@ -20,12 +20,12 @@ module Configuration
                   else
                     @etablissement.dossier_eleve
                   end
+      year = Time.now.strftime("%Y")
+      next_year = Time.now.strftime("%y").to_i + 1
+      timestamp = Time.now.strftime("%m%d%I%M%S")
+      nom_fichier = "#{@agent_connecte.etablissement.uai}PRIVE#{year}#{next_year}#{timestamp}"
 
-      xml_string = render_to_string layout: false
-      nom_fichier = "#{@agent_connecte.etablissement.uai}PRIVE#{Time.now.strftime('%Y')}#{Time.now.strftime('%y').to_i + 1}#{Time.now.strftime('%m%d%I%M%S')}"
-      file = Tempfile.new("#{nom_fichier}.xml")
-      file.write(xml_string)
-      file.close
+      file = construit_xml(nom_fichier)
 
       nom_zip = "#{nom_fichier}.zip"
       temp_file = Tempfile.new(nom_zip)
@@ -34,8 +34,16 @@ module Configuration
         zipfile.add("#{nom_fichier}.xml", file)
       end
       zip_data = File.read(temp_file.path)
-      send_data(zip_data, :type => 'application/zip', filename: nom_zip)
+      send_data(zip_data, type: "application/zip", filename: nom_zip)
+    end
 
+    def construit_xml(nom_fichier)
+      xml_string = render_to_string layout: false
+      file = Tempfile.new("#{nom_fichier}.xml")
+      file.write(xml_string)
+      file.close
+
+      file
     end
 
     def export_pieces_jointes
