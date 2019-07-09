@@ -16,6 +16,18 @@ class RespLegal < ActiveRecord::Base
     resp.validates :communique_info_parents_eleves, inclusion: { in: [true, false] }
   end
 
+  CODE_PARENTE = {
+    "MERE": 10,
+    "PERE": 20,
+    "FRATRIE": 37,
+    "ASCENDANT": 38,
+    "AUTRE MEMBRE DE LA FAMILLE": 39,
+    "EDUCATEUR": 41,
+    "TUTEUR": 50,
+    "AIDE SOCIALE A L'ENFANCE": 51,
+    "AUTRE LIEN": 90
+  }.freeze
+
   def pays_fra?
     pays == "FRA" && resp_present?
   end
@@ -59,7 +71,7 @@ class RespLegal < ActiveRecord::Base
   end
 
   def self.liens_de_parente
-    ["MERE", "PERE", "AUTRE FAM.", "AUTRE LIEN", "TUTEUR", "ASE"]
+    ["MERE", "PERE", "FRATRIE", "ASCENDANT", "AUTRE MEMBRE DE LA FAMILLE", "EDUCATEUR", "TUTEUR", "AIDE SOCIALE A L'ENFANCE", "AUTRE LIEN"]
   end
 
   def self.codes_profession

@@ -76,6 +76,7 @@ Metrics/ClassLength:
     - 'app/jobs/importer_siecle.rb'
     - 'app/controllers/accueil_controller.rb'
     - 'app/models/eleve.rb'
+    - 'app/models/resp_legal.rb'
 
 Metrics/AbcSize:
   Exclude:

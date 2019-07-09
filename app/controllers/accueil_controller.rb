@@ -116,8 +116,6 @@ class AccueilController < ApplicationController
   end
 
   def variables_famille
-    @lien_de_parentes = ["MERE", "PERE", "AUTRE FAM.", "AUTRE LIEN", "TUTEUR", "ASE"]
-
     @code_situation = code_situation
     @liste_pays = []
     pays = YAML.safe_load(File.read(File.join(Rails.root, "/app/jobs/code_pays.yml")))
