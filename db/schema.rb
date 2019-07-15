@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_26_134611) do
+ActiveRecord::Schema.define(version: 2019_07_15_180742) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -187,6 +187,7 @@ ActiveRecord::Schema.define(version: 2019_06_26_134611) do
     t.string "code_matiere"
     t.string "libelle"
     t.text "explication"
+    t.string "code_matiere_6"
     t.index ["etablissement_id"], name: "index_options_pedagogiques_on_etablissement_id"
   end
 
@@ -225,7 +226,7 @@ ActiveRecord::Schema.define(version: 2019_06_26_134611) do
     t.string "email"
     t.string "profession"
     t.integer "enfants_a_charge"
-    t.boolean "communique_info_parents_eleves", default: false
+    t.boolean "communique_info_parents_eleves"
     t.integer "priorite"
     t.datetime "updated_at"
     t.string "adresse_ant"
@@ -234,7 +235,7 @@ ActiveRecord::Schema.define(version: 2019_06_26_134611) do
     t.string "tel_personnel"
     t.string "tel_portable"
     t.string "tel_professionnel"
-    t.string "pays", default: "FRANCE"
+    t.string "pays", default: "FRA"
     t.integer "id_ent"
     t.string "ville_etrangere"
   end

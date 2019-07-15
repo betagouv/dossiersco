@@ -2,8 +2,8 @@
 
 require "nokogiri"
 
-premier_fichier = './doc/analyse_nomenclature/Nomenclature-2018-19.xml'
-deuxieme_fichier = './doc/analyse_nomenclature/Nomenclature-2019-20.xml'
+premier_fichier = "./doc/analyse_nomenclature/Nomenclature-2018-19.xml"
+deuxieme_fichier = "./doc/analyse_nomenclature/Nomenclature-2019-20.xml"
 
 puts "---8<" + "-" * 30
 
@@ -12,11 +12,11 @@ puts "Début de comparaison des fichiers #{premier_fichier} et #{deuxieme_fichie
 premier_xml = Nokogiri::XML(File.read(premier_fichier))
 deuxieme_xml = Nokogiri::XML(File.read(deuxieme_fichier))
 
-mefs_deuxieme = deuxieme_xml.xpath('/BEE_NOMENCLATURES/DONNEES/MEFS/MEF')
-codes_mef_deuxieme = mefs_deuxieme.map{|e| e["CODE_MEF"]}
-libelles_long_mef_deuxieme = mefs_deuxieme.map{|e| e.xpath("LIBELLE_LONG").text}
+mefs_deuxieme = deuxieme_xml.xpath("/BEE_NOMENCLATURES/DONNEES/MEFS/MEF")
+codes_mef_deuxieme = mefs_deuxieme.map { |e| e["CODE_MEF"] }
+libelles_long_mef_deuxieme = mefs_deuxieme.map { |e| e.xpath("LIBELLE_LONG").text }
 
-premier_xml.xpath('/BEE_NOMENCLATURES/DONNEES/MEFS/MEF').each do |mef|
+premier_xml.xpath("/BEE_NOMENCLATURES/DONNEES/MEFS/MEF").each do |mef|
   index = codes_mef_deuxieme.index(mef["CODE_MEF"])
   libelle_long = mef.xpath("LIBELLE_LONG").text
 
@@ -37,5 +37,3 @@ premier_xml.xpath('/BEE_NOMENCLATURES/DONNEES/MEFS/MEF').each do |mef|
 end
 
 puts "---8<" + "-" * 30
-
-
