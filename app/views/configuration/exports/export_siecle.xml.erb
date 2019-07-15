@@ -77,17 +77,19 @@
                 <% dossier_eleve.options_pedagogiques.each do |option| %>
                   <% next if option.code_matiere.nil? %>
                   <OPTION>
-                    <CODE_MATIERE><%= option.code_matiere %></CODE_MATIERE>
+                    <CODE_MATIERE><%= option.code_matiere_6 %></CODE_MATIERE>
                     <CODE_MODALITE_ELECT><%= option.obligatoire ? "O" : "F" %></CODE_MODALITE_ELECT>
                   </OPTION>
                 <% end %>
               </OPTIONS>
             </SCOLARITE_ACTIVE>
             <ETABLISSEMENT_AN_DERNIER>
-              <CODE_RNE>0750680G</CODE_RNE>
+              <CODE_RNE><%= @etablissement.uai %></CODE_RNE>
               <CODE_PROVENANCE>1</CODE_PROVENANCE>
               <OPTIONS_AN_DERNIER>
-                <CODE_MATIERE>code5</CODE_MATIERE>
+                <% dossier_eleve.options_origines.each do |id, h| %>
+                  <CODE_MATIERE><%= h["code_matiere"] %></CODE_MATIERE>
+                <% end %>
               </OPTIONS_AN_DERNIER>
             </ETABLISSEMENT_AN_DERNIER>
           </ELEVE>
