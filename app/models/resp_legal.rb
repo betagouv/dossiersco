@@ -23,8 +23,10 @@ class RespLegal < ActiveRecord::Base
     "ASCENDANT": 38,
     "AUTRE MEMBRE DE LA FAMILLE": 39,
     "EDUCATEUR": 41,
+    "ASS. FAMIL": 42,
     "TUTEUR": 50,
     "AIDE SOCIALE A L'ENFANCE": 51,
+    "ELEVE": 70,
     "AUTRE LIEN": 90
   }.freeze
 
