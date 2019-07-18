@@ -78,6 +78,10 @@ heroku psql
 heroku pg:index_usage
 (nécessite heroku plugins:install heroku-pg-extras)
 
+# Scalingo
+
+scalingo --app dossiersco-production env
+
 # Colorer le terminal irb
 
 require 'awesome_print'
