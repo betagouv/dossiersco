@@ -12,4 +12,23 @@ class Famille
     raise ExceptionAucunEmailRetrouve, "Aucun email retrouvé"
   end
 
+  def nettoyage_telephone(params)
+    if params["resp_legal_attributes"]
+      %w[tel_personnel tel_portable tel_professionnel].each do |tel|
+        if params["resp_legal_attributes"]["0"] && params["resp_legal_attributes"]["0"][tel]
+          params["resp_legal_attributes"]["0"][tel] = params["resp_legal_attributes"]["0"][tel].delete(" ")
+        end
+        params["resp_legal_attributes"]["1"][tel] = params["resp_legal_attributes"]["1"][tel].delete(" ") if params["resp_legal_attributes"]["1"]
+      end
+    end
+
+    if params["contact_urgence_attributes"]
+      %w[tel_principal tel_secondaire].each do |tel|
+        params["contact_urgence_attributes"][tel] = params["contact_urgence_attributes"][tel].delete(" ")
+      end
+    end
+
+    params
+  end
+
 end

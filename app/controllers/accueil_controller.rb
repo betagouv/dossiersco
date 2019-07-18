@@ -140,14 +140,14 @@ class AccueilController < ApplicationController
   end
 
   def params_dossier_famille
-    params.require(:dossier_eleve).permit(resp_legal_attributes: %i[lien_de_parente prenom nom code_postal
-                                                                    adresse ville ville_etrangere pays
-                                                                    tel_personnel tel_portable
-                                                                    tel_professionnel email profession
-                                                                    communique_info_parents_eleves
-                                                                    enfants_a_charge id ],
-                                          contact_urgence_attributes: %i[lien_avec_eleve prenom nom tel_principal
-                                                                         tel_secondaire])
+    Famille.new.nettoyage_telephone(params.require(:dossier_eleve).permit(resp_legal_attributes: %i[lien_de_parente prenom nom code_postal
+                                                                                                    adresse ville ville_etrangere pays
+                                                                                                    tel_personnel tel_portable
+                                                                                                    tel_professionnel email profession
+                                                                                                    communique_info_parents_eleves
+                                                                                                    enfants_a_charge id ],
+                                                                          contact_urgence_attributes: %i[lien_avec_eleve prenom nom tel_principal
+                                                                                                         tel_secondaire]))
   end
 
   def responsables_valides?(resp_legal1, resp_legal2)
