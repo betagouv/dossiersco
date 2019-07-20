@@ -3,6 +3,6 @@
 Fabricator(:eleve) do
   nom { sequence(:nom) { |i| "nom#{i}" } }
   prenom { sequence(:prenom) { |i| "prenom#{i}" } }
-  identifiant { sequence(:identifiant) { |i| "IDENTIFIANT#{i}" } }
+  identifiant { sequence(:identifiant) { |i| "IDENTIF#{'I' * (4 - i.to_s.size)}#{i}" } }
   date_naiss "2004-04-27"
 end
