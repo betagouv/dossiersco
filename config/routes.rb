@@ -20,6 +20,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :retour_siecle, only: [:new]
+
   namespace :configuration do
     resources :dossiers_eleve, only: [] do
       collection do

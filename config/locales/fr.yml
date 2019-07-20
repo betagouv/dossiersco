@@ -64,6 +64,7 @@ fr:
       import_export: "Import/export des élèves"
       suivi_inscription: "Suivi des inscriptions"
       tableau_de_bord: "Tableau de bord"
+      retour_siecle: "Retour Base Élèves"
     famille:
       menu_accueil: "Accueil"
       menu_administration: "Administration"
@@ -84,6 +85,24 @@ fr:
       document_soumis: "Votre document est transmis à l'établissement."
       document_invalide: "Votre document ne peut pas être pris en compte par l'établissement pour cette inscription. Un courriel vient de vous être envoyé. Merci de prendre connaissance de ce message et nous fournir une nouvelle version de ce document."
       document_valide: "Votre document a été examiné et approuvé par l'établissement."
+  retour_siecles:
+    manque_code_matiere:
+      titre_manque_code_matiere: "Code matière manquant"
+      explication_manque_code_matier_html: "<p>Pour que les données remontent correctement dans la Base Élève, nous devons avoir des options avec code matière. Dans l'import que nous vous avons demandé, avec le fichier Excel, nous n'avons pas ces codes matière.</p><p>En téléversant votre fichier <b>Nomenclature.xml</b> dans DossierSCO, nous serons en mesure de récupérer ces codes matières. Merci de télécharger ce fichier depuis SIECLE (dans les export XML, le fichier Nomenclature), puis de le téléverser ci dessous.</p>"
+      aide_siecle: "Identifiez-vous dans SIECLE, BEE, onglet Consultation et Exports, Exportations, en XML, cliquez sur Nomenclature. Dézippez le fichier avant de le soumettre dans DossierSCO."
+      selectionner_fichier: "Sélectionnez votre fichier Nomenclature.xml"
+      importer_fichier: "Importer un fichier Nomenclature.xml"
+    new:
+      titre_selection_ine: "Extraire un ou plusieurs dossiers pour la Base Élève"
+      explication_selection_ine_html: "<p><strong>Attention, nous sommes en phase de test.</strong> Il n'est pas très prudent de faire un import privée dans siecle avec le fichier généré par DossierSCO pour le moment.</p>
+      <p>Télécharger un export XML pour importer les modifications sur les dossiers élèves dans SIECLE. Pour l'import dans SIECLE, vous devez passer par l'interface d'import d'application privée</p>"
+      demander_fichier_partiel_xml: "Demander ces dossiers"
+      telecharger_fichier_partiel_xml: "Télécharger %{count_eleves} élèves et %{count_resp} représentant légaux dans un fichier siecle"
+      telecharger_fichier_complet_xml: "Télécharger tous les dossiers"
+
+      retour_siecle_partiel_html: "<p>Générer un fichier de retour dans la base élève avec uniquement les dossiers que vous voulez.</p><p>Pour cela, indiquez les INE que vous voulez extraire, séparé par une virgule, et validez.</p>"
+      titre_retour_complet: "Extraire tous les dossiers pour la base élève"
+      retour_siecle_complet_html: "<p>Générer un fichier contenant TOUS les dossiers, soit %{count_resp} représentant légaux et %{count_eleves} élèves</p>"
   mot_de_passe_agent:
     new:
       titre: "Changement de mot de passe"

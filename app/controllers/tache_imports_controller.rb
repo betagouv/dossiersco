@@ -32,7 +32,8 @@ class TacheImportsController < ApplicationController
     else
       flash[:alert] = t(".fichier_manquant")
     end
-    redirect_to new_tache_import_path
+
+    redirect_back(fallback_location: new_tache_import_path)
   end
 
   private

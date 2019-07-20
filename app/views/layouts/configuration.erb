@@ -44,6 +44,9 @@
           <li class="nav__item <%= 'active' if request.fullpath.include? '/tache_import' %>">
             <%= link_to t('.import_export'), new_tache_import_path, {class: 'nav-link'} %>
           </li>
+          <li class="nav__item <%= 'active' if request.fullpath.include? '/siecle' %>">
+            <%= link_to t('.retour_siecle'), new_retour_siecle_path, {class: 'nav-link'} %>
+          </li>
           <li class="nav__item <%= 'active' if request.fullpath.include? '/campagne' %>">
             <%= link_to 'Configuration de la campagne', configuration_campagnes_path, {class: 'nav-link'} %>
           </li>

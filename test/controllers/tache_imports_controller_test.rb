@@ -69,4 +69,20 @@ class TacheImportsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "redirige sur la page appelante" do
+    etablissement = Fabricate(:etablissement)
+    admin = Fabricate(:admin, etablissement: etablissement)
+    identification_agent(admin)
+    Fabricate(:tache_import_en_traitement, etablissement: etablissement)
+
+    fichier_xls = fixture_file_upload("files/test_import_siecle.xls")
+    params = { tache_import: { fichier: fichier_xls, type_siecle: "reinscription" } }
+
+    page_origine = "/somewhere"
+    @request.env["HTTP_REFERER"] = page_origine
+    post tache_imports_path, params: params, headers: { "HTTP_REFERER" => page_origine }
+
+    assert_redirected_to page_origine
+  end
+
 end

@@ -1,0 +1,35 @@
+<section class="section">
+
+  <div class="panel">
+    <div class="panel__header">
+      <h3><%= t('.titre_manque_code_matiere') %></h3>
+    </div>
+    <p><%= t('.explication_manque_code_matier_html') %></p>
+
+    <% if @tache.statut != 'en_attente' && @tache.statut != 'en_cours' %>
+      <%= form_for TacheImport.new, multipart: true do |form| %>
+        <p><i class="fas fa-info-circle blue"></i> <%= t('.aide_siecle') %></p>
+        <div class="form__group">
+          <%= form.hidden_field :type_fichier, value: "nomenclature" %>
+          <p class="card-text"><%= t('.selectionner_fichier') %></p>
+        </div>
+        <div class="form__group">
+          <%= form.file_field :fichier %>
+        </div>
+        <% if Rails.env.demo? && @agent_connecte.etablissement.uai == '0123456S' %>
+          <div class="form__group">
+            Pour sécuriser vos données, l'import de SIECLE est réservé aux collèges ayant créé un compte DossierSCO. Vous pouvez tester cette fonctionnalité après avoir créé votre compte sur <a href="https://dossiersco.fr/configuration/etablissements/new">https://dossiersco.fr/configuration/etablissements/new</a>
+          </div>
+        <% else %>
+          <div class="form__group">
+            <button type="submit" class="button" id="soumettre-fichier">
+              <%= t('.importer_fichier') %>
+            </button>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+
+  </div>
+
+</section>

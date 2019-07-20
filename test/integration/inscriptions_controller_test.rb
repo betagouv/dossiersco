@@ -20,6 +20,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     identification_agent(agent)
 
     post "/tache_imports", params: { tache_import: { fichier: "tests/test_import_siecle.xls", job_klass: "ImporterSiecle" } }
+
     follow_redirect!
 
     doc = Nokogiri::HTML(response.body)

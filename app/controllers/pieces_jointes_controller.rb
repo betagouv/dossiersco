@@ -19,7 +19,6 @@ class PiecesJointesController < ApplicationController
   end
 
   def show
-    puts @piece_jointe.inspect
     if @piece_jointe.fichiers.length == 1
       if Rails.env.development?
         redirect_to @piece_jointe.fichiers.first.url

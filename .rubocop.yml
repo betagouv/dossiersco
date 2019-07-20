@@ -83,6 +83,7 @@ Metrics/ClassLength:
 Metrics/AbcSize:
   Exclude:
     - 'test/**/*'
+    - 'app/controllers/retour_siecles_controller.rb'
     - 'app/services/famille.rb'
     - 'app/controllers/configuration/exports_controller.rb'
     - 'app/controllers/pieces_jointes_controller.rb'
