@@ -50,6 +50,9 @@
         <% @dossiers.where("mef_destination_id is not null").each do |dossier_eleve| %>
           <ELEVE>
             <ID_PRV_ELE><%= dossier_eleve.id %></ID_PRV_ELE>
+            <% if dossier_eleve.eleve.identifiant.present? %>
+              <ID_NATIONAL><%= dossier_eleve.eleve.identifiant %></ID_NATIONAL>
+            <% end %>
             <NOM_DE_FAMILLE><%= dossier_eleve.eleve.nom %></NOM_DE_FAMILLE>
             <PRENOM><%= dossier_eleve.eleve.prenom %></PRENOM>
             <CODE_PAYS_NAT><%= dossier_eleve.eleve.nationalite ? dossier_eleve.eleve.nationalite : 995 %></CODE_PAYS_NAT>
