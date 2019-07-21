@@ -20,6 +20,10 @@ Style/Documentation:
 Style/AsciiComments:
   Enabled: false
 
+Style/GuardClause:
+  Exclude:
+    - 'app/controllers/retour_siecles_controller.rb'
+
 Metrics/LineLength:
   Max: 150
   Exclude:

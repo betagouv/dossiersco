@@ -13,8 +13,11 @@ class RetourSieclesController < ApplicationController
     render(:manque_code_matiere) && return if OptionPedagogique.where(etablissement: @etablissement, code_matiere_6: nil).count.positive?
 
     @dossiers = DossierEleve.where(etablissement: @etablissement)
-    ines = params[:liste_ine].split(",")
-    @selection_dossiers = @etablissement.dossier_eleve.joins(:eleve).where("eleves.identifiant in (?)", ines) if params[:liste_ine].present?
+
+    if params[:liste_ine].present?
+      ines = params[:liste_ine].split(",")
+      @selection_dossiers = @etablissement.dossier_eleve.joins(:eleve).where("eleves.identifiant in (?)", ines)
+    end
   end
 
 end
