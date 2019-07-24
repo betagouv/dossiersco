@@ -90,6 +90,22 @@ class ImporterSiecleTest < ActiveJob::TestCase
     assert_empty DossierEleve.where(mef_origine: mef)
   end
 
+  test "supprime les espaces des numéros de téléphone des représentants légaux" do
+    etablissement = Fabricate(:etablissement)
+    importer = ImporterSiecle.new
+    mef = Fabricate(:mef, libelle: "4EME")
+    ligne = Array.new(34)
+    ligne[9] = "18/05/1991"
+    ligne[11] = "12345678901"
+    ligne[32] = mef.code
+    ligne[33] = mef.libelle
+    ligne[102] = "11 22 33 44 55"
+    ligne[104] = "11 22 33 44 55"
+    importer.import_ligne(etablissement.id, ligne, "reinscription")
+    assert_equal "1122334455", RespLegal.first.tel_personnel
+    assert_equal "1122334455", RespLegal.first.tel_portable
+  end
+
   test "On arrive  à crééer un MEF 3EME" do
     etablissement = Fabricate(:etablissement)
     importer = ImporterSiecle.new

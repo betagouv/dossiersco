@@ -245,6 +245,7 @@ class ImporterSiecle < ApplicationJob
 
       donnees_resp_legal.each do |key, value|
         resp_legal[key] = value
+        resp_legal[key] = value.delete(" ") if %i[tel_personnel tel_portable].include?(key) && value.present?
       end
       resp_legal.save(validate: false)
 
