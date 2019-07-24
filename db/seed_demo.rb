@@ -44,10 +44,10 @@ puts "création d'élèves et de dossier associés"
     "nom" => Faker::Name.last_name,
     "sexe" => Faker::Boolean.boolean ? "Masculin" : "Féminin",
     "ville_naiss" => Faker::Address.city,
-    "nationalite" => "FRANCE",
+    "nationalite" => "100",
     "classe_ant" => niveau[1],
     "date_naiss" => Faker::Date.birthday(11, 17),
-    "pays_naiss" => "FRANCE",
+    "pays_naiss" => "100",
     "niveau_classe_ant" => niveau[0]
   )
 
