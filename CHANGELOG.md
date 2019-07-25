@@ -6,6 +6,114 @@
 
 Des tests d'import nous ont montrés que positionner l'INE dans l'ID_NATIONAL permet la reconnaissance des élèves dans l'import privé.
 
+- **[retour SIECLE] Nettoyer les numéros de téléphones**
+
+Les téléphones ont été saisie de manière libre. Pour siecle, nous devons les envoyer sans espace.
+
+Nous avons donc
+- corrigé les numéros de téléphone en production (sur les données existantes)
+- fait en sorte que juste après la saisie, les numéros soient enregistrer sans espace
+- supprimer les espaces provenant du fichier Excel provenant de siecle, que nous utilisons pour l'import de données.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/686)
+
+- **[retour SIECLE] Remplacer les pays par leur code**
+
+Les pays ont été saisie librement. Siecle attend un code pays.
+
+Nous avons donc :
+- changé l'interface graphique pour que les pays soient choisi dans une liste défini
+- fait en sorte d'enregistrer des code pays plutôt que du texte
+- fait la conversion du pays en texte provenant du fichier Excel SIECLE qui nous sert pour importer les données.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/695)
+
+---
+
+## samedi 20 juillet
+
+- **[retour SIECLE] améliorer le parcours utilisateur de l'export SIECLE**
+
+Le parcoure utilisateur pour l'export SIECLE est maintenant dans un nouveau menu. L'affichage se fera en fonction de l'état des dossiers élèves de dossierSCO :
+
+- Nous affichons l'import de nomenclature s'il manque des codes option dans les options pédagogique.
+- Nous affichons le nombre de représentants légaux et le nombre d'élève contenu dans l'export avant de faire réellement l'export.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/688)
+
+---
+
+## lundi 15 juillet
+
+- **[retour siecle] renseigner le CODE_PARENTE**
+
+Fait en sorte que dans l'interface graphique, les familles ne puissent pas choisir un lien de parenté non reconnu par SIECLE :
+
+- 10 : MERE
+- 20 : PERE
+- 37 : FRATRIE
+- 38 : ASCENDANT
+- 39 : AUTRE MEMBRE DE LA FAMILLE
+- 41 : EDUCATEUR
+- 50 : TUTEUR
+- 51 : AIDE SOCIALE A L'ENFANCE
+- 70 : ELEVE LUI-MEME
+- 90 : AUTRE LIEN
+
+Et appliquer une transformation pour que le fichier SIECLE soit construit avec le bon code (et non du texte).
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/675)
+
+- **code option par import nomenclature**
+
+Pour la remonté vers SIECLE, nous avons besoin de qualifier les options avec le code de chaque option (6 chiffres),
+Ce code n'est pas donnée dans le fichier Excel dont nous nous servons, pour le moment, pour intégrer des données provenant de SIECLE.
+
+Nous préparons doucemnt la transition vers la récupération de données depuis les fichiers XML proposé par siecle, qui sont plus complet.
+
+Dans ce ticket, nous ajoutons le fait de récupérer les codes option au moment de l'import du fichier `nomenclature.xml`
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/682)
+
+---
+
+## samedi 13 juillet
+
+- **Régime de demi-pension**
+
+Dossiersco ne propose qu'externe ou demi-pensionnaire actuellement.
+Pour l'export vers SIECLE, il faudrait regarder dans la liste des 22 régime, lesquelles correspondent le mieux à demi-pensionnaire et à externe.
+
+Plus tard, DossierSCO proposera les régime définit dans SIECLE.
+
+
+Suite à une suggestion d'un gestionnaire :
+
+- Pour les demi-pensionnaire, nous utilisons le régime 24 "Demi pensionnaire dans l'établissement 4", car nous supposons que la majorité des établissements sont au forfait 4 jours (pas de restauration le mercredi). L'inconvénient est que chaque établissement devra reprendre chaque élève dans Siecle pour ajuster son régime de demi-pension: DP 5jours pour certaines établissements, voire DP 3 jours, etc.
+
+- Pour les externes, le plus courant est le régime 0 "externe libre".
+
+Si cette solution est trop couteuse en temps de traitement pour vous, nous chercherons avec vous une autre solution, n'hésitez pas à le signaler à l'équipe DossierSCO.
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/681)
+
+
+---
+## Mardi 9 juillet
+
+- **Générer un fichier xml au bon nom pour import privé siecle**
+
+Le nom du fichier xml export siecle pour import privé dans siecle a le format suivant : PRIVE<ANNEESCOL+1>.xml
+Exemple : 0750680GPRIVE2018190702224500.xml
+Le fichier est un zip contenant ce fichier xml
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/671)
+
+- **[retour siecle] Forcer à un minimum de 1 le nombre d'enfants scolarisés**
+
+[ticket](https://gitlab.com/dossiersco/dossiersco/issues/676)
+
+---
 ## Lundi 8 juillet
 
 - **Nettoyer les données sur les pays**
