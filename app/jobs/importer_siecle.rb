@@ -274,7 +274,13 @@ class ImporterSiecle < ApplicationJob
                                   else
                                     donnees_eleve[:ville_naiss_etrangere]
                                   end
-    donnees_eleve[:nationalite] = donnees_eleve[:pays_naiss]
+
+    if donnees_eleve[:pays_naiss]
+      pays = YAML.safe_load(File.read(File.join(Rails.root, "/app/jobs/code_pays.yml")))
+      donnees_eleve[:pays_naiss] = pays.key(donnees_eleve[:pays_naiss])
+
+      donnees_eleve[:nationalite] = donnees_eleve[:pays_naiss]
+    end
 
     donnees_eleve.delete(:commune_naiss)
     donnees_eleve.delete(:ville_naiss_etrangere)
