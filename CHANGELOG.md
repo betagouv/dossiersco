@@ -1,6 +1,8 @@
 ## Jeudi 25 juillet
 
-- **Renseigne l'INE dans la balise ID_NATIONAL**
+- **Retour dans SIECLE : inclus DATE_DEB_SCO dans l'année scolaire à venir**
+
+- **Retour dans SIECLE : renseigne l'INE dans la balise ID_NATIONAL**
 
 Des tests d'import nous ont montrés que positionner l'INE dans l'ID_NATIONAL permet la reconnaissance des élèves dans l'import privé.
 
