@@ -1,3 +1,9 @@
+## Jeudi 25 juillet
+
+- **Renseigne l'INE dans la balise ID_NATIONAL**
+
+Des tests d'import nous ont montrés que positionner l'INE dans l'ID_NATIONAL permet la reconnaissance des élèves dans l'import privé.
+
 ## Lundi 8 juillet
 
 - **Nettoyer les données sur les pays**
