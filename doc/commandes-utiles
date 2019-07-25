@@ -225,3 +225,15 @@ Dans app/jobs/importer_siecle.rb, commenter le discard_on puis le begin rescue :
 
 docker volume prune
 docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
+
+# Calculer le délais de validation d'un dossier
+
+dossiers = DossierEleve.select {|d| d.etat == "validé"}
+dossiers.map {|d| (d.updated_at - d.created_at)/(60*60*24)}.sum / dossiers.count
+
+24 jours pour "validé"
+20 jours pour "en attente" : 2.3 jours depuis la 1ère inscription.
+
+created_at n'est pas pertinent car c'est la date de l'import SIECLE
+
+dossiers.map {|d| premiere_connexion = Trace.select {|t| t.identifiant == d.eleve.identifiant && t.created_at > Date.parse('2019-01-01')}.map {|t| t.created_at}.sort.first ; (premiere_connexion.nil? ? 0 : (d.updated_at - premiere_connexion)/(60*60*24)) }.sum / dossiers.count
