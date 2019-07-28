@@ -226,6 +226,10 @@ Dans app/jobs/importer_siecle.rb, commenter le discard_on puis le begin rescue :
 docker volume prune
 docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
 
+# Vérifier la conformité d'un fichier de retour dans SIECLE
+
+docker-compose run --rm app ruby scripts/test_siecle.rb 0750680GPRIVE2019200728090617.xml
+
 # Calculer le délais de validation d'un dossier
 
 dossiers = DossierEleve.select {|d| d.etat == "validé"}
