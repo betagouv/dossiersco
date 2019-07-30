@@ -241,3 +241,7 @@ dossiers.map {|d| (d.updated_at - d.created_at)/(60*60*24)}.sum / dossiers.count
 created_at n'est pas pertinent car c'est la date de l'import SIECLE
 
 dossiers.map {|d| premiere_connexion = Trace.select {|t| t.identifiant == d.eleve.identifiant && t.created_at > Date.parse('2019-01-01')}.map {|t| t.created_at}.sort.first ; (premiere_connexion.nil? ? 0 : (d.updated_at - premiere_connexion)/(60*60*24)) }.sum / dossiers.count
+
+# Nombre d'élèves inscrits en 6ème
+
+DossierEleve.select {|d| d.etat == "validé" && d.mef_destination.present? && d.mef_destination.libelle =~ /6EME/ }.count
