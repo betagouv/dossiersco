@@ -1,3 +1,7 @@
+## Mercredi 31  juillet
+
+- **Evaluation de la 2ème saison :** Ajout d'un index sur l'identifiant de la table traces pour pouvoir calculer le délais entre la 1ère connexion et la validation.
+
 ## Jeudi 25 juillet
 
 - **Retour dans SIECLE : inclus DATE_DEB_SCO dans l'année scolaire à venir**
