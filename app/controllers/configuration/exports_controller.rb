@@ -15,10 +15,11 @@ module Configuration
     def export_siecle
       @etablissement = @agent_connecte.etablissement
 
+      base_dossiers = @etablissement.dossier_eleve.where("mef_destination_id is not null")
       @dossiers = if params[:limite]
-                    @etablissement.dossier_eleve.joins(:eleve).where("eleves.identifiant in (?)", params[:liste_ine].split(","))
+                    base_dossiers.joins(:eleve).where("eleves.identifiant in (?)", params[:liste_ine].split(","))
                   else
-                    @etablissement.dossier_eleve
+                    base_dossiers
                   end
       year = Time.now.strftime("%Y")
       next_year = Time.now.strftime("%y").to_i + 1

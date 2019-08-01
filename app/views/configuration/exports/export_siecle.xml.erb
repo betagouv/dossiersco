@@ -47,7 +47,7 @@
         <% end %>
       </PERSONNES>
       <ELEVES>
-        <% @dossiers.where("mef_destination_id is not null").each do |dossier_eleve| %>
+        <% @dossiers.each do |dossier_eleve| %>
           <ELEVE>
             <ID_PRV_ELE><%= dossier_eleve.id %></ID_PRV_ELE>
             <% if dossier_eleve.eleve.identifiant.present? %>
