@@ -64,7 +64,7 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     assert_template "new"
   end
 
-  test "liste les dossier sans mef destination qui ne pourront être exporté" do
+  test "liste les dossiers sans mef destination qui ne pourront être importé dans siecle" do
     admin = Fabricate(:admin)
     identification_agent(admin)
     etablissement = admin.etablissement
@@ -75,6 +75,32 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     get new_retour_siecle_path
 
     assert_equal [dossier_sans_mef], assigns(:dossiers_sans_mef_destination)
+  end
+
+  test "liste les dossiers dont l'élève n'a pas de prénom qui ne pourra pas être importé dans siecle" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+    etablissement = admin.etablissement
+
+    eleve_sans_prenom = Fabricate(:eleve, prenom: nil)
+    dossier_sans_prenom = Fabricate(:dossier_eleve, eleve: eleve_sans_prenom, etablissement: etablissement)
+    Fabricate(:dossier_eleve, mef_destination: Fabricate(:mef, etablissement: etablissement), etablissement: etablissement)
+
+    get new_retour_siecle_path
+    assert_equal [dossier_sans_prenom], assigns(:dossiers_sans_nom_ou_prenom)
+  end
+
+  test "liste les dossiers dont l'élève n'a pas de nom qui ne pourra pas être importé dans siecle" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+    etablissement = admin.etablissement
+
+    eleve_sans_nom = Fabricate(:eleve, nom: nil)
+    dossier_sans_nom = Fabricate(:dossier_eleve, eleve: eleve_sans_nom, etablissement: etablissement)
+    Fabricate(:dossier_eleve, mef_destination: Fabricate(:mef, etablissement: etablissement), etablissement: etablissement)
+
+    get new_retour_siecle_path
+    assert_equal [dossier_sans_nom], assigns(:dossiers_sans_nom_ou_prenom)
   end
 
 end

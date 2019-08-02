@@ -63,18 +63,31 @@
     <table class="table">
       <thead>
         <tr>
+          <th>Identifiant</th>
           <th>Prénom</th>
           <th>Nom</th>
+          <th>Raison</th>
         </tr>
       </thead>
 
       <tbody>
         <% @dossiers_sans_mef_destination.each do |dossier| %>
           <tr>
+            <td><%= dossier.eleve.identifiant %></td>
             <td><%= dossier.eleve.prenom %></td>
             <td><%= dossier.eleve.nom %></td>
+            <td><%= t(".dossier_sans_mef_destination") %></td>
           </tr>
         <% end %>
+        <% @dossiers_sans_nom_ou_prenom.each do |dossier| %>
+          <tr>
+            <td><%= dossier.eleve.identifiant %></td>
+            <td><%= dossier.eleve.prenom %></td>
+            <td><%= dossier.eleve.nom %></td>
+            <td><%= t(".dossier_sans_nom_ou_prenom") %></td>
+          </tr>
+        <% end %>
+ 
       </tbody>
     </table>
 
