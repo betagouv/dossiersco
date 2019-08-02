@@ -52,3 +52,34 @@
 
 </section>
 
+<section class="section">
+
+  <div class="panel">
+    <div class="panel__header">
+      <h3><%= t('.titre_dossiers_non_exportable') %></h3>
+    </div>
+    <p><%= t(".dossiers_non_exportable_explication_html") %></p>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Prénom</th>
+          <th>Nom</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @dossiers_sans_mef_destination.each do |dossier| %>
+          <tr>
+            <td><%= dossier.eleve.prenom %></td>
+            <td><%= dossier.eleve.nom %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+
+  </div>
+
+</section>
+

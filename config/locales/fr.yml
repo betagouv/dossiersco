@@ -103,6 +103,8 @@ fr:
       retour_siecle_partiel_html: "<p>Générer un fichier de retour dans la base élève avec uniquement les dossiers que vous voulez.</p><p>Pour cela, indiquez les INE que vous voulez extraire, séparé par une virgule, et validez.</p>"
       titre_retour_complet: "Extraire tous les dossiers pour la base élève"
       retour_siecle_complet_html: "<p>Générer un fichier contenant TOUS les dossiers, soit %{count_resp} représentant légaux et %{count_eleves} élèves</p>"
+      titre_dossiers_non_exportable: "Dossiers non exportable"
+      dossiers_non_exportable_explication_html: "Certains dossiers n'ont pas les informations nécessaire pour pouvoir retourner dans siecle correctement. Voici la liste des dossiers n'ayant pas de mef destination"
   mot_de_passe_agent:
     new:
       titre: "Changement de mot de passe"

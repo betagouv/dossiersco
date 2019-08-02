@@ -64,4 +64,17 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     assert_template "new"
   end
 
+  test "liste les dossier sans mef destination qui ne pourront être exporté" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+    etablissement = admin.etablissement
+
+    dossier_sans_mef = Fabricate(:dossier_eleve, mef_destination: nil, etablissement: etablissement)
+    Fabricate(:dossier_eleve, mef_destination: Fabricate(:mef, etablissement: etablissement), etablissement: etablissement)
+
+    get new_retour_siecle_path
+
+    assert_equal [dossier_sans_mef], assigns(:dossiers_sans_mef_destination)
+  end
+
 end
