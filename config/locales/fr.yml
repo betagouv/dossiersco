@@ -107,6 +107,7 @@ fr:
       dossiers_non_exportable_explication_html: "Certains dossiers n'ont pas les informations nécessaire pour pouvoir retourner dans siecle correctement. Voici la liste des dossiers n'ayant pas de mef destination"
       dossier_sans_mef_destination: "dossier sans mef destination"
       dossier_sans_nom_ou_prenom: "élève sans nom ou prénom"
+      probleme_de_commune_insee: "commune naisssance introuvable"
   mot_de_passe_agent:
     new:
       titre: "Changement de mot de passe"

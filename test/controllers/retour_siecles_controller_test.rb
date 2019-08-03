@@ -74,7 +74,8 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
 
     get new_retour_siecle_path
 
-    assert_equal [dossier_sans_mef], assigns(:dossiers_sans_mef_destination)
+    assert_equal dossier_sans_mef.eleve.identifiant, assigns(:dossiers_bloques).first.identifiant
+    assert_equal I18n.t("retour_siecles.new.dossier_sans_mef_destination"), assigns(:dossiers_bloques).first.raison
   end
 
   test "liste les dossiers dont l'élève n'a pas de prénom qui ne pourra pas être importé dans siecle" do
@@ -87,7 +88,8 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     Fabricate(:dossier_eleve, mef_destination: Fabricate(:mef, etablissement: etablissement), etablissement: etablissement)
 
     get new_retour_siecle_path
-    assert_equal [dossier_sans_prenom], assigns(:dossiers_sans_nom_ou_prenom)
+    assert_equal dossier_sans_prenom.eleve.nom, assigns(:dossiers_bloques).first.nom
+    assert_equal I18n.t("retour_siecles.new.dossier_sans_nom_ou_prenom"), assigns(:dossiers_bloques).first.raison
   end
 
   test "liste les dossiers dont l'élève n'a pas de nom qui ne pourra pas être importé dans siecle" do
@@ -100,7 +102,37 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     Fabricate(:dossier_eleve, mef_destination: Fabricate(:mef, etablissement: etablissement), etablissement: etablissement)
 
     get new_retour_siecle_path
-    assert_equal [dossier_sans_nom], assigns(:dossiers_sans_nom_ou_prenom)
+    assert_equal dossier_sans_nom.eleve.prenom, assigns(:dossiers_bloques).first.prenom
+    assert_equal I18n.t("retour_siecles.new.dossier_sans_nom_ou_prenom"), assigns(:dossiers_bloques).first.raison
+  end
+
+  test "liste les dossiers dont nous n'avons pas le bon code profession" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+    etablissement = admin.etablissement
+
+    eleve = Fabricate(:eleve)
+    resp_legal = Fabricate(:resp_legal, profession: "Retraité employé, ouvrier")
+    dossier = Fabricate(:dossier_eleve, eleve: eleve, resp_legal: [resp_legal], etablissement: etablissement)
+    Fabricate(:dossier_eleve, mef_destination: Fabricate(:mef, etablissement: etablissement), etablissement: etablissement)
+
+    get new_retour_siecle_path
+    assert_equal dossier.eleve.identifiant, assigns(:dossiers_bloques).first.identifiant
+    assert_equal I18n.t("retour_siecles.new.probleme_de_profession"), assigns(:dossiers_bloques).first.raison
+  end
+
+  test "liste les dossiers dont nous ne retrouvons pas la commune insee" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+    etablissement = admin.etablissement
+
+    eleve_sans_commune_insee = Fabricate(:eleve, ville_naiss: "une ville sans code insee")
+    dossier = Fabricate(:dossier_eleve, eleve: eleve_sans_commune_insee, etablissement: etablissement)
+
+    get new_retour_siecle_path
+    assert_equal dossier.eleve.identifiant, assigns(:dossiers_bloques).first.identifiant
+    assert_equal I18n.t("retour_siecles.new.probleme_de_commune_insee"), assigns(:dossiers_bloques).first.raison
   end
 
 end
+

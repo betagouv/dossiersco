@@ -21,7 +21,7 @@
         <%= form_tag  export_siecle_configuration_exports_path, method: :get do |f| %>
           <%= hidden_field_tag :liste_ine, @selection_dossiers.map(&:eleve).map(&:identifiant).join(",") %>
           <%= hidden_field_tag :limite, true %>
-          <button type="submit" class="button mt-1"><%= t('.telecharger_fichier_partiel_xml', count_eleves: @selection_dossiers.count, count_resp: @selection_dossiers.map(&:resp_legal).flatten.count) %></button>
+          <button type="submit" class="button mt-1"><%= t('.telecharger_fichier_partiel_xml', count_eleves: @selection_dossiers.count - @dossiers_bloques.count, count_resp: @selection_dossiers.map(&:resp_legal).flatten.count - @dossiers_bloques.count) %></button>
         <% end %>
         <% if @selection_dossiers.count == 0 %>
           <p>Si aucun dossier n'est proposé, c'est sans doute que le dossier n'a pas de mef destination, ou bien que l'élève ou un des représentant légaux n'a pas de prénom et/ou de nom.</p>
@@ -39,7 +39,7 @@
     <div class="panel__header">
       <h3><%= t('.titre_retour_complet') %></h3>
     </div>
-    <p><%= t(".retour_siecle_complet_html", count_resp: @dossiers.map(&:resp_legal).flatten.count, count_eleves: @dossiers.count) %></p>
+    <p><%= t(".retour_siecle_complet_html", count_resp: @dossiers.map(&:resp_legal).flatten.count - @dossiers_bloques.count, count_eleves: @dossiers.count - @dossiers_bloques.count) %></p>
 
     <% if Rails.env.production? && !super_admin?(@agent_connecte) %>
       <p>Nous sommes en train de faire les derniers réglages pour nous assurer que le fichier généré est bien conforme aux spécification de la base élève. Vous devriez bientôt avoir ici un bouton pour télécharger le fichier SIECLE.</p>
@@ -67,31 +67,22 @@
           <th>Prénom</th>
           <th>Nom</th>
           <th>Raison</th>
+          <th></th>
         </tr>
       </thead>
 
       <tbody>
-        <% @dossiers_sans_mef_destination.each do |dossier| %>
+        <% @dossiers_bloques.each do |dossier| %>
           <tr>
-            <td><%= dossier.eleve.identifiant %></td>
-            <td><%= dossier.eleve.prenom %></td>
-            <td><%= dossier.eleve.nom %></td>
-            <td><%= t(".dossier_sans_mef_destination") %></td>
+              <td><%= dossier.identifiant %></td>
+              <td><%= dossier.prenom %></td>
+              <td><%= dossier.nom %></td>
+              <td><%= dossier.raison %></td>
+              <td><%= link_to "voir le dossier", "/agent/eleve/#{dossier.identifiant}" %></td>
           </tr>
         <% end %>
-        <% @dossiers_sans_nom_ou_prenom.each do |dossier| %>
-          <tr>
-            <td><%= dossier.eleve.identifiant %></td>
-            <td><%= dossier.eleve.prenom %></td>
-            <td><%= dossier.eleve.nom %></td>
-            <td><%= t(".dossier_sans_nom_ou_prenom") %></td>
-          </tr>
-        <% end %>
- 
       </tbody>
     </table>
-
-
   </div>
 
 </section>

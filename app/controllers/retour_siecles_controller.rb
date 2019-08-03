@@ -13,8 +13,11 @@ class RetourSieclesController < ApplicationController
     render(:manque_code_matiere) && return if OptionPedagogique.where(etablissement: @etablissement, code_matiere_6: nil).count.positive?
 
     @dossiers = dossiers_etablissement.where("mef_destination_id is not null")
-    @dossiers_sans_mef_destination = dossiers_etablissement.where(mef_destination: nil)
-    @dossiers_sans_nom_ou_prenom = eleves_sans_nom.or(eleves_sans_prenom)
+    @dossiers_bloques = []
+    @dossiers_bloques.concat(extrait_informations(dossiers_etablissement.where(mef_destination: nil), I18n.t("retour_siecles.new.dossier_sans_mef_destination")))
+    @dossiers_bloques.concat(extrait_informations(eleves_sans_nom.or(eleves_sans_prenom), I18n.t("retour_siecles.new.dossier_sans_nom_ou_prenom")))
+    @dossiers_bloques.concat(extrait_informations(eleves_sans_commune_insee, I18n.t("retour_siecles.new.probleme_de_commune_insee")))
+    @dossiers_bloques.concat(extrait_informations(resp_legal_probleme_profession, I18n.t("retour_siecles.new.probleme_de_profession")))
 
     if params[:liste_ine].present?
       ines = params[:liste_ine].split(",")
@@ -32,6 +35,33 @@ class RetourSieclesController < ApplicationController
 
   def eleves_sans_nom
     dossiers_etablissement.joins(:eleve).where("eleves.nom is null")
+  end
+
+  def eleves_sans_commune_insee
+    dossiers_etablissement.joins(:eleve).where("eleves.commune_insee_naissance is null")
+  end
+
+  def resp_legal_probleme_profession
+    resp_legal_profession_null.or(resp_legal_profession_retraite_employe_ouvrier).or(resp_legal_retraite_cadre_intermediaire)
+  end
+
+  def resp_legal_profession_null
+    dossiers_etablissement.joins(:eleve).joins(:resp_legal).where("resp_legals.profession is null")
+  end
+
+  def resp_legal_profession_retraite_employe_ouvrier
+    dossiers_etablissement.joins(:eleve).joins(:resp_legal).where("resp_legals.profession = 'Retraité employé, ouvrier'")
+  end
+
+  def resp_legal_retraite_cadre_intermediaire
+    dossiers_etablissement.joins(:eleve).joins(:resp_legal).where("resp_legals.profession = 'Retraité cadre, profession intermédiaire'")
+  end
+
+  def extrait_informations(dossiers, raison)
+    dossier_bloque = Struct.new(:identifiant, :prenom, :nom, :raison)
+    dossiers.map do |dossier|
+      dossier_bloque.new(dossier.eleve.identifiant, dossier.eleve.prenom, dossier.eleve.nom, raison)
+    end
   end
 
 end
