@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 
-Eleve.all.each {|e| e.update(ville_naiss: e.ville_naiss.upcase)}
+Eleve.where("ville_naiss is not null").each {|e| e.update(ville_naiss: e.ville_naiss.upcase)}
 
 Eleve.where("ville_naiss like '%-%'").each {|e| e.update(ville_naiss: e.ville_naiss.gsub(/-/, ' ')) }
 
