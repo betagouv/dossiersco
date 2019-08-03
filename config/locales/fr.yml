@@ -476,7 +476,7 @@ fr:
       telecharger_xml: "Télécharger"
       titre_import_nomenclature: "Importer le fichier de nomenclature"
       importer_fichier_nomenclature: "Importer le fichier"
-      aide_siecle_nomenclature: ""
+      aide_siecle_nomenclature: "Pensez à dezipper le fichier nomenclature. DossierSCO ne peux lire qu'un fichier XML pour le moment."
       selectionner_fichier_nomenclature: "Sélectionnez votre fichier de nomenclature au format XML"
 
   contact_par_etats:
