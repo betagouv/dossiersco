@@ -88,9 +88,13 @@ class RespLegal < ActiveRecord::Base
       '65': "Ouvrier qualifié - magasinage",
       '67': "Ouvrier non qualifié de type industriel",
       '68': "Ouvrier non qualifié de type artisanal",
-      '69': "Ouvrier agricole", '71': "Retraité agriculteur exploitant",
-      '72': "Retraité artisan, commerçant, chef d'entreprise", '73': "Retraité cadre, profession interm édiaire",
-      '76': "Retraité employé, ouvrier",
+      '69': "Ouvrier agricole",
+      '71': "Retraité agriculteur exploitant",
+      '72': "Retraité artisan, commerçant, chef d'entreprise",
+      '74': "Retraité cadre",
+      '75': "Retraité profession intermédiaire",
+      '77': "Retraité employé",
+      '78': "Retraité ouvrier",
       '85': "Personne sans activité professionnelle < 60 ans",
       '86': "Personne sans activité professionnelle > 60 ans" }
   end
