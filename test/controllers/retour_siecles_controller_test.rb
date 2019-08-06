@@ -126,7 +126,7 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     identification_agent(admin)
     etablissement = admin.etablissement
 
-    eleve_sans_commune_insee = Fabricate(:eleve, ville_naiss: "une ville sans code insee")
+    eleve_sans_commune_insee = Fabricate(:eleve, commune_insee_naissance: nil)
     dossier = Fabricate(:dossier_eleve, eleve: eleve_sans_commune_insee, etablissement: etablissement)
 
     get new_retour_siecle_path
@@ -135,4 +135,3 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
   end
 
 end
-

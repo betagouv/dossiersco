@@ -103,8 +103,9 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     admin = Fabricate(:admin)
     identification_agent(admin)
 
-    dossier = Fabricate(:dossier_eleve,
-                        etablissement: admin.etablissement)
+    eleve = Fabricate(:eleve)
+    resp_legal = Fabricate(:resp_legal)
+    dossier = Fabricate(:dossier_eleve, eleve: eleve, resp_legal: [resp_legal], etablissement: admin.etablissement)
 
     get export_siecle_configuration_exports_path(xml_only: true)
 

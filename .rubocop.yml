@@ -28,6 +28,7 @@ Metrics/LineLength:
   Max: 150
   Exclude:
     - 'app/views/**/*erb*'
+    - 'app/controllers/retour_siecles_controller.rb'
 
 Metrics/BlockLength:
   Exclude:
@@ -37,6 +38,7 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Exclude:
     - 'app/services/famille.rb'
+    - 'app/controllers/retour_siecles_controller.rb'
     - 'test/services/famille_test.rb'
     - 'app/controllers/configuration/exports_controller.rb'
     - 'app/controllers/pieces_jointes_controller.rb'

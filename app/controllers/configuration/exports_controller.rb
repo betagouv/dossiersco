@@ -15,15 +15,15 @@ module Configuration
     def export_siecle
       @etablissement = @agent_connecte.etablissement
 
-      base_dossiers = @etablissement.dossier_eleve.
-        where("mef_destination_id is not null").
-        joins(:eleve).
-        where("eleves.prenom is not null").
-        where("eleves.nom is not null").
-        where("eleves.commune_insee_naissance is not null").
-        joins(:resp_legal).
-        where("resp_legals.profession != 'Retraité cadre, profession intermédiaire'").
-        where("resp_legals.profession != 'Retraité employé, ouvrier'")
+      base_dossiers = @etablissement.dossier_eleve
+                                    .where("mef_destination_id is not null")
+                                    .joins(:eleve)
+                                    .where("eleves.prenom is not null")
+                                    .where("eleves.nom is not null")
+                                    .where("eleves.commune_insee_naissance is not null")
+                                    .joins(:resp_legal)
+                                    .where("resp_legals.profession != 'Retraité cadre, profession intermédiaire'")
+                                    .where("resp_legals.profession != 'Retraité employé, ouvrier'")
 
       @dossiers = if params[:limite]
                     base_dossiers.joins(:eleve).where("eleves.identifiant in (?)", params[:liste_ine].split(","))
