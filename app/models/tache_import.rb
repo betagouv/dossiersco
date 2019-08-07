@@ -14,4 +14,8 @@ class TacheImport < ActiveRecord::Base
     type_fichier == "nomenclature"
   end
 
+  def import_responsables?
+    type_fichier == "responsables"
+  end
+
 end

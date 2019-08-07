@@ -62,6 +62,34 @@
       <% end %>
   </div>
 
+  <div class="panel responsablesAvecAdresses">
+    <div class="panel__header">
+      <h3><%= t('.titre_import_responsables') %></h3>
+    </div>
+      <% if @tache.statut != 'en_attente' && @tache.statut != 'en_cours' %>
+        <%= form_for TacheImport.new, multipart: true do |form| %>
+        <p><i class="fas fa-info-circle blue"></i> <%= t('.aide_siecle_responsables') %></p>
+          <p class="card-text"><%= t('.selectionner_fichier_responsables') %></p>
+          <%= form.hidden_field :type_fichier, value: "responsables" %>
+          <div class="form__group">
+            <%= form.file_field :fichier %>
+          </div>
+          <% if Rails.env.demo? && @agent_connecte.etablissement.uai == '0123456S' %>
+            <div class="form__group">
+              Pour sécuriser vos données, l'import du fichier des Responsables est réservé aux collèges ayant créé un compte DossierSCO. Vous pouvez tester cette fonctionnalité après avoir créé votre compte sur <a href="https://dossiersco.fr/configuration/etablissements/new">https://dossiersco.fr/configuration/etablissements/new</a>
+            </div>
+          <% else %>
+            <div class="form__group">
+              <button type="submit" class="button" id="soumettre-fichier">
+                <%= t('.importer_fichier_responsables') %>
+              </button>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+  </div>
+
+
 
   <div class="panel">
     <div class="panel__header">

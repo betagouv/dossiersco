@@ -480,7 +480,10 @@ fr:
       importer_fichier_nomenclature: "Importer le fichier"
       aide_siecle_nomenclature: "Pensez à dezipper le fichier nomenclature. DossierSCO ne peux lire qu'un fichier XML pour le moment."
       selectionner_fichier_nomenclature: "Sélectionnez votre fichier de nomenclature au format XML"
-
+      titre_import_responsables: "Importer le fichier Responsables"
+      aide_siecle_responsables: "Pensez à dezipper le fichier responsablesavecadresses. DossierSCO ne peux lire qu'un fichier XML pour le moment"
+      selectionner_fichier_responsables: "Sélectionnez votre fichier responsablesavecadresses au format XML"
+      importer_fichier_responsables: "Importer le fichier"
   contact_par_etats:
     new:
       contacter_élèves: "Contacter les élèves massivement"

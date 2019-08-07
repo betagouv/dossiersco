@@ -13,4 +13,9 @@ class TacheImportTest < ActiveSupport::TestCase
     assert !Fabricate(:tache_import, type_fichier: "siecle").import_nomenclature?
   end
 
+  test "#responsables? true si type_fichier est 'responsables'" do
+    assert Fabricate(:tache_import, type_fichier: "responsables").import_responsables?
+    assert !Fabricate(:tache_import, type_fichier: "nomenclature").import_responsables?
+  end
+
 end

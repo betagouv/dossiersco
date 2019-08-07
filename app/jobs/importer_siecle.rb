@@ -29,6 +29,9 @@ class ImporterSiecle < ApplicationJob
     if tache.import_nomenclature?
       ImportNomenclature.new.perform(tache)
       mail = AgentMailer.succes_import_nomenclature(email)
+    elsif tache.import_responsables?
+      ImportResponsable.new.perform(tache)
+      mail = AgentMailer.succes_import_responsables(email)
     else
       statistiques = import_xls(tache)
       mail = AgentMailer.succes_import(email, statistiques)
