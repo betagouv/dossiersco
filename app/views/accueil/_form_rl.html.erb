@@ -85,7 +85,7 @@
 </div>
 
 <div class="form__group">
-  <% professions = RespLegal.codes_profession.map{ |k, v| v } %>
+  <% professions = YAML.load(File.read("lib/professions.yml")).map{|e| [e.values.first, e.keys.first]} %>
   <%= f.input :profession, collection: professions, selected:  responsable.profession %>
 </div>
 
