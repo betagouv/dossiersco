@@ -68,7 +68,7 @@
                 <LEGAL>
                   <ID_PRV_PER><%= resp_legal.id %></ID_PRV_PER>
                   <CODE_PARENTE><%= RespLegal::CODE_PARENTE[resp_legal.lien_de_parente&.to_sym] %></CODE_PARENTE>
-                  <HEBERGE_ELEVE>false</HEBERGE_ELEVE>
+                  <HEBERGE_ELEVE><%= resp_legal.priorite == 1 ? true : false %></HEBERGE_ELEVE>
                 </LEGAL>
               <% end %>
             </RESPONSABLES_ELEVE>
