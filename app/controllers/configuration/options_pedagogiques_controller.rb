@@ -10,11 +10,11 @@ module Configuration
 
     def index
       @mefs = Mef.where(etablissement: @agent_connecte.etablissement).includes(:options_pedagogiques)
-      @options_pedagogiques = OptionPedagogique.where(etablissement: @agent_connecte.etablissement)
+      @options_pedagogiques = OptionPedagogique.where(etablissement: @agent_connecte.etablissement).order(:nom)
     end
 
     def liste
-      @options_pedagogiques = OptionPedagogique.where(etablissement: @agent_connecte.etablissement)
+      @options_pedagogiques = OptionPedagogique.where(etablissement: @agent_connecte.etablissement).order(:nom)
     end
 
     def new

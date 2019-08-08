@@ -10,7 +10,7 @@ class RetourSieclesController < ApplicationController
   def new
     @tache = agent_connecte.etablissement.tache_import.last || TacheImport.new(etablissement: agent_connecte.etablissement)
 
-    @options_en_erreur = OptionPedagogique.where(etablissement: @etablissement, code_matiere_6: nil)
+    @options_en_erreur = OptionPedagogique.where(etablissement: @etablissement, code_matiere_6: [nil, ""])
     render(:manque_code_matiere) && return if @options_en_erreur.count.positive?
 
     @dossiers = dossiers_etablissement.where("mef_destination_id is not null")
