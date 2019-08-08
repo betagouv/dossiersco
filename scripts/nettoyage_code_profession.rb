@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-professions = YAML.load(File.read("lib/professions.yml"))
+professions = YAML.safe_load(File.read("lib/professions.yml"))
 
 professions.each do |profession|
   code = profession.keys.first
