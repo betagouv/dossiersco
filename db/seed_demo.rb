@@ -4,8 +4,8 @@ puts "loading Etablissement"
 etablissement = Etablissement.create("nom" => "Établissement de démo", "ville" => "Paris", "uai" => "0123456S")
 
 puts "loading Agent"
-admin = Agent.create("prenom" => "Principale", "nom" => "Papillon", "etablissement" => etablissement, "admin" => true, "password_digest" => "$2a$10$7F2E3eyr4Z2j0JdhFI3o6et1wVwhxPAJAET1V1AMcdfy36jeWIB7y", "email" => "ce.0753936w@ac-paris.fr")
-superAdmin = Agent.create("prenom" => "Pierre", "nom" => "De Maulmont", "etablissement" => etablissement, "admin" => true, "password_digest" => "$2a$10$.aMYRnJeqdQn/4pI61y81edPVMV0UvevcMGdk7VgCwu9YfFgVXnnG", "email" => "pierre.de-maulmont@ac-paris.fr")
+admin = Agent.create("prenom" => "Principale", "nom" => "Papillon", "etablissement" => etablissement, "admin" => true, "password" => "un mot de passe pas trop mal", "email" => "ce.0753936w@ac-paris.fr")
+superAdmin = Agent.create("prenom" => "Pierre", "nom" => "De Maulmont", "etablissement" => etablissement, "admin" => true, "password" => "un_super_password c0mpl1ké", "email" => "pierre.de-maulmont@ac-paris.fr")
 
 puts "loading OptionPedagogique"
 anglais_lv1 = OptionPedagogique.create("nom" => "ANGLAIS LV1", "obligatoire" => true, "etablissement" => etablissement, "code_matiere" => "AGL1")
