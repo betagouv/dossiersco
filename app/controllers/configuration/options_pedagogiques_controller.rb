@@ -41,7 +41,7 @@ module Configuration
 
     def update
       if @option_pedagogique.update(option_pedagogique_params)
-        redirect_to configuration_options_pedagogiques_url, notice: t(".option_mise_a_jour")
+        redirect_back(fallback_location: configuration_options_pedagogiques_url, notice: t(".option_mise_a_jour"))
       else
         render :edit
       end
@@ -85,7 +85,7 @@ module Configuration
     end
 
     def option_pedagogique_params
-      params.require(:option_pedagogique).permit(:libelle, :code_matiere, :nom, :obligatoire, :groupe,
+      params.require(:option_pedagogique).permit(:libelle, :code_matiere, :code_matiere_6, :nom, :obligatoire, :groupe,
                                                  :explication, mef_ids: [])
     end
 

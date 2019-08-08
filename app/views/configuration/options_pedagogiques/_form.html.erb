@@ -1,4 +1,4 @@
-<%= form_with(model: option_pedagogique, url: url, local: true) do |form| %>
+<%= simple_form_for(option_pedagogique, url: url, methode: "post") do |form| %>
   <% if option_pedagogique.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(option_pedagogique.errors.count, "error") %> prohibited this option_pedagogique from being saved:</h2>
@@ -11,13 +11,20 @@
   <% end %>
 
   <div class="form__group">
-    <%= form.label :nom %>
-    <%= form.text_field :nom %>
+    <%= form.input :nom %>
   </div>
 
   <div class="form__group">
-    <%= form.label :explication %>
-    <%= form.text_area :explication %>
+    <%= form.input :explication %>
+  </div>
+
+  <div class="form__group">
+    <%= form.input :code_matiere, label: t(".code_gestion") %>
+  </div>
+
+  <div class="form__group">
+    <%= form.input :code_matiere_6, label: t(".code_matiere") %>
+    <%= t(".explication_code_matiere_html") %>
   </div>
 
   <div class=form__group">

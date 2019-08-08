@@ -92,6 +92,9 @@ fr:
       aide_siecle: "Identifiez-vous dans SIECLE, BEE, onglet Consultation et Exports, Exportations, en XML, cliquez sur Nomenclature. Dézippez le fichier avant de le soumettre dans DossierSCO."
       selectionner_fichier: "Sélectionnez votre fichier Nomenclature.xml"
       importer_fichier: "Importer un fichier Nomenclature.xml"
+      titre_options_en_erreurs: "Options incomplètes pour SIECLE"
+      explication_options_en_erreurs_html: "Liste des options sur lesquelles il manque au moins une information pour pouvoir créer le fichier de retour vers SIECLE"
+      modifier: "modifier"
     new:
       titre_selection_ine: "Extraire un ou plusieurs dossiers pour la Base Élève"
       explication_selection_ine_html: "<p><strong>Attention, nous sommes en phase de test.</strong> Il n'est pas très prudent de faire un import privée dans siecle avec le fichier généré par DossierSCO pour le moment.</p>
@@ -316,6 +319,10 @@ fr:
         option_mise_a_jour: "L'option pédagogique a été mise à jour"
       destroy:
         option_supprimee: "L'option pédagogique a été supprimée"
+      form:
+        code_gestion: "Code gestion"
+        code_matiere: "Code matière"
+        explication_code_matiere_html: "<em>vous trouverez ce code dans SIECLE, dans la partie nomenclature, sur la colonne « Code Matière »</em>"
     pieces_attendues:
       create:
         piece_cree: "La pièce attendue a bien été créée"

@@ -21,11 +21,12 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
   test "Quand les options n'ont pas de code, propose un lien pour aller uploader le fichier nomenclature" do
     admin = Fabricate(:admin)
     etablissement = admin.etablissement
-    Fabricate(:option_pedagogique, etablissement: etablissement, code_matiere_6: nil)
+    options_en_erreur = [Fabricate(:option_pedagogique, etablissement: etablissement, code_matiere_6: nil)]
     identification_agent(admin)
 
     get new_retour_siecle_path
     assert_response :success
+    assert_equal options_en_erreur, assigns(:options_en_erreur)
     assert_template "manque_code_matiere"
   end
 

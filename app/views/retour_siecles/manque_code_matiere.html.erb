@@ -33,3 +33,37 @@
   </div>
 
 </section>
+
+<section class="section">
+
+  <div class="panel">
+    <div class="panel__header">
+      <h3><%= t('.titre_options_en_erreurs') %></h3>
+    </div>
+    <p><%= t('.explication_options_en_erreurs_html') %></p>
+
+     <table class="table">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Code Gestion</th>
+          <th>Code Matière</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @options_en_erreur.each do |option| %>
+          <tr>
+              <td><%= option.nom %></td>
+              <td><%= option.code_matiere %></td>
+              <td><%= option.code_matiere_6 %></td>
+              <td><%= link_to t(".modifier"), edit_configuration_option_pedagogique_path(option) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  </div>
+
+</section>
