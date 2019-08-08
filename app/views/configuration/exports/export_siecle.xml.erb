@@ -28,7 +28,7 @@
             <% end %>
             <COMMUNICATION_ADRESSE><%= resp_legal.communique_info_parents_eleves? ? true : false %></COMMUNICATION_ADRESSE>
 
-            <CODE_PROFESSION><%= RespLegal.code_profession_from(resp_legal.profession) %></CODE_PROFESSION>
+            <CODE_PROFESSION><%= resp_legal.profession %></CODE_PROFESSION>
             <% if resp_legal.tel_personnel.present? %>
               <TEL_PERSONNEL><%= resp_legal.tel_personnel %></TEL_PERSONNEL>
             <% end %>

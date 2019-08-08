@@ -23,9 +23,9 @@ class ImportResponsables
 
       responsable = responsables.first
 
-      profession = "74" if responsable.profession ==  && profession[0] != "7"
-      profession = "77" if responsable.profession ==  && profession[0] != "7"
-      responsable.update(profession: RespLegal.codes_profession[profession])
+      profession = "74" if responsable.profession == "73" && profession[0] != "7"
+      profession = "77" if responsable.profession == "76" && profession[0] != "7"
+      responsable.update(profession: profession)
     end
   end
 

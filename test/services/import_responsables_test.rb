@@ -64,7 +64,7 @@ class ImportResponsablesTest < ActiveSupport::TestCase
     resp_legal = Fabricate(:resp_legal,
                            prenom: "Marylene",
                            nom: "ROCQUE",
-                           profession: 73,
+                           profession: "73",
                            dossier_eleve: Fabricate(:dossier_eleve, etablissement: etablissement))
 
     fichier_xml = fixture_file_upload("files/responsables_avec_adresses_simple.xml")

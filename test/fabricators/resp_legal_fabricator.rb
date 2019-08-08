@@ -8,7 +8,7 @@ Fabricator(:resp_legal) do
   tel_personnel  Faker::PhoneNumber.phone_number
   tel_portable   Faker::PhoneNumber.phone_number
   email "henri@laposte.net"
-  profession "artisan"
+  profession "21"
   enfants_a_charge 1
   communique_info_parents_eleves false
   adresse Faker::Address.street_address

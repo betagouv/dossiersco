@@ -83,14 +83,6 @@ class RespLegalTest < ActiveSupport::TestCase
     assert responsable_legal.adresse_inchangee
   end
 
-  test "retourne un code profession 99 par défaut" do
-    assert_equal "99", RespLegal.code_profession_from("")
-  end
-
-  test "retourne un code profession 45 pour les fonctionnaires" do
-    assert_equal "45", RespLegal.code_profession_from("Profession intermédiaire administrative de la fonction publique")
-  end
-
   test "renvoie un tableau vide si aucun moyen de communication renseigné" do
     representant = Fabricate.build(:resp_legal, email: nil, tel_personnel: nil, tel_portable: nil, tel_professionnel: nil)
     assert_equal [], representant.moyens_de_communication
