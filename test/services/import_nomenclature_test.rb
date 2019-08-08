@@ -88,4 +88,21 @@ class ImportNomenclatureTest < ActiveSupport::TestCase
     end
   end
 
+  test "si une option de la nomenclature n'est pas trouvé, on crée une option" do
+    etablissement = Fabricate(:etablissement)
+
+    fichier_xml = fixture_file_upload("files/nomenclature_simple.xml")
+    tache = Fabricate(:tache_import, type_fichier: "nomenclature", fichier: fichier_xml, etablissement: etablissement)
+
+    assert_equal 0, OptionPedagogique.count
+    ImportNomenclature.new.perform(tache)
+    assert_equal 1, OptionPedagogique.count
+    option = OptionPedagogique.first
+    assert_equal "LCA LATIN", option.nom
+    assert_equal "LANGUES ET CULTURES DE L'ANTIQUITE LATIN", option.libelle
+    assert_equal "LCALA", option.code_matiere
+    assert_equal "020300", option.code_matiere_6
+    assert_equal etablissement, option.etablissement
+  end
+
 end

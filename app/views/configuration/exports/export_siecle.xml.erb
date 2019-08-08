@@ -16,8 +16,8 @@
           <PERSONNE>
             <ID_PRV_PER><%= resp_legal.id %></ID_PRV_PER>
             <CODE_CIVILITE>1</CODE_CIVILITE>
-            <NOM_DE_FAMILLE><%= resp_legal.nom %></NOM_DE_FAMILLE>
-            <PRENOM><%= resp_legal.prenom %></PRENOM>
+            <NOM_DE_FAMILLE><%= resp_legal.nom || "non fourni" %></NOM_DE_FAMILLE>
+            <PRENOM><%= resp_legal.prenom || "non fourni" %></PRENOM>
             <% if resp_legal.adresse.present? && resp_legal.code_postal.present? && resp_legal.ville.present? && resp_legal.pays.present? %>
               <ADRESSE>
                 <LIGNE1_ADRESSE><%= resp_legal.adresse %></LIGNE1_ADRESSE>

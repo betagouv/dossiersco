@@ -16,7 +16,6 @@ class RetourSieclesController < ApplicationController
     @dossiers = dossiers_etablissement.where("mef_destination_id is not null")
     @dossiers_bloques = []
     @dossiers_bloques.concat(extrait_informations(dossiers_etablissement.where(mef_destination: nil), I18n.t("retour_siecles.new.dossier_sans_mef_destination")))
-    @dossiers_bloques.concat(extrait_informations(eleves_sans_nom.or(eleves_sans_prenom), I18n.t("retour_siecles.new.dossier_sans_nom_ou_prenom")))
     @dossiers_bloques.concat(extrait_informations(eleves_sans_commune_insee, I18n.t("retour_siecles.new.probleme_de_commune_insee")))
     @dossiers_bloques.concat(extrait_informations(resp_legal_probleme_profession, I18n.t("retour_siecles.new.probleme_de_profession")))
 
@@ -28,14 +27,6 @@ class RetourSieclesController < ApplicationController
 
   def dossiers_etablissement
     DossierEleve.where(etablissement: @etablissement)
-  end
-
-  def eleves_sans_prenom
-    dossiers_etablissement.joins(:eleve).where("eleves.prenom is null")
-  end
-
-  def eleves_sans_nom
-    dossiers_etablissement.joins(:eleve).where("eleves.nom is null")
   end
 
   def eleves_sans_commune_insee
