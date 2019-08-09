@@ -1,4 +1,30 @@
-## Mercredi 31  juillet
+# CHANGELOG
+
+## jeudi 8 août
+
+- **Afficher les options incomplète**
+
+Affichage de la liste des options dont nous n'avons pas le code matière sur 6 chiffres en dessous de la demande d'import de la nomenclature, dans le menu «retour vers siecle ». [ticket](https://gitlab.com/dossiersco/dossiersco/issues/701)
+
+- **Import des responsablesAvecAdresses**
+
+L'import de ce fichier permet de récupérer les professions des responsbles légaux.
+
+- **Nettoyage des codes profession**
+
+Nous enregistrons maintenant des codes (bien que nous affichions des libellés). Siecle s'attends à recevoir des codes, c'est donc ce qu'il faut lui envoyer.
+
+Deux codes ont été remplacé par plusieurs autres pour avoir une description plus fine de certaines profession. Nous avons arbitrairement choisi un code. Il faudra sans doute que les responsables précise à la prochaine inscription/re-inscription (ou bien dans la fiche de renseignement sur SIECLE directement).
+
+Les codes concernés sont :
+
+- 73 : "Retraité cadre, profession intermédiaire"; remplacé par 74 "Retraité cadre" et 75 "Retraité profession intermédiaire"
+- 76 : "Retraité employé, ouvrier"; remplacé par 77 "Retraité employé" et 78 "Retraité ouvrier"
+
+Chaque responsable qui était 73 est passé 74, et chaque responsables qui était 76 est passé 77.
+
+
+## Mercredi 31 juillet
 
 - **Evaluation de la 2ème saison :** Ajout d'un index sur l'identifiant de la table traces pour pouvoir calculer le délais entre la 1ère connexion et la validation.
 
