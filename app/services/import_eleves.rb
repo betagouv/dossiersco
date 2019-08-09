@@ -11,12 +11,31 @@ class ImportEleves
 
   def met_a_jour_eleves!(xml)
     xml.xpath("/BEE_ELEVES/DONNEES/ELEVES/ELEVE").each do |noeud_eleve|
-      Eleve.find_by(identifiant: noeud_eleve.xpath("ID_NATIONAL").text)&.dossier_eleve&.update(
-        mef_an_dernier: extrait_le_code_mef(noeud_eleve),
-        division_an_dernier: extrait_la_precedente_division(noeud_eleve),
-        division: extrait_division_courante(noeud_eleve)
-      )
+      eleve = Eleve.find_by(identifiant: noeud_eleve.xpath("ID_NATIONAL").text)
+
+      met_a_jour_eleve(eleve, noeud_eleve)
+      met_a_jour_dossier(eleve, noeud_eleve)
     end
+  end
+
+  def met_a_jour_eleve(eleve, noeud)
+    code_insee = extrait_le_code_insee_naissance(noeud)
+    eleve&.update(
+      commune_insee_naissance: code_insee,
+      ville_naiss: Commune.new.du_code_insee(code_insee)
+    )
+  end
+
+  def met_a_jour_dossier(eleve, noeud)
+    eleve&.dossier_eleve&.update(
+      mef_an_dernier: extrait_le_code_mef(noeud),
+      division_an_dernier: extrait_la_precedente_division(noeud),
+      division: extrait_division_courante(noeud)
+    )
+  end
+
+  def extrait_le_code_insee_naissance(noeud)
+    noeud.xpath("CODE_COMMUNE_INSEE_NAISS").text
   end
 
   def extrait_le_code_mef(noeud)

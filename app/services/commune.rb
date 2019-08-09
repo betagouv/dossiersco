@@ -14,4 +14,11 @@ class Commune
     villes.uniq
   end
 
+  def du_code_insee(code)
+    CSV.foreach("app/services/laposte_hexasmal.csv", col_sep: ";") do |row|
+      return row[1] if row[0] == code.to_s
+    end
+    nil
+  end
+
 end

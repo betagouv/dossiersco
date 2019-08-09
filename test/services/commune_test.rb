@@ -19,4 +19,9 @@ class CommuneTest < ActiveSupport::TestCase
     assert_equal [], commune.code_postal("34567")
   end
 
+  test "retrouve la ville de CERNY à partir du code insee 91129" do
+    commune = Commune.new
+    assert_equal "CERNY", commune.du_code_insee(91_129)
+  end
+
 end
