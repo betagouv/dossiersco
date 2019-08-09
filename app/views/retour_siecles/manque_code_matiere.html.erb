@@ -49,20 +49,24 @@
           <th>Code Gestion</th>
           <th>Code Matière</th>
           <th></th>
+          <th></th>
         </tr>
       </thead>
 
       <tbody>
         <% @options_en_erreur.each do |option| %>
           <tr>
-              <td><%= option.nom %></td>
-              <td><%= option.code_matiere %></td>
-              <td><%= option.code_matiere_6 %></td>
-              <td><%= link_to t(".modifier"), edit_configuration_option_pedagogique_path(option) %></td>
+            <td><%= option.nom %></td>
+            <td><%= option.code_matiere %></td>
+            <td><%= option.code_matiere_6 %></td>
+            <td><%= link_to t(".modifier"), edit_configuration_option_pedagogique_path(option) %></td>
+            <td><%= link_to("Supprimer", configuration_option_pedagogique_path(option),
+                            method: :delete, data: { confirm: 'Voulez-vous vraiment supprimer cette option ?' })
+                          %></td>
           </tr>
         <% end %>
       </tbody>
-    </table>
+     </table>
 
   </div>
 
