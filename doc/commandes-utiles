@@ -221,6 +221,10 @@ Dans app/jobs/importer_siecle.rb, commenter le discard_on puis le begin rescue :
     #  AgentMailer.erreur_import(email).deliver_now
     #end
 
+# Pour passer un script
+
+docker-compose run --rm app rails runner scripts/nettoyage_ville_naiss.rb
+
 # Faire du ménage dans docker
 
 docker volume prune
