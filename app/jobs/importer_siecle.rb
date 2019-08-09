@@ -33,13 +33,12 @@ class ImporterSiecle < ApplicationJob
       ImportResponsable.new.perform(tache)
       mail = AgentMailer.succes_import_responsables(email)
     elsif tache.import_eleves?
-      ImportEleve.new.perform(tache)
+      ImportEleves.new.perform(tache)
       mail = AgentMailer.succes_import_eleves(email)
     else
       statistiques = import_xls(tache)
       mail = AgentMailer.succes_import(email, statistiques)
     end
-
     mail.deliver_now
 
     tache.update(statut: TacheImport::STATUTS[:terminee])

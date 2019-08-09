@@ -70,7 +70,7 @@
         <%= form_for TacheImport.new, multipart: true do |form| %>
         <p><i class="fas fa-info-circle blue"></i> <%= t('.aide_eleve_avec_adresse') %></p>
           <p class="card-text"><%= t('.selectionner_fichier_eleve_avec_adresse') %></p>
-          <%= form.hidden_field :type_fichier, value: "eleve" %>
+          <%= form.hidden_field :type_fichier, value: "eleves" %>
           <div class="form__group">
             <%= form.file_field :fichier %>
           </div>
