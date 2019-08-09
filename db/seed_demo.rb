@@ -4,7 +4,7 @@ puts "loading Etablissement"
 etablissement = Etablissement.create("nom" => "Établissement de démo", "ville" => "Paris", "uai" => "0123456S")
 
 puts "loading Agent"
-admin = Agent.create("prenom" => "Principale", "nom" => "Papillon", "etablissement" => etablissement, "admin" => true, "password" => "un mot de passe pas trop mal", "email" => "ce.0753936w@ac-paris.fr")
+admin = Agent.create("prenom" => "Principale", "nom" => "Papillon", "etablissement" => etablissement, "admin" => true, "password" => "un mot de passe pas trop mal", "email" => "ce.0123456s@ac-paris.fr")
 superAdmin = Agent.create("prenom" => "Pierre", "nom" => "De Maulmont", "etablissement" => etablissement, "admin" => true, "password" => "un_super_password c0mpl1ké", "email" => "pierre.de-maulmont@ac-paris.fr")
 
 puts "loading OptionPedagogique"
