@@ -37,7 +37,7 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
 
     representant = Fabricate(:resp_legal)
     eleve = Fabricate(:eleve)
-    Fabricate(:dossier_eleve, etablissement: etablissement, eleve: eleve, resp_legal: [representant])
+    Fabricate(:dossier_eleve, etablissement: etablissement, etat: DossierEleve::ETAT[:valide], eleve: eleve, resp_legal: [representant])
 
     get new_retour_siecle_path
 
@@ -54,7 +54,7 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
 
     representant = Fabricate(:resp_legal)
     eleve = Fabricate(:eleve)
-    Fabricate(:dossier_eleve, etablissement: etablissement, eleve: eleve, resp_legal: [representant])
+    Fabricate(:dossier_eleve, etablissement: etablissement, etat: DossierEleve::ETAT[:valide], eleve: eleve, resp_legal: [representant])
     Fabricate(:dossier_eleve, etablissement: etablissement)
 
     get new_retour_siecle_path, params: { liste_ine: eleve.identifiant }
@@ -105,6 +105,19 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     get new_retour_siecle_path
     assert_equal dossier.eleve.identifiant, assigns(:dossiers_bloques).first.identifiant
     assert_equal I18n.t("retour_siecles.new.probleme_de_commune_insee"), assigns(:dossiers_bloques).first.raison
+  end
+
+  test "exporte uniquement le dossier en état validé" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+    etablissement = admin.etablissement
+
+    dossier = Fabricate(:dossier_eleve, etat: DossierEleve::ETAT[:valide], etablissement: etablissement)
+    Fabricate(:dossier_eleve, etat: DossierEleve::ETAT[:en_attente_de_validation], etablissement: etablissement)
+
+    get new_retour_siecle_path
+    assert_equal 1, assigns(:dossiers).count
+    assert_equal [dossier], assigns(:dossiers)
   end
 
 end

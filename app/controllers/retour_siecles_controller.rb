@@ -13,7 +13,7 @@ class RetourSieclesController < ApplicationController
     @options_en_erreur = OptionPedagogique.where(etablissement: @etablissement, code_matiere_6: [nil, ""])
     render(:manque_code_matiere) && return if @options_en_erreur.count.positive?
 
-    @dossiers = dossiers_etablissement.where("mef_destination_id is not null")
+    @dossiers = dossiers_etablissement.where.not(mef_destination_id: [nil, ""]).where(etat: DossierEleve::ETAT[:valide])
     @dossiers_bloques = []
     @dossiers_bloques.concat(extrait_informations(dossiers_etablissement.where(mef_destination: nil), I18n.t("retour_siecles.new.dossier_sans_mef_destination")))
     @dossiers_bloques.concat(extrait_informations(eleves_sans_commune_insee, I18n.t("retour_siecles.new.probleme_de_commune_insee")))
