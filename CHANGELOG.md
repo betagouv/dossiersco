@@ -1,6 +1,8 @@
 # CHANGELOG
 
-## jeudi 8 août
+## août
+
+- renseigne une commune de naissance à l'étranger pour le retour dans siecle
 
 - **Afficher les options incomplète**
 
