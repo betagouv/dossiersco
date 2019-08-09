@@ -19,6 +19,8 @@ class ImportEleves
   end
 
   def met_a_jour_eleve(eleve, noeud)
+    return if eleve.commune_insee_naissance.present?
+
     code_insee = extrait_le_code_insee_naissance(noeud)
     eleve&.update(
       commune_insee_naissance: code_insee,

@@ -26,5 +26,20 @@ class ImportElevesTest < ActiveSupport::TestCase
     end
   end
 
-end
+  test "n'écrase pas les données présente" do
+    etablissement = Fabricate(:etablissement)
+    eleve = Fabricate(:eleve, identifiant: "070832327JA", ville_naiss: "Saint Denis", commune_insee_naissance: "93066")
+    Fabricate(:dossier_eleve, eleve: eleve)
 
+    fichier_xml = fixture_file_upload("files/eleves_avec_adresse_simple.xml")
+    tache = Fabricate(:tache_import, type_fichier: "nomenclature", fichier: fichier_xml, etablissement: etablissement)
+
+    assert_nothing_raised do
+      ImportEleves.new.perform(tache)
+      eleve.reload
+      assert_equal "93066", eleve.commune_insee_naissance
+      assert_equal "Saint Denis", eleve.ville_naiss
+    end
+  end
+
+end
