@@ -18,4 +18,8 @@ class TacheImport < ActiveRecord::Base
     type_fichier == "responsables"
   end
 
+  def import_eleves?
+    type_fichier == "eleves"
+  end
+
 end

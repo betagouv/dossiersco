@@ -18,4 +18,9 @@ class TacheImportTest < ActiveSupport::TestCase
     assert !Fabricate(:tache_import, type_fichier: "nomenclature").import_responsables?
   end
 
+  test "#eleves? true si type_fichier est 'eleves'" do
+    assert Fabricate(:tache_import, type_fichier: "eleves").import_eleves?
+    assert !Fabricate(:tache_import, type_fichier: "nomenclature").import_eleves?
+  end
+
 end

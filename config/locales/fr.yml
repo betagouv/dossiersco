@@ -491,6 +491,10 @@ fr:
       aide_siecle_responsables: "Pensez à dezipper le fichier responsablesavecadresses. DossierSCO ne peux lire qu'un fichier XML pour le moment"
       selectionner_fichier_responsables: "Sélectionnez votre fichier responsablesavecadresses au format XML"
       importer_fichier_responsables: "Importer le fichier"
+      titre_import_eleve: "Importer le fichier EleveAvecAdresse"
+      aide_eleve_avec_adresse: "Penez à déwipper le fichier eleveavecadresse. DossierSCO ne peux lire qu'un fichier XML pour le moment"
+      selectionner_fichier_eleve_avec_adresse: "Sélectionnez votre fichier EleveAvecAdresse au format XML depuis SIECLE"
+      importer_fichier_eleve_avec_adresse: "Importer le fichier"
   contact_par_etats:
     new:
       contacter_élèves: "Contacter les élèves massivement"
