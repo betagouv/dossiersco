@@ -12,6 +12,7 @@ class ImportEleves
   def met_a_jour_eleves!(xml)
     xml.xpath("/BEE_ELEVES/DONNEES/ELEVES/ELEVE").each do |noeud_eleve|
       eleve = Eleve.find_by(identifiant: noeud_eleve.xpath("ID_NATIONAL").text)
+      next unless eleve
 
       met_a_jour_eleve(eleve, noeud_eleve)
       met_a_jour_dossier(eleve, noeud_eleve)
