@@ -49,7 +49,7 @@
       <ELEVES>
         <% @dossiers.each do |dossier_eleve| %>
           <ELEVE>
-            <ID_PRV_ELE><%= dossier_eleve.id %></ID_PRV_ELE>
+            <ID_PRV_ELE><%= dossier_eleve.eleve.id_prv_ele || dossier_eleve.eleve.id %></ID_PRV_ELE>
             <% if dossier_eleve.eleve.identifiant.present? %>
               <ID_NATIONAL><%= dossier_eleve.eleve.identifiant %></ID_NATIONAL>
             <% end %>

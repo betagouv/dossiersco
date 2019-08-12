@@ -49,7 +49,10 @@ class ImportEleves
   end
 
   def extrait_id_eleve(noeud)
-    noeud.attributes["ELEVE_ID"]
+    id_prv_ele = noeud.xpath("ID_PRV_ELE")&.text
+    return nil if id_prv_ele.blank?
+
+    id_prv_ele
   end
 
   def extrait_le_code_insee_naissance(noeud)

@@ -44,7 +44,8 @@ class ImportElevesTest < ActiveSupport::TestCase
 
   test "récolte le ID_PRV_ELE du fichier avec l'élève" do
     etablissement = Fabricate(:etablissement)
-    eleve = Fabricate(:eleve, identifiant: "070832327JA", id_prv_ele: nil)
+    eleve = Fabricate(:eleve, identifiant: "060375611AC", id_prv_ele: nil)
+    autre_eleve = Fabricate(:eleve, identifiant: "070832327JA", id_prv_ele: nil)
     Fabricate(:dossier_eleve, eleve: eleve)
 
     fichier_xml = fixture_file_upload("files/eleves_avec_adresse_simple.xml")
@@ -52,7 +53,9 @@ class ImportElevesTest < ActiveSupport::TestCase
 
     ImportEleves.new.perform(tache)
     eleve.reload
-    assert_equal "1816400", eleve.id_prv_ele
+    assert_equal "9065", eleve.id_prv_ele
+    autre_eleve.reload
+    assert_nil autre_eleve.id_prv_ele
   end
 
 end
