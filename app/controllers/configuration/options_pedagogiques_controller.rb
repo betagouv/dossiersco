@@ -41,7 +41,8 @@ module Configuration
 
     def update
       if @option_pedagogique.update(option_pedagogique_params)
-        redirect_back(fallback_location: configuration_options_pedagogiques_url, notice: t(".option_mise_a_jour"))
+        flash[:notice] = t(".option_mise_a_jour")
+        redirect_back(fallback_location: configuration_options_pedagogiques_url)
       else
         render :edit
       end
@@ -49,7 +50,8 @@ module Configuration
 
     def destroy
       @option_pedagogique.destroy
-      redirect_to liste_configuration_options_pedagogiques_path, notice: t(".option_supprimee")
+      flash[:notice] = t(".option_supprimee")
+      redirect_back(fallback_location: liste_configuration_options_pedagogiques_path)
     end
 
     def ajoute_option_au_mef

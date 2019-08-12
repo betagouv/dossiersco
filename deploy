@@ -1,3 +1,3 @@
 #!/bin/sh
 
-make test && git push && git push git@github.com:betagouv/dossiersco && git push git@scalingo.com:dossiersco-demo && git push git@scalingo.com:dossiersco-production
+make test && git push git@github.com:betagouv/dossiersco && git push git@scalingo.com:dossiersco-demo && git push git@scalingo.com:dossiersco-production

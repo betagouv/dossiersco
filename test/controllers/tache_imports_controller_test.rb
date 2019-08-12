@@ -79,7 +79,6 @@ class TacheImportsControllerTest < ActionDispatch::IntegrationTest
     params = { tache_import: { fichier: fichier_xls, type_siecle: "reinscription" } }
 
     page_origine = "/somewhere"
-    @request.env["HTTP_REFERER"] = page_origine
     post tache_imports_path, params: params, headers: { "HTTP_REFERER" => page_origine }
 
     assert_redirected_to page_origine

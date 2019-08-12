@@ -4,10 +4,6 @@ require "test_helper"
 
 class OptionsPedagogiquesControllerTest < ActionDispatch::IntegrationTest
 
-  setup do
-    @option_pedagogique = Fabricate(:option_pedagogique)
-  end
-
   test "should get index" do
     admin = Fabricate(:admin)
     post agent_url, params: { email: admin.email, mot_de_passe: admin.password }
@@ -41,7 +37,9 @@ class OptionsPedagogiquesControllerTest < ActionDispatch::IntegrationTest
     admin = Fabricate(:admin)
     identification_agent(admin)
 
-    get edit_configuration_option_pedagogique_url(@option_pedagogique)
+    option_pedagogique = Fabricate(:option_pedagogique)
+
+    get edit_configuration_option_pedagogique_url(option_pedagogique)
     assert_response :success
   end
 
@@ -49,8 +47,10 @@ class OptionsPedagogiquesControllerTest < ActionDispatch::IntegrationTest
     admin = Fabricate(:admin)
     identification_agent(admin)
 
+    option_pedagogique = Fabricate(:option_pedagogique)
     params = { option_pedagogique: { nom: "couture" } }
-    patch configuration_option_pedagogique_url(@option_pedagogique), params: params
+
+    patch configuration_option_pedagogique_url(option_pedagogique), params: params
     assert_redirected_to configuration_options_pedagogiques_url
   end
 
@@ -58,8 +58,9 @@ class OptionsPedagogiquesControllerTest < ActionDispatch::IntegrationTest
     admin = Fabricate(:admin)
     identification_agent(admin)
 
+    option_pedagogique = Fabricate(:option_pedagogique)
     assert_difference("OptionPedagogique.count", -1) do
-      delete configuration_option_pedagogique_url(@option_pedagogique)
+      delete configuration_option_pedagogique_url(option_pedagogique)
     end
 
     assert_redirected_to liste_configuration_options_pedagogiques_path
@@ -85,6 +86,16 @@ class OptionsPedagogiquesControllerTest < ActionDispatch::IntegrationTest
     post definie_ouverte_inscription_configuration_options_pedagogiques_path, params: params
 
     assert_equal false, MefOptionPedagogique.find(mef_option.id).ouverte_inscription
+  end
+
+  test "si je supprime depuis une page A, j'y retourne" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+
+    page_origine = "mon_origine"
+    option_pedagogique = Fabricate(:option_pedagogique)
+    delete configuration_option_pedagogique_url(option_pedagogique), params: {}, headers: { "referer" => page_origine }
+    assert_redirected_to page_origine
   end
 
 end
