@@ -249,3 +249,7 @@ dossiers.map {|d| premiere_connexion = Trace.select {|t| t.identifiant == d.elev
 # Nombre d'élèves inscrits en 6ème
 
 DossierEleve.select {|d| d.etat == "validé" && d.mef_destination.present? && d.mef_destination.libelle =~ /6EME/ }.count
+
+# Trouver l'endroit où une gem est installée dans docker
+
+bundle show "nom d'une gem"
