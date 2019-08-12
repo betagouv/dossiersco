@@ -30,6 +30,18 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     assert_template "manque_code_matiere"
   end
 
+  test "Quand les élèves n'ont pas leur division, propos l'upload du fichier eleveavecadresse" do
+    admin = Fabricate(:admin)
+    etablissement = admin.etablissement
+    dossier_eleve = Fabricate(:dossier_eleve, division: nil, etablissement: etablissement)
+
+    identification_agent(admin)
+    get new_retour_siecle_path
+    assert_response :success
+    assert_equal [dossier_eleve], assigns(:dossiers_sans_division)
+    assert_template "manque_division"
+  end
+
   test "affiche le nombre de dossiers (resp_legal et eleve)" do
     admin = Fabricate(:admin)
     identification_agent(admin)

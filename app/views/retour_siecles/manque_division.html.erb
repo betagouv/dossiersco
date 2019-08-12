@@ -1,0 +1,67 @@
+<section class="section">
+
+  <div class="panel">
+    <div class="panel__header">
+      <h3><%= t('.titre_manque_division') %></h3>
+    </div>
+    <p><%= t('.explication_manque_division_html') %></p>
+
+    <% if @tache.statut != 'en_attente' && @tache.statut != 'en_cours' %>
+      <%= form_for TacheImport.new, multipart: true do |form| %>
+        <p><i class="fas fa-info-circle blue"></i> <%= t('.aide_eleves_avec_adresse') %></p>
+        <div class="form__group">
+          <%= form.hidden_field :type_fichier, value: "eleves" %>
+          <p class="card-text"><%= t('.selectionner_fichier') %></p>
+        </div>
+        <div class="form__group">
+          <%= form.file_field :fichier %>
+        </div>
+        <% if Rails.env.demo? && @agent_connecte.etablissement.uai == '0123456S' %>
+          <div class="form__group">
+            Pour sécuriser vos données, l'import de SIECLE est réservé aux collèges ayant créé un compte DossierSCO. Vous pouvez tester cette fonctionnalité après avoir créé votre compte sur <a href="https://dossiersco.fr/configuration/etablissements/new">https://dossiersco.fr/configuration/etablissements/new</a>
+          </div>
+        <% else %>
+          <div class="form__group">
+            <button type="submit" class="button" id="soumettre-fichier">
+              <%= t('.importer_fichier') %>
+            </button>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+
+  </div>
+
+</section>
+
+<section class="section">
+
+  <div class="panel">
+    <div class="panel__header">
+      <h3><%= t('.titre_dossiers_sans_division') %></h3>
+    </div>
+    <p><%= t('.explication_dossiers_sans_division_html') %></p>
+
+     <table class="table">
+      <thead>
+        <tr>
+          <th>INE</th>
+          <th>Prénom</th>
+          <th>Nom</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @dossiers_sans_division.each do |dossier| %>
+          <tr>
+            <td><%= dossier.eleve.identifiant %></td>
+            <td><%= dossier.eleve.prenom %></td>
+            <td><%= dossier.eleve.nom %></td>
+          </tr>
+        <% end %>
+      </tbody>
+     </table>
+
+  </div>
+
+</section>

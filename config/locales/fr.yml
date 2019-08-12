@@ -95,6 +95,14 @@ fr:
       titre_options_en_erreurs: "Options incomplètes pour SIECLE"
       explication_options_en_erreurs_html: "Liste des options sur lesquelles il manque au moins une information pour pouvoir créer le fichier de retour vers SIECLE"
       modifier: "modifier"
+    manque_division:
+      titre_manque_division: "Division manquantes"
+      explication_manque_division_html: "Pour assurer un retour correct dans SIECLE, nous avons besoin de connaitre les divisions (pour l'année à venir et l'année précédente)"
+      aide_eleves_avec_adresse: "Identifiez-vous dans SIECLE, BEE, onglet Consultation et Exports, Exportations, en XML, cliquez sur ElevesAvecAdresse. Dézippez le fichier avant de le soumettre dans DossierSCO."
+      selectionner_fichier: "Sélectionnez votre fichier ElevesAvecAdresse.xml"
+      importer_fichier: "Importer un fichier ElevesAvecAdresse.xml"
+      titre_dossiers_sans_division: "Dossiers sans division"
+      explication_dossiers_sans_division_html: "Liste des dossiers sur lesquels il manque la division pour pouvoir créer le fichier de retour vers SIECLE"
     new:
       titre_selection_ine: "Extraire un ou plusieurs dossiers pour la Base Élève"
       explication_selection_ine_html: "<p><strong>Attention, nous sommes en phase de test.</strong> Il n'est pas très prudent de faire un import privée dans siecle avec le fichier généré par DossierSCO pour le moment.</p>
