@@ -128,6 +128,11 @@ Pour peupler l'application en local :
 ```bash rake db:vide db:seed:demo```
 
 
+## Déploiement
+
+Nous déployons sur [scalingo](https://scalingo.com) automatiquement après chaque mise à jour de la branche `master`.
+
+
 ## Outils
 
 - Tous les identifiants et mots de passe sont stockés dans
