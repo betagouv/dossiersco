@@ -2,6 +2,10 @@
 
 ## Août
 
+- **Retour vers SIECLE uniquement pour les dossiers validé**
+
+- **Import EleveAvecAdresse** afin de récupérer les informations de ̀`code_mef` et `division` de l'an dernier, et la `division` de l'année en cours.
+
 - renseigne une commune de naissance à l'étranger pour le retour dans siecle
 
 - **Afficher les options incomplète**
