@@ -143,3 +143,8 @@ Pour peupler l'application en local :
   beta.gouv.fr](https://stats.data.gouv.fr/index.php?module=CoreHome&action=index&idSite=54&period=range&date=previous30&updated=1#?idSite=54&period=range&date=previous30&category=Dashboard_Dashboard&subcategory=1).
   Voir [beta.bouv.fr/suivi/](https://beta.gouv.fr/suivi/)
 - Support utilisateurs en direct à l'aide de [Drift](https://app.drift.com/)
+
+## Autes notes
+
+- [Le forum des gestionnaires d'EPLE](http://gestionnaires.actifforum.com/)
+
