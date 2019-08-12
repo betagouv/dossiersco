@@ -1,0 +1,11 @@
+
+
+RespLegal.where("tel_portable like '% %'").sort_by{|e| e.tel_portable.length}.map(&:tel_portable)
+
+RespLegal.where("tel_portable like '% %'").where("profession != ''").each {|r| puts "r : #{r.inspect}"; r.update(tel_portable: r.tel_portable.gsub(/ /, ''))}
+
+
+irb(main):027:0> RespLegal.where("tel_portable like '% %'").sort_by{|e| e.tel_portable.length}.map(&:tel_portable).count
+D, [2019-07-17T21:06:52.011889 #23] DEBUG -- :   RespLegal Load (60.5ms)  SELECT "resp_legals".* FROM "resp_legals" WHERE (tel_portable like '% %')
+=> 17005
+
