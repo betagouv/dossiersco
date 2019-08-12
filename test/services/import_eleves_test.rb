@@ -12,7 +12,7 @@ class ImportElevesTest < ActiveSupport::TestCase
     dossier = Fabricate(:dossier_eleve, eleve: eleve)
 
     fichier_xml = fixture_file_upload("files/eleves_avec_adresse_simple.xml")
-    tache = Fabricate(:tache_import, type_fichier: "nomenclature", fichier: fichier_xml, etablissement: etablissement)
+    tache = Fabricate(:tache_import, type_fichier: "eleves", fichier: fichier_xml, etablissement: etablissement)
 
     assert_nothing_raised do
       ImportEleves.new.perform(tache)
@@ -32,7 +32,7 @@ class ImportElevesTest < ActiveSupport::TestCase
     Fabricate(:dossier_eleve, eleve: eleve)
 
     fichier_xml = fixture_file_upload("files/eleves_avec_adresse_simple.xml")
-    tache = Fabricate(:tache_import, type_fichier: "nomenclature", fichier: fichier_xml, etablissement: etablissement)
+    tache = Fabricate(:tache_import, type_fichier: "eleves", fichier: fichier_xml, etablissement: etablissement)
 
     assert_nothing_raised do
       ImportEleves.new.perform(tache)
@@ -40,6 +40,19 @@ class ImportElevesTest < ActiveSupport::TestCase
       assert_equal "93066", eleve.commune_insee_naissance
       assert_equal "Saint Denis", eleve.ville_naiss
     end
+  end
+
+  test "récolte le ID_PRV_ELE du fichier avec l'élève" do
+    etablissement = Fabricate(:etablissement)
+    eleve = Fabricate(:eleve, identifiant: "070832327JA", id_prv_ele: nil)
+    Fabricate(:dossier_eleve, eleve: eleve)
+
+    fichier_xml = fixture_file_upload("files/eleves_avec_adresse_simple.xml")
+    tache = Fabricate(:tache_import, type_fichier: "eleves", fichier: fichier_xml, etablissement: etablissement)
+
+    ImportEleves.new.perform(tache)
+    eleve.reload
+    assert_equal "1816400", eleve.id_prv_ele
   end
 
 end

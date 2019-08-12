@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_08_204611) do
+ActiveRecord::Schema.define(version: 2019_08_12_083821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,6 +110,7 @@ ActiveRecord::Schema.define(version: 2019_08_08_204611) do
     t.string "prenom_3"
     t.integer "montee_id"
     t.string "commune_insee_naissance"
+    t.string "id_prv_ele"
   end
 
   create_table "eleves_options", force: :cascade do |t|

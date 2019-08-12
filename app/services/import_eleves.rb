@@ -20,6 +20,11 @@ class ImportEleves
   end
 
   def met_a_jour_eleve(eleve, noeud)
+    met_a_jour_commune_insee_naissance(eleve, noeud)
+    met_a_jour_id_prv_ele(eleve, noeud)
+  end
+
+  def met_a_jour_commune_insee_naissance(eleve, noeud)
     return if eleve.commune_insee_naissance.present?
 
     code_insee = extrait_le_code_insee_naissance(noeud)
@@ -29,12 +34,22 @@ class ImportEleves
     )
   end
 
+  def met_a_jour_id_prv_ele(eleve, noeud)
+    eleve&.update(
+      id_prv_ele: extrait_id_eleve(noeud)
+    )
+  end
+
   def met_a_jour_dossier(eleve, noeud)
     eleve&.dossier_eleve&.update(
       mef_an_dernier: extrait_le_code_mef(noeud),
       division_an_dernier: extrait_la_precedente_division(noeud),
       division: extrait_division_courante(noeud)
     )
+  end
+
+  def extrait_id_eleve(noeud)
+    noeud.attributes["ELEVE_ID"]
   end
 
   def extrait_le_code_insee_naissance(noeud)
