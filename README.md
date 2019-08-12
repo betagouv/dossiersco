@@ -72,6 +72,7 @@ Ces rituels génère des documents vie à vie du projet et de l'équipe :
 
 - [Journal de l'équipe](https://gitlab.com/dossiersco/dossiersco/blob/master/doc/journal.md)
 - Le [blog de l'équipe](https://blog.dossiersco.fr/)
+- [CHANGELOG](CHANGELOG.md) le fichier dans lequel nous inscrivons chaque nouvelles fonctionnalités et corrections apporté à DossierSCO.
 
 
 ## Documentation
