@@ -10,6 +10,7 @@ class ImportNomenclature
 
     met_a_jour_les_mef!(xml, tache.etablissement)
     met_a_jour_les_options_pedagogiques!(xml, tache.etablissement)
+    met_a_jour_les_mef_options_pedagogiques!(xml, tache.etablissement)
   end
 
   def met_a_jour_les_mef!(xml, etablissement)
@@ -33,6 +34,18 @@ class ImportNomenclature
           code_matiere_6: element.parent.attributes["CODE_MATIERE"]
         )
       end
+    end
+  end
+
+  def met_a_jour_les_mef_options_pedagogiques!(xml, etablissement)
+    xml.xpath("/BEE_NOMENCLATURES/DONNEES/PROGRAMMES/PROGRAMME").each do |programme|
+      code_matiere = programme.xpath("CODE_MATIERE").text
+      code_mef = programme.xpath("CODE_MEF").text
+      code_modalite_elect = programme.xpath("CODE_MODALITE_ELECT").text
+
+      mef = Mef.find_by(etablissement: etablissement, code: code_mef)
+      option_pedagogique = OptionPedagogique.find_by(etablissement: etablissement, code_matiere_6: code_matiere)
+      MefOptionPedagogique.find_by(mef: mef, option_pedagogique: option_pedagogique, code_modalite_elect: [nil, "", "S"])&.update(code_modalite_elect: code_modalite_elect)
     end
   end
 
