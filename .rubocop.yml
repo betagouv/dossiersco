@@ -29,6 +29,7 @@ Metrics/LineLength:
   Exclude:
     - 'app/views/**/*erb*'
     - 'app/controllers/retour_siecles_controller.rb'
+    - 'app/services/import_nomenclature.rb'
 
 Metrics/BlockLength:
   Exclude:

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_14_075028) do
+ActiveRecord::Schema.define(version: 2019_08_14_131139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -162,7 +162,7 @@ ActiveRecord::Schema.define(version: 2019_08_14_075028) do
     t.bigint "option_pedagogique_id"
     t.boolean "abandonnable", default: true
     t.boolean "ouverte_inscription", default: true
-    t.string "code_modalite_elect"
+    t.string "code_modalite_elect", limit: 1, default: "O"
     t.index ["mef_id"], name: "index_mef_options_pedagogiques_on_mef_id"
     t.index ["option_pedagogique_id"], name: "index_mef_options_pedagogiques_on_option_pedagogique_id"
   end

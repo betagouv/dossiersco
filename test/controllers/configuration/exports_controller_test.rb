@@ -172,4 +172,50 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 1, xml.xpath("//ELEVE").count
   end
 
+  test "exporte le CODE_MODALITE_ELECT" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+
+    mef = Fabricate(:mef)
+    option = Fabricate(:option_pedagogique)
+    Fabricate(:mef_option_pedagogique, mef: mef, option_pedagogique: option, code_modalite_elect: "F")
+    dossier = Fabricate(:dossier_eleve,
+                        etablissement: admin.etablissement,
+                        mef_destination: mef,
+                        options_pedagogiques: [option])
+
+    get export_siecle_configuration_exports_path(xml_only: true), params: { limite: true, liste_ine: dossier.eleve.identifiant }
+
+    assert_response :success
+
+    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    Nokogiri::XML::Schema(File.read(schema))
+    xml = Nokogiri::XML(response.body)
+
+    assert_equal "F", xml.xpath("//CODE_MODALITE_ELECT").text
+  end
+
+  test "exporte O comme valeur par défaut CODE_MODALITE_ELECT" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+
+    mef = Fabricate(:mef)
+    option = Fabricate(:option_pedagogique)
+    Fabricate(:mef_option_pedagogique, mef: mef, option_pedagogique: option, code_modalite_elect: nil)
+    dossier = Fabricate(:dossier_eleve,
+                        etablissement: admin.etablissement,
+                        mef_destination: mef,
+                        options_pedagogiques: [option])
+
+    get export_siecle_configuration_exports_path(xml_only: true), params: { limite: true, liste_ine: dossier.eleve.identifiant }
+
+    assert_response :success
+
+    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    Nokogiri::XML::Schema(File.read(schema))
+    xml = Nokogiri::XML(response.body)
+
+    assert_equal "O", xml.xpath("//CODE_MODALITE_ELECT").text
+  end
+
 end
