@@ -2,9 +2,11 @@
 
 ## Août
 
+- **Déduit le CODE_MODALITE_ELECT des options** à partir de la Nomenclature pour le retour dans siecle #611
+
 - **Retour vers SIECLE uniquement pour les dossiers validé**
 
-- **Import EleveAvecAdresse** afin de récupérer les informations de ̀`code_mef` et `division` de l'an dernier, et la `division` de l'année en cours.
+- **Intègre l'import EleveAvecAdresse** dans le retour siecle afin de récupérer les informations de ̀`code_mef` et `division` de l'an dernier, et la `division` de l'année en cours.
 
 - renseigne une commune de naissance à l'étranger pour le retour dans siecle
 
