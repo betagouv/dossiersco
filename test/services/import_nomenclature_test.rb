@@ -131,4 +131,17 @@ class ImportNomenclatureTest < ActiveSupport::TestCase
     assert_equal "F", mef_option.reload.code_modalite_elect
   end
 
+  test "récupère le RANG_OPTION dans le mef_option_pedagogique correspondant" do
+    etablissement = Fabricate(:etablissement)
+    mef = Fabricate(:mef, code: "10110001110", etablissement: etablissement)
+    option = Fabricate(:option_pedagogique, code_matiere_6: "020300", etablissement: etablissement)
+    mef_option = Fabricate(:mef_option_pedagogique, mef: mef, option_pedagogique: option, code_modalite_elect: nil, rang_option: nil)
+
+    fichier_xml = fixture_file_upload("files/nomenclature_simple.xml")
+    tache = Fabricate(:tache_import, type_fichier: "nomenclature", fichier: fichier_xml, etablissement: etablissement)
+
+    ImportNomenclature.new.perform(tache)
+    assert_equal 1, mef_option.reload.rang_option
+  end
+
 end

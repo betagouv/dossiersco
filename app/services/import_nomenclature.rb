@@ -11,6 +11,7 @@ class ImportNomenclature
     met_a_jour_les_mef!(xml, tache.etablissement)
     met_a_jour_les_options_pedagogiques!(xml, tache.etablissement)
     met_a_jour_les_mef_options_pedagogiques!(xml, tache.etablissement)
+    met_a_jour_les_rangs_options!(xml, tache.etablissement)
   end
 
   def met_a_jour_les_mef!(xml, etablissement)
@@ -46,6 +47,18 @@ class ImportNomenclature
       mef = Mef.find_by(etablissement: etablissement, code: code_mef)
       option_pedagogique = OptionPedagogique.find_by(etablissement: etablissement, code_matiere_6: code_matiere)
       MefOptionPedagogique.find_by(mef: mef, option_pedagogique: option_pedagogique, code_modalite_elect: [nil, "", "S"])&.update(code_modalite_elect: code_modalite_elect)
+    end
+  end
+
+  def met_a_jour_les_rangs_options!(xml, etablissement)
+    xml.xpath("/BEE_NOMENCLATURES/DONNEES/OPTIONS_OBLIGATOIRES/OPTION_OBLIGATOIRE").each do |programme|
+      code_matiere = programme.xpath("CODE_MATIERE").text
+      code_mef = programme.xpath("CODE_MEF").text
+      rang_option = programme.xpath("RANG_OPTION").text
+
+      mef = Mef.find_by(etablissement: etablissement, code: code_mef)
+      option_pedagogique = OptionPedagogique.find_by(etablissement: etablissement, code_matiere_6: code_matiere)
+      MefOptionPedagogique.find_by(mef: mef, option_pedagogique: option_pedagogique)&.update(rang_option: rang_option)
     end
   end
 
