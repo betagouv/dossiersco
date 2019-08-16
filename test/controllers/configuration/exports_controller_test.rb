@@ -195,7 +195,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "F", xml.xpath("//CODE_MODALITE_ELECT").text
   end
 
-  test "exporte O comme valeur par défaut CODE_MODALITE_ELECT" do
+  test "exporte O comme valeur par défaut de CODE_MODALITE_ELECT" do
     admin = Fabricate(:admin)
     identification_agent(admin)
 
