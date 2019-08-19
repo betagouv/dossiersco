@@ -262,4 +262,33 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     assert_equal option_de_rang_2.code_matiere_6, options[1].xpath("CODE_MATIERE").text
   end
 
+  test "retourne l'information à propos du paiement des frais de scolarité" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+
+    resp_qui_paie = Fabricate(:resp_legal, paie_frais_scolaires: true)
+    resp_qui_paie_pas = Fabricate(:resp_legal, paie_frais_scolaires: false)
+    dossier = Fabricate(:dossier_eleve, etablissement: admin.etablissement, resp_legal: [resp_qui_paie, resp_qui_paie_pas])
+
+    get export_siecle_configuration_exports_path(xml_only: true), params: { limite: true, liste_ine: dossier.eleve.identifiant }
+
+    assert_response :success
+
+    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    Nokogiri::XML::Schema(File.read(schema))
+    xml = Nokogiri::XML(response.body)
+
+    responsables = xml.xpath("//ELEVES/ELEVE/RESPONSABLES_ELEVE/LEGAL")
+    assert_equal 2, responsables.length
+    responsables.each do |noeud_legal|
+      id_prv_resp = noeud_legal.xpath("ID_PRV_PER").text
+      paie_frais_scolaires = noeud_legal.xpath("PAIE_FRAIS_SCOLAIRES").text
+      if id_prv_resp == resp_qui_paie.id.to_s
+        assert_equal "1", paie_frais_scolaires
+      else
+        assert_equal "0", paie_frais_scolaires
+      end
+    end
+  end
+
 end
