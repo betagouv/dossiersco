@@ -218,4 +218,21 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "O", xml.xpath("//CODE_MODALITE_ELECT").text
   end
 
+  test "utilise le 11e caractère du mef_an_dernier comme TYPE_MEF dans le fichier d'export" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+
+    dossier = Fabricate(:dossier_eleve, etablissement: admin.etablissement, mef_an_dernier: "12345678009")
+
+    get export_siecle_configuration_exports_path(xml_only: true), params: { limite: true, liste_ine: dossier.eleve.identifiant }
+
+    assert_response :success
+
+    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    Nokogiri::XML::Schema(File.read(schema))
+    xml = Nokogiri::XML(response.body)
+
+    assert_equal "9", xml.xpath("//TYPE_MEF").text
+  end
+
 end

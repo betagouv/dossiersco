@@ -95,6 +95,7 @@
               <CODE_RNE><%= @etablissement.uai %></CODE_RNE>
               <CODE_PROVENANCE>1</CODE_PROVENANCE>
               <CODE_MEF><%= dossier_eleve.mef_an_dernier %></CODE_MEF>
+              <TYPE_MEF><%= dossier_eleve.mef_an_dernier[10] || " " %></TYPE_MEF>
               <CODE_DIVISION><%= dossier_eleve.division_an_dernier %></CODE_DIVISION>
               <OPTIONS_AN_DERNIER>
                 <% dossier_eleve.options_origines.each do |id, h| %>
