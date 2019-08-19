@@ -152,4 +152,13 @@ class DossierEleve < ActiveRecord::Base
     moyens
   end
 
+  def options_triees_par_rang
+    options_par_rang = {}
+    options_pedagogiques.each do |option|
+      rang_option = option.mef_options_pedagogiques.find_by(mef: mef_destination)&.rang_option
+      options_par_rang.merge!(rang_option => option)
+    end
+    Hash[options_par_rang.sort].map { |_rang, option| option }
+  end
+
 end

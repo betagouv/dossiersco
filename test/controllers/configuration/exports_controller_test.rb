@@ -235,4 +235,31 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "9", xml.xpath("//TYPE_MEF").text
   end
 
+  test "retourne les options dans l'ordre de leur RANG_OPTION" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+
+    mef = Fabricate(:mef)
+    option_de_rang_2 = Fabricate(:option_pedagogique, code_matiere_6: "020002")
+    option_de_rang_1 = Fabricate(:option_pedagogique, code_matiere_6: "010001")
+    Fabricate(:mef_option_pedagogique, mef: mef, option_pedagogique: option_de_rang_2, rang_option: 2)
+    Fabricate(:mef_option_pedagogique, mef: mef, option_pedagogique: option_de_rang_1, rang_option: 1)
+    dossier = Fabricate(:dossier_eleve,
+                        etablissement: admin.etablissement,
+                        mef_destination: mef,
+                        options_pedagogiques: [option_de_rang_2, option_de_rang_1])
+
+    get export_siecle_configuration_exports_path(xml_only: true), params: { limite: true, liste_ine: dossier.eleve.identifiant }
+
+    assert_response :success
+
+    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    Nokogiri::XML::Schema(File.read(schema))
+    xml = Nokogiri::XML(response.body)
+
+    options = xml.xpath("//SCOLARITE_ACTIVE/OPTIONS/OPTION")
+    assert_equal option_de_rang_1.code_matiere_6, options[0].xpath("CODE_MATIERE").text
+    assert_equal option_de_rang_2.code_matiere_6, options[1].xpath("CODE_MATIERE").text
+  end
+
 end

@@ -162,4 +162,17 @@ class DossierEleveTest < ActiveSupport::TestCase
     assert_equal expected, dossier.moyens_de_communication_electronique
   end
 
+  test "[retour siecle] classe les options obligatoires selon leur rang" do
+    mef = Fabricate(:mef)
+    option_de_rang_2 = Fabricate(:option_pedagogique, code_matiere_6: "020002")
+    option_de_rang_1 = Fabricate(:option_pedagogique, code_matiere_6: "010001")
+    Fabricate(:mef_option_pedagogique, mef: mef, option_pedagogique: option_de_rang_2, rang_option: 2)
+    Fabricate(:mef_option_pedagogique, mef: mef, option_pedagogique: option_de_rang_1, rang_option: 1)
+    dossier = Fabricate(:dossier_eleve,
+                        mef_destination: mef,
+                        options_pedagogiques: [option_de_rang_2, option_de_rang_1])
+
+    assert_equal [option_de_rang_1, option_de_rang_2], dossier.options_triees_par_rang
+  end
+
 end

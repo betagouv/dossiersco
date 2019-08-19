@@ -140,3 +140,7 @@ Metrics/PerceivedComplexity:
     - 'app/controllers/accueil_controller.rb'
     - 'app/services/import_eleve_complete.rb'
 
+Naming/VariableNumber:
+  Exclude:
+    - 'test/controllers/configuration/exports_controller_test.rb'
+    - 'test/models/dossier_eleve_test.rb'

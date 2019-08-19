@@ -82,7 +82,7 @@
               <CODE_STATUT>ST</CODE_STATUT>
               <DATE_DEB_SCO>2019-09-04</DATE_DEB_SCO>
               <OPTIONS>
-                <% dossier_eleve.options_pedagogiques.each do |option| %>
+                <% dossier_eleve.options_triees_par_rang.each do |option| %>
                   <% next if option.code_matiere.nil? %>
                   <OPTION>
                     <CODE_MATIERE><%= option.code_matiere_6 %></CODE_MATIERE>
