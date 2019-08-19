@@ -125,7 +125,7 @@ Pour accéder à la console rails :
 
 Pour peupler l'application en local :
 
-```bash rake db:vide db:seed:demo```
+```bash make populate
 
 
 ## Déploiement
