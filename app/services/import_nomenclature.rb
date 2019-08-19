@@ -51,10 +51,10 @@ class ImportNomenclature
   end
 
   def met_a_jour_les_rangs_options!(xml, etablissement)
-    xml.xpath("/BEE_NOMENCLATURES/DONNEES/OPTIONS_OBLIGATOIRES/OPTION_OBLIGATOIRE").each do |programme|
-      code_matiere = programme.xpath("CODE_MATIERE").text
-      code_mef = programme.xpath("CODE_MEF").text
-      rang_option = programme.xpath("RANG_OPTION").text
+    xml.xpath("/BEE_NOMENCLATURES/DONNEES/OPTIONS_OBLIGATOIRES/OPTION_OBLIGATOIRE").each do |option_obligatoire|
+      code_matiere = option_obligatoire.xpath("CODE_MATIERE").text
+      code_mef = option_obligatoire.xpath("CODE_MEF").text
+      rang_option = option_obligatoire.xpath("RANG_OPTION").text
 
       mef = Mef.find_by(etablissement: etablissement, code: code_mef)
       option_pedagogique = OptionPedagogique.find_by(etablissement: etablissement, code_matiere_6: code_matiere)
