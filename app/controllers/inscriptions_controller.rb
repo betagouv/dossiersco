@@ -67,11 +67,6 @@ class InscriptionsController < ApplicationController
     @dossier_eleve.contact_urgence = @dossier_eleve.contact_urgence || ContactUrgence.new(dossier_eleve: @dossier_eleve)
     @meme_adresse = @dossier_eleve.resp_legal.first.meme_adresse @dossier_eleve.resp_legal.second
     @modeles = agent_connecte.etablissement.modele
-    @liste_pays = []
-    filename = File.join(Rails.root, "app/views/accueil/liste-pays.csv")
-    CSV.foreach(filename, col_sep: ";") do |row|
-      @liste_pays << [row[0].upcase, row[1].upcase]
-    end
     render :eleve
   end
 

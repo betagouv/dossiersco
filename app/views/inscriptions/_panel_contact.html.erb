@@ -81,14 +81,11 @@
           </li>
         <% end %>
         <li><b><%= t('accueil.form_rl.adresse') %> : </b><%= resp_legal.adresse %></li>
-        <% if resp_legal.pays === 'FRA' %>
+        <% if resp_legal.pays == "100" %>
           <li><b><%= t('accueil.form_rl.code_postal') %> : </b><%= resp_legal.code_postal %></li>
         <% end %>
         <li><b><%= t('accueil.form_rl.ville') %> : </b><%= resp_legal.ville %></li>
-        <li><b><%= t('accueil.form_rl.pays') %></b> :
-          <% @liste_pays.each do |option| %>
-            <%= option[0] if option[1] == resp_legal.pays %>
-          <% end %></li>
+        <li><b><%= t('accueil.form_rl.pays') %></b> : <%= nom_pays(resp_legal.pays) %>
         <% unless resp_legal.adresse_inchangee %>
           <div id="ancienne_adresse">
             <hr/>
@@ -122,7 +119,7 @@
       </div>
     <% end %>
 
-    <%= f.fields_for :resp_legal do |r| %>
+    <%= f.simple_fields_for :resp_legal do |r| %>
       <% if @dossier_eleve.resp_legal.count > 1 %>
         <h4>Responsable <%= r.object.priorite %></h4>
       <% end %>
@@ -162,7 +159,7 @@
         <%= r.input :ville_etrangere, label: t('accueil.form_rl.ville'), input_html: {value: ville_etrangere} %>
       </div>
       <div class="form__group">
-        <%= r.input :pays, collection: @liste_pays, selected: r.object.pays, input_html: { class: 'pays', data: {"resp-legal" => r.object.priorite}}, include_blank: true %>
+        <%= r.input :pays, collection: liste_pays, label_method: :second, value_method: :first, selected: r.object.pays, input_html: { class: 'pays', data: {"resp-legal" => r.object.priorite}}, include_blank: true %>
       </div>
     <% end %>
     <%= f.button :submit, 'Enregistrer', class: 'button mt-1' %>

@@ -83,4 +83,12 @@ module ApplicationHelper
       suivi.eleves_importe.count +
       suivi.familles_connectes.count
   end
+
+  def nom_pays(code_pays)
+    liste_pays[code_pays.to_i]
+  end
+
+  def liste_pays
+    YAML.safe_load(File.read(File.join(Rails.root, "/app/jobs/code_pays.yml")))
+  end
 end

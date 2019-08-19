@@ -126,4 +126,10 @@ class ApplicationHelperTest < ActionDispatch::IntegrationTest
     assert_equal 6, somme_suivi(suivi)
   end
 
+  test "nom_pays donne le nom du pays à partir du code_pays" do
+    assert_equal "FRANCE", nom_pays(100)
+    assert_equal "MADAGASCAR", nom_pays(333)
+    assert_nil nom_pays(10_983)
+  end
+
 end

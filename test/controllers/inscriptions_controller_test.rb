@@ -97,7 +97,7 @@ class InscriptionControllerTest < ActionDispatch::IntegrationTest
                                                "tel_personnel" => "", "tel_portable" => "0101010101", "tel_professionnel" => "",
                                                "email" => "test@hotmail.fr", "adresse" => "19 RUE DU COLONEL MOUTARDE",
                                                "code_postal" => "75017", "ville" => "PARIS", "ville_etrangere" => "",
-                                               "pays" => "FRA", "id" => resp_legal.id } },
+                                               "pays" => "100", "id" => resp_legal.id } },
                                     "dossier_id" => dossier.id } }
 
     patch agent_update_eleve_path(dossier), params: params
@@ -106,6 +106,7 @@ class InscriptionControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Aline", resp_legal.prenom
     assert_equal "19 RUE DU COLONEL MOUTARDE", resp_legal.adresse
     assert_equal "0101010101", resp_legal.tel_portable
+    assert_equal "100", resp_legal.pays
   end
 
   test "Un agent modifie un contact en cas d'urgence" do
