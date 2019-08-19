@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_16_091827) do
+ActiveRecord::Schema.define(version: 2019_08_19_080842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -245,6 +245,7 @@ ActiveRecord::Schema.define(version: 2019_08_16_091827) do
     t.string "pays", default: "FRA"
     t.integer "id_ent"
     t.string "ville_etrangere"
+    t.boolean "paie_frais_scolaires"
   end
 
   create_table "tache_imports", force: :cascade do |t|

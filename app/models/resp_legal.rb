@@ -30,6 +30,10 @@ class RespLegal < ActiveRecord::Base
     "AUTRE LIEN": 90
   }.freeze
 
+  scope :par_nom_et_prenom, lambda { |etablissement, nom, prenom|
+    where(nom: nom, prenom: prenom).joins(:dossier_eleve) .where("dossier_eleves.etablissement_id = ?", etablissement.id)
+  }
+
   def pays_fra?
     pays == "FRA" && resp_present?
   end

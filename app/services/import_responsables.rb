@@ -5,20 +5,26 @@ require "nokogiri"
 class ImportResponsables
 
   def perform(tache)
-    file = File.read("#{Rails.root}/public/#{tache.fichier}")
-    xml = Nokogiri::XML(file)
+    xml = Nokogiri::XML(File.read("#{Rails.root}/public/#{tache.fichier}"))
 
-    met_a_jour_les_professions!(xml, tache.etablissement)
-  end
+    xml.xpath("/BEE_RESPONSABLES/DONNEES/PERSONNES/PERSONNE").each do |noeud_personne|
+      nom = noeud_personne.xpath("NOM_DE_FAMILLE").text
+      prenom = noeud_personne.xpath("PRENOM").text
 
-  def met_a_jour_les_professions!(xml, etablissement)
-    xml.xpath("/BEE_RESPONSABLES/DONNEES/PERSONNES/PERSONNE").each do |personne|
-      nom = personne.xpath("NOM_DE_FAMILLE").text
-      prenom = personne.xpath("PRENOM").text
+      responsables = RespLegal.par_nom_et_prenom(tache.etablissement, nom, prenom)
 
-      responsables = RespLegal.where(nom: nom, prenom: prenom).joins(:dossier_eleve).where("dossier_eleves.etablissement_id = ?", etablissement.id)
       raise ExceptionPlusieursResponsablesLegauxTrouve if responsables.count > 1
       raise ExceptionAucunResponsableLegalTrouve if responsables.count.zero?
+
+      met_a_jour_le_paiement_des_frais!(responsables.first, noeud_personne)
+    end
+  end
+
+  def met_a_jour_le_paiement_des_frais!(responsable, noeud)
+    id = noeud.attributes["PERSONNE_ID"].value
+    noeud.xpath("/BEE_RESPONSABLES/DONNEES/RESPONSABLES/RESPONSABLE_ELEVE[PERSONNE_ID=#{id}]").each do |noeud_responsable|
+      paie_frais_scolaires = noeud_responsable.xpath("PAIE_FRAIS_SCOLAIRES").text
+      responsable.update(paie_frais_scolaires: paie_frais_scolaires)
     end
   end
 

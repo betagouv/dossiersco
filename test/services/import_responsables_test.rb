@@ -12,13 +12,13 @@ class ImportResponsablesTest < ActiveSupport::TestCase
     etablissement = Fabricate(:etablissement)
 
     Fabricate(:resp_legal,
-              prenom: "Marylene",
-              nom: "ROCQUE",
+              prenom: "Maryline",
+              nom: "ROCK",
               profession: 34,
               dossier_eleve: Fabricate(:dossier_eleve, etablissement: etablissement))
     Fabricate(:resp_legal,
-              prenom: "Marylene",
-              nom: "ROCQUE",
+              prenom: "Maryline",
+              nom: "ROCK",
               profession: 10,
               dossier_eleve: Fabricate(:dossier_eleve, etablissement: etablissement))
 
@@ -38,6 +38,30 @@ class ImportResponsablesTest < ActiveSupport::TestCase
 
     assert_raise ExceptionAucunResponsableLegalTrouve do
       ImportResponsables.new.perform(tache)
+    end
+  end
+
+  test "récupère l'information PAIE_FRAIS_SCOLAIRE pour chaque Resp_Legal" do
+    etablissement = Fabricate(:etablissement)
+
+    maryline = Fabricate(:resp_legal,
+                         prenom: "Maryline",
+                         nom: "ROCK",
+                         profession: 34,
+                         dossier_eleve: Fabricate(:dossier_eleve, etablissement: etablissement))
+    truc = Fabricate(:resp_legal,
+                     prenom: "Bidule",
+                     nom: "TRUC",
+                     profession: 34,
+                     dossier_eleve: Fabricate(:dossier_eleve, etablissement: etablissement))
+
+    fichier_xml = fixture_file_upload("files/responsables_avec_adresses_simple.xml")
+    tache = Fabricate(:tache_import, type_fichier: "responsables", fichier: fichier_xml, etablissement: etablissement)
+
+    assert_nothing_raised do
+      ImportResponsables.new.perform(tache)
+      assert maryline.reload.paie_frais_scolaires
+      assert_equal false, truc.reload.paie_frais_scolaires
     end
   end
 
