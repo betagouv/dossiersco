@@ -175,4 +175,17 @@ class DossierEleveTest < ActiveSupport::TestCase
     assert_equal [option_de_rang_1, option_de_rang_2], dossier.options_triees_par_rang
   end
 
+  test "[retour siecle] classe les options obligatoires avant les options facultatives" do
+    mef = Fabricate(:mef)
+    option_facultative = Fabricate(:option_pedagogique, code_matiere_6: "020002")
+    option_obligatoire = Fabricate(:option_pedagogique, code_matiere_6: "010001")
+    Fabricate(:mef_option_pedagogique, mef: mef, option_pedagogique: option_facultative, rang_option: nil)
+    Fabricate(:mef_option_pedagogique, mef: mef, option_pedagogique: option_obligatoire, rang_option: 1)
+    dossier = Fabricate(:dossier_eleve,
+                        mef_destination: mef,
+                        options_pedagogiques: [option_facultative, option_obligatoire])
+
+    assert_equal [option_obligatoire, option_facultative], dossier.options_triees_par_rang
+  end
+
 end

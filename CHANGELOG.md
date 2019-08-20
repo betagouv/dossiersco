@@ -2,6 +2,12 @@
 
 ## Août
 
+### Retour SIECLE
+
+- **Classe les options obligatoires** à partir de leur RANG_OPTION #613
+
+- **Classe les options facultives** après les options obligatoires #613
+
 - **Déduit le CODE_MODALITE_ELECT des options** à partir de la Nomenclature pour le retour dans siecle #611
 
 - **Retour vers SIECLE uniquement pour les dossiers validé**

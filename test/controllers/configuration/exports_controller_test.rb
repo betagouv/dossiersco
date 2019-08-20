@@ -235,19 +235,21 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "9", xml.xpath("//TYPE_MEF").text
   end
 
-  test "retourne les options dans l'ordre de leur RANG_OPTION" do
+  test "retourne les options dans l'ordre de leur RANG_OPTION, suivi des options facultatives" do
     admin = Fabricate(:admin)
     identification_agent(admin)
 
     mef = Fabricate(:mef)
+    option_facultative = Fabricate(:option_pedagogique, code_matiere_6: "033333")
     option_de_rang_2 = Fabricate(:option_pedagogique, code_matiere_6: "020002")
     option_de_rang_1 = Fabricate(:option_pedagogique, code_matiere_6: "010001")
+    Fabricate(:mef_option_pedagogique, mef: mef, option_pedagogique: option_facultative, rang_option: nil)
     Fabricate(:mef_option_pedagogique, mef: mef, option_pedagogique: option_de_rang_2, rang_option: 2)
     Fabricate(:mef_option_pedagogique, mef: mef, option_pedagogique: option_de_rang_1, rang_option: 1)
     dossier = Fabricate(:dossier_eleve,
                         etablissement: admin.etablissement,
                         mef_destination: mef,
-                        options_pedagogiques: [option_de_rang_2, option_de_rang_1])
+                        options_pedagogiques: [option_facultative, option_de_rang_2, option_de_rang_1])
 
     get export_siecle_configuration_exports_path(xml_only: true), params: { limite: true, liste_ine: dossier.eleve.identifiant }
 
@@ -260,6 +262,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     options = xml.xpath("//SCOLARITE_ACTIVE/OPTIONS/OPTION")
     assert_equal option_de_rang_1.code_matiere_6, options[0].xpath("CODE_MATIERE").text
     assert_equal option_de_rang_2.code_matiere_6, options[1].xpath("CODE_MATIERE").text
+    assert_equal option_facultative.code_matiere_6, options[2].xpath("CODE_MATIERE").text
   end
 
   test "retourne l'information à propos du paiement des frais de scolarité" do
