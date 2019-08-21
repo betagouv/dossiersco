@@ -14,7 +14,7 @@ class ImportResponsables
       responsables = RespLegal.par_nom_et_prenom(tache.etablissement, nom, prenom)
 
       raise ExceptionPlusieursResponsablesLegauxTrouve if responsables.count > 1
-      raise ExceptionAucunResponsableLegalTrouve if responsables.count.zero?
+      next ExceptionAucunResponsableLegalTrouve if responsables.count.zero?
 
       met_a_jour_le_paiement_des_frais!(responsables.first, noeud_personne)
     end

@@ -253,3 +253,9 @@ DossierEleve.select {|d| d.etat == "validé" && d.mef_destination.present? && d.
 # Trouver l'endroit où une gem est installée dans docker
 
 bundle show "nom d'une gem"
+
+# Tester un git add -p partiel
+
+git stash save --keep-index
+make test
+git stash pop
