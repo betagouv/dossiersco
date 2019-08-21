@@ -1,6 +1,6 @@
 # DossierSCO
 
-Inscrire ses enfants au collège sans se déplacer, sans redonner d'informations déjà connues et sans flux papier.
+Transformer une campagne d'inscription de masse en accueil qualitatif individualisé des familles
 
 [dossiersco.fr](https://dossiersco.fr/)
 
