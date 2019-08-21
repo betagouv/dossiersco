@@ -4,6 +4,7 @@ dump.rdb
 !.locales
 !.gitignore
 !.circleci
+*.sw[a-p]
 notes
 uploads
 secrets.*
