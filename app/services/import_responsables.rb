@@ -17,6 +17,7 @@ class ImportResponsables
       next ExceptionAucunResponsableLegalTrouve if responsables.count.zero?
 
       met_a_jour_le_paiement_des_frais!(responsables.first, noeud_personne)
+      met_a_jour_la_profession_des_retraites!(responsables.first, noeud_personne)
     end
   end
 
@@ -26,6 +27,11 @@ class ImportResponsables
       paie_frais_scolaires = noeud_responsable.xpath("PAIE_FRAIS_SCOLAIRES").text
       responsable.update(paie_frais_scolaires: paie_frais_scolaires)
     end
+  end
+
+  def met_a_jour_la_profession_des_retraites!(responsable, noeud)
+    code_profession = noeud.xpath("CODE_PROFESSION").text
+    responsable.update(profession: code_profession)
   end
 
 end

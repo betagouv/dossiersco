@@ -54,6 +54,30 @@ class ImportResponsablesTest < ActiveSupport::TestCase
     end
   end
 
+  test "récupère le CODE_PROFESSION de chaque Resp_Legal" do
+    etablissement = Fabricate(:etablissement)
+
+    maryline = Fabricate(:resp_legal,
+                         prenom: "Maryline",
+                         nom: "ROCK",
+                         profession: 73,
+                         dossier_eleve: Fabricate(:dossier_eleve, etablissement: etablissement))
+    truc = Fabricate(:resp_legal,
+                     prenom: "Bidule",
+                     nom: "TRUC",
+                     profession: 76,
+                     dossier_eleve: Fabricate(:dossier_eleve, etablissement: etablissement))
+
+    fichier_xml = fixture_file_upload("files/responsables_avec_adresses_simple.xml")
+    tache = Fabricate(:tache_import, type_fichier: "responsables", fichier: fichier_xml, etablissement: etablissement)
+
+    assert_nothing_raised do
+      ImportResponsables.new.perform(tache)
+      assert_equal "75",  maryline.reload.profession
+      assert_equal "78",  truc.reload.profession
+    end
+  end
+
   test "ignore un responsable légal quand il n'est pas trouvé dans DossierSCO" do
     etablissement = Fabricate(:etablissement)
 
