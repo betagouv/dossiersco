@@ -7,7 +7,6 @@ class Etablissement < ActiveRecord::Base
   has_many :tache_import, dependent: :destroy
   has_many :pieces_attendues, dependent: :destroy
   has_many :modele, dependent: :destroy
-  has_many :dossier_affelnets, dependent: :destroy
   has_many :mef, dependent: :destroy
   has_many :options_pedagogiques, dependent: :destroy
   has_many :regimes_sortie, dependent: :destroy
@@ -53,7 +52,6 @@ class Etablissement < ActiveRecord::Base
     dossier_eleve.destroy_all
     eleves.map(&:destroy)
     tache_import.destroy_all
-    dossier_affelnets.destroy_all
   end
 
   def email_chef

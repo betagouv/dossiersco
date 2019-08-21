@@ -30,7 +30,6 @@ class EtablissementTest < ActiveSupport::TestCase
     etablissement = Fabricate.create(:etablissement)
     dossier_eleve = Fabricate.create(:dossier_eleve, etablissement: etablissement)
     Fabricate.create(:tache_import, etablissement: etablissement)
-    Fabricate.create(:dossier_affelnet, etablissement: etablissement)
     Fabricate.create(:mef, etablissement: etablissement)
     resp_legal = Fabricate(:resp_legal, dossier_eleve: dossier_eleve)
     piece_jointe = Fabricate(:piece_jointe, dossier_eleve: dossier_eleve)
@@ -42,7 +41,6 @@ class EtablissementTest < ActiveSupport::TestCase
     assert_equal 0, etablissement.dossier_eleve.count
     assert_equal 0, Eleve.where(id: dossier_eleve.eleve.id).count
     assert_equal 0, etablissement.tache_import.count
-    assert_equal 0, etablissement.dossier_affelnets.count
     assert_not_equal 0, etablissement.mef.count
 
     assert_equal false, Message.exists?(message.id)
