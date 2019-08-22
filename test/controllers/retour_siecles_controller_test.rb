@@ -30,7 +30,7 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     assert_template "manque_code_matiere"
   end
 
-  test "Quand les élèves n'ont pas leur division, propos l'upload du fichier eleveavecadresse" do
+  test "Quand les élèves n'ont pas leur division, propose l'upload du fichier eleveavecadresse" do
     admin = Fabricate(:admin)
     etablissement = admin.etablissement
     dossier_eleve = Fabricate(:dossier_eleve, division: nil, etablissement: etablissement)
@@ -43,9 +43,7 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "affiche le nombre de dossiers (resp_legal et eleve)" do
-    admin = Fabricate(:admin)
-    identification_agent(admin)
-    etablissement = admin.etablissement
+    etablissement = identification_agent_avec_responsables_uploaded
 
     representant = Fabricate(:resp_legal)
     eleve = Fabricate(:eleve)
@@ -60,9 +58,7 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "avec un dossier seulement" do
-    admin = Fabricate(:admin)
-    identification_agent(admin)
-    etablissement = admin.etablissement
+    etablissement = identification_agent_avec_responsables_uploaded
 
     representant = Fabricate(:resp_legal)
     eleve = Fabricate(:eleve)
@@ -130,6 +126,23 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     get new_retour_siecle_path
     assert_equal 1, assigns(:dossiers).count
     assert_equal [dossier], assigns(:dossiers)
+  end
+
+  test "propose l'upload du fichier ResponsablesAvecAdresses.xml" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+
+    get new_retour_siecle_path
+    assert_response :success
+    assert_template "upload_responsables"
+  end
+
+  test "ne propose pas l'upload du fichier ResponsablesAvecAdresses s'il a déjà été fait" do
+    identification_agent_avec_responsables_uploaded
+
+    get new_retour_siecle_path
+    assert_response :success
+    assert_template "new"
   end
 
 end

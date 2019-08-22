@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_21_142151) do
+ActiveRecord::Schema.define(version: 2019_08_22_144503) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,6 +123,7 @@ ActiveRecord::Schema.define(version: 2019_08_21_142151) do
     t.boolean "demande_caf", default: false
     t.string "email_reponse"
     t.date "date_debut"
+    t.boolean "responsables_uploaded", default: false
   end
 
   create_table "fichier_a_telechargers", force: :cascade do |t|

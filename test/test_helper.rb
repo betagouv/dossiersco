@@ -14,9 +14,16 @@ module ActiveSupport
       ERB::Util.html_escape(text)
     end
 
-    def identification_agent(agent)
+    def identification_agent(agent = nil)
       post agent_url, params: { email: agent.email, mot_de_passe: agent.password }
       follow_redirect!
+    end
+
+    def identification_agent_avec_responsables_uploaded
+      etablissement = Fabricate(:etablissement_avec_responsables_uploaded)
+      admin = Fabricate(:admin, etablissement: etablissement)
+      identification_agent(admin)
+      admin.etablissement
     end
 
   end

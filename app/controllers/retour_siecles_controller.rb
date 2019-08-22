@@ -17,15 +17,22 @@ class RetourSieclesController < ApplicationController
     render(:manque_division) && return if @dossiers_sans_division.count.positive?
 
     @dossiers = dossiers_etablissement.where.not(mef_destination_id: [nil, ""]).where(etat: DossierEleve::ETAT[:valide])
-    @dossiers_bloques = []
-    @dossiers_bloques.concat(extrait_informations(dossiers_etablissement.where(mef_destination: nil), I18n.t("retour_siecles.new.dossier_sans_mef_destination")))
-    @dossiers_bloques.concat(extrait_informations(eleves_sans_commune_insee, I18n.t("retour_siecles.new.probleme_de_commune_insee")))
-    @dossiers_bloques.concat(extrait_informations(resp_legal_probleme_profession, I18n.t("retour_siecles.new.probleme_de_profession")))
+
+    @dossiers_bloques = dossiers_bloques
 
     if params[:liste_ine].present?
       ines = params[:liste_ine].split(",")
       @selection_dossiers = @dossiers.joins(:eleve).where("eleves.identifiant in (?)", ines)
     end
+
+    render(:upload_responsables) unless agent_connecte.etablissement.responsables_uploaded?
+  end
+
+  def dossiers_bloques
+    dossiers_bloques = []
+    dossiers_bloques.concat(extrait_informations(dossiers_etablissement.where(mef_destination: nil), I18n.t("retour_siecles.new.dossier_sans_mef_destination")))
+    dossiers_bloques.concat(extrait_informations(eleves_sans_commune_insee, I18n.t("retour_siecles.new.probleme_de_commune_insee")))
+    dossiers_bloques.concat(extrait_informations(resp_legal_probleme_profession, I18n.t("retour_siecles.new.probleme_de_profession")))
   end
 
   def dossiers_etablissement
