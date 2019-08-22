@@ -30,6 +30,9 @@ class RespLegal < ActiveRecord::Base
     "AUTRE LIEN": 90
   }.freeze
 
+  CODE_PROFESSION_RETRAITES_CADRES_ET_PROFESSIONS_INTERMEDIAIRE = "73"
+  CODE_PROFESSION_RETRAITES_EMPLOYES_ET_OUVRIERS = "76"
+
   scope :par_nom_et_prenom, lambda { |etablissement, nom, prenom|
     where(nom: nom, prenom: prenom).joins(:dossier_eleve) .where("dossier_eleves.etablissement_id = ?", etablissement.id)
   }

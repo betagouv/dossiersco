@@ -54,7 +54,7 @@ class ImportResponsablesTest < ActiveSupport::TestCase
     end
   end
 
-  test "récupère le CODE_PROFESSION de chaque Resp_Legal" do
+  test "affecte un code profession plus précis pour les retraités" do
     etablissement = Fabricate(:etablissement)
 
     maryline = Fabricate(:resp_legal,
@@ -75,6 +75,24 @@ class ImportResponsablesTest < ActiveSupport::TestCase
       ImportResponsables.new.perform(tache)
       assert_equal "75",  maryline.reload.profession
       assert_equal "78",  truc.reload.profession
+    end
+  end
+
+  test "conserve le code profession dossiersco des non-retraités" do
+    etablissement = Fabricate(:etablissement)
+
+    ada = Fabricate(:resp_legal,
+                    prenom: "Ada",
+                    nom: "LOVELACE",
+                    profession: 40,
+                    dossier_eleve: Fabricate(:dossier_eleve, etablissement: etablissement))
+
+    fichier_xml = fixture_file_upload("files/responsables_avec_adresses_simple.xml")
+    tache = Fabricate(:tache_import, type_fichier: "responsables", fichier: fichier_xml, etablissement: etablissement)
+
+    assert_nothing_raised do
+      ImportResponsables.new.perform(tache)
+      assert_equal "40", ada.reload.profession
     end
   end
 

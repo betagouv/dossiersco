@@ -30,8 +30,13 @@ class ImportResponsables
   end
 
   def met_a_jour_la_profession_des_retraites!(responsable, noeud)
-    code_profession = noeud.xpath("CODE_PROFESSION").text
-    responsable.update(profession: code_profession)
+    if [
+      RespLegal::CODE_PROFESSION_RETRAITES_CADRES_ET_PROFESSIONS_INTERMEDIAIRE,
+      RespLegal::CODE_PROFESSION_RETRAITES_EMPLOYES_ET_OUVRIERS
+    ].include?(responsable.profession)
+      code_profession = noeud.xpath("CODE_PROFESSION").text
+      responsable.update(profession: code_profession)
+    end
   end
 
 end
