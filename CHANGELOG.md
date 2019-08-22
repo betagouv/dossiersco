@@ -4,6 +4,8 @@
 
 ### Retour SIECLE
 
+- **Précise les codes profession pour les retraités** à partir de l'import Responsables SIECLE #618
+
 - **Classe les options obligatoires** à partir de leur RANG_OPTION #613
 
 - **Classe les options facultives** après les options obligatoires #613
