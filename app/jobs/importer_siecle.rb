@@ -16,7 +16,7 @@ class ImporterSiecle < ApplicationJob
       ImportNomenclature.new.perform(tache)
       mail = AgentMailer.succes_import_nomenclature(email)
     elsif tache.import_responsables?
-      ImportResponsable.new.perform(tache)
+      ImportResponsables.new.perform(tache)
       mail = AgentMailer.succes_import_responsables(email)
     elsif tache.import_eleves?
       ImportEleves.new.perform(tache)
