@@ -39,7 +39,6 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Exclude:
     - 'app/services/famille.rb'
-    - 'app/jobs/importer_siecle.rb'
     - 'app/services/import_nomenclature.rb'
     - 'app/controllers/retour_siecles_controller.rb'
     - 'test/services/famille_test.rb'
@@ -67,7 +66,6 @@ Metrics/MethodLength:
     - 'app/models/etablissement.rb'
     - 'app/models/message.rb'
     - 'app/models/resp_legal.rb'
-    - 'app/jobs/importer_affelnet.rb'
     - 'app/services/genere_pdf.rb'
     - 'app/services/contacter_famille.rb'
     - 'lib/tasks/charger_donnees_exemple.rake'
@@ -92,7 +90,6 @@ Metrics/ClassLength:
 Metrics/AbcSize:
   Exclude:
     - 'test/**/*'
-    - 'app/jobs/importer_siecle.rb'
     - 'app/services/import_nomenclature.rb'
     - 'app/services/import_responsables.rb'
     - 'app/controllers/retour_siecles_controller.rb'
@@ -118,7 +115,6 @@ Metrics/AbcSize:
     - 'app/models/etablissement.rb'
     - 'app/models/message.rb'
     - 'app/models/resp_legal.rb'
-    - 'app/jobs/importer_affelnet.rb'
     - 'app/services/genere_pdf.rb'
     - 'app/models/dossier_eleve.rb'
     - 'app/mailers/famille_mailer.rb'

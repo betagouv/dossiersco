@@ -21,15 +21,12 @@ class ImporterSiecle < ApplicationJob
 
   def declenche_import(tache, email)
     file = "#{Rails.root}/public/#{tache.fichier}"
-
     if file_type_xml?(file)
-      mail = send("import_fichier_#{tache.type_fichier}", tache, email)
-      mail.deliver_now
+      send("import_fichier_#{tache.type_fichier}", tache, email).deliver_now
     elsif file_type_excel?(file)
       importeur = ImportEleveComplete.new
       importeur.perform(tache)
-      mail = AgentMailer.succes_import(email, importeur.statistiques)
-      mail.deliver_now
+      AgentMailer.succes_import(email, importeur.statistiques).deliver_now
     else
       raise StandardError, "type de fichier non reconnu"
     end
