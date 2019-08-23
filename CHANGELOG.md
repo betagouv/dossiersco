@@ -8,8 +8,6 @@
 
 - **Récupère l'information à propos du paiement des frais scolaires** pour pouvoir les remonter dans siecle
 
-- **Possibilité d'utiliser les fichiers zip pour faire les imports**
-
 - **Affiche le pays dans l'interface agent > contact**
 
 - **Importer le fichier ElevesAvecAdresses.xml pour récupérer l'arrondissement de naissance et l'ID élève privé**
