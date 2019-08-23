@@ -5,6 +5,8 @@
       <h3><%= t('.titre_manque_division') %></h3>
     </div>
     <p><%= t('.explication_manque_division_html') %></p>
+    <%= link_to "Sauter cette étape", new_retour_siecle_path(bypass_manque_division: true) %>
+
 
     <% if @tache.statut != 'en_attente' && @tache.statut != 'en_cours' %>
       <%= form_for TacheImport.new, multipart: true do |form| %>

@@ -14,7 +14,7 @@ class RetourSieclesController < ApplicationController
     render(:manque_code_matiere) && return if @options_en_erreur.count.positive?
 
     @dossiers_sans_division = DossierEleve.where(etablissement: @etablissement, division: nil)
-    render(:manque_division) && return if @dossiers_sans_division.count.positive?
+    render(:manque_division) && return if @dossiers_sans_division.count.positive? && !params[:bypass_manque_division]
 
     @dossiers = dossiers_etablissement.where.not(mef_destination_id: [nil, ""]).where(etat: DossierEleve::ETAT[:valide])
     @dossiers_bloques = []

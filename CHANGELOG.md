@@ -4,6 +4,8 @@
 
 ### Retour SIECLE
 
+- **Permet de continuer malgré des élèves sans division** pour les remonter dans siecle
+
 - **Récupère l'information à propos du paiement des frais scolaires** pour pouvoir les remonter dans siecle
 
 - **Possibilité d'utiliser les fichiers zip pour faire les imports**
