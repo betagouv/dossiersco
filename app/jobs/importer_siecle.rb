@@ -33,7 +33,6 @@ class ImporterSiecle < ApplicationJob
     else
       raise StandardError, "type de fichier non reconnu"
     end
-
   end
 
   def file_type_excel?(file)

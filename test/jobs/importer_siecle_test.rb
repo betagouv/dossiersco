@@ -87,4 +87,5 @@ class ImporterSiecleTest < ActiveJob::TestCase
     last_email = ActionMailer::Base.deliveries.last
     assert_equal "L'import de votre base élève a échoué", last_email.subject
   end
+
 end
