@@ -105,7 +105,6 @@ Metrics/AbcSize:
     - 'app/controllers/contact_par_etats_controller.rb'
     - 'app/controllers/mot_de_passe_agent_controller.rb'
     - 'app/controllers/configuration/dossiers_eleve_controller.rb'
-    - 'app/jobs/impcs/PerceivedComplexityorter_siecle.rb'
     - 'app/services/pdf_fiche_infirmerie.rb'
     - 'app/services/pdf_convocation.rb'
     - 'app/controllers/tache_imports_controller.rb'
@@ -138,6 +137,7 @@ Metrics/PerceivedComplexity:
   Exclude:
     - 'app/controllers/authentification_cas_ent_controller.rb'
     - 'app/controllers/accueil_controller.rb'
+    - 'app/controllers/retour_siecles_controller.rb'
     - 'app/services/import_eleve_complete.rb'
 
 Naming/VariableNumber:
