@@ -12,26 +12,59 @@ class ImporterSiecle < ApplicationJob
     tache = TacheImport.find(tache_id)
     tache.update(statut: TacheImport::STATUTS[:en_traitement])
 
-    if tache.import_nomenclature?
-      ImportNomenclature.new.perform(tache)
-      mail = AgentMailer.succes_import_nomenclature(email)
-    elsif tache.import_responsables?
-      ImportResponsables.new.perform(tache)
-      mail = AgentMailer.succes_import_responsables(email)
-    elsif tache.import_eleves?
-      ImportEleves.new.perform(tache)
-      mail = AgentMailer.succes_import_eleves(email)
-    else
-      importeur = ImportEleveComplete.new
-      importeur.perform(tache)
-      mail = AgentMailer.succes_import(email, importeur.statistiques)
-    end
-    mail.deliver_now
-
+    declenche_import(tache, email)
     tache.update(statut: TacheImport::STATUTS[:terminee])
   rescue StandardError => e
     tache.update(statut: TacheImport::STATUTS[:en_erreur])
     AgentMailer.erreur_import(email, e).deliver_now
+  end
+
+  def declenche_import(tache, email)
+    file = "#{Rails.root}/public/#{tache.fichier}"
+
+    if file_type_xml?(file)
+      mail = send("import_fichier_#{tache.type_fichier}", tache, email)
+      mail.deliver_now
+    elsif file_type_excel?(file)
+      importeur = ImportEleveComplete.new
+      importeur.perform(tache)
+      mail = AgentMailer.succes_import(email, importeur.statistiques)
+      mail.deliver_now
+    else
+      raise StandardError, "type de fichier non reconnu"
+    end
+
+  end
+
+  def file_type_excel?(file)
+    file_type(file) == "application/vnd.ms-excel"
+  end
+
+  def file_type_xml?(file)
+    file_type(file) == "text/xml"
+  end
+
+  def file_type_zip?(file)
+    file_type(file) == "application/zip"
+  end
+
+  def file_type(file)
+    `file -ib #{file}`.delete("\n").split(";")[0]
+  end
+
+  def import_fichier_nomenclature(tache, email)
+    ImportNomenclature.new.perform(tache)
+    AgentMailer.succes_import_nomenclature(email)
+  end
+
+  def import_fichier_responsables(tache, email)
+    ImportResponsables.new.perform(tache)
+    AgentMailer.succes_import_responsables(email)
+  end
+
+  def import_fichier_eleves(tache, email)
+    ImportEleves.new.perform(tache)
+    AgentMailer.succes_import_eleves(email)
   end
 
 end
