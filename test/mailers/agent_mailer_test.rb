@@ -22,7 +22,8 @@ class AgentMailerTest < ActionMailer::TestCase
 
   test "erreur import" do
     agent = Fabricate(:agent)
-    email = AgentMailer.erreur_import(agent.email)
+    exception = StandardError.new("Test d'erreur")
+    email = AgentMailer.erreur_import(agent.email, exception)
 
     assert_emails 1 do
       email.deliver_now

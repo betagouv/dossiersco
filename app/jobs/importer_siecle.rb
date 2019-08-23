@@ -29,9 +29,9 @@ class ImporterSiecle < ApplicationJob
     mail.deliver_now
 
     tache.update(statut: TacheImport::STATUTS[:terminee])
-  rescue StandardError
+  rescue StandardError => e
     tache.update(statut: TacheImport::STATUTS[:en_erreur])
-    AgentMailer.erreur_import(email).deliver_now
+    AgentMailer.erreur_import(email, e).deliver_now
   end
 
 end

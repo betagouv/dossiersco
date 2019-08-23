@@ -22,7 +22,8 @@ class AgentMailer < ApplicationMailer
     mail(subject: "Import des élèves dans DossierSCO", to: email, &:text)
   end
 
-  def erreur_import(email)
+  def erreur_import(email, exception)
+    @exception = exception
     mail(subject: "L'import de votre base élève a échoué", to: email, &:text)
   end
 
