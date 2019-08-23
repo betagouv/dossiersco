@@ -16,50 +16,62 @@ module ApplicationHelper
   def markdown(text)
     return "" if text.nil?
 
-    options = {
-      filter_html: true,
-      hard_wrap: true,
-      link_attributes: { rel: "nofollow", target: "_blank" },
-      space_after_headers: true,
-      fenced_code_blocks: true
-    }
-
-    extensions = {
-      autolink: true,
-      superscript: true,
-      disable_indented_code_blocks: true
-    }
-
     renderer = Redcarpet::Render::HTML.new(options)
     markdown = Redcarpet::Markdown.new(renderer, extensions)
 
     markdown.render(text).html_safe
   end
 
+  def options
+    {
+      filter_html: true,
+      hard_wrap: true,
+      link_attributes: { rel: "nofollow", target: "_blank" },
+      space_after_headers: true,
+      fenced_code_blocks: true
+    }
+  end
+
+  def extensions
+    {
+      autolink: true,
+      superscript: true,
+      disable_indented_code_blocks: true
+    }
+  end
+
   def classe_pour_menu(etape, dossier, entrees_de_menu)
-    index_etape = entrees_de_menu.index(etape)
-    index_etape ||= 0
-    index_dossier = entrees_de_menu.index(dossier.etape_la_plus_avancee)
-    index_dossier ||= 0
-    if index_dossier > index_etape
+    if etape_courante_precede_etape_la_plus_avancee?(etape, dossier, entrees_de_menu)
       "step step-enabled current done"
-    elsif index_dossier == index_etape
+    elsif etape_courante_equivalente_etape_la_plus_avancee?(etape, dossier, entrees_de_menu)
       "step step-enabled current"
     else
       "step step-disabled"
     end
   end
 
+  def etape_courante_precede_etape_la_plus_avancee?(etape, dossier, entrees_de_menu)
+    retrouve_index(entrees_de_menu, dossier.etape_la_plus_avancee) > retrouve_index(entrees_de_menu, etape)
+  end
+
+  def etape_courante_equivalente_etape_la_plus_avancee?(etape, dossier, entrees_de_menu)
+    retrouve_index(entrees_de_menu, dossier.etape_la_plus_avancee) == retrouve_index(entrees_de_menu, etape)
+  end
+
   def lien_menu(etape, dossier, entrees_de_menu)
-    index_etape = entrees_de_menu.index(etape)
-    index_etape ||= 0
-    index_dossier = entrees_de_menu.index(dossier.etape_la_plus_avancee)
-    index_dossier ||= 0
-    if index_dossier >= index_etape
+    if etape_courante_equivalente_ou_precedente_etape_la_plus_avancee?(etape, dossier, entrees_de_menu)
       "/#{etape}"
     else
       "#"
     end
+  end
+
+  def etape_courante_equivalente_ou_precedente_etape_la_plus_avancee?(etape, dossier, entrees_de_menu)
+    retrouve_index(entrees_de_menu, dossier.etape_la_plus_avancee) >= retrouve_index(entrees_de_menu, etape)
+  end
+
+  def retrouve_index(entrees_de_menu, etape)
+    entrees_de_menu.index(etape) || 0
   end
 
   def abandonnable?(dossier, option)

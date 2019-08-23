@@ -20,9 +20,6 @@ class Eleve < ActiveRecord::Base
 
   def obligatoire(options_du_groupe)
     options_du_groupe.map do |options|
-      noms_options_du_groupe = options.collect(&:nom)
-      noms_demandes = demande.map(&:option).map(&:nom)
-      options_du_groupe_demandees = noms_demandes & noms_options_du_groupe
       {
         label: options.first.groupe,
         name: options.first.groupe,
@@ -31,6 +28,12 @@ class Eleve < ActiveRecord::Base
         checked: options_du_groupe_demandees.size == 1 ? options_du_groupe_demandees[0] : ""
       }
     end
+  end
+
+  def options_du_groupe_demandees(options, demande)
+    noms_options_du_groupe = options.collect(&:nom)
+    noms_demandes = demande.map(&:option).map(&:nom)
+    noms_demandes & noms_options_du_groupe
   end
 
   def options_demandees
@@ -51,20 +54,6 @@ class Eleve < ActiveRecord::Base
 
   def jour_de_naissance
     date_naiss.split("-")[2]
-  end
-
-  def facultative(options_du_groupe)
-    options_du_groupe.flat_map do |options|
-      options.map do |option|
-        {
-          name: option.nom,
-          label: option.groupe,
-          type: "check",
-          condition: options_demandees.include?(option),
-          desc: option.nom_et_info
-        }
-      end
-    end
   end
 
   def obligatoire_sans_choix(options_du_groupe)
