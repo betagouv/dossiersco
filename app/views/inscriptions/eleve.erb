@@ -83,7 +83,7 @@
           <h3>Options pédagogiques choisies à l'inscription</h3>
         </div>
         <ul class="mb-5">
-          <% @dossier_eleve.options_pedagogiques.each do |option| %>
+          <% @dossier_eleve.options_triees_par_rang.each do |option| %>
             <li><%= option.nom %></li>
           <% end %>
         </ul>
