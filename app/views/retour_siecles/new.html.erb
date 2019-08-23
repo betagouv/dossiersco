@@ -11,6 +11,7 @@
     <% else %>
 
       <%= form_tag new_retour_siecle_path, method: :get do |f| %>
+        <%= hidden_field_tag :bypass_manque_division, value: true %>
         <div>
           <%= text_field_tag :liste_ine %>
         </div>

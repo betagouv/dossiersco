@@ -22,8 +22,7 @@ module Configuration
                                     .where("eleves.prenom is not null")
                                     .where("eleves.nom is not null")
                                     .where(communes_non_vides)
-
-      @dossiers = if params[:limite]
+      @dossiers = if params[:liste_ine].present?
                     base_dossiers.joins(:eleve).where("eleves.identifiant in (?)", params[:liste_ine].split(","))
                   else
                     base_dossiers
