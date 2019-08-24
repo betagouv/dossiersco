@@ -10,6 +10,8 @@ Ce document à pour objet de lister les hypothèses, de documenter celles qui on
 
 - Est-ce que DossierSCO à malgré tout apporté de la valeur pour eux ?
 - Est-ce qu'ils vont re-utiliser DossierSCO ?
+- Comment accueillez-vous les familles ?
+- Comment accueillez-vous les familles les plus en difficulté ?
 
 
 
