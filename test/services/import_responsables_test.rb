@@ -8,25 +8,29 @@ class ImportResponsablesTest < ActiveSupport::TestCase
 
   include ActionDispatch::TestProcess::FixtureFile
 
-  test "lève une exception s'il y a deux représentant légaux qui porte le même nom, prénom et date de naissance dans le même établissement" do
+  test "ne met pas à jour deux représentants légaux qui portent le même nom et prénom dans le même établissement" do
     etablissement = Fabricate(:etablissement)
 
-    Fabricate(:resp_legal,
-              prenom: "Maryline",
-              nom: "ROCK",
-              profession: 34,
-              dossier_eleve: Fabricate(:dossier_eleve, etablissement: etablissement))
-    Fabricate(:resp_legal,
-              prenom: "Maryline",
-              nom: "ROCK",
-              profession: 10,
-              dossier_eleve: Fabricate(:dossier_eleve, etablissement: etablissement))
+    premier_homonyme = Fabricate(:resp_legal,
+                                 prenom: "Maryline",
+                                 nom: "ROCK",
+                                 profession: 34,
+                                 paie_frais_scolaires: false,
+                                 dossier_eleve: Fabricate(:dossier_eleve, etablissement: etablissement))
+    second_homonyme = Fabricate(:resp_legal,
+                                prenom: "Maryline",
+                                nom: "ROCK",
+                                profession: 10,
+                                paie_frais_scolaires: false,
+                                dossier_eleve: Fabricate(:dossier_eleve, etablissement: etablissement))
 
     fichier_xml = fixture_file_upload("files/responsables_avec_adresses_simple.xml")
     tache = Fabricate(:tache_import, type_fichier: "responsables", fichier: fichier_xml, etablissement: etablissement)
 
-    assert_raise ExceptionPlusieursResponsablesLegauxTrouve do
+    assert_nothing_raised do
       ImportResponsables.new.perform(tache)
+      assert_equal false, premier_homonyme.reload.paie_frais_scolaires
+      assert_equal false, second_homonyme.reload.paie_frais_scolaires
     end
   end
 
