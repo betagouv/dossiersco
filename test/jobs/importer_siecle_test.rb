@@ -75,17 +75,4 @@ class ImporterSiecleTest < ActiveJob::TestCase
     assert_equal "Import de votre base élève dans DossierSCO", last_email.subject
   end
 
-  test "lève une exception si le format n'est pas XML ou Excel" do
-    ActionMailer::Base.deliveries.clear
-    fichier_png = fixture_file_upload("files/sample.png")
-    tache = Fabricate(:tache_import, fichier: fichier_png)
-    assert_equal "en attente", tache.statut
-    ImporterSiecle.perform_now(tache.id, "an_email@example.com")
-    tache.reload
-    assert_equal "en erreur", tache.statut
-    assert_equal 1, ActionMailer::Base.deliveries.count
-    last_email = ActionMailer::Base.deliveries.last
-    assert_equal "L'import de votre base élève a échoué", last_email.subject
-  end
-
 end
