@@ -46,7 +46,6 @@ class FamilleMailer < ApplicationMailer
     end
 
     subject = "Réinscription de votre enfant au collège"
-
     email_reponse = @eleve.dossier_eleve.etablissement.email_reponse
     reply_to = if email_reponse.present?
                  email_reponse
@@ -67,7 +66,6 @@ class FamilleMailer < ApplicationMailer
     end
 
     subject = "Réinscription de votre enfant au collège"
-
     reply_to = agent.email
     mail(subject: subject, reply_to: reply_to, to: email, &:text)
   end

@@ -25,6 +25,24 @@ class Etablissement < ActiveRecord::Base
     dossier_eleve.collect(&:eleve).collect(&:niveau_classe_ant).reject(&:nil?).uniq
   end
 
+  def stats
+    avec_feedback = []
+    etats = {}
+    DossierEleve
+      .where.not(etat: "pas connecté")
+      .select { |e| e.etablissement_id == id }
+      .group_by(&:etat)
+      .each_pair do |etat, dossiers_etat|
+      etats[etat] = dossiers_etat.count
+      avec_feedback.push(*dossiers_etat) if etat.include? "valid"
+    end
+    notes = avec_feedback.collect(&:satisfaction)
+    notes_renseignees = notes.select(&:positive?)
+    moyenne = notes_renseignees.count.positive? ? format("%.2f", ((notes_renseignees.sum + 0.0) / notes_renseignees.count)).to_s : ""
+    dossiers_avec_commentaires = avec_feedback.reject { |d| d if d.commentaire.nil? || d.commentaire.empty? }
+    [etats, notes, moyenne, dossiers_avec_commentaires]
+  end
+
   def departement
     code_postal.present? ? code_postal[0..1] : ""
   end
