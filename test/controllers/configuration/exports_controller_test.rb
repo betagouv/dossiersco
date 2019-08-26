@@ -304,4 +304,22 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "ne génére pas de balise division si pas de division" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+
+    Fabricate(:dossier_eleve_valide,
+              etablissement: admin.etablissement,
+              division: nil, division_an_dernier: nil)
+
+    get export_siecle_configuration_exports_path(xml_only: true)
+
+    assert_response :success
+
+    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    Nokogiri::XML::Schema(File.read(schema))
+
+    assert_no_match "CODE_DIVISION", response.body
+  end
+
 end

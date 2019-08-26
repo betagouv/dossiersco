@@ -79,7 +79,9 @@
             </RESPONSABLES_ELEVE>
             <SCOLARITE_ACTIVE>
               <CODE_MEF><%= dossier_eleve.mef_destination.code %></CODE_MEF>
-              <CODE_DIVISION><%= dossier_eleve.division %></CODE_DIVISION>
+              <% if dossier_eleve.division.present? %>
+                <CODE_DIVISION><%= dossier_eleve.division %></CODE_DIVISION>
+              <% end %>
               <CODE_STATUT>ST</CODE_STATUT>
               <DATE_DEB_SCO>2019-09-04</DATE_DEB_SCO>
               <OPTIONS>
@@ -97,7 +99,9 @@
               <CODE_PROVENANCE>1</CODE_PROVENANCE>
               <CODE_MEF><%= dossier_eleve.mef_an_dernier %></CODE_MEF>
               <TYPE_MEF><%= dossier_eleve.mef_an_dernier[10] || " " %></TYPE_MEF>
-              <CODE_DIVISION><%= dossier_eleve.division_an_dernier %></CODE_DIVISION>
+              <% if dossier_eleve.division_an_dernier.present? %>
+                <CODE_DIVISION><%= dossier_eleve.division_an_dernier %></CODE_DIVISION>
+              <% end %>
               <OPTIONS_AN_DERNIER>
                 <% dossier_eleve.options_origines.each do |id, h| %>
                   <CODE_MATIERE><%= h["code_matiere"] %></CODE_MATIERE>
