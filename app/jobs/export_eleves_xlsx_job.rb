@@ -3,15 +3,9 @@
 class ExportElevesXlsxJob < ActiveJob::Base
 
   def perform(agent)
-    lignes = faire_lignes(agent)
-    entete = cellules_entete(agent)
-
-    creer_fichier(lignes, entete, agent)
-
+    creer_fichier(faire_lignes(agent), cellules_entete(agent), agent)
     temp_file = creer_zip(agent)
-
     FichierATelecharger.create!(contenu: temp_file, etablissement: agent.etablissement, nom: "eleves")
-
     FileUtils.rm_rf("tmp/eleves-#{agent.etablissement.id}.xlsx")
   end
 
@@ -32,22 +26,42 @@ class ExportElevesXlsxJob < ActiveJob::Base
   end
 
   def cellules_entete(agent)
-    options_etablissement = agent.etablissement.options_pedagogiques
-    entete_options = options_etablissement.map(&:nom)
-    entete = ["Classe actuelle", "MEF actuel", "Prenom", "Nom", "Date naissance", "Sexe"].concat(entete_options)
-
+    entete = []
+    entete << "Classe actuelle"
+    entete << "MEF actuel"
+    entete << "Prenom"
+    entete << "Nom"
+    entete << "Date naissance"
+    entete << "Pays naissance"
+    entete << "Ville naissance"
+    entete << "Commune INSEE naissance"
+    entete << "Nationalite"
+    entete << "Sexe"
+    entete.concat(agent.etablissement.options_pedagogiques.map(&:nom))
     entete.concat(agent.etablissement.regimes_sortie.map(&:nom)) if agent.etablissement.regimes_sortie.count > 1
     entete.concat(["Autorise photo de classe", "Information médicale"])
     entete.concat(agent.etablissement.pieces_attendues.map(&:nom))
-    entete.concat(["Status du dossier"])
-    entete.concat(["Demi-pensionnaire"])
+    entete << "Status du dossier"
+    entete << "Demi-pensionnaire"
     entete
   end
 
   def cellules_infos_base(dossier)
-    mef_origin = dossier.mef_origine.present? ? dossier.mef_origine.libelle : ""
-    [dossier.eleve.classe_ant, mef_origin, dossier.eleve.prenom, dossier.eleve.nom,
-     dossier.eleve.date_naiss, dossier.eleve.sexe]
+    pays = Pays.new
+    nationalite = Nationalite.new
+    eleve = dossier.eleve
+    informations = []
+    informations << eleve.classe_ant
+    informations << (dossier.mef_origine.present? ? dossier.mef_origine.libelle : "")
+    informations << eleve.prenom
+    informations << eleve.nom
+    informations << eleve.date_naiss
+    informations << pays.a_partir_du_code(eleve.pays_naiss)
+    informations << eleve.ville_naiss
+    informations << eleve.commune_insee_naissance
+    informations << nationalite.a_partir_du_code(eleve.nationalite)
+    informations << eleve.sexe
+    informations
   end
 
   def cellules_options_eleve(dossier)
@@ -86,15 +100,11 @@ class ExportElevesXlsxJob < ActiveJob::Base
   end
 
   def creer_zip(agent)
-    dossier = "tmp"
-    nom_zip = "eleves.zip"
     nom_fichier = "eleves-#{agent.etablissement.id}.xlsx"
-    temp_file = Tempfile.new(nom_zip)
-
+    temp_file = Tempfile.new("eleves.zip")
     Zip::File.open(temp_file.path, Zip::File::CREATE) do |zipfile|
-      zipfile.add(nom_fichier, File.join(dossier, nom_fichier))
+      zipfile.add(nom_fichier, File.join("tmp", nom_fichier))
     end
-
     temp_file
   end
 
