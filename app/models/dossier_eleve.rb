@@ -58,6 +58,16 @@ class DossierEleve < ActiveRecord::Base
     where("etat in (?)", [ETAT[:pas_connecte], ETAT[:connecte]])
   }
 
+  scope :exportables, lambda {
+    where("mef_destination_id is not null")
+      .where.not(mef_an_dernier: [nil, ""])
+      .where(etat: ETAT[:valide])
+      .joins(:eleve)
+      .where("eleves.prenom is not null")
+      .where("eleves.nom is not null")
+      .where("eleves.commune_insee_naissance is not null or (eleves.pays_naiss <> '100' and eleves.ville_naiss is not null)")
+  }
+
   def self.par_authentification(identifiant, jour, mois, annee)
     eleve = Eleve.par_authentification(identifiant, jour, mois, annee)
     return eleve.dossier_eleve if eleve.is_a?(Eleve)
@@ -163,15 +173,5 @@ class DossierEleve < ActiveRecord::Base
     options_obligatoires = Hash[options_par_rang.sort].map { |_rang, option| option }
     options_obligatoires + options_facultatives
   end
-
-  scope :exportables, lambda {
-    where("mef_destination_id is not null")
-      .where.not(mef_an_dernier: [nil, ""])
-      .where(etat: ETAT[:valide])
-      .joins(:eleve)
-      .where("eleves.prenom is not null")
-      .where("eleves.nom is not null")
-      .where("eleves.commune_insee_naissance is not null or (eleves.pays_naiss <> '100' and eleves.ville_naiss is not null)")
-  }
 
 end
