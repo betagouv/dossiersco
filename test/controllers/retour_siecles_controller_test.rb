@@ -144,4 +144,21 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     assert_equal [dossier], assigns(:dossiers)
   end
 
+  test "n'exporte pas un dossier sans mef_an_dernier" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+    etablissement = admin.etablissement
+
+    dossier_ignore = Fabricate(:dossier_eleve, mef_an_dernier: nil,
+                                               etat: DossierEleve::ETAT[:valide], etablissement: etablissement)
+
+    dossier_pris_en_compte = Fabricate(:dossier_eleve, mef_an_dernier: Fabricate(:mef),
+                                                       etat: DossierEleve::ETAT[:valide], etablissement: etablissement)
+
+    get new_retour_siecle_path
+    assert_equal 1, assigns(:dossiers).count
+    assert_not assigns(:dossiers).include?(dossier_ignore)
+    assert_equal [dossier_pris_en_compte], assigns(:dossiers)
+  end
+
 end
