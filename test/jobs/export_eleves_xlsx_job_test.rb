@@ -69,6 +69,25 @@ class ExportElevesXlsxJobTest < ActionDispatch::IntegrationTest
     cellules_attendues << "Information médicale"
     cellules_attendues << "Status du dossier"
     cellules_attendues << "Demi-pensionnaire"
+
+    2.times do
+      cellules_attendues << "lien_de_parente"
+      cellules_attendues << "prenom"
+      cellules_attendues << "nom"
+      cellules_attendues << "adresse"
+      cellules_attendues << "code_postal"
+      cellules_attendues << "ville"
+      cellules_attendues << "pays"
+      cellules_attendues << "ville_etrangere"
+      cellules_attendues << "tel_personnel"
+      cellules_attendues << "tel_portable"
+      cellules_attendues << "tel_professionnel"
+      cellules_attendues << "email"
+      cellules_attendues << "profession"
+      cellules_attendues << "enfants_a_charge"
+      cellules_attendues << "communique_info_parents_eleves"
+      cellules_attendues << "paie_frais_scolaires"
+    end
     assert_equal cellules_attendues, export.cellules_entete(agent)
   end
 
@@ -151,6 +170,32 @@ class ExportElevesXlsxJobTest < ActionDispatch::IntegrationTest
                  dossier.etat,
                  "X"]]
     assert_equal expected, export.faire_lignes(agent)
+  end
+
+  test "#cellules_resp_legaux renvoie des cases vide pour le 2eme resp si aucune info" do
+    responsable = Fabricate(:resp_legal)
+    dossier = Fabricate(:dossier_eleve, resp_legal: [responsable])
+    export = ExportElevesXlsxJob.new
+
+    cellules_attendues = []
+    cellules_attendues << responsable.lien_de_parente
+    cellules_attendues << responsable.prenom
+    cellules_attendues << responsable.nom
+    cellules_attendues << responsable.adresse
+    cellules_attendues << responsable.code_postal
+    cellules_attendues << responsable.ville
+    cellules_attendues << responsable.pays
+    cellules_attendues << responsable.ville_etrangere
+    cellules_attendues << responsable.tel_personnel
+    cellules_attendues << responsable.tel_portable
+    cellules_attendues << responsable.tel_professionnel
+    cellules_attendues << responsable.email
+    cellules_attendues << responsable.profession
+    cellules_attendues << responsable.enfants_a_charge
+    cellules_attendues << responsable.communique_info_parents_eleves
+    cellules_attendues << responsable.paie_frais_scolaires
+
+    assert_equal cellules_attendues, export.cellules_responsable_legaux(dossier)
   end
 
 end

@@ -20,6 +20,7 @@ class ExportElevesXlsxJob < ActiveJob::Base
       ligne.concat(cellules_pieces_jointes(dossier))
       ligne << dossier.etat
       ligne << (dossier.demi_pensionnaire? ? "X" : "")
+      ligne.concat(cellules_responsable_legaux(dossier))
       lignes << ligne
     end
     lignes
@@ -43,6 +44,26 @@ class ExportElevesXlsxJob < ActiveJob::Base
     entete.concat(agent.etablissement.pieces_attendues.map(&:nom))
     entete << "Status du dossier"
     entete << "Demi-pensionnaire"
+
+    2.times do
+      entete << "lien_de_parente"
+      entete << "prenom"
+      entete << "nom"
+      entete << "adresse"
+      entete << "code_postal"
+      entete << "ville"
+      entete << "pays"
+      entete << "ville_etrangere"
+      entete << "tel_personnel"
+      entete << "tel_portable"
+      entete << "tel_professionnel"
+      entete << "email"
+      entete << "profession"
+      entete << "enfants_a_charge"
+      entete << "communique_info_parents_eleves"
+      entete << "paie_frais_scolaires"
+    end
+
     entete
   end
 
@@ -106,6 +127,29 @@ class ExportElevesXlsxJob < ActiveJob::Base
       zipfile.add(nom_fichier, File.join("tmp", nom_fichier))
     end
     temp_file
+  end
+
+  def cellules_responsable_legaux(dossier)
+    responsables = []
+    dossier.resp_legal.each do |responsable|
+      responsables << responsable.lien_de_parente
+      responsables << responsable.prenom
+      responsables << responsable.nom
+      responsables << responsable.adresse
+      responsables << responsable.code_postal
+      responsables << responsable.ville
+      responsables << responsable.pays
+      responsables << responsable.ville_etrangere
+      responsables << responsable.tel_personnel
+      responsables << responsable.tel_portable
+      responsables << responsable.tel_professionnel
+      responsables << responsable.email
+      responsables << responsable.profession
+      responsables << responsable.enfants_a_charge
+      responsables << responsable.communique_info_parents_eleves
+      responsables << responsable.paie_frais_scolaires
+    end
+    responsables
   end
 
 end

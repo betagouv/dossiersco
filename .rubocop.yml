@@ -91,6 +91,7 @@ Metrics/MethodLength:
 Metrics/ClassLength:
   Exclude:
     - 'test/**/*'
+    - "app/jobs/export_eleves_xlsx_job.rb"
     - 'app/services/pdf_fiche_infirmerie.rb'
     - 'app/controllers/inscriptions_controller.rb'
     - 'app/models/dossier_eleve.rb'
