@@ -15,13 +15,7 @@ module Configuration
     def export_siecle
       @etablissement = @agent_connecte.etablissement
 
-      communes_non_vides = "eleves.commune_insee_naissance is not null or (eleves.pays_naiss <> '100' and eleves.ville_naiss is not null)"
-      base_dossiers = @etablissement.dossier_eleve
-                                    .where("mef_destination_id is not null")
-                                    .joins(:eleve)
-                                    .where("eleves.prenom is not null")
-                                    .where("eleves.nom is not null")
-                                    .where(communes_non_vides)
+      base_dossiers = @etablissement.dossier_eleve.exportables
       @dossiers = if params[:liste_ine].present?
                     base_dossiers.joins(:eleve).where("eleves.identifiant in (?)", params[:liste_ine].split(","))
                   else

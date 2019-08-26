@@ -164,4 +164,13 @@ class DossierEleve < ActiveRecord::Base
     options_obligatoires + options_facultatives
   end
 
+  scope :exportables, lambda {
+    where("mef_destination_id is not null")
+      .where.not(mef_an_dernier: [nil, ""])
+      .joins(:eleve)
+      .where("eleves.prenom is not null")
+      .where("eleves.nom is not null")
+      .where("eleves.commune_insee_naissance is not null or (eleves.pays_naiss <> '100' and eleves.ville_naiss is not null)")
+  }
+
 end
