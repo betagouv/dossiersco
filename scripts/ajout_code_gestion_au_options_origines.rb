@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-etablissement = Etablissement.find_by(uai: '0752550P')
+etablissement = Etablissement.find_by(uai: "0752550P")
 
 dossiers = etablissement.dossier_eleve
 
-dossiers.sample(1).each do |dossier|
+dossiers.each do |dossier|
   puts "dossier.options_origines : #{dossier.options_origines}"
   dossier.options_origines.keys.each do |option_id|
     puts "key : #{option_id}"
