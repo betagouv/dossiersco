@@ -16,7 +16,7 @@ class RetourSieclesController < ApplicationController
     @dossiers_sans_division = DossierEleve.where(etablissement: @etablissement, division: nil)
     render(:manque_division) && return if @dossiers_sans_division.count.positive? && !params[:bypass_manque_division]
 
-    @dossiers = dossiers_etablissement.where.not(mef_destination_id: [nil, ""]).where.not(mef_an_dernier: nil).where(etat: DossierEleve::ETAT[:valide])
+    @dossiers = dossiers_etablissement.where.not(mef_destination_id: [nil, ""]).where.not(mef_an_dernier: [nil, ""]).where(etat: DossierEleve::ETAT[:valide])
     @dossiers_bloques = []
     @dossiers_bloques.concat(extrait_informations(dossiers_etablissement.where(mef_destination: nil), I18n.t("retour_siecles.new.dossier_sans_mef_destination")))
     @dossiers_bloques.concat(extrait_informations(eleves_sans_commune_insee, I18n.t("retour_siecles.new.probleme_de_commune_insee")))
