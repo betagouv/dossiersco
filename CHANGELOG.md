@@ -4,6 +4,8 @@
 
 ### Retour SIECLE
 
+- **Liste les dossiers sans mef_an_dernier comme non exportables**
+
 - **Permet de continuer malgré des élèves sans division** pour les remonter dans siecle
 
 - **Récupère l'information à propos du paiement des frais scolaires** pour pouvoir les remonter dans siecle

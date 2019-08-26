@@ -21,6 +21,7 @@ class RetourSieclesController < ApplicationController
     @dossiers_bloques.concat(extrait_informations(dossiers_etablissement.where(mef_destination: nil), I18n.t("retour_siecles.new.dossier_sans_mef_destination")))
     @dossiers_bloques.concat(extrait_informations(eleves_sans_commune_insee, I18n.t("retour_siecles.new.probleme_de_commune_insee")))
     @dossiers_bloques.concat(extrait_informations(resp_legal_probleme_profession, I18n.t("retour_siecles.new.probleme_de_profession")))
+    @dossiers_bloques.concat(extrait_informations(dossiers_etablissement.where(mef_an_dernier: nil), I18n.t("retour_siecles.new.dossier_mef_an_dernier_inconnu")))
 
     if params[:liste_ine].present?
       ines = params[:liste_ine].split(",")

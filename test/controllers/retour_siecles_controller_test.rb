@@ -131,6 +131,17 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     assert_equal I18n.t("retour_siecles.new.probleme_de_commune_insee"), assigns(:dossiers_bloques).first.raison
   end
 
+  test "liste les dossiers dont nous ne retrouvons pas le mef_an_dernier" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+    etablissement = admin.etablissement
+
+    dossier_sans_mef_an_dernier = Fabricate(:dossier_eleve, mef_an_dernier: nil, etablissement: etablissement)
+
+    get new_retour_siecle_path
+    assert_equal dossier_sans_mef_an_dernier.eleve.identifiant, assigns(:dossiers_bloques).first.identifiant
+    assert_equal I18n.t("retour_siecles.new.dossier_mef_an_dernier_inconnu"), assigns(:dossiers_bloques).first.raison
+  end
   test "exporte uniquement le dossier en état validé" do
     admin = Fabricate(:admin)
     identification_agent(admin)
