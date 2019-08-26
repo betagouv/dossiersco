@@ -322,4 +322,26 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     assert_no_match "CODE_DIVISION", response.body
   end
 
+  test "n'exporte que les élèves avec une mef destination conforme au xsd " do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+
+    mef_non_conforme = Fabricate(:mef, code: "ACREER POUR BILANGUEALLEMAND")
+    option = Fabricate(:option_pedagogique)
+    Fabricate(:mef_option_pedagogique, mef: mef_non_conforme, option_pedagogique: option, code_modalite_elect: "F")
+    Fabricate(:dossier_eleve_valide,
+              etablissement: admin.etablissement,
+              mef_destination: mef_non_conforme,
+              options_pedagogiques: [option])
+
+    get export_siecle_configuration_exports_path(xml_only: true)
+
+    assert_response :success
+
+    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    Nokogiri::XML::Schema(File.read(schema))
+
+    assert_no_match mef_non_conforme.code, response.body
+  end
+
 end

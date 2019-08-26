@@ -21,6 +21,7 @@ module Configuration
                   else
                     base_dossiers
                   end
+      @dossiers = @dossiers.select { |d| d.mef_destination.code =~ /\d{11}/ && d.mef_origine.code =~ /\d{11}/ }
       year = Time.now.strftime("%Y")
       next_year = Time.now.strftime("%y").to_i + 1
       timestamp = Time.now.strftime("%m%d%I%M%S")

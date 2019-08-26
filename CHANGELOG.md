@@ -4,6 +4,8 @@
 
 ### Retour SIECLE
 
+- **Controle le code des mef retournées dans la base élève**
+
 - **Formatte code postal, tel pro, adresses pour siecle**
 
 - **Renseigne à Inconnu un nom ou un prenom vide** de représentant légal
