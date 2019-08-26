@@ -62,7 +62,7 @@
             <% if dossier_eleve.eleve.pays_naiss == "100" %>
               <CODE_COMMUNE_INSEE_NAISS><%= dossier_eleve.eleve.commune_insee_naissance %></CODE_COMMUNE_INSEE_NAISS>
             <% else %>
-              <VILLE_NAISS><%= dossier_eleve.eleve.ville_naiss %></VILLE_NAISS>
+              <VILLE_NAISS><%= dossier_eleve.eleve.ville_naiss.present? ? dossier_eleve.eleve.ville_naiss : "Inconnu" %></VILLE_NAISS>
             <% end %>
             <ADHESION_TRANSPORT>false</ADHESION_TRANSPORT>
             <CODE_REGIME><%= dossier_eleve.demi_pensionnaire? ? 24 : 0 %></CODE_REGIME>

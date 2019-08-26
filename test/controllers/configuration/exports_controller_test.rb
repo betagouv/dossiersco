@@ -130,6 +130,26 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     assert_match dossier.eleve.ville_naiss, xml.css("VILLE_NAISS").text
   end
 
+  test "Pour une naissance à l'étranger sans commune, la commune est renseignée comme inconnue" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+
+    eleve_sans_commune = Fabricate(:eleve, ville_naiss: nil, pays_naiss: "324")
+    dossier_sans_commune = Fabricate(:dossier_eleve_valide,
+                                     eleve: eleve_sans_commune,
+                                     etablissement: admin.etablissement,
+                                     mef_destination: Fabricate(:mef, etablissement: admin.etablissement))
+    get export_siecle_configuration_exports_path(xml_only: true)
+
+    assert_response :success
+
+    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    Nokogiri::XML::Schema(File.read(schema))
+    xml = Nokogiri::XML(response.body)
+
+    assert_match dossier_sans_commune.eleve.pays_naiss, xml.css("CODE_PAYS").text
+    assert_match "Inconnu", xml.css("VILLE_NAISS").text
+  end
   test "export uniquement pour l'INE saisi" do
     admin = Fabricate(:admin)
     identification_agent(admin)

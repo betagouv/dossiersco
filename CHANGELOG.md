@@ -4,7 +4,10 @@
 
 ### Retour SIECLE
 
+- **Renseigne à Inconnu un dossier eleve sans ville de naissance pour un pays étranger**
+
 - **N'exporte que les dossiers validés** pour le retour dans siecle
+
 - **Liste les dossiers sans mef_an_dernier comme non exportables**
 
 - **Permet de continuer malgré des élèves sans division** pour les remonter dans siecle
