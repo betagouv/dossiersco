@@ -107,7 +107,7 @@ class RespLegal < ActiveRecord::Base
     self.ville_etrangere = ""
   end
 
-  def tel_profesionnel_siecle
+  def tel_professionnel_siecle
     tel_professionnel.gsub(/\d*/).first
   end
 
