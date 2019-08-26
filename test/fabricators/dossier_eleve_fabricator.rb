@@ -9,3 +9,7 @@ Fabricator(:dossier_eleve) do
   division_an_dernier "4 D"
   division "3 A"
 end
+
+Fabricator(:dossier_eleve_valide, from: :dossier_eleve) do
+  etat "validé"
+end

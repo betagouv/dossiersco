@@ -9,32 +9,22 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     identification_agent(admin)
 
     resp = Fabricate(:resp_legal, email: "")
-    dossier_eleve = Fabricate(:dossier_eleve,
+    dossier_eleve = Fabricate(:dossier_eleve_valide,
                               etablissement: admin.etablissement,
                               resp_legal: [resp])
 
     resp = Fabricate(:resp_legal, email: nil)
-    dossier_eleve = Fabricate(:dossier_eleve,
+    dossier_eleve = Fabricate(:dossier_eleve_valide,
                               etablissement: admin.etablissement,
                               resp_legal: [resp])
 
-    # resp = Fabricate(:resp_legal, communique_info_parents_eleves: nil)
-    # dossier_eleve = Fabricate(:dossier_eleve,
-    #                           etablissement: admin.etablissement,
-    #                           resp_legal: [resp])
-
-    # resp = Fabricate(:resp_legal, profession: nil)
-    # dossier_eleve = Fabricate(:dossier_eleve,
-    #                           etablissement: admin.etablissement,
-    #                           resp_legal: [resp])
-
     resp = Fabricate(:resp_legal)
-    dossier_eleve = Fabricate(:dossier_eleve,
+    dossier_eleve = Fabricate(:dossier_eleve_valide,
                               etablissement: admin.etablissement,
                               resp_legal: [resp])
     3.times do
       resp = Fabricate(:resp_legal)
-      dossier_eleve = Fabricate(:dossier_eleve,
+      dossier_eleve = Fabricate(:dossier_eleve_valide,
                                 etablissement: admin.etablissement,
                                 resp_legal: [resp])
       option = Fabricate(:option_pedagogique, nom: "un super nom d'option un peu long", obligatoire: "F", code_matiere: "ALGEV")
@@ -42,7 +32,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     end
 
     resp = Fabricate(:resp_legal, enfants_a_charge: 2)
-    Fabricate(:dossier_eleve,
+    Fabricate(:dossier_eleve_valide,
               mef_destination: nil,
               etablissement: admin.etablissement,
               resp_legal: [resp])
@@ -66,7 +56,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
                      code_postal: "75000",
                      ville: "Ville de test",
                      pays: "FRA")
-    Fabricate(:dossier_eleve,
+    Fabricate(:dossier_eleve_valide,
               etablissement: admin.etablissement,
               resp_legal: [resp])
     %i[adresse code_postal ville pays].each do |partie_du_tag_adresse|
@@ -76,7 +66,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
                                  ville: "Ville a ne pas afficher",
                                  pays: "XXX")
       resp_incomplet[partie_du_tag_adresse] = nil
-      Fabricate.build(:dossier_eleve,
+      Fabricate.build(:dossier_eleve_valide,
                       etablissement: admin.etablissement,
                       resp_legal: [resp_incomplet])
     end
@@ -105,7 +95,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
     eleve = Fabricate(:eleve)
     resp_legal = Fabricate(:resp_legal)
-    dossier = Fabricate(:dossier_eleve, eleve: eleve, resp_legal: [resp_legal], etablissement: admin.etablissement)
+    dossier = Fabricate(:dossier_eleve_valide, eleve: eleve, resp_legal: [resp_legal], etablissement: admin.etablissement)
 
     get export_siecle_configuration_exports_path(xml_only: true)
 
@@ -123,7 +113,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     identification_agent(admin)
 
     eleve = Fabricate(:eleve, ville_naiss: "KINSHASA", pays_naiss: "324")
-    dossier = Fabricate(:dossier_eleve,
+    dossier = Fabricate(:dossier_eleve_valide,
                         eleve: eleve,
                         etablissement: admin.etablissement,
                         mef_destination: Fabricate(:mef, etablissement: admin.etablissement))
@@ -154,10 +144,10 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
                            code_postal: "75000",
                            ville: "Ville de test",
                            pays: "FRA")
-    dossier = Fabricate(:dossier_eleve,
+    dossier = Fabricate(:dossier_eleve_valide,
                         etablissement: admin.etablissement,
                         resp_legal: [resp])
-    Fabricate(:dossier_eleve,
+    Fabricate(:dossier_eleve_valide,
               etablissement: admin.etablissement,
               resp_legal: [autre_resp])
 
@@ -179,7 +169,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     mef = Fabricate(:mef)
     option = Fabricate(:option_pedagogique)
     Fabricate(:mef_option_pedagogique, mef: mef, option_pedagogique: option, code_modalite_elect: "F")
-    dossier = Fabricate(:dossier_eleve,
+    dossier = Fabricate(:dossier_eleve_valide,
                         etablissement: admin.etablissement,
                         mef_destination: mef,
                         options_pedagogiques: [option])
@@ -202,7 +192,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     mef = Fabricate(:mef)
     option = Fabricate(:option_pedagogique)
     Fabricate(:mef_option_pedagogique, mef: mef, option_pedagogique: option, code_modalite_elect: nil)
-    dossier = Fabricate(:dossier_eleve,
+    dossier = Fabricate(:dossier_eleve_valide,
                         etablissement: admin.etablissement,
                         mef_destination: mef,
                         options_pedagogiques: [option])
@@ -222,7 +212,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     admin = Fabricate(:admin)
     identification_agent(admin)
 
-    dossier = Fabricate(:dossier_eleve, etablissement: admin.etablissement, mef_an_dernier: "12345678009")
+    dossier = Fabricate(:dossier_eleve_valide, etablissement: admin.etablissement, mef_an_dernier: "12345678009")
 
     get export_siecle_configuration_exports_path(xml_only: true), params: { limite: true, liste_ine: dossier.eleve.identifiant }
 
@@ -246,7 +236,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     Fabricate(:mef_option_pedagogique, mef: mef, option_pedagogique: option_facultative, rang_option: nil)
     Fabricate(:mef_option_pedagogique, mef: mef, option_pedagogique: option_de_rang_2, rang_option: 2)
     Fabricate(:mef_option_pedagogique, mef: mef, option_pedagogique: option_de_rang_1, rang_option: 1)
-    dossier = Fabricate(:dossier_eleve,
+    dossier = Fabricate(:dossier_eleve_valide,
                         etablissement: admin.etablissement,
                         mef_destination: mef,
                         options_pedagogiques: [option_facultative, option_de_rang_2, option_de_rang_1])
@@ -271,7 +261,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
     resp_qui_paie = Fabricate(:resp_legal, paie_frais_scolaires: true)
     resp_qui_paie_pas = Fabricate(:resp_legal, paie_frais_scolaires: false)
-    dossier = Fabricate(:dossier_eleve, etablissement: admin.etablissement, resp_legal: [resp_qui_paie, resp_qui_paie_pas])
+    dossier = Fabricate(:dossier_eleve_valide, etablissement: admin.etablissement, resp_legal: [resp_qui_paie, resp_qui_paie_pas])
 
     get export_siecle_configuration_exports_path(xml_only: true), params: { limite: true, liste_ine: dossier.eleve.identifiant }
 

@@ -167,6 +167,7 @@ class DossierEleve < ActiveRecord::Base
   scope :exportables, lambda {
     where("mef_destination_id is not null")
       .where.not(mef_an_dernier: [nil, ""])
+      .where(etat: ETAT[:valide])
       .joins(:eleve)
       .where("eleves.prenom is not null")
       .where("eleves.nom is not null")

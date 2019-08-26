@@ -4,6 +4,7 @@
 
 ### Retour SIECLE
 
+- **N'exporte que les dossiers validés** pour le retour dans siecle
 - **Liste les dossiers sans mef_an_dernier comme non exportables**
 
 - **Permet de continuer malgré des élèves sans division** pour les remonter dans siecle
