@@ -107,4 +107,20 @@ class RespLegal < ActiveRecord::Base
     self.ville_etrangere = ""
   end
 
+  def tel_profesionnel_siecle
+    tel_professionnel.gsub(/\d*/).first
+  end
+
+  def ligne_adresse1_siecle
+    if adresse.length > 38
+      ligne_adresse.split(",")[0]
+    else
+      adresse
+    end
+  end
+
+  def ligne_adresse2_siecle
+    ligne_adresse.split(",")[1..-1].join(",") if adresse.length > 38
+  end
+
 end

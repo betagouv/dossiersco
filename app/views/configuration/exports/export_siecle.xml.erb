@@ -20,8 +20,11 @@
             <PRENOM><%= alternative(resp_legal.prenom) %></PRENOM>
             <% if resp_legal.adresse.present? && resp_legal.code_postal.present? && resp_legal.ville.present? && resp_legal.pays.present? %>
               <ADRESSE>
-                <LIGNE1_ADRESSE><%= resp_legal.adresse %></LIGNE1_ADRESSE>
-                <CODE_POSTAL><%= resp_legal.code_postal %></CODE_POSTAL>
+                <LIGNE1_ADRESSE><%= resp_legal.ligne_adresse1_siecle %></LIGNE1_ADRESSE>
+                <% if resp_legal.ligne_adresse2_siecle.present? %>
+                  <LIGNE2_ADRESSE><%= resp_legal.ligne_adresse2_siecle %></LIGNE1_ADRESSE>
+                <% end %>
+                <CODE_POSTAL><%= resp_legal.code_postal.strip %></CODE_POSTAL>
                 <LL_POSTAL><%= resp_legal.ville %></LL_POSTAL>
                 <CODE_PAYS><%= resp_legal.pays ? resp_legal.pays : 995 %></CODE_PAYS>
               </ADRESSE>
@@ -33,7 +36,7 @@
               <TEL_PERSONNEL><%= resp_legal.tel_personnel %></TEL_PERSONNEL>
             <% end %>
             <% if resp_legal.tel_professionnel.present? %>
-              <TEL_PROFESSIONNEL><%= resp_legal.tel_professionnel %></TEL_PROFESSIONNEL>
+              <TEL_PROFESSIONNEL><%= resp_legal.tel_professionnel_siecle %></TEL_PROFESSIONNEL>
             <% end %>
             <% if resp_legal.tel_portable.present? %>
               <TEL_PORTABLE><%= resp_legal.tel_portable %></TEL_PORTABLE>

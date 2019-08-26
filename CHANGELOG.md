@@ -4,6 +4,8 @@
 
 ### Retour SIECLE
 
+- **Formatte code postal, tel pro, adresses pour siecle**
+
 - **Renseigne à Inconnu un nom ou un prenom vide** de représentant légal
 
 - **Renseigne à Inconnu un dossier eleve sans ville de naissance pour un pays étranger**
