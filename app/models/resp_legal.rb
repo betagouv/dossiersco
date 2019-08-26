@@ -111,16 +111,20 @@ class RespLegal < ActiveRecord::Base
     tel_professionnel.gsub(/\d*/).first
   end
 
-  def ligne_adresse1_siecle
-    if adresse.length > 38
-      adresse.split(",")[0]
-    else
-      adresse
-    end
+  def ligne1_adresse_siecle
+    lignes_adresses[0]
   end
 
-  def ligne_adresse2_siecle
-    adresse.split(",")[1..-1].join(",") if adresse.length > 38
+  def ligne2_adresse_siecle
+    lignes_adresses[1]
+  end
+
+  private
+
+  def lignes_adresses
+    return [adresse, nil] if adresse.length <= 38
+
+    [adresse[0, 38], adresse[38..-1]]
   end
 
 end

@@ -112,4 +112,27 @@ class RespLegalTest < ActiveSupport::TestCase
     assert_equal "Bob Marley", representant.nom_complet
   end
 
+  test "découpe l'adresse en lignes conformes au retour base élève" do
+    skip
+    adresse_sur_deux_lignes = <<~ADRESSE
+      100 Back Street Paradise
+      11201 BROOKLYN NY / USA
+    ADRESSE
+
+    resp_legal = Fabricate(:resp_legal,
+                           adresse: adresse_sur_deux_lignes)
+
+    assert_equal "100 Back Street Paradise", resp_legal.ligne1_adresse_siecle
+    assert_equal "11201 BROOKLYN NY / USA", resp_legal.ligne2_adresse_siecle
+  end
+
+  test "tronque si pas de separateur" do
+    adresse = "100 Back Street Paradise 11201 BROOKLYN NY / USA"
+    resp_legal = Fabricate(:resp_legal,
+                           adresse: adresse)
+
+    assert_equal "100 Back Street Paradise 11201 BROOKLY", resp_legal.ligne1_adresse_siecle
+    assert_equal "N NY / USA", resp_legal.ligne2_adresse_siecle
+  end
+
 end
