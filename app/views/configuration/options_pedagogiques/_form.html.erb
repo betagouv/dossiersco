@@ -19,7 +19,11 @@
   </div>
 
   <div class="form__group">
-    <%= form.input :code_matiere, label: t(".code_gestion") %>
+    <% if option_pedagogique.code_matiere.present? %>
+      <%= form.input :code_matiere, label: t(".code_gestion"), disabled: true %>
+    <% else %>
+      <%= form.input :code_matiere, label: t(".code_gestion") %>
+    <% end %>
   </div>
 
   <div class="form__group">
