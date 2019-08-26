@@ -53,8 +53,8 @@
             <% if dossier_eleve.eleve.identifiant.present? %>
               <ID_NATIONAL><%= dossier_eleve.eleve.identifiant %></ID_NATIONAL>
             <% end %>
-            <NOM_DE_FAMILLE><%= dossier_eleve.eleve.nom %></NOM_DE_FAMILLE>
-            <PRENOM><%= dossier_eleve.eleve.prenom %></PRENOM>
+            <NOM_DE_FAMILLE><%= alternative(dossier_eleve.eleve.nom) %></NOM_DE_FAMILLE>
+            <PRENOM><%= alternative(dossier_eleve.eleve.prenom) %></PRENOM>
             <CODE_PAYS_NAT><%= dossier_eleve.eleve.nationalite ? dossier_eleve.eleve.nationalite : 995 %></CODE_PAYS_NAT>
             <DATE_NAISS><%= dossier_eleve.eleve.date_naiss %></DATE_NAISS>
             <CODE_SEXE><%= dossier_eleve.eleve.sexe == 'Masculin' ? '1' : '2' %></CODE_SEXE>
@@ -62,7 +62,7 @@
             <% if dossier_eleve.eleve.pays_naiss == "100" %>
               <CODE_COMMUNE_INSEE_NAISS><%= dossier_eleve.eleve.commune_insee_naissance %></CODE_COMMUNE_INSEE_NAISS>
             <% else %>
-              <VILLE_NAISS><%= dossier_eleve.eleve.ville_naiss.present? ? dossier_eleve.eleve.ville_naiss : "Inconnu" %></VILLE_NAISS>
+              <VILLE_NAISS><%= alternative(dossier_eleve.eleve.ville_naiss) %></VILLE_NAISS>
             <% end %>
             <ADHESION_TRANSPORT>false</ADHESION_TRANSPORT>
             <CODE_REGIME><%= dossier_eleve.demi_pensionnaire? ? 24 : 0 %></CODE_REGIME>

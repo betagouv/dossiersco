@@ -91,4 +91,8 @@ module ApplicationHelper
   def liste_pays
     YAML.safe_load(File.read(File.join(Rails.root, "/app/jobs/code_pays.yml")))
   end
+
+  def alternative(valeur)
+    valeur.present? ? valeur : "Inconnu"
+  end
 end
