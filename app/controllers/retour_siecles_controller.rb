@@ -17,6 +17,8 @@ class RetourSieclesController < ApplicationController
     render(:manque_division) && return if @dossiers_sans_division.count.positive? && !params[:bypass_manque_division]
 
     @dossiers = dossiers_etablissement.exportables
+    @nb_resp_legaux = nb_resp_legaux(@dossiers)
+
     @dossiers_bloques = []
     @dossiers_bloques.concat(extrait_informations(dossiers_etablissement.where(mef_destination: nil), I18n.t("retour_siecles.new.dossier_sans_mef_destination")))
     @dossiers_bloques.concat(extrait_informations(eleves_sans_commune_insee, I18n.t("retour_siecles.new.probleme_de_commune_insee")))
@@ -28,6 +30,8 @@ class RetourSieclesController < ApplicationController
     if params[:liste_ine].present?
       ines = params[:liste_ine].split(",")
       @selection_dossiers = @dossiers.joins(:eleve).where("eleves.identifiant in (?)", ines)
+      @dossiers_exportables = @selection_dossiers.exportables
+      @nb_resp_legaux_selection = nb_resp_legaux(@dossiers_exportables)
     end
   end
 
@@ -60,6 +64,12 @@ class RetourSieclesController < ApplicationController
     dossiers.map do |dossier|
       dossier_bloque.new(dossier.eleve.identifiant, dossier.eleve.prenom, dossier.eleve.nom, raison)
     end
+  end
+
+  private
+
+  def nb_resp_legaux(dossiers)
+    RespLegal.joins(:dossier_eleve).where(dossier_eleve: [dossiers.pluck(:id)]).count
   end
 
 end
