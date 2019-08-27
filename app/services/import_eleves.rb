@@ -7,6 +7,7 @@ class ImportEleves
     xml = Nokogiri::XML(file)
 
     met_a_jour_eleves!(xml)
+    met_a_jour_les_dossiers!(tache.etablissement)
   end
 
   def met_a_jour_eleves!(xml)
@@ -92,6 +93,10 @@ class ImportEleves
 
   def extrait_prenom3(noeud)
     noeud.xpath("PRENOM3").text
+  end
+
+  def met_a_jour_les_dossiers!(etablissement)
+    AnalyseurRetourSiecle.analyse_dossiers!(etablissement.dossier_eleve)
   end
 
 end

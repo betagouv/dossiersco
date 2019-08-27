@@ -89,4 +89,23 @@ class ImportElevesTest < ActiveSupport::TestCase
     assert_equal "Prénom 3 DossierSCO", eleve_avec_3_prenoms.prenom_3
   end
 
+  test "met à jour l'information à propos des possibilité de retour siecle" do
+    etablissement = Fabricate(:etablissement)
+    eleve = Fabricate(:eleve, identifiant: "070832327JA", ville_naiss: "blu", commune_insee_naissance: nil)
+    dossier = Fabricate(:dossier_eleve, eleve: eleve)
+    dossier_valide = Fabricate(:dossier_eleve_valide, etablissement: etablissement)
+    dossier_invalide = Fabricate(:dossier_eleve, mef_destination: nil, etablissement: etablissement)
+
+    fichier_xml = fixture_file_upload("files/eleves_avec_adresse_simple.xml")
+    tache = Fabricate(:tache_import, type_fichier: "eleves", fichier: fichier_xml, etablissement: etablissement)
+
+    ImportEleves.new.perform(tache)
+
+    dossier_valide.reload
+    assert_equal "", dossier_valide.retour_siecle_impossible
+    dossier_invalide.reload
+    assert_equal I18n.t("retour_siecles.dossier_non_valide"), dossier_invalide.retour_siecle_impossible
+  end
+
+
 end
