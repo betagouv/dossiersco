@@ -126,7 +126,7 @@ class ImportEleveCompleteTest < ActiveSupport::TestCase
     assert_equal "1122334455", RespLegal.first.tel_portable
   end
 
-  test "On arrive à crééer un MEF 3EME" do
+  test "On arrive à créer un MEF 3EME" do
     etablissement = Fabricate(:etablissement)
     importer = ImportEleveComplete.new
     ligne = Array.new(34)
