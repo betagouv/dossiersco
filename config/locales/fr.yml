@@ -120,6 +120,7 @@ fr:
       dossier_sans_nom_ou_prenom: "élève sans nom ou prénom"
       dossier_mef_an_dernier_inconnu: "Mef an dernier inconnue"
       dossier_avec_mef_origine_invalide: "Le code MEF origine n'est pas conforme. Il doit être composé de 11 caractères"
+      dossier_avec_mef_destination_invalide: "Le code MEF destination n'est pas conforme. Il doit être composé de 11 caractères"
       probleme_de_commune_insee: "commune naissance introuvable"
       probleme_de_profession: "la profession correspond à une ancienne catégorie (découpée en plusieurs catégories depuis)"
   mot_de_passe_agent:

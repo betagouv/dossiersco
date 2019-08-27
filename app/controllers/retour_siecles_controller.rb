@@ -23,6 +23,7 @@ class RetourSieclesController < ApplicationController
     @dossiers_bloques.concat(extrait_informations(resp_legal_probleme_profession, I18n.t("retour_siecles.new.probleme_de_profession")))
     @dossiers_bloques.concat(extrait_informations(dossiers_etablissement.where(mef_an_dernier: nil), I18n.t("retour_siecles.new.dossier_mef_an_dernier_inconnu")))
     @dossiers_bloques.concat(extrait_informations(dossiers_etablissement.avec_code_mef_origine_invalide, I18n.t("retour_siecles.new.dossier_avec_mef_origine_invalide")))
+    @dossiers_bloques.concat(extrait_informations(dossiers_etablissement.avec_code_mef_destination_invalide, I18n.t("retour_siecles.new.dossier_avec_mef_destination_invalide")))
 
     if params[:liste_ine].present?
       ines = params[:liste_ine].split(",")

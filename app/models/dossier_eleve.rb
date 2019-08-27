@@ -74,6 +74,10 @@ class DossierEleve < ActiveRecord::Base
     joins("INNER JOIN mef AS mef_origine ON mef_origine.id = mef_origine_id AND length(mef_origine.code) != '11'")
   }
 
+  scope :avec_code_mef_destination_invalide, lambda {
+    joins("INNER JOIN mef AS mef_destination ON mef_destination.id = mef_destination_id AND length(mef_destination.code) != '11'")
+  }
+
   def self.par_authentification(identifiant, jour, mois, annee)
     eleve = Eleve.par_authentification(identifiant, jour, mois, annee)
     return eleve.dossier_eleve if eleve.is_a?(Eleve)

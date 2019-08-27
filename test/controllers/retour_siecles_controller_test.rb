@@ -159,6 +159,24 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     assert_equal dossier_avec_mef_non_conforme.eleve.identifiant, assigns(:dossiers_bloques).first.identifiant
     assert_equal I18n.t("retour_siecles.new.dossier_avec_mef_origine_invalide"), assigns(:dossiers_bloques).first.raison
   end
+
+  test "liste les dossiers avec un code mef_destination invalide" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+
+    mef_non_conforme = Fabricate(:mef, code: "ACREER POUR BILANGUEALLEMAND")
+    option = Fabricate(:option_pedagogique)
+    Fabricate(:mef_option_pedagogique, mef: mef_non_conforme, option_pedagogique: option)
+    dossier_avec_mef_non_conforme = Fabricate(:dossier_eleve_valide,
+                                              etablissement: admin.etablissement,
+                                              mef_destination: mef_non_conforme,
+                                              options_pedagogiques: [option])
+
+    get new_retour_siecle_path
+    assert_equal dossier_avec_mef_non_conforme.eleve.identifiant, assigns(:dossiers_bloques).first.identifiant
+    assert_equal I18n.t("retour_siecles.new.dossier_avec_mef_destination_invalide"), assigns(:dossiers_bloques).first.raison
+  end
+
   test "exporte uniquement le dossier en état validé" do
     admin = Fabricate(:admin)
     identification_agent(admin)
