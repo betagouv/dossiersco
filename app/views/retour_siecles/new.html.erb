@@ -57,7 +57,7 @@
 
   <div class="panel">
     <div class="panel__header">
-      <h3><%= t('.titre_dossiers_non_exportable') %></h3>
+      <h3><%= t('.titre_dossiers_non_exportable', count: @dossiers_bloques.length) %></h3>
     </div>
     <p><%= t(".dossiers_non_exportable_explication_html") %></p>
 
