@@ -2,8 +2,6 @@
 
 ## Préparation
 
-### Dans le portail ARENA
-
 - Depuis le portail ARENA, sélectionnez "mise à jour"
 - Sélectionner l'année 2019-2020
 
