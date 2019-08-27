@@ -119,4 +119,21 @@ class ImportResponsablesTest < ActiveSupport::TestCase
     end
   end
 
+  test "met à jour l'information à propos des possibilité de retour siecle" do
+    etablissement = Fabricate(:etablissement)
+    dossier_valide = Fabricate(:dossier_eleve_valide, etablissement: etablissement)
+    dossier_invalide = Fabricate(:dossier_eleve, mef_destination: nil, etablissement: etablissement)
+
+    fichier_xml = fixture_file_upload("files/responsables_avec_adresses_simple.xml")
+    tache = Fabricate(:tache_import, type_fichier: "responsables", fichier: fichier_xml, etablissement: etablissement)
+
+    ImportResponsables.new.perform(tache)
+
+    dossier_valide.reload
+    assert_equal "", dossier_valide.retour_siecle_impossible
+    dossier_invalide.reload
+    assert_equal I18n.t("retour_siecles.dossier_non_valide"), dossier_invalide.retour_siecle_impossible
+
+  end
+
 end
