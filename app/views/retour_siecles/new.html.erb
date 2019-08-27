@@ -1,3 +1,11 @@
+<% if @dossiers_bloques %>
+  <section class="section notifications">
+    <div class="notification warning">
+      <%= t('.alerte_dossiers_non_exportables_html', count: @dossiers_bloques.length) %>
+    </div>
+  </section>
+<% end %>
+
 <section class="section">
 
   <div class="panel">
@@ -53,7 +61,7 @@
 
 </section>
 
-<section class="section">
+<section class="section" id="dossiers_bloques">
 
   <div class="panel">
     <div class="panel__header">
