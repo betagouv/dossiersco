@@ -23,6 +23,7 @@ Style/AsciiComments:
 Style/GuardClause:
   Exclude:
     - 'app/controllers/retour_siecles_controller.rb'
+    - 'app/services/import_eleves.rb'
 
 Metrics/LineLength:
   Max: 150

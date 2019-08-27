@@ -58,6 +58,12 @@
             <% end %>
             <NOM_DE_FAMILLE><%= dossier_eleve.eleve.nom %></NOM_DE_FAMILLE>
             <PRENOM><%= dossier_eleve.eleve.prenom %></PRENOM>
+            <% if dossier_eleve.eleve.prenom_2 %>
+              <PRENOM2><%= dossier_eleve.eleve.prenom_2 %></PRENOM2>
+            <% end %>
+            <% if dossier_eleve.eleve.prenom_3 %>
+              <PRENOM3><%= dossier_eleve.eleve.prenom_3 %></PRENOM3>
+            <% end %>
             <CODE_PAYS_NAT><%= dossier_eleve.eleve.nationalite ? dossier_eleve.eleve.nationalite : 995 %></CODE_PAYS_NAT>
             <DATE_NAISS><%= dossier_eleve.eleve.date_naiss %></DATE_NAISS>
             <CODE_SEXE><%= dossier_eleve.eleve.sexe == 'Masculin' ? '1' : '2' %></CODE_SEXE>

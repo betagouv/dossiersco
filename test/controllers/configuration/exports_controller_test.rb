@@ -354,6 +354,29 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
               etablissement: admin.etablissement,
               resp_legal: [resp_longue_adresse])
 
+    xml = recupere_fichier_xml_de_retour_siecle
+
+    assert_match " Dépasse 38 caractères", xml.css("LIGNE2_ADRESSE").text
+  end
+
+  test "exporte les seconds et troisièmes prénoms" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+
+    eleve_avec_3_prenoms = Fabricate(:eleve,
+                                     prenom_2: "PRENOM 2",
+                                     prenom_3: "PRENOM 3")
+    Fabricate(:dossier_eleve_valide,
+              eleve: eleve_avec_3_prenoms,
+              etablissement: admin.etablissement)
+
+    xml = recupere_fichier_xml_de_retour_siecle
+
+    assert_equal "PRENOM 2", xml.css("PRENOM2").text
+    assert_equal "PRENOM 3", xml.css("PRENOM3").text
+  end
+
+  def recupere_fichier_xml_de_retour_siecle
     get export_siecle_configuration_exports_path(xml_only: true)
 
     assert_response :success
@@ -363,7 +386,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     xml = Nokogiri::XML(response.body)
 
     assert_empty xml.errors
-    assert_match " Dépasse 38 caractères", xml.css("LIGNE2_ADRESSE").text
+    xml
   end
 
 end

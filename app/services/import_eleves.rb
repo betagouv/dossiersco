@@ -22,6 +22,7 @@ class ImportEleves
   def met_a_jour_eleve(eleve, noeud)
     met_a_jour_commune_insee_naissance(eleve, noeud)
     met_a_jour_id_prv_ele(eleve, noeud)
+    met_a_jour_prenoms_ele(eleve, noeud)
   end
 
   def met_a_jour_commune_insee_naissance(eleve, noeud)
@@ -38,6 +39,19 @@ class ImportEleves
     eleve&.update(
       id_prv_ele: extrait_id_eleve(noeud)
     )
+  end
+
+  def met_a_jour_prenoms_ele(eleve, noeud)
+    unless eleve&.prenom_2.present?
+      eleve&.update(
+        prenom_2: extrait_prenom2(noeud)
+      )
+    end
+    unless eleve&.prenom_3.present?
+      eleve&.update(
+        prenom_3: extrait_prenom3(noeud)
+      )
+    end
   end
 
   def met_a_jour_dossier(eleve, noeud)
@@ -70,6 +84,14 @@ class ImportEleves
   def extrait_division_courante(noeud)
     id = noeud.attributes["ELEVE_ID"]
     noeud.xpath("/BEE_ELEVES/DONNEES/STRUCTURES/STRUCTURES_ELEVE[@ELEVE_ID='#{id}']/STRUCTURE/CODE_STRUCTURE").text
+  end
+
+  def extrait_prenom2(noeud)
+    noeud.xpath("PRENOM2").text
+  end
+
+  def extrait_prenom3(noeud)
+    noeud.xpath("PRENOM3").text
   end
 
 end

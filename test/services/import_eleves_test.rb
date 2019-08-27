@@ -58,4 +58,35 @@ class ImportElevesTest < ActiveSupport::TestCase
     assert_nil autre_eleve.id_prv_ele
   end
 
+  test "récolte PRENOM2 et PRENOM3" do
+    etablissement = Fabricate(:etablissement)
+    eleve_avec_3_prenoms = Fabricate(:eleve, identifiant: "060375611AC")
+    Fabricate(:dossier_eleve, eleve: eleve_avec_3_prenoms)
+
+    fichier_xml = fixture_file_upload("files/eleves_avec_adresse_simple.xml")
+    tache = Fabricate(:tache_import, type_fichier: "eleves", fichier: fichier_xml, etablissement: etablissement)
+
+    ImportEleves.new.perform(tache)
+    eleve_avec_3_prenoms.reload
+    assert_equal "PRENOM2", eleve_avec_3_prenoms.prenom_2
+    assert_equal "PRENOM3", eleve_avec_3_prenoms.prenom_3
+  end
+
+  test "préserve des PRENOM2 et PRENOM3 renseignés dans DossierSCO" do
+    etablissement = Fabricate(:etablissement)
+    eleve_avec_3_prenoms = Fabricate(:eleve,
+                                     identifiant: "060375611AC",
+                                     prenom_2: "Prénom 2 DossierSCO",
+                                     prenom_3: "Prénom 3 DossierSCO")
+    Fabricate(:dossier_eleve, eleve: eleve_avec_3_prenoms)
+
+    fichier_xml = fixture_file_upload("files/eleves_avec_adresse_simple.xml")
+    tache = Fabricate(:tache_import, type_fichier: "eleves", fichier: fichier_xml, etablissement: etablissement)
+
+    ImportEleves.new.perform(tache)
+    eleve_avec_3_prenoms.reload
+    assert_equal "Prénom 2 DossierSCO", eleve_avec_3_prenoms.prenom_2
+    assert_equal "Prénom 3 DossierSCO", eleve_avec_3_prenoms.prenom_3
+  end
+
 end
