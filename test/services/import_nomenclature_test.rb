@@ -144,4 +144,21 @@ class ImportNomenclatureTest < ActiveSupport::TestCase
     assert_equal 1, mef_option.reload.rang_option
   end
 
+  test "met à jour l'information à propos des possibilité de retour siecle" do
+    etablissement = Fabricate(:etablissement)
+    Fabricate(:mef, libelle: "5EME", etablissement: etablissement)
+    dossier_valide = Fabricate(:dossier_eleve_valide, etablissement: etablissement)
+    dossier_invalide = Fabricate(:dossier_eleve, mef_destination: nil, etablissement: etablissement)
+
+    fichier_xml = fixture_file_upload("files/nomenclature_simple.xml")
+    tache = Fabricate(:tache_import, type_fichier: "nomenclature", fichier: fichier_xml, etablissement: etablissement)
+
+    ImportNomenclature.new.perform(tache)
+
+    dossier_valide.reload
+    assert_equal "", dossier_valide.retour_siecle_impossible
+    dossier_invalide.reload
+    assert_equal I18n.t("retour_siecles.dossier_non_valide"), dossier_invalide.retour_siecle_impossible
+  end
+
 end

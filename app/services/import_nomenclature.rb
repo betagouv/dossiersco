@@ -12,6 +12,7 @@ class ImportNomenclature
     met_a_jour_les_options_pedagogiques!(xml, tache.etablissement)
     met_a_jour_les_mef_options_pedagogiques!(xml, tache.etablissement)
     met_a_jour_les_rangs_options!(xml, tache.etablissement)
+    met_a_jour_les_dossiers!(tache.etablissement)
   end
 
   def met_a_jour_les_mef!(xml, etablissement)
@@ -60,6 +61,10 @@ class ImportNomenclature
       option_pedagogique = OptionPedagogique.find_by(etablissement: etablissement, code_matiere_6: code_matiere)
       MefOptionPedagogique.find_by(mef: mef, option_pedagogique: option_pedagogique)&.update(rang_option: rang_option)
     end
+  end
+
+  def met_a_jour_les_dossiers!(etablissement)
+    AnalyseurRetourSiecle.analyse_dossiers!(etablissement.dossier_eleve)
   end
 
 end

@@ -105,6 +105,7 @@ Metrics/ClassLength:
 Metrics/AbcSize:
   Exclude:
     - 'test/**/*'
+    - 'app/services/analyseur_retour_siecle.rb'
     - 'app/jobs/importer_siecle.rb'
     - 'app/services/import_nomenclature.rb'
     - 'app/services/import_responsables.rb'
@@ -145,6 +146,7 @@ Metrics/CyclomaticComplexity:
     - 'app/controllers/retour_siecles_controller.rb'
     - 'app/controllers/authentification_cas_ent_controller.rb'
     - 'app/services/import_eleve_complete.rb'
+    - 'app/services/analyseur_retour_siecle.rb'
 
 Metrics/PerceivedComplexity:
   Exclude:
@@ -152,6 +154,7 @@ Metrics/PerceivedComplexity:
     - 'app/controllers/accueil_controller.rb'
     - 'app/controllers/retour_siecles_controller.rb'
     - 'app/services/import_eleve_complete.rb'
+    - 'app/services/analyseur_retour_siecle.rb'
 
 Naming/VariableNumber:
   Exclude:

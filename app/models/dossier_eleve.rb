@@ -153,7 +153,7 @@ class DossierEleve < ActiveRecord::Base
   end
 
   def valide?
-    self.etat == ETAT[:valide]
+    etat == ETAT[:valide]
   end
 
   def valide!

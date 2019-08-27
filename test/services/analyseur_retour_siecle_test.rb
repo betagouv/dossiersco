@@ -38,14 +38,14 @@ class AnalyseurRetourSiecleTest < ActiveSupport::TestCase
   end
 
   test "Un dossier dont le code mef origine n'est pas sur 11 caractères n'est pas exportable" do
-    mef_code_pas_11 = Fabricate(:mef, code: "1234567890")
-    dossier = Fabricate(:dossier_eleve_valide, mef_origine: mef_code_pas_11)
+    mef_code_pas_onze = Fabricate(:mef, code: "1234567890")
+    dossier = Fabricate(:dossier_eleve_valide, mef_origine: mef_code_pas_onze)
     assert_equal I18n.t("retour_siecles.dossier_avec_mef_origine_invalide"), AnalyseurRetourSiecle.analyse(dossier)
   end
 
   test "Un dossier dont le code mef de destination n'est pas sur 11 caractères n'est pas exportable" do
-    mef_code_pas_11 = Fabricate(:mef, code: "1234567890")
-    dossier = Fabricate(:dossier_eleve_valide, mef_destination: mef_code_pas_11, mef_origine: Fabricate(:mef))
+    mef_code_pas_onze = Fabricate(:mef, code: "1234567890")
+    dossier = Fabricate(:dossier_eleve_valide, mef_destination: mef_code_pas_onze, mef_origine: Fabricate(:mef))
     assert_equal I18n.t("retour_siecles.dossier_avec_mef_destination_invalide"), AnalyseurRetourSiecle.analyse(dossier)
   end
 
@@ -56,5 +56,3 @@ class AnalyseurRetourSiecleTest < ActiveSupport::TestCase
   end
 
 end
-
-
