@@ -2,6 +2,8 @@
 
 ## Préparation
 
+### Dans le portail ARENA
+
 - Depuis le portail ARENA, sélectionnez "mise à jour"
 - Sélectionner l'année 2019-2020
 
@@ -38,7 +40,8 @@ Vous obtiendrez un fichier du type :
 - 0752550PPRIVE2019200823065124.zip
 Le nom exact sera différent car il dépends du jour et de l'heure ou vous l'avez enregistré.
 
-## Retour par import privé
+
+## Retour Par Import Privé
 
 - Depuis le portail ARENA, sélectionnez "mise à jour"
 - Sélectionner l'année 2019-2020
