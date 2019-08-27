@@ -152,6 +152,10 @@ class DossierEleve < ActiveRecord::Base
     pieces_manquantes.any?
   end
 
+  def valide?
+    self.etat == ETAT[:valide]
+  end
+
   def valide!
     self.date_validation_agent = self.date_validation_agent ||= Time.now
     self.etat = ETAT[:valide]

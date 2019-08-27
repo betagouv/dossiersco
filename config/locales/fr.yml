@@ -86,6 +86,14 @@ fr:
       document_invalide: "Votre document ne peut pas être pris en compte par l'établissement pour cette inscription. Un courriel vient de vous être envoyé. Merci de prendre connaissance de ce message et nous fournir une nouvelle version de ce document."
       document_valide: "Votre document a été examiné et approuvé par l'établissement."
   retour_siecles:
+    dossier_non_valide: "Dossier dans en état différent de validé"
+    dossier_sans_mef_destination: "dossier sans mef destination"
+    dossier_sans_mef_an_dernier: "Mef an dernier inconnue"
+    dossier_sans_nom_ou_prenom: "élève sans nom ou prénom"
+    probleme_commune_naissance: "commune naissance introuvable"
+    dossier_avec_mef_origine_invalide: "Le code MEF origine n'est pas conforme. Il doit être composé de 11 caractères"
+    dossier_avec_mef_destination_invalide: "Le code MEF destination n'est pas conforme. Il doit être composé de 11 caractères"
+
     manque_code_matiere:
       titre_manque_code_matiere: "Code matière manquant"
       explication_manque_code_matier_html: "<p>Pour que les données remontent correctement dans la Base Élève, nous devons avoir des options avec code matière. Dans l'import que nous vous avons demandé, avec le fichier Excel, nous n'avons pas ces codes matière.</p><p>En téléversant votre fichier <b>Nomenclature.xml</b> dans DossierSCO, nous serons en mesure de récupérer ces codes matières. Merci de télécharger ce fichier depuis SIECLE (dans les export XML, le fichier Nomenclature), puis de le téléverser ci dessous.</p>"

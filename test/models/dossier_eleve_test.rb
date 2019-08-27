@@ -188,4 +188,14 @@ class DossierEleveTest < ActiveSupport::TestCase
     assert_equal [option_obligatoire, option_facultative], dossier.options_triees_par_rang
   end
 
+  test "dossier non valide si état différent de valide" do
+    dossier = Fabricate(:dossier_eleve, etat: DossierEleve::ETAT[:en_attente_de_validation])
+    assert ! dossier.valide?
+  end
+
+  test "dossier valide si état validé" do
+    dossier = Fabricate(:dossier_eleve, etat: DossierEleve::ETAT[:valide])
+    assert dossier.valide?
+  end
+
 end
