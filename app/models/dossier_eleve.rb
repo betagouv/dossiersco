@@ -62,6 +62,8 @@ class DossierEleve < ActiveRecord::Base
     where("mef_destination_id is not null")
       .where.not(mef_an_dernier: [nil, ""])
       .where(etat: ETAT[:valide])
+      .joins("INNER JOIN mef AS mef_origine ON mef_origine.id = mef_origine_id AND length(mef_origine.code) = '11'")
+      .joins("INNER JOIN mef AS mef_destination ON mef_destination.id = mef_destination_id AND length(mef_destination.code) = '11'")
       .joins(:eleve)
       .where("eleves.prenom is not null")
       .where("eleves.nom is not null")
