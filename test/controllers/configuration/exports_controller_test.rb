@@ -376,6 +376,23 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "PRENOM 3", xml.css("PRENOM3").text
   end
 
+  test "n'exporte pas des seconds et troisièmes prénoms vides" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+
+    eleve_avec_prenoms_vides = Fabricate(:eleve,
+                                         prenom_2: "",
+                                         prenom_3: "")
+    Fabricate(:dossier_eleve_valide,
+              eleve: eleve_avec_prenoms_vides,
+              etablissement: admin.etablissement)
+
+    recupere_fichier_xml_de_retour_siecle
+
+    assert_no_match "PRENOM2", response.body
+    assert_no_match "PRENOM3", response.body
+  end
+
   def recupere_fichier_xml_de_retour_siecle
     get export_siecle_configuration_exports_path(xml_only: true)
 
