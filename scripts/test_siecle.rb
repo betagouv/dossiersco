@@ -15,5 +15,6 @@ if fichier
   schema = "./doc/import_prive/schema_Import_3.1_avec_correction.xsd"
   xsd = Nokogiri::XML::Schema(File.read(schema))
   xml = Nokogiri::XML(File.read(fichier))
+  puts "erreur dans le fichier xml : #{xml.errors}"
   puts xsd.validate(xml)
 end

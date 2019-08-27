@@ -344,4 +344,26 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     assert_no_match mef_non_conforme.code, response.body
   end
 
+  test "exporte sur deux lignes une adresse de plus de 38 caractères" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+
+    resp_longue_adresse = Fabricate(:resp_legal,
+                                    adresse: "A" * 38 + " Dépasse 38 caractères")
+    Fabricate(:dossier_eleve_valide,
+              etablissement: admin.etablissement,
+              resp_legal: [resp_longue_adresse])
+
+    get export_siecle_configuration_exports_path(xml_only: true)
+
+    assert_response :success
+
+    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    Nokogiri::XML::Schema(File.read(schema))
+    xml = Nokogiri::XML(response.body)
+
+    assert_empty xml.errors
+    assert_match " Dépasse 38 caractères", xml.css("LIGNE2_ADRESSE").text
+  end
+
 end
