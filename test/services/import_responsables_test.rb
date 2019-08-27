@@ -133,7 +133,6 @@ class ImportResponsablesTest < ActiveSupport::TestCase
     assert_equal "", dossier_valide.retour_siecle_impossible
     dossier_invalide.reload
     assert_equal I18n.t("retour_siecles.dossier_non_valide"), dossier_invalide.retour_siecle_impossible
-
   end
 
 end
