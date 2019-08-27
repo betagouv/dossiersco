@@ -40,7 +40,7 @@ class RetourSieclesController < ApplicationController
   end
 
   def eleves_sans_commune_insee
-    dossiers_etablissement.joins(:eleve).where("eleves.commune_insee_naissance is null")
+    dossiers_etablissement.joins(:eleve).where("(eleves.commune_insee_naissance is null and eleves.pays_naiss = '100') or (eleves.ville_naiss is null and eleves.pays_naiss <> '100')")
   end
 
   def resp_legal_probleme_profession

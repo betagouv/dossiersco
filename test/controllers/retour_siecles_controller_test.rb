@@ -118,12 +118,25 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     assert_equal I18n.t("retour_siecles.new.probleme_de_profession"), assigns(:dossiers_bloques).first.raison
   end
 
-  test "liste les dossiers dont nous ne retrouvons pas la commune insee" do
+  test "un dossier est non exportable si le pays de naissance est 100 (france) et qu'il n'y pas de commune insee" do
     admin = Fabricate(:admin)
     identification_agent(admin)
     etablissement = admin.etablissement
 
-    eleve_sans_commune_insee = Fabricate(:eleve, commune_insee_naissance: nil)
+    eleve_sans_commune_insee = Fabricate(:eleve, commune_insee_naissance: nil, pays_naiss: "100")
+    dossier = Fabricate(:dossier_eleve, eleve: eleve_sans_commune_insee, etablissement: etablissement)
+
+    get new_retour_siecle_path
+    assert_equal dossier.eleve.identifiant, assigns(:dossiers_bloques).first.identifiant
+    assert_equal I18n.t("retour_siecles.new.probleme_de_commune_insee"), assigns(:dossiers_bloques).first.raison
+  end
+
+  test "un dossier est non exportable si le pays de naissance n'est pas 100 (france) et qu'il n'y pas de ville de naissance" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+    etablissement = admin.etablissement
+
+    eleve_sans_commune_insee = Fabricate(:eleve, ville_naiss: nil, pays_naiss: "216")
     dossier = Fabricate(:dossier_eleve, eleve: eleve_sans_commune_insee, etablissement: etablissement)
 
     get new_retour_siecle_path
