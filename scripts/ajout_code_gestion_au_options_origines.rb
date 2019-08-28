@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
-etablissement = Etablissement.find_by(uai: "0752550P")
+uai = ARGV[0] 
+unless uai.present?
+  puts "veuillez fournir l'UAI de l'établissement (exemple : 0770002J)"
+  return
+end
+etablissement = Etablissement.find_by(uai: uai)
 
 dossiers = etablissement.dossier_eleve
 
