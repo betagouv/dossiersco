@@ -13,11 +13,6 @@
       <h3><%= t('.titre_selection_ine') %></h3>
     </div>
     <p><%= t(".retour_siecle_partiel_html") %></p>
-
-    <% if Rails.env.production? && !super_admin?(@agent_connecte) %>
-      <p>Nous sommes en train de faire les derniers réglages pour nous assurer que le fichier généré est bien conforme aux spécification de la base élève. Vous devriez bientôt avoir ici un bouton pour télécharger le fichier SIECLE.</p>
-    <% else %>
-
       <%= form_tag new_retour_siecle_path, method: :get do |f| %>
         <%= hidden_field_tag :bypass_manque_division, value: true %>
         <div>
@@ -37,7 +32,6 @@
         <% end %>
       <% end %>
 
-    <% end %>
   </div>
 
 </section>
@@ -50,13 +44,9 @@
     </div>
     <p><%= t(".retour_siecle_complet_html", count_resp: @nb_resp_legaux, count_eleves: @dossiers.length) %></p>
 
-    <% if Rails.env.production? && !super_admin?(@agent_connecte) %>
-      <p>Nous sommes en train de faire les derniers réglages pour nous assurer que le fichier généré est bien conforme aux spécification de la base élève. Vous devriez bientôt avoir ici un bouton pour télécharger le fichier SIECLE.</p>
-    <% else %>
-      <%= form_tag  export_siecle_configuration_exports_path, method: :get do |f| %>
-        <button type="submit" class="button mt-1"><%= t('.telecharger_fichier_complet_xml') %></button>
-      <% end %>
-    <% end %>
+		<%= form_tag  export_siecle_configuration_exports_path, method: :get do |f| %>
+		  <button type="submit" class="button mt-1"><%= t('.telecharger_fichier_complet_xml') %></button>
+		<% end %>
   </div>
 
 </section>
