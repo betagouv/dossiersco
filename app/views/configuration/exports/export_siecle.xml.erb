@@ -45,7 +45,7 @@
             <% if resp_legal.email.present? %>
               <EMAIL><%= resp_legal.email %></EMAIL>
             <% end %>
-            <ENFANT_A_CHARGE><%= resp_legal.enfants_a_charge.positive? ? resp_legal.enfants_a_charge : 1 %></ENFANT_A_CHARGE>
+            <ENFANT_A_CHARGE><%= nb_enfants_a_charge(resp_legal) %></ENFANT_A_CHARGE>
           </PERSONNE>
         <% end %>
       </PERSONNES>

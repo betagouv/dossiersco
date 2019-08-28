@@ -95,4 +95,8 @@ module ApplicationHelper
   def alternative(valeur)
     valeur.present? ? valeur : "Inconnu"
   end
+
+  def nb_enfants_a_charge(resp_legal)
+    resp_legal.enfants_a_charge&.positive? ? resp_legal.enfants_a_charge : 1
+  end
 end
