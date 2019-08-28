@@ -29,4 +29,14 @@ class PagesController < ApplicationController
     render html: contenue.html_safe, layout: "connexion"
   end
 
+  def retour_siecle
+    fichier = File.join(Rails.root, "doc/retour_base_eleve.md")
+    renderer = Redcarpet::Render::HTML.new(hard_wrap: true)
+    markdown = Redcarpet::Markdown.new(renderer, {})
+
+    contenue = markdown.render(File.read(fichier)).to_s
+
+    render html: contenue.html_safe, layout: "connexion"
+  end
+
 end
