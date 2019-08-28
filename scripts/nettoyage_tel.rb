@@ -20,4 +20,3 @@ puts "Nettoie les téléphones..."
   %w[6 7].each { |prefixe| corrige_tel(type_tel, prefixe) }
   supprime_tel(type_tel)
 end
-
