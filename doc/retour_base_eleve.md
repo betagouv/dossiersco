@@ -12,7 +12,11 @@ Dans la base élève > Exportations > En XML, cliquer sur :
 - Elèves avec adresse
 - Responsables avec adresse
 
-Dézippez les trois fichiers ainsi sauvegardés. Vous devriez obtenir les trois fichiers suivants :
+Dézippez les trois fichiers ainsi sauvegardés. 
+- faire click droit
+- extraire ici
+
+Vous devriez obtenir les trois fichiers suivants :
 - Nomenclature.xml
 - ElevesAvecAdresses.xml
 - ResponsablesAvecAdresses.xml
@@ -31,14 +35,14 @@ Allez ensuite dans "Retour Base Élèves".
 - Complétez les éventuels codes matières manquant
 
 - Sélectionnez le fichier ElevesAvecAdresses.xml
-- Vérifiez que le nombre de code division manquantes correspond à peu près aux divisions qui ne sont pas encore affectées dans la base élève
+- Vérifiez que le nombre de code divisions manquantes correspond à peu près aux divisions qui ne sont pas encore intégrées dans la base élève
 
 - S'il reste des divisions non renseignées, cliquez sur "Sauter cette étape"
 
 - Cliquez sur "Télécharger tous les dossiers"
 Vous obtiendrez un fichier du type :
 - 0752550PPRIVE2019200823065124.zip
-Le nom exact sera différent car il dépends du jour et de l'heure ou vous l'avez enregistré.
+Le nom exact sera différent car il dépend du jour et de l'heure ou vous l'avez enregistré.
 
 
 ## Retour Par Import Privé
