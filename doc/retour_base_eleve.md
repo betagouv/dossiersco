@@ -2,9 +2,9 @@
 
 ## Préparation
 
-### Dans le portail ARENA
+### Dans le portail ARENA Base Elève
 
-- Depuis le portail ARENA, sélectionnez "mise à jour"
+- Depuis le portail ARENA Base Elève, sélectionnez "mise à jour"
 - Sélectionner l'année 2019-2020
 
 Dans la base élève > Exportations > En XML, cliquer sur :
@@ -23,7 +23,8 @@ Vous devriez obtenir les trois fichiers suivants :
 
 ### Dans DossierSCO
 
-- Allez dans  Configuration > Import/export des élèves
+- Allez dans le module **Configuration**
+- Allez dans le menu **Import/export des élèves**
 - Se déplacer vers le bas jusqu'à "Importer le fichier Responsables"
 - Cliquer sur le bouton "Choisir un fichier" et sélectionner ResponsablesAvecAdresses.xml
 - Cliquer sur "Importer le fichier"
@@ -45,11 +46,13 @@ Vous obtiendrez un fichier du type :
 Le nom exact sera différent car il dépend du jour et de l'heure ou vous l'avez enregistré.
 
 
-## Retour Par Import Privé
+## Retour Par ARENA Base Elève
 
-- Depuis le portail ARENA, sélectionnez "mise à jour"
+- Depuis le portail ARENA Base Elève, sélectionnez "mise à jour"
 - Sélectionner l'année 2019-2020
-- Sélectionner Importations > "Dossiers depuis logiciel privé"
+- Sélectionner **Importations**
+- Sélectionner **Dossiers depuis logiciel privé**
+(l'import privé est le seul canal pour remonter des informations)
 
 - Cliquer sur "Parcourir" et sélecitonné le fichier du type 0752550PPRIVE2019200823065124.zip qui vient d'être téléchargé depuis DossierSCO.
 - Cliquer sur IMPORTER
