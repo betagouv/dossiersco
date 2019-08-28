@@ -16,6 +16,16 @@ Eleve.where("ville_naiss like '%Î%'").each { |e| e.update(ville_naiss: e.ville_
 
 Eleve.where("ville_naiss like '%Ç%'").each { |e| e.update(ville_naiss: e.ville_naiss.gsub(/Ç/, "C")) }
 
+Eleve.where("ville_naiss like 'PARIS% 1%'").each { |e| e.update(ville_naiss: "PARIS 01") }
+Eleve.where("ville_naiss like 'PARIS% 2%'").each { |e| e.update(ville_naiss: "PARIS 02") }
+Eleve.where("ville_naiss like 'PARIS% 3%'").each { |e| e.update(ville_naiss: "PARIS 03") }
+Eleve.where("ville_naiss like 'PARIS% 4%'").each { |e| e.update(ville_naiss: "PARIS 04") }
+Eleve.where("ville_naiss like 'PARIS% 5%'").each { |e| e.update(ville_naiss: "PARIS 05") }
+Eleve.where("ville_naiss like 'PARIS% 6%'").each { |e| e.update(ville_naiss: "PARIS 06") }
+Eleve.where("ville_naiss like 'PARIS% 7%'").each { |e| e.update(ville_naiss: "PARIS 07") }
+Eleve.where("ville_naiss like 'PARIS% 8%'").each { |e| e.update(ville_naiss: "PARIS 08") }
+Eleve.where("ville_naiss like 'PARIS% 9%'").each { |e| e.update(ville_naiss: "PARIS 09") }
+
 Eleve.where("ville_naiss like 'PARIS%01%'").each { |e| e.update(ville_naiss: "PARIS 01") }
 Eleve.where("ville_naiss like 'PARIS%02%'").each { |e| e.update(ville_naiss: "PARIS 02") }
 Eleve.where("ville_naiss like 'PARIS%03%'").each { |e| e.update(ville_naiss: "PARIS 03") }
