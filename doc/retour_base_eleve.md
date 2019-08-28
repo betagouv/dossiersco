@@ -29,7 +29,7 @@ Vous devriez obtenir les trois fichiers suivants :
 - Cliquer sur "Importer le fichier"
 
 
-Allez ensuite dans "Retour Base Élèves".
+Allez ensuite dans l'onglet "Retour Base Élèves".
 
 - Sélectionnez le fichier Nomenclature.xml
 - Complétez les éventuels codes matières manquant
