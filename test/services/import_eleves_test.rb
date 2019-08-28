@@ -92,7 +92,7 @@ class ImportElevesTest < ActiveSupport::TestCase
   test "met à jour l'information à propos des possibilité de retour siecle" do
     etablissement = Fabricate(:etablissement)
     eleve = Fabricate(:eleve, identifiant: "070832327JA", ville_naiss: "blu", commune_insee_naissance: nil)
-    dossier = Fabricate(:dossier_eleve, eleve: eleve)
+    Fabricate(:dossier_eleve, eleve: eleve)
     dossier_valide = Fabricate(:dossier_eleve_valide, etablissement: etablissement)
     dossier_invalide = Fabricate(:dossier_eleve, mef_destination: nil, etablissement: etablissement)
 

@@ -39,6 +39,7 @@ Metrics/BlockLength:
 
 Metrics/MethodLength:
   Exclude:
+    - 'app/services/import_responsables.rb'
     - 'app/services/famille.rb'
     - 'app/jobs/importer_siecle.rb'
     - 'app/services/import_nomenclature.rb'
