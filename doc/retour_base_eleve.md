@@ -5,18 +5,18 @@
 ### Dans le portail ARENA Base Elève
 
 - Depuis le portail ARENA Base Elève, sélectionnez **mise à jour**
-- Sélectionner l'année **2019-2020**
+- Sélectionnez l'année **2019-2020**
 - Exportations
 - En XML
 
-Cliquer sur :
+Cliquez sur :
 
 - Nomenclature
 - Elèves avec adresse
 - Responsables avec adresse
 
-**Dézippez** les trois fichiers ainsi sauvegardés. 
-- faire click droit
+**Dézippez** les trois fichiers ainsi sauvegardés.
+- faites clic droit
 - extraire ici
 
 Vous devriez obtenir les trois fichiers suivants :
@@ -47,20 +47,22 @@ Allez ensuite dans l'onglet "Retour Base Élèves".
 
 Vous obtiendrez un fichier du type :
 - 0752550PPRIVE2019200823065124.zip
-Le nom exact sera différent car il dépend du jour et de l'heure ou vous l'avez enregistré.
+Le nom exact sera différent car il dépend du jour et de l'heure où vous l'avez enregistré.
 
 
 ## Retour Par ARENA Base Elève
 
 - Depuis le portail ARENA Base Elève, sélectionnez "mise à jour"
-- Sélectionner l'année 2019-2020
-- Sélectionner **Importations**
-- Sélectionner **Dossiers depuis logiciel privé**
+- Sélectionnez l'année 2019-2020
+- Sélectionnez **Importations**
+- Sélectionnez **Dossiers depuis logiciel privé**
 (l'import privé est le seul canal pour remonter des informations)
 
-- Cliquer sur "Parcourir" et sélecitonné le fichier du type 0752550PPRIVE2019200823065124.zip qui vient d'être téléchargé depuis DossierSCO.
-- Cliquer sur IMPORTER
+- Cliquez sur "Parcourir" et sélectionnez le fichier du type 0752550PPRIVE2019200823065124.zip qui vient d'être téléchargé depuis DossierSCO.
+- Cliquez sur IMPORTER
 
 Si la mention "fichier déposé" apparait, tout s'est bien passé.
 
 Si une erreur est mentionnée, contacter l'équipe.
+
+**Une fois le fichier déposé, il est à noter que SIECLE le traitera la nuit suivant le dépôt**
