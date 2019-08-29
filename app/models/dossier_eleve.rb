@@ -70,6 +70,10 @@ class DossierEleve < ActiveRecord::Base
       .where("eleves.commune_insee_naissance is not null or (eleves.pays_naiss <> '100' and eleves.ville_naiss is not null)")
   }
 
+  scope :valide, lambda {
+    where(etat: ETAT[:valide])
+  }
+
   scope :avec_code_mef_origine_invalide, lambda {
     joins("INNER JOIN mef AS mef_origine ON mef_origine.id = mef_origine_id AND length(mef_origine.code) != '11'")
   }

@@ -58,6 +58,7 @@ Rails.application.routes.draw do
       collection do
         get "export-options", defaults: { format: "xlsx" }
         get "export-siecle", defaults: { format: "xml" }
+        get "eleves-avec-adresses", defaults: { format: "xml" }
         post "export_pieces_jointes"
       end
     end

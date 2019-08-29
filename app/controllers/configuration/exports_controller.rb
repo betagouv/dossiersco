@@ -58,5 +58,9 @@ module Configuration
       redirect_to new_tache_import_path
     end
 
+    def eleves_avec_adresses
+      @dossiers = @etablissement.dossier_eleve.valide
+    end
+
   end
 end

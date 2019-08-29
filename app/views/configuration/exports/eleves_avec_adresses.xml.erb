@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<BEE_ELEVES VERSION="3.0">
+  <PARAMETRES>
+    <UAJ>0752550P</UAJ>
+    <ANNEE_SCOLAIRE>2019</ANNEE_SCOLAIRE>
+    <DATE_EXPORT>26/08/2019</DATE_EXPORT>
+    <HORODATAGE>26/08/2019 17:40:46</HORODATAGE>
+  </PARAMETRES>
+  <DONNEES>
+    <ELEVES>
+      <% @dossiers.each do |dossier| %>
+        <ELEVE>
+          <% if dossier.eleve.identifiant.present? %>
+            <ID_NATIONAL><%= dossier.eleve.identifiant %></ID_NATIONAL>
+          <% end %>
+          <NOM_DE_FAMILLE><%= dossier.eleve.nom %></NOM_DE_FAMILLE>
+          <PRENOM><%= dossier.eleve.prenom %></PRENOM>
+          <% if dossier.eleve.prenom_2.present? %>
+            <PRENOM2><%= dossier.eleve.prenom_2 %></PRENOM2>
+          <% end %>
+          <% if dossier.eleve.prenom_3.present? %>
+            <PRENOM3><%= dossier.eleve.prenom_3 %></PRENOM3>
+          <% end %>
+          <CODE_PAYS_NAT><%= dossier.eleve.nationalite ? dossier.eleve.nationalite : 995 %></CODE_PAYS_NAT>
+          <DATE_NAISS><%= dossier.eleve.date_naiss %></DATE_NAISS>
+          <CODE_SEXE><%= dossier.eleve.sexe == 'Masculin' ? '1' : '2' %></CODE_SEXE>
+          <CODE_PAYS><%= dossier.eleve.pays_naiss ? dossier.eleve.pays_naiss : 995 %></CODE_PAYS>
+          <% if dossier.eleve.pays_naiss == "100" %>
+            <CODE_COMMUNE_INSEE_NAISS><%= dossier.eleve.commune_insee_naissance %></CODE_COMMUNE_INSEE_NAISS>
+          <% else %>
+            <VILLE_NAISS><%= alternative(dossier.eleve.ville_naiss) %></VILLE_NAISS>
+          <% end %>
+          <ADHESION_TRANSPORT>false</ADHESION_TRANSPORT>
+          <CODE_REGIME><%= dossier.demi_pensionnaire? ? 24 : 0 %></CODE_REGIME>
+          <SCOLARITE_AN_DERNIER>
+            <CODE_MEF><%= dossier.mef_an_dernier %></CODE_MEF>
+            <% if dossier.division_an_dernier.present? %>
+              <CODE_STRUCTURE><%= dossier.division_an_dernier %></CODE_STRUCTURE>
+            <% end %>
+            <CODE_RNE><%= @etablissement.uai %></CODE_RNE>
+          </SCOLARITE_AN_DERNIER>
+        </ELEVE>
+    <% end %>
+    </ELEVES>
+    <OPTIONS>
+      <% @dossiers.each do |dossier| %>
+        <OPTION>
+          <% num_option = 1 %>
+          <% dossier.options_triees_par_rang.each do |option| %>
+            <% next if option.code_matiere.nil? %>
+            <OPTION_ELEVE>
+              <NUM_OPTION><%= num_option %></NUM_OPTION>
+              <% num_option += 1 %>
+              <CODE_MODALITE_ELECT><%= option.mef_options_pedagogiques.find_by(mef: dossier.mef_destination)&.code_modalite_elect || "O" %></CODE_MODALITE_ELECT>
+              <CODE_MATIERE><%= option.code_matiere_6 %></CODE_MATIERE>
+            </OPTION_ELEVE>
+          <% end %>
+        </OPTION>
+      <% end %>
+    </OPTIONS>
+    <STRUCTURES>
+      <% @dossiers.each do |dossier| %>
+        <STRUCTURES_ELEVE>
+          <STRUCTURE>
+            <CODE_STRUCTURE><%= dossier.division_an_dernier %></CODE_STRUCTURE>
+            <TYPE_STRUCTURE><%= dossier.mef_an_dernier&[10] || " " %></TYPE_STRUCTURE>
+          </STRUCTURE>
+        </STRUCTURES_ELEVE>
+      <% end %>
+    </STRUCTURES>
+    <BOURSES />
+    <ADRESSES/>
+  </DONNEES>
+</BEE_ELEVES>
