@@ -84,7 +84,7 @@ class ImportEleves
 
   def extrait_division_courante(noeud)
     id = noeud.attributes["ELEVE_ID"]
-    noeud.xpath("/BEE_ELEVES/DONNEES/STRUCTURES/STRUCTURES_ELEVE[@ELEVE_ID='#{id}']/STRUCTURE/CODE_STRUCTURE").text
+    noeud.xpath("/BEE_ELEVES/DONNEES/STRUCTURES/STRUCTURES_ELEVE[@ELEVE_ID='#{id}']/STRUCTURE[1]/CODE_STRUCTURE").text
   end
 
   def extrait_prenom2(noeud)

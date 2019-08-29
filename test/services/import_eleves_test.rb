@@ -107,4 +107,20 @@ class ImportElevesTest < ActiveSupport::TestCase
     assert_equal I18n.t("retour_siecles.dossier_non_valide"), dossier_invalide.retour_siecle_impossible
   end
 
+  test "quand il y deux structures, on ne prend que la premier (la deuxième correspond au groupe)" do
+    etablissement = Fabricate(:etablissement)
+
+    eleve = Fabricate(:eleve, identifiant: "070876696HA")
+    dossier_valide = Fabricate(:dossier_eleve_valide, eleve: eleve, etablissement: etablissement, division: nil)
+
+    fichier_xml = fixture_file_upload("files/eleves_avec_adresse_avec_double_structure.xml")
+    tache = Fabricate(:tache_import, type_fichier: "eleves", fichier: fichier_xml, etablissement: etablissement)
+
+    ImportEleves.new.perform(tache)
+
+    dossier_valide.reload
+    assert_equal "", dossier_valide.retour_siecle_impossible
+    assert_equal "301", dossier_valide.division
+  end
+
 end
