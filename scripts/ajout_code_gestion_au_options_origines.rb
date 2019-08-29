@@ -10,7 +10,7 @@ etablissement = Etablissement.find_by(uai: uai)
 dossiers = etablissement.dossier_eleve
 
 dossiers.each do |dossier|
-  puts "dossier.options_origines : #{dossier.options_origines}"
+  puts "dossier.options_origines : #{dossier.options_origines} dossier id : #{dossier.id}"
   dossier.options_origines.keys.each do |option_id|
     puts "key : #{option_id}"
     option = OptionPedagogique.find(option_id)
