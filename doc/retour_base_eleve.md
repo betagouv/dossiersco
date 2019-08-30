@@ -32,6 +32,7 @@ Vous devriez obtenir les trois fichiers suivants :
 - Bouton **"Choisir un fichier"** et sélectionner **ResponsablesAvecAdresses.xml**
 - **"Importer le fichier"**
 
+**Aucune modification ne sera écrasée** (il s'agit de savoir qui paye les frais de scolarité et de prendre en compte une modification du code insee des retraités)
 
 Allez ensuite dans l'onglet "Retour Base Élèves".
 
