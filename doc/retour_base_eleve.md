@@ -65,6 +65,8 @@ Si la mention "fichier déposé" apparait, tout s'est bien passé.
 
 Si une erreur est mentionnée, contacter l'équipe.
 
-**Une fois le fichier déposé, il est à noter que SIECLE le traitera la nuit suivant le dépôt**
+**Une fois le fichier déposé, il est à noter que SIECLE ne le traitera que dans les 24h qui suivent le dépôt** :
+- vers minuit dans l'accadémie de Paris
+- vers 8h30 dans l'accadémie de Montpellier
 
 ![échanges entre la base élève et siecle](/images/retour_base_eleve.svg)
