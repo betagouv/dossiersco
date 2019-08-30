@@ -259,3 +259,16 @@ bundle show "nom d'une gem"
 git stash save --keep-index
 make test
 git stash pop
+
+# Parcourir les pièces jointes
+#
+
+s3cmd --configure
+(voir clés dans environnement scalingo)
+
+s3cmd ls -r s3://dossierscoweb/uploads/La GARRIGUETTE/
+
+[Plus d'infos](https://github.com/s3tools/s3cmd)
+
+
+
