@@ -66,3 +66,5 @@ Si la mention "fichier déposé" apparait, tout s'est bien passé.
 Si une erreur est mentionnée, contacter l'équipe.
 
 **Une fois le fichier déposé, il est à noter que SIECLE le traitera la nuit suivant le dépôt**
+
+![échanges entre la base élève et siecle](/images/retour_base_eleve.svg)
