@@ -4,6 +4,8 @@ require "test_helper"
 
 class ExportsControllerTest < ActionDispatch::IntegrationTest
 
+  SCHEMA_IMPORT_SIECLE = "doc/documents/import_prive/schema_Import_3.1.xsd"
+
   test "#export-siecle" do
     admin = Fabricate(:admin)
     identification_agent(admin)
@@ -41,7 +43,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
 
-    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    schema = Rails.root.join(SCHEMA_IMPORT_SIECLE)
     xsd = Nokogiri::XML::Schema(File.read(schema))
     xml = Nokogiri::XML(response.body)
     assert_equal [], xsd.validate(xml)
@@ -75,7 +77,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
 
-    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    schema = Rails.root.join(SCHEMA_IMPORT_SIECLE)
     xsd = Nokogiri::XML::Schema(File.read(schema))
     xml = Nokogiri::XML(response.body)
     assert_equal [], xsd.validate(xml)
@@ -101,7 +103,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
 
-    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    schema = Rails.root.join(SCHEMA_IMPORT_SIECLE)
     Nokogiri::XML::Schema(File.read(schema))
     xml = Nokogiri::XML(response.body)
 
@@ -122,7 +124,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
 
-    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    schema = Rails.root.join(SCHEMA_IMPORT_SIECLE)
     Nokogiri::XML::Schema(File.read(schema))
     xml = Nokogiri::XML(response.body)
 
@@ -143,7 +145,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
 
-    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    schema = Rails.root.join(SCHEMA_IMPORT_SIECLE)
     Nokogiri::XML::Schema(File.read(schema))
     xml = Nokogiri::XML(response.body)
 
@@ -175,7 +177,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
 
-    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    schema = Rails.root.join(SCHEMA_IMPORT_SIECLE)
     Nokogiri::XML::Schema(File.read(schema))
     xml = Nokogiri::XML(response.body)
 
@@ -198,7 +200,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
 
-    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    schema = Rails.root.join(SCHEMA_IMPORT_SIECLE)
     Nokogiri::XML::Schema(File.read(schema))
     xml = Nokogiri::XML(response.body)
 
@@ -221,7 +223,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
 
-    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    schema = Rails.root.join(SCHEMA_IMPORT_SIECLE)
     Nokogiri::XML::Schema(File.read(schema))
     xml = Nokogiri::XML(response.body)
 
@@ -238,7 +240,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
 
-    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    schema = Rails.root.join(SCHEMA_IMPORT_SIECLE)
     Nokogiri::XML::Schema(File.read(schema))
     xml = Nokogiri::XML(response.body)
 
@@ -265,7 +267,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
 
-    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    schema = Rails.root.join(SCHEMA_IMPORT_SIECLE)
     Nokogiri::XML::Schema(File.read(schema))
     xml = Nokogiri::XML(response.body)
 
@@ -287,7 +289,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
 
-    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    schema = Rails.root.join(SCHEMA_IMPORT_SIECLE)
     Nokogiri::XML::Schema(File.read(schema))
     xml = Nokogiri::XML(response.body)
 
@@ -316,7 +318,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
 
-    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    schema = Rails.root.join(SCHEMA_IMPORT_SIECLE)
     Nokogiri::XML::Schema(File.read(schema))
 
     assert_no_match "CODE_DIVISION", response.body
@@ -338,7 +340,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
 
-    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    schema = Rails.root.join(SCHEMA_IMPORT_SIECLE)
     Nokogiri::XML::Schema(File.read(schema))
 
     assert_no_match mef_non_conforme.code, response.body
@@ -398,7 +400,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
 
-    schema = Rails.root.join("doc/import_prive/schema_Import_3.1.xsd")
+    schema = Rails.root.join(SCHEMA_IMPORT_SIECLE)
     Nokogiri::XML::Schema(File.read(schema))
     xml = Nokogiri::XML(response.body)
 

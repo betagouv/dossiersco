@@ -21,5 +21,3 @@ puts "Nettoie les téléphones..."
   %w[6 7].each { |prefixe| complete_tel_portable(type_tel, prefixe) }
   supprime_tel(type_tel)
 end
-
-

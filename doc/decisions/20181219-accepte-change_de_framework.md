@@ -1,7 +1,5 @@
 # Change de framework
 
-Status: acceptée
-
 ## Contexte
 
 Sinatra n'est pas un _framework_ mais une librairie. Sinatra est peut connu. La

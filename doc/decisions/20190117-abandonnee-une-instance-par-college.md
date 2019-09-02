@@ -1,7 +1,5 @@
 # Deployer une instance par collège
 
-Status: abandonnée
-
 ## Contexte
 
 Dans beaucoup de table, nous conservons l'identifiant établissement. Dans chaque requête, nous faisons un filtre avec ce code établissement.

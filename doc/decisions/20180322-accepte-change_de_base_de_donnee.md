@@ -1,7 +1,5 @@
 # Changer de base de donnée
 
-Status: acceptée
-
 ## Contexte
 
 _

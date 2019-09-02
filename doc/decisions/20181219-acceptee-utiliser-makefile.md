@@ -1,7 +1,5 @@
 # Utiliser Makefile
 
-Status: _acceptée_
-
 ## Contexte
 
 Pour rester le plus proche possible de l'environnement de production, nous voulons utiliser des containers. Cela permet aussi de partager des envivonnement le plus proche possible entre nous.

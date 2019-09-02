@@ -1,7 +1,5 @@
 # Utiliser les Enregistrement de Décision d'Architecture (ADR en anglais)
 
-Status: acceptée
-
 ## Contexte
 
 Les équipes se suivent et ne se ressemble pas forcement. L'oralité ne suffit

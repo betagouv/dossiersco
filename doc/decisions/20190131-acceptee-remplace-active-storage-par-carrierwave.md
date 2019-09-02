@@ -1,7 +1,5 @@
 # Remplace ActiveStorage par Carrierwave
 
-Status: _acceptée_
-
 ## Contexte
 
 - ActiveStorage est un module de Rails très récent, et peu documenté.

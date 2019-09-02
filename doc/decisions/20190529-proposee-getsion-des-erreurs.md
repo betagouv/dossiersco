@@ -1,7 +1,5 @@
 # Gérer les erreurs avec les exceptions
 
-Status: proposée
-
 ## Contexte
 
 Avec rails, il est facile de se perdre dans la gestion des erreurs. ActiveRecord propose un compotement basé sur un boolean (`monobjet.save` renvoie vrai ou faux), puis sur un objet tableau amélioré pour stocker les erreurs.

@@ -2,8 +2,6 @@
 
 _//Une phrase à l'impératif courte, de moins de 50 caractères, un peu comme un message de commit//_
 
-Status: _//proposée, acceptée, rejetée, abandonnée, suspendue, etc//_
-
 ## Contexte
 
 _//quel est le problème qui motive cette décision ou ce changement ?//_

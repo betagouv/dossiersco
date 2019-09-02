@@ -1,7 +1,5 @@
 # Remplacer les fixtures
 
-Status: en cours
-
 ## Contexte
 
 L'utilisation de _fixture_ ne permet pas d'avoir un environnement neutre au démarrage d'un test, éloigne des tests les informations du contexte.

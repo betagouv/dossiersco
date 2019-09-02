@@ -1,7 +1,5 @@
 # Déploiement pas automatique
 
-Status: rejeté
-
 ## Contexte
 
 Après avoir reconstruit l'environnement de démo depuis zéro, nous ne pouvons

@@ -1,7 +1,5 @@
 # Enregistrer uniquement les changements
 
-Status: proposée
-
 ## Contexte
 
 Enregistrer uniquement les changements... event sourcing.

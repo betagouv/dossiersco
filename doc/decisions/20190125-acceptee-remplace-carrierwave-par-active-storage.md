@@ -1,7 +1,5 @@
 # Remplace Carrierwave par ActiveStorage
 
-Status: _acceptée_
-
 ## Contexte
 
 - Lorsque nous utilisions le framework Sinatra, nous utilisions Carrierwave pour l'upload de fichiers.

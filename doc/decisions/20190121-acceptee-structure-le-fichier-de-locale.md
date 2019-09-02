@@ -1,7 +1,5 @@
 # Structure le fichier de locale
 
-Status: _acceptée_
-
 ## Contexte
 
 Il existe plusieurs façons de structurer les locales :

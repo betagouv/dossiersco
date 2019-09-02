@@ -14,9 +14,15 @@ Ce document à pour objet de lister les hypothèses, de documenter celles qui on
 - Comment accueillez-vous les familles ?
 - Comment accueillez-vous les familles les plus en difficulté ?
 
+- Avez-vous lu des articles du blog de dossiersco ?
+- Si oui, comment les avez vous découvert ?
+_pas sur que les personnes utilisatrices soient consciente du blog, il faudra sans doute tourner la question autrement_
+
 
 ## Références
 
 Validez qualitativement[...] _seulement cinq entretiens avec les clients_
 
 Ce chiffre est tiré d'une recherche sur les tests d'utilisabilité (Jacob Nielsen / Steve Krug) qui démontre que cinq personnes suffisent à dévoiler 85% des problèmes. Running Lean, Ash Maurya, p.115 de l'édition française.
+
+
