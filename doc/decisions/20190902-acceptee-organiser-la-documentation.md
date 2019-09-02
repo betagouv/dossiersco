@@ -5,7 +5,7 @@
 Nous accumulons beaucoup de documents, d'interview utilisateur, de
 questionnement, d'information sous forme textuelle.
 
-Ces documents sont éparpillé sur le gitlab, le keybase, le blog, le repertoire
+Ces documents sont éparpillés sur le gitlab, le keybase, le blog, le repertoire
 doc de l'application (sur github).
 
 Il n'est pas facile de faire des synthèses à partir de toutes ces informations.
