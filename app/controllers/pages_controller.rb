@@ -30,7 +30,7 @@ class PagesController < ApplicationController
   end
 
   def retour_siecle
-    fichier = File.join(Rails.root, "doc/retour_base_eleve.md")
+    fichier = File.join(Rails.root, "doc/procedures/retour_base_eleve.md")
     renderer = Redcarpet::Render::HTML.new(hard_wrap: true)
     markdown = Redcarpet::Markdown.new(renderer, {})
 
