@@ -16,7 +16,7 @@ avoir vérifier qu'elles sont bien justifiées.
 ## Decision
 
 Nous allons rassembler la documentation publiable (ou annonymisé) dans un
-repertoire à coté du code source (le répertoire [doc](doc)).
+repertoire à coté du code source (le répertoire [doc](/doc)).
 
 Nous allons organiser ce répertoire doc en 4 sous répertoire :
 
