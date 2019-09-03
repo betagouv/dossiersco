@@ -4,7 +4,7 @@ require "test_helper"
 
 class ExportsControllerTest < ActionDispatch::IntegrationTest
 
-  SCHEMA_IMPORT_SIECLE = "lib/schema_Import_3.1.xsd"
+  SCHEMA_IMPORT_SIECLE = "./lib/schema_Import_3.1.xsd"
 
   test "#export-siecle" do
     admin = Fabricate(:admin)
