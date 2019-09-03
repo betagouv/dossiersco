@@ -1,2 +1,0 @@
-Dans la balise CODE_PARENTE, il faut mettre deux caractères
-Cette contrainte n'apparait pas dans le xsd.
