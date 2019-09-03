@@ -178,7 +178,6 @@ Rails.application.routes.draw do
 
   get "/redirection_erreur", to: "pages#redirection_erreur"
   get "/changelog", to: "pages#changelog"
-  get "/procedures/retour-siecle", to: "pages#retour_siecle"
 
   mount LetterOpenerWeb::Engine, at: "/letter_opener" unless ENV["laisser_partir_les_emails"]
 
