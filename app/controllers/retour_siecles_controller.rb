@@ -27,12 +27,12 @@ class RetourSieclesController < ApplicationController
     @dossiers_bloques.concat(extrait_informations(dossiers_etablissement.avec_code_mef_origine_invalide, I18n.t("retour_siecles.new.dossier_avec_mef_origine_invalide")))
     @dossiers_bloques.concat(extrait_informations(dossiers_etablissement.avec_code_mef_destination_invalide, I18n.t("retour_siecles.new.dossier_avec_mef_destination_invalide")))
 
-    if params[:liste_ine].present?
-      ines = params[:liste_ine].split(",")
-      @selection_dossiers = @dossiers.joins(:eleve).where("eleves.identifiant in (?)", ines)
-      @dossiers_exportables = @selection_dossiers.exportables
-      @nb_resp_legaux_selection = nb_resp_legaux(@dossiers_exportables)
-    end
+    return unless params[:liste_ine].present?
+
+    ines = params[:liste_ine].split(",")
+    @selection_dossiers = @dossiers.joins(:eleve).where("eleves.identifiant in (?)", ines)
+    @dossiers_exportables = @selection_dossiers.exportables
+    @nb_resp_legaux_selection = nb_resp_legaux(@dossiers_exportables)
   end
 
   def dossiers_etablissement

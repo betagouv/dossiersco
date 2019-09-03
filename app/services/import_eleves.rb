@@ -43,16 +43,8 @@ class ImportEleves
   end
 
   def met_a_jour_prenoms_ele(eleve, noeud)
-    unless eleve&.prenom_2.present?
-      eleve&.update(
-        prenom_2: extrait_prenom2(noeud)
-      )
-    end
-    unless eleve&.prenom_3.present?
-      eleve&.update(
-        prenom_3: extrait_prenom3(noeud)
-      )
-    end
+    eleve&.update(prenom_2: extrait_prenom2(noeud)) unless eleve&.prenom_2.present?
+    eleve&.update(prenom_3: extrait_prenom3(noeud)) unless eleve&.prenom_3.present?
   end
 
   def met_a_jour_dossier(eleve, noeud)
