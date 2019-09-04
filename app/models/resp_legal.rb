@@ -115,12 +115,16 @@ class RespLegal < ActiveRecord::Base
     lignes_adresses[1]
   end
 
+  def ligne3_adresse_siecle
+    lignes_adresses[2]
+  end
+
   private
 
   def lignes_adresses
     return [adresse, nil] if adresse.length <= 38
 
-    [adresse[0, 38], adresse[38..-1]]
+    [adresse[0, 38], adresse[38..75], adresse[76..-1]]
   end
 
 end

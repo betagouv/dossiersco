@@ -121,4 +121,17 @@ class RespLegalTest < ActiveSupport::TestCase
     assert_equal "N NY / USA", resp_legal.ligne2_adresse_siecle
   end
 
+  test "aller jusqu'à 4 ligne d'adresse" do
+    adresse = "Résidence le claricy 1 bâtiment C appart 4760 3 éme étage\r\n290 vois des hauts de clairicy "
+    resp_legal = Fabricate(:resp_legal, adresse: adresse)
+
+    assert_equal "Résidence le claricy 1 bâtiment C appa", resp_legal.ligne1_adresse_siecle
+    assert_equal "rt 4760 3 éme étage\r\n290 vois des haut", resp_legal.ligne2_adresse_siecle
+    assert_equal "s de clairicy ", resp_legal.ligne3_adresse_siecle
+
+    assert resp_legal.ligne1_adresse_siecle.length <= 38
+    assert resp_legal.ligne2_adresse_siecle.length <= 38
+    assert resp_legal.ligne3_adresse_siecle.length <= 38
+  end
+
 end
