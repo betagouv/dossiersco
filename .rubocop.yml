@@ -153,6 +153,4 @@ Metrics/PerceivedComplexity:
     - 'app/services/analyseur_retour_siecle.rb'
 
 Naming/VariableNumber:
-  Exclude:
-    - 'test/controllers/configuration/exports_controller_test.rb'
-    - 'test/models/dossier_eleve_test.rb'
+  Enabled: false
