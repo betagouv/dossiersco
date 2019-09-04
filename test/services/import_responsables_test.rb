@@ -9,7 +9,7 @@ class ImportResponsablesTest < ActiveSupport::TestCase
   include ActionDispatch::TestProcess::FixtureFile
 
   test "ne met pas à jour deux représentants légaux qui portent le même nom et prénom dans le même établissement" do
-    etablissement = Fabricate(:etablissement)
+    etablissement = Fabricate(:etablissement, uai: "0140070A")
 
     premier_homonyme = Fabricate(:resp_legal,
                                  prenom: "Maryline",
@@ -35,7 +35,7 @@ class ImportResponsablesTest < ActiveSupport::TestCase
   end
 
   test "récupère l'information PAIE_FRAIS_SCOLAIRE pour chaque Resp_Legal" do
-    etablissement = Fabricate(:etablissement)
+    etablissement = Fabricate(:etablissement, uai: "0140070A")
 
     maryline = Fabricate(:resp_legal,
                          prenom: "Maryline",
@@ -59,7 +59,7 @@ class ImportResponsablesTest < ActiveSupport::TestCase
   end
 
   test "affecte un code profession plus précis pour les retraités" do
-    etablissement = Fabricate(:etablissement)
+    etablissement = Fabricate(:etablissement, uai: "0140070A")
 
     maryline = Fabricate(:resp_legal,
                          prenom: "Maryline",
@@ -83,7 +83,7 @@ class ImportResponsablesTest < ActiveSupport::TestCase
   end
 
   test "conserve le code profession dossiersco des non-retraités" do
-    etablissement = Fabricate(:etablissement)
+    etablissement = Fabricate(:etablissement, uai: "0140070A")
 
     ada = Fabricate(:resp_legal,
                     prenom: "Ada",
@@ -101,7 +101,7 @@ class ImportResponsablesTest < ActiveSupport::TestCase
   end
 
   test "ignore un responsable légal quand il n'est pas trouvé dans DossierSCO" do
-    etablissement = Fabricate(:etablissement)
+    etablissement = Fabricate(:etablissement, uai: "0140070A")
 
     truc = Fabricate(:resp_legal,
                      prenom: "Bidule",
@@ -120,7 +120,7 @@ class ImportResponsablesTest < ActiveSupport::TestCase
   end
 
   test "met à jour l'information à propos des possibilité de retour siecle" do
-    etablissement = Fabricate(:etablissement)
+    etablissement = Fabricate(:etablissement, uai: "0140070A")
     dossier_valide = Fabricate(:dossier_eleve_valide, etablissement: etablissement)
     dossier_invalide = Fabricate(:dossier_eleve, mef_destination: nil, etablissement: etablissement)
 
@@ -133,6 +133,22 @@ class ImportResponsablesTest < ActiveSupport::TestCase
     assert_equal "", dossier_valide.retour_siecle_impossible
     dossier_invalide.reload
     assert_equal I18n.t("retour_siecles.dossier_non_valide"), dossier_invalide.retour_siecle_impossible
+  end
+
+  test "n'importe pas un fichier avec le mauvais UAJ" do
+    etablissement = Fabricate(:etablissement, uai: "0140070r")
+
+    fichier_xml = fixture_file_upload("files/responsables_avec_adresses_simple.xml")
+    tache = Fabricate(:tache_import, type_fichier: "eleves", fichier: fichier_xml, etablissement: etablissement)
+    maryline = Fabricate(:resp_legal,
+                         prenom: "Maryline",
+                         nom: "ROCK",
+                         profession: "73",
+                         dossier_eleve: Fabricate(:dossier_eleve, etablissement: etablissement))
+
+    ImportResponsables.new.perform(tache)
+    maryline.reload
+    assert_equal "73", maryline.profession
   end
 
 end

@@ -7,7 +7,7 @@ class ImportNomenclatureTest < ActiveSupport::TestCase
   include ActionDispatch::TestProcess::FixtureFile
 
   test "retrouve le mef correspondant au libelle, et y ajoute le code trouvé" do
-    etablissement = Fabricate(:etablissement)
+    etablissement = Fabricate(:etablissement, uai: "0140070A")
     mef = Fabricate(:mef, libelle: "5EME", etablissement: etablissement)
 
     fichier_xml = fixture_file_upload("files/nomenclature_simple.xml")
@@ -21,7 +21,7 @@ class ImportNomenclatureTest < ActiveSupport::TestCase
   end
 
   test "ne fait rien si le MEF n'est pas trouvé" do
-    etablissement = Fabricate(:etablissement)
+    etablissement = Fabricate(:etablissement, uai: "0140070A")
     mef = Fabricate(:mef, libelle: "4EME", code: "truc", etablissement: etablissement)
 
     fichier_xml = fixture_file_upload("files/nomenclature_simple.xml")
@@ -35,7 +35,7 @@ class ImportNomenclatureTest < ActiveSupport::TestCase
   end
 
   test "fonctionne sur plusieurs MEFs et un fichier plus gros" do
-    etablissement = Fabricate(:etablissement)
+    etablissement = Fabricate(:etablissement, uai: "0140070A")
     mef3 = Fabricate(:mef, libelle: "3EME", etablissement: etablissement)
     mef4 = Fabricate(:mef, libelle: "4EME", etablissement: etablissement)
     mef5 = Fabricate(:mef, libelle: "5EME", etablissement: etablissement)
@@ -58,7 +58,7 @@ class ImportNomenclatureTest < ActiveSupport::TestCase
   end
 
   test "retrouve le mef de l'établissement, et correspondant au libelle, et y ajoute le code trouvé" do
-    etablissement = Fabricate(:etablissement)
+    etablissement = Fabricate(:etablissement, uai: "0140070A")
     autre_mef = Fabricate(:mef, libelle: "5EME", code: "truc")
     mef = Fabricate(:mef, libelle: "5EME", etablissement: etablissement)
 
@@ -74,7 +74,7 @@ class ImportNomenclatureTest < ActiveSupport::TestCase
   end
 
   test "retrouve une option existante à partir du code gestion et lui ajoute le code matière sur 6" do
-    etablissement = Fabricate(:etablissement)
+    etablissement = Fabricate(:etablissement, uai: "0140070A")
     option = Fabricate(:option_pedagogique, code_matiere_6: nil, code_matiere: "LCALA", etablissement: etablissement)
 
     fichier_xml = fixture_file_upload("files/nomenclature_simple.xml")
@@ -89,7 +89,7 @@ class ImportNomenclatureTest < ActiveSupport::TestCase
   end
 
   test "si une option de la nomenclature n'est pas trouvé, on crée une option" do
-    etablissement = Fabricate(:etablissement)
+    etablissement = Fabricate(:etablissement, uai: "0140070A")
 
     fichier_xml = fixture_file_upload("files/nomenclature_simple.xml")
     tache = Fabricate(:tache_import, type_fichier: "nomenclature", fichier: fichier_xml, etablissement: etablissement)
@@ -106,7 +106,7 @@ class ImportNomenclatureTest < ActiveSupport::TestCase
   end
 
   test "donne la priorité au code modalité O par rapport au S" do
-    etablissement = Fabricate(:etablissement)
+    etablissement = Fabricate(:etablissement, uai: "0140070A")
     mef = Fabricate(:mef, code: "20211010110", etablissement: etablissement)
     option = Fabricate(:option_pedagogique, code_matiere_6: "061300", etablissement: etablissement)
     mef_option = Fabricate(:mef_option_pedagogique, mef: mef, option_pedagogique: option, code_modalite_elect: nil)
@@ -119,7 +119,7 @@ class ImportNomenclatureTest < ActiveSupport::TestCase
   end
 
   test "récupère le CODE_MODALITE_ELECT dans le mef_option_pedagogique correspondant" do
-    etablissement = Fabricate(:etablissement)
+    etablissement = Fabricate(:etablissement, uai: "0140070A")
     mef = Fabricate(:mef, code: "10110001110", etablissement: etablissement)
     option = Fabricate(:option_pedagogique, code_matiere_6: "020300", etablissement: etablissement)
     mef_option = Fabricate(:mef_option_pedagogique, mef: mef, option_pedagogique: option, code_modalite_elect: nil)
@@ -132,7 +132,7 @@ class ImportNomenclatureTest < ActiveSupport::TestCase
   end
 
   test "récupère le RANG_OPTION dans le mef_option_pedagogique correspondant" do
-    etablissement = Fabricate(:etablissement)
+    etablissement = Fabricate(:etablissement, uai: "0140070A")
     mef = Fabricate(:mef, code: "10110001110", etablissement: etablissement)
     option = Fabricate(:option_pedagogique, code_matiere_6: "020300", etablissement: etablissement)
     mef_option = Fabricate(:mef_option_pedagogique, mef: mef, option_pedagogique: option, code_modalite_elect: nil, rang_option: nil)
@@ -145,7 +145,7 @@ class ImportNomenclatureTest < ActiveSupport::TestCase
   end
 
   test "met à jour l'information à propos des possibilité de retour siecle" do
-    etablissement = Fabricate(:etablissement)
+    etablissement = Fabricate(:etablissement, uai: "0140070A")
     Fabricate(:mef, libelle: "5EME", etablissement: etablissement)
     dossier_valide = Fabricate(:dossier_eleve_valide, etablissement: etablissement)
     dossier_invalide = Fabricate(:dossier_eleve, mef_destination: nil, etablissement: etablissement)
@@ -159,6 +159,16 @@ class ImportNomenclatureTest < ActiveSupport::TestCase
     assert_equal "", dossier_valide.retour_siecle_impossible
     dossier_invalide.reload
     assert_equal I18n.t("retour_siecles.dossier_non_valide"), dossier_invalide.retour_siecle_impossible
+  end
+
+  test "n'importe pas un fichier avec le mauvais UAJ" do
+    etablissement = Fabricate(:etablissement, uai: "0140070R")
+
+    fichier_xml = fixture_file_upload("files/nomenclature_simple.xml")
+    tache = Fabricate(:tache_import, type_fichier: "nomenclature", fichier: fichier_xml, etablissement: etablissement)
+
+    ImportNomenclature.new.perform(tache)
+    assert_nil Mef.find_by(code: "10110001110")
   end
 
 end

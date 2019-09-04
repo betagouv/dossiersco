@@ -8,6 +8,8 @@ class ImportNomenclature
     file = File.read("#{Rails.root}/public/#{tache.fichier}")
     xml = Nokogiri::XML(file)
 
+    return if xml.xpath("/BEE_NOMENCLATURES/PARAMETRES/UAJ").text != tache.etablissement.uai
+
     met_a_jour_les_mef!(xml, tache.etablissement)
     met_a_jour_les_options_pedagogiques!(xml, tache.etablissement)
     met_a_jour_les_mef_options_pedagogiques!(xml, tache.etablissement)

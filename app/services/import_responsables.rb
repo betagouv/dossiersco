@@ -7,6 +7,8 @@ class ImportResponsables
   def perform(tache)
     xml = Nokogiri::XML(File.read("#{Rails.root}/public/#{tache.fichier}"))
 
+    return if xml.xpath("/BEE_RESPONSABLES/PARAMETRES/UAJ").text != tache.etablissement.uai
+
     xml.xpath("/BEE_RESPONSABLES/DONNEES/PERSONNES/PERSONNE").each do |noeud_personne|
       nom = noeud_personne.xpath("NOM_DE_FAMILLE").text
       prenom = noeud_personne.xpath("PRENOM").text

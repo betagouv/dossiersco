@@ -6,6 +6,8 @@ class ImportEleves
     file = File.read("#{Rails.root}/public/#{tache.fichier}")
     xml = Nokogiri::XML(file)
 
+    return if xml.xpath("/BEE_ELEVES/PARAMETRES/UAJ").text != tache.etablissement.uai
+
     met_a_jour_eleves!(xml)
     met_a_jour_les_dossiers!(tache.etablissement)
   end
