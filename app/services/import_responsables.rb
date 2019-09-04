@@ -10,10 +10,11 @@ class ImportResponsables
     return if xml.xpath("/BEE_RESPONSABLES/PARAMETRES/UAJ").text != tache.etablissement.uai
 
     xml.xpath("/BEE_RESPONSABLES/DONNEES/PERSONNES/PERSONNE").each do |noeud_personne|
-      nom = noeud_personne.xpath("NOM_DE_FAMILLE").text
-      prenom = noeud_personne.xpath("PRENOM").text
-
-      responsables = RespLegal.par_nom_et_prenom(tache.etablissement, nom, prenom)
+      responsables = RespLegal.par_nom_et_prenom(
+        tache.etablissement,
+        noeud_personne.xpath("NOM_DE_FAMILLE").text,
+        noeud_personne.xpath("PRENOM").text
+      )
 
       next if responsables.count > 1
       next ExceptionAucunResponsableLegalTrouve if responsables.count.zero?

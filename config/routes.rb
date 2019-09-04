@@ -3,10 +3,6 @@
 Rails.application.routes.draw do
   root to: "accueil#index"
 
-  resource :dossier_affelnet, only: [:create] do
-    post :traiter
-  end
-
   resource  :configuration, only: [:show]
 
   resource :contact_par_etat, only: [:new, :create]

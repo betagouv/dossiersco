@@ -43,26 +43,22 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_entree_mauvaise_date
-    dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [Fabricate(:resp_legal)])
-    eleve = dossier_eleve.eleve
+    eleve = Fabricate(:dossier_eleve, resp_legal: [Fabricate(:resp_legal)]).eleve
 
-    params = {
+    post "/identification", params: {
       identifiant: eleve.identifiant,
       annee: eleve.annee_de_naissance,
       mois: eleve.mois_de_naissance,
       jour: (eleve.jour_de_naissance.to_i + 1.days).to_s
     }
-    post "/identification", params: params
 
     follow_redirect!
-    message_erreur = "Nous n'avons pas reconnu ces identifiants, merci de les vérifier."
-    assert response.body.include?(html_escape(message_erreur))
+    assert response.body.include?(html_escape("Nous n'avons pas reconnu ces identifiants, merci de les vérifier."))
   end
 
   def test_entree_mauvais_identifiant_et_date
     resp_legal = Fabricate(:resp_legal)
-    dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
-    eleve = dossier_eleve.eleve
+    eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal]).eleve
     params = {
       identifiant: "MAUVAISIDENTIFIANT",
       annee: eleve.annee_de_naissance,
