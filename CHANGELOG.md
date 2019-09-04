@@ -1,8 +1,26 @@
 # CHANGELOG
 
+## Septembre
+
+### Nouvelle organisation de la documentation et des procédures
+
+- **Déplacer la documentation du repertoire dossiersco vers celui du blog**
+
+- **Organisation les menus du site de documentation**
+
+- **Organisation du repertoire `doc` de l'application dossiersco**
+
 ## Août
 
 ### Retour SIECLE
+
+- **Dans éditer une option pédagogique, griser le Code gestion quand il existe**
+
+- **Inclure adresses et tél des Resp Légaux et élèves dans l'export excel depuis DossierSCO**
+
+- **Dans le mail qui annonce la fin de l'import, s'il c'est mal passé, nous affichons la raison**. Cela peut être un peu technique, mais ça va nous aider à trouver d'où viens l'erreur.
+
+- **Agent > Mef / options : afficher les options dans l'ordre de siecle**
 
 - **Liste les dossiers avec code mef_origine ou destination invalide**
 
