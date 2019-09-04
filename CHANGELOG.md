@@ -4,6 +4,8 @@
 
 ### Nouvelle organisation de la documentation et des procédures
 
+- **Empêcher l'import d'un fichier xml quand celui-ci a un UAJ différent de l'établissement qui est en train de faire l'import**
+
 - **Déplacer la documentation du repertoire dossiersco vers celui du blog**
 
 - **Organisation les menus du site de documentation**
