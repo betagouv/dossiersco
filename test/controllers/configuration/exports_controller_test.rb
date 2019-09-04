@@ -57,7 +57,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
                      adresse: "3 rue de test",
                      code_postal: "75000",
                      ville: "Ville de test",
-                     pays: "FRA")
+                     pays: "100")
     Fabricate(:dossier_eleve_valide,
               etablissement: admin.etablissement,
               resp_legal: [resp])
@@ -393,6 +393,20 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
     assert_no_match "PRENOM2", response.body
     assert_no_match "PRENOM3", response.body
+  end
+
+  test "pas de code postal si ville à l'étrange" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+
+    resp_legal = Fabricate(:resp_legal, pays: "140", code_postal: "1207", ville: "GENEVE")
+    Fabricate(:dossier_eleve_valide, resp_legal: [resp_legal], etablissement: admin.etablissement)
+
+    recupere_fichier_xml_de_retour_siecle
+
+    assert_match "COMMUNE_ETRANGERE", response.body
+    assert_no_match "LL_POSTAL", response.body
+    assert_no_match "CODE_POSTAL", response.body
   end
 
   def recupere_fichier_xml_de_retour_siecle

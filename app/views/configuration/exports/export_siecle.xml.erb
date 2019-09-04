@@ -24,8 +24,12 @@
                 <% if resp_legal.ligne2_adresse_siecle.present? %>
                   <LIGNE2_ADRESSE><%= resp_legal.ligne2_adresse_siecle %></LIGNE2_ADRESSE>
                 <% end %>
-                <CODE_POSTAL><%= resp_legal.code_postal.strip %></CODE_POSTAL>
-                <LL_POSTAL><%= resp_legal.ville %></LL_POSTAL>
+                <% if resp_legal.pays == "100" %>
+                  <CODE_POSTAL><%= resp_legal.code_postal.strip %></CODE_POSTAL>
+                  <LL_POSTAL><%= resp_legal.ville %></LL_POSTAL>
+                <% else %>
+                  <COMMUNE_ETRANGERE><%= resp_legal.ville %></COMMUNE_ETRANGERE>
+                <% end %>
                 <CODE_PAYS><%= resp_legal.pays ? resp_legal.pays : 995 %></CODE_PAYS>
               </ADRESSE>
             <% end %>
