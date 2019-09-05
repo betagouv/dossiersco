@@ -86,16 +86,16 @@
         <% end %>
         <li><b><%= t('accueil.form_rl.ville') %> : </b><%= resp_legal.ville %></li>
         <li><b><%= t('accueil.form_rl.pays') %></b> : <%= nom_pays(resp_legal.pays) %>
-        <% unless resp_legal.adresse_inchangee %>
-          <div id="ancienne_adresse">
-            <hr/>
-            <p><strong><%= t('.ancienne_adresse') %></strong></p>
-            <li><b><%= t('accueil.form_rl.adresse') %> : </b><%= resp_legal.adresse_ant %></li>
-            <li><b><%= t('accueil.form_rl.code_postal') %> : </b><%= resp_legal.code_postal_ant %></li>
-            <li><b><%= t('accueil.form_rl.ville') %> : </b><%= resp_legal.ville_ant %></li>
-          </div>
-        <% end %>
       </ul>
+      <% unless resp_legal.adresse_inchangee %>
+        <div id="ancienne_adresse">
+          <hr/>
+          <p><strong><%= t('.ancienne_adresse') %></strong></p>
+          <li><b><%= t('accueil.form_rl.adresse') %> : </b><%= resp_legal.adresse_ant %></li>
+          <li><b><%= t('accueil.form_rl.code_postal') %> : </b><%= resp_legal.code_postal_ant %></li>
+          <li><b><%= t('accueil.form_rl.ville') %> : </b><%= resp_legal.ville_ant %></li>
+        </div>
+      <% end %>
     <% end %>
     <div class="text-right">
       <button class="button-outline small secondary modifier" data-target="infos-contact">Modifier</button>

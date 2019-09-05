@@ -1,0 +1,95 @@
+<nav>
+  <ul class="file-ariane-retour-base">
+    <li><%= link_to 'Vérification des codes matière', manque_code_matiere_retour_siecle_path %></li>>
+    <li><%= link_to 'Vérification des divisions', manque_division_retour_siecle_path %></li>>
+    <li><b><%= link_to 'Export des dossiers', export_des_dossiers_retour_siecle_path %></b></li>
+  </ul>
+</nav>
+<% if @dossiers_bloques %>
+  <div class="notifications">
+    <div class="notification warning">
+      <%= t('.alerte_dossiers_non_exportables_html', count: @dossiers_bloques.length) %>
+    </div>
+  </div>
+<% end %>
+<section class="section">
+  <div class="panel">
+    <div class="panel__header">
+      <h3><%= t('.titre_selection_ine') %></h3>
+    </div>
+    <p><%= t(".retour_siecle_partiel_html") %></p>
+    <%= form_tag export_des_dossiers_retour_siecle_path, method: :get do |f| %>
+      <div>
+        <%= text_field_tag :liste_ine %>
+      </div>
+      <button type="submit" class="button mt-1"><%= t('.demander_fichier_partiel_xml') %></button>
+    <% end %>
+
+    <% if @selection_dossiers %>
+      <%= form_tag  export_siecle_configuration_exports_path, method: :get do |f| %>
+        <%= hidden_field_tag :liste_ine, @selection_dossiers.map(&:eleve).map(&:identifiant).join(",") %>
+        <%= hidden_field_tag :limite, true %>
+        <button type="submit" class="button mt-1"><%= t('.telecharger_fichier_partiel_xml', count_eleves: @dossiers_exportables.length, count_resp: @nb_resp_legaux_selection) %></button>
+      <% end %>
+      <% if @selection_dossiers.count == 0 %>
+        <p>Si aucun dossier n'est proposé, c'est sans doute que le dossier n'a pas de mef destination, ou bien que l'élève ou un des représentant légaux n'a pas de prénom et/ou de nom.</p>
+      <% end %>
+    <% end %>
+
+  </div>
+
+</section>
+
+<section class="section">
+
+  <div class="panel">
+    <div class="panel__header">
+      <h3><%= t('.titre_retour_complet') %></h3>
+    </div>
+    <% nb_dossiers = @dossiers.nil? ? 0 : @dossiers.length %>
+    <p><%= t(".retour_siecle_complet_html", count_resp: @nb_resp_legaux, count_eleves: nb_dossiers) %></p>
+    <%= form_tag  export_siecle_configuration_exports_path, method: :get do |f| %>
+      <button type="submit" class="button mt-1"><%= t('.telecharger_fichier_complet_xml') %></button>
+    <% end %>
+  </div>
+
+</section>
+
+<section class="section" id="dossiers_bloques">
+
+  <div class="panel">
+    <div class="panel__header">
+      <% nb_dossiers_bloques = @dossiers_bloques.nil? ? 0 : @dossiers_bloques.length %>
+      <h3><%= t('.titre_dossiers_non_exportable', count: nb_dossiers_bloques) %></h3>
+    </div>
+    <p><%= t(".dossiers_non_exportable_explication_html") %></p>
+
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Identifiant</th>
+        <th>Prénom</th>
+        <th>Nom</th>
+        <th>Raison</th>
+        <th></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% unless @dossiers_bloques.nil? %>
+        <% @dossiers_bloques.each do |dossier| %>
+          <tr>
+            <td><%= dossier.identifiant %></td>
+            <td><%= dossier.prenom %></td>
+            <td><%= dossier.nom %></td>
+            <td><%= dossier.raison %></td>
+            <td><%= link_to "voir le dossier", "/agent/eleve/#{dossier.identifiant}" %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+
+</section>
+

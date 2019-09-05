@@ -20,7 +20,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :retour_siecle, only: [:new]
+  resource :retour_siecle, only: [:new] do
+    collection do
+      get "manque_division"
+      get "manque_code_matiere"
+      get "export_des_dossiers"
+    end
+  end
 
   namespace :configuration do
     resources :dossiers_eleve, only: [] do

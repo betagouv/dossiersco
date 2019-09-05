@@ -1,35 +1,45 @@
+<nav>
+  <ul class="file-ariane-retour-base">
+    <li><b><%= link_to 'Vérification des codes matière', manque_code_matiere_retour_siecle_path %></b></li>>
+    <li><%= link_to 'Vérification des divisions', manque_division_retour_siecle_path %></li>>
+    <li><%= link_to 'Export des dossiers', export_des_dossiers_retour_siecle_path %></li>
+  </ul>
+</nav>
 <section class="section">
-
   <div class="panel">
     <div class="panel__header">
       <h3><%= t('.titre_manque_code_matiere') %></h3>
     </div>
-    <p><%= t('.explication_manque_code_matier_html') %></p>
 
-    <% if @tache.statut != 'en_attente' && @tache.statut != 'en_cours' %>
-      <%= form_for TacheImport.new, multipart: true do |form| %>
-        <p><i class="fas fa-info-circle blue"></i> <%= t('.aide_siecle') %></p>
-        <div class="form__group">
-          <%= form.hidden_field :type_fichier, value: "nomenclature" %>
-          <p class="card-text"><%= t('.selectionner_fichier') %></p>
-        </div>
-        <div class="form__group">
-          <%= form.file_field :fichier %>
-        </div>
-        <% if Rails.env.demo? && @agent_connecte.etablissement.uai == '0123456S' %>
+    <% if @options_en_erreur.count > 0 %>
+      <p><%= t('.explication_manque_code_matier_html') %></p>
+
+      <% if @tache.statut != 'en_attente' && @tache.statut != 'en_cours' %>
+        <%= form_for TacheImport.new, multipart: true do |form| %>
+          <p><i class="fas fa-info-circle blue"></i> <%= t('.aide_siecle') %></p>
           <div class="form__group">
-            Pour sécuriser vos données, l'import de SIECLE est réservé aux collèges ayant créé un compte DossierSCO. Vous pouvez tester cette fonctionnalité après avoir créé votre compte sur <a href="https://dossiersco.fr/configuration/etablissements/new">https://dossiersco.fr/configuration/etablissements/new</a>
+            <%= form.hidden_field :type_fichier, value: "nomenclature" %>
+            <p class="card-text"><%= t('.selectionner_fichier') %></p>
           </div>
-        <% else %>
           <div class="form__group">
-            <button type="submit" class="button" id="soumettre-fichier">
-              <%= t('.importer_fichier') %>
-            </button>
+            <%= form.file_field :fichier %>
           </div>
+          <% if Rails.env.demo? && @agent_connecte.etablissement.uai == '0123456S' %>
+            <div class="form__group">
+              Pour sécuriser vos données, l'import de SIECLE est réservé aux collèges ayant créé un compte DossierSCO. Vous pouvez tester cette fonctionnalité après avoir créé votre compte sur <a href="https://dossiersco.fr/configuration/etablissements/new">https://dossiersco.fr/configuration/etablissements/new</a>
+            </div>
+          <% else %>
+            <div class="form__group">
+              <button type="submit" class="button" id="soumettre-fichier">
+                <%= t('.importer_fichier') %>
+              </button>
+            </div>
+          <% end %>
         <% end %>
       <% end %>
+    <% else %>
+      <p><%= t('.aucun_code_manquant') %> <%= link_to t('.passer_Etape_suivant'), manque_division_retour_siecle_path %></p>
     <% end %>
-
   </div>
 
 </section>
@@ -42,31 +52,31 @@
     </div>
     <p><%= t('.explication_options_en_erreurs_html') %></p>
 
-     <table class="table">
+    <table class="table">
       <thead>
-        <tr>
-          <th>Nom</th>
-          <th>Code Gestion</th>
-          <th>Code Matière</th>
-          <th></th>
-          <th></th>
-        </tr>
+      <tr>
+        <th>Nom</th>
+        <th>Code Gestion</th>
+        <th>Code Matière</th>
+        <th></th>
+        <th></th>
+      </tr>
       </thead>
 
       <tbody>
-        <% @options_en_erreur.each do |option| %>
-          <tr>
-            <td><%= option.nom %></td>
-            <td><%= option.code_matiere %></td>
-            <td><%= option.code_matiere_6 %></td>
-            <td><%= link_to t(".modifier"), edit_configuration_option_pedagogique_path(option) %></td>
-            <td><%= link_to("Supprimer", configuration_option_pedagogique_path(option),
-                            method: :delete, data: { confirm: 'Voulez-vous vraiment supprimer cette option ?' })
-                          %></td>
-          </tr>
-        <% end %>
+      <% @options_en_erreur.each do |option| %>
+        <tr>
+          <td><%= option.nom %></td>
+          <td><%= option.code_matiere %></td>
+          <td><%= option.code_matiere_6 %></td>
+          <td><%= link_to t(".modifier"), edit_configuration_option_pedagogique_path(option) %></td>
+          <td><%= link_to("Supprimer", configuration_option_pedagogique_path(option),
+                          method: :delete, data: { confirm: 'Voulez-vous vraiment supprimer cette option ?' })
+          %></td>
+        </tr>
+      <% end %>
       </tbody>
-     </table>
+    </table>
 
   </div>
 
