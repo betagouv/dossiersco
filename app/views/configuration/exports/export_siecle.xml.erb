@@ -15,7 +15,7 @@
           <% next unless resp_legal.nom %>
           <PERSONNE>
             <ID_PRV_PER><%= resp_legal.id %></ID_PRV_PER>
-            <CODE_CIVILITE>1</CODE_CIVILITE>
+            <CODE_CIVILITE><%= resp_legal.lien_de_parente == "MERE" ? "2" : "1" %></CODE_CIVILITE>
             <NOM_DE_FAMILLE><%= alternative(resp_legal.nom) %></NOM_DE_FAMILLE>
             <PRENOM><%= alternative(resp_legal.prenom) %></PRENOM>
             <% if resp_legal.adresse.present? && resp_legal.code_postal.present? && resp_legal.ville.present? && resp_legal.pays.present? %>
