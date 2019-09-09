@@ -1,11 +1,20 @@
-<section class="section">
+<nav>
+  <ul class="file-ariane-retour-base">
+    <li><%= link_to 'Vérification des codes matière', manque_code_matiere_retour_siecle_path %></li>>
+    <li><b><%= link_to 'Vérification des divisions', manque_division_retour_siecle_path %></b></li>>
+    <li><%= link_to 'Export des dossiers', export_des_dossiers_retour_siecle_path %></li>
+  </ul>
+</nav>
 
+<section class="section">
   <div class="panel">
     <div class="panel__header">
       <h3><%= t('.titre_manque_division') %></h3>
     </div>
+
+    <% if @dossiers_sans_division.count > 0 %>
     <p><%= t('.explication_manque_division_html') %></p>
-    <%= link_to "Sauter cette étape", new_retour_siecle_path(bypass_manque_division: true) %>
+    <%= link_to "Sauter cette étape", export_des_dossiers_retour_siecle_path %>
 
 
     <% if @tache.statut != 'en_attente' && @tache.statut != 'en_cours' %>
@@ -31,7 +40,9 @@
         <% end %>
       <% end %>
     <% end %>
-
+    <% else %>
+      <p><%= t('.aucune_division_manquante') %> <%= link_to t('.passer_etape_suivant'), export_des_dossiers_retour_siecle_path %></p>
+  <% end %>
   </div>
 
 </section>
