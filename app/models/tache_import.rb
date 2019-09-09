@@ -22,4 +22,8 @@ class TacheImport < ActiveRecord::Base
     type_fichier == "eleves"
   end
 
+  def self.date_dernier_import_nomenclature(etablissement)
+    where(etablissement: etablissement, type_fichier: "nomenclature").order("created_at DESC").first&.created_at
+  end
+
 end

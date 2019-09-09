@@ -23,7 +23,9 @@ class RetourSieclesController < ApplicationController
     end
   end
 
-  def manque_code_matiere; end
+  def manque_code_matiere
+    @date_dernier_import_nomenclature = TacheImport.date_dernier_import_nomenclature(@etablissement)
+  end
 
   def manque_division; end
 

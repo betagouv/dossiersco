@@ -213,4 +213,25 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     assert_equal [dossier_pris_en_compte], assigns(:dossiers)
   end
 
+  test "la date de dernier import nomenclature est nil s'il n'a pas eu lieu" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+
+    get manque_code_matiere_retour_siecle_path
+    assert_response :success
+    assert_nil assigns(:date_dernier_import_nomenclature)
+  end
+
+  test "la date de dernier import nomenclature est connue" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+    etablissement = admin.etablissement
+
+    ma_date = DateTime.new(2019, 12, 30, 23, 55)
+    Fabricate(:tache_import, created_at: ma_date, type_fichier: "nomenclature", etablissement: etablissement)
+    get manque_code_matiere_retour_siecle_path
+    assert_response :success
+    assert_equal ma_date, assigns(:date_dernier_import_nomenclature)
+  end
+
 end

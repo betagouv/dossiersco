@@ -5,6 +5,7 @@
     <li><%= link_to 'Export des dossiers', export_des_dossiers_retour_siecle_path %></li>
   </ul>
 </nav>
+
 <section class="section">
   <div class="panel">
     <div class="panel__header">
@@ -41,43 +42,44 @@
       <p><%= t('.aucun_code_manquant') %> <%= link_to t('.passer_Etape_suivant'), manque_division_retour_siecle_path %></p>
     <% end %>
   </div>
-
 </section>
 
-<section class="section">
+<% if @date_dernier_import_nomenclature %>
+  <section class="section">
 
-  <div class="panel">
-    <div class="panel__header">
-      <h3><%= t('.titre_options_en_erreurs') %></h3>
+    <div class="panel">
+      <div class="panel__header">
+        <h3><%= t('.titre_options_en_erreurs') %></h3>
+      </div>
+      <p><%= t('.explication_options_en_erreurs_html') %></p>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Code Gestion</th>
+            <th>Code Matière</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @options_en_erreur.each do |option| %>
+            <tr>
+              <td><%= option.nom %></td>
+              <td><%= option.code_matiere %></td>
+              <td><%= option.code_matiere_6 %></td>
+              <td><%= link_to t(".modifier"), edit_configuration_option_pedagogique_path(option) %></td>
+              <td><%= link_to("Supprimer", configuration_option_pedagogique_path(option),
+                              method: :delete, data: { confirm: 'Voulez-vous vraiment supprimer cette option ?' })
+                              %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
     </div>
-    <p><%= t('.explication_options_en_erreurs_html') %></p>
 
-    <table class="table">
-      <thead>
-      <tr>
-        <th>Nom</th>
-        <th>Code Gestion</th>
-        <th>Code Matière</th>
-        <th></th>
-        <th></th>
-      </tr>
-      </thead>
-
-      <tbody>
-      <% @options_en_erreur.each do |option| %>
-        <tr>
-          <td><%= option.nom %></td>
-          <td><%= option.code_matiere %></td>
-          <td><%= option.code_matiere_6 %></td>
-          <td><%= link_to t(".modifier"), edit_configuration_option_pedagogique_path(option) %></td>
-          <td><%= link_to("Supprimer", configuration_option_pedagogique_path(option),
-                          method: :delete, data: { confirm: 'Voulez-vous vraiment supprimer cette option ?' })
-          %></td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
-
-  </div>
-
-</section>
+  </section>
+<% end %>
