@@ -14,13 +14,8 @@ module Configuration
 
     def export_siecle
       @etablissement = @agent_connecte.etablissement
+      defini_dossiers
 
-      base_dossiers = @etablissement.dossier_eleve.exportables
-      @dossiers = if params[:liste_ine].present?
-                    base_dossiers.joins(:eleve).where("eleves.identifiant in (?)", params[:liste_ine].split(","))
-                  else
-                    base_dossiers
-                  end
       year = Time.now.strftime("%Y")
       next_year = Time.now.strftime("%y").to_i + 1
       timestamp = Time.now.strftime("%m%d%I%M%S")
@@ -31,6 +26,19 @@ module Configuration
       nom_zip = "#{nom_fichier}.zip"
       temp_file = Tempfile.new(nom_zip)
 
+      cree_zip file, temp_file, nom_fichier
+    end
+
+    def defini_dossiers
+      base_dossiers = @etablissement.dossier_eleve.exportables
+      @dossiers = if params[:liste_ine].present?
+                    base_dossiers.joins(:eleve).where("eleves.identifiant in (?)", params[:liste_ine].split(","))
+                  else
+                    base_dossiers
+                  end
+    end
+
+    def cree_zip(file, temp_file, nom_fichier)
       if params[:xml_only]
         send_file file.path, x_sendfile: true, type: "text/xml"
       else

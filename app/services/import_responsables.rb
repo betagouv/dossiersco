@@ -9,12 +9,16 @@ class ImportResponsables
 
     return if xml.xpath("/BEE_RESPONSABLES/PARAMETRES/UAJ").text != tache.etablissement.uai
 
+    parcours_personnes xml, tache
+
+    met_a_jour_les_dossiers!(tache.etablissement)
+  end
+
+  def parcours_personnes(xml, tache)
     xml.xpath("/BEE_RESPONSABLES/DONNEES/PERSONNES/PERSONNE").each do |noeud_personne|
-      responsables = RespLegal.par_nom_et_prenom(
-        tache.etablissement,
-        noeud_personne.xpath("NOM_DE_FAMILLE").text,
-        noeud_personne.xpath("PRENOM").text
-      )
+      responsables = RespLegal.par_nom_et_prenom(tache.etablissement,
+                                                 noeud_personne.xpath("NOM_DE_FAMILLE").text,
+                                                 noeud_personne.xpath("PRENOM").text)
 
       next if responsables.count > 1
       next ExceptionAucunResponsableLegalTrouve if responsables.count.zero?
@@ -22,8 +26,6 @@ class ImportResponsables
       met_a_jour_le_paiement_des_frais!(responsables.first, noeud_personne)
       met_a_jour_la_profession_des_retraites!(responsables.first, noeud_personne)
     end
-
-    met_a_jour_les_dossiers!(tache.etablissement)
   end
 
   def met_a_jour_le_paiement_des_frais!(responsable, noeud)

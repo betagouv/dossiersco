@@ -23,16 +23,20 @@ class PiecesJointesController < ApplicationController
       if Rails.env.development?
         redirect_to @piece_jointe.fichiers.first.url
       else
-        render text: proc { |_response, output|
-          AWS::S3::S3Object.stream(path, bucket) do |segment|
-            output.write segment
-            output.flush # not sure if this is needed
-          end
-        }
+        render text: render_aws
       end
     else
       render text: "trop de fichiers à montrer"
     end
+  end
+
+  def render_aws
+    proc { |_response, output|
+      AWS::S3::S3Object.stream(path, bucket) do |segment|
+        output.write segment
+        output.flush # not sure if this is needed
+      end
+    }
   end
 
   def valider
