@@ -48,7 +48,8 @@ class ImportNomenclature
 
       mef = Mef.find_by(etablissement: etablissement, code: code_mef)
       option_pedagogique = OptionPedagogique.find_by(etablissement: etablissement, code_matiere_6: code_matiere)
-      MefOptionPedagogique.find_by(mef: mef, option_pedagogique: option_pedagogique, code_modalite_elect: [nil, "", "S"])&.update(code_modalite_elect: code_modalite_elect)
+      MefOptionPedagogique.find_by(mef: mef, option_pedagogique: option_pedagogique, code_modalite_elect: [nil, "", "S"])
+          &.update(code_modalite_elect: code_modalite_elect)
     end
   end
 
