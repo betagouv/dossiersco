@@ -17,23 +17,26 @@ class ContactParEtatsController < ApplicationController
   end
 
   def create
-    unless params[:message].present?
-      flash[:alert] = "Aucun texte à envoyer"
-      redirect_to new_contact_par_etat_path
-      return
-    end
+    redirige_si_pas_de_message
 
-    unless @agent_connecte.etablissement.envoyer_aux_familles
-      flash[:alert] = "Votre établissement est configuré pour ne pas envoyer"\
-        " d'emails aux familles. Pour changer la configuration, rendez-vous"\
-        " dans le module de configuration, dans le menu « configuration de"\
-        " campagne » dans le bloc « accueil »."
-
-      redirect_to new_contact_par_etat_path
-      return
-    end
+    redirige_si_envoie_mail_desactive
 
     dossiers = DossierEleve.where(etablissement: @agent_connecte.etablissement, etat: DossierEleve::ETAT[params[:etat].to_sym])
+
+    dossiers_sans_email = parcours_les_dossiers dossiers
+
+    nombre_de_mail_envoye = I18n.t(".nombre_de_mail_envoye",
+                                   email_envoye: (dossiers.count - dossiers_sans_email.count),
+                                   dossier_sans_email: dossiers_sans_email.count)
+
+    flash[:notice] = nombre_de_mail_envoye if dossiers_sans_email.any?
+
+    redirect_to "/agent/liste_des_eleves"
+  end
+
+  private
+
+  def parcours_les_dossiers(dossiers)
     dossiers_sans_email = []
 
     dossiers.each do |dossier|
@@ -44,14 +47,25 @@ class ContactParEtatsController < ApplicationController
     rescue ExceptionAucunEmailRetrouve
       dossiers_sans_email << dossier
     end
+    dossiers_sans_email
+  end
 
-    nombre_de_mail_envoye = I18n.t(".nombre_de_mail_envoye",
-                                   email_envoye: (dossiers.count - dossiers_sans_email.count),
-                                   dossier_sans_email: dossiers_sans_email.count)
+  def redirige_si_pas_de_message
+    return if params[:message].present?
 
-    flash[:notice] = nombre_de_mail_envoye if dossiers_sans_email.any?
+    flash[:alert] = "Aucun texte à envoyer"
+    redirect_to new_contact_par_etat_path
+  end
 
-    redirect_to "/agent/liste_des_eleves"
+  def redirige_si_envoie_mail_desactive
+    return if @agent_connecte.etablissement.envoyer_aux_familles
+
+    flash[:alert] = "Votre établissement est configuré pour ne pas envoyer"\
+      " d'emails aux familles. Pour changer la configuration, rendez-vous"\
+      " dans le module de configuration, dans le menu « configuration de"\
+      " campagne » dans le bloc « accueil »."
+
+    redirect_to new_contact_par_etat_path
   end
 
 end

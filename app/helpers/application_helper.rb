@@ -16,19 +16,9 @@ module ApplicationHelper
   def markdown(text)
     return "" if text.nil?
 
-    options = {
-      filter_html: true,
-      hard_wrap: true,
-      link_attributes: { rel: "nofollow", target: "_blank" },
-      space_after_headers: true,
-      fenced_code_blocks: true
-    }
+    options = defini_les_options
 
-    extensions = {
-      autolink: true,
-      superscript: true,
-      disable_indented_code_blocks: true
-    }
+    extensions = defifni_les_extensions
 
     renderer = Redcarpet::Render::HTML.new(options)
     markdown = Redcarpet::Markdown.new(renderer, extensions)
@@ -36,11 +26,27 @@ module ApplicationHelper
     markdown.render(text).html_safe
   end
 
+  def defini_les_options
+    {
+      filter_html: true,
+      hard_wrap: true,
+      link_attributes: { rel: "nofollow", target: "_blank" },
+      space_after_headers: true,
+      fenced_code_blocks: true
+    }
+  end
+
+  def defifni_les_extensions
+    {
+      autolink: true,
+      superscript: true,
+      disable_indented_code_blocks: true
+    }
+  end
+
   def classe_pour_menu(etape, dossier, entrees_de_menu)
-    index_etape = entrees_de_menu.index(etape)
-    index_etape ||= 0
-    index_dossier = entrees_de_menu.index(dossier.etape_la_plus_avancee)
-    index_dossier ||= 0
+    index_etape = entrees_de_menu.index(etape) || 0
+    index_dossier = entrees_de_menu.index(dossier.etape_la_plus_avancee) || 0
     if index_dossier > index_etape
       "step step-enabled current done"
     elsif index_dossier == index_etape
