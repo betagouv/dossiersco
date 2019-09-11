@@ -34,10 +34,7 @@ class ApplicationController < ActionController::Base
       type_utilisateur: "agent",
       dossiersco_id: agent_connecte.id
     )
-    Trace.create(identifiant: agent_connecte.email,
-                 categorie: "agent",
-                 page_demandee: request.path_info,
-                 adresse_ip: request.ip)
+    cree_trace_agent agent_connecte
   end
 
   def if_agent_is_admin
@@ -49,6 +46,13 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def cree_trace_agent(agent_connecte)
+    Trace.create(identifiant: agent_connecte.email,
+                 categorie: "agent",
+                 page_demandee: request.path_info,
+                 adresse_ip: request.ip)
+  end
 
   def ajoute_information_utilisateur_pour_sentry(infos)
     Raven.tags_context(type_utilisateur: infos[:type_utilisateur], dossiersco_id: infos[:dossiersco_id])

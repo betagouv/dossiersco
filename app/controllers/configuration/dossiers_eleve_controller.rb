@@ -14,10 +14,7 @@ module Configuration
         mef_destination = dossier_eleve.mef_destination
         dossier_eleve.options_pedagogiques &= mef_destination.options_pedagogiques
 
-        options_origines = dossier_eleve.options_origines.keys.map { |o| OptionPedagogique.find(o) }
-        options_origines.each do |option|
-          dossier_eleve.options_pedagogiques << option if non_abandonnable?(dossier_eleve, option)
-        end
+        defini_options_origines dossier_eleve
       end
 
       redirect_to configuration_mef_index_path
@@ -27,6 +24,15 @@ module Configuration
       !option.abandonnable?(dossier.mef_destination) &&
         !dossier.options_pedagogiques.include?(option) &&
         dossier.mef_destination.options_pedagogiques.include?(option)
+    end
+
+    private
+
+    def defini_options_origines(dossier_eleve)
+      options_origines = dossier_eleve.options_origines.keys.map { |o| OptionPedagogique.find(o) }
+      options_origines.each do |option|
+        dossier_eleve.options_pedagogiques << option if non_abandonnable?(dossier_eleve, option)
+      end
     end
 
   end
