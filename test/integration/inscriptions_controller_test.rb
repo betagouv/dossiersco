@@ -396,4 +396,34 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal I18n.t("inscriptions.eleve.valider_inscription"), doc.xpath('//*[@id="bouton-validation-inscription"]').children.text
   end
 
+  test "Une pièce jointe non validée peut être modifiée" do
+    eleve = Fabricate(:eleve, identifiant: "XXX")
+    etablissement = Fabricate(:etablissement)
+    dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement)
+    Fabricate(:resp_legal, dossier_eleve: dossier_eleve)
+    piece_attendue = Fabricate(:piece_attendue, etablissement: etablissement)
+    Fabricate(:piece_jointe, piece_attendue: piece_attendue, dossier_eleve: dossier_eleve, etat: "soumis")
+    agent = Fabricate(:agent, etablissement: etablissement)
+
+    identification_agent(agent)
+    get "/agent/eleve/XXX"
+
+    assert response.parsed_body.include? 'id="piece_jointe_fichiers"'
+  end
+
+  test "Une pièce jointe validée ne peut pas être modifiée" do
+    eleve = Fabricate(:eleve, identifiant: "XXX")
+    etablissement = Fabricate(:etablissement)
+    dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement)
+    Fabricate(:resp_legal, dossier_eleve: dossier_eleve)
+    piece_attendue = Fabricate(:piece_attendue, etablissement: etablissement)
+    Fabricate(:piece_jointe, piece_attendue: piece_attendue, dossier_eleve: dossier_eleve, etat: "valide")
+    agent = Fabricate(:agent, etablissement: etablissement)
+
+    identification_agent(agent)
+    get "/agent/eleve/XXX"
+
+    assert_not response.parsed_body.include? 'id="piece_jointe_fichiers"'
+  end
+
 end

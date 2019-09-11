@@ -18,11 +18,13 @@
                 </div>
               <% end %>
             <% end %>
-            <%= form.hidden_field :piece_attendue_id %>
-            <div class="form__group">
-              <%= form.file_field :fichiers, multiple: true %>
-            </div>
-            <span id="fichier_<%= piece.code %>"></span>
+            <% unless piece.etat == PieceJointe::ETATS[:valide] %>
+              <%= form.hidden_field :piece_attendue_id %>
+              <div class="form__group">
+                <%= form.file_field :fichiers, multiple: true %>
+              </div>
+              <span id="fichier_<%= piece.code %>"></span>
+            <% end %>
             <br />
             <div class="image-piece-a-joindre lien-piece-jointe" id="image_<%= piece.code %>">
             </div>

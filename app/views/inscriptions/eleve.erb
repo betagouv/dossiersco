@@ -38,24 +38,26 @@
                     <% end %>
                     <%= form.hidden_field :piece_attendue_id %>
                     <%= hidden_field_tag :eleve_id, params[:identifiant] %>
-                    <div class="form__group mb-2">
-                      <%= form.file_field :fichiers, multiple: true, data: { btnClass: "button", text: "Parcourir"} %>
-                      <button class="soumettre hide" type="submit">Soumettre</button>
-                    </div>
+                    <% unless piece.etat == PieceJointe::ETATS[:valide] %>
+                      <div class="form__group mb-2">
+                        <%= form.file_field :fichiers, multiple: true, data: { btnClass: "button", text: "Parcourir"} %>
+                        <button class="soumettre hide" type="submit">Soumettre</button>
+                      </div>
+                    <% end %>
                   <% end %>
                   <% if piece.id.present? && piece.soumise? %>
                     <div class="form__group">
                       <%= link_to t('.valider'), valider_piece_jointe_path(piece, identifiant: params[:identifiant]),
-                        method: :put, class: "button" %>
+                                  method: :put, class: "button" %>
                       <%= link_to t('.refuser'), refuser_piece_jointe_path(piece, identifiant: params[:identifiant]),
-                        method: :put, class: "button warning" %>
-                  </div>
-                <% elsif piece.id.present? %>
-                  <div class="form__group">
-                    <%= link_to t('.annuler_decision'), annuler_decision_piece_jointe_path(piece, identifiant: params[:identifiant]),
-                      method: :put, class: "secondary button-outline " %>
-                </div>
-              <% end %>
+                                  method: :put, class: "button warning" %>
+                    </div>
+                  <% elsif piece.id.present? %>
+                    <div class="form__group">
+                      <%= link_to t('.annuler_decision'), annuler_decision_piece_jointe_path(piece, identifiant: params[:identifiant]),
+                                  method: :put, class: "secondary button-outline " %>
+                    </div>
+                  <% end %>
                 </div>
               </div>
             </div>
@@ -127,36 +129,36 @@
         <% if @dossier_eleve.renseignements_medicaux %>
           <div class="form__group">
             <p>
-            <%= t('.envoyer_une_info_medicale') %>
-            <%= @dossier_eleve.renseignements_medicaux %>
+              <%= t('.envoyer_une_info_medicale') %>
+              <%= @dossier_eleve.renseignements_medicaux %>
             </p>
           </div>
         <% end %>
 
         <div class="form__group">
           <p>
-          <% if @dossier_eleve.autorise_photo_de_classe %>
-            <%= t('.j_accepte') %>
-          <% else %>
-            <%= t('.j_accepte_pas') %>
-          <% end %>
-          <%= t('.enfant_photographie') %>
+            <% if @dossier_eleve.autorise_photo_de_classe %>
+              <%= t('.j_accepte') %>
+            <% else %>
+              <%= t('.j_accepte_pas') %>
+            <% end %>
+            <%= t('.enfant_photographie') %>
           </p>
         </div>
 
         <% if @dossier_eleve.regime_sortie.present? %>
           <div class="form__group">
             <p>
-            Régime choisi : <%= @dossier_eleve.regime_sortie.nom %>
-          </p>
+              Régime choisi : <%= @dossier_eleve.regime_sortie.nom %>
+            </p>
           </div>
         <% end %>
 
         <% if @dossier_eleve.identifiant_caf.present? %>
           <div class="form__group">
             <p>
-            Identifiant CAF : <%= @dossier_eleve.identifiant_caf %>
-          </p>
+              Identifiant CAF : <%= @dossier_eleve.identifiant_caf %>
+            </p>
           </div>
         <% end %>
       </div>
@@ -181,14 +183,14 @@
                 <% @dossier_eleve.moyens_de_communication_electronique.each do |nom, moyens_de_communication|%>
                   <% next if moyens_de_communication.empty? %>
                   <dt>
-                  <%= nom %>
+                    <%= nom %>
                   </dt>
                   <% moyens_de_communication.each do |moyen_de_communication| %>
                     <dd>
-                    <label style="cursor: pointer">
-                      <%= radio_button_tag 'moyen_de_communication', moyen_de_communication %>
-                      <%= moyen_de_communication %>
-                    </label>
+                      <label style="cursor: pointer">
+                        <%= radio_button_tag 'moyen_de_communication', moyen_de_communication %>
+                        <%= moyen_de_communication %>
+                      </label>
                     </dd>
                   <% end %>
                 <% end %>
@@ -213,7 +215,7 @@
             <% @dossier_eleve.message.limit(5).order('created_at desc').each do |message| %>
               <div class="message">
                 <p>
-                <%= message.categorie %> du <%= l(message.created_at) %>
+                  <%= message.categorie %> du <%= l(message.created_at) %>
                 </p>
                 <div class="contenu-message">
                   <% if message.categorie == "mail" %>
@@ -265,7 +267,7 @@
             <div class="form__group">
               <button class="button <%= 'disabled' if @dossier_eleve.etat == 'sortant'%>"
                       id="bouton-eleve-sortant" type='submit'  <%= 'disabled' if @dossier_eleve.etat == 'sortant'%>>
-                      Cet élève est sorti·e de l'établissement</button>
+                Cet élève est sorti·e de l'établissement</button>
             </div>
           </form>
         </div>
@@ -277,63 +279,63 @@
 <%= render partial: 'partials/image_box' %>
 
 <script type="text/javascript" charset="utf-8">
-// Onglets
-$(document).ready(function() {
+  // Onglets
+  $(document).ready(function() {
 
-  $.urlParam = function(name){
-    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-    if (results==null) {
-      return null;
+    $.urlParam = function(name){
+      var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+      if (results==null) {
+        return null;
+      }
+      return decodeURI(results[1]) || 0;
     }
-    return decodeURI(results[1]) || 0;
-  }
 
-  let onglet = $.urlParam('onglet')
-  let piece = $.urlParam('piece')
+    let onglet = $.urlParam('onglet')
+    let piece = $.urlParam('piece')
 
-  if (onglet) {
-    $('.lien-section').removeClass('active')
-    $('.lien-section[data-target="#' + onglet + '"]').addClass('active')
-    $('.main').addClass('hide')
-    $("#" + onglet).removeClass('hide')
-  }
+    if (onglet) {
+      $('.lien-section').removeClass('active')
+      $('.lien-section[data-target="#' + onglet + '"]').addClass('active')
+      $('.main').addClass('hide')
+      $("#" + onglet).removeClass('hide')
+    }
 
-  if (piece) {
-    $([document.documentElement, document.body]).animate({
-      scrollTop: $("#piece_" + piece).offset().top
+    if (piece) {
+      $([document.documentElement, document.body]).animate({
+        scrollTop: $("#piece_" + piece).offset().top
+      })
+    }
+
+    $('.lien-section').click(function(e) {
+      e.preventDefault();
+      const target = $(this).data('target')
+
+      $('.lien-section').removeClass('active')
+      $(this).addClass('active')
+      $('.main').addClass('hide')
+      $(target).removeClass('hide')
     })
-  }
 
-  $('.lien-section').click(function(e) {
-    e.preventDefault();
-    const target = $(this).data('target')
-
-    $('.lien-section').removeClass('active')
-    $(this).addClass('active')
-    $('.main').addClass('hide')
-    $(target).removeClass('hide')
-  })
-
-  // Historique
-  $("#historique .message").on('click',function(e) {
-    $(this).find(".contenu-message").toggleClass('d-none');
-  })
-  // Modèles
-  $('#inserer').click(function() {
-    $.ajax({
-      method: "GET",
-      url: "/agent/fusionne_modele/"+$("#modeles").val()+"/eleve/<%= @dossier_eleve.eleve.identifiant %>"
-    }).done(function(data) {
-      $("#message").val($("#message").val()+(data ? "\n"+data : ""));
+    // Historique
+    $("#historique .message").on('click',function(e) {
+      $(this).find(".contenu-message").toggleClass('d-none');
     })
-    return false;
-  })
+    // Modèles
+    $('#inserer').click(function() {
+      $.ajax({
+        method: "GET",
+        url: "/agent/fusionne_modele/"+$("#modeles").val()+"/eleve/<%= @dossier_eleve.eleve.identifiant %>"
+      }).done(function(data) {
+        $("#message").val($("#message").val()+(data ? "\n"+data : ""));
+      })
+      return false;
+    })
 
-  $('input[type=file]')[0].focus();
+    $('input[type=file]')[0].focus();
 
-  $('.forms').change(function() {
-    $(this).find( ".soumettre" ).click()
+    $('.forms').change(function() {
+      $(this).find( ".soumettre" ).click()
       $("button[type='submit']").attr("disabled", "disabled").addClass('disabled')
+    })
   })
-})
 </script>

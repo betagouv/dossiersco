@@ -253,4 +253,42 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     assert_equal true, DossierEleve.find(dossier_eleve.id).continuer_dossiersco
   end
 
+  test "Une pièce jointe non validée peut être modifiée" do
+    eleve = Fabricate(:eleve)
+    etablissement = Fabricate(:etablissement)
+    dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement)
+    params_identification = {
+      identifiant: eleve.identifiant,
+      annee: eleve.annee_de_naissance,
+      mois: eleve.mois_de_naissance,
+      jour: eleve.jour_de_naissance
+    }
+    post "/identification", params: params_identification
+
+    piece_attendue = Fabricate(:piece_attendue, etablissement: etablissement)
+    Fabricate(:piece_jointe, piece_attendue: piece_attendue, dossier_eleve: dossier_eleve, etat: "soumis")
+    get pieces_a_joindre_path
+
+    assert response.parsed_body.include? 'id="piece_jointe_fichiers"'
+  end
+
+  test "Une pièce jointe validée ne peut pas être modifiée" do
+    eleve = Fabricate(:eleve)
+    etablissement = Fabricate(:etablissement)
+    dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement)
+    params_identification = {
+      identifiant: eleve.identifiant,
+      annee: eleve.annee_de_naissance,
+      mois: eleve.mois_de_naissance,
+      jour: eleve.jour_de_naissance
+    }
+    post "/identification", params: params_identification
+
+    piece_attendue = Fabricate(:piece_attendue, etablissement: etablissement)
+    Fabricate(:piece_jointe, piece_attendue: piece_attendue, dossier_eleve: dossier_eleve, etat: "valide")
+    get pieces_a_joindre_path
+
+    assert_not response.parsed_body.include? 'id="piece_jointe_fichiers"'
+  end
+
 end
