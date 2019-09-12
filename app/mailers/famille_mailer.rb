@@ -30,9 +30,8 @@ class FamilleMailer < ApplicationMailer
     end
 
     subject = "Réinscription de votre enfant au collège"
-    reply_to = agent.email
 
-    mail(subject: subject, reply_to: reply_to, to: [email, agent.email], &:text)
+    mail(subject: subject, reply_to: agent.email, to: [email, agent.email], &:text)
   end
 
   def envoyer_mail_confirmation(eleve)
@@ -45,14 +44,9 @@ class FamilleMailer < ApplicationMailer
       return
     end
 
-    subject = "Réinscription de votre enfant au collège"
     email_reponse = @eleve.dossier_eleve.etablissement.email_reponse
-    reply_to = if email_reponse.present?
-                 email_reponse
-               else
-                 eleve.dossier_eleve.etablissement.email_chef
-               end
-    mail(subject: subject, reply_to: reply_to, to: email, &:text)
+    reply_to = reply_to_mail_confirmation(email_reponse, eleve)
+    mail(subject: "Réinscription de votre enfant au collège", reply_to: reply_to, to: email, &:text)
   end
 
   def mail_validation_inscription(eleve, agent)
@@ -68,6 +62,16 @@ class FamilleMailer < ApplicationMailer
     subject = "Réinscription de votre enfant au collège"
     reply_to = agent.email
     mail(subject: subject, reply_to: reply_to, to: email, &:text)
+  end
+
+  private
+
+  def reply_to_mail_confirmation(email_reponse, eleve)
+    if email_reponse.present?
+      email_reponse
+    else
+      eleve.dossier_eleve.etablissement.email_chef
+    end
   end
 
 end

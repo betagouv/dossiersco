@@ -13,14 +13,7 @@ class Famille
   end
 
   def nettoyage_telephone(params)
-    if params["resp_legal_attributes"]
-      %w[tel_personnel tel_portable tel_professionnel].each do |tel|
-        if params["resp_legal_attributes"]["0"] && params["resp_legal_attributes"]["0"][tel]
-          params["resp_legal_attributes"]["0"][tel] = params["resp_legal_attributes"]["0"][tel].delete(" ")
-        end
-        params["resp_legal_attributes"]["1"][tel] = params["resp_legal_attributes"]["1"][tel].delete(" ") if params["resp_legal_attributes"]["1"]
-      end
-    end
+    nettoie_resp_legal params if params["resp_legal_attributes"]
 
     if params["contact_urgence_attributes"]
       %w[tel_principal tel_secondaire].each do |tel|
@@ -29,6 +22,15 @@ class Famille
     end
 
     params
+  end
+
+  def nettoie_resp_legal(params)
+    %w[tel_personnel tel_portable tel_professionnel].each do |tel|
+      if params["resp_legal_attributes"]["0"] && params["resp_legal_attributes"]["0"][tel]
+        params["resp_legal_attributes"]["0"][tel] = params["resp_legal_attributes"]["0"][tel].delete(" ")
+      end
+      params["resp_legal_attributes"]["1"][tel] = params["resp_legal_attributes"]["1"][tel].delete(" ") if params["resp_legal_attributes"]["1"]
+    end
   end
 
 end

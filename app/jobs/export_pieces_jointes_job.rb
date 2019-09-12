@@ -5,11 +5,7 @@ class ExportPiecesJointesJob < ActiveJob::Base
   def perform(agent, mef_id)
     nom_zip = "pieces-jointes.zip"
     temp_file = Tempfile.new(nom_zip)
-    mef_selectionnes = if mef_id.blank?
-                         Mef.where(etablissement: agent.etablissement)
-                       else
-                         Mef.where(id: mef_id)
-                       end
+    mef_selectionnes = selectionne_mef(mef_id, agent)
 
     Zip::File.open(temp_file.path, Zip::File::CREATE) do |zipfile|
       mef_selectionnes.each do |mef|
@@ -36,6 +32,16 @@ class ExportPiecesJointesJob < ActiveJob::Base
     end
 
     FichierATelecharger.create!(contenu: temp_file, etablissement: agent.etablissement, nom: "pieces-jointes")
+  end
+
+  private
+
+  def selectionne_mef(mef_id, agent)
+    if mef_id.blank?
+      Mef.where(etablissement: agent.etablissement)
+    else
+      Mef.where(id: mef_id)
+    end
   end
 
 end
