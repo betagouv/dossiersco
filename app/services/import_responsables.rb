@@ -25,6 +25,7 @@ class ImportResponsables
 
       met_a_jour_le_paiement_des_frais!(responsables.first, noeud_personne)
       met_a_jour_la_profession_des_retraites!(responsables.first, noeud_personne)
+      met_a_jour_la_civilite!(responsables.first, noeud_personne)
     end
   end
 
@@ -44,6 +45,10 @@ class ImportResponsables
       code_profession = noeud.xpath("CODE_PROFESSION").text
       responsable.update(profession: code_profession)
     end
+  end
+
+  def met_a_jour_la_civilite!(responsable, noeud)
+    responsable.update(civilite: noeud.xpath("LC_CIVILITE").text)
   end
 
   def met_a_jour_les_dossiers!(etablissement)

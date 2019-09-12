@@ -409,11 +409,11 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     assert_no_match "CODE_POSTAL", response.body
   end
 
-  test "Si le lien de parenté est mère alors le code civilité est 2" do
+  test "le code CIVILITE doit être 2 pour une civilité MME" do
     admin = Fabricate(:admin)
     identification_agent(admin)
 
-    resp_legal = Fabricate(:resp_legal, lien_de_parente: "MERE")
+    resp_legal = Fabricate(:resp_legal, civilite: "MME")
     Fabricate(:dossier_eleve_valide, resp_legal: [resp_legal], etablissement: admin.etablissement)
 
     xml = recupere_fichier_xml_de_retour_siecle
@@ -421,11 +421,11 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "2", xml.xpath("//CODE_CIVILITE").text
   end
 
-  test "Si le lien de parenté est père alors le code civilité est 1" do
+  test "le code CIVILITE doit être 1 pour une civilité MR" do
     admin = Fabricate(:admin)
     identification_agent(admin)
 
-    resp_legal = Fabricate(:resp_legal, lien_de_parente: "PERE")
+    resp_legal = Fabricate(:resp_legal, civilite: "M.")
     Fabricate(:dossier_eleve_valide, resp_legal: [resp_legal], etablissement: admin.etablissement)
 
     xml = recupere_fichier_xml_de_retour_siecle

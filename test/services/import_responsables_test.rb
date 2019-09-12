@@ -151,4 +151,19 @@ class ImportResponsablesTest < ActiveSupport::TestCase
     assert_equal "73", maryline.profession
   end
 
+  test "récupère la civilité dans le fichier" do
+    etablissement = Fabricate(:etablissement, uai: "0140070A")
+
+    resp_legal = Fabricate(:resp_legal, prenom: "Maryline", nom: "ROCK", civilite: nil)
+    Fabricate(:dossier_eleve_valide, resp_legal: [resp_legal], etablissement: etablissement)
+
+    fichier_xml = fixture_file_upload("files/responsables_avec_adresses_simple.xml")
+    tache = Fabricate(:tache_import, type_fichier: "responsables", fichier: fichier_xml, etablissement: etablissement)
+
+    ImportResponsables.new.perform(tache)
+
+    resp_legal.reload
+    assert_equal "MME", resp_legal.civilite
+  end
+
 end
