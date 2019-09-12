@@ -23,10 +23,15 @@ class ImportResponsables
       next if responsables.count > 1
       next ExceptionAucunResponsableLegalTrouve if responsables.count.zero?
 
-      met_a_jour_le_paiement_des_frais!(responsables.first, noeud_personne)
-      met_a_jour_la_profession_des_retraites!(responsables.first, noeud_personne)
-      met_a_jour_la_civilite!(responsables.first, noeud_personne)
+      effectue_les_mises_a_jour!(responsables.first, noeud_personne)
     end
+  end
+
+  def effectue_les_mises_a_jour!(responsable, noeud)
+    met_a_jour_le_paiement_des_frais!(responsable, noeud)
+    met_a_jour_la_profession_des_retraites!(responsable, noeud)
+    met_a_jour_la_civilite!(responsable, noeud)
+    met_a_jour_communique_info_parents_eleves!(responsable, noeud)
   end
 
   def met_a_jour_le_paiement_des_frais!(responsable, noeud)
@@ -49,6 +54,10 @@ class ImportResponsables
 
   def met_a_jour_la_civilite!(responsable, noeud)
     responsable.update(civilite: noeud.xpath("LC_CIVILITE").text)
+  end
+
+  def met_a_jour_communique_info_parents_eleves!(responsable, noeud)
+    responsable.update(communique_info_parents_eleves: noeud.xpath("COMMUNICATION_ADRESSE").text)
   end
 
   def met_a_jour_les_dossiers!(etablissement)

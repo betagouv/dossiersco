@@ -33,7 +33,7 @@
                 <CODE_PAYS><%= resp_legal.pays ? resp_legal.pays : 995 %></CODE_PAYS>
               </ADRESSE>
             <% end %>
-            <COMMUNICATION_ADRESSE><%= resp_legal.communique_info_parents_eleves? ? true : false %></COMMUNICATION_ADRESSE>
+            <COMMUNICATION_ADRESSE><%= resp_legal.communique_info_parents_eleves? ? "1" : "0" %></COMMUNICATION_ADRESSE>
 
             <CODE_PROFESSION><%= resp_legal.profession %></CODE_PROFESSION>
             <% if resp_legal.tel_personnel.present? %>

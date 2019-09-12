@@ -166,4 +166,22 @@ class ImportResponsablesTest < ActiveSupport::TestCase
     assert_equal "MME", resp_legal.civilite
   end
 
+  test "récupère l'information sur le souhaite de communiquer ou pas son adresse aux fédérations de parents d'élèves" do
+    etablissement = Fabricate(:etablissement, uai: "0140070A")
+
+    resp_legal_ok = Fabricate(:resp_legal, prenom: "Maryline", nom: "ROCK", communique_info_parents_eleves: false)
+    resp_legal_pas_ok = Fabricate(:resp_legal, prenom: "Bidule", nom: "TRUC", communique_info_parents_eleves: false)
+    Fabricate(:dossier_eleve_valide, resp_legal: [resp_legal_ok, resp_legal_pas_ok], etablissement: etablissement)
+
+    fichier_xml = fixture_file_upload("files/responsables_avec_adresses_simple.xml")
+    tache = Fabricate(:tache_import, type_fichier: "responsables", fichier: fichier_xml, etablissement: etablissement)
+
+    ImportResponsables.new.perform(tache)
+
+    resp_legal_ok.reload
+    assert_equal true, resp_legal_ok.communique_info_parents_eleves
+    resp_legal_pas_ok.reload
+    assert_equal false, resp_legal_pas_ok.communique_info_parents_eleves
+  end
+
 end
