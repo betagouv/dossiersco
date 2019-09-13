@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 etablissement = Etablissement.find_by(uai: "0931434D")
 
@@ -7,6 +8,7 @@ xml = Nokogiri::XML(file)
 xml.xpath("//ELEVE").each do |noeud_eleve|
   ine = noeud_eleve.xpath("ID_NATIONAL").text
   next if ine.blank?
+
   code_mef_destination = noeud_eleve.xpath("CODE_MEF").text
   code_mef_an_dernier = noeud_eleve.xpath("SCOLARITE_AN_DERNIER/CODE_MEF").text
   puts "ine: #{ine} code_mef_destination: #{code_mef_destination} code_mef_and_dernier: #{code_mef_an_dernier}"
