@@ -116,14 +116,14 @@ class InscriptionControllerTest < ActionDispatch::IntegrationTest
     contact_urgence = Fabricate(:contact_urgence, dossier_eleve: dossier)
     post "/agent", params: { email: agent.email, mot_de_passe: agent.password }
     params = { "dossier_eleve" => { "contact_urgence_attributes" =>
-                                    { "lien_avec_eleve" => "voisin", "prenom" => "Dupont", "nom" => "Dupond",
+                                    { "lien_de_parente" => "ASCENDANT", "prenom" => "Dupont", "nom" => "Dupond",
                                       "tel_principal" => "010101", "tel_secondaire" => "020202",
                                       "id" => contact_urgence.id },
                                     "dossier_id" => dossier.id } }
 
     patch agent_update_eleve_path(dossier), params: params
     contact_urgence.reload
-    assert_equal "voisin", contact_urgence.lien_avec_eleve
+    assert_equal "ASCENDANT", contact_urgence.lien_de_parente
     assert_equal "Dupont", contact_urgence.prenom
     assert_equal "010101", contact_urgence.tel_principal
   end

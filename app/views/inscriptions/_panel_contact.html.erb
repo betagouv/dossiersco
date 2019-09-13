@@ -175,7 +175,7 @@
                       html: { id: "form-infos-contact-urgence", class: "d-none"} do |f| %>
     <%= f.fields_for :contact_urgence do |c|  %>
       <div class="form__group">
-        <%= c.input :lien_avec_eleve %>
+        <%= c.input :lien_de_parente %>
       </div>
       <div class="form__group">
         <%= c.input :prenom, placeholder: "Prénom" %>
@@ -194,7 +194,7 @@
   <% end %>
   <div id="infos-contact-urgence">
     <ul class="list-unstyled">
-      <li><b><%= t('.lien_avec_eleve') %> : </b><%= @dossier_eleve.contact_urgence.lien_avec_eleve %></li>
+      <li><b><%= t('.lien_avec_eleve') %> : </b><%= @dossier_eleve.contact_urgence.lien_de_parente %></li>
       <li><b><%= t('.prenom') %> : </b><%= @dossier_eleve.contact_urgence.prenom %></li>
       <li><b><%= t('.nom') %> : </b><%= @dossier_eleve.contact_urgence.nom %></li>
       <% if @dossier_eleve.contact_urgence.tel_principal.present? %>

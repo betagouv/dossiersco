@@ -433,6 +433,30 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "1", xml.xpath("//CODE_CIVILITE").text
   end
 
+  test "on export un contact en cas d'urgence" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+
+    resp_legal = Fabricate(:resp_legal, civilite: "M.")
+    Fabricate(:dossier_eleve_valide, resp_legal: [resp_legal], etablissement: admin.etablissement)
+
+    xml = recupere_fichier_xml_de_retour_siecle
+
+    assert_equal "1", xml.xpath("//CODE_CIVILITE").text
+  end
+
+  test "un contact en cas d'urgence ajoute une personne" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+
+    resp_legal = Fabricate(:resp_legal, civilite: "M.")
+    Fabricate(:dossier_eleve_valide, resp_legal: [resp_legal], etablissement: admin.etablissement)
+
+    xml = recupere_fichier_xml_de_retour_siecle
+
+    assert_equal "1", xml.xpath("//CODE_CIVILITE").text
+  end
+
   def recupere_fichier_xml_de_retour_siecle
     get export_siecle_configuration_exports_path(xml_only: true)
 

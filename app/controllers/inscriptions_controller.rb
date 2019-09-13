@@ -86,7 +86,7 @@ class InscriptionsController < ApplicationController
                                                                     tel_professionnel email profession
                                                                     communique_info_parents_eleves
                                                                     enfants_a_charge id ],
-                                          contact_urgence_attributes: %i[lien_avec_eleve prenom nom tel_principal
+                                          contact_urgence_attributes: %i[lien_de_parente prenom nom tel_principal
                                                                          tel_secondaire id])
   end
 
