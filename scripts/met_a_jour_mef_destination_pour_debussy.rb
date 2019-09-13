@@ -7,13 +7,23 @@ xml = Nokogiri::XML(file)
 
 xml.xpath("//ELEVE").each do |noeud_eleve|
   ine = noeud_eleve.xpath("ID_NATIONAL").text
-  next if ine.blank?
+  if ine.blank?
+    puts "NEXT ine vide"
+    next
+  end
 
   dossier = DossierEleve.joins(:eleve).where("eleves.identifiant = ?", ine).first
-  next if dossier.blank?
+  if dossier.blank?
+    puts "next, dossier non trouvé pour #{ine}"
+    next
+  end
 
   cm2 = Mef.find_by(etablissement: etablissement, libelle: "CM2")
-  next if dossier.mef_destination == cm2
+  if dossier.mef_destination != cm2
+    puts "suivant car mef destination n'est pas CM2"
+    next
+  end
+
 
   code_mef_destination = noeud_eleve.xpath("CODE_MEF").text
   mef_destination = Mef.find_by(etablissement: etablissement, code: code_mef_destination)
