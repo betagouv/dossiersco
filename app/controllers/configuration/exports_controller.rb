@@ -26,7 +26,7 @@ module Configuration
       nom_zip = "#{nom_fichier}.zip"
       temp_file = Tempfile.new(nom_zip)
 
-      cree_zip file, temp_file, nom_fichier
+      cree_zip file, temp_file, nom_fichier, nom_zip
     end
 
     def defini_dossiers
@@ -38,7 +38,7 @@ module Configuration
                   end
     end
 
-    def cree_zip(file, temp_file, nom_fichier)
+    def cree_zip(file, temp_file, nom_fichier, nom_zip)
       if params[:xml_only]
         send_file file.path, x_sendfile: true, type: "text/xml"
       else
