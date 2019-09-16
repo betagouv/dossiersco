@@ -32,6 +32,7 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Exclude:
     - 'test/**/*'
+    - 'scripts/nettoyage_lien_de_parent_contact_urgence.rb'
     - 'app/jobs/importer_siecle.rb'
     - 'app/controllers/retour_siecles_controller.rb'
     - 'app/controllers/authentification_cas_ent_controller.rb'
@@ -72,6 +73,7 @@ Metrics/ClassLength:
 
 Metrics/AbcSize:
   Exclude:
+    - 'scripts/nettoyage_lien_de_parent_contact_urgence.rb'
     - 'test/integration/accueil_controller_test.rb'
     - 'test/integration/inscriptions_controller_test.rb'
     - 'app/controllers/tache_imports_controller.rb'
@@ -110,6 +112,7 @@ Metrics/AbcSize:
 
 Metrics/CyclomaticComplexity:
   Exclude:
+    - 'scripts/nettoyage_lien_de_parent_contact_urgence.rb'
     - 'app/controllers/accueil_controller.rb'
     - 'app/controllers/retour_siecles_controller.rb'
     - 'app/controllers/authentification_cas_ent_controller.rb'
@@ -118,6 +121,7 @@ Metrics/CyclomaticComplexity:
 
 Metrics/PerceivedComplexity:
   Exclude:
+    - 'scripts/nettoyage_lien_de_parent_contact_urgence.rb'
     - 'app/controllers/authentification_cas_ent_controller.rb'
     - 'app/controllers/accueil_controller.rb'
     - 'app/controllers/retour_siecles_controller.rb'
