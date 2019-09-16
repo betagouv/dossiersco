@@ -33,6 +33,7 @@ def ascendant?(contact)
     contact.lien_de_parente == "grand mere maternel" ||
     contact.lien_de_parente == "grand parent" ||
     contact.lien_de_parente == "grands parents" ||
+    contact.lien_de_parente == "grands parents maternels" ||
     contact.lien_de_parente == "mamie maternelle" ||
     contact.lien_de_parente == "grand-père et médecin"
 end
