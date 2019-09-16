@@ -19,6 +19,7 @@ def fratrie?(contact)
     contact.lien_de_parente == "frere" ||
     contact.lien_de_parente == "demi-frère" ||
     contact.lien_de_parente == "soeur" ||
+    contact.lien_de_parente == "grande soeur" ||
     contact.lien_de_parente == "sœur"
 end
 
@@ -30,12 +31,16 @@ def ascendant?(contact)
     contact.lien_de_parente == "grand pere maternel" ||
     contact.lien_de_parente == "grand mere" ||
     contact.lien_de_parente == "grand mere paternel" ||
+    contact.lien_de_parente == "grand mere paternelle" ||
     contact.lien_de_parente == "grand mere maternel" ||
     contact.lien_de_parente == "grand parent" ||
     contact.lien_de_parente == "grands parents" ||
     contact.lien_de_parente == "grands parents maternels" ||
+    contact.lien_de_parente == "grands parents paternels" ||
     contact.lien_de_parente == "mamie maternelle" ||
     contact.lien_de_parente == "mamie" ||
+    contact.lien_de_parente == "mami" ||
+    contact.lien_de_parente == "papi" ||
     contact.lien_de_parente == "compagne du pere" ||
     contact.lien_de_parente == "grand-père et médecin"
 end
@@ -45,10 +50,12 @@ def autre_membre?(contact)
     contact.lien_de_parente == "beau pere" ||
     contact.lien_de_parente == "belle mere" ||
     contact.lien_de_parente == "tante" ||
+    contact.lien_de_parente == "la tante" ||
     contact.lien_de_parente == "oncle" ||
     contact.lien_de_parente == "ma niece" ||
     contact.lien_de_parente == "cousine" ||
-    contact.lien_de_parente == "marraine"
+    contact.lien_de_parente == "marraine" ||
+    contact.lien_de_parente == "parrain"
 end
 
 def educateur?(contact)
@@ -59,6 +66,7 @@ end
 def assistante_familliale?(contact)
   contact.lien_de_parente == "ass.famil" ||
     contact.lien_de_parente == "nounou" ||
+    contact.lien_de_parente == "assistante familiale" ||
     contact.lien_de_parente == "baby-sitter de son frere"
 end
 
