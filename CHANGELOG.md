@@ -4,6 +4,18 @@
 
 ### Nouvelle organisation de la documentation et des procédures
 
+- **N'affiche pas les codes MEF manqant lors du retour vers siècle avant un premier import de la nomenclature**
+
+- **Rend plus explicite les étapes du retour vers siècle**
+
+- **Récupère la civilité des résponsables légaux depuis siècle**
+
+- **Récupère l'autorisation de transfert aux fédérations de parents d'élèves depuis siècle**
+
+- **Découpe les adresses trop longues des responsables légaux de façon plus logique pour l'export siècle**
+
+- **Empêcher la modification d'une pièce jointe après validation**
+
 - **Empêcher l'import d'un fichier xml quand celui-ci a un UAJ différent de l'établissement qui est en train de faire l'import**
 
 - **Déplacer la documentation du repertoire dossiersco vers celui du blog**
