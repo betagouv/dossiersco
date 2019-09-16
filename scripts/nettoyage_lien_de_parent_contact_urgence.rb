@@ -6,6 +6,7 @@ end
 
 def mere?(contact)
   contact.lien_de_parente == "mere" ||
+    contact.lien_de_parente == "mere ou pere" ||
     contact.lien_de_parente == "maman"
 end
 
@@ -17,6 +18,7 @@ end
 def fratrie?(contact)
   contact.lien_de_parente == "fratrie" ||
     contact.lien_de_parente == "frere" ||
+    contact.lien_de_parente == "frere aine" ||
     contact.lien_de_parente == "demi-frère" ||
     contact.lien_de_parente == "soeur" ||
     contact.lien_de_parente == "grande soeur" ||
@@ -33,8 +35,12 @@ def ascendant?(contact)
     contact.lien_de_parente == "grand mere paternel" ||
     contact.lien_de_parente == "grand mere paternelle" ||
     contact.lien_de_parente == "grand mere maternel" ||
+    contact.lien_de_parente == "grand mere,soeur" ||
+    contact.lien_de_parente == "grand mere maternelle" ||
+    contact.lien_de_parente == "gd mere maternelle" ||
     contact.lien_de_parente == "grand parent" ||
     contact.lien_de_parente == "grands parents" ||
+    contact.lien_de_parente == "grand parents" ||
     contact.lien_de_parente == "grands parents maternels" ||
     contact.lien_de_parente == "grands parents paternels" ||
     contact.lien_de_parente == "mamie maternelle" ||
@@ -42,7 +48,7 @@ def ascendant?(contact)
     contact.lien_de_parente == "mami" ||
     contact.lien_de_parente == "papi" ||
     contact.lien_de_parente == "compagne du pere" ||
-    contact.lien_de_parente == "grand-père et médecin"
+    contact.lien_de_parente == "grand pere et médecin"
 end
 
 def autre_membre?(contact)
@@ -50,8 +56,13 @@ def autre_membre?(contact)
     contact.lien_de_parente == "beau pere" ||
     contact.lien_de_parente == "belle mere" ||
     contact.lien_de_parente == "tante" ||
+    contact.lien_de_parente == "tata" ||
+    contact.lien_de_parente == "tatie" ||
     contact.lien_de_parente == "la tante" ||
+    contact.lien_de_parente == "la tente" ||
+    contact.lien_de_parente == "grande tante" ||
     contact.lien_de_parente == "oncle" ||
+    contact.lien_de_parente == "tonton" ||
     contact.lien_de_parente == "ma niece" ||
     contact.lien_de_parente == "cousine" ||
     contact.lien_de_parente == "marraine" ||
