@@ -91,7 +91,7 @@ class PdfFicheInfirmerie
     else
       pdf.text "Nom : #{contact_urgence.nom}" \
         "  Prénom : #{contact_urgence.prenom}", inline_format: true
-      pdf.text "Lien avec l'élève : #{contact_urgence.lien_avec_eleve}"
+      pdf.text "Lien avec l'élève : #{contact_urgence.lien_de_parente}"
 
       pdf.text "Tel. Principal :" \
         " #{telephone(contact_urgence, :principal)}," \
