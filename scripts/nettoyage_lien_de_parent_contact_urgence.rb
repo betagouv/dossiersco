@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 def nettoyage(lien)
-  lien.downcase.gsub(/[éêèë]/, "e").gsub(/[àâ]/, "a").tr("-", " ").tr(".", " ")
+  lien.downcase.gsub(/[éêèë]/, "e").gsub(/[àâ]/, "a").tr("-", " ").tr(".", " ").strip
 end
 
 def mere?(contact)
@@ -35,6 +35,8 @@ def ascendant?(contact)
     contact.lien_de_parente == "grands parents" ||
     contact.lien_de_parente == "grands parents maternels" ||
     contact.lien_de_parente == "mamie maternelle" ||
+    contact.lien_de_parente == "mamie" ||
+    contact.lien_de_parente == "compagne du pere" ||
     contact.lien_de_parente == "grand-père et médecin"
 end
 
@@ -45,6 +47,7 @@ def autre_membre?(contact)
     contact.lien_de_parente == "tante" ||
     contact.lien_de_parente == "oncle" ||
     contact.lien_de_parente == "ma niece" ||
+    contact.lien_de_parente == "cousine" ||
     contact.lien_de_parente == "marraine"
 end
 
