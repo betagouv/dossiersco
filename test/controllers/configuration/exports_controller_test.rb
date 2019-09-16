@@ -351,14 +351,13 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     identification_agent(admin)
 
     resp_longue_adresse = Fabricate(:resp_legal,
-                                    adresse: "A" * 38 + " Dépasse 38 caractères")
+                                    adresse: "A" * 35 + " Dépasse 38 caractères")
     Fabricate(:dossier_eleve_valide,
               etablissement: admin.etablissement,
               resp_legal: [resp_longue_adresse])
-
     xml = recupere_fichier_xml_de_retour_siecle
 
-    assert_match " Dépasse 38 caractères", xml.css("LIGNE2_ADRESSE").text
+    assert_match "Dépasse 38 caractères", xml.css("LIGNE2_ADRESSE").text
   end
 
   test "exporte les seconds et troisièmes prénoms" do

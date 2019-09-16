@@ -124,7 +124,28 @@ class RespLegal < ActiveRecord::Base
   def lignes_adresses
     return [adresse, nil] if adresse.length <= 38
 
-    [adresse[0, 38], adresse[38..75], adresse[76..-1]]
+    @adresse_decoupee = adresse.split(" ")
+    ligne_2 = nil
+    ligne_3 = nil
+
+    ligne_1 = construit_ligne_adresse
+    ligne_2 = construit_ligne_adresse unless @adresse_decoupee.empty?
+    ligne_3 = construit_ligne_adresse unless @adresse_decoupee.empty?
+
+    [ligne_1, ligne_2, ligne_3]
+  end
+
+  def construit_ligne_adresse
+    ligne = ""
+    ligne_provisoire = ""
+    while ligne_provisoire.length < 38 && !@adresse_decoupee.empty?
+      ligne_provisoire = ligne + " " + @adresse_decoupee.first
+      if ligne_provisoire.length < 38
+        ligne = ligne_provisoire.strip
+        @adresse_decoupee.delete_at(0)
+      end
+    end
+    ligne
   end
 
 end
