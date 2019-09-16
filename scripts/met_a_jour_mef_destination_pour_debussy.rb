@@ -24,7 +24,6 @@ xml.xpath("//ELEVE").each do |noeud_eleve|
     next
   end
 
-
   code_mef_destination = noeud_eleve.xpath("CODE_MEF").text
   mef_destination = Mef.find_by(etablissement: etablissement, code: code_mef_destination)
   puts "mise à jour #{ine} de mef destination #{dossier.mef_destination_id} pour #{mef_destination.id}"
