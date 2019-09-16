@@ -19,6 +19,8 @@ def fratrie?(contact)
   contact.lien_de_parente == "fratrie" ||
     contact.lien_de_parente == "frere" ||
     contact.lien_de_parente == "frere aine" ||
+    contact.lien_de_parente == "frere aîne" ||
+    contact.lien_de_parente == "frere majeur" ||
     contact.lien_de_parente == "demi-frère" ||
     contact.lien_de_parente == "soeur" ||
     contact.lien_de_parente == "grande soeur" ||
@@ -29,6 +31,7 @@ def ascendant?(contact)
   contact.lien_de_parente == "ascendant" ||
     contact.lien_de_parente == "grnad mere" ||
     contact.lien_de_parente == "grand pere" ||
+    contact.lien_de_parente == "grand  pere" ||
     contact.lien_de_parente == "grand pere paternel" ||
     contact.lien_de_parente == "grand pere maternel" ||
     contact.lien_de_parente == "grand mere" ||
@@ -53,8 +56,25 @@ end
 
 def autre_membre?(contact)
   contact.lien_de_parente == "autremembredelafamille" ||
+  contact.lien_de_parente == "autre membre de la famille" ||
+  contact.lien_de_parente == "grands parents de coeur" ||
     contact.lien_de_parente == "beau pere" ||
+    contact.lien_de_parente == "beau  pere" ||
+    contact.lien_de_parente == "beau   pere" ||
+    contact.lien_de_parente == "beau papa" ||
+    contact.lien_de_parente == "beau parent" ||
+    contact.lien_de_parente == "beau peere" ||
+    contact.lien_de_parente == "beau_pere" ||
+    contact.lien_de_parente == "beaux pere" ||
+    contact.lien_de_parente == "belle maman" ||
+    contact.lien_de_parente == "belle mere / marraine" ||
+    contact.lien_de_parente == "bo pere" ||
+    contact.lien_de_parente == "beau papa" ||
+    contact.lien_de_parente == "compagnon de la mere" ||
+    contact.lien_de_parente == "concubin" ||
+    contact.lien_de_parente == "compagnon de la mere" ||
     contact.lien_de_parente == "belle mere" ||
+    contact.lien_de_parente == "conjointe du pere" ||
     contact.lien_de_parente == "tante" ||
     contact.lien_de_parente == "tata" ||
     contact.lien_de_parente == "tatie" ||
@@ -65,20 +85,26 @@ def autre_membre?(contact)
     contact.lien_de_parente == "tonton" ||
     contact.lien_de_parente == "ma niece" ||
     contact.lien_de_parente == "cousine" ||
+    contact.lien_de_parente == "famille" ||
     contact.lien_de_parente == "marraine" ||
+    contact.lien_de_parente == "maraine" ||
     contact.lien_de_parente == "parrain"
 end
 
 def educateur?(contact)
   contact.lien_de_parente == "educateur" ||
-    contact.lien_de_parente == "Educateurs MDEF Mélan Taninges"
+    contact.lien_de_parente == "Educateurs MDEF Mélan Taninges" ||
+    contact.lien_de_parente == "educatrice"
 end
 
 def assistante_familliale?(contact)
   contact.lien_de_parente == "ass.famil" ||
+    contact.lien_de_parente == "ass  famil" ||
+    contact.lien_de_parente == "assistante maternelle" ||
     contact.lien_de_parente == "nounou" ||
     contact.lien_de_parente == "assistante familiale" ||
-    contact.lien_de_parente == "baby-sitter de son frere"
+    contact.lien_de_parente == "assistante familial" ||
+    contact.lien_de_parente == "assistante maternelle de la famille"
 end
 
 def tuteur?(contact)
@@ -86,7 +112,8 @@ def tuteur?(contact)
 end
 
 def aide_sociale?(contact)
-  contact.lien_de_parente == "aidesocialeal'enfance"
+  contact.lien_de_parente == "aidesocialeal'enfance" ||
+    contact.lien_de_parente == "assistante sociale"
 end
 
 def eleve?(contact)
