@@ -26,6 +26,7 @@ def fratrie?(contact)
     contact.lien_de_parente == "frere majeur" ||
     contact.lien_de_parente == "grand frere" ||
     contact.lien_de_parente == "demi-frère" ||
+    contact.lien_de_parente == "enfant" ||
     contact.lien_de_parente == "frere (aine)" ||
     contact.lien_de_parente == "frere / parrain civil" ||
     contact.lien_de_parente == "grand soeur" ||
@@ -240,7 +241,6 @@ ContactUrgence.all.each do |contact|
   elsif eleve?(contact)
     contact.update(lien_de_parente: "ELEVE")
   else
-    puts contact.lien_de_parente
-    # contact.update(lien_de_parente: "AUTRE LIEN")
+    contact.update(lien_de_parente: "AUTRE LIEN")
   end
 end
