@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  root to: "accueil#index"
+  root to: "pages#index"
 
   resource  :configuration, only: [:show]
 
@@ -54,6 +54,9 @@ Rails.application.routes.draw do
         post "changer_etablissement"
       end
       get "activation"
+      collection do
+        get "connexion"
+      end
     end
     resources :pieces_attendues, expect: [:show, :index]
     resource :exports, only: :[] do
@@ -108,12 +111,11 @@ Rails.application.routes.draw do
   get "/choix-dossier", to: "authentification_cas_ent#choix_dossier"
   get "/debug-ent", to:  "authentification_cas_ent#debug_ent"
 
-
-  post "/identification", to: "accueil#identification"
-
   get "/accueil", to: "accueil#accueil"
   post "/accueil", to: "accueil#post_accueil"
   get "/confirmation", to: "accueil#confirmation"
+  get "/connexion", to: "accueil#connexion"
+  post "/identification", to: "accueil#identification"
 
   get "/eleve", to: "accueil#eleve"
   post "/eleve", to: "accueil#post_eleve"
@@ -140,7 +142,6 @@ Rails.application.routes.draw do
 
   get "/stats", to: "suivi#index"
 
-  get "/agent", to: "inscriptions#agent"
   post "/agent", to: "inscriptions#post_agent"
 
   get "/agent/liste_des_eleves", to: "inscriptions#liste_des_eleves"
@@ -164,6 +165,7 @@ Rails.application.routes.draw do
   post "/agent/valider_plusieurs_dossiers", to: "inscriptions#valider_plusieurs_dossiers"
 
   get "/agent/deconnexion", to: "inscriptions#deconnexion"
+  get "/agent/connexion", to: "inscriptions#connexion"
 
   get "/agent/tableau_de_bord", to: "inscriptions#tableau_de_bord"
 
@@ -178,7 +180,6 @@ Rails.application.routes.draw do
   get "/agent/relance", to: "inscriptions#relance"
   post "/agent/relance_sms", to: "inscriptions#relance_sms"
 
-  get "/redirection_erreur", to: "pages#redirection_erreur"
   get "/changelog", to: "pages#changelog"
 
   mount LetterOpenerWeb::Engine, at: "/letter_opener" unless ENV["laisser_partir_les_emails"]

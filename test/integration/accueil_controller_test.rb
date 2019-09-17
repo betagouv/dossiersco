@@ -4,8 +4,8 @@ require "test_helper"
 
 class AccueilControllerTest < ActionDispatch::IntegrationTest
 
-  def test_accueil
-    get "/"
+  def test_connexion
+    get "/connexion"
     assert response.parsed_body.include? "Inscription"
   end
 

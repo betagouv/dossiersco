@@ -2,11 +2,11 @@
 
 class InscriptionsController < ApplicationController
 
-  before_action :identification_agent, except: %i[post_agent agent]
+  before_action :identification_agent, except: %i[post_agent connexion]
   layout "agent"
 
-  def agent
-    render :identification, layout: "connexion"
+  def connexion
+    render layout: "connexion"
   end
 
   def post_agent
@@ -193,7 +193,8 @@ class InscriptionsController < ApplicationController
 
   def deconnexion
     reset_session
-    redirect_to "/agent"
+    @agent_connecte = nil
+    redirect_to root_path
   end
 
   def tableau_de_bord

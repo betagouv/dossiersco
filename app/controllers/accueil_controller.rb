@@ -4,12 +4,12 @@ require "csv"
 
 class AccueilController < ApplicationController
 
-  before_action :retrouve_eleve_connecte, except: %i[index identification stats]
+  before_action :retrouve_eleve_connecte, except: %i[connexion identification stats]
   before_action :entrees_de_menu
 
   layout "famille"
 
-  def index
+  def connexion
     render layout: "connexion"
   end
 
@@ -44,7 +44,7 @@ class AccueilController < ApplicationController
 
     else
       flash[:erreur] = t("identification.erreurs.identifiants_inconnus")
-      redirect_to root_path
+      redirect_to :connexion
     end
   end
 

@@ -17,7 +17,8 @@ class InscriptionEtablissementTest < ActionDispatch::IntegrationTest
     stub_request(:get, request).to_return(body: body_response)
 
     visit "/"
-    click_link "Vous êtes agent en EPLE ?"
+    click_link "Je suis agent EPLE"
+    visit "/agent/connexion"
     click_link "Inscrire mon établissement sur DossierSCO"
     fill_in "UAI", with: uai
     click_button "Envoyer la demande d'inscription"
@@ -65,7 +66,7 @@ class InscriptionEtablissementTest < ActionDispatch::IntegrationTest
     assert_not_nil Agent.find_by(email: "ce.0500079p@ac-paris.fr")
 
     visit "/"
-    click_link "Vous êtes agent en EPLE ?"
+    click_link "Je suis agent EPLE"
     click_link "Inscrire mon établissement sur DossierSCO"
     fill_in "UAI", with: "0500079P"
     click_button "Envoyer la demande d'inscription"

@@ -27,7 +27,7 @@
                 <%= @agent_connecte.email %>
                 <div class="dropdown-content">
                   <%= link_to 'Mon profil', edit_configuration_agent_path(@agent_connecte), {class: "dropdown-item"} %>
-                  <%= link_to "Se déconnecter", agent_deconnexion_path, {class: "dropdown-item"} %>
+                  <%= link_to "Se déconnecter", agent_deconnexion_path, class: "dropdown-item", data: { turbolinks: false }%>
                 </div>
               </div>
             </li>

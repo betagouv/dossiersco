@@ -1,0 +1,74 @@
+<section class="section">
+  <div class="container">
+      <h1 class="text-center">DossierSCO</h1>
+  </div>
+  <div class="container">
+    <div class="row mt-2">
+      <%= link_to "Inscrire un élève", connexion_path, class: 'button large' %>
+      <%= link_to "Je suis agent EPLE", agent_connexion_path, class: "button-outline large secondary" %>
+    </div>
+  </div>
+</section>
+
+<section class="section section-grey">
+  <div class="container">
+    <h2>L'inscription au collège en quelques clics</h2>
+
+    <p>Dossiersco est un outil libre et gratuit, développé et financé par <%= link_to "le ministère de l'Éducation nationale", "https://www.education.gouv.fr/" %> et <%= link_to "l'Incubateur des services publics numériques", "https://beta.gouv.fr/" %>.
+      En proposant une plateforme d'inscription au collège en ligne, Dossiersco sert un double objectif : faciliter la vie des parents d'élèves et des personnels d'établissement scolaire</p>
+
+
+    <div id="player"></div>
+
+    <iframe width="560" height="315" src="https://www.youtube.com/embed?listType=playlist&list=PL6REEwt5I78o30sDwUNIbe5jr9-7KNvnW&modestbranding=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <h2>Faciliter la vie des parents d'élèves et des personnels d'établissements scolaires</h2>
+
+    <p>Grâce à Dossiersco, la gestion des inscriptions est nettement simplifiée.</p>
+
+    <b>Les avantages pour les parents d'élèves</b>
+    <ul>
+      <li>Permettre aux parents d’inscrire leurs enfants et de télécharger des pièces justificatives sans avoir à se déplacer et en indiquant uniquement s'il y a des des éléments nouveaux dans leur dossier.
+      </li>
+    </ul>
+
+    <b>Les avantages pour le personnel des établissements scolaires</b>
+
+    <ul>
+      <li>Grâce à ce système, les agents peuvent récupérer les nouvelles pièces et données sans avoir à relire l’ensemble des dossiers ni à saisir dans la base SIECLE.</li>
+      <li>Ils peuvent consacrer davantage de temps à  l'accueil individualisé des familles.</li>
+    </ul>
+
+
+    <p>L’outil est conçu pour permettre une prise en main  rapide et intuitive.</p>
+
+    <h2>Envie de tester DossierSCO ? Découvrez notre environnement de démonstration</h2>
+
+    <p>Expérimentez en toute quiétude dans un environnement “bac à sable” qui vous permet d’explorer les fonctionnalités avec des données fictives (supprimées et recréées régulièrement).
+    Vous pourrez ainsi voir les deux côtés de DossierSCO : les interfaces “agents” et “familles”.
+    <%= link_to "L'environnement de démonstration est ici", "http://demo.dossiersco.fr/" %> et il existe également un <%= link_to "article-tutoriel", "https://blog.dossiersco.fr/demo/2019/04/11/environnement-de-demo.html" %> si besoin.</p>
+
+    <h2>La méthode Dossiersco, au plus près des usagers</h2>
+    <p>Dossiersco a été conçu par des personnels d'établissements scolaires, à l’intersection de bonnes pratiques observées dans différentes académies, grâce à la communauté <%= link_to "OpenAcadémie", "https://openacademie.beta.gouv.fr/" %>.
+    L'outil est en amélioration continue. Son développement se construit à partir de l’expérience des utilisateurs, notamment à l'occasion des réunions <%= link_to "openlab", "http://blog.dossiersco.fr/openlab/2019/04/11/construire-dossiersco.html" %>.</p>
+
+
+    <h2>Retours d'expérience</h2>
+
+    <p>Les familles ont plébiscité la démarche.
+      L'année dernière, elles ont été invitées à donner une note de satisfaction 1 à 5 en fin de parcours : elles attribuent une note moyenne de 4,5.
+      Les appréciations, très nombreuses, parlent d'elles-même : « bien », « pratique », « simple », « rapide », « merci ».</p>
+
+    <h2>A propos</h2>
+
+    <p>La conception de ce service est pilotée par Pierre de Maulmont, intrapreneur et intendant du Lycée Arago (Paris); en collaboration avec une équipe de l'Incubateur des services publics numériques.</p>
+
+    <p>Vous pouvez suivre semaine après semaine la vie de l'équipe et les modifications apportées au service DossierSCO en lisant <a href="https://gitlab.com/dossiersco/dossiersco/blob/master/doc/journal.md" target="_blank">notre journal</a>.</p>
+
+    <p>Par souci de transparence, vous pouvez consulter <%= link_to "les statistiques d'usage", stats_path %> de DossierSCO.</p>
+
+    <p>Si vous souhaitez contribuer au développement du service, le code est ouvert et nous accueillerons avec grand plaisir vos <a href="https://gitlab.com/dossiersco/dossiersco/" target="_blank">demandes de fusion (Pull Request)</a></p>
+
+    <p>Pour toute question, n'hésitez pas à nous envoyer un mail à <a href="mailto:equipe@dossiersco.fr" target="_blank">equipe@dossiersco.fr</a></p>
+</div>
+</section>

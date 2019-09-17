@@ -5,13 +5,13 @@ require "redcarpet/render_strip"
 
 class PagesController < ApplicationController
 
-  def redirection_erreur
+  def index
     if !eleve.nil?
       redirect_to accueil_path
     elsif !agent_connecte.nil?
       redirect_to agent_tableau_de_bord_path
     else
-      redirect_to root_path
+      render layout: "connexion"
     end
   end
 

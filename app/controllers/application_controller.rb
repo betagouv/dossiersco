@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
 
   def identification_agent
     unless agent_connecte.present?
-      redirect_to "/agent", alert: t("messages.probleme_identification")
+      redirect_to agent_connexion_path, alert: t("messages.probleme_identification")
       return
     end
     ajoute_information_utilisateur_pour_sentry(

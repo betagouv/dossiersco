@@ -12,6 +12,8 @@ class InscriptionTest < ActionDispatch::IntegrationTest
     Fabricate(:resp_legal, dossier_eleve: dossier_eleve, priorite: 2, lien_de_parente: "PERE")
 
     visit "/"
+    click_link "Inscrire un élève"
+    visit "/connexion"
     assert_selector "h1", text: "Inscription au collège"
 
     fill_in "identifiant", with: eleve.identifiant

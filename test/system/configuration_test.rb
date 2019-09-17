@@ -8,7 +8,7 @@ class ConfigurationTest < ActionDispatch::IntegrationTest
 
   test "Configuration basique : un agent se connect, déclenche un import de fichier" do
     admin = Fabricate(:admin)
-    visit "/agent"
+    visit "/agent/connexion"
     assert_selector "h1", text: "Agent EPLE"
     fill_in "email", with: admin.email
     fill_in "mot_de_passe", with: admin.password
