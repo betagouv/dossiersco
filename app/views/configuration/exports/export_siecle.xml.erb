@@ -11,7 +11,7 @@
   <% if @dossiers.any? %>
     <DONNEES>
       <PERSONNES>
-        <% @dossiers.map(&:resp_legal).flatten.each do |resp_legal| %>
+        <% @dossiers.map(&:resp_legal).flatten.compact.each do |resp_legal| %>
           <% next unless resp_legal.nom %>
           <PERSONNE>
             <ID_PRV_PER><%= resp_legal.id %></ID_PRV_PER>
@@ -52,6 +52,25 @@
             <ENFANT_A_CHARGE><%= nb_enfants_a_charge(resp_legal) %></ENFANT_A_CHARGE>
           </PERSONNE>
         <% end %>
+        <% @dossiers.map(&:contact_urgence).compact.each do |contact_urgence| %>
+          <% next unless contact_urgence.nom %>
+          <PERSONNE>
+            <ID_PRV_PER><%= contact_urgence.id %></ID_PRV_PER>
+            <CODE_CIVILITE><%= "?" %></CODE_CIVILITE>
+            <NOM_DE_FAMILLE><%= alternative(contact_urgence.nom) %></NOM_DE_FAMILLE>
+            <PRENOM><%= alternative(contact_urgence.prenom) %></PRENOM>
+            <COMMUNICATION_ADRESSE>0</COMMUNICATION_ADRESSE>
+            <CODE_PROFESSION>99</CODE_PROFESSION>
+            <% if contact_urgence.tel_principal.present? %>
+              <TEL_PERSONNEL><%= contact_urgence.tel_principal %></TEL_PERSONNEL>
+            <% end %>
+            <% if contact_urgence.tel_secondaire.present? %>
+              <TEL_PROFESSIONNEL><%= contact_urgence.tel_secondaire %></TEL_PROFESSIONNEL>
+            <% end %>
+            <ACCEPTE_SMS>false</ACCEPTE_SMS>
+            <ENFANT_A_CHARGE>0</ENFANT_A_CHARGE>
+          </PERSONNE>
+        <% end %>
       </PERSONNES>
       <ELEVES>
         <% @dossiers.each do |dossier_eleve| %>
@@ -88,6 +107,12 @@
                   <PAIE_FRAIS_SCOLAIRES><%= resp_legal.paie_frais_scolaires? ? 1 : 0 %></PAIE_FRAIS_SCOLAIRES>
                   <HEBERGE_ELEVE><%= resp_legal.priorite == 1 ? true : false %></HEBERGE_ELEVE>
                 </LEGAL>
+              <% end %>
+              <% if dossier_eleve.contact_urgence.present? %>
+                <CONTACT>
+                  <ID_PRV_PER><%= dossier_eleve.contact_urgence.id %></ID_PRV_PER>
+                  <CODE_PARENTE><%= RespLegal::CODE_PARENTE[dossier_eleve.contact_urgence.lien_de_parente&.to_sym] %></CODE_PARENTE>
+                </CONTACT>
               <% end %>
             </RESPONSABLES_ELEVE>
             <SCOLARITE_ACTIVE>

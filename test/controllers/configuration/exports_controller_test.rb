@@ -432,28 +432,32 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "1", xml.xpath("//CODE_CIVILITE").text
   end
 
-  test "on export un contact en cas d'urgence" do
+  test "on export un contact en cas d'urgence dans les personnes si présent" do
     admin = Fabricate(:admin)
     identification_agent(admin)
 
-    resp_legal = Fabricate(:resp_legal, civilite: "M.")
-    Fabricate(:dossier_eleve_valide, resp_legal: [resp_legal], etablissement: admin.etablissement)
+    contact_urgence = Fabricate(:contact_urgence)
+    Fabricate(:dossier_eleve_valide, contact_urgence: contact_urgence, etablissement: admin.etablissement)
 
     xml = recupere_fichier_xml_de_retour_siecle
 
-    assert_equal "1", xml.xpath("//CODE_CIVILITE").text
+    assert_equal contact_urgence.id.to_s, xml.xpath("/IMPORT_ELEVES/DONNEES/PERSONNES/PERSONNE/ID_PRV_PER").text
+    assert xml.xpath("/IMPORT_ELEVES/DONNEES/PERSONNES/PERSONNE/NOM_DE_FAMILLE").map(&:text).include?(contact_urgence.nom)
+    assert xml.xpath("/IMPORT_ELEVES/DONNEES/PERSONNES/PERSONNE/PRENOM").map(&:text).include?(contact_urgence.prenom)
   end
 
-  test "un contact en cas d'urgence ajoute une personne" do
+  test "ajoute un contact en cas d'urgence à l'élève" do
     admin = Fabricate(:admin)
     identification_agent(admin)
 
-    resp_legal = Fabricate(:resp_legal, civilite: "M.")
-    Fabricate(:dossier_eleve_valide, resp_legal: [resp_legal], etablissement: admin.etablissement)
+    contact_urgence = Fabricate(:contact_urgence, lien_de_parente: "AUTRE LIEN")
+    Fabricate(:dossier_eleve_valide, contact_urgence: contact_urgence, etablissement: admin.etablissement)
 
     xml = recupere_fichier_xml_de_retour_siecle
 
-    assert_equal "1", xml.xpath("//CODE_CIVILITE").text
+    assert_equal 1, xml.xpath("/IMPORT_ELEVES/DONNEES/ELEVES/ELEVE/RESPONSABLES_ELEVE/CONTACT").count
+    assert_equal contact_urgence.id.to_s, xml.xpath("/IMPORT_ELEVES/DONNEES/ELEVES/ELEVE/RESPONSABLES_ELEVE/CONTACT/ID_PRV_PER").text
+    assert_equal "90", xml.xpath("/IMPORT_ELEVES/DONNEES/ELEVES/ELEVE/RESPONSABLES_ELEVE/CONTACT/CODE_PARENTE").text
   end
 
   def recupere_fichier_xml_de_retour_siecle
