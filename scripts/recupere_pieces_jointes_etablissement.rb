@@ -8,12 +8,13 @@ end
 
 liste = []
 
-Etablissement.find_by(uai: uai).dossier_eleve do |dossier|
+Etablissement.find_by(uai: uai).dossier_eleve.each do |dossier|
   liste << {
-    ine: dossier.eleve.identifiant,
-    prenom: dossier.eleve.prenom,
-    nom: dossier.eleve.nom,
-    fichiers: piece_jointe.flatten.map(&:fichiers).flatten.map(&:path) }
+    "ine" => dossier.eleve.identifiant,
+    "prenom" => dossier.eleve.prenom,
+    "nom" => dossier.eleve.nom,
+    "fichiers" => dossier.piece_jointe.map(&:fichiers).flatten.map(&:path)
+  }
 end
 
 puts liste.to_yaml
