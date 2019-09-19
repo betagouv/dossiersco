@@ -198,4 +198,10 @@ class DossierEleveTest < ActiveSupport::TestCase
     assert dossier.valide?
   end
 
+  test "un dossier élève a le nom d'un élève" do
+    eleve = Fabricate.build(:eleve, nom:"Alice")
+    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    assert_equal "Alice", dossier.nom
+  end
+
 end

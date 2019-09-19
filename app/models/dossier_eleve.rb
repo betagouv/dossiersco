@@ -26,6 +26,8 @@ class DossierEleve < ActiveRecord::Base
   accepts_nested_attributes_for :contact_urgence
   accepts_nested_attributes_for :eleve
 
+  delegate(:nom, to: :eleve)
+
   ETAT = {
     pas_connecte: "pas connecté",
     connecte: "connecté",
