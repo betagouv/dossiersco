@@ -3,7 +3,7 @@
 
     <h2 class="separation"><%= t('.titre') %></h2>
 
-    <p><%= t('.dossier_complet_html', eleve: "#{@eleve.prenom} #{@dossier_eleve.nom}", niveau: @eleve.niveau_classe_ant[0].to_i - 1, etablissement: @dossier_eleve.etablissement.nom) %></p>
+    <p><%= t('.dossier_complet_html', eleve: "#{@dossier_eleve.prenom} #{@dossier_eleve.nom}", niveau: @eleve.niveau_classe_ant[0].to_i - 1, etablissement: @dossier_eleve.etablissement.nom) %></p>
     <p><%= t('.verifier_informations') %></p>
 
     <div class="card">
@@ -69,7 +69,7 @@
 
     <form action='/validation' method='POST' class="mt-2">
       <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-      <%= render partial:'partials/champ_check', locals: { desc: t('.certifie_sur_l_honneur', prenom_eleve: @eleve.prenom),
+      <%= render partial:'partials/champ_check', locals: { desc: t('.certifie_sur_l_honneur', prenom_eleve: @dossier_eleve.prenom),
                                                            name: 'signature', condition: @dossier_eleve.signature, required: 'required' }%>
 
                                                          <div class="text-center mt-2">

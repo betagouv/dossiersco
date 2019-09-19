@@ -138,7 +138,7 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
       mois: eleve.mois_de_naissance,
       jour: eleve.jour_de_naissance
     }
-    post "/eleve", params: { eleve: { prenom: eleve.prenom }, Espagnol: true, Latin: true }
+    post "/eleve", params: { eleve: { prenom: dossier_eleve.prenom }, Espagnol: true, Latin: true }
     get "/famille"
 
     post "/identification", params: {

@@ -97,7 +97,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     get "/agent/eleve/#{dossier.eleve.identifiant}"
 
     assert response.body.include? dossier.nom
-    assert response.body.include? dossier.eleve.prenom
+    assert response.body.include? dossier.prenom
   end
 
   def test_valide_une_inscription
@@ -141,7 +141,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     get "/agent/liste_des_eleves"
 
     assert response.body.include? dossier_eleve.nom
-    assert response.body.include? dossier_eleve.eleve.prenom
+    assert response.body.include? dossier_eleve.prenom
   end
 
   def test_affiche_changement_adresse_liste_eleves

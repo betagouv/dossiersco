@@ -68,7 +68,7 @@
         <% @dossiers_sans_division.each do |dossier| %>
           <tr>
             <td><%= dossier.eleve.identifiant %></td>
-            <td><%= dossier.eleve.prenom %></td>
+            <td><%= dossier.prenom %></td>
             <td><%= dossier.nom %></td>
           </tr>
         <% end %>

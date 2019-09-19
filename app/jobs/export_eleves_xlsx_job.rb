@@ -74,7 +74,7 @@ class ExportElevesXlsxJob < ActiveJob::Base
     informations = []
     informations << eleve.classe_ant
     informations << (dossier.mef_origine.present? ? dossier.mef_origine.libelle : "")
-    informations << eleve.prenom
+    informations << dossier.prenom
     informations << dossier.nom
     informations << eleve.date_naiss
     informations << pays.a_partir_du_code(eleve.pays_naiss)

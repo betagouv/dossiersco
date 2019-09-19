@@ -14,12 +14,12 @@
             <ID_NATIONAL><%= dossier.eleve.identifiant %></ID_NATIONAL>
           <% end %>
           <NOM_DE_FAMILLE><%= dossier.nom %></NOM_DE_FAMILLE>
-          <PRENOM><%= dossier.eleve.prenom %></PRENOM>
-          <% if dossier.eleve.prenom_2.present? %>
-            <PRENOM2><%= dossier.eleve.prenom_2 %></PRENOM2>
+          <PRENOM><%= dossier.prenom %></PRENOM>
+          <% if dossier.prenom_2.present? %>
+            <PRENOM2><%= dossier.prenom_2 %></PRENOM2>
           <% end %>
-          <% if dossier.eleve.prenom_3.present? %>
-            <PRENOM3><%= dossier.eleve.prenom_3 %></PRENOM3>
+          <% if dossier.prenom_3.present? %>
+            <PRENOM3><%= dossier.prenom_3 %></PRENOM3>
           <% end %>
           <CODE_PAYS_NAT><%= dossier.eleve.nationalite ? dossier.eleve.nationalite : 995 %></CODE_PAYS_NAT>
           <DATE_NAISS><%= dossier.eleve.date_naiss %></DATE_NAISS>

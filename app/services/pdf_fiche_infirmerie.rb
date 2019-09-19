@@ -109,7 +109,7 @@ class PdfFicheInfirmerie
   end
 
   def affiche_eleve(pdf, dossier)
-    pdf.text "<b>NOM</b> : #{dossier.nom},    <b>Prénom</b> : #{dossier.eleve.prenom}," \
+    pdf.text "<b>NOM</b> : #{dossier.nom},    <b>Prénom</b> : #{dossier.prenom}," \
       "    <b>Classe</b> : #{CHAMP_LIBRE}", inline_format: true
     pdf.text "Date de naissance : #{dossier.eleve.date_naiss.to_date.strftime('%d/%m/%Y')}" \
       "  Scolarité antérieure :" \

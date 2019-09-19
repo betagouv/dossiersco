@@ -204,4 +204,12 @@ class DossierEleveTest < ActiveSupport::TestCase
     assert_equal "Alice", dossier.nom
   end
 
+  test "un dossier élève a les prenoms d'un élève" do
+    eleve = Fabricate.build(:eleve, prenom: "Alice", prenom_2: "Alice2", prenom_3: "Alice3")
+    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    assert_equal "Alice", dossier.prenom
+    assert_equal "Alice2", dossier.prenom_2
+    assert_equal "Alice3", dossier.prenom_3
+  end
+
 end

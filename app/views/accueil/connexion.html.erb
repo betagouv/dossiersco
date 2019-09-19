@@ -44,7 +44,7 @@
       <p>Vous êtes sur un environnement de test. Les données existantes ici sont anonymisées. Vous pouvez donc vous connecter avec les comptes suivants : </p>
       <ul>
         <% DossierEleve.where(etablissement_id: Etablissement.find_by(uai: '0123456S').id).sample(3).each do |dossier| %>
-          <li><%= link_to "Élève #{dossier.eleve.prenom} #{dossier.nom}", "/identification?identifiant=#{dossier.eleve.identifiant}&annee=#{dossier.eleve.annee_de_naissance}&mois=#{dossier.eleve.mois_de_naissance}&jour=#{dossier.eleve.jour_de_naissance}", method: :post %></li>
+          <li><%= link_to "Élève #{dossier.prenom} #{dossier.nom}", "/identification?identifiant=#{dossier.eleve.identifiant}&annee=#{dossier.eleve.annee_de_naissance}&mois=#{dossier.eleve.mois_de_naissance}&jour=#{dossier.eleve.jour_de_naissance}", method: :post %></li>
         <% end %>
       </ul>
     </div>

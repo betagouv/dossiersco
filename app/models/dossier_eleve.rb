@@ -27,6 +27,9 @@ class DossierEleve < ActiveRecord::Base
   accepts_nested_attributes_for :eleve
 
   delegate(:nom, to: :eleve)
+  delegate(:prenom, to: :eleve)
+  delegate(:prenom_2, to: :eleve)
+  delegate(:prenom_3, to: :eleve)
 
   ETAT = {
     pas_connecte: "pas connecté",
@@ -114,15 +117,15 @@ class DossierEleve < ActiveRecord::Base
     enfants > 1
   end
 
-  DEFAULT_TEMPLATE = "<%= eleve.dossier_eleve.etablissement.nom %>: attention,"\
-    " derniers jours pour réinscrire votre enfant <%= eleve.prenom %> "\
-    " sur https://dossiersco.fr avec vos identifiants: <%= eleve.identifiant %>"\
+  DEFAULT_TEMPLATE = "<%= dossier.etablissement.nom %>: attention,"\
+    " derniers jours pour réinscrire votre enfant <%= dossier.prenom %> "\
+    " sur https://dossiersco.fr avec vos identifiants: <%= dossier.eleve.identifiant %>"\
     " et la date de naissance de l'enfant."
 
   def relance_sms(template = DEFAULT_TEMPLATE)
     # Construction du message
     template = Tilt["erb"].new { template }
-    text = template.render(nil, eleve: eleve)
+    text = template.render(nil, dossier: self)
 
     Message.create(categorie: "sms", contenu: text, etat: ETAT[:en_attente], dossier_eleve: self)
   end

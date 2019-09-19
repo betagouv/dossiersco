@@ -34,7 +34,7 @@
         <% resp_legal_1 = dossier_eleve.resp_legal.find {|d| d.priorite == 1} %>
         <tr>
           <td><%= dossier_eleve.eleve.classe_ant %></td>
-          <td><%= dossier_eleve.eleve.prenom %></td>
+          <td><%= dossier_eleve.prenom %></td>
           <td><%= dossier_eleve.nom %></td>
           <td><%= resp_legal_1.prenom %></td>
           <td><%= resp_legal_1.nom %></td>

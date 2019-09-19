@@ -1,10 +1,10 @@
 Bonjour,
 
-Nous vous avons invité·e à procéder à l'inscription de votre enfant <%= @eleve.prenom %> <%= @dossier.nom %> à son établissement: <%= @eleve.dossier_eleve.etablissement.nom %>.
+Nous vous avons invité·e à procéder à l'inscription de votre enfant <%= @dossier.prenom %> <%= @dossier.nom %> à son établissement: <%= @dossier.etablissement.nom %>.
 
 Nous vous remercions de vous être connecté·e et d'avoir effectué la démarche. Votre demande d'inscription a été examinée favorablement par l'etablissement.
 
-Si votre enfant était déjà présent dans l'établissement <%= @eleve.dossier_eleve.etablissement.nom %> l'an passé,
+Si votre enfant était déjà présent dans l'établissement <%= @dossier.etablissement.nom %> l'an passé,
 il/elle sera réinscrit-e sous réserve  :
 - de la décision prise par le chef d'établissement après avis du conseil de classe du 3ème trimestre
 - d'être en règle avec la caisse de l'établissement (restitution des manuels scolaires notamment).

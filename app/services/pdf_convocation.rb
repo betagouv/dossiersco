@@ -61,7 +61,7 @@ class PdfConvocation
     pdf.text "Madame, Monsieur,"
 
     pdf.move_down 10
-    pdf.text "Votre enfant <b>#{dossier.eleve.prenom} #{dossier.nom}</b> est affecté(e) au " \
+    pdf.text "Votre enfant <b>#{dossier.prenom} #{dossier.nom}</b> est affecté(e) au " \
       " Collège #{etablissement.nom}, #{etablissement.ville}.", inline_format: true,
                                                                 indent_paragraphs: 20
     pdf.text "Pour procéder à son inscription pour la prochaine année scolaire, nous vous invitons à " \
