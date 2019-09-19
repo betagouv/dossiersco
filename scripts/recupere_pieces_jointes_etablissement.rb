@@ -16,4 +16,4 @@ Etablissement.find_by(uai: uai).dossier_eleve do |dossier|
     fichiers: piece_jointe.flatten.map(&:fichiers).flatten.map(&:path) }
 end
 
-liste.to_yaml
+puts liste.to_yaml
