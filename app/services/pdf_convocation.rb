@@ -10,7 +10,7 @@ class PdfConvocation
     FileUtils.mkdir_p(dossier) unless File.directory?(dossier)
     Prawn::Document.generate("#{dossier}/#{nom}") do |pdf|
       nombre_de_dossier = 0
-      dossiers_eleve.sort_by { |d| d.eleve.nom }.each do |dossier_eleve|
+      dossiers_eleve.sort_by(&:nom).each do |dossier_eleve|
         nombre_de_dossier += 1
         pdf.default_leading 3
         pdf.move_down 20
@@ -18,7 +18,7 @@ class PdfConvocation
         affiche_entete(pdf, etablissement)
         pdf.move_down 20
 
-        affiche_texte(pdf, etablissement, dossier_eleve.eleve)
+        affiche_texte(pdf, etablissement, dossier_eleve)
         pdf.move_down 5
 
         affiche_pieces_attendues(pdf, etablissement)
@@ -57,11 +57,11 @@ class PdfConvocation
     pdf.text "Inscriptions #{Time.now.strftime('%Y')}/#{Time.now.strftime('%Y').to_i + 1}", size: 20, align: :center
   end
 
-  def affiche_texte(pdf, etablissement, eleve)
+  def affiche_texte(pdf, etablissement, dossier)
     pdf.text "Madame, Monsieur,"
 
     pdf.move_down 10
-    pdf.text "Votre enfant <b>#{eleve.prenom} #{eleve.nom}</b> est affecté(e) au " \
+    pdf.text "Votre enfant <b>#{dossier.eleve.prenom} #{dossier.nom}</b> est affecté(e) au " \
       " Collège #{etablissement.nom}, #{etablissement.ville}.", inline_format: true,
                                                                 indent_paragraphs: 20
     pdf.text "Pour procéder à son inscription pour la prochaine année scolaire, nous vous invitons à " \

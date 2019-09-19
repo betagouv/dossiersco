@@ -16,7 +16,7 @@ class ExportPiecesJointesJob < ActiveJob::Base
           dossier_eleve.pieces_jointes.each do |piece|
             piece.fichiers.each_with_index do |fichier, index|
               format = fichier.url.split(".").last
-              eleve_folder = "#{eleve.prenom}-#{eleve.nom}-#{eleve.identifiant}"
+              eleve_folder = "#{eleve.prenom}-#{dossier_eleve.nom}-#{eleve.identifiant}"
               begin
                 zipfile.add(
                   "#{mef.libelle}/#{eleve_folder}/#{fichier.model.piece_attendue.nom}-#{index}.#{format}",

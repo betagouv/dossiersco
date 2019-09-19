@@ -51,7 +51,7 @@
       <tbody>
       <% @dossiers_sans_mef.each do |dossier| %>
         <tr>
-          <td><%= dossier.eleve.nom %></td>
+          <td><%= dossier.nom %></td>
           <td><%= dossier.eleve.prenom %></td>
           <td><%= dossier.mef_origine.libelle %></td>
           <td><%= dossier.etat %></td>

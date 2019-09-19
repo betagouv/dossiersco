@@ -87,7 +87,7 @@ class RetourSieclesController < ApplicationController
   def extrait_informations(dossiers, raison)
     dossier_bloque = Struct.new(:identifiant, :prenom, :nom, :raison)
     dossiers.map do |dossier|
-      dossier_bloque.new(dossier.eleve.identifiant, dossier.eleve.prenom, dossier.eleve.nom, raison)
+      dossier_bloque.new(dossier.eleve.identifiant, dossier.eleve.prenom, dossier.nom, raison)
     end
   end
 

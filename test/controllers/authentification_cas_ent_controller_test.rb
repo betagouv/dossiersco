@@ -96,7 +96,7 @@ class AuthentificationCasEntControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_template "authentification_cas_ent/choix_dossier_eleve", format: "html"
-    assert response.body.include?(eleve.nom), "#{eleve.nom} devrait être dans l'écran"
+    assert response.body.include?(dossier_eleve.nom), "#{dossier_eleve.nom} devrait être dans l'écran"
     assert response.body.include?(eleve.prenom), "#{eleve.prenom} devrait être dans l'écran"
     assert response.body.include?(autre_eleve.nom), "#{autre_eleve.nom} devrait être dans l'écran"
     assert response.body.include?(autre_eleve.prenom), "#{autre_eleve.prenom} devrait être dans l'écran"

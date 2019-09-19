@@ -17,7 +17,7 @@ class ExportElevesXlsxJobTest < ActionDispatch::IntegrationTest
     assert_equal [[nil,
                    dossier.mef_origine.libelle,
                    dossier.eleve.prenom,
-                   dossier.eleve.nom,
+                   dossier.nom,
                    "2004-04-27",
                    "FRANCE",
                    nil,
@@ -37,7 +37,7 @@ class ExportElevesXlsxJobTest < ActionDispatch::IntegrationTest
     expected = [[nil,
                  dossier.mef_origine.libelle,
                  dossier.eleve.prenom,
-                 dossier.eleve.nom,
+                 dossier.nom,
                  "2004-04-27",
                  "FRANCE",
                  nil,
@@ -98,7 +98,7 @@ class ExportElevesXlsxJobTest < ActionDispatch::IntegrationTest
     cellules_attendues << nil
     cellules_attendues << dossier.mef_origine.libelle
     cellules_attendues << dossier.eleve.prenom
-    cellules_attendues << dossier.eleve.nom
+    cellules_attendues << dossier.nom
     cellules_attendues << "2004-04-27"
     cellules_attendues << "FRANCE"
     cellules_attendues << nil
@@ -158,7 +158,7 @@ class ExportElevesXlsxJobTest < ActionDispatch::IntegrationTest
     expected = [[nil,
                  dossier.mef_origine.libelle,
                  dossier.eleve.prenom,
-                 dossier.eleve.nom,
+                 dossier.nom,
                  "2004-04-27",
                  "FRANCE",
                  "Paris",

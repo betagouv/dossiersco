@@ -57,6 +57,7 @@ Metrics/MethodLength:
     - 'app/services/import_eleve_complete.rb'
     - 'app/jobs/export_eleves_xlsx_job.rb'
     - 'app/jobs/export_pieces_jointes_job.rb'
+    - 'app/mailers/famille_mailer.rb'
 
 Metrics/ClassLength:
   Exclude:

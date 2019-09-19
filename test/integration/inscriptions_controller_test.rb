@@ -96,7 +96,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     get "/agent/eleve/#{dossier.eleve.identifiant}"
 
-    assert response.body.include? dossier.eleve.nom
+    assert response.body.include? dossier.nom
     assert response.body.include? dossier.eleve.prenom
   end
 
@@ -140,7 +140,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     get "/agent/liste_des_eleves"
 
-    assert response.body.include? dossier_eleve.eleve.nom
+    assert response.body.include? dossier_eleve.nom
     assert response.body.include? dossier_eleve.eleve.prenom
   end
 

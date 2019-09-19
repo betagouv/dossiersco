@@ -7,6 +7,7 @@ class FamilleMailer < ApplicationMailer
   def contacter_directement_une_famille(email, message, eleve)
     @message = message
     @eleve = eleve
+    @dossier = eleve.dossier_eleve
     email_reponse = @eleve.dossier_eleve.etablissement.email_reponse
     reply_to = if email_reponse.present?
                  email_reponse
@@ -20,6 +21,7 @@ class FamilleMailer < ApplicationMailer
 
   def contacter_une_famille(eleve, agent, message)
     @eleve = eleve
+    @dossier = eleve.dossier_eleve
     @message = message
     return unless @eleve.dossier_eleve.etablissement.envoyer_aux_familles
 
@@ -36,6 +38,7 @@ class FamilleMailer < ApplicationMailer
 
   def envoyer_mail_confirmation(eleve)
     @eleve = eleve
+    @dossier = eleve.dossier_eleve
     return unless @eleve.dossier_eleve.etablissement.envoyer_aux_familles
 
     begin
@@ -51,6 +54,7 @@ class FamilleMailer < ApplicationMailer
 
   def mail_validation_inscription(eleve, agent)
     @eleve = eleve
+    @dossier = eleve.dossier_eleve
     return unless @eleve.dossier_eleve.etablissement.envoyer_aux_familles
 
     begin

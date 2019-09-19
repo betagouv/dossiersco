@@ -13,7 +13,7 @@
           <% if dossier.eleve.identifiant.present? %>
             <ID_NATIONAL><%= dossier.eleve.identifiant %></ID_NATIONAL>
           <% end %>
-          <NOM_DE_FAMILLE><%= dossier.eleve.nom %></NOM_DE_FAMILLE>
+          <NOM_DE_FAMILLE><%= dossier.nom %></NOM_DE_FAMILLE>
           <PRENOM><%= dossier.eleve.prenom %></PRENOM>
           <% if dossier.eleve.prenom_2.present? %>
             <PRENOM2><%= dossier.eleve.prenom_2 %></PRENOM2>

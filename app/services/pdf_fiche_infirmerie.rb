@@ -28,7 +28,7 @@ class PdfFicheInfirmerie
           affiche_entete(pdf)
           pdf.move_down 15
 
-          affiche_eleve(pdf, dossier_eleve.eleve)
+          affiche_eleve(pdf, dossier_eleve)
           pdf.move_down 8
 
           affiche_les_respresentant_legaux(pdf, dossier_eleve.resp_legal)
@@ -108,12 +108,12 @@ class PdfFicheInfirmerie
     pdf.text "Fiche infirmerie", size: 20, align: :center
   end
 
-  def affiche_eleve(pdf, eleve)
-    pdf.text "<b>NOM</b> : #{eleve.nom},    <b>Prénom</b> : #{eleve.prenom}," \
+  def affiche_eleve(pdf, dossier)
+    pdf.text "<b>NOM</b> : #{dossier.nom},    <b>Prénom</b> : #{dossier.eleve.prenom}," \
       "    <b>Classe</b> : #{CHAMP_LIBRE}", inline_format: true
-    pdf.text "Date de naissance : #{eleve.date_naiss.to_date.strftime('%d/%m/%Y')}" \
+    pdf.text "Date de naissance : #{dossier.eleve.date_naiss.to_date.strftime('%d/%m/%Y')}" \
       "  Scolarité antérieure :" \
-      " #{eleve.classe_ant.present? ? eleve.classe_ant : CHAMP_LIBRE}"
+      " #{dossier.eleve.classe_ant.present? ? dossier.eleve.classe_ant : CHAMP_LIBRE}"
   end
 
   def affiche_bas_de_page(pdf)
