@@ -6,6 +6,14 @@ unless uai.present?
   return
 end
 
-puts Etablissement.find_by(uai: uai).dossier_eleve.map(&:piece_jointe).flatten.map(&:fichiers).flatten.map(&:path).to_yaml
+liste = []
 
+Etablissement.find_by(uai: uai).dossier_eleve do |dossier|
+  liste << {
+    ine: dossier.eleve.identifiant,
+    prenom: dossier.eleve.prenom,
+    nom: dossier.eleve.nom,
+    fichiers: piece_jointe.flatten.map(&:fichiers).flatten.map(&:path) }
+end
 
+liste.to_yaml
