@@ -13,7 +13,7 @@ Etablissement.find_by(uai: uai).dossier_eleve.each do |dossier|
     "ine" => dossier.eleve.identifiant,
     "prenom" => dossier.eleve.prenom,
     "nom" => dossier.eleve.nom,
-    "fichiers" => dossier.piece_jointe.select{|pj| pj.etat == PieceJointe::ETATS[:valide]}.map(&:fichiers).flatten.map(&:path)
+    "fichiers" => dossier.piece_jointe.select { |pj| pj.etat == PieceJointe::ETATS[:valide] }.map(&:fichiers).flatten.map(&:path)
   }
 end
 
