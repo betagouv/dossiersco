@@ -77,7 +77,7 @@ class ImportEleveComplete
         option = OptionPedagogique.find_or_create_by(
           etablissement_id: etablissement_id,
           libelle: nom,
-          code_matiere: code
+          code_gestion: code
         )
         option.update(nom: nom) if option.nom.nil?
         option.update(obligatoire: true) if ligne_siecle[colonne + 1] == "O"
@@ -185,7 +185,7 @@ class ImportEleveComplete
       option = OptionPedagogique.find_or_create_by(
         etablissement_id: etablissement_id,
         nom: nom,
-        code_matiere: code
+        code_gestion: code
       )
 
       next if dossier_eleve.options_pedagogiques.include? option
@@ -193,7 +193,7 @@ class ImportEleveComplete
       dossier_eleve.options_pedagogiques << option
       option_origine = {}
       option_origine[:nom] = option.nom
-      option_origine[:code_matiere] = option.code_matiere
+      option_origine[:code_gestion] = option.code_gestion
       option_origine[:groupe] = option.groupe
 
       dossier_eleve.options_origines[option.id] = option_origine

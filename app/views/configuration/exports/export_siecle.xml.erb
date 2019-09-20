@@ -125,7 +125,7 @@
               <DATE_FIN_SCO>2020-08-31</DATE_FIN_SCO>
               <OPTIONS>
                 <% dossier_eleve.options_triees_par_rang.each do |option| %>
-                  <% next if option.code_matiere.nil? %>
+                  <% next if option.code_gestion.nil? %>
                   <OPTION>
                     <CODE_MATIERE><%= option.code_matiere_6 %></CODE_MATIERE>
                     <CODE_MODALITE_ELECT><%= option.mef_options_pedagogiques.find_by(mef: dossier_eleve.mef_destination)&.code_modalite_elect || "O" %></CODE_MODALITE_ELECT>
@@ -143,7 +143,7 @@
               <% end %>
               <OPTIONS_AN_DERNIER>
                 <% dossier_eleve.options_origines.each do |id, h| %>
-                  <CODE_MATIERE><%= h["code_matiere"] %></CODE_MATIERE>
+                  <CODE_MATIERE><%= h["code_gestion"] %></CODE_MATIERE>
                 <% end %>
               </OPTIONS_AN_DERNIER>
             </ETABLISSEMENT_AN_DERNIER>

@@ -75,7 +75,7 @@ class ImportNomenclatureTest < ActiveSupport::TestCase
 
   test "retrouve une option existante à partir du code gestion et lui ajoute le code matière sur 6" do
     etablissement = Fabricate(:etablissement, uai: "0140070A")
-    option = Fabricate(:option_pedagogique, code_matiere_6: nil, code_matiere: "LCALA", etablissement: etablissement)
+    option = Fabricate(:option_pedagogique, code_matiere_6: nil, code_gestion: "LCALA", etablissement: etablissement)
 
     fichier_xml = fixture_file_upload("files/nomenclature_simple.xml")
     tache = Fabricate(:tache_import, type_fichier: "nomenclature", fichier: fichier_xml, etablissement: etablissement)
@@ -83,7 +83,7 @@ class ImportNomenclatureTest < ActiveSupport::TestCase
     assert_nothing_raised do
       ImportNomenclature.new.perform(tache)
       option.reload
-      assert_equal "LCALA", option.code_matiere
+      assert_equal "LCALA", option.code_gestion
       assert_equal "020300", option.code_matiere_6
     end
   end
@@ -100,7 +100,7 @@ class ImportNomenclatureTest < ActiveSupport::TestCase
     option = OptionPedagogique.first
     assert_equal "LCA LATIN", option.nom
     assert_equal "LANGUES ET CULTURES DE L'ANTIQUITE LATIN", option.libelle
-    assert_equal "LCALA", option.code_matiere
+    assert_equal "LCALA", option.code_gestion
     assert_equal "020300", option.code_matiere_6
     assert_equal etablissement, option.etablissement
   end

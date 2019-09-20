@@ -16,7 +16,7 @@ class AnalyseurOptionTest < ActiveSupport::TestCase
 
     option = Fabricate(:option_pedagogique, etablissement: etablissement, mef: [mef])
     options_origines = {}
-    options_origines[option.id] = { nom: option.nom, code_matiere: option.code_matiere }
+    options_origines[option.id] = { nom: option.nom, code_gestion: option.code_gestion }
 
     dossier = Fabricate(:dossier_eleve,
                         mef_destination: mef,
@@ -34,10 +34,10 @@ class AnalyseurOptionTest < ActiveSupport::TestCase
     mef = Fabricate(:mef)
 
     option = Fabricate(:option_pedagogique, etablissement: etablissement, mef: [mef])
-    options_origines[option.id] = { nom: option.nom, code_matiere: option.code_matiere }
+    options_origines[option.id] = { nom: option.nom, code_gestion: option.code_gestion }
 
     Fabricate(:option_pedagogique, etablissement: etablissement, mef: [mef])
-    options_origines[option.id] = { nom: option.nom, code_matiere: option.code_matiere }
+    options_origines[option.id] = { nom: option.nom, code_gestion: option.code_gestion }
 
     nouvelle_option = Fabricate(:option_pedagogique, etablissement: etablissement, mef: [mef])
 
@@ -76,7 +76,7 @@ class AnalyseurOptionTest < ActiveSupport::TestCase
     option = Fabricate(:option_pedagogique, etablissement: etablissement, mef: [mef])
 
     options_origines = {}
-    options_origines[option.id] = { nom: option.nom, code_matiere: option.code_matiere }
+    options_origines[option.id] = { nom: option.nom, code_gestion: option.code_gestion }
 
     dossier = Fabricate(:dossier_eleve,
                         etablissement: etablissement,
@@ -102,7 +102,7 @@ class AnalyseurOptionTest < ActiveSupport::TestCase
     option = Fabricate(:option_pedagogique, etablissement: etablissement, mef: [mef])
 
     options_origines = {}
-    options_origines[option.id] = { nom: option.nom, code_matiere: option.code_matiere }
+    options_origines[option.id] = { nom: option.nom, code_gestion: option.code_gestion }
 
     dossier = Fabricate(:dossier_eleve,
                         etablissement: etablissement,
@@ -121,7 +121,7 @@ class AnalyseurOptionTest < ActiveSupport::TestCase
     option = Fabricate(:option_pedagogique, etablissement: etablissement, mef: [mef])
     id_option = option.id
     options_origines = {}
-    options_origines[id_option] = { nom: option.nom, code_matiere: option.code_matiere }
+    options_origines[id_option] = { nom: option.nom, code_gestion: option.code_gestion }
     option.destroy
 
     dossier = Fabricate(:dossier_eleve,

@@ -25,17 +25,17 @@ class ImportNomenclature
 
   def met_a_jour_les_options_pedagogiques!(xml, etablissement)
     xml.xpath("/BEE_NOMENCLATURES/DONNEES/MATIERES/MATIERE/CODE_GESTION").each do |element|
-      mise_a_jour_du_code_matiere_option_pedagogique(etablissement, element)
+      mise_a_jour_du_code_gestion_option_pedagogique(etablissement, element)
     end
   end
 
-  def mise_a_jour_du_code_matiere_option_pedagogique(etablissement, element)
-    option = OptionPedagogique.find_by(etablissement: etablissement, code_matiere: element.text)
+  def mise_a_jour_du_code_gestion_option_pedagogique(etablissement, element)
+    option = OptionPedagogique.find_by(etablissement: etablissement, code_gestion: element.text)
     option ||= OptionPedagogique.create!(
       etablissement: etablissement,
       nom: element.parent.xpath("LIBELLE_COURT").text,
       libelle: element.parent.xpath("LIBELLE_LONG").text,
-      code_matiere: element.parent.xpath("CODE_GESTION").text
+      code_gestion: element.parent.xpath("CODE_GESTION").text
     )
     option.update(code_matiere_6: element.parent.attributes["CODE_MATIERE"])
   end

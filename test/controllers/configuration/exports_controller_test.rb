@@ -29,7 +29,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
       dossier_eleve = Fabricate(:dossier_eleve_valide,
                                 etablissement: admin.etablissement,
                                 resp_legal: [resp])
-      option = Fabricate(:option_pedagogique, nom: "un super nom d'option un peu long", obligatoire: "F", code_matiere: "ALGEV")
+      option = Fabricate(:option_pedagogique, nom: "un super nom d'option un peu long", obligatoire: "F", code_gestion: "ALGEV")
       dossier_eleve.options_pedagogiques << option
     end
 
