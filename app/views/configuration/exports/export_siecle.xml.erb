@@ -127,7 +127,7 @@
                 <% dossier_eleve.options_triees_par_rang.each do |option| %>
                   <% next if option.code_gestion.nil? %>
                   <OPTION>
-                    <CODE_MATIERE><%= option.code_matiere_6 %></CODE_MATIERE>
+                    <CODE_MATIERE><%= option.code_matiere %></CODE_MATIERE>
                     <CODE_MODALITE_ELECT><%= option.mef_options_pedagogiques.find_by(mef: dossier_eleve.mef_destination)&.code_modalite_elect || "O" %></CODE_MODALITE_ELECT>
                   </OPTION>
                 <% end %>

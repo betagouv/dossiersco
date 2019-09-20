@@ -69,7 +69,7 @@
             <tr>
               <td><%= option.nom %></td>
               <td><%= option.code_gestion %></td>
-              <td><%= option.code_matiere_6 %></td>
+              <td><%= option.code_matiere %></td>
               <td><%= link_to t(".modifier"), edit_configuration_option_pedagogique_path(option) %></td>
               <td><%= link_to("Supprimer", configuration_option_pedagogique_path(option),
                               method: :delete, data: { confirm: 'Voulez-vous vraiment supprimer cette option ?' })

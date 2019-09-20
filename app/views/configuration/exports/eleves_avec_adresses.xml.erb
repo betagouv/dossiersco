@@ -52,7 +52,7 @@
               <NUM_OPTION><%= num_option %></NUM_OPTION>
               <% num_option += 1 %>
               <CODE_MODALITE_ELECT><%= option.mef_options_pedagogiques.find_by(mef: dossier.mef_destination)&.code_modalite_elect || "O" %></CODE_MODALITE_ELECT>
-              <CODE_MATIERE><%= option.code_matiere_6 %></CODE_MATIERE>
+              <CODE_MATIERE><%= option.code_matiere %></CODE_MATIERE>
             </OPTION_ELEVE>
           <% end %>
         </OPTION>

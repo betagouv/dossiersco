@@ -37,7 +37,7 @@ class ImportNomenclature
       libelle: element.parent.xpath("LIBELLE_LONG").text,
       code_gestion: element.parent.xpath("CODE_GESTION").text
     )
-    option.update(code_matiere_6: element.parent.attributes["CODE_MATIERE"])
+    option.update(code_matiere: element.parent.attributes["CODE_MATIERE"])
   end
 
   def met_a_jour_les_mef_options_pedagogiques!(xml, etablissement)
@@ -47,7 +47,7 @@ class ImportNomenclature
       code_modalite_elect = programme.xpath("CODE_MODALITE_ELECT").text
 
       mef = Mef.find_by(etablissement: etablissement, code: code_mef)
-      option_pedagogique = OptionPedagogique.find_by(etablissement: etablissement, code_matiere_6: code_matiere)
+      option_pedagogique = OptionPedagogique.find_by(etablissement: etablissement, code_matiere: code_matiere)
       MefOptionPedagogique.find_by(mef: mef, option_pedagogique: option_pedagogique, code_modalite_elect: [nil, "", "S"])
           &.update(code_modalite_elect: code_modalite_elect)
     end
@@ -60,7 +60,7 @@ class ImportNomenclature
       rang_option = option_obligatoire.xpath("RANG_OPTION").text
 
       mef = Mef.find_by(etablissement: etablissement, code: code_mef)
-      option_pedagogique = OptionPedagogique.find_by(etablissement: etablissement, code_matiere_6: code_matiere)
+      option_pedagogique = OptionPedagogique.find_by(etablissement: etablissement, code_matiere: code_matiere)
       MefOptionPedagogique.find_by(mef: mef, option_pedagogique: option_pedagogique)&.update(rang_option: rang_option)
     end
   end
