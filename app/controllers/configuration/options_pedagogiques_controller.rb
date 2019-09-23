@@ -87,7 +87,7 @@ module Configuration
     end
 
     def option_pedagogique_params
-      params.require(:option_pedagogique).permit(:libelle, :code_matiere, :code_matiere_6, :nom, :obligatoire, :groupe,
+      params.require(:option_pedagogique).permit(:libelle, :code_gestion, :code_matiere, :nom, :obligatoire, :groupe,
                                                  :explication, mef_ids: [])
     end
 

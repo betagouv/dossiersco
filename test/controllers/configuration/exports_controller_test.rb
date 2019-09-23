@@ -29,7 +29,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
       dossier_eleve = Fabricate(:dossier_eleve_valide,
                                 etablissement: admin.etablissement,
                                 resp_legal: [resp])
-      option = Fabricate(:option_pedagogique, nom: "un super nom d'option un peu long", obligatoire: "F", code_matiere: "ALGEV")
+      option = Fabricate(:option_pedagogique, nom: "un super nom d'option un peu long", obligatoire: "F", code_gestion: "ALGEV")
       dossier_eleve.options_pedagogiques << option
     end
 
@@ -252,9 +252,9 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     identification_agent(admin)
 
     mef = Fabricate(:mef)
-    option_facultative = Fabricate(:option_pedagogique, code_matiere_6: "033333")
-    option_de_rang_2 = Fabricate(:option_pedagogique, code_matiere_6: "020002")
-    option_de_rang_1 = Fabricate(:option_pedagogique, code_matiere_6: "010001")
+    option_facultative = Fabricate(:option_pedagogique, code_matiere: "033333")
+    option_de_rang_2 = Fabricate(:option_pedagogique, code_matiere: "020002")
+    option_de_rang_1 = Fabricate(:option_pedagogique, code_matiere: "010001")
     Fabricate(:mef_option_pedagogique, mef: mef, option_pedagogique: option_facultative, rang_option: nil)
     Fabricate(:mef_option_pedagogique, mef: mef, option_pedagogique: option_de_rang_2, rang_option: 2)
     Fabricate(:mef_option_pedagogique, mef: mef, option_pedagogique: option_de_rang_1, rang_option: 1)
@@ -272,9 +272,9 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     xml = Nokogiri::XML(response.body)
 
     options = xml.xpath("//SCOLARITE_ACTIVE/OPTIONS/OPTION")
-    assert_equal option_de_rang_1.code_matiere_6, options[0].xpath("CODE_MATIERE").text
-    assert_equal option_de_rang_2.code_matiere_6, options[1].xpath("CODE_MATIERE").text
-    assert_equal option_facultative.code_matiere_6, options[2].xpath("CODE_MATIERE").text
+    assert_equal option_de_rang_1.code_matiere, options[0].xpath("CODE_MATIERE").text
+    assert_equal option_de_rang_2.code_matiere, options[1].xpath("CODE_MATIERE").text
+    assert_equal option_facultative.code_matiere, options[2].xpath("CODE_MATIERE").text
   end
 
   test "retourne l'information à propos du paiement des frais de scolarité" do

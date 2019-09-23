@@ -102,7 +102,7 @@ class RetourSieclesController < ApplicationController
   end
 
   def options_en_erreur
-    @options_en_erreur = OptionPedagogique.where(etablissement: @etablissement, code_matiere_6: [nil, ""])
+    @options_en_erreur = OptionPedagogique.where(etablissement: @etablissement, code_matiere: [nil, ""])
   end
 
   def dossiers_sans_division
