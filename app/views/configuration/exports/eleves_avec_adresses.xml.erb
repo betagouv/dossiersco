@@ -47,7 +47,7 @@
         <OPTION>
           <% num_option = 1 %>
           <% dossier.options_triees_par_rang.each do |option| %>
-            <% next if option.code_gestion.nil? %>
+            <% next if option.code_matiere.nil? %>
             <OPTION_ELEVE>
               <NUM_OPTION><%= num_option %></NUM_OPTION>
               <% num_option += 1 %>
