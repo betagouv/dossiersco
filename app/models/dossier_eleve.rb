@@ -31,6 +31,8 @@ class DossierEleve < ActiveRecord::Base
   delegate(:prenom_2, to: :eleve)
   delegate(:prenom_3, to: :eleve)
   delegate(:identifiant, to: :eleve)
+  delegate(:ville_naiss, to: :eleve)
+  delegate(:commune_insee_naissance, to: :eleve)
 
   ETAT = {
     pas_connecte: "pas connecté",

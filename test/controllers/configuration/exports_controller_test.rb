@@ -128,8 +128,8 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     Nokogiri::XML::Schema(File.read(schema))
     xml = Nokogiri::XML(response.body)
 
-    assert_match dossier.eleve.pays_naiss,  xml.css("CODE_PAYS").text
-    assert_match dossier.eleve.ville_naiss, xml.css("VILLE_NAISS").text
+    assert_match dossier.eleve.pays_naiss, xml.css("CODE_PAYS").text
+    assert_match dossier.ville_naiss, xml.css("VILLE_NAISS").text
   end
 
   test "Pour une naissance à l'étranger sans commune, la commune est renseignée comme inconnue" do

@@ -26,9 +26,9 @@
           <CODE_SEXE><%= dossier.eleve.sexe == 'Masculin' ? '1' : '2' %></CODE_SEXE>
           <CODE_PAYS><%= dossier.eleve.pays_naiss ? dossier.eleve.pays_naiss : 995 %></CODE_PAYS>
           <% if dossier.eleve.pays_naiss == "100" %>
-            <CODE_COMMUNE_INSEE_NAISS><%= dossier.eleve.commune_insee_naissance %></CODE_COMMUNE_INSEE_NAISS>
+            <CODE_COMMUNE_INSEE_NAISS><%= dossier.commune_insee_naissance %></CODE_COMMUNE_INSEE_NAISS>
           <% else %>
-            <VILLE_NAISS><%= alternative(dossier.eleve.ville_naiss) %></VILLE_NAISS>
+            <VILLE_NAISS><%= alternative(dossier.ville_naiss) %></VILLE_NAISS>
           <% end %>
           <ADHESION_TRANSPORT>false</ADHESION_TRANSPORT>
           <CODE_REGIME><%= dossier.demi_pensionnaire? ? 24 : 0 %></CODE_REGIME>

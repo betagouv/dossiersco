@@ -218,4 +218,16 @@ class DossierEleveTest < ActiveSupport::TestCase
     assert_equal "0123456789U", dossier.identifiant
   end
 
+  test "un dossier élève a la ville de naissance d'un élève" do
+    eleve = Fabricate.build(:eleve, ville_naiss: "Chateldon")
+    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    assert_equal "Chateldon", dossier.ville_naiss
+  end
+
+  test "un dossier élève a la commune insee de naissance d'un élève" do
+    eleve = Fabricate.build(:eleve, commune_insee_naissance: "63102")
+    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    assert_equal "63102", dossier.commune_insee_naissance
+  end
+
 end
