@@ -230,4 +230,40 @@ class DossierEleveTest < ActiveSupport::TestCase
     assert_equal "100", dossier.pays_naiss
   end
 
+  test "un dossier élève a le sexe d'un élève" do
+    eleve = Fabricate.build(:eleve, sexe: "Féminin")
+    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    assert_equal "Féminin", dossier.sexe
+  end
+
+  test "un dossier élève a la nationalite d'un élève" do
+    eleve = Fabricate.build(:eleve, nationalite: "FRANCE")
+    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    assert_equal "FRANCE", dossier.nationalite
+  end
+
+  test "un dossier élève a la classe_ant d'un élève" do
+    eleve = Fabricate.build(:eleve, classe_ant: "5C")
+    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    assert_equal eleve.classe_ant, dossier.classe_ant
+  end
+
+  test "un dossier élève a la date_naiss d'un élève" do
+    eleve = Fabricate.build(:eleve, date_naiss: "2006-05-24")
+    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    assert_equal eleve.date_naiss, dossier.date_naiss
+  end
+
+  test "un dossier élève a le niveau_classe_ant  d'un élève" do
+    eleve = Fabricate.build(:eleve, niveau_classe_ant: "5EME")
+    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    assert_equal eleve.niveau_classe_ant, dossier.niveau_classe_ant
+  end
+
+  test "un dossier élève a l  d'un élève" do
+    eleve = Fabricate.build(:eleve, id_prv_ele: "24463")
+    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    assert_equal eleve.id_prv_ele, dossier.id_prv_ele
+  end
+
 end

@@ -21,9 +21,9 @@
           <% if dossier.prenom_3.present? %>
             <PRENOM3><%= dossier.prenom_3 %></PRENOM3>
           <% end %>
-          <CODE_PAYS_NAT><%= dossier.eleve.nationalite ? dossier.eleve.nationalite : 995 %></CODE_PAYS_NAT>
-          <DATE_NAISS><%= dossier.eleve.date_naiss %></DATE_NAISS>
-          <CODE_SEXE><%= dossier.eleve.sexe == 'Masculin' ? '1' : '2' %></CODE_SEXE>
+          <CODE_PAYS_NAT><%= dossier.nationalite ? dossier.nationalite : 995 %></CODE_PAYS_NAT>
+          <DATE_NAISS><%= dossier.date_naiss %></DATE_NAISS>
+          <CODE_SEXE><%= dossier.sexe == 'Masculin' ? '1' : '2' %></CODE_SEXE>
           <CODE_PAYS><%= dossier.pays_naiss ? dossier.pays_naiss : 995 %></CODE_PAYS>
           <% if dossier.pays_naiss == "100" %>
             <CODE_COMMUNE_INSEE_NAISS><%= dossier.commune_insee_naissance %></CODE_COMMUNE_INSEE_NAISS>

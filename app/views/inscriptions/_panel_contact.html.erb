@@ -3,8 +3,8 @@
     <ul class="list-unstyled">
       <li><b><%= t('.prenom') %> : </b><%= @dossier_eleve.prenom %></li>
       <li><b><%= t('.nom') %> : </b><%= @dossier_eleve.nom %></li>
-      <li><b><%= t('.sexe') %> : </b><%= @dossier_eleve.eleve.sexe %></li>
-      <li><b><%= t('.date_naissance') %> : </b><%= l(@dossier_eleve.eleve.date_naiss.to_date) %></li>
+      <li><b><%= t('.sexe') %> : </b><%= @dossier_eleve.sexe %></li>
+      <li><b><%= t('.date_naissance') %> : </b><%= l(@dossier_eleve.date_naiss.to_date) %></li>
     </ul>
     <div class="text-right">
       <button class="button-outline small secondary modifier" data-target="infos-eleve">Modifier</button>
@@ -30,7 +30,7 @@
         <%= e.input :nom, label: t('.nom') %>
       </div>
       <div class="form__group">
-        <%= e.input :sexe, label: t('.sexe'), collection: ['Masculin', 'Féminin'], selected: @dossier_eleve.eleve.sexe %>
+        <%= e.input :sexe, label: t('.sexe'), collection: ['Masculin', 'Féminin'], selected: @dossier_eleve.sexe %>
       </div>
       <div class="form__group">
         <%= e.input :date_naiss, label: t('.date_naissance') %>

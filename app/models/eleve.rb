@@ -14,6 +14,7 @@ class Eleve < ActiveRecord::Base
     find_by(identifiant: identifiant, date_naiss: date_naissance)
   end
 
+  #  TODO: déplacer cette méthode dans dossier
   def self.creation_ou_retrouve_par(identifiant)
     find_or_initialize_by(identifiant: identifiant.gsub(/[^[:alnum:]]/, "").upcase)
   end

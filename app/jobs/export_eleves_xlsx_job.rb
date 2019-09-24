@@ -81,7 +81,7 @@ class ExportElevesXlsxJob < ActiveJob::Base
     informations << dossier.ville_naiss
     informations << dossier.commune_insee_naissance
     informations << nationalite.a_partir_du_code(eleve.nationalite)
-    informations << eleve.sexe
+    informations << dossier.sexe
     informations
   end
 
