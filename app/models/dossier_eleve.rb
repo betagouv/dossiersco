@@ -26,13 +26,14 @@ class DossierEleve < ActiveRecord::Base
   accepts_nested_attributes_for :contact_urgence
   accepts_nested_attributes_for :eleve
 
-  delegate(:nom, to: :eleve)
-  delegate(:prenom, to: :eleve)
-  delegate(:prenom_2, to: :eleve)
-  delegate(:prenom_3, to: :eleve)
-  delegate(:identifiant, to: :eleve)
-  delegate(:ville_naiss, to: :eleve)
-  delegate(:commune_insee_naissance, to: :eleve)
+  delegate :nom, to: :eleve
+  delegate :prenom, to: :eleve
+  delegate :prenom_2, to: :eleve
+  delegate :prenom_3, to: :eleve
+  delegate :identifiant, to: :eleve
+  delegate :ville_naiss, to: :eleve
+  delegate :commune_insee_naissance, to: :eleve
+  delegate :pays_naiss, to: :eleve
 
   ETAT = {
     pas_connecte: "pas connecté",

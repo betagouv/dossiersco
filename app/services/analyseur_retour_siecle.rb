@@ -16,7 +16,7 @@ class AnalyseurRetourSiecle
   end
 
   def self.commune_insee_renseigner_si_nee_en_france?(dossier)
-    dossier.eleve.pays_naiss == "100" && dossier.commune_insee_naissance.present?
+    dossier.pays_naiss == "100" && dossier.commune_insee_naissance.present?
   end
 
   def self.analyse_dossiers!(dossiers)

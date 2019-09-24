@@ -128,7 +128,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     Nokogiri::XML::Schema(File.read(schema))
     xml = Nokogiri::XML(response.body)
 
-    assert_match dossier.eleve.pays_naiss, xml.css("CODE_PAYS").text
+    assert_match dossier.pays_naiss, xml.css("CODE_PAYS").text
     assert_match dossier.ville_naiss, xml.css("VILLE_NAISS").text
   end
 
@@ -149,7 +149,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     Nokogiri::XML::Schema(File.read(schema))
     xml = Nokogiri::XML(response.body)
 
-    assert_match dossier_sans_commune.eleve.pays_naiss, xml.css("CODE_PAYS").text
+    assert_match dossier_sans_commune.pays_naiss, xml.css("CODE_PAYS").text
     assert_match "Inconnu", xml.css("VILLE_NAISS").text
   end
   test "export uniquement pour l'INE saisi" do

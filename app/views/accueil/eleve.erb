@@ -34,7 +34,7 @@
     </div>
 
     <div class="form__group">
-      <%= f.input :pays_naiss, collection: @liste_pays, required: true, checked: @eleve.pays_naiss, as: :select, label: t('.pays_de_naissance') %>
+      <%= f.input :pays_naiss, collection: @liste_pays, required: true, checked: @dossier_eleve.pays_naiss, as: :select, label: t('.pays_de_naissance') %>
     </div>
 
     <div class="form__group">
