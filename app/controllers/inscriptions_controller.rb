@@ -75,7 +75,7 @@ class InscriptionsController < ApplicationController
     @dossier_eleve.attributes = params_dossier_eleve
     @dossier_eleve.resp_legal.map(&:defini_ville_residence)
     @dossier_eleve.save(validate: false)
-    redirect_to "/agent/eleve/#{@dossier_eleve.eleve.identifiant}?onglet=contact"
+    redirect_to "/agent/eleve/#{@dossier_eleve.identifiant}?onglet=contact"
   end
 
   def params_dossier_eleve
@@ -95,13 +95,13 @@ class InscriptionsController < ApplicationController
     params_mef = params.require(:dossier_eleve).permit(:mef_destination_id, :mef_origine_id)
     if @dossier_eleve.update(params_mef)
       respond_to do |format|
-        format.html { redirect_to "/agent/eleve/#{@dossier_eleve.eleve.identifiant}" }
+        format.html { redirect_to "/agent/eleve/#{@dossier_eleve.identifiant}" }
         flash[:notice_mef] = t(".changements_enregistres")
         format.js { render layout: false }
       end
     else
       respond_to do |format|
-        format.html { redirect_to "/agent/eleve/#{@dossier_eleve.eleve.identifiant}" }
+        format.html { redirect_to "/agent/eleve/#{@dossier_eleve.identifiant}" }
         flash[:alert_mef] = t(".changements_non_enregistres")
         format.js { render layout: false }
       end
@@ -130,20 +130,21 @@ class InscriptionsController < ApplicationController
 
   def contacter_une_famille
     eleve = Eleve.find_by(identifiant: params[:identifiant])
+    dossier = eleve.dossier_eleve
 
     unless params[:message].present?
       flash[:alert] = "Aucun texte à envoyer"
-      redirect_to "/agent/eleve/#{eleve.identifiant}?onglet=echanges"
+      redirect_to "/agent/eleve/#{dossier.identifiant}?onglet=echanges"
       return
     end
     unless params[:moyen_de_communication].present?
       flash[:alert] = "Aucun moyen de communication choisi"
-      redirect_to "/agent/eleve/#{eleve.identifiant}?onglet=echanges"
+      redirect_to "/agent/eleve/#{dossier.identifiant}?onglet=echanges"
       return
     end
     unless @agent_connecte.etablissement.envoyer_aux_familles
       flash[:alert] = I18n.t(".alert_pas_config_envoyer_email")
-      redirect_to "/agent/eleve/#{eleve.identifiant}?onglet=echanges"
+      redirect_to "/agent/eleve/#{dossier.identifiant}?onglet=echanges"
       return
     end
 
@@ -151,7 +152,7 @@ class InscriptionsController < ApplicationController
     contacter.envoyer(params[:message], params[:moyen_de_communication])
 
     flash[:notice] = "Votre message a été envoyé."
-    redirect_to "/agent/eleve/#{eleve.identifiant}?onglet=echanges"
+    redirect_to "/agent/eleve/#{dossier.identifiant}?onglet=echanges"
   end
 
   def relance_emails
@@ -215,7 +216,7 @@ class InscriptionsController < ApplicationController
     eleve = Eleve.find_by(identifiant: params[:identifiant])
     dossier_eleve = eleve.dossier_eleve
     upload_pieces_jointes dossier_eleve, params, "valide"
-    redirect_to "/agent/eleve/#{eleve.identifiant}?onglet=dossier"
+    redirect_to "/agent/eleve/#{dossier_eleve.identifiant}?onglet=dossier"
   end
 
   def export

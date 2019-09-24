@@ -22,9 +22,9 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
   test "On atterrit sur l'accueil famille si on est connecté en tant qu'élève" do
     eleve = Fabricate(:eleve)
     etablissement = Fabricate(:etablissement)
-    Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement)
+    dossier = Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement)
     params_identification = {
-      identifiant: eleve.identifiant,
+      identifiant: dossier.identifiant,
       annee: eleve.annee_de_naissance,
       mois: eleve.mois_de_naissance,
       jour: eleve.jour_de_naissance

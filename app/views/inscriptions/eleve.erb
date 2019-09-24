@@ -178,7 +178,7 @@
           <% if @dossier_eleve.moyens_de_communication_electronique.any? %>
             <form action="/agent/contacter_une_famille" method="POST" class="text-center">
               <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-              <input type="hidden" name="identifiant" value="<%= @dossier_eleve.eleve.identifiant %>" />
+              <input type="hidden" name="identifiant" value="<%= @dossier_eleve.identifiant %>" />
               <dl style="text-align:left">
                 <% @dossier_eleve.moyens_de_communication_electronique.each do |nom, moyens_de_communication|%>
                   <% next if moyens_de_communication.empty? %>
@@ -250,7 +250,7 @@
           <%= t('.date_validation_agent_html', date: l(@dossier_eleve.date_validation_agent, :format => :phrase)) if @dossier_eleve.date_validation_agent %>
           <form action='/agent/valider_inscription' method='POST'>
             <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-            <input type="hidden" name="identifiant" value="<%= @dossier_eleve.eleve.identifiant %>" />
+            <input type="hidden" name="identifiant" value="<%= @dossier_eleve.identifiant %>" />
             <div class="form__group mb-2">
               <% unless [DossierEleve::ETAT[:pas_connecte], DossierEleve::ETAT[:connecte], DossierEleve::ETAT[:en_attente]].include? @dossier_eleve.etat %>
                 <button class="button  <%= 'disabled' if @dossier_eleve.etat == 'validé'%>"
@@ -263,7 +263,7 @@
           </form>
           <form action='/agent/eleve_sortant' method='POST'>
             <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-            <input type="hidden" name="identifiant" value="<%= @dossier_eleve.eleve.identifiant %>" />
+            <input type="hidden" name="identifiant" value="<%= @dossier_eleve.identifiant %>" />
             <div class="form__group">
               <button class="button <%= 'disabled' if @dossier_eleve.etat == 'sortant'%>"
                       id="bouton-eleve-sortant" type='submit'  <%= 'disabled' if @dossier_eleve.etat == 'sortant'%>>
@@ -324,7 +324,7 @@
     $('#inserer').click(function() {
       $.ajax({
         method: "GET",
-        url: "/agent/fusionne_modele/"+$("#modeles").val()+"/eleve/<%= @dossier_eleve.eleve.identifiant %>"
+        url: "/agent/fusionne_modele/"+$("#modeles").val()+"/eleve/<%= @dossier_eleve.identifiant %>"
       }).done(function(data) {
         $("#message").val($("#message").val()+(data ? "\n"+data : ""));
       })

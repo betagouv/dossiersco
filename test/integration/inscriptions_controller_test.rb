@@ -94,7 +94,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     agent = Fabricate(:agent, etablissement: dossier.etablissement)
     identification_agent(agent)
 
-    get "/agent/eleve/#{dossier.eleve.identifiant}"
+    get "/agent/eleve/#{dossier.identifiant}"
 
     assert response.body.include? dossier.nom
     assert response.body.include? dossier.prenom
@@ -104,15 +104,14 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     resp_legal = Fabricate(:resp_legal, priorite: 1)
     dossier = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
     etablissement = dossier.etablissement
-    eleve = dossier.eleve
     agent = Fabricate(:agent, etablissement: etablissement)
 
     identification_agent(agent)
 
-    post "/agent/valider_inscription", params: { identifiant: eleve.identifiant }
+    post "/agent/valider_inscription", params: { identifiant: dossier.identifiant }
     assert_equal "validé", dossier.reload.etat
 
-    get "/agent/eleve/#{eleve.identifiant}"
+    get "/agent/eleve/#{dossier.identifiant}"
     doc = Nokogiri::HTML(response.body)
     assert_equal "disabled", doc.css("#bouton-validation-inscription").first.attributes["disabled"].value
   end
@@ -123,11 +122,11 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     agent = Fabricate(:agent, etablissement: dossier.etablissement)
     identification_agent(agent)
 
-    post "/agent/eleve_sortant", params: { identifiant: dossier.eleve.identifiant }
+    post "/agent/eleve_sortant", params: { identifiant: dossier.identifiant }
     eleve = dossier.eleve
     assert_equal "sortant", eleve.dossier_eleve.etat
 
-    get "/agent/eleve/#{eleve.identifiant}"
+    get "/agent/eleve/#{dossier.identifiant}"
     doc = Nokogiri::HTML(response.body)
     assert_equal "disabled", doc.css("#bouton-eleve-sortant").first.attributes["disabled"].value
   end
@@ -195,11 +194,11 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
                            priorite: 1)
 
     contact_urgence = Fabricate(:contact_urgence, tel_principal: "0103030303")
-    dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal], contact_urgence: contact_urgence)
+    dossier = Fabricate(:dossier_eleve, resp_legal: [resp_legal], contact_urgence: contact_urgence)
 
-    agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
+    agent = Fabricate(:agent, etablissement: dossier.etablissement)
     identification_agent(agent)
-    get "/agent/eleve/#{dossier_eleve.eleve.identifiant}"
+    get "/agent/eleve/#{dossier.identifiant}"
 
     assert response.body.include? "0101010101"
     assert response.body.include? "0606060606"
@@ -225,7 +224,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     identification_agent(agent)
 
     post "/agent/contacter_une_famille", params: {
-      identifiant: dossier.eleve.identifiant,
+      identifiant: dossier.identifiant,
       message: "Message de test",
       moyen_de_communication: resp_legal.email
     }
@@ -238,19 +237,19 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
   def test_changement_statut_famille_connecte
     resp_legal = Fabricate(:resp_legal)
-    dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
-    eleve = dossier_eleve.eleve
+    dossier = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
+    eleve = dossier.eleve
 
     post "/identification", params: {
-      identifiant: eleve.identifiant,
+      identifiant: dossier.identifiant,
       annee: eleve.annee_de_naissance,
       mois: eleve.mois_de_naissance,
       jour: eleve.jour_de_naissance
     }
 
-    assert_equal "connecté", dossier_eleve.reload.etat
+    assert_equal "connecté", dossier.reload.etat
 
-    agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
+    agent = Fabricate(:agent, etablissement: dossier.etablissement)
     identification_agent(agent)
     get "/agent/liste_des_eleves"
 
@@ -262,7 +261,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     eleve = dossier.eleve
 
     post "/identification", params: {
-      identifiant: eleve.identifiant,
+      identifiant: dossier.identifiant,
       annee: eleve.annee_de_naissance,
       mois: eleve.mois_de_naissance,
       jour: eleve.jour_de_naissance
@@ -276,12 +275,12 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   test "n'envoie rien si aucun moyen de communication fourni" do
     ActionMailer::Base.deliveries = []
     resp_legal = Fabricate(:resp_legal, email: "phill@collins.uk")
-    dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
+    dossier = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
 
-    agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
+    agent = Fabricate(:agent, etablissement: dossier.etablissement)
     identification_agent(agent)
 
-    post "/agent/contacter_une_famille", params: { identifiant: dossier_eleve.eleve.identifiant, message: "Message de test" }
+    post "/agent/contacter_une_famille", params: { identifiant: dossier.identifiant, message: "Message de test" }
 
     assert_equal "Aucun moyen de communication choisi", flash[:alert]
     assert_equal 0, ActionMailer::Base.deliveries.count
@@ -300,7 +299,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     identification_agent(agent)
     post "/agent/contacter_une_famille", params: {
-      identifiant: dossier.eleve.identifiant,
+      identifiant: dossier.identifiant,
       message: "Message de test",
       moyen_de_communication: "truc@example.com"
     }
@@ -333,7 +332,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     agent = Fabricate(:agent, etablissement: dossier.etablissement)
     identification_agent(agent)
-    get "/agent/eleve/#{dossier.eleve.identifiant}"
+    get "/agent/eleve/#{dossier.identifiant}"
 
     doc = Nokogiri::HTML(response.body)
     assert_not_nil doc.css("div#ancienne_adresse").first
@@ -342,11 +341,11 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   def test_page_eleve_agent_affiche_adresse_sans_changement
     eleve = Fabricate(:eleve, identifiant: "truc")
     resp_legal = Fabricate(:resp_legal)
-    Fabricate(:dossier_eleve, eleve: eleve, resp_legal: [resp_legal])
+    dossier = Fabricate(:dossier_eleve, eleve: eleve, resp_legal: [resp_legal])
     agent = Fabricate(:agent)
     identification_agent(agent)
 
-    get "/agent/eleve/#{eleve.identifiant}"
+    get "/agent/eleve/#{dossier.identifiant}"
 
     doc = Nokogiri::HTML(response.body)
     assert_nil doc.css("div#ancienne_adresse").first

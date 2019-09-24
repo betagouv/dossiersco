@@ -10,8 +10,8 @@
     <ELEVES>
       <% @dossiers.each do |dossier| %>
         <ELEVE>
-          <% if dossier.eleve.identifiant.present? %>
-            <ID_NATIONAL><%= dossier.eleve.identifiant %></ID_NATIONAL>
+          <% if dossier.identifiant.present? %>
+            <ID_NATIONAL><%= dossier.identifiant %></ID_NATIONAL>
           <% end %>
           <NOM_DE_FAMILLE><%= dossier.nom %></NOM_DE_FAMILLE>
           <PRENOM><%= dossier.prenom %></PRENOM>

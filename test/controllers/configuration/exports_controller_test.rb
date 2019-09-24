@@ -107,7 +107,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     Nokogiri::XML::Schema(File.read(schema))
     xml = Nokogiri::XML(response.body)
 
-    assert_match dossier.eleve.identifiant, xml.css("ID_NATIONAL").text
+    assert_match dossier.identifiant, xml.css("ID_NATIONAL").text
   end
 
   test "Pour une naissance à l'étranger, la commune est renseignée sous forme de texte" do
@@ -173,7 +173,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
               etablissement: admin.etablissement,
               resp_legal: [autre_resp])
 
-    get export_siecle_configuration_exports_path(xml_only: true), params: { limite: true, liste_ine: dossier.eleve.identifiant }
+    get export_siecle_configuration_exports_path(xml_only: true), params: { limite: true, liste_ine: dossier.identifiant }
 
     assert_response :success
 
@@ -196,7 +196,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
                         mef_destination: mef,
                         options_pedagogiques: [option])
 
-    get export_siecle_configuration_exports_path(xml_only: true), params: { limite: true, liste_ine: dossier.eleve.identifiant }
+    get export_siecle_configuration_exports_path(xml_only: true), params: { limite: true, liste_ine: dossier.identifiant }
 
     assert_response :success
 
@@ -219,7 +219,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
                         mef_destination: mef,
                         options_pedagogiques: [option])
 
-    get export_siecle_configuration_exports_path(xml_only: true), params: { limite: true, liste_ine: dossier.eleve.identifiant }
+    get export_siecle_configuration_exports_path(xml_only: true), params: { limite: true, liste_ine: dossier.identifiant }
 
     assert_response :success
 
@@ -236,7 +236,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
     dossier = Fabricate(:dossier_eleve_valide, etablissement: admin.etablissement, mef_an_dernier: "12345678009")
 
-    get export_siecle_configuration_exports_path(xml_only: true), params: { limite: true, liste_ine: dossier.eleve.identifiant }
+    get export_siecle_configuration_exports_path(xml_only: true), params: { limite: true, liste_ine: dossier.identifiant }
 
     assert_response :success
 
@@ -263,7 +263,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
                         mef_destination: mef,
                         options_pedagogiques: [option_facultative, option_de_rang_2, option_de_rang_1])
 
-    get export_siecle_configuration_exports_path(xml_only: true), params: { limite: true, liste_ine: dossier.eleve.identifiant }
+    get export_siecle_configuration_exports_path(xml_only: true), params: { limite: true, liste_ine: dossier.identifiant }
 
     assert_response :success
 
@@ -285,7 +285,7 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     resp_qui_paie_pas = Fabricate(:resp_legal, paie_frais_scolaires: false)
     dossier = Fabricate(:dossier_eleve_valide, etablissement: admin.etablissement, resp_legal: [resp_qui_paie, resp_qui_paie_pas])
 
-    get export_siecle_configuration_exports_path(xml_only: true), params: { limite: true, liste_ine: dossier.eleve.identifiant }
+    get export_siecle_configuration_exports_path(xml_only: true), params: { limite: true, liste_ine: dossier.identifiant }
 
     assert_response :success
 

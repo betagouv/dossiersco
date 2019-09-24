@@ -74,11 +74,11 @@ class ImportEleveCompleteTest < ActiveSupport::TestCase
     assert_equal 2, DossierEleve.count
   end
 
-  test "importe pas un dossier élève si l'inscription à commencé" do
+  test "n'importe pas un dossier élève si l'inscription à commencé" do
     etablissement = Fabricate(:etablissement)
     eleve = Fabricate(:eleve, nom: "Fordt")
     mef = Fabricate(:mef, libelle: "4EME")
-    Fabricate(:dossier_eleve, etat: DossierEleve::ETAT[:en_attente], etablissement: etablissement, eleve: eleve, mef_origine: mef)
+    dossier = Fabricate(:dossier_eleve, etat: DossierEleve::ETAT[:en_attente], etablissement: etablissement, eleve: eleve, mef_origine: mef)
 
     importer = ImportEleveComplete.new
 
@@ -89,7 +89,7 @@ class ImportEleveCompleteTest < ActiveSupport::TestCase
     ligne[9] = "18/05/1991"
     ligne[13] = nil
     ligne[33] = "4EME"
-    ligne[11] = eleve.identifiant
+    ligne[11] = dossier.identifiant
 
     importer.import_ligne(etablissement, ligne, "reinscription")[:result]
 

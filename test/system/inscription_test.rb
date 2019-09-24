@@ -16,7 +16,7 @@ class InscriptionTest < ActionDispatch::IntegrationTest
     visit "/connexion"
     assert_selector "h1", text: "Inscription au collège"
 
-    fill_in "identifiant", with: eleve.identifiant
+    fill_in "identifiant", with: dossier_eleve.identifiant
     fill_in "annee", with: eleve.annee_de_naissance
     fill_in "mois", with: eleve.mois_de_naissance
     fill_in "jour", with: eleve.jour_de_naissance

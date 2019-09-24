@@ -13,7 +13,7 @@
     <ul>
     <% dossiers_avec_commentaires.each do |dossier| %>
       <li>
-        <a href="/agent/eleve/<%= dossier.eleve.identifiant %>" ><%= l(dossier.date_validation_famille, format: :short) %> : <strong><%= dossier.satisfaction %></strong> : </a>
+        <a href="/agent/eleve/<%= dossier.identifiant %>" ><%= l(dossier.date_validation_famille, format: :short) %> : <strong><%= dossier.satisfaction %></strong> : </a>
         <%= dossier.commentaire %>
       </li>
     <% end %>

@@ -73,10 +73,10 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
 
     representant = Fabricate(:resp_legal)
     eleve = Fabricate(:eleve)
-    Fabricate(:dossier_eleve, etablissement: etablissement, etat: DossierEleve::ETAT[:valide], eleve: eleve, resp_legal: [representant])
+    dossier = Fabricate(:dossier_eleve, etablissement: etablissement, etat: DossierEleve::ETAT[:valide], eleve: eleve, resp_legal: [representant])
     Fabricate(:dossier_eleve, etablissement: etablissement)
 
-    get export_des_dossiers_retour_siecle_path, params: { liste_ine: eleve.identifiant }
+    get export_des_dossiers_retour_siecle_path, params: { liste_ine: dossier.identifiant }
 
     assert_response :success
     assert_not_nil assigns(:selection_dossiers)
@@ -93,7 +93,7 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
 
     get export_des_dossiers_retour_siecle_path
 
-    assert_equal dossier_sans_mef.eleve.identifiant, assigns(:dossiers_bloques).first.identifiant
+    assert_equal dossier_sans_mef.identifiant, assigns(:dossiers_bloques).first.identifiant
     assert_equal I18n.t("retour_siecles.export_des_dossiers.dossier_sans_mef_destination"), assigns(:dossiers_bloques).first.raison
   end
 
@@ -108,7 +108,7 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     Fabricate(:dossier_eleve, mef_destination: Fabricate(:mef, etablissement: etablissement), etablissement: etablissement)
 
     get export_des_dossiers_retour_siecle_path
-    assert_equal dossier.eleve.identifiant, assigns(:dossiers_bloques).first.identifiant
+    assert_equal dossier.identifiant, assigns(:dossiers_bloques).first.identifiant
     assert_equal I18n.t("retour_siecles.export_des_dossiers.probleme_de_profession"), assigns(:dossiers_bloques).first.raison
   end
 
@@ -121,7 +121,7 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     dossier = Fabricate(:dossier_eleve, eleve: eleve_sans_commune_insee, etablissement: etablissement)
 
     get export_des_dossiers_retour_siecle_path
-    assert_equal dossier.eleve.identifiant, assigns(:dossiers_bloques).first.identifiant
+    assert_equal dossier.identifiant, assigns(:dossiers_bloques).first.identifiant
     assert_equal I18n.t("retour_siecles.export_des_dossiers.probleme_de_commune_insee"), assigns(:dossiers_bloques).first.raison
   end
 
@@ -145,7 +145,7 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     dossier_sans_mef_an_dernier = Fabricate(:dossier_eleve, mef_an_dernier: nil, etablissement: etablissement)
 
     get export_des_dossiers_retour_siecle_path
-    assert_equal dossier_sans_mef_an_dernier.eleve.identifiant, assigns(:dossiers_bloques).first.identifiant
+    assert_equal dossier_sans_mef_an_dernier.identifiant, assigns(:dossiers_bloques).first.identifiant
     assert_equal I18n.t("retour_siecles.export_des_dossiers.dossier_mef_an_dernier_inconnu"), assigns(:dossiers_bloques).first.raison
   end
 
@@ -162,7 +162,7 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
                                               options_pedagogiques: [option])
 
     get export_des_dossiers_retour_siecle_path
-    assert_equal dossier_avec_mef_non_conforme.eleve.identifiant, assigns(:dossiers_bloques).first.identifiant
+    assert_equal dossier_avec_mef_non_conforme.identifiant, assigns(:dossiers_bloques).first.identifiant
     assert_equal I18n.t("retour_siecles.export_des_dossiers.dossier_avec_mef_origine_invalide"), assigns(:dossiers_bloques).first.raison
   end
 
@@ -179,7 +179,7 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
                                               options_pedagogiques: [option])
 
     get export_des_dossiers_retour_siecle_path
-    assert_equal dossier_avec_mef_non_conforme.eleve.identifiant, assigns(:dossiers_bloques).first.identifiant
+    assert_equal dossier_avec_mef_non_conforme.identifiant, assigns(:dossiers_bloques).first.identifiant
     assert_equal I18n.t("retour_siecles.export_des_dossiers.dossier_avec_mef_destination_invalide"), assigns(:dossiers_bloques).first.raison
   end
 

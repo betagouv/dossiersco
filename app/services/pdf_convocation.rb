@@ -28,7 +28,7 @@ class PdfConvocation
           "et de vérifier les informations vous concernant avant le : #{etablissement.date_limite}", inline_format: true, indent_paragraphs: 20
 
         pdf.move_down 10
-        pdf.text "Votre identifiant est : <b>#{dossier_eleve.eleve.identifiant}</b> ", inline_format: true
+        pdf.text "Votre identifiant est : <b>#{dossier_eleve.identifiant}</b> ", inline_format: true
 
         pdf.move_down 10
         pdf.text "Cet outil numérique relève d’une démarche d’innovation ; nous sommes très intéressés par vos retours."

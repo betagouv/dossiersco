@@ -66,7 +66,7 @@ class AuthentificationCasEntController < ApplicationController
   end
 
   def identifie_et_redirige(dossier_eleve)
-    session[:identifiant] = dossier_eleve.eleve.identifiant
+    session[:identifiant] = dossier_eleve.identifiant
 
     if dossier_eleve.derniere_etape.present?
       redirect_to("/#{dossier_eleve.derniere_etape}")

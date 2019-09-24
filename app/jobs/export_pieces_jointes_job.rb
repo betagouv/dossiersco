@@ -10,13 +10,12 @@ class ExportPiecesJointesJob < ActiveJob::Base
     Zip::File.open(temp_file.path, Zip::File::CREATE) do |zipfile|
       mef_selectionnes.each do |mef|
         DossierEleve.where(mef_origine: mef).each do |dossier_eleve|
-          eleve = dossier_eleve.eleve
-          next if eleve.identifiant.nil? || dossier_eleve.pieces_jointes.empty?
+          next if dossier_eleve.identifiant.nil? || dossier_eleve.pieces_jointes.empty?
 
           dossier_eleve.pieces_jointes.each do |piece|
             piece.fichiers.each_with_index do |fichier, index|
               format = fichier.url.split(".").last
-              eleve_folder = "#{dossier_eleve.prenom}-#{dossier_eleve.nom}-#{eleve.identifiant}"
+              eleve_folder = "#{dossier_eleve.prenom}-#{dossier_eleve.nom}-#{dossier_eleve.identifiant}"
               begin
                 zipfile.add(
                   "#{mef.libelle}/#{eleve_folder}/#{fichier.model.piece_attendue.nom}-#{index}.#{format}",

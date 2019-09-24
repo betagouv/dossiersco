@@ -30,6 +30,7 @@ class DossierEleve < ActiveRecord::Base
   delegate(:prenom, to: :eleve)
   delegate(:prenom_2, to: :eleve)
   delegate(:prenom_3, to: :eleve)
+  delegate(:identifiant, to: :eleve)
 
   ETAT = {
     pas_connecte: "pas connecté",
@@ -119,7 +120,7 @@ class DossierEleve < ActiveRecord::Base
 
   DEFAULT_TEMPLATE = "<%= dossier.etablissement.nom %>: attention,"\
     " derniers jours pour réinscrire votre enfant <%= dossier.prenom %> "\
-    " sur https://dossiersco.fr avec vos identifiants: <%= dossier.eleve.identifiant %>"\
+    " sur https://dossiersco.fr avec vos identifiants: <%= dossier.identifiant %>"\
     " et la date de naissance de l'enfant."
 
   def relance_sms(template = DEFAULT_TEMPLATE)

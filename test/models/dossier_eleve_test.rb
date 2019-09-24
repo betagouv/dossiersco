@@ -212,4 +212,10 @@ class DossierEleveTest < ActiveSupport::TestCase
     assert_equal "Alice3", dossier.prenom_3
   end
 
+  test "un dossier élève a l'identifiant d'un élève" do
+    eleve = Fabricate.build(:eleve, identifiant: "0123456789U")
+    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    assert_equal "0123456789U", dossier.identifiant
+  end
+
 end

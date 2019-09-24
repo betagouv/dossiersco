@@ -8,7 +8,7 @@ class AgentPiecesJointesControllerTest < ActionDispatch::IntegrationTest
     admin = Fabricate(:admin)
     identification_agent(admin)
     piece_attendue = Fabricate(:piece_attendue)
-    eleve = Fabricate(:dossier_eleve).eleve
+    dossier = Fabricate(:dossier_eleve)
 
     piece_jointe = fixture_file_upload("files/sample.png", "image/png")
     post agent_pieces_jointes_url, params: {
@@ -16,10 +16,10 @@ class AgentPiecesJointesControllerTest < ActionDispatch::IntegrationTest
         fichiers: [piece_jointe],
         piece_attendue_id: piece_attendue.id
       },
-      eleve_id: eleve.identifiant
+      eleve_id: dossier.identifiant
     }
 
-    assert_redirected_to "/agent/eleve/#{eleve.identifiant}"
+    assert_redirected_to "/agent/eleve/#{dossier.identifiant}"
   end
 
 end
