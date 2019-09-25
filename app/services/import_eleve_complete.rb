@@ -142,7 +142,7 @@ class ImportEleveComplete
 
     eleve = Eleve.creation_ou_retrouve_par(donnees_eleve[:identifiant])
 
-    return resultat if eleve.id.present? && donnees_eleve[:classe_ant] != eleve.classe_ant
+    return resultat if eleve.id.present? && donnees_eleve[:classe_ant] != eleve.dossier_eleve.classe_ant
 
     return resultat if eleve.dossier_eleve&.deja_connecte?
 

@@ -70,17 +70,16 @@ class ExportElevesXlsxJob < ActiveJob::Base
   def cellules_infos_base(dossier)
     pays = Pays.new
     nationalite = Nationalite.new
-    eleve = dossier.eleve
     informations = []
-    informations << eleve.classe_ant
+    informations << dossier.classe_ant
     informations << (dossier.mef_origine.present? ? dossier.mef_origine.libelle : "")
     informations << dossier.prenom
     informations << dossier.nom
-    informations << eleve.date_naiss
+    informations << dossier.date_naiss
     informations << pays.a_partir_du_code(dossier.pays_naiss)
     informations << dossier.ville_naiss
     informations << dossier.commune_insee_naissance
-    informations << nationalite.a_partir_du_code(eleve.nationalite)
+    informations << nationalite.a_partir_du_code(dossier.nationalite)
     informations << dossier.sexe
     informations
   end

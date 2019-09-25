@@ -23,7 +23,7 @@ class GenerePdf
   def cherche_classes(etablissement)
     etablissement.dossier_eleve
                  .includes(%i[eleve resp_legal contact_urgence])
-                 .group_by { |d| d.eleve.classe_ant }
+                 .group_by(&:classe_ant)
   end
 
   def parcours_classes(etablissement, classes, pdf_class)

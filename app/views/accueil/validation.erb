@@ -3,7 +3,7 @@
 
     <h2 class="separation"><%= t('.titre') %></h2>
 
-    <p><%= t('.dossier_complet_html', eleve: "#{@dossier_eleve.prenom} #{@dossier_eleve.nom}", niveau: @eleve.niveau_classe_ant[0].to_i - 1, etablissement: @dossier_eleve.etablissement.nom) %></p>
+    <p><%= t('.dossier_complet_html', eleve: "#{@dossier_eleve.prenom} #{@dossier_eleve.nom}", niveau: @dossier_eleve.niveau_classe_ant[0].to_i - 1, etablissement: @dossier_eleve.etablissement.nom) %></p>
     <p><%= t('.verifier_informations') %></p>
 
     <div class="card">

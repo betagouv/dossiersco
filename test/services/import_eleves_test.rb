@@ -46,7 +46,7 @@ class ImportElevesTest < ActiveSupport::TestCase
     etablissement = Fabricate(:etablissement, uai: "0752387M")
     eleve = Fabricate(:eleve, identifiant: "060375611AC", id_prv_ele: nil)
     autre_eleve = Fabricate(:eleve, identifiant: "070832327JA", id_prv_ele: nil)
-    Fabricate(:dossier_eleve, eleve: eleve)
+    dossier = Fabricate(:dossier_eleve, eleve: eleve)
     Fabricate(:dossier_eleve, eleve: autre_eleve)
 
     fichier_xml = fixture_file_upload("files/eleves_avec_adresse_simple.xml")
@@ -54,7 +54,7 @@ class ImportElevesTest < ActiveSupport::TestCase
 
     ImportEleves.new.perform(tache)
     eleve.reload
-    assert_equal "9065", eleve.id_prv_ele
+    assert_equal "9065", dossier.id_prv_ele
     autre_eleve.reload
     assert_nil autre_eleve.id_prv_ele
   end

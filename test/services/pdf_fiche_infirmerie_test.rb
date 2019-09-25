@@ -8,7 +8,7 @@ class PdfFicheInfirmerieTest < ActiveSupport::TestCase
     eleve = Fabricate(:eleve, classe_ant: "5EME")
     dossier = Fabricate(:dossier_eleve, eleve: eleve)
     etablissement = dossier.etablissement
-    classe = dossier.eleve.classe_ant
+    classe = dossier.classe_ant
 
     5.times do
       eleve = Fabricate(:eleve, classe_ant: classe)

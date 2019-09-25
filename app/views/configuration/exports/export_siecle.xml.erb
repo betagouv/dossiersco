@@ -75,7 +75,7 @@
       <ELEVES>
         <% @dossiers.each do |dossier_eleve| %>
           <ELEVE>
-            <ID_PRV_ELE><%= dossier_eleve.eleve.id_prv_ele || dossier_eleve.eleve.id %></ID_PRV_ELE>
+            <ID_PRV_ELE><%= dossier_eleve.id_prv_ele || dossier_eleve.eleve.id %></ID_PRV_ELE>
             <% if dossier_eleve.identifiant.present? %>
               <ID_NATIONAL><%= dossier_eleve.identifiant %></ID_NATIONAL>
             <% end %>
@@ -87,9 +87,9 @@
             <% if dossier_eleve.prenom_3.present? %>
               <PRENOM3><%= dossier_eleve.prenom_3 %></PRENOM3>
             <% end %>
-            <CODE_PAYS_NAT><%= dossier_eleve.eleve.nationalite ? dossier_eleve.eleve.nationalite : 995 %></CODE_PAYS_NAT>
-            <DATE_NAISS><%= dossier_eleve.eleve.date_naiss %></DATE_NAISS>
-            <CODE_SEXE><%= dossier_eleve.eleve.sexe == 'Masculin' ? '1' : '2' %></CODE_SEXE>
+            <CODE_PAYS_NAT><%= dossier_eleve.nationalite ? dossier_eleve.nationalite : 995 %></CODE_PAYS_NAT>
+            <DATE_NAISS><%= dossier_eleve.date_naiss %></DATE_NAISS>
+            <CODE_SEXE><%= dossier_eleve.sexe == 'Masculin' ? '1' : '2' %></CODE_SEXE>
             <CODE_PAYS><%= dossier_eleve.pays_naiss ? dossier_eleve.pays_naiss : 995 %></CODE_PAYS>
             <% if dossier_eleve.pays_naiss == "100" %>
               <CODE_COMMUNE_INSEE_NAISS><%= dossier_eleve.commune_insee_naissance %></CODE_COMMUNE_INSEE_NAISS>

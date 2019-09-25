@@ -10,7 +10,7 @@
       <%= f.input :prenom, placeholder: 'Prénom', required: true %>
     </div>
 
-    <% if @eleve.niveau_classe_ant !~ /5EME/ and @eleve.niveau_classe_ant !~ /6EME/ %>
+    <% if @dossier_eleve.niveau_classe_ant !~ /5EME/ and @dossier_eleve.niveau_classe_ant !~ /6EME/ %>
       <div class="form__group">
         <%= f.input :prenom_2, placeholder: 'Deuxième prénom (optionnel)' %>
       </div>
@@ -38,7 +38,7 @@
     </div>
 
     <div class="form__group">
-      <%= f.input :nationalite, collection: @liste_nationalite, required: true, checked: @eleve.nationalite, as: :select, label: t('.pays_de_nationalite') %>
+      <%= f.input :nationalite, collection: @liste_nationalite, required: true, checked: @dossier_eleve.nationalite, as: :select, label: t('.pays_de_nationalite') %>
     </div>
 
 
