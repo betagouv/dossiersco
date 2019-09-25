@@ -10,9 +10,9 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement)
     params_identification = {
       identifiant: dossier_eleve.identifiant,
-      annee: eleve.annee_de_naissance,
-      mois: eleve.mois_de_naissance,
-      jour: eleve.jour_de_naissance
+      annee: dossier_eleve.annee_de_naissance,
+      mois: dossier_eleve.mois_de_naissance,
+      jour: dossier_eleve.jour_de_naissance
     }
     post "/identification", params: params_identification
 

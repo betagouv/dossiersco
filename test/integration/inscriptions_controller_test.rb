@@ -238,13 +238,12 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   def test_changement_statut_famille_connecte
     resp_legal = Fabricate(:resp_legal)
     dossier = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
-    eleve = dossier.eleve
 
     post "/identification", params: {
       identifiant: dossier.identifiant,
-      annee: eleve.annee_de_naissance,
-      mois: eleve.mois_de_naissance,
-      jour: eleve.jour_de_naissance
+      annee: dossier.annee_de_naissance,
+      mois: dossier.mois_de_naissance,
+      jour: dossier.jour_de_naissance
     }
 
     assert_equal "connecté", dossier.reload.etat
@@ -258,13 +257,12 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
   def test_changement_statut_famille_en_cours_de_validation
     dossier = Fabricate(:dossier_eleve)
-    eleve = dossier.eleve
 
     post "/identification", params: {
       identifiant: dossier.identifiant,
-      annee: eleve.annee_de_naissance,
-      mois: eleve.mois_de_naissance,
-      jour: eleve.jour_de_naissance
+      annee: dossier.annee_de_naissance,
+      mois: dossier.mois_de_naissance,
+      jour: dossier.jour_de_naissance
     }
     post "/validation"
 

@@ -15,9 +15,9 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
 
     post "/identification", params: {
       identifiant: dossier.identifiant,
-      annee: eleve.annee_de_naissance,
-      mois: eleve.mois_de_naissance,
-      jour: eleve.jour_de_naissance
+      annee: dossier.annee_de_naissance,
+      mois: dossier.mois_de_naissance,
+      jour: dossier.jour_de_naissance
     }
     follow_redirect!
     assert response.body.include? "Pour réinscrire votre enfant"
@@ -31,12 +31,11 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
   def test_entree_succes_eleve_1
     resp_legal = Fabricate(:resp_legal)
     dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
-    eleve = dossier_eleve.eleve
     post "/identification", params: {
       identifiant: dossier_eleve.identifiant,
-      annee: eleve.annee_de_naissance,
-      mois: eleve.mois_de_naissance,
-      jour: eleve.jour_de_naissance
+      annee: dossier_eleve.annee_de_naissance,
+      mois: dossier_eleve.mois_de_naissance,
+      jour: dossier_eleve.jour_de_naissance
     }
     follow_redirect!
     assert response.body.include? "Pour réinscrire votre enfant"
@@ -44,13 +43,12 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
 
   def test_entree_mauvaise_date
     dossier = Fabricate(:dossier_eleve, resp_legal: [Fabricate(:resp_legal)])
-    eleve = dossier.eleve
 
     post "/identification", params: {
       identifiant: dossier.identifiant,
-      annee: eleve.annee_de_naissance,
-      mois: eleve.mois_de_naissance,
-      jour: (eleve.jour_de_naissance.to_i + 1.days).to_s
+      annee: dossier.annee_de_naissance,
+      mois: dossier.mois_de_naissance,
+      jour: (dossier.jour_de_naissance.to_i + 1.days).to_s
     }
 
     follow_redirect!
@@ -59,12 +57,12 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
 
   def test_entree_mauvais_identifiant_et_date
     resp_legal = Fabricate(:resp_legal)
-    eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal]).eleve
+    dossier = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
     params = {
       identifiant: "MAUVAISIDENTIFIANT",
-      annee: eleve.annee_de_naissance,
-      mois: eleve.mois_de_naissance,
-      jour: eleve.jour_de_naissance
+      annee: dossier.annee_de_naissance,
+      mois: dossier.mois_de_naissance,
+      jour: dossier.jour_de_naissance
     }
     post "/identification", params: params
 
@@ -87,9 +85,9 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     dossier = eleve.dossier_eleve
     params = {
       identifiant: dossier.identifiant,
-      annee: eleve.annee_de_naissance,
-      mois: eleve.mois_de_naissance,
-      jour: eleve.jour_de_naissance
+      annee: dossier.annee_de_naissance,
+      mois: dossier.mois_de_naissance,
+      jour: dossier.jour_de_naissance
     }
     post "/identification", params: params
   end
@@ -109,13 +107,12 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
   def test_modifie_une_information_de_eleve_preserve_les_autres_informations
     resp_legal = Fabricate(:resp_legal)
     dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
-    eleve = dossier_eleve.eleve
 
     params = {
       identifiant: dossier_eleve.identifiant,
-      annee: eleve.annee_de_naissance,
-      mois: eleve.mois_de_naissance,
-      jour: eleve.jour_de_naissance
+      annee: dossier_eleve.annee_de_naissance,
+      mois: dossier_eleve.mois_de_naissance,
+      jour: dossier_eleve.jour_de_naissance
     }
     post "/identification", params: params
     post "/eleve", params: { eleve: { prenom: "Edith" } }
@@ -132,22 +129,21 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
   test "ramène parent à dernière étape incomplète" do
     resp_legal = Fabricate(:resp_legal)
     dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
-    eleve = dossier_eleve.eleve
 
     post "/identification", params: {
       identifiant: dossier_eleve.identifiant,
-      annee: eleve.annee_de_naissance,
-      mois: eleve.mois_de_naissance,
-      jour: eleve.jour_de_naissance
+      annee: dossier_eleve.annee_de_naissance,
+      mois: dossier_eleve.mois_de_naissance,
+      jour: dossier_eleve.jour_de_naissance
     }
     post "/eleve", params: { eleve: { prenom: dossier_eleve.prenom }, Espagnol: true, Latin: true }
     get "/famille"
 
     post "/identification", params: {
       identifiant: dossier_eleve.identifiant,
-      annee: eleve.annee_de_naissance,
-      mois: eleve.mois_de_naissance,
-      jour: eleve.jour_de_naissance
+      annee: dossier_eleve.annee_de_naissance,
+      mois: dossier_eleve.mois_de_naissance,
+      jour: dossier_eleve.jour_de_naissance
     }
     follow_redirect!
 
@@ -158,15 +154,14 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
   test "une famille remplit l'etape administration" do
     resp_legal = Fabricate(:resp_legal)
     dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
-    eleve = dossier_eleve.eleve
     regime_sortie = Fabricate(:regime_sortie, etablissement: dossier_eleve.etablissement)
     Fabricate(:regime_sortie, etablissement: dossier_eleve.etablissement)
 
     post "/identification", params: {
       identifiant: dossier_eleve.identifiant,
-      annee: eleve.annee_de_naissance,
-      mois: eleve.mois_de_naissance,
-      jour: eleve.jour_de_naissance
+      annee: dossier_eleve.annee_de_naissance,
+      mois: dossier_eleve.mois_de_naissance,
+      jour: dossier_eleve.jour_de_naissance
     }
     get "/administration"
     post "/administration", params: {
@@ -187,13 +182,12 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
   test "ramene à la dernire etape visitée plutot que l'etape la plus avancée" do
     resp_legal = Fabricate(:resp_legal)
     dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
-    eleve = dossier_eleve.eleve
 
     params = {
       identifiant: dossier_eleve.identifiant,
-      annee: eleve.annee_de_naissance,
-      mois: eleve.mois_de_naissance,
-      jour: eleve.jour_de_naissance
+      annee: dossier_eleve.annee_de_naissance,
+      mois: dossier_eleve.mois_de_naissance,
+      jour: dossier_eleve.jour_de_naissance
     }
     params_famille = { "dossier_eleve[resp_legal_attributes][0][nom]": "test",
                        "dossier_eleve[resp_legal_attributes][0][id]": resp_legal.id }
@@ -204,9 +198,9 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     post "/deconnexion"
     params = {
       identifiant: dossier_eleve.identifiant,
-      annee: eleve.annee_de_naissance,
-      mois: eleve.mois_de_naissance,
-      jour: eleve.jour_de_naissance
+      annee: dossier_eleve.annee_de_naissance,
+      mois: dossier_eleve.mois_de_naissance,
+      jour: dossier_eleve.jour_de_naissance
     }
     post "/identification", params: params
     follow_redirect!
@@ -219,9 +213,9 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement)
     params_identification = {
       identifiant: dossier_eleve.identifiant,
-      annee: eleve.annee_de_naissance,
-      mois: eleve.mois_de_naissance,
-      jour: eleve.jour_de_naissance
+      annee: dossier_eleve.annee_de_naissance,
+      mois: dossier_eleve.mois_de_naissance,
+      jour: dossier_eleve.jour_de_naissance
     }
     regime_sortie = Fabricate(:regime_sortie)
     Fabricate(:regime_sortie)
@@ -240,9 +234,9 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement)
     params_identification = {
       identifiant: dossier_eleve.identifiant,
-      annee: eleve.annee_de_naissance,
-      mois: eleve.mois_de_naissance,
-      jour: eleve.jour_de_naissance
+      annee: dossier_eleve.annee_de_naissance,
+      mois: dossier_eleve.mois_de_naissance,
+      jour: dossier_eleve.jour_de_naissance
     }
 
     params = { continuer_dossiersco: true }
@@ -261,9 +255,9 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement)
     params_identification = {
       identifiant: dossier_eleve.identifiant,
-      annee: eleve.annee_de_naissance,
-      mois: eleve.mois_de_naissance,
-      jour: eleve.jour_de_naissance
+      annee: dossier_eleve.annee_de_naissance,
+      mois: dossier_eleve.mois_de_naissance,
+      jour: dossier_eleve.jour_de_naissance
     }
     post "/identification", params: params_identification
 
@@ -280,9 +274,9 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
     dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement)
     params_identification = {
       identifiant: dossier_eleve.identifiant,
-      annee: eleve.annee_de_naissance,
-      mois: eleve.mois_de_naissance,
-      jour: eleve.jour_de_naissance
+      annee: dossier_eleve.annee_de_naissance,
+      mois: dossier_eleve.mois_de_naissance,
+      jour: dossier_eleve.jour_de_naissance
     }
     post "/identification", params: params_identification
 

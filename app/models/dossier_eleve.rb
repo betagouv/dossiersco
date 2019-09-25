@@ -207,4 +207,16 @@ class DossierEleve < ActiveRecord::Base
     options_obligatoires + options_facultatives
   end
 
+  def annee_de_naissance
+    date_naiss.split("-")[0]
+  end
+
+  def mois_de_naissance
+    date_naiss.split("-")[1]
+  end
+
+  def jour_de_naissance
+    date_naiss.split("-")[2]
+  end
+
 end

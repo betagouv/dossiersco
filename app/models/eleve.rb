@@ -42,18 +42,6 @@ class Eleve < ActiveRecord::Base
     abandon.map(&:option)
   end
 
-  def annee_de_naissance
-    date_naiss.split("-")[0]
-  end
-
-  def mois_de_naissance
-    date_naiss.split("-")[1]
-  end
-
-  def jour_de_naissance
-    date_naiss.split("-")[2]
-  end
-
   def facultative(options_du_groupe)
     options_du_groupe.flat_map do |options|
       options.map do |option|

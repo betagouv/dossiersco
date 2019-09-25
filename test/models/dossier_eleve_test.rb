@@ -81,22 +81,24 @@ class DossierEleveTest < ActiveSupport::TestCase
   test "#par_authentification avec identifiant saisi en minuscule" do
     eleve = Fabricate(:eleve, identifiant: "UNINE")
     dossier = Fabricate(:dossier_eleve, eleve: eleve)
-    assert_equal dossier, DossierEleve.par_authentification("un_ine", eleve.jour_de_naissance, eleve.mois_de_naissance, eleve.annee_de_naissance)
+    assert_equal dossier, DossierEleve.par_authentification("un_ine",
+                                                            dossier.jour_de_naissance, dossier.mois_de_naissance, dossier.annee_de_naissance)
   end
 
   test "#par_authentification fonctionne aussi avec un identifiant en majuscule" do
     eleve = Fabricate(:eleve, identifiant: "ENMAJUSCULE")
     dossier = Fabricate(:dossier_eleve, eleve: eleve)
-    assert_equal dossier, DossierEleve.par_authentification("EnMaJuScUlE", eleve.jour_de_naissance, eleve.mois_de_naissance, eleve.annee_de_naissance)
+    assert_equal dossier, DossierEleve.par_authentification("EnMaJuScUlE",
+                                                            dossier.jour_de_naissance, dossier.mois_de_naissance, dossier.annee_de_naissance)
   end
 
   test "#par_authentification ne contient que des alphanums" do
     eleve = Fabricate(:eleve, identifiant: "ALPHANUM1234")
     dossier = Fabricate(:dossier_eleve, eleve: eleve)
     assert_equal dossier, DossierEleve.par_authentification("alpha,num;1234!",
-                                                            eleve.jour_de_naissance,
-                                                            eleve.mois_de_naissance,
-                                                            eleve.annee_de_naissance)
+                                                            dossier.jour_de_naissance,
+                                                            dossier.mois_de_naissance,
+                                                            dossier.annee_de_naissance)
   end
 
   test "ajoute un message à envoyer pour la relance SMS" do
@@ -264,6 +266,24 @@ class DossierEleveTest < ActiveSupport::TestCase
     eleve = Fabricate.build(:eleve, id_prv_ele: "24463")
     dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
     assert_equal eleve.id_prv_ele, dossier.id_prv_ele
+  end
+
+  test "a une année de naissance" do
+    eleve = Fabricate.build(:eleve, date_naiss: "2004-04-27")
+    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    assert_equal "2004", dossier.annee_de_naissance
+  end
+
+  test "a un mois de naissance" do
+    eleve = Fabricate.build(:eleve, date_naiss: "2004-04-27")
+    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    assert_equal "04", dossier.mois_de_naissance
+  end
+
+  test "a un jour de naissance" do
+    eleve = Fabricate.build(:eleve, date_naiss: "2004-04-27")
+    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    assert_equal "27", dossier.jour_de_naissance
   end
 
 end

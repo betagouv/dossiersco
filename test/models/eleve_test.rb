@@ -8,27 +8,15 @@ class EleveTest < ActiveSupport::TestCase
     assert Fabricate.build(:eleve).valid?
   end
 
-  test "a une année de naissance" do
-    eleve = Fabricate.build(:eleve, date_naiss: "2004-04-27")
-    assert_equal "2004", eleve.annee_de_naissance
-  end
-
-  test "a un mois de naissance" do
-    eleve = Fabricate.build(:eleve, date_naiss: "2004-04-27")
-    assert_equal "04", eleve.mois_de_naissance
-  end
-
-  test "a un jour de naissance" do
-    eleve = Fabricate.build(:eleve, date_naiss: "2004-04-27")
-    assert_equal "27", eleve.jour_de_naissance
-  end
-
   test "#par_authentification" do
     eleve = Fabricate(:eleve)
-    assert_equal eleve, Eleve.par_authentification(eleve.identifiant, eleve.jour_de_naissance, eleve.mois_de_naissance, eleve.annee_de_naissance)
+    dossier = Fabricate(:dossier_eleve, eleve: eleve)
+    assert_equal eleve, Eleve.par_authentification(dossier.identifiant,
+                                                   dossier.jour_de_naissance, dossier.mois_de_naissance, dossier.annee_de_naissance)
 
     eleve = Fabricate(:eleve, identifiant: "TRUC")
-    assert_equal eleve, Eleve.par_authentification("truc", eleve.jour_de_naissance, eleve.mois_de_naissance, eleve.annee_de_naissance)
+    dossier = Fabricate(:dossier_eleve, eleve: eleve)
+    assert_equal eleve, Eleve.par_authentification("truc", dossier.jour_de_naissance, dossier.mois_de_naissance, dossier.annee_de_naissance)
   end
 
   test "#par_authentification avec des jour et mois sur 2 digits" do
