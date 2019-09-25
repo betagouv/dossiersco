@@ -19,21 +19,6 @@ class Eleve < ActiveRecord::Base
     find_or_initialize_by(identifiant: identifiant.gsub(/[^[:alnum:]]/, "").upcase)
   end
 
-  def obligatoire(options_du_groupe)
-    options_du_groupe.map do |options|
-      noms_options_du_groupe = options.collect(&:nom)
-      noms_demandes = demande.map(&:option).map(&:nom)
-      options_du_groupe_demandees = noms_demandes & noms_options_du_groupe
-      {
-        label: options.first.groupe,
-        name: options.first.groupe,
-        type: "radio",
-        options: options.collect(&:nom),
-        checked: options_du_groupe_demandees.size == 1 ? options_du_groupe_demandees[0] : ""
-      }
-    end
-  end
-
   def options_demandees
     demande.map(&:option)
   end
