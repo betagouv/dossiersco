@@ -19,36 +19,4 @@ class Eleve < ActiveRecord::Base
     find_or_initialize_by(identifiant: identifiant.gsub(/[^[:alnum:]]/, "").upcase)
   end
 
-  def options_demandees
-    demande.map(&:option)
-  end
-
-  def options_abandonnees
-    abandon.map(&:option)
-  end
-
-  def facultative(options_du_groupe)
-    options_du_groupe.flat_map do |options|
-      options.map do |option|
-        {
-          name: option.nom,
-          label: option.groupe,
-          type: "check",
-          condition: options_demandees.include?(option),
-          desc: option.nom_et_info
-        }
-      end
-    end
-  end
-
-  def obligatoire_sans_choix(options_du_groupe)
-    options_du_groupe.map do |options|
-      {
-        name: options.first.nom,
-        label: options.first.groupe,
-        type: "hidden"
-      }
-    end
-  end
-
 end
