@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_20_173624) do
+ActiveRecord::Schema.define(version: 2019_09_25_130833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,20 @@ ActiveRecord::Schema.define(version: 2019_09_20_173624) do
     t.string "division_an_dernier"
     t.string "division"
     t.string "retour_siecle_impossible"
+    t.string "identifiant"
+    t.string "prenom"
+    t.string "nom"
+    t.string "sexe"
+    t.string "ville_naiss"
+    t.string "nationalite"
+    t.string "classe_ant"
+    t.string "date_naiss"
+    t.string "pays_naiss"
+    t.string "niveau_classe_ant"
+    t.string "prenom_2"
+    t.string "prenom_3"
+    t.string "commune_insee_naissance"
+    t.string "id_prv_ele"
     t.index ["eleve_id"], name: "index_dossier_eleves_on_eleve_id"
     t.index ["mef_destination_id"], name: "index_dossier_eleves_on_mef_destination_id"
     t.index ["mef_origine_id"], name: "index_dossier_eleves_on_mef_origine_id"

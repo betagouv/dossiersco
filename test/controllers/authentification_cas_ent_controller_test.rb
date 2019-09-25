@@ -81,11 +81,11 @@ class AuthentificationCasEntControllerTest < ActionDispatch::IntegrationTest
                            prenom: "Henri",
                            adresse: "533 RUE DU TEST",
                            email: "henri@ford.com")
-    autre_eleve = Fabricate(:eleve, prenom: "Fiesta", nom: "FORD")
     autre_dossier_eleve = Fabricate(:dossier_eleve,
                                     etablissement: etablissement,
                                     resp_legal: [resp_legal],
-                                    eleve: autre_eleve)
+                                    prenom: "Fiesta",
+                                    nom: "FORD")
 
     request = "https://ent.parisclassenumerique.fr/cas/serviceValidate?service=https://demo.dossiersco.fr/retour-ent&ticket=something"
     body_response = File.read(fixture_file_upload("files/retour_ent_plusieurs_enfants.xml"))
@@ -98,8 +98,8 @@ class AuthentificationCasEntControllerTest < ActionDispatch::IntegrationTest
     assert_template "authentification_cas_ent/choix_dossier_eleve", format: "html"
     assert response.body.include?(dossier_eleve.nom), "#{dossier_eleve.nom} devrait être dans l'écran"
     assert response.body.include?(dossier_eleve.prenom), "#{dossier_eleve.prenom} devrait être dans l'écran"
-    assert response.body.include?(autre_eleve.nom), "#{autre_eleve.nom} devrait être dans l'écran"
-    assert response.body.include?(autre_eleve.prenom), "#{autre_eleve.prenom} devrait être dans l'écran"
+    assert response.body.include?(autre_dossier_eleve.nom), "#{autre_dossier_eleve.nom} devrait être dans l'écran"
+    assert response.body.include?(autre_dossier_eleve.prenom), "#{autre_dossier_eleve.prenom} devrait être dans l'écran"
     assert response.body.include?(dossier_eleve.etablissement.nom), "#{dossier_eleve.etablissement.nom} devrait être dans l'écran"
     assert response.body.include?(autre_dossier_eleve.etablissement.nom), "#{autre_dossier_eleve.etablissement.nom} devrait être dans l'écran"
   end
