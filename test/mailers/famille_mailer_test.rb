@@ -7,10 +7,9 @@ class FamilleMailerTest < ActionMailer::TestCase
   test "contacter_une_famille" do
     etablissement = Fabricate(:etablissement, envoyer_aux_familles: true)
     agent = Fabricate(:agent, etablissement: etablissement)
-    eleve = Fabricate(:eleve)
     resp_legal = Fabricate(:resp_legal, email: "henri@ford.com")
-    d = Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement, resp_legal: [resp_legal])
-    email = FamilleMailer.contacter_une_famille(eleve, agent, "un message spécifique")
+    dossier = Fabricate(:dossier_eleve, etablissement: etablissement, resp_legal: [resp_legal])
+    email = FamilleMailer.contacter_une_famille(dossier, agent, "un message spécifique")
 
     assert_emails 1 do
       email.deliver_now
@@ -23,17 +22,16 @@ class FamilleMailerTest < ActionMailer::TestCase
     assert_equal "Réinscription de votre enfant au collège", email.subject
 
     assert email.body.include? etablissement.nom
-    assert email.body.include? d.nom
+    assert email.body.include? dossier.nom
     assert email.body.include?("un message spécifique")
   end
 
   test "envoyer mail confirmation" do
     etablissement = Fabricate(:etablissement, envoyer_aux_familles: true, email_reponse: "ce.1000135X@ac-.fr")
-    eleve = Fabricate(:eleve)
     resp_legal = Fabricate(:resp_legal, email: "henri@ford.com")
-    d = Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement, resp_legal: [resp_legal])
+    dossier = Fabricate(:dossier_eleve, etablissement: etablissement, resp_legal: [resp_legal])
 
-    email = FamilleMailer.envoyer_mail_confirmation(eleve)
+    email = FamilleMailer.envoyer_mail_confirmation(dossier)
 
     assert_emails 1 do
       email.deliver_now
@@ -46,20 +44,16 @@ class FamilleMailerTest < ActionMailer::TestCase
     assert_equal "Réinscription de votre enfant au collège", email.subject
 
     assert email.body.include? etablissement.nom
-    assert email.body.include? d.nom
+    assert email.body.include? dossier.nom
   end
 
   test "mail validation inscription" do
     etablissement = Fabricate(:etablissement, envoyer_aux_familles: true)
     agent = Fabricate(:agent, etablissement: etablissement)
-    eleve = Fabricate(:eleve)
     resp_legal = Fabricate(:resp_legal, email: "henri@ford.com")
-    d = Fabricate(:dossier_eleve,
-                  eleve: eleve,
-                  etablissement: etablissement,
-                  resp_legal: [resp_legal])
+    dossier = Fabricate(:dossier_eleve, etablissement: etablissement, resp_legal: [resp_legal])
 
-    email = FamilleMailer.mail_validation_inscription(eleve, agent)
+    email = FamilleMailer.mail_validation_inscription(dossier, agent)
 
     assert_emails 1 do
       email.deliver_now
@@ -72,7 +66,7 @@ class FamilleMailerTest < ActionMailer::TestCase
     assert_equal "Réinscription de votre enfant au collège", email.subject
 
     assert email.body.include? etablissement.nom
-    assert email.body.include? d.nom
+    assert email.body.include? dossier.nom
   end
 
 end

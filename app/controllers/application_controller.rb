@@ -3,7 +3,7 @@
 class ApplicationController < ActionController::Base
 
   def retrouve_eleve_connecte
-    @eleve ||= Eleve.find_by(identifiant: session[:identifiant])
+    @eleve ||= DossierEleve.find_by(identifiant: session[:identifiant])
     if @eleve
       ajoute_information_utilisateur_pour_sentry(
         type_utilisateur: "famille",

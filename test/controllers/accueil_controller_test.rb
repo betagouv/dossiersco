@@ -5,9 +5,8 @@ require "test_helper"
 class AccueilControllerTest < ActionDispatch::IntegrationTest
 
   def cree_dossier_eleve_et_identification
-    eleve = Fabricate(:eleve)
     etablissement = Fabricate(:etablissement)
-    dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement)
+    dossier_eleve = Fabricate(:dossier_eleve, etablissement: etablissement)
     params_identification = {
       identifiant: dossier_eleve.identifiant,
       annee: dossier_eleve.annee_de_naissance,

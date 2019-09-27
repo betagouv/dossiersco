@@ -15,8 +15,8 @@ class ImporterSiecleTest < ActiveJob::TestCase
   end
 
   test "Une tache passe d'« en attente » à « terminée » avec un fichier" do
-    fichier_xls = fixture_file_upload("files/test_import_siecle.xls")
-    tache = Fabricate(:tache_import, fichier: fichier_xls)
+    fichier_nomenclature = fixture_file_upload("files/nomenclature_simple.xml")
+    tache = Fabricate(:tache_import, fichier: fichier_nomenclature, type_fichier: "nomenclature")
     assert_equal "en attente", tache.statut
     ImporterSiecle.perform_now(tache.id, "an_email@example.com")
     tache.reload
@@ -62,7 +62,7 @@ class ImporterSiecleTest < ActiveJob::TestCase
     assert_equal "Import des élèves dans DossierSCO", last_email.subject
   end
 
-  test "appel ImportEleveComplete si le type_fichier est nil" do
+  test "indique une erreur si le type_fichier est nil" do
     ActionMailer::Base.deliveries.clear
 
     fichier_xls = fixture_file_upload("files/test_import_siecle.xls")
@@ -72,7 +72,7 @@ class ImporterSiecleTest < ActiveJob::TestCase
 
     assert_equal 1, ActionMailer::Base.deliveries.count
     last_email = ActionMailer::Base.deliveries.last
-    assert_equal "Import de votre base élève dans DossierSCO", last_email.subject
+    assert_equal "L'import de votre base élève a échoué", last_email.subject
   end
 
 end

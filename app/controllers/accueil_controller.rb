@@ -49,8 +49,8 @@ class AccueilController < ApplicationController
   end
 
   def accueil
-    @eleve.dossier_eleve.update derniere_etape: "accueil"
-    @dossier_eleve = @eleve.dossier_eleve
+    @eleve.update derniere_etape: "accueil"
+    @dossier_eleve = @eleve
   end
 
   def post_accueil
@@ -58,8 +58,8 @@ class AccueilController < ApplicationController
   end
 
   def eleve
-    @eleve.dossier_eleve.update derniere_etape: "eleve"
-    @dossier_eleve = @eleve.dossier_eleve
+    @eleve.update derniere_etape: "eleve"
+    @dossier_eleve = @eleve
     @options_pedagogiques = @dossier_eleve.mef_destination&.options_pedagogiques
 
     @option_origines_ids = @dossier_eleve.options_origines.map { |k, _v| k.to_i }
@@ -80,8 +80,8 @@ class AccueilController < ApplicationController
   end
 
   def post_eleve
-    if @eleve.update(params_eleve)
-      dossier_eleve = @eleve.dossier_eleve
+    if @eleve.update(params_dossier_eleve)
+      dossier_eleve = @eleve
       dossier_eleve.options_pedagogiques = []
       @options_pedagogiques = OptionPedagogique.where(etablissement: dossier_eleve.etablissement)
       @options_pedagogiques.each do |option|
@@ -100,12 +100,12 @@ class AccueilController < ApplicationController
     end
   end
 
-  def params_eleve
-    params.require(:eleve).permit!
+  def params_dossier_eleve
+    params.require(:dossier_eleve).permit!
   end
 
   def famille
-    @dossier_eleve = @eleve.dossier_eleve
+    @dossier_eleve = @eleve
     @dossier_eleve.update derniere_etape: "famille"
     @dossier_eleve.resp_legal << RespLegal.new(priorite: 2) if @dossier_eleve.resp_legal.count < 2
     @dossier_eleve.resp_legal.sort_by(&:priorite)
@@ -125,7 +125,7 @@ class AccueilController < ApplicationController
   end
 
   def post_famille
-    @dossier_eleve = @eleve.dossier_eleve
+    @dossier_eleve = @eleve
 
     valide = true
     save_dossier = @dossier_eleve.update(params_dossier_famille)
@@ -162,8 +162,8 @@ class AccueilController < ApplicationController
   end
 
   def validation
-    @eleve.dossier_eleve.update derniere_etape: "validation"
-    @dossier_eleve = @eleve.dossier_eleve
+    @eleve.update derniere_etape: "validation"
+    @dossier_eleve = @eleve
     analyseur = AnalyseurOption.new(@dossier_eleve)
     @options_maintenues = analyseur.option_maintenue
     @options_demandees = analyseur.option_demandee
@@ -171,12 +171,12 @@ class AccueilController < ApplicationController
   end
 
   def post_validation
-    @dossier_eleve = @eleve.dossier_eleve
+    @dossier_eleve = @eleve
     @dossier_eleve.signature = params[:signature]
     @dossier_eleve.date_validation_famille = @dossier_eleve.date_validation_famille ||= Time.now
     @dossier_eleve.save
     if @dossier_eleve.etat != "validé"
-      mail = FamilleMailer.envoyer_mail_confirmation(@dossier_eleve.eleve)
+      mail = FamilleMailer.envoyer_mail_confirmation(@dossier_eleve)
       part = mail.html_part || mail.text_part || mail
       Message.create(categorie: "mail", contenu: part.body, etat: "envoyé", dossier_eleve: @dossier)
       mail.deliver_now
@@ -186,18 +186,18 @@ class AccueilController < ApplicationController
   end
 
   def confirmation
-    @dossier_eleve = @eleve.dossier_eleve
+    @dossier_eleve = @eleve
     render "confirmation"
   end
 
   def administration
-    @eleve.dossier_eleve.update derniere_etape: "administration"
-    @dossier_eleve = @eleve.dossier_eleve
+    @eleve.update derniere_etape: "administration"
+    @dossier_eleve = @eleve
     render "administration"
   end
 
   def post_administration
-    dossier_eleve = @eleve.dossier_eleve
+    dossier_eleve = @eleve
     dossier_eleve.demi_pensionnaire = params["demi_pensionnaire"]
     dossier_eleve.regime_sortie = RegimeSortie.find(params["regime_sortie"].to_i) if params["regime_sortie"].present?
     dossier_eleve.renseignements_medicaux = params["renseignements_medicaux"]
@@ -215,21 +215,21 @@ class AccueilController < ApplicationController
   end
 
   def continuer_dossiersco
-    dossier_eleve = @eleve.dossier_eleve
+    dossier_eleve = @eleve
     dossier_eleve.continuer_dossiersco = params[:continuer_dossiersco]
     dossier_eleve.save!
   end
 
   def satisfaction
-    dossier_eleve = @eleve.dossier_eleve
+    dossier_eleve = @eleve
     dossier_eleve.satisfaction = params[:note]
     dossier_eleve.save!
   end
 
   def pieces_a_joindre
-    @eleve.dossier_eleve.update derniere_etape: "pieces_a_joindre"
-    @pieces_jointes = @eleve.dossier_eleve.pieces_jointes
-    @dossier_eleve = @eleve.dossier_eleve
+    @eleve.update derniere_etape: "pieces_a_joindre"
+    @pieces_jointes = @eleve.pieces_jointes
+    @dossier_eleve = @eleve
     render "pieces_a_joindre"
   end
 
@@ -238,7 +238,7 @@ class AccueilController < ApplicationController
   end
 
   def post_pieces_a_joindre
-    @dossier_eleve = @eleve.dossier_eleve
+    @dossier_eleve = @eleve
     if @dossier_eleve.pieces_manquantes?
       @pieces_jointes = @dossier_eleve.pieces_jointes
       flash[:erreur] = "Veuillez télécharger les pièces obligatoires"
@@ -249,7 +249,7 @@ class AccueilController < ApplicationController
   end
 
   def commentaire
-    dossier_eleve = @eleve.dossier_eleve
+    dossier_eleve = @eleve
     dossier_eleve.commentaire = params[:commentaire]
     dossier_eleve.save!
     head :ok
@@ -261,14 +261,14 @@ class AccueilController < ApplicationController
   end
 
   def note_avancement_et_redirige_vers(page_destination)
-    @eleve.dossier_eleve.update!(derniere_etape: page_destination)
+    @eleve.update!(derniere_etape: page_destination)
 
     index_entree_menu = @entrees_de_menu.index(page_destination)
     index_entree_menu ||= 0
-    index_etape_la_plus_avancee = @entrees_de_menu.index(@eleve.dossier_eleve.etape_la_plus_avancee)
+    index_etape_la_plus_avancee = @entrees_de_menu.index(@eleve.etape_la_plus_avancee)
     index_etape_la_plus_avancee ||= 0
 
-    @eleve.dossier_eleve.update!(etape_la_plus_avancee: page_destination) if index_entree_menu > index_etape_la_plus_avancee
+    @eleve.update!(etape_la_plus_avancee: page_destination) if index_entree_menu > index_etape_la_plus_avancee
 
     redirect_to "/#{page_destination}"
   end

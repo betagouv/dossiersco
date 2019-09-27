@@ -22,9 +22,7 @@ class ImporterSiecle < ApplicationJob
       ImportEleves.new.perform(tache)
       mail = AgentMailer.succes_import_eleves(email)
     else
-      importeur = ImportEleveComplete.new
-      importeur.perform(tache)
-      mail = AgentMailer.succes_import(email, importeur.statistiques)
+      raise StandardError, "type d'import non couvert"
     end
     mail.deliver_now
 

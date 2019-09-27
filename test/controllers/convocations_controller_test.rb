@@ -22,12 +22,12 @@ class ConvocationsControllerTest < ActionDispatch::IntegrationTest
                                            etablissement: agent.etablissement,
                                            etat: "pas connecté",
                                            resp_legal: [Fabricate(:resp_legal, priorite: 1)],
-                                           eleve: Fabricate(:eleve, nom: "Piaf"))
+                                           nom: "Piaf")
     dossier_eleve_connecte = Fabricate(:dossier_eleve,
                                        etablissement: agent.etablissement,
                                        etat: "connecté",
                                        resp_legal: [Fabricate(:resp_legal, priorite: 1)],
-                                       eleve: Fabricate(:eleve, nom: "Blayo"))
+                                       nom: "Blayo")
 
     identification_agent(agent)
 

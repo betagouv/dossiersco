@@ -20,20 +20,17 @@ class AnalyseurRetourSiecleTest < ActiveSupport::TestCase
   end
 
   test "Un dossier dont le prénom est vide n'est pas exportable" do
-    eleve = Fabricate(:eleve, prenom: nil)
-    dossier = Fabricate(:dossier_eleve_valide, mef_an_dernier: "12345678901", eleve: eleve)
+    dossier = Fabricate(:dossier_eleve_valide, mef_an_dernier: "12345678901", prenom: nil)
     assert_equal I18n.t("retour_siecles.dossier_sans_nom_ou_prenom"), AnalyseurRetourSiecle.analyse(dossier)
   end
 
   test "Un dossier dont le nom est vide n'est pas exportable" do
-    eleve = Fabricate(:eleve, nom: "")
-    dossier = Fabricate(:dossier_eleve_valide, mef_an_dernier: "12345678901", eleve: eleve)
+    dossier = Fabricate(:dossier_eleve_valide, mef_an_dernier: "12345678901", nom: "")
     assert_equal I18n.t("retour_siecles.dossier_sans_nom_ou_prenom"), AnalyseurRetourSiecle.analyse(dossier)
   end
 
   test "Si l'élève est né en france, il doit avoir une commune insee de naissance pour être exportable" do
-    eleve = Fabricate(:eleve, pays_naiss: "100", commune_insee_naissance: nil)
-    dossier = Fabricate(:dossier_eleve_valide, mef_an_dernier: "12345678901", eleve: eleve)
+    dossier = Fabricate(:dossier_eleve_valide, mef_an_dernier: "12345678901", pays_naiss: "100", commune_insee_naissance: nil)
     assert_equal I18n.t("retour_siecles.probleme_commune_naissance"), AnalyseurRetourSiecle.analyse(dossier)
   end
 

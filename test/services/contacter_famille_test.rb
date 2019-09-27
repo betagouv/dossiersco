@@ -13,7 +13,7 @@ class ContacterFamilleTest < ActiveSupport::TestCase
     etablissement = dossier.etablissement
     etablissement.update!(envoyer_aux_familles: true)
 
-    contacter = ContacterFamille.new(dossier.eleve)
+    contacter = ContacterFamille.new(dossier)
 
     assert_equal 0, ActionMailer::Base.deliveries.count
     message = "un message"
@@ -29,7 +29,7 @@ class ContacterFamilleTest < ActiveSupport::TestCase
     etablissement = dossier.etablissement
     etablissement.update!(envoyer_aux_familles: true)
 
-    contacter = ContacterFamille.new(dossier.eleve)
+    contacter = ContacterFamille.new(dossier)
 
     assert_equal "33777777777", contacter.ajoute_code_pays("7777777777")
   end
@@ -40,20 +40,20 @@ class ContacterFamilleTest < ActiveSupport::TestCase
     etablissement = dossier.etablissement
     etablissement.update!(envoyer_aux_familles: true)
 
-    contacter = ContacterFamille.new(dossier.eleve)
+    contacter = ContacterFamille.new(dossier)
 
     assert_equal "33666666666", contacter.ajoute_code_pays("33666666666")
   end
 
   test "true avec corine@example.com" do
     dossier = Fabricate(:dossier_eleve)
-    contacter = ContacterFamille.new(dossier.eleve)
+    contacter = ContacterFamille.new(dossier)
     assert contacter.email?("corine@example.com")
   end
 
   test "false avec 5555555555" do
     dossier = Fabricate(:dossier_eleve)
-    contacter = ContacterFamille.new(dossier.eleve)
+    contacter = ContacterFamille.new(dossier)
     assert !contacter.email?("5555555555")
   end
 

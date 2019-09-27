@@ -79,22 +79,19 @@ class DossierEleveTest < ActiveSupport::TestCase
   end
 
   test "#par_authentification avec identifiant saisi en minuscule" do
-    eleve = Fabricate(:eleve, identifiant: "UNINE")
-    dossier = Fabricate(:dossier_eleve, eleve: eleve)
+    dossier = Fabricate(:dossier_eleve, identifiant: "UNINE")
     assert_equal dossier, DossierEleve.par_authentification("un_ine",
                                                             dossier.jour_de_naissance, dossier.mois_de_naissance, dossier.annee_de_naissance)
   end
 
   test "#par_authentification fonctionne aussi avec un identifiant en majuscule" do
-    eleve = Fabricate(:eleve, identifiant: "ENMAJUSCULE")
-    dossier = Fabricate(:dossier_eleve, eleve: eleve)
+    dossier = Fabricate(:dossier_eleve, identifiant: "ENMAJUSCULE")
     assert_equal dossier, DossierEleve.par_authentification("EnMaJuScUlE",
                                                             dossier.jour_de_naissance, dossier.mois_de_naissance, dossier.annee_de_naissance)
   end
 
   test "#par_authentification ne contient que des alphanums" do
-    eleve = Fabricate(:eleve, identifiant: "ALPHANUM1234")
-    dossier = Fabricate(:dossier_eleve, eleve: eleve)
+    dossier = Fabricate(:dossier_eleve, identifiant: "ALPHANUM1234")
     assert_equal dossier, DossierEleve.par_authentification("alpha,num;1234!",
                                                             dossier.jour_de_naissance,
                                                             dossier.mois_de_naissance,
@@ -109,16 +106,14 @@ class DossierEleveTest < ActiveSupport::TestCase
   end
 
   test "#par_authentification avec des jours et mois sur deux digits" do
-    eleve = Fabricate(:eleve, identifiant: "INE", date_naiss: "2006-12-11")
-    dossier = Fabricate(:dossier_eleve, eleve: eleve)
-    Fabricate(:dossier_eleve, eleve: Fabricate(:eleve, identifiant: "INE", date_naiss: "2006-02-03"))
+    dossier = Fabricate(:dossier_eleve, identifiant: "INE", date_naiss: "2006-12-11")
+    Fabricate(:dossier_eleve, identifiant: "INE", date_naiss: "2006-02-03")
     assert_equal dossier, DossierEleve.par_authentification("ine", "11", "12", "2006")
   end
 
   test "#par_authentification avec des jours et mois sur un seul digit" do
-    Fabricate(:dossier_eleve, eleve: Fabricate(:eleve, identifiant: "INE", date_naiss: "2006-12-11"))
-    eleve = Fabricate(:eleve, identifiant: "INE", date_naiss: "2006-02-03")
-    dossier = Fabricate(:dossier_eleve, eleve: eleve)
+    Fabricate(:dossier_eleve, identifiant: "INE", date_naiss: "2006-12-11")
+    dossier = Fabricate(:dossier_eleve, identifiant: "INE", date_naiss: "2006-02-03")
     assert_equal dossier, DossierEleve.par_authentification("ine", "3", "2", "2006")
   end
 
@@ -201,89 +196,98 @@ class DossierEleveTest < ActiveSupport::TestCase
   end
 
   test "un dossier élève a le nom d'un élève" do
-    eleve = Fabricate.build(:eleve, nom: "Alice")
-    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    dossier = Fabricate.build(:dossier_eleve, nom: "Alice")
     assert_equal "Alice", dossier.nom
   end
 
   test "un dossier élève a les prenoms d'un élève" do
-    eleve = Fabricate.build(:eleve, prenom: "Alice", prenom_2: "Alice2", prenom_3: "Alice3")
-    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    dossier = Fabricate.build(:dossier_eleve, prenom: "Alice", prenom_2: "Alice2", prenom_3: "Alice3")
     assert_equal "Alice", dossier.prenom
     assert_equal "Alice2", dossier.prenom_2
     assert_equal "Alice3", dossier.prenom_3
   end
 
   test "un dossier élève a l'identifiant d'un élève" do
-    eleve = Fabricate.build(:eleve, identifiant: "0123456789U")
-    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    dossier = Fabricate.build(:dossier_eleve, identifiant: "0123456789U")
     assert_equal "0123456789U", dossier.identifiant
   end
 
   test "un dossier élève a la ville de naissance d'un élève" do
-    eleve = Fabricate.build(:eleve, ville_naiss: "Chateldon")
-    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    dossier = Fabricate.build(:dossier_eleve, ville_naiss: "Chateldon")
     assert_equal "Chateldon", dossier.ville_naiss
   end
 
   test "un dossier élève a le pays de naissance d'un élève" do
-    eleve = Fabricate.build(:eleve, pays_naiss: "100")
-    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    dossier = Fabricate.build(:dossier_eleve, pays_naiss: "100")
     assert_equal "100", dossier.pays_naiss
   end
 
   test "un dossier élève a le sexe d'un élève" do
-    eleve = Fabricate.build(:eleve, sexe: "Féminin")
-    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    dossier = Fabricate.build(:dossier_eleve, sexe: "Féminin")
     assert_equal "Féminin", dossier.sexe
   end
 
   test "un dossier élève a la nationalite d'un élève" do
-    eleve = Fabricate.build(:eleve, nationalite: "FRANCE")
-    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    dossier = Fabricate.build(:dossier_eleve, nationalite: "FRANCE")
     assert_equal "FRANCE", dossier.nationalite
   end
 
   test "un dossier élève a la classe_ant d'un élève" do
-    eleve = Fabricate.build(:eleve, classe_ant: "5C")
-    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
-    assert_equal eleve.classe_ant, dossier.classe_ant
+    dossier = Fabricate.build(:dossier_eleve, classe_ant: "5C")
+    assert_equal dossier.classe_ant, dossier.classe_ant
   end
 
   test "un dossier élève a la date_naiss d'un élève" do
-    eleve = Fabricate.build(:eleve, date_naiss: "2006-05-24")
-    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
-    assert_equal eleve.date_naiss, dossier.date_naiss
+    dossier = Fabricate.build(:dossier_eleve, date_naiss: "2006-05-24")
+    assert_equal dossier.date_naiss, dossier.date_naiss
   end
 
   test "un dossier élève a le niveau_classe_ant  d'un élève" do
-    eleve = Fabricate.build(:eleve, niveau_classe_ant: "5EME")
-    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
-    assert_equal eleve.niveau_classe_ant, dossier.niveau_classe_ant
+    dossier = Fabricate.build(:dossier_eleve, niveau_classe_ant: "5EME")
+    assert_equal dossier.niveau_classe_ant, dossier.niveau_classe_ant
   end
 
   test "un dossier élève a l  d'un élève" do
-    eleve = Fabricate.build(:eleve, id_prv_ele: "24463")
-    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
-    assert_equal eleve.id_prv_ele, dossier.id_prv_ele
+    dossier = Fabricate.build(:dossier_eleve, id_prv_ele: "24463")
+    assert_equal dossier.id_prv_ele, dossier.id_prv_ele
   end
 
   test "a une année de naissance" do
-    eleve = Fabricate.build(:eleve, date_naiss: "2004-04-27")
-    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    dossier = Fabricate.build(:dossier_eleve, date_naiss: "2004-04-27")
     assert_equal "2004", dossier.annee_de_naissance
   end
 
   test "a un mois de naissance" do
-    eleve = Fabricate.build(:eleve, date_naiss: "2004-04-27")
-    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    dossier = Fabricate.build(:dossier_eleve, date_naiss: "2004-04-27")
     assert_equal "04", dossier.mois_de_naissance
   end
 
   test "a un jour de naissance" do
-    eleve = Fabricate.build(:eleve, date_naiss: "2004-04-27")
-    dossier = Fabricate.build(:dossier_eleve, eleve: eleve)
+    dossier = Fabricate.build(:dossier_eleve, date_naiss: "2004-04-27")
     assert_equal "27", dossier.jour_de_naissance
+  end
+
+  test "#par_authentification" do
+    dossier = Fabricate(:dossier_eleve)
+    assert_equal dossier, DossierEleve.par_authentification(
+      dossier.identifiant,
+      dossier.jour_de_naissance,
+      dossier.mois_de_naissance,
+      dossier.annee_de_naissance
+    )
+
+    dossier = Fabricate(:dossier_eleve, identifiant: "TRUC")
+    assert_equal dossier, DossierEleve.par_authentification("truc", dossier.jour_de_naissance, dossier.mois_de_naissance, dossier.annee_de_naissance)
+  end
+
+  test "#par_authentification avec des jour et mois sur 2 digits" do
+    dossier = Fabricate(:dossier_eleve, identifiant: "TRUC", date_naiss: "2006-12-23")
+    assert_equal dossier, DossierEleve.par_authentification("truc", "23", "12", "2006")
+  end
+
+  test "#par_authentification avec des jour et mois sur 1 digits" do
+    dossier = Fabricate(:dossier_eleve, identifiant: "TRUC", date_naiss: "2006-01-04")
+    assert_equal dossier, DossierEleve.par_authentification("truc", "4", "1", "2006")
   end
 
 end

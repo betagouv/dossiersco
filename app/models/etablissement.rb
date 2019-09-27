@@ -48,9 +48,7 @@ class Etablissement < ActiveRecord::Base
   end
 
   def purge_dossiers_eleves!
-    eleves = dossier_eleve.all.map(&:eleve)
     dossier_eleve.destroy_all
-    eleves.map(&:destroy)
     tache_import.destroy_all
   end
 

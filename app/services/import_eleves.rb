@@ -13,45 +13,40 @@ class ImportEleves
   end
 
   def met_a_jour_eleves!(xml)
-    xml.xpath("/BEE_ELEVES/DONNEES/ELEVES/ELEVE").each do |noeud_eleve|
-      eleve = Eleve.find_by(identifiant: noeud_eleve.xpath("ID_NATIONAL").text)
-      next unless eleve
+    xml.xpath("/BEE_ELEVES/DONNEES/ELEVES/ELEVE").each do |noeud|
+      dossier = DossierEleve.find_by(identifiant: noeud.xpath("ID_NATIONAL").text)
+      next unless dossier
 
-      met_a_jour_eleve(eleve, noeud_eleve)
-      met_a_jour_dossier(eleve, noeud_eleve)
+      met_a_jour_commune_insee_naissance(dossier, noeud)
+      met_a_jour_id_prv_ele(dossier, noeud)
+      met_a_jour_prenoms_ele(dossier, noeud)
+      met_a_jour_dossier(dossier, noeud)
     end
   end
 
-  def met_a_jour_eleve(eleve, noeud)
-    met_a_jour_commune_insee_naissance(eleve, noeud)
-    met_a_jour_id_prv_ele(eleve, noeud)
-    met_a_jour_prenoms_ele(eleve, noeud)
-  end
-
-  def met_a_jour_commune_insee_naissance(eleve, noeud)
-    dossier = eleve.dossier_eleve
+  def met_a_jour_commune_insee_naissance(dossier, noeud)
     return if dossier.commune_insee_naissance.present?
 
     code_insee = extrait_le_code_insee_naissance(noeud)
-    eleve&.update(
+    dossier&.update(
       commune_insee_naissance: code_insee,
       ville_naiss: Commune.new.du_code_insee(code_insee)
     )
   end
 
-  def met_a_jour_id_prv_ele(eleve, noeud)
-    eleve&.update(
+  def met_a_jour_id_prv_ele(dossier, noeud)
+    dossier&.update(
       id_prv_ele: extrait_id_eleve(noeud)
     )
   end
 
-  def met_a_jour_prenoms_ele(eleve, noeud)
-    eleve&.update(prenom_2: extrait_prenom2(noeud)) unless eleve&.prenom_2.present?
-    eleve&.update(prenom_3: extrait_prenom3(noeud)) unless eleve&.prenom_3.present?
+  def met_a_jour_prenoms_ele(dossier, noeud)
+    dossier&.update(prenom_2: extrait_prenom2(noeud)) unless dossier&.prenom_2.present?
+    dossier&.update(prenom_3: extrait_prenom3(noeud)) unless dossier&.prenom_3.present?
   end
 
-  def met_a_jour_dossier(eleve, noeud)
-    eleve&.dossier_eleve&.update(
+  def met_a_jour_dossier(dossier_eleve, noeud)
+    dossier_eleve&.update(
       mef_an_dernier: extrait_le_code_mef(noeud),
       division_an_dernier: extrait_la_precedente_division(noeud),
       division: extrait_division_courante(noeud)

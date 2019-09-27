@@ -8,7 +8,6 @@ require "tilt/erb"
 
 class DossierEleve < ActiveRecord::Base
 
-  belongs_to :eleve
   belongs_to :etablissement
   belongs_to :mef_origine, class_name: "Mef", required: false
   belongs_to :mef_destination, class_name: "Mef", required: false
@@ -24,22 +23,6 @@ class DossierEleve < ActiveRecord::Base
 
   accepts_nested_attributes_for :resp_legal
   accepts_nested_attributes_for :contact_urgence
-  accepts_nested_attributes_for :eleve
-
-  delegate :identifiant, to: :eleve
-  delegate :prenom, to: :eleve
-  delegate :nom, to: :eleve
-  delegate :sexe, to: :eleve
-  delegate :ville_naiss, to: :eleve
-  delegate :nationalite, to: :eleve
-  delegate :classe_ant, to: :eleve
-  delegate :date_naiss, to: :eleve
-  delegate :pays_naiss, to: :eleve
-  delegate :niveau_classe_ant, to: :eleve
-  delegate :prenom_2, to: :eleve
-  delegate :prenom_3, to: :eleve
-  delegate :commune_insee_naissance, to: :eleve
-  delegate :id_prv_ele, to: :eleve
 
   ETAT = {
     pas_connecte: "pas connecté",
@@ -62,9 +45,6 @@ class DossierEleve < ActiveRecord::Base
 
   validates :etat, inclusion: { in: ETAT.values }
 
-  # TODO: fusionner Eleve et DossierEleve
-  default_scope { joins(:eleve) }
-
   scope :pour, lambda { |etablissement|
     where(etablissement: etablissement)
   }
@@ -79,10 +59,9 @@ class DossierEleve < ActiveRecord::Base
       .where(etat: ETAT[:valide])
       .joins("INNER JOIN mef AS mef_origine ON mef_origine.id = mef_origine_id AND length(mef_origine.code) = '11'")
       .joins("INNER JOIN mef AS mef_destination ON mef_destination.id = mef_destination_id AND length(mef_destination.code) = '11'")
-      .joins(:eleve)
-      .where("eleves.prenom is not null")
-      .where("eleves.nom is not null")
-      .where("eleves.commune_insee_naissance is not null or (eleves.pays_naiss <> '100' and eleves.ville_naiss is not null)")
+      .where("prenom is not null")
+      .where("nom is not null")
+      .where("commune_insee_naissance is not null or (pays_naiss <> '100' and ville_naiss is not null)")
   }
 
   scope :valide, lambda {
@@ -96,13 +75,6 @@ class DossierEleve < ActiveRecord::Base
   scope :avec_code_mef_destination_invalide, lambda {
     joins("INNER JOIN mef AS mef_destination ON mef_destination.id = mef_destination_id AND length(mef_destination.code) != '11'")
   }
-
-  def self.par_authentification(identifiant, jour, mois, annee)
-    eleve = Eleve.par_authentification(identifiant, jour, mois, annee)
-    return eleve.dossier_eleve if eleve.is_a?(Eleve)
-
-    nil
-  end
 
   def pieces_jointes
     etablissement.pieces_attendues.map do |piece_attendue|
@@ -217,6 +189,16 @@ class DossierEleve < ActiveRecord::Base
 
   def jour_de_naissance
     date_naiss.split("-")[2]
+  end
+
+  def self.par_authentification(identifiant, jour, mois, annee)
+    identifiant = identifiant.gsub(/[^[:alnum:]]/, "").upcase
+    date_naissance = "#{annee}-#{format('%02d', mois.to_i)}-#{format('%02d', jour.to_i)}"
+    find_by(identifiant: identifiant, date_naiss: date_naissance)
+  end
+
+  def self.creation_ou_retrouve_par(identifiant)
+    find_or_initialize_by(identifiant: identifiant.gsub(/[^[:alnum:]]/, "").upcase)
   end
 
 end

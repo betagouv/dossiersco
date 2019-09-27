@@ -32,7 +32,7 @@ module Configuration
     def defini_dossiers
       base_dossiers = @etablissement.dossier_eleve.exportables
       @dossiers = if params[:liste_ine].present?
-                    base_dossiers.joins(:eleve).where("eleves.identifiant in (?)", params[:liste_ine].split(","))
+                    base_dossiers.where("identifiant in (?)", params[:liste_ine].split(","))
                   else
                     base_dossiers
                   end

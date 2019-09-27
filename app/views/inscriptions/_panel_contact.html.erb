@@ -12,10 +12,10 @@
   </div>
   <%= simple_form_for @dossier_eleve, url: agent_update_eleve_path(@dossier_eleve), method: :patch,
                       html: { id: "form-infos-eleve", class: "d-none"} do |f| %>
-    <% if @dossier_eleve.eleve.errors.any? %>
+    <% if @dossier_eleve.errors.any? %>
       <div class="list-errors notification warning">
         <ul>
-          <% @dossier_eleve.eleve.errors.full_messages.each do |msg| %>
+          <% @dossier_eleve.errors.full_messages.each do |msg| %>
             <li><%= msg %></li>
           <% end %>
         </ul>

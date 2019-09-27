@@ -10,8 +10,7 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_entree_succes_eleve_non_inscrit
-    eleve = Fabricate(:eleve)
-    dossier = Fabricate(:dossier_eleve, eleve: eleve, resp_legal: [Fabricate(:resp_legal)])
+    dossier = Fabricate(:dossier_eleve, resp_legal: [Fabricate(:resp_legal)])
 
     post "/identification", params: {
       identifiant: dossier.identifiant,
@@ -30,7 +29,7 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
 
   def test_entree_succes_eleve_1
     resp_legal = Fabricate(:resp_legal)
-    dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
+    dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal], etape_la_plus_avancee: "accueil")
     post "/identification", params: {
       identifiant: dossier_eleve.identifiant,
       annee: dossier_eleve.annee_de_naissance,
@@ -74,15 +73,13 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
   def test_nom_college_accueil
     resp_legal = Fabricate(:resp_legal)
     dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
-    eleve = dossier_eleve.eleve
-    identification(eleve)
+    identification(dossier_eleve)
     follow_redirect!
     doc = Nokogiri::HTML(response.parsed_body)
     assert_equal "Collège #{dossier_eleve.etablissement.nom}", doc.xpath("//div//h1/text()").to_s
   end
 
-  def identification(eleve)
-    dossier = eleve.dossier_eleve
+  def identification(dossier)
     params = {
       identifiant: dossier.identifiant,
       annee: dossier.annee_de_naissance,
@@ -95,10 +92,9 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
   def test_modification_lieu_naiss_eleve
     resp_legal = Fabricate(:resp_legal)
     dossier_eleve = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
-    eleve = dossier_eleve.eleve
-    identification(eleve)
+    identification(dossier_eleve)
 
-    post "/eleve", params: { eleve: { ville_naiss: "Beziers", prenom: "Edith" } }
+    post "/eleve", params: { dossier_eleve: { ville_naiss: "Beziers", prenom: "Edith" } }
     get "/eleve"
     assert response.parsed_body.include? "Edith"
     assert response.parsed_body.include? "Beziers"
@@ -115,7 +111,7 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
       jour: dossier_eleve.jour_de_naissance
     }
     post "/identification", params: params
-    post "/eleve", params: { eleve: { prenom: "Edith" } }
+    post "/eleve", params: { dossier_eleve: { prenom: "Edith" } }
     get "/eleve"
     assert response.parsed_body.include? "Edith"
   end
@@ -136,7 +132,7 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
       mois: dossier_eleve.mois_de_naissance,
       jour: dossier_eleve.jour_de_naissance
     }
-    post "/eleve", params: { eleve: { prenom: dossier_eleve.prenom }, Espagnol: true, Latin: true }
+    post "/eleve", params: { dossier_eleve: { prenom: dossier_eleve.prenom }, Espagnol: true, Latin: true }
     get "/famille"
 
     post "/identification", params: {
@@ -208,9 +204,8 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "une famille choisi un régime d'autorisation de sortie" do
-    eleve = Fabricate(:eleve)
     etablissement = Fabricate(:etablissement)
-    dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement)
+    dossier_eleve = Fabricate(:dossier_eleve, etablissement: etablissement)
     params_identification = {
       identifiant: dossier_eleve.identifiant,
       annee: dossier_eleve.annee_de_naissance,
@@ -229,9 +224,8 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "une famille préfère continuer à utiliser DossierSCO l'année prochaine" do
-    eleve = Fabricate(:eleve)
     etablissement = Fabricate(:etablissement)
-    dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement)
+    dossier_eleve = Fabricate(:dossier_eleve, etablissement: etablissement)
     params_identification = {
       identifiant: dossier_eleve.identifiant,
       annee: dossier_eleve.annee_de_naissance,
@@ -250,9 +244,8 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "Une pièce jointe non validée peut être modifiée" do
-    eleve = Fabricate(:eleve)
     etablissement = Fabricate(:etablissement)
-    dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement)
+    dossier_eleve = Fabricate(:dossier_eleve, etablissement: etablissement)
     params_identification = {
       identifiant: dossier_eleve.identifiant,
       annee: dossier_eleve.annee_de_naissance,
@@ -269,9 +262,8 @@ class AccueilControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "Une pièce jointe validée ne peut pas être modifiée" do
-    eleve = Fabricate(:eleve)
     etablissement = Fabricate(:etablissement)
-    dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement)
+    dossier_eleve = Fabricate(:dossier_eleve, etablissement: etablissement)
     params_identification = {
       identifiant: dossier_eleve.identifiant,
       annee: dossier_eleve.annee_de_naissance,

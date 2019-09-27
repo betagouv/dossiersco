@@ -123,8 +123,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     identification_agent(agent)
 
     post "/agent/eleve_sortant", params: { identifiant: dossier.identifiant }
-    eleve = dossier.eleve
-    assert_equal "sortant", eleve.dossier_eleve.etat
+    assert_equal "sortant", dossier.etat
 
     get "/agent/eleve/#{dossier.identifiant}"
     doc = Nokogiri::HTML(response.body)
@@ -172,8 +171,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
   test "affiche l'email du resp_legal" do
     etablissement = Fabricate(:etablissement)
-    eleve = Fabricate(:eleve, identifiant: "XXX")
-    dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement)
+    dossier_eleve = Fabricate(:dossier_eleve, etablissement: etablissement, identifiant: "XXX")
     Fabricate(:resp_legal, dossier_eleve: dossier_eleve, email: "test@test.com", priorite: 1)
 
     agent = Fabricate(:agent, etablissement: dossier_eleve.etablissement)
@@ -185,8 +183,6 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_affiche_contacts
-    Eleve.create! identifiant: "XXX"
-
     resp_legal = Fabricate(:resp_legal,
                            tel_personnel: "0101010101",
                            tel_portable: "0606060606",
@@ -194,7 +190,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
                            priorite: 1)
 
     contact_urgence = Fabricate(:contact_urgence, tel_principal: "0103030303")
-    dossier = Fabricate(:dossier_eleve, resp_legal: [resp_legal], contact_urgence: contact_urgence)
+    dossier = Fabricate(:dossier_eleve, resp_legal: [resp_legal], contact_urgence: contact_urgence, identifiant: "XXX")
 
     agent = Fabricate(:agent, etablissement: dossier.etablissement)
     identification_agent(agent)
@@ -290,9 +286,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     etablissement = Fabricate(:etablissement, envoyer_aux_familles: true)
     resp_legal = Fabricate(:resp_legal)
-    dossier = Fabricate(:dossier_eleve,
-                        etablissement: etablissement,
-                        resp_legal: [resp_legal])
+    dossier = Fabricate(:dossier_eleve, etablissement: etablissement, resp_legal: [resp_legal])
     agent = Fabricate(:agent, etablissement: etablissement)
 
     identification_agent(agent)
@@ -337,9 +331,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_page_eleve_agent_affiche_adresse_sans_changement
-    eleve = Fabricate(:eleve, identifiant: "truc")
     resp_legal = Fabricate(:resp_legal)
-    dossier = Fabricate(:dossier_eleve, eleve: eleve, resp_legal: [resp_legal])
+    dossier = Fabricate(:dossier_eleve, resp_legal: [resp_legal], identifiant: "truc")
     agent = Fabricate(:agent)
     identification_agent(agent)
 
@@ -351,8 +344,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
 
   def test_un_agent_voit_un_commentaire_parent_dans_vue_eleve
     etablissement = Fabricate(:etablissement)
-    e = Fabricate(:eleve, identifiant: "XXX")
-    d = DossierEleve.create! eleve_id: e.id, etablissement_id: etablissement.id, commentaire: "Commentaire de test"
+    d = Fabricate(:dossier_eleve, etablissement_id: etablissement.id, commentaire: "Commentaire de test", identifiant: "XXX")
     Fabricate(:resp_legal, dossier_eleve: d)
 
     agent = Fabricate(:agent, etablissement: d.etablissement)
@@ -364,8 +356,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "un agent ne peut pas valider un dossier si la famille n'a pas fini l'inscription" do
-    e = Fabricate(:eleve, identifiant: "XXX")
-    d = Fabricate(:dossier_eleve, etat: "connecté", eleve: e)
+    d = Fabricate(:dossier_eleve, etat: "connecté", identifiant: "XXX")
     Fabricate(:resp_legal, dossier_eleve: d)
 
     agent = Fabricate(:agent, etablissement: d.etablissement)
@@ -379,24 +370,23 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "un agent  peut valider un dossier si la famille a fini l'inscription" do
-    e = Fabricate(:eleve, identifiant: "XXX")
-    d = Fabricate(:dossier_eleve, etat: "en attente de validation", eleve: e)
-    Fabricate(:resp_legal, dossier_eleve: d)
+    dossier = Fabricate(:dossier_eleve, etat: "en attente de validation", identifiant: "XXX")
+    Fabricate(:resp_legal, dossier_eleve: dossier)
 
-    agent = Fabricate(:agent, etablissement: d.etablissement)
+    agent = Fabricate(:agent, etablissement: dossier.etablissement)
     identification_agent(agent)
     get "/agent/eleve/XXX"
 
     doc = Nokogiri::HTML(response.body)
 
-    assert_not_equal I18n.t("inscriptions.eleve.impossible_valider", etat: d.etat), doc.xpath("//*[@id='dossier']/div/div[2]/form[1]/div").text.strip!
+    assert_not_equal I18n.t("inscriptions.eleve.impossible_valider", etat: dossier.etat),
+                     doc.xpath("//*[@id='dossier']/div/div[2]/form[1]/div").text.strip!
     assert_equal I18n.t("inscriptions.eleve.valider_inscription"), doc.xpath('//*[@id="bouton-validation-inscription"]').children.text
   end
 
   test "Une pièce jointe non validée peut être modifiée" do
-    eleve = Fabricate(:eleve, identifiant: "XXX")
     etablissement = Fabricate(:etablissement)
-    dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement)
+    dossier_eleve = Fabricate(:dossier_eleve, etablissement: etablissement, identifiant: "XXX")
     Fabricate(:resp_legal, dossier_eleve: dossier_eleve)
     piece_attendue = Fabricate(:piece_attendue, etablissement: etablissement)
     Fabricate(:piece_jointe, piece_attendue: piece_attendue, dossier_eleve: dossier_eleve, etat: "soumis")
@@ -409,9 +399,8 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "Une pièce jointe validée ne peut pas être modifiée" do
-    eleve = Fabricate(:eleve, identifiant: "XXX")
     etablissement = Fabricate(:etablissement)
-    dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve, etablissement: etablissement)
+    dossier_eleve = Fabricate(:dossier_eleve, etablissement: etablissement, identifiant: "XXX")
     Fabricate(:resp_legal, dossier_eleve: dossier_eleve)
     piece_attendue = Fabricate(:piece_attendue, etablissement: etablissement)
     Fabricate(:piece_jointe, piece_attendue: piece_attendue, dossier_eleve: dossier_eleve, etat: "valide")

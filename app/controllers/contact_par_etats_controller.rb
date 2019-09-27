@@ -42,7 +42,7 @@ class ContactParEtatsController < ApplicationController
     dossiers.each do |dossier|
       email = Famille.new.retrouve_un_email(dossier)
 
-      contacter = ContacterFamille.new(dossier.eleve)
+      contacter = ContacterFamille.new(dossier)
       contacter.envoyer(params[:message], email)
     rescue ExceptionAucunEmailRetrouve
       dossiers_sans_email << dossier

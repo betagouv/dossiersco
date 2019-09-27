@@ -39,7 +39,6 @@ class EtablissementTest < ActiveSupport::TestCase
     etablissement.purge_dossiers_eleves!
 
     assert_equal 0, etablissement.dossier_eleve.count
-    assert_equal 0, Eleve.where(id: dossier_eleve.eleve.id).count
     assert_equal 0, etablissement.tache_import.count
     assert_not_equal 0, etablissement.mef.count
 

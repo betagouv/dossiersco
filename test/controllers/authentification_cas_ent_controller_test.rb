@@ -11,11 +11,11 @@ class AuthentificationCasEntControllerTest < ActionDispatch::IntegrationTest
                            prenom: "Henri",
                            adresse: "533 RUE DU TEST",
                            email: "henri@ford.com")
-    eleve = Fabricate(:eleve, prenom: "Mustang", nom: "FORD")
     dossier_eleve = Fabricate(:dossier_eleve,
                               etablissement: etablissement,
                               resp_legal: [resp_legal],
-                              eleve: eleve)
+                              prenom: "Mustang",
+                              nom: "FORD")
 
     request = "https://ent.parisclassenumerique.fr/cas/serviceValidate?service=https://demo.dossiersco.fr/retour-ent&ticket=something"
     body_response = File.read(fixture_file_upload("files/retour_ent.xml"))
@@ -46,11 +46,10 @@ class AuthentificationCasEntControllerTest < ActionDispatch::IntegrationTest
                            prenom: "Henri",
                            adresse: "533 RUE DU TEST",
                            email: "henri@ford.com")
-    eleve = Fabricate(:eleve, prenom: "Mustang", nom: "FORD")
     dossier_eleve = Fabricate(:dossier_eleve,
                               etablissement: etablissement,
                               resp_legal: [resp_legal],
-                              eleve: eleve)
+                              prenom: "Mustang", nom: "FORD")
 
     request = "https://ent.parisclassenumerique.fr/cas/serviceValidate?service=https://demo.dossiersco.fr/retour-ent&ticket=something"
     body_response = File.read(fixture_file_upload("files/retour_ent_plusieurs_etablissements.xml"))
@@ -70,11 +69,10 @@ class AuthentificationCasEntControllerTest < ActionDispatch::IntegrationTest
                            adresse: "533 RUE DU TEST",
                            email: "henri@ford.com")
 
-    eleve = Fabricate(:eleve, prenom: "Mustang", nom: "FORD")
     dossier_eleve = Fabricate(:dossier_eleve,
                               etablissement: etablissement,
                               resp_legal: [resp_legal],
-                              eleve: eleve)
+                              prenom: "Mustang", nom: "FORD")
 
     resp_legal = Fabricate(:resp_legal,
                            nom: "FORD",
@@ -112,12 +110,11 @@ class AuthentificationCasEntControllerTest < ActionDispatch::IntegrationTest
                            adresse: "533 RUE DU TEST",
                            email: "henri@ford.com")
 
-    eleve = Fabricate(:eleve, prenom: "Mustang", nom: "FORD")
     Fabricate(:dossier_eleve,
               etablissement: etablissement,
               resp_legal: [resp_legal],
               derniere_etape: "confirmation",
-              eleve: eleve)
+              prenom: "Mustang", nom: "FORD")
 
     request = "https://ent.parisclassenumerique.fr/cas/serviceValidate?service=https%3A%2F%2Fdemo.dossiersco.fr%2Fretour-ent&ticket="
     body_response = File.read(fixture_file_upload("files/retour_ent_plusieurs_enfants.xml"))

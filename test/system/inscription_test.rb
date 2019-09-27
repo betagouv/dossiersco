@@ -5,8 +5,7 @@ require "test_helper"
 class InscriptionTest < ActionDispatch::IntegrationTest
 
   test "Inscription simple" do
-    eleve = Fabricate(:eleve, niveau_classe_ant: "5EME")
-    dossier_eleve = Fabricate(:dossier_eleve, eleve: eleve)
+    dossier_eleve = Fabricate(:dossier_eleve, niveau_classe_ant: "5EME")
 
     Fabricate(:resp_legal, dossier_eleve: dossier_eleve, priorite: 1, lien_de_parente: "MERE")
     Fabricate(:resp_legal, dossier_eleve: dossier_eleve, priorite: 2, lien_de_parente: "PERE")
@@ -28,11 +27,11 @@ class InscriptionTest < ActionDispatch::IntegrationTest
 
     assert_selector "h2", text: "Identité de l'élève"
 
-    fill_in "eleve[prenom]", with: "Blanche"
-    fill_in "eleve[nom]", with: "Mousse"
-    fill_in "eleve[ville_naiss]", with: "Liege"
-    select "BELGIQUE", from: "eleve_pays_naiss"
-    select "BELGE", from: "eleve[nationalite]"
+    fill_in "dossier_eleve[prenom]", with: "Blanche"
+    fill_in "dossier_eleve[nom]", with: "Mousse"
+    fill_in "dossier_eleve[ville_naiss]", with: "Liege"
+    select "BELGIQUE", from: "dossier_eleve_pays_naiss"
+    select "BELGE", from: "dossier_eleve[nationalite]"
 
     click_button("Enregistrer et continuer")
     assert_selector "h2", text: "Responsable légal"

@@ -152,8 +152,15 @@ class ExportElevesXlsxJobTest < ActionDispatch::IntegrationTest
 
   test "#faie_lignes utilise les infos nationalite, commune insee et ville_naissance" do
     agent = Fabricate(:agent)
-    eleve = Fabricate(:eleve, nationalite: "208", commune_insee_naissance: "75112", ville_naiss: "Paris", pays_naiss: "100")
-    dossier = Fabricate(:dossier_eleve, etablissement: agent.etablissement, demi_pensionnaire: true, eleve: eleve)
+    dossier = Fabricate(
+      :dossier_eleve,
+      etablissement: agent.etablissement,
+      demi_pensionnaire: true,
+      nationalite: "208",
+      commune_insee_naissance: "75112",
+      ville_naiss: "Paris",
+      pays_naiss: "100"
+    )
     export = ExportElevesXlsxJob.new
     expected = [[nil,
                  dossier.mef_origine.libelle,

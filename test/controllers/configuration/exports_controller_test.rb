@@ -95,9 +95,8 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     admin = Fabricate(:admin)
     identification_agent(admin)
 
-    eleve = Fabricate(:eleve)
     resp_legal = Fabricate(:resp_legal)
-    dossier = Fabricate(:dossier_eleve_valide, eleve: eleve, resp_legal: [resp_legal], etablissement: admin.etablissement)
+    dossier = Fabricate(:dossier_eleve_valide, resp_legal: [resp_legal], etablissement: admin.etablissement)
 
     get export_siecle_configuration_exports_path(xml_only: true)
 
@@ -114,9 +113,9 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     admin = Fabricate(:admin)
     identification_agent(admin)
 
-    eleve = Fabricate(:eleve, ville_naiss: "KINSHASA", pays_naiss: "324")
     dossier = Fabricate(:dossier_eleve_valide,
-                        eleve: eleve,
+                        ville_naiss: "KINSHASA",
+                        pays_naiss: "324",
                         etablissement: admin.etablissement,
                         mef_destination: Fabricate(:mef, etablissement: admin.etablissement))
 
@@ -136,9 +135,9 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     admin = Fabricate(:admin)
     identification_agent(admin)
 
-    eleve_sans_commune = Fabricate(:eleve, ville_naiss: nil, pays_naiss: "324")
     dossier_sans_commune = Fabricate(:dossier_eleve_valide,
-                                     eleve: eleve_sans_commune,
+                                     ville_naiss: nil,
+                                     pays_naiss: "324",
                                      etablissement: admin.etablissement,
                                      mef_destination: Fabricate(:mef, etablissement: admin.etablissement))
     get export_siecle_configuration_exports_path(xml_only: true)
@@ -364,11 +363,9 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     admin = Fabricate(:admin)
     identification_agent(admin)
 
-    eleve_avec_3_prenoms = Fabricate(:eleve,
-                                     prenom_2: "PRENOM 2",
-                                     prenom_3: "PRENOM 3")
     Fabricate(:dossier_eleve_valide,
-              eleve: eleve_avec_3_prenoms,
+              prenom_2: "PRENOM 2",
+              prenom_3: "PRENOM 3",
               etablissement: admin.etablissement)
 
     xml = recupere_fichier_xml_de_retour_siecle
@@ -381,11 +378,9 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     admin = Fabricate(:admin)
     identification_agent(admin)
 
-    eleve_avec_prenoms_vides = Fabricate(:eleve,
-                                         prenom_2: "",
-                                         prenom_3: "")
     Fabricate(:dossier_eleve_valide,
-              eleve: eleve_avec_prenoms_vides,
+              prenom_2: "",
+              prenom_3: "",
               etablissement: admin.etablissement)
 
     recupere_fichier_xml_de_retour_siecle

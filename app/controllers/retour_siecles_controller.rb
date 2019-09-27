@@ -55,7 +55,7 @@ class RetourSieclesController < ApplicationController
     return unless params[:liste_ine].present?
 
     ines = params[:liste_ine].split(",")
-    @selection_dossiers = @dossiers.joins(:eleve).where("eleves.identifiant in (?)", ines)
+    @selection_dossiers = @dossiers.where("identifiant in (?)", ines)
     @dossiers_exportables = @selection_dossiers.exportables
     @nb_resp_legaux_selection = nb_resp_legaux(@dossiers_exportables)
   end
@@ -65,7 +65,7 @@ class RetourSieclesController < ApplicationController
   end
 
   def eleves_sans_commune_insee
-    dossiers_etablissement.joins(:eleve).where("eleves.commune_insee_naissance is null and eleves.pays_naiss = '100'")
+    dossiers_etablissement.where("commune_insee_naissance is null and pays_naiss = '100'")
   end
 
   def resp_legal_probleme_profession
@@ -73,15 +73,15 @@ class RetourSieclesController < ApplicationController
   end
 
   def resp_legal_profession_null
-    dossiers_etablissement.joins(:eleve).joins(:resp_legal).where("resp_legals.profession is null")
+    dossiers_etablissement.joins(:resp_legal).where("resp_legals.profession is null")
   end
 
   def resp_legal_profession_retraite_employe_ouvrier
-    dossiers_etablissement.joins(:eleve).joins(:resp_legal).where("resp_legals.profession = 'Retraité employé, ouvrier'")
+    dossiers_etablissement.joins(:resp_legal).where("resp_legals.profession = 'Retraité employé, ouvrier'")
   end
 
   def resp_legal_retraite_cadre_intermediaire
-    dossiers_etablissement.joins(:eleve).joins(:resp_legal).where("resp_legals.profession = 'Retraité cadre, profession intermédiaire'")
+    dossiers_etablissement.joins(:resp_legal).where("resp_legals.profession = 'Retraité cadre, profession intermédiaire'")
   end
 
   def extrait_informations(dossiers, raison)

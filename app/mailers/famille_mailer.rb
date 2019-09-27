@@ -4,22 +4,22 @@ class FamilleMailer < ApplicationMailer
 
   default from: "equipe@dossiersco.fr"
 
-  def contacter_directement_une_famille(email, message, eleve)
+  def contacter_directement_une_famille(email, message, dossier_eleve)
     @message = message
-    @dossier = eleve.dossier_eleve
+    @dossier = dossier_eleve
     email_reponse = @dossier.etablissement.email_reponse
     reply_to = if email_reponse.present?
                  email_reponse
                else
-                 eleve.dossier_eleve.etablissement.email_chef
+                 dossier_eleve.etablissement.email_chef
                end
     subject = "Réinscription de votre enfant au collège"
 
     mail(subject: subject, reply_to: reply_to, to: email, &:text)
   end
 
-  def contacter_une_famille(eleve, agent, message)
-    @dossier = eleve.dossier_eleve
+  def contacter_une_famille(dossier_eleve, agent, message)
+    @dossier = dossier_eleve
     @message = message
     return unless @dossier.etablissement.envoyer_aux_familles
 
@@ -34,8 +34,8 @@ class FamilleMailer < ApplicationMailer
     mail(subject: subject, reply_to: agent.email, to: [email, agent.email], &:text)
   end
 
-  def envoyer_mail_confirmation(eleve)
-    @dossier = eleve.dossier_eleve
+  def envoyer_mail_confirmation(dossier_eleve)
+    @dossier = dossier_eleve
     return unless @dossier.etablissement.envoyer_aux_familles
 
     begin
@@ -45,12 +45,12 @@ class FamilleMailer < ApplicationMailer
     end
 
     email_reponse = @dossier.etablissement.email_reponse
-    reply_to = reply_to_mail_confirmation(email_reponse, eleve)
+    reply_to = reply_to_mail_confirmation(email_reponse, @dossier)
     mail(subject: "Réinscription de votre enfant au collège", reply_to: reply_to, to: email, &:text)
   end
 
-  def mail_validation_inscription(eleve, agent)
-    @dossier = eleve.dossier_eleve
+  def mail_validation_inscription(dossier_eleve, agent)
+    @dossier = dossier_eleve
     return unless @dossier.etablissement.envoyer_aux_familles
 
     begin
@@ -66,11 +66,11 @@ class FamilleMailer < ApplicationMailer
 
   private
 
-  def reply_to_mail_confirmation(email_reponse, eleve)
+  def reply_to_mail_confirmation(email_reponse, dossier_eleve)
     if email_reponse.present?
       email_reponse
     else
-      eleve.dossier_eleve.etablissement.email_chef
+      dossier_eleve.etablissement.email_chef
     end
   end
 

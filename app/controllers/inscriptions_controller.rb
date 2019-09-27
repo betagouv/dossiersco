@@ -27,14 +27,13 @@ class InscriptionsController < ApplicationController
 
   def liste_des_eleves
     lignes_eleves = DossierEleve
-                    .joins(:eleve, :resp_legal)
+                    .joins(:resp_legal)
                     .select("dossier_eleves.id as dossier_id")
                     .select("dossier_eleves.updated_at as dossier_maj")
                     .select("dossier_eleves.*")
-                    .select("eleves.*")
                     .select("resp_legals.email")
                     .select("adresse,code_postal,ville,adresse_ant,code_postal_ant,ville_ant")
-                    .order("eleves.classe_ant DESC, dossier_eleves.etat, eleves.identifiant")
+                    .order("classe_ant DESC, dossier_eleves.etat, identifiant")
                     .where(resp_legals: { priorite: 1 }, etablissement: agent_connecte.etablissement)
     pieces_jointes = PieceJointe
                      .joins(:dossier_eleve, :piece_attendue)
@@ -60,7 +59,7 @@ class InscriptionsController < ApplicationController
   end
 
   def eleve
-    @dossier_eleve = Eleve.find_by(identifiant: params[:identifiant]).dossier_eleve
+    @dossier_eleve = DossierEleve.find_by(identifiant: params[:identifiant])
     @pieces_jointes = @dossier_eleve.pieces_jointes
     @emails_presents = false
     @dossier_eleve.resp_legal.each { |r| (@emails_presents = true) if r.email.present? }
@@ -109,10 +108,9 @@ class InscriptionsController < ApplicationController
   end
 
   def valider_inscription
-    eleve = Eleve.find_by identifiant: params[:identifiant]
-    dossier_eleve = eleve.dossier_eleve
+    dossier_eleve = DossierEleve.find_by identifiant: params[:identifiant]
     dossier_eleve.valide!
-    mail = FamilleMailer.mail_validation_inscription(eleve, @agent_connecte)
+    mail = FamilleMailer.mail_validation_inscription(dossier_eleve, @agent_connecte)
     part = mail.html_part || mail.text_part || mail
     Message.create(categorie: "mail", contenu: part.body, etat: "envoyé", dossier_eleve: @dossier)
     mail.deliver_now
@@ -121,16 +119,13 @@ class InscriptionsController < ApplicationController
   end
 
   def eleve_sortant
-    eleve = Eleve.find_by identifiant: params[:identifiant]
-    dossier_eleve = eleve.dossier_eleve
+    dossier_eleve = DossierEleve.find_by identifiant: params[:identifiant]
     dossier_eleve.update(etat: "sortant")
-
     redirect_to "/agent/liste_des_eleves"
   end
 
   def contacter_une_famille
-    eleve = Eleve.find_by(identifiant: params[:identifiant])
-    dossier = eleve.dossier_eleve
+    dossier = DossierEleve.find_by(identifiant: params[:identifiant])
 
     unless params[:message].present?
       flash[:alert] = "Aucun texte à envoyer"
@@ -148,7 +143,7 @@ class InscriptionsController < ApplicationController
       return
     end
 
-    contacter = ContacterFamille.new(eleve)
+    contacter = ContacterFamille.new(dossier)
     contacter.envoyer(params[:message], params[:moyen_de_communication])
 
     flash[:notice] = "Votre message a été envoyé."

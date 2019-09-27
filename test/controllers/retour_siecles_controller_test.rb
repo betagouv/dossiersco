@@ -57,8 +57,7 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     etablissement = admin.etablissement
 
     representant = Fabricate(:resp_legal)
-    eleve = Fabricate(:eleve)
-    Fabricate(:dossier_eleve, etablissement: etablissement, etat: DossierEleve::ETAT[:valide], eleve: eleve, resp_legal: [representant])
+    Fabricate(:dossier_eleve, etablissement: etablissement, etat: DossierEleve::ETAT[:valide], resp_legal: [representant])
 
     get export_des_dossiers_retour_siecle_path
 
@@ -72,8 +71,7 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     etablissement = admin.etablissement
 
     representant = Fabricate(:resp_legal)
-    eleve = Fabricate(:eleve)
-    dossier = Fabricate(:dossier_eleve, etablissement: etablissement, etat: DossierEleve::ETAT[:valide], eleve: eleve, resp_legal: [representant])
+    dossier = Fabricate(:dossier_eleve, etablissement: etablissement, etat: DossierEleve::ETAT[:valide], resp_legal: [representant])
     Fabricate(:dossier_eleve, etablissement: etablissement)
 
     get export_des_dossiers_retour_siecle_path, params: { liste_ine: dossier.identifiant }
@@ -102,9 +100,8 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     identification_agent(admin)
     etablissement = admin.etablissement
 
-    eleve = Fabricate(:eleve)
     resp_legal = Fabricate(:resp_legal, profession: "Retraité employé, ouvrier")
-    dossier = Fabricate(:dossier_eleve, eleve: eleve, resp_legal: [resp_legal], etablissement: etablissement)
+    dossier = Fabricate(:dossier_eleve, resp_legal: [resp_legal], etablissement: etablissement)
     Fabricate(:dossier_eleve, mef_destination: Fabricate(:mef, etablissement: etablissement), etablissement: etablissement)
 
     get export_des_dossiers_retour_siecle_path
@@ -117,11 +114,10 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     identification_agent(admin)
     etablissement = admin.etablissement
 
-    eleve_sans_commune_insee = Fabricate(:eleve, commune_insee_naissance: nil, pays_naiss: "100")
-    dossier = Fabricate(:dossier_eleve, eleve: eleve_sans_commune_insee, etablissement: etablissement)
+    dossier_sans_commune_insee = Fabricate(:dossier_eleve, commune_insee_naissance: nil, pays_naiss: "100", etablissement: etablissement)
 
     get export_des_dossiers_retour_siecle_path
-    assert_equal dossier.identifiant, assigns(:dossiers_bloques).first.identifiant
+    assert_equal dossier_sans_commune_insee.identifiant, assigns(:dossiers_bloques).first.identifiant
     assert_equal I18n.t("retour_siecles.export_des_dossiers.probleme_de_commune_insee"), assigns(:dossiers_bloques).first.raison
   end
 
@@ -130,8 +126,7 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     identification_agent(admin)
     etablissement = admin.etablissement
 
-    eleve_sans_commune_insee = Fabricate(:eleve, ville_naiss: nil, pays_naiss: "216")
-    Fabricate(:dossier_eleve, eleve: eleve_sans_commune_insee, etablissement: etablissement)
+    Fabricate(:dossier_eleve, ville_naiss: nil, pays_naiss: "216", etablissement: etablissement)
 
     get export_des_dossiers_retour_siecle_path
     assert_empty assigns(:dossiers_bloques)
