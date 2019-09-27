@@ -6,6 +6,15 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
 
   SCHEMA_IMPORT_SIECLE = "./lib/schema_Import_3.1.xsd"
 
+  test "#export-changements" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+
+    get export_changements_configuration_exports_path
+
+    assert_redirected_to new_tache_import_path
+  end
+
   test "#export-siecle" do
     admin = Fabricate(:admin)
     identification_agent(admin)

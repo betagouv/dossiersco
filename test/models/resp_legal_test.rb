@@ -9,7 +9,7 @@ class RespLegalTest < ActiveSupport::TestCase
   end
 
   def test_detection_adresses_identiques_cas_degenere
-    assert RespLegal.new.adresse_inchangee
+    assert RespLegal.new.adresse_inchangee?
   end
 
   def test_detection_adresses_identiques
@@ -21,7 +21,7 @@ class RespLegalTest < ActiveSupport::TestCase
       ville: "  Paris\r",
       code_postal: "75 011"
     )
-    assert rl.adresse_inchangee
+    assert rl.adresse_inchangee?
   end
 
   test "même adresse avec sois" do
@@ -80,7 +80,7 @@ class RespLegalTest < ActiveSupport::TestCase
       ville_ant: nil,
       code_postal_ant: nil
     )
-    assert responsable_legal.adresse_inchangee
+    assert responsable_legal.adresse_inchangee?
   end
 
   test "renvoie un tableau vide si aucun moyen de communication renseigné" do

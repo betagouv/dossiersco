@@ -7,8 +7,13 @@ module Configuration
 
     def export_options
       ExportElevesXlsxJob.perform_later(@agent_connecte)
-
       flash[:notice] = t(".export_des_options")
+      redirect_to new_tache_import_path
+    end
+
+    def export_changements
+      ExportListeChangementsXlsxJob.perform_later(@agent_connecte)
+      flash[:notice] = t(".export_des_changements")
       redirect_to new_tache_import_path
     end
 

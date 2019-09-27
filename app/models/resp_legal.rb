@@ -64,7 +64,7 @@ class RespLegal < ActiveRecord::Base
       (valeur2&.upcase&.gsub(/[[:space:]]/, ""))
   end
 
-  def adresse_inchangee
+  def adresse_inchangee?
     return true if adresse_ant.nil? && ville_ant.nil? && code_postal_ant.nil?
 
     equivalentes(adresse, adresse_ant) &&

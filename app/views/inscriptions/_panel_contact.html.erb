@@ -87,7 +87,7 @@
         <li><b><%= t('accueil.form_rl.ville') %> : </b><%= resp_legal.ville %></li>
         <li><b><%= t('accueil.form_rl.pays') %></b> : <%= nom_pays(resp_legal.pays) %>
       </ul>
-      <% unless resp_legal.adresse_inchangee %>
+      <% unless resp_legal.adresse_inchangee? %>
         <div id="ancienne_adresse">
           <hr/>
           <p><strong><%= t('.ancienne_adresse') %></strong></p>

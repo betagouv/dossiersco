@@ -320,7 +320,7 @@ class InscriptionsControllerTest < ActionDispatch::IntegrationTest
     dossier = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
 
     resp_legal.update adresse: "Nouvelle adresse"
-    assert !resp_legal.adresse_inchangee
+    assert !resp_legal.adresse_inchangee?
 
     agent = Fabricate(:agent, etablissement: dossier.etablissement)
     identification_agent(agent)

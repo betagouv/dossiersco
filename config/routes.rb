@@ -61,6 +61,7 @@ Rails.application.routes.draw do
     resources :pieces_attendues, expect: [:show, :index]
     resource :exports, only: :[] do
       collection do
+        get "export-changements", defaults: { format: "xlsx" }
         get "export-options", defaults: { format: "xlsx" }
         get "export-siecle", defaults: { format: "xml" }
         get "eleves-avec-adresses", defaults: { format: "xml" }
