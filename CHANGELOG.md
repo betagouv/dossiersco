@@ -2,6 +2,10 @@
 
 ## Septembre
 
+- **Révision des url d'accueil, de login et de tableau de bord**
+
+- **Export des contacts en cas d'urgence dans le fichier de retour vers SIECLE**
+
 ### Nouvelle organisation de la documentation et des procédures
 
 - **N'affiche pas les codes MEF manqant lors du retour vers siècle avant un premier import de la nomenclature**
