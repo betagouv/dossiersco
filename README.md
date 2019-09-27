@@ -31,23 +31,6 @@ autres messages important sur le slack de l'équipe, pour permettre aux
 personnes absentes de rester informer.
 
 
-### Journal
-
-  Chaque fin de journée;
-  chaque personne ayant travaillée sur le projet dans la journée;
-  devra avoir écrit un petit bout de texte pour parler de ce qu'elle a fait.
-
-Afin de faciliter la synchronisation de toutes les personnes participantes, et
-pour éviter les longues réunions, ce fichier sera constituer comme chacune le
-préfère. Pour certaine personne, au fil de l'eau, pour d'autre en fin de
-journée.
-
-Pour simplifier, il y aura un [éditeur pour le journal du
-jour](https://hackmd.io/KHIgMl23RGufrygMtw3A_w#) sur invitation, pour les
-membres de l'équipe. Ce journal comporte une partie privée qui restera dans les
-archives de l'équipe, et une partie publique qui sera publié sur le blog.
-
-
 ### Rétrospective
 
   En fin d'itération;
@@ -66,23 +49,15 @@ Des actions d'amélioration, qui n'auraient pas été dédecté ou décidé en c
 d'itération pourront être mises en place.
 
 
-### Artefacts:
-
-Ces rituels génère des documents vie à vie du projet et de l'équipe :
-
-- [Journal de l'équipe](https://gitlab.com/dossiersco/dossiersco/blob/master/doc/journal.md)
-- Le [blog de l'équipe](https://blog.dossiersco.fr/)
-- [CHANGELOG](CHANGELOG.md) le fichier dans lequel nous inscrivons chaque nouvelles fonctionnalités et corrections apporté à DossierSCO.
-
-
 ## Documentation
 
-- [L'histoire des décisions d'architecture](https://gitlab.com/dossiersco/dossiersco/tree/master/doc/architecture)
-- le [suivi des travaux sur le projet](https://gitlab.com/dossiersco/dossiersco/boards)
+- Le [blog de l'équipe](https://blog.dossiersco.fr/)
+- [CHANGELOG](CHANGELOG.md) le fichier dans lequel nous inscrivons chaque nouvelles fonctionnalités et corrections apporté à DossierSCO.
+- [L'histoire des décisions](https://blog.dossiersco.fr/decisions) (technique et non technique)
 
 ## Développement
 
-Le code source est disponible sur [gitlab.com/dossiersco](https://gitlab.com/dossiersco).
+Le code source est disponible sur [github.com/betagouv/dossiersco](https://github.com/betagouv/dossiersco).
 
 Pour faciliter la mise en place d'environnement, nous nous basons sur
 [docker](https://www.docker.com/). Les commandes principales sont placées dans
@@ -93,7 +68,7 @@ d'explorer les commandes ̀ docker` et plus particulièrement `docker-compose`.
 
 Pour cloner le repository :
 
-```bash git clone https://gitlab.com/dossiersco/dossiersco.git ```
+```bash git clone https://github.com/betagouv/dossiersco/dossiersco.git ```
 
 
 Pour constuire le projet (installer les gems entre autres) : 
@@ -130,8 +105,9 @@ Pour peupler l'application en local :
 
 ## Déploiement
 
-Nous déployons sur [scalingo](https://scalingo.com) automatiquement après chaque mise à jour de la branche `master`.
+Nous déployons sur [scalingo](https://scalingo.com).
 
+Le déployement s'effectue en executant le script `deploy` à la racine du projet. Si vous n'avez pas accès à Scalingo, demandé le. C'est impératif pour pouvoir déployer.
 
 ## Outils
 
@@ -150,7 +126,4 @@ Nous déployons sur [scalingo](https://scalingo.com) automatiquement après chaq
   Voir [beta.bouv.fr/suivi/](https://beta.gouv.fr/suivi/)
 - Support utilisateurs en direct à l'aide de [Drift](https://app.drift.com/)
 
-## Autes notes
-
-- [Le forum des gestionnaires d'EPLE](http://gestionnaires.actifforum.com/)
 
