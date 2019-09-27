@@ -14,38 +14,50 @@ class AccueilController < ApplicationController
   end
 
   def identification
-    if params[:identifiant].empty? || params[:annee].empty? || params[:mois].empty? || params[:jour].empty?
+    if empty_params?(params)
       flash[:erreur] = t("identification.erreurs.identifiants_non_renseignes")
       redirect_to root_path
       return
     end
 
     Trace.create(identifiant: params[:identifiant], categorie: "famille", page_demandee: request.path_info, adresse_ip: request.ip)
-
     dossier_eleve = DossierEleve.par_authentification(params[:identifiant], params[:jour], params[:mois], params[:annee])
 
-    if dossier_eleve.present? &&
-       dossier_eleve.etablissement.date_debut.present? &&
-       dossier_eleve.etablissement.date_debut > Time.now
+    redirection = root_path
+    if campagne_pas_ouverte?(dossier_eleve)
       flash[:erreur] = t("identification.erreurs.avant_date_debut",
                          date: dossier_eleve.etablissement.date_debut.strftime("%d/%m/%Y"))
-      redirect_to root_path
     elsif dossier_eleve.present?
-      dossier_eleve.update(etat: "connecté") if dossier_eleve.etat == "pas connecté"
-      session[:identifiant] = params[:identifiant]
-
-      if dossier_eleve.derniere_etape.present?
-        redirect_to "/#{dossier_eleve.derniere_etape}"
-      elsif dossier_eleve.etape_la_plus_avancee.present?
-        redirect_to "/#{dossier_eleve.etape_la_plus_avancee}"
-      else
-        redirect_to "accueil"
-      end
-
+      connection_eleve(dossier_eleve)
+      redirection = derniere_etape_ou_plus_avancee(dossier_eleve)
     else
       flash[:erreur] = t("identification.erreurs.identifiants_inconnus")
-      redirect_to :connexion
+      redirection = :connexion
     end
+    redirect_to redirection
+  end
+
+  def empty_params?(params)
+    params[:identifiant].empty? || params[:annee].empty? || params[:mois].empty? || params[:jour].empty?
+  end
+
+  def campagne_pas_ouverte?(dossier_eleve)
+    dossier_eleve.present? && dossier_eleve.etablissement.date_debut.present? && dossier_eleve.etablissement.date_debut > Time.now
+  end
+
+  def derniere_etape_ou_plus_avancee(dossier_eleve)
+    if dossier_eleve.derniere_etape.present?
+      "/#{dossier_eleve.derniere_etape}"
+    elsif dossier_eleve.etape_la_plus_avancee.present?
+      "/#{dossier_eleve.etape_la_plus_avancee}"
+    else
+      "accueil"
+    end
+  end
+
+  def connection_eleve(dossier_eleve)
+    dossier_eleve.update(etat: "connecté") if dossier_eleve.etat == "pas connecté"
+    session[:identifiant] = dossier_eleve.identifiant
   end
 
   def accueil
