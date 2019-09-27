@@ -1,20 +1,21 @@
 # frozen_string_literal: true
 
-DossierEleve.all.joins(:eleve).each do |dossier|
+DossierEleve.all.each do |dossier|
+  eleve = Eleve.find(dossier.eleve_id)
   dossier.update(
-    prenom: dossier.eleve.prenom,
-    identifiant: dossier.eleve.identifiant,
-    nom: dossier.eleve.nom,
-    sexe: dossier.eleve.sexe,
-    ville_naiss: dossier.eleve.ville_naiss,
-    nationalite: dossier.eleve.nationalite,
-    classe_ant: dossier.eleve.classe_ant,
-    date_naiss: dossier.eleve.date_naiss,
-    pays_naiss: dossier.eleve.pays_naiss,
-    niveau_classe_ant: dossier.eleve.niveau_classe_ant,
-    prenom_2: dossier.eleve.prenom_2,
-    prenom_3: dossier.eleve.prenom_3,
-    commune_insee_naissance: dossier.eleve.commune_insee_naissance,
-    id_prv_ele: dossier.eleve.id_prv_ele
+    prenom: eleve.prenom,
+    identifiant: eleve.identifiant,
+    nom: eleve.nom,
+    sexe: eleve.sexe,
+    ville_naiss: eleve.ville_naiss,
+    nationalite: eleve.nationalite,
+    classe_ant: eleve.classe_ant,
+    date_naiss: eleve.date_naiss,
+    pays_naiss: eleve.pays_naiss,
+    niveau_classe_ant: eleve.niveau_classe_ant,
+    prenom_2: eleve.prenom_2,
+    prenom_3: eleve.prenom_3,
+    commune_insee_naissance: eleve.commune_insee_naissance,
+    id_prv_ele: eleve.id_prv_ele
   )
 end
