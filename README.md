@@ -68,17 +68,23 @@ d'explorer les commandes ̀ docker` et plus particulièrement `docker-compose`.
 
 Pour cloner le repository :
 
-```bash git clone https://github.com/betagouv/dossiersco/dossiersco.git ```
+```bash
+git clone https://github.com/betagouv/dossiersco/dossiersco.git
+```
 
 
 Pour constuire le projet (installer les gems entre autres) : 
 
-```bash make build ```
+```bash
+make build
+```
 
 
 Pour démarrer les serveurs (base de données et application) : 
 
-```bash make run ```
+```bash
+make run
+```
 
 
 L'accès à l'application se fait ensuite par <http://0.0.0.0:9393/>.
@@ -93,16 +99,22 @@ make test
 
 Pour lancer un test en particulier :
 
-```bash docker-compose run --rm test rails test <mon fichier ex: test/models/agent_test.rb> ```
+```bash
+docker-compose run --rm test rails test <mon fichier ex: test/models/agent_test.rb>
+```
 
 
 Pour accéder à la console rails :
 
-```bash make console ```
+```bash
+make console
+```
 
 Pour peupler l'application en local :
 
-```bash make populate```
+```bash
+make populate
+```
 
 
 ## Déploiement
