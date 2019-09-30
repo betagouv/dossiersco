@@ -86,7 +86,9 @@ L'accès à l'application se fait ensuite par <http://0.0.0.0:9393/>.
 
 Pour lancer les tests :
 
-```bash make test ```
+```bash
+make test
+```
 
 
 Pour lancer un test en particulier :
@@ -100,7 +102,7 @@ Pour accéder à la console rails :
 
 Pour peupler l'application en local :
 
-```bash make populate
+```bash make populate```
 
 
 ## Déploiement
