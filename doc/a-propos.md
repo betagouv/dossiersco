@@ -22,7 +22,7 @@ L’outil est conçu pour permettre une prise en main  rapide et intuitive.
 ## La méthode Dossiersco, au plus près des usagers
 Dossiersco a été conçu par des personnels d'établissements scolaires, à l’intersection de bonnes pratiques observées dans différentes académies, grâce à la communauté [OpenAcadémie](https://openacademie.beta.gouv.fr/). 
  
-L'outil est en amélioration continue. Son développement se construit à partir de l’expérience des utilisateurs, notamment à l'occasion des réunions [openlab](http://blog.dossiersco.fr/openlab/2019/04/11/construire-dossiersco.html).
+L'outil est en amélioration continue. Son développement se construit à partir de l’expérience des utilisateurs, notamment à l'occasion des réunions [openlab](https://docs.dossiersco.fr/posts/construire-dossiersco/).
 
 ## Retours d'expérience
 

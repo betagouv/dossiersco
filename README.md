@@ -51,9 +51,9 @@ d'itération pourront être mises en place.
 
 ## Documentation
 
-- Le [blog de l'équipe](https://blog.dossiersco.fr/)
+-  [La documentation de DossierSCO](https://docs.dossiersco.fr/)
 - [CHANGELOG](CHANGELOG.md) le fichier dans lequel nous inscrivons chaque nouvelles fonctionnalités et corrections apporté à DossierSCO.
-- [L'histoire des décisions](https://blog.dossiersco.fr/decisions) (technique et non technique)
+- [L'histoire des décisions](https://docs.dossiersco.fr/decisions) (technique et non technique)
 
 ## Développement
 
