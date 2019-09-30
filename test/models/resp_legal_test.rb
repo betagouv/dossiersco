@@ -136,4 +136,13 @@ class RespLegalTest < ActiveSupport::TestCase
     assert resp_legal.ligne3_adresse_siecle.length <= 38
   end
 
+  test "supprime les retours à la ligne sur l'adresse" do
+    adresse = <<~HERE
+      20 RUE DU    VILLAGE
+      BAT G
+    HERE
+    resp_legal = Fabricate(:resp_legal, adresse: adresse)
+    assert_equal "20 RUE DU VILLAGE BAT G", resp_legal.ligne1_adresse_siecle
+  end
+
 end

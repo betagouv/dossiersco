@@ -122,12 +122,12 @@ class RespLegal < ActiveRecord::Base
   private
 
   def lignes_adresses
-    return [adresse, nil] if adresse.length <= 38
+    adresse_sur_une_seule_ligne = adresse.gsub(/[\n ]+/, " ")&.strip
+    return [adresse_sur_une_seule_ligne, nil] if adresse.length <= 38
 
-    @adresse_decoupee = adresse.split(" ")
+    @adresse_decoupee = adresse_sur_une_seule_ligne&.split(" ")
     ligne_2 = nil
     ligne_3 = nil
-
     ligne_1 = construit_ligne_adresse
     ligne_2 = construit_ligne_adresse unless @adresse_decoupee.empty?
     ligne_3 = construit_ligne_adresse unless @adresse_decoupee.empty?
