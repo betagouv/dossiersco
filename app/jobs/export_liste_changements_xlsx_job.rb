@@ -53,6 +53,10 @@ class ExportListeChangementsXlsxJob < ActiveJob::Base
       ligne << resp.adresse_ant
       ligne << resp.code_postal_ant
       ligne << resp.ville_ant
+      ligne << resp.email
+      ligne << resp.tel_personnel
+      ligne << resp.tel_portable
+      ligne << resp.tel_professionnel
     end
     ligne
   end
