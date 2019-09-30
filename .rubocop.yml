@@ -59,6 +59,7 @@ Metrics/MethodLength:
     - 'app/jobs/export_eleves_xlsx_job.rb'
     - 'app/jobs/export_pieces_jointes_job.rb'
     - 'app/mailers/famille_mailer.rb'
+    - 'app/models/resp_legal.rb'
 
 Metrics/ClassLength:
   Exclude:

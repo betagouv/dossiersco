@@ -119,31 +119,37 @@ class RespLegal < ActiveRecord::Base
     lignes_adresses[2]
   end
 
+  def ligne4_adresse_siecle
+    lignes_adresses[3]
+  end
+
   private
 
   def lignes_adresses
-    adresse_sur_une_seule_ligne = adresse.gsub(/[\n ]+/, " ")&.strip
-    return [adresse_sur_une_seule_ligne, nil] if adresse.length <= 38
+    adresse_decoupee_par_ligne = adresse&.split("\n")
 
-    @adresse_decoupee = adresse_sur_une_seule_ligne&.split(" ")
-    ligne_2 = nil
-    ligne_3 = nil
-    ligne_1 = construit_ligne_adresse
-    ligne_2 = construit_ligne_adresse unless @adresse_decoupee.empty?
-    ligne_3 = construit_ligne_adresse unless @adresse_decoupee.empty?
+    lignes = []
+    adresse_decoupee_par_ligne.each do |ligne|
+      lignes << construit_ligne_adresse(ligne.split)
+    end
 
-    [ligne_1, ligne_2, ligne_3]
+    lignes.flatten
   end
 
-  def construit_ligne_adresse
-    ligne = ""
-    ligne_provisoire = ""
-    while ligne_provisoire.length < 38 && !@adresse_decoupee.empty?
-      ligne_provisoire = ligne + " " + @adresse_decoupee.first
-      if ligne_provisoire.length < 38
-        ligne = ligne_provisoire.strip
-        @adresse_decoupee.delete_at(0)
+  def construit_ligne_adresse(adresse_a_decouper)
+    ligne = []
+    i = 0
+    until adresse_a_decouper.empty?
+      ligne_candidate = ""
+      ligne[i] = ""
+      while ligne_candidate.length < 38 && !adresse_a_decouper.empty?
+        ligne_candidate = ligne[i] + " " + adresse_a_decouper.first
+        if ligne_candidate.length < 38
+          ligne[i] = ligne_candidate.strip
+          adresse_a_decouper.delete_at(0) # retire 1er élément
+        end
       end
+      i += 1
     end
     ligne
   end

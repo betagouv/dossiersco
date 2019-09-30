@@ -136,13 +136,64 @@ class RespLegalTest < ActiveSupport::TestCase
     assert resp_legal.ligne3_adresse_siecle.length <= 38
   end
 
-  test "supprime les retours à la ligne sur l'adresse" do
+  test "découpe une adresse sur trois lignes en se fondant sur les retours à la ligne" do
     adresse = <<~HERE
-      20 RUE DU    VILLAGE
+      20 RUE DU VILLAGE DE MOINS DE 38
+      VILLE DE MOINS DE 38
       BAT G
     HERE
     resp_legal = Fabricate(:resp_legal, adresse: adresse)
-    assert_equal "20 RUE DU VILLAGE BAT G", resp_legal.ligne1_adresse_siecle
+
+    assert_equal "20 RUE DU VILLAGE DE MOINS DE 38", resp_legal.ligne1_adresse_siecle
+    assert_equal "VILLE DE MOINS DE 38", resp_legal.ligne2_adresse_siecle
+    assert_equal "BAT G", resp_legal.ligne3_adresse_siecle
+  end
+
+  test "découpe une adresse en se fondant sur les retours à la ligne et la limite des 38 caractères pour la 1ère ligne" do
+    adresse = <<~HERE
+      20 RUE DU VILLAGE DE PLUS DE 38 CARACTERES
+      VILLE
+    HERE
+    resp_legal = Fabricate(:resp_legal, adresse: adresse)
+
+    assert_equal "20 RUE DU VILLAGE DE PLUS DE 38", resp_legal.ligne1_adresse_siecle
+    assert_equal "CARACTERES", resp_legal.ligne2_adresse_siecle
+    assert_equal "VILLE", resp_legal.ligne3_adresse_siecle
+  end
+
+  test "découpe une adresse sur 4 lignes" do
+    adresse = <<~HERE
+      20 RUE DU VILLAGE DE PLUS DE 38 CARACTERES
+      VILLE TRES LONGUE DE PLUS DE 38 CARACTERES DU NOM DE VILLE
+    HERE
+    resp_legal = Fabricate(:resp_legal, adresse: adresse)
+
+    assert_equal "20 RUE DU VILLAGE DE PLUS DE 38", resp_legal.ligne1_adresse_siecle
+    assert_equal "CARACTERES", resp_legal.ligne2_adresse_siecle
+    assert_equal "VILLE TRES LONGUE DE PLUS DE 38", resp_legal.ligne3_adresse_siecle
+    assert_equal "CARACTERES DU NOM DE VILLE", resp_legal.ligne4_adresse_siecle
+  end
+
+  test "découpe une adresse malgré des lignes vides superflues" do
+    adresse = <<~HERE
+      20 RUE DU VILLAGE
+
+
+
+      VILLE
+    HERE
+    resp_legal = Fabricate(:resp_legal, adresse: adresse)
+
+    assert_equal "20 RUE DU VILLAGE", resp_legal.ligne1_adresse_siecle
+    assert_equal "VILLE", resp_legal.ligne2_adresse_siecle
+  end
+
+  test "découpe une adresse avec \r et \n" do
+    adresse = "20 RUE DU VILLAGE\r\n \r\r VILLE"
+    resp_legal = Fabricate(:resp_legal, adresse: adresse)
+
+    assert_equal "20 RUE DU VILLAGE", resp_legal.ligne1_adresse_siecle
+    assert_equal "VILLE", resp_legal.ligne2_adresse_siecle
   end
 
 end
