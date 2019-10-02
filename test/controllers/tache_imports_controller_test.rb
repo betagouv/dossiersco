@@ -84,7 +84,7 @@ class TacheImportsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to page_origine
   end
 
-  test "affiche la liste des fichiers de responsables ayant changés de coordonnées" do
+  test "affiche la liste des fichiers de responsables ayant changé de coordonnées" do
     admin = Fabricate(:admin)
     identification_agent(admin)
 

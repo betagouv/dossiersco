@@ -517,7 +517,7 @@ fr:
       aide_eleve_avec_adresse: "Penez à déwipper le fichier eleveavecadresse. DossierSCO ne peux lire qu'un fichier XML pour le moment"
       selectionner_fichier_eleve_avec_adresse: "Sélectionnez votre fichier EleveAvecAdresse au format XML depuis SIECLE"
       importer_fichier_eleve_avec_adresse: "Importer le fichier"
-      titre_export_changement: "Export des responsables ayant changés de coordonnées"
+      titre_export_changement: "Export des responsables ayant changé de coordonnées"
       export_changement: "Fichier Excel comprenant la liste des élèves avec les responsbles légaux ayant changé de coordonées"
       generer_fichier_changement: "Générer le fichier"
       export_des_changements : "Le fichier des changements va être généré"
