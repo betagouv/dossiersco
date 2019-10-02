@@ -27,7 +27,10 @@ class ExportListeChangementsXlsxJob < ActiveJob::Base
       entete << "lien de parenté"
       entete << "nom responsable"
       entete << "prénom responsable"
-      entete << "nouvelle adresse responsable"
+      entete << "nouvelle adresse responsable ligne1"
+      entete << "nouvelle adresse responsable ligne2"
+      entete << "nouvelle adresse responsable ligne3"
+      entete << "nouvelle adresse responsable ligne4"
       entete << "nouveau code postal responsable"
       entete << "nouvelle ville responsable"
       entete << "adresse antérieure responsable"
@@ -51,7 +54,10 @@ class ExportListeChangementsXlsxJob < ActiveJob::Base
       ligne << resp.lien_de_parente
       ligne << resp.nom
       ligne << resp.prenom
-      ligne << resp.adresse
+      ligne << resp.ligne1_adresse_siecle
+      ligne << resp.ligne2_adresse_siecle
+      ligne << resp.ligne3_adresse_siecle
+      ligne << resp.ligne4_adresse_siecle
       ligne << resp.code_postal
       ligne << resp.ville
       ligne << resp.adresse_ant
