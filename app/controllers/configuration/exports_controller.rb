@@ -13,7 +13,7 @@ module Configuration
 
     def export_changements
       ExportListeChangementsXlsxJob.perform_later(@agent_connecte)
-      flash[:notice] = t(".export_des_changements")
+      flash[:notice] = t(".export_en_cours")
       redirect_to new_tache_import_path
     end
 

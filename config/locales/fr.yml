@@ -307,6 +307,8 @@ fr:
         export_des_pieces_jointes: "La génération du dossier est en cours, il sera disponible sur cette page dans la partie 'Exporter les pièces jointes'. Rechargez la page pour le faire apparaitre"
       export_options:
         export_des_options: "La génération du fichier est en cours, il sera disponible sur cette page dans la partie 'Exporter un fichier'. Rechargez la page pour le faire apparaitre"
+      export_changements:
+        export_en_cours : "Le fichier des changements va être généré"
     regimes_sortie:
       update:
         mis_a_jour: Le régime d'autorisation de sortie a été mis à jour
@@ -520,7 +522,6 @@ fr:
       titre_export_changement: "Export des responsables ayant changé d'adresse"
       export_changement: "Fichier Excel comprenant la liste des élèves avec les responsbles légaux ayant changé d'adresse"
       generer_fichier_changement: "Générer le fichier"
-      export_des_changements : "Le fichier des changements va être généré"
   contact_par_etats:
     new:
       contacter_élèves: "Contacter les élèves massivement"
