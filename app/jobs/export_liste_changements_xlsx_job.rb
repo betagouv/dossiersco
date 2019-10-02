@@ -33,6 +33,10 @@ class ExportListeChangementsXlsxJob < ActiveJob::Base
       entete << "adresse antérieure responsable"
       entete << "code postal antérieure responsable"
       entete << "ville antérieure responsable"
+      entete << "email responsable"
+      entete << "tel personnel responsable"
+      entete << "tel portable responsable"
+      entete << "tel professionnel responsable"
     end
 
     entete
