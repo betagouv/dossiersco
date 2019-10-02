@@ -56,7 +56,7 @@
           <% next unless contact_urgence.nom %>
           <PERSONNE>
             <ID_PRV_PER><%= contact_urgence.id %></ID_PRV_PER>
-            <CODE_CIVILITE><%= "?" %></CODE_CIVILITE>
+            <CODE_CIVILITE><%= contact_urgence.lien_de_parente == "MERE" ? "2" : "1" %></CODE_CIVILITE>
             <NOM_DE_FAMILLE><%= alternative(contact_urgence.nom) %></NOM_DE_FAMILLE>
             <PRENOM><%= alternative(contact_urgence.prenom) %></PRENOM>
             <COMMUNICATION_ADRESSE>0</COMMUNICATION_ADRESSE>
