@@ -436,6 +436,18 @@ class ExportsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "1", xml.xpath("//CODE_CIVILITE").text
   end
 
+  test "n'exporte pas un représentant légal d'adresse Inconnue" do
+    admin = Fabricate(:admin)
+    identification_agent(admin)
+
+    resp_legal = Fabricate(:resp_legal, adresse: "Inconnue")
+    Fabricate(:dossier_eleve_valide, resp_legal: [resp_legal], etablissement: admin.etablissement)
+
+    xml = recupere_fichier_xml_de_retour_siecle
+
+    assert_no_match "PERSONNE>", xml.xpath("//PERSONNES").to_s
+  end
+
   test "on export un contact en cas d'urgence dans les personnes si présent" do
     admin = Fabricate(:admin)
     identification_agent(admin)
