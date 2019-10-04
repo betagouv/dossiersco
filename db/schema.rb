@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_25_130833) do
+ActiveRecord::Schema.define(version: 2019_10_04_131537) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2019_09_25_130833) do
     t.string "tel_principal"
     t.string "tel_secondaire"
     t.datetime "updated_at"
+    t.integer "civilite"
   end
 
   create_table "dossier_eleves", force: :cascade do |t|
