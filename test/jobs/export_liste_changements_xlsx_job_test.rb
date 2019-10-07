@@ -13,13 +13,15 @@ class ExportListeChangementsXlsxJobTest < ActionDispatch::IntegrationTest
   test "ligne" do
     resp_legal = Fabricate(:resp_legal, adresse: "1 rue Mozart\r\nMezidon-Cano", adresse_ant: "34 rue de l'église", email: "pere@laposte.net",
                                         tel_personnel: "0612345678", tel_portable: "0612345679", tel_professionnel: "0612345670")
-    dossier = Fabricate(:dossier_eleve, resp_legal: [resp_legal])
+    mef_destination = Fabricate(:mef, libelle: "6EME")
+    dossier = Fabricate(:dossier_eleve, resp_legal: [resp_legal], mef_destination: mef_destination)
     export = ExportListeChangementsXlsxJob.new
 
     cellules_attendues = []
     cellules_attendues << dossier.nom
     cellules_attendues << dossier.prenom
     cellules_attendues << dossier.identifiant
+    cellules_attendues << dossier.mef_destination.libelle
     cellules_attendues << resp_legal.lien_de_parente
     cellules_attendues << resp_legal.nom
     cellules_attendues << resp_legal.prenom

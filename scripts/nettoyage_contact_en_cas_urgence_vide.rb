@@ -4,5 +4,5 @@ ContactUrgence.where(
   nom: [nil, ""],
   prenom: [nil, ""],
   tel_principal: [nil, ""],
-  tel_secondaire: [nil, ""],
+  tel_secondaire: [nil, ""]
 ).delete_all

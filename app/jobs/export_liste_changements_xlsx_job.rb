@@ -22,6 +22,7 @@ class ExportListeChangementsXlsxJob < ActiveJob::Base
     entete << "nom élève"
     entete << "prénom élève"
     entete << "INE"
+    entete << "MEF destination"
 
     2.times do
       entete << "lien de parenté"
@@ -50,6 +51,7 @@ class ExportListeChangementsXlsxJob < ActiveJob::Base
     ligne << dossier.nom
     ligne << dossier.prenom
     ligne << dossier.identifiant
+    ligne << dossier.mef_destination.libelle
     dossier.resp_legal.each do |resp|
       ligne << resp.lien_de_parente
       ligne << resp.nom
