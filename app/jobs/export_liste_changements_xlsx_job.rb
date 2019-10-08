@@ -3,7 +3,7 @@
 class ExportListeChangementsXlsxJob < ActiveJob::Base
 
   def perform(agent)
-    creer_fichier(faire_lignes(agent), cellules_entete(agent), agent)
+    creer_fichier(faire_lignes(agent), cellules_entete, agent)
     temp_file = creer_zip(agent)
     FichierATelecharger.create!(contenu: temp_file, etablissement: agent.etablissement, nom: "changements")
     FileUtils.rm_rf("tmp/changements-#{agent.etablissement.id}.xlsx")
@@ -17,59 +17,30 @@ class ExportListeChangementsXlsxJob < ActiveJob::Base
     lignes
   end
 
-  def cellules_entete(_agent)
-    entete = []
-    entete << "nom élève"
-    entete << "prénom élève"
-    entete << "INE"
-    entete << "MEF destination"
+  def cellules_entete
+    ["nom élève", "prénom élève", "INE", "MEF destination"].concat(entetes_responsables)
+  end
 
-    2.times do
-      entete << "lien de parenté"
-      entete << "nom responsable"
-      entete << "prénom responsable"
-      entete << "nouvelle adresse responsable ligne1"
-      entete << "nouvelle adresse responsable ligne2"
-      entete << "nouvelle adresse responsable ligne3"
-      entete << "nouvelle adresse responsable ligne4"
-      entete << "nouveau code postal responsable"
-      entete << "nouvelle ville responsable"
-      entete << "adresse antérieure responsable"
-      entete << "code postal antérieure responsable"
-      entete << "ville antérieure responsable"
-      entete << "email responsable"
-      entete << "tel personnel responsable"
-      entete << "tel portable responsable"
-      entete << "tel professionnel responsable"
-    end
-
-    entete
+  def entetes_responsables
+    [
+      "lien de parenté", "nom responsable", "prénom responsable", "nouvelle adresse responsable ligne1",
+      "nouvelle adresse responsable ligne2", "nouvelle adresse responsable ligne3", "nouvelle adresse responsable ligne4",
+      "nouveau code postal responsable", "nouvelle ville responsable", "adresse antérieure responsable", "code postal antérieure responsable",
+      "ville antérieure responsable", "email responsable", "tel personnel responsable", "tel portable responsable", "tel professionnel responsable"
+    ] * 2
   end
 
   def ligne(dossier)
-    ligne = []
-    ligne << dossier.nom
-    ligne << dossier.prenom
-    ligne << dossier.identifiant
-    ligne << dossier.mef_destination.libelle
+    ligne = [dossier.nom, dossier.prenom, dossier.identifiant, dossier.mef_destination.libelle]
     dossier.resp_legal.each do |resp|
-      ligne << resp.lien_de_parente
-      ligne << resp.nom
-      ligne << resp.prenom
-      ligne << resp.ligne1_adresse_siecle
-      ligne << resp.ligne2_adresse_siecle
-      ligne << resp.ligne3_adresse_siecle
-      ligne << resp.ligne4_adresse_siecle
-      ligne << resp.code_postal
-      ligne << resp.ville
-      ligne << resp.adresse_ant
-      ligne << resp.code_postal_ant
-      ligne << resp.ville_ant
-      ligne << resp.email
-      ligne << resp.tel_personnel
-      ligne << resp.tel_portable
-      ligne << resp.tel_professionnel
+      ligne.concat [
+        resp.lien_de_parente, resp.nom, resp.prenom,
+        resp.ligne1_adresse_siecle, resp.ligne2_adresse_siecle, resp.ligne3_adresse_siecle, resp.ligne4_adresse_siecle,
+        resp.code_postal, resp.ville, resp.adresse_ant, resp.code_postal_ant, resp.ville_ant, resp.email,
+        resp.tel_personnel, resp.tel_portable, resp.tel_professionnel
+      ]
     end
+
     ligne
   end
 
