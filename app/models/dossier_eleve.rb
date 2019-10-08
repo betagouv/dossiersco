@@ -76,6 +76,18 @@ class DossierEleve < ActiveRecord::Base
     joins("INNER JOIN mef AS mef_destination ON mef_destination.id = mef_destination_id AND length(mef_destination.code) != '11'")
   }
 
+  scope :sans_commune_insee, lambda {
+    where("commune_insee_naissance is null and pays_naiss = '100'")
+  }
+
+  scope :sans_mef_an_dernier, lambda {
+    where(mef_an_dernier: nil)
+  }
+
+  scope :sans_mef_destination, lambda {
+    where(mef_destination: nil)
+  }
+
   def pieces_jointes
     etablissement.pieces_attendues.map do |piece_attendue|
       PieceJointe.find_or_initialize_by(piece_attendue: piece_attendue, dossier_eleve: self)

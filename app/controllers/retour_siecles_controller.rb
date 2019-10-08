@@ -32,26 +32,7 @@ class RetourSieclesController < ApplicationController
   def export_des_dossiers
     @dossiers = dossiers_etablissement.exportables
     @nb_resp_legaux = nb_resp_legaux(@dossiers)
-    @dossiers_bloques = []
-    @dossiers_bloques
-      .concat(extrait_informations(dossiers_etablissement.where(mef_destination: nil),
-                                   I18n.t("retour_siecles.export_des_dossiers.dossier_sans_mef_destination")))
-    @dossiers_bloques
-      .concat(extrait_informations(eleves_sans_commune_insee,
-                                   I18n.t("retour_siecles.export_des_dossiers.probleme_de_commune_insee")))
-    @dossiers_bloques
-      .concat(extrait_informations(resp_legal_probleme_profession,
-                                   I18n.t("retour_siecles.export_des_dossiers.probleme_de_profession")))
-    @dossiers_bloques
-      .concat(extrait_informations(dossiers_etablissement.where(mef_an_dernier: nil),
-                                   I18n.t("retour_siecles.export_des_dossiers.dossier_mef_an_dernier_inconnu")))
-    @dossiers_bloques
-      .concat(extrait_informations(dossiers_etablissement.avec_code_mef_origine_invalide,
-                                   I18n.t("retour_siecles.export_des_dossiers.dossier_avec_mef_origine_invalide")))
-    @dossiers_bloques
-      .concat(extrait_informations(dossiers_etablissement.avec_code_mef_destination_invalide,
-                                   I18n.t("retour_siecles.export_des_dossiers.dossier_avec_mef_destination_invalide")))
-
+    @dossiers_bloques = dossiers_bloques
     return unless params[:liste_ine].present?
 
     ines = params[:liste_ine].split(",")
@@ -60,12 +41,22 @@ class RetourSieclesController < ApplicationController
     @nb_resp_legaux_selection = nb_resp_legaux(@dossiers_exportables)
   end
 
-  def dossiers_etablissement
-    DossierEleve.where(etablissement: @etablissement)
+  def dossiers_bloques
+    dossiers_bloques = []
+    %w[sans_mef_destination sans_commune_insee
+       avec_code_mef_origine_invalide sans_mef_an_dernier avec_code_mef_destination_invalide].each do |probleme|
+      dossiers_bloques
+        .concat(extrait_informations(dossiers_etablissement.send(probleme),
+                                     I18n.t(probleme, scope: "retour_siecles.export_des_dossiers")))
+    end
+
+    dossiers_bloques
+      .concat(extrait_informations(resp_legal_probleme_profession,
+                                   I18n.t("retour_siecles.export_des_dossiers.probleme_de_profession")))
   end
 
-  def eleves_sans_commune_insee
-    dossiers_etablissement.where("commune_insee_naissance is null and pays_naiss = '100'")
+  def dossiers_etablissement
+    DossierEleve.where(etablissement: @etablissement)
   end
 
   def resp_legal_probleme_profession

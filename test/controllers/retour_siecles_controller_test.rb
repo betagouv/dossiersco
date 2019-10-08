@@ -92,7 +92,7 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
     get export_des_dossiers_retour_siecle_path
 
     assert_equal dossier_sans_mef.identifiant, assigns(:dossiers_bloques).first.identifiant
-    assert_equal I18n.t("retour_siecles.export_des_dossiers.dossier_sans_mef_destination"), assigns(:dossiers_bloques).first.raison
+    assert_equal I18n.t("retour_siecles.export_des_dossiers.sans_mef_destination"), assigns(:dossiers_bloques).first.raison
   end
 
   test "liste les dossiers dont nous n'avons pas le bon code profession" do
@@ -118,7 +118,7 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
 
     get export_des_dossiers_retour_siecle_path
     assert_equal dossier_sans_commune_insee.identifiant, assigns(:dossiers_bloques).first.identifiant
-    assert_equal I18n.t("retour_siecles.export_des_dossiers.probleme_de_commune_insee"), assigns(:dossiers_bloques).first.raison
+    assert_equal I18n.t("retour_siecles.export_des_dossiers.sans_commune_insee"), assigns(:dossiers_bloques).first.raison
   end
 
   test "un dossier est exportable si le pays de naissance n'est pas 100 (france) et qu'il n'y pas de ville de naissance" do
@@ -141,7 +141,7 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
 
     get export_des_dossiers_retour_siecle_path
     assert_equal dossier_sans_mef_an_dernier.identifiant, assigns(:dossiers_bloques).first.identifiant
-    assert_equal I18n.t("retour_siecles.export_des_dossiers.dossier_mef_an_dernier_inconnu"), assigns(:dossiers_bloques).first.raison
+    assert_equal I18n.t("retour_siecles.export_des_dossiers.sans_mef_an_dernier"), assigns(:dossiers_bloques).first.raison
   end
 
   test "liste les dossiers avec un code mef_origine invalide" do
@@ -158,7 +158,7 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
 
     get export_des_dossiers_retour_siecle_path
     assert_equal dossier_avec_mef_non_conforme.identifiant, assigns(:dossiers_bloques).first.identifiant
-    assert_equal I18n.t("retour_siecles.export_des_dossiers.dossier_avec_mef_origine_invalide"), assigns(:dossiers_bloques).first.raison
+    assert_equal I18n.t("retour_siecles.export_des_dossiers.avec_code_mef_origine_invalide"), assigns(:dossiers_bloques).first.raison
   end
 
   test "liste les dossiers avec un code mef_destination invalide" do
@@ -175,7 +175,7 @@ class RetourSieclesControllerTest < ActionDispatch::IntegrationTest
 
     get export_des_dossiers_retour_siecle_path
     assert_equal dossier_avec_mef_non_conforme.identifiant, assigns(:dossiers_bloques).first.identifiant
-    assert_equal I18n.t("retour_siecles.export_des_dossiers.dossier_avec_mef_destination_invalide"), assigns(:dossiers_bloques).first.raison
+    assert_equal I18n.t("retour_siecles.export_des_dossiers.avec_code_mef_destination_invalide"), assigns(:dossiers_bloques).first.raison
   end
 
   test "exporte uniquement le dossier en état validé" do
