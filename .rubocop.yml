@@ -32,7 +32,6 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Exclude:
     - 'test/**/*'
-    - 'app/jobs/importer_siecle.rb'
     - 'app/controllers/retour_siecles_controller.rb'
     - 'app/controllers/authentification_cas_ent_controller.rb'
     - 'app/models/dossier_eleve.rb'

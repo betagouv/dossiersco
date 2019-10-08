@@ -12,20 +12,11 @@ class ImporterSiecle < ApplicationJob
     tache = TacheImport.find(tache_id)
     tache.update(statut: TacheImport::STATUTS[:en_traitement])
 
-    if tache.import_nomenclature?
-      ImportNomenclature.new.perform(tache)
-      mail = AgentMailer.succes_import_nomenclature(email)
-    elsif tache.import_responsables?
-      ImportResponsables.new.perform(tache)
-      mail = AgentMailer.succes_import_responsables(email)
-    elsif tache.import_eleves?
-      ImportEleves.new.perform(tache)
-      mail = AgentMailer.succes_import_eleves(email)
-    else
-      raise StandardError, "type d'import non couvert"
-    end
-    mail.deliver_now
+    type = %i[import_nomenclature? import_responsables? import_eleves?].detect { |m| tache.send(m) }
+    raise StandardError, "type d'import non couvert" if type.nil?
 
+    ImportNomenclature.new.perform(tache)
+    AgentMailer.send("succes_#{type.to_s[0..-2]}", email).deliver_now
     tache.update(statut: TacheImport::STATUTS[:terminee])
   rescue StandardError => e
     tache.update(statut: TacheImport::STATUTS[:en_erreur])
