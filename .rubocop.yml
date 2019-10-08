@@ -32,7 +32,6 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Exclude:
     - 'test/**/*'
-    - 'scripts/nettoyage_lien_de_parent_contact_urgence.rb'
     - 'app/jobs/export_liste_changements_xlsx_job.rb'
     - 'app/jobs/importer_siecle.rb'
     - 'app/controllers/retour_siecles_controller.rb'
