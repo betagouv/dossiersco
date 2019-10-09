@@ -32,7 +32,6 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Exclude:
     - 'test/**/*'
-    - 'app/controllers/tache_imports_controller.rb'
     - 'app/controllers/configurations_controller.rb'
     - 'app/controllers/accueil_controller.rb'
     - 'app/controllers/inscriptions_controller.rb'
