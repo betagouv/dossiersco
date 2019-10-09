@@ -17,25 +17,27 @@ class AuthentificationCasEntController < ApplicationController
   def retour_cas
     data = donnees_ent(params[:ticket])["serviceResponse"]["authenticationSuccess"]["attributes"]["userAttributes"]
     responsables = []
-    retrouve_liste_resp_legal(data).each do |resp_legal|
-      responsables << resp_legal
-    end
+    retrouve_liste_resp_legal(data).each { |resp_legal| responsables << resp_legal }
 
-    if responsables.count == 1
-      identifie_et_redirige(responsables.first.dossier_eleve)
-    elsif responsables.count > 1
-      @resp_legals = responsables
-      render :choix_dossier_eleve, layout: "connexion"
-    else
-      Raven.extra_context data: data
-      Raven.capture_exception(Exception.new("Pas de responsable legal trouvé"))
-      flash[:alert] = I18n.t(".dossier_non_trouve")
-      redirect_to "/"
-    end
+    (identifie_et_redirige(responsables.first.dossier_eleve) && return) if responsables.count == 1
+    (rendre_choix_dossier_eleve(responsables) && return) if responsables.count > 1
+    dossier_non_trouve(data, nil, Exception.new("Pas de responsable legal trouvé"))
   rescue StandardError
-    Raven.extra_context params: params
-    Raven.extra_context donnee: donnees_ent(params[:ticket])
-    Raven.capture_exception(Exception.new("Problème d'extraction de donnée"))
+    dossier_non_trouve(nil, params, Exception.new("Problème d'extraction de donnée"))
+  end
+
+  def rendre_choix_dossier_eleve(responsables)
+    @resp_legals = responsables
+    render :choix_dossier_eleve, layout: "connexion"
+  end
+
+  def dossier_non_trouve(data, params, exception)
+    Raven.extra_context data: data if data
+    if params
+      Raven.extra_context params: params
+      Raven.extra_context donnee: donnees_ent(params[:ticket])
+    end
+    Raven.capture_exception(exception)
     flash[:alert] = I18n.t(".dossier_non_trouve")
     redirect_to "/"
   end
@@ -81,18 +83,20 @@ class AuthentificationCasEntController < ApplicationController
     return [] unless data.is_a?(Hash)
 
     email = data["email"]
-    if email && email != { "xmlns" => "" }
-      query = RespLegal.where("lower(email) = ?", email.downcase)
-    else
-      query = RespLegal.where("lower(prenom) = ?", data["firstName"].downcase)
-      nom = data["lastName"]
-      query = query.where("lower(nom) = ?", nom.downcase) if nom != { "xmlns" => "" }
-      if query.count > 1
-        adresse = data["address"]
-        query = query.where("lower(adresse) = ?", adresse.downcase) if adresse != { "xmlns" => "" }
-      end
+    return RespLegal.where("lower(email) = ?", email.downcase) if email && email != { "xmlns" => "" }
+
+    responsables_sans_email
+  end
+
+  def responsables_sans_email
+    responsables = RespLegal.where("lower(prenom) = ?", data["firstName"].downcase)
+    nom = data["lastName"]
+    responsables = query.where("lower(nom) = ?", nom.downcase) if nom != { "xmlns" => "" }
+    if responsables.count > 1
+      adresse = data["address"]
+      responsables = query.where("lower(adresse) = ?", adresse.downcase) if adresse != { "xmlns" => "" }
     end
-    query
+    responsables
   end
 
   def debug_ent

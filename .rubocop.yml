@@ -32,7 +32,6 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Exclude:
     - 'test/**/*'
-    - 'app/controllers/authentification_cas_ent_controller.rb'
     - 'app/models/dossier_eleve.rb'
     - 'app/controllers/tache_imports_controller.rb'
     - 'app/controllers/configurations_controller.rb'
