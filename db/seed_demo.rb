@@ -38,7 +38,8 @@ puts "création d'élèves et de dossier associés"
   mef_origine = Mef.find_by(libelle: niveau[0])
   mef_destination = Mef.niveau_superieur(mef_origine)
 
-  eleve = Eleve.create!(
+
+  dossier_eleve = DossierEleve.create!(
     "identifiant" => Faker::Alphanumeric.alpha(10).upcase,
     "prenom" => Faker::Name.first_name,
     "nom" => Faker::Name.last_name,
@@ -48,11 +49,7 @@ puts "création d'élèves et de dossier associés"
     "classe_ant" => niveau[1],
     "date_naiss" => Faker::Date.birthday(11, 17),
     "pays_naiss" => "100",
-    "niveau_classe_ant" => niveau[0]
-  )
-
-  dossier_eleve = DossierEleve.create!(
-    "eleve" => eleve,
+    "niveau_classe_ant" => niveau[0],
     "etablissement" => etablissement,
     "etat" => "pas connecté",
     "satisfaction" => 0,
