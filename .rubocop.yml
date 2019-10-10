@@ -109,7 +109,6 @@ Metrics/AbcSize:
 
 Metrics/CyclomaticComplexity:
   Exclude:
-    - 'app/controllers/retour_siecles_controller.rb'
     - 'app/controllers/authentification_cas_ent_controller.rb'
     - 'app/services/import_eleve_complete.rb'
     - 'app/services/analyseur_retour_siecle.rb'
