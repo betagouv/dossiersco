@@ -70,7 +70,6 @@ Metrics/ClassLength:
 Metrics/AbcSize:
   Exclude:
     - 'app/jobs/export_liste_changements_xlsx_job.rb'
-    - 'scripts/nettoyage_lien_de_parent_contact_urgence.rb'
     - 'test/integration/accueil_controller_test.rb'
     - 'test/integration/inscriptions_controller_test.rb'
     - 'app/controllers/tache_imports_controller.rb'
