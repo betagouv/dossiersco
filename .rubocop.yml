@@ -118,8 +118,6 @@ Metrics/CyclomaticComplexity:
 
 Metrics/PerceivedComplexity:
   Exclude:
-    - "scripts/nettoyage_lien_de_parent_contact_urgence.rb"
-    - "app/controllers/authentification_cas_ent_controller.rb"
     - "app/services/analyseur_retour_siecle.rb"
 
 Naming/VariableNumber:
