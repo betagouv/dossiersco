@@ -7,21 +7,17 @@ class ConfigurationsController < ApplicationController
   before_action :identification_agent
   before_action :if_agent_is_admin
 
+  Stats = Struct.new(:agents, :options, :mef, :dossiers, :date_fin, :uai, :nom_etablissement, :code_postal,
+                     :pieces_attendues, :eleves_sans_mef, keyword_init: true)
+
   def show
     etablissement = @agent_connecte.etablissement
-    stats = Struct.new(:agents, :options, :mef, :dossiers, :date_fin, :uai, :nom_etablissement, :code_postal,
-                       :pieces_attendues, :eleves_sans_mef)
-    @stats = stats.new
-    @stats.agents = Agent.pour_etablissement(agent_connecte.etablissement).count
-    @stats.options = etablissement.options_pedagogiques.count
-    @stats.mef = etablissement.mef.count
-    @stats.eleves_sans_mef = etablissement.dossier_eleve.where(mef_origine: nil).count
-    @stats.dossiers = etablissement.dossier_eleve.count
-    @stats.date_fin = etablissement.date_limite
-    @stats.uai = etablissement.uai
-    @stats.nom_etablissement = etablissement.nom
-    @stats.code_postal = etablissement.code_postal
-    @stats.pieces_attendues = etablissement.pieces_attendues.map(&:nom)
+    @stats = Stats.new(agents: Agent.pour_etablissement(agent_connecte.etablissement).count,
+                       options: etablissement.options_pedagogiques.count, mef: etablissement.mef.count,
+                       eleves_sans_mef: etablissement.dossier_eleve.where(mef_origine: nil).count,
+                       dossiers: etablissement.dossier_eleve.count, date_fin: etablissement.date_limite,
+                       uai: etablissement.uai, nom_etablissement: etablissement.nom,
+                       code_postal: etablissement.code_postal, pieces_attendues: etablissement.pieces_attendues.map(&:nom))
   end
 
 end
