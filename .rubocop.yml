@@ -118,7 +118,6 @@ Metrics/CyclomaticComplexity:
 
 Metrics/PerceivedComplexity:
   Exclude:
-    - "app/services/analyseur_retour_siecle.rb"
 
 Naming/VariableNumber:
   Enabled: false
