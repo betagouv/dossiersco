@@ -15,3 +15,8 @@
 //= require turbolinks
 //= require drift
 //= require popper.min
+//= require agent/dataTables.buttons.min
+//= require agent/dataTables.select.min
+//= require agent/jquery.dataTables.min
+//= require agent/jquery.dataTables.yadcf.min
+//= require agent/select2.min
