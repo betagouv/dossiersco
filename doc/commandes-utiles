@@ -300,5 +300,5 @@ Co-authored-by: yaf <yannick.francois@beta.gouv.fr>
 Co-authored-by: pblayo <philippe.blayo@beta.gouv.fr>
 Co-authored-by: LucienMLD <lucien.mollard@beta.gouv.fr>
 
-
+Pour un changement durable, faire `git config commit.template '.gitmessage'`
 
