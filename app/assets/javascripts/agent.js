@@ -14,3 +14,4 @@
 //= require rails-ujs
 //= require turbolinks
 //= require drift
+//= require popper.min

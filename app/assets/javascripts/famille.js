@@ -13,3 +13,4 @@
 //= require jquery.min
 //= require rails-ujs
 //= require turbolinks
+//= require popper.min
