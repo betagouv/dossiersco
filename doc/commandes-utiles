@@ -81,6 +81,7 @@ heroku pg:index_usage
 # Scalingo
 
 scalingo --app dossiersco-production env
+scalingo run rails db:seed:demo --app dossiersco-demo
 
 ## Restore un backup de prod en demo
 
