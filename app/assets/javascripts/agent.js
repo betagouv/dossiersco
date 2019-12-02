@@ -13,7 +13,6 @@
 //= require jquery.min
 //= require rails-ujs
 //= require turbolinks
-//= require drift
 //= require popper.min
 //= require agent/dataTables.buttons.min
 //= require agent/dataTables.select.min

@@ -75,13 +75,5 @@
     <%= yield %>
 
   </main>
-  <script>
-    drift.identify(<%= @agent_connecte.id %>, {
-      email: '<%= @agent_connecte.email %>',
-      name: '<%= @agent_connecte.prenom %> <%= @agent_connecte.nom %> (<%= @agent_connecte.etablissement.nom %>)',
-      postalcode: '<%= @agent_connecte.etablissement.code_postal %>',
-      city: '<%= @agent_connecte.etablissement.ville %>'
-    })
-  </script>
 <% end %>
 <%= render template: 'layouts/application' %>
