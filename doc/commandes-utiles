@@ -303,3 +303,8 @@ Co-authored-by: LucienMLD <lucien.mollard@beta.gouv.fr>
 Pour un changement durable, faire `git config commit.template '.gitmessage'`
 
 s3cmd del --recursive s3://dossierscoweb/uploads/
+
+# Nettoyer tmp/
+
+sudo rm tmp/[0-9]* -r
+sudo rm tmp/cache -r
